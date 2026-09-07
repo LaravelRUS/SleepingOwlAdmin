@@ -158,7 +158,12 @@ class Columns extends Extension implements Initializable, Renderable
     public function toArray(): array
     {
         return [
-            'columns' => $this->all(),
+            'columns' => $this->getDisplay() instanceof \SleepingOwl\Admin\Display\DisplayTable
+                && ! $this->getDisplay() instanceof \SleepingOwl\Admin\Display\DisplayDatatables
+                ? $this->all()->filter(function (ColumnInterface $column) {
+                    return $column->isVisible();
+                })
+                : $this->all(),
             'attributes' => $this->getDisplay()->htmlAttributesToString(),
             'attributesArray' => $this->getDisplay()->getHtmlAttributes(),
         ];

@@ -14002,13 +14002,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.runtime.esm-bundler.js");
 /* harmony import */ var _libs_dropzone__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../libs/dropzone */ "./resources/assets/js_owl/libs/dropzone.js");
 /* harmony import */ var _libs_dropzone__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_libs_dropzone__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _file_upload__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./file-upload */ "./resources/assets/js_owl/admin/form/file-upload.js");
-/* harmony import */ var _file_value__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./file-value */ "./resources/assets/js_owl/admin/form/file-value.js");
-/* harmony import */ var _upload_response__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./upload-response */ "./resources/assets/js_owl/admin/form/upload-response.js");
+/* harmony import */ var _frontend_features_forms_file_download__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../frontend/features/forms/file-download */ "./resources/frontend/features/forms/file-download.js");
+/* harmony import */ var _file_upload__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./file-upload */ "./resources/assets/js_owl/admin/form/file-upload.js");
+/* harmony import */ var _file_value__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./file-value */ "./resources/assets/js_owl/admin/form/file-value.js");
+/* harmony import */ var _upload_response__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./upload-response */ "./resources/assets/js_owl/admin/form/upload-response.js");
 function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
 function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+
 
 
 
@@ -14058,12 +14060,12 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       errors: [],
       uploader: null,
       uploading: false,
-      val: (0,_file_value__WEBPACK_IMPORTED_MODULE_3__.normalizeFileValue)(this.value)
+      val: (0,_file_value__WEBPACK_IMPORTED_MODULE_4__.normalizeFileValue)(this.value)
     };
   },
   computed: {
     downloadUrl: function downloadUrl() {
-      return (0,_file_value__WEBPACK_IMPORTED_MODULE_3__.fileDownloadUrl)(this.val, function (path) {
+      return (0,_file_value__WEBPACK_IMPORTED_MODULE_4__.fileDownloadUrl)(this.val, function (path) {
         return Admin.Url.upload(path);
       });
     },
@@ -14087,10 +14089,35 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       this.errors = [];
     },
     completeUpload: function completeUpload(response) {
-      this.val = (0,_file_value__WEBPACK_IMPORTED_MODULE_3__.normalizeFileValue)(response === null || response === void 0 ? void 0 : response.value);
+      this.val = (0,_file_value__WEBPACK_IMPORTED_MODULE_4__.normalizeFileValue)(response === null || response === void 0 ? void 0 : response.value);
+    },
+    downloadCurrent: function downloadCurrent() {
+      var _this = this;
+      return _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
+        var _t;
+        return _regenerator().w(function (_context) {
+          while (1) switch (_context.p = _context.n) {
+            case 0:
+              _context.p = 0;
+              _context.n = 1;
+              return (0,_frontend_features_forms_file_download__WEBPACK_IMPORTED_MODULE_2__.downloadFile)(_this.downloadUrl, {
+                document: _this.$el.ownerDocument
+              });
+            case 1:
+              _context.n = 3;
+              break;
+            case 2:
+              _context.p = 2;
+              _t = _context.v;
+              Admin.Messages.error(_this.messages.responseError, _t.message);
+            case 3:
+              return _context.a(2);
+          }
+        }, _callee, null, [[0, 2]]);
+      }))();
     },
     failUpload: function failUpload(response) {
-      var errors = (0,_upload_response__WEBPACK_IMPORTED_MODULE_4__.responseErrors)(response);
+      var errors = (0,_upload_response__WEBPACK_IMPORTED_MODULE_5__.responseErrors)(response);
       if (errors[0]) Admin.Messages.error(response === null || response === void 0 ? void 0 : response.message, errors[0]);
       this.errors = errors;
     },
@@ -14098,7 +14125,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       this.uploading = false;
     },
     mountUpload: function mountUpload() {
-      this.uploader = (0,_file_upload__WEBPACK_IMPORTED_MODULE_2__.createFileUpload)((_libs_dropzone__WEBPACK_IMPORTED_MODULE_1___default()), this.$refs.uploadButton, {
+      this.uploader = (0,_file_upload__WEBPACK_IMPORTED_MODULE_3__.createFileUpload)((_libs_dropzone__WEBPACK_IMPORTED_MODULE_1___default()), this.$refs.uploadButton, {
         csrfToken: this.csrfToken,
         fileTooBigText: this.messages.fileTooBig,
         maxFileSize: this.maxFileSize,
@@ -14111,21 +14138,21 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       });
     },
     remove: function remove() {
-      var _this = this;
-      return _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
+      var _this2 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2() {
         var result;
-        return _regenerator().w(function (_context) {
-          while (1) switch (_context.n) {
+        return _regenerator().w(function (_context2) {
+          while (1) switch (_context2.n) {
             case 0:
-              _context.n = 1;
-              return Admin.Messages.confirm(_this.messages.confirmRemove);
+              _context2.n = 1;
+              return Admin.Messages.confirm(_this2.messages.confirmRemove);
             case 1:
-              result = _context.v;
-              if (result.value) _this.val = '';
+              result = _context2.v;
+              if (result.value) _this2.val = '';
             case 2:
-              return _context.a(2);
+              return _context2.a(2);
           }
-        }, _callee);
+        }, _callee2);
       }))();
     },
     startUpload: function startUpload() {
@@ -14151,14 +14178,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.runtime.esm-bundler.js");
 /* harmony import */ var _libs_dropzone__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../libs/dropzone */ "./resources/assets/js_owl/libs/dropzone.js");
 /* harmony import */ var _libs_dropzone__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_libs_dropzone__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _image_paste_buffer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./image-paste-buffer */ "./resources/assets/js_owl/admin/form/image-paste-buffer.js");
-/* harmony import */ var _image_upload__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./image-upload */ "./resources/assets/js_owl/admin/form/image-upload.js");
-/* harmony import */ var _image_value__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./image-value */ "./resources/assets/js_owl/admin/form/image-value.js");
-/* harmony import */ var _upload_response__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./upload-response */ "./resources/assets/js_owl/admin/form/upload-response.js");
+/* harmony import */ var _frontend_features_forms_file_download__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../frontend/features/forms/file-download */ "./resources/frontend/features/forms/file-download.js");
+/* harmony import */ var _image_paste_buffer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./image-paste-buffer */ "./resources/assets/js_owl/admin/form/image-paste-buffer.js");
+/* harmony import */ var _image_upload__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./image-upload */ "./resources/assets/js_owl/admin/form/image-upload.js");
+/* harmony import */ var _image_value__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./image-value */ "./resources/assets/js_owl/admin/form/image-value.js");
+/* harmony import */ var _upload_response__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./upload-response */ "./resources/assets/js_owl/admin/form/upload-response.js");
 function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
 function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+
 
 
 
@@ -14217,7 +14246,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       uploader: null,
       uploading: false,
       useAssetPrefix: true,
-      val: (0,_image_value__WEBPACK_IMPORTED_MODULE_4__.normalizeImageValue)(this.value)
+      val: (0,_image_value__WEBPACK_IMPORTED_MODULE_5__.normalizeImageValue)(this.value)
     };
   },
   computed: {
@@ -14225,7 +14254,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       return this.val.length > 0;
     },
     previewUrl: function previewUrl() {
-      return (0,_image_value__WEBPACK_IMPORTED_MODULE_4__.imagePreviewUrl)(this.val, {
+      return (0,_image_value__WEBPACK_IMPORTED_MODULE_5__.imagePreviewUrl)(this.val, {
         assetPrefix: this.assetPrefix,
         createUploadUrl: function createUploadUrl(path) {
           return Admin.Url.upload(path);
@@ -14245,24 +14274,24 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
     this.disposed = true;
     (_this$uploader = this.uploader) === null || _this$uploader === void 0 || _this$uploader.destroy();
     this.uploader = null;
-    if (this.pasteActive) (0,_image_paste_buffer__WEBPACK_IMPORTED_MODULE_2__.removeImagePasteBuffer)(this.pasteDocument());
+    if (this.pasteActive) (0,_image_paste_buffer__WEBPACK_IMPORTED_MODULE_3__.removeImagePasteBuffer)(this.pasteDocument());
   },
   methods: {
     acceptPastedUpload: function acceptPastedUpload(response) {
       var _response$path;
       var value = (_response$path = response === null || response === void 0 ? void 0 : response.path) !== null && _response$path !== void 0 ? _response$path : response === null || response === void 0 ? void 0 : response.value;
       if (value === undefined) return;
-      this.val = (0,_image_value__WEBPACK_IMPORTED_MODULE_4__.normalizeImageValue)(value);
+      this.val = (0,_image_value__WEBPACK_IMPORTED_MODULE_5__.normalizeImageValue)(value);
       this.useAssetPrefix = false;
     },
     applyInsertedValue: function applyInsertedValue(value) {
-      if (!value) return (0,_image_paste_buffer__WEBPACK_IMPORTED_MODULE_2__.removeImagePasteBuffer)(this.pasteDocument());
-      if ((0,_image_value__WEBPACK_IMPORTED_MODULE_4__.isBlobImageValue)(value)) {
-        if (this.onlyLink) return (0,_image_paste_buffer__WEBPACK_IMPORTED_MODULE_2__.removeImagePasteBuffer)(this.pasteDocument());
+      if (!value) return (0,_image_paste_buffer__WEBPACK_IMPORTED_MODULE_3__.removeImagePasteBuffer)(this.pasteDocument());
+      if ((0,_image_value__WEBPACK_IMPORTED_MODULE_5__.isBlobImageValue)(value)) {
+        if (this.onlyLink) return (0,_image_paste_buffer__WEBPACK_IMPORTED_MODULE_3__.removeImagePasteBuffer)(this.pasteDocument());
         return this.uploadPastedImage();
       }
-      (0,_image_paste_buffer__WEBPACK_IMPORTED_MODULE_2__.removeImagePasteBuffer)(this.pasteDocument());
-      this.val = (0,_image_value__WEBPACK_IMPORTED_MODULE_4__.normalizeImageValue)(value);
+      (0,_image_paste_buffer__WEBPACK_IMPORTED_MODULE_3__.removeImagePasteBuffer)(this.pasteDocument());
+      this.val = (0,_image_value__WEBPACK_IMPORTED_MODULE_5__.normalizeImageValue)(value);
       return true;
     },
     closeAlert: function closeAlert() {
@@ -14270,11 +14299,36 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
     },
     completeUpload: function completeUpload(response) {
       if ((response === null || response === void 0 ? void 0 : response.value) === undefined) return;
-      this.val = (0,_image_value__WEBPACK_IMPORTED_MODULE_4__.normalizeImageValue)(response.value);
+      this.val = (0,_image_value__WEBPACK_IMPORTED_MODULE_5__.normalizeImageValue)(response.value);
       this.useAssetPrefix = false;
     },
+    downloadCurrent: function downloadCurrent() {
+      var _this = this;
+      return _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
+        var _t;
+        return _regenerator().w(function (_context) {
+          while (1) switch (_context.p = _context.n) {
+            case 0:
+              _context.p = 0;
+              _context.n = 1;
+              return (0,_frontend_features_forms_file_download__WEBPACK_IMPORTED_MODULE_2__.downloadFile)(_this.previewUrl, {
+                document: _this.$el.ownerDocument
+              });
+            case 1:
+              _context.n = 3;
+              break;
+            case 2:
+              _context.p = 2;
+              _t = _context.v;
+              if (!_this.disposed) Admin.Messages.error(_this.messages.responseError, _t.message);
+            case 3:
+              return _context.a(2);
+          }
+        }, _callee, null, [[0, 2]]);
+      }))();
+    },
     failUpload: function failUpload(response) {
-      var errors = (0,_upload_response__WEBPACK_IMPORTED_MODULE_5__.responseErrors)(response);
+      var errors = (0,_upload_response__WEBPACK_IMPORTED_MODULE_6__.responseErrors)(response);
       if (errors[0]) Admin.Messages.error(response === null || response === void 0 ? void 0 : response.message, errors[0]);
       this.errors = errors;
     },
@@ -14282,36 +14336,36 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       this.uploading = false;
     },
     insert: function insert(showCurrent) {
-      var _this = this;
-      return _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
+      var _this2 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2() {
         var result;
-        return _regenerator().w(function (_context) {
-          while (1) switch (_context.p = _context.n) {
+        return _regenerator().w(function (_context2) {
+          while (1) switch (_context2.p = _context2.n) {
             case 0:
-              _this.pasteActive = true;
-              _context.p = 1;
-              _context.n = 2;
-              return Admin.Messages.cliptobuffer(_this.labels.insertLink, null, null, showCurrent ? _this.val : null, showCurrent ? _this.previewUrl : null);
+              _this2.pasteActive = true;
+              _context2.p = 1;
+              _context2.n = 2;
+              return Admin.Messages.cliptobuffer(_this2.labels.insertLink, null, null, showCurrent ? _this2.val : null, showCurrent ? _this2.previewUrl : null);
             case 2:
-              result = _context.v;
-              if (_this.disposed) {
-                _context.n = 3;
+              result = _context2.v;
+              if (_this2.disposed) {
+                _context2.n = 3;
                 break;
               }
-              _context.n = 3;
-              return _this.applyInsertedValue(result === null || result === void 0 ? void 0 : result.value);
+              _context2.n = 3;
+              return _this2.applyInsertedValue(result === null || result === void 0 ? void 0 : result.value);
             case 3:
-              _context.p = 3;
-              _this.pasteActive = false;
-              return _context.f(3);
+              _context2.p = 3;
+              _this2.pasteActive = false;
+              return _context2.f(3);
             case 4:
-              return _context.a(2);
+              return _context2.a(2);
           }
-        }, _callee, null, [[1,, 3, 4]]);
+        }, _callee2, null, [[1,, 3, 4]]);
       }))();
     },
     mountUpload: function mountUpload() {
-      this.uploader = (0,_image_upload__WEBPACK_IMPORTED_MODULE_3__.createImageUpload)((_libs_dropzone__WEBPACK_IMPORTED_MODULE_1___default()), this.$refs.uploadButton, {
+      this.uploader = (0,_image_upload__WEBPACK_IMPORTED_MODULE_4__.createImageUpload)((_libs_dropzone__WEBPACK_IMPORTED_MODULE_1___default()), this.$refs.uploadButton, {
         csrfToken: this.csrfToken,
         fileTooBigText: this.messages.fileTooBig,
         invalidFileTypeText: this.messages.invalidFileType,
@@ -14328,21 +14382,21 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       return this.$el.ownerDocument;
     },
     remove: function remove() {
-      var _this2 = this;
-      return _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2() {
+      var _this3 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee3() {
         var result;
-        return _regenerator().w(function (_context2) {
-          while (1) switch (_context2.n) {
+        return _regenerator().w(function (_context3) {
+          while (1) switch (_context3.n) {
             case 0:
-              _context2.n = 1;
-              return Admin.Messages.confirm(_this2.messages.confirmRemove);
+              _context3.n = 1;
+              return Admin.Messages.confirm(_this3.messages.confirmRemove);
             case 1:
-              result = _context2.v;
-              if (!_this2.disposed && result.value) _this2.val = '';
+              result = _context3.v;
+              if (!_this3.disposed && result.value) _this3.val = '';
             case 2:
-              return _context2.a(2);
+              return _context3.a(2);
           }
-        }, _callee2);
+        }, _callee3);
       }))();
     },
     startUpload: function startUpload() {
@@ -14350,62 +14404,62 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       this.closeAlert();
     },
     uploadPastedImage: function uploadPastedImage() {
-      var _this3 = this;
-      return _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee3() {
-        var document, buffer, body, response, _t;
-        return _regenerator().w(function (_context3) {
-          while (1) switch (_context3.p = _context3.n) {
+      var _this4 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee4() {
+        var document, buffer, body, response, _t2;
+        return _regenerator().w(function (_context4) {
+          while (1) switch (_context4.p = _context4.n) {
             case 0:
-              document = _this3.pasteDocument();
-              buffer = (0,_image_paste_buffer__WEBPACK_IMPORTED_MODULE_2__.readImagePasteBuffer)(document);
+              document = _this4.pasteDocument();
+              buffer = (0,_image_paste_buffer__WEBPACK_IMPORTED_MODULE_3__.readImagePasteBuffer)(document);
               if (buffer) {
-                _context3.n = 1;
+                _context4.n = 1;
                 break;
               }
-              return _context3.a(2, false);
+              return _context4.a(2, false);
             case 1:
-              _this3.startUpload();
-              _context3.p = 2;
-              body = (0,_image_paste_buffer__WEBPACK_IMPORTED_MODULE_2__.createImagePasteBody)(buffer);
-              _context3.n = 3;
-              return (0,_image_upload__WEBPACK_IMPORTED_MODULE_3__.postPastedImage)(Admin.Http, _this3.url, body);
+              _this4.startUpload();
+              _context4.p = 2;
+              body = (0,_image_paste_buffer__WEBPACK_IMPORTED_MODULE_3__.createImagePasteBody)(buffer);
+              _context4.n = 3;
+              return (0,_image_upload__WEBPACK_IMPORTED_MODULE_4__.postPastedImage)(Admin.Http, _this4.url, body);
             case 3:
-              response = _context3.v;
-              if (!_this3.disposed) _this3.acceptPastedUpload(response);
-              _context3.n = 5;
+              response = _context4.v;
+              if (!_this4.disposed) _this4.acceptPastedUpload(response);
+              _context4.n = 5;
               break;
             case 4:
-              _context3.p = 4;
-              _t = _context3.v;
-              _context3.n = 5;
-              return _this3.showPasteUploadError(_t);
+              _context4.p = 4;
+              _t2 = _context4.v;
+              _context4.n = 5;
+              return _this4.showPasteUploadError(_t2);
             case 5:
-              _context3.p = 5;
-              (0,_image_paste_buffer__WEBPACK_IMPORTED_MODULE_2__.removeImagePasteBuffer)(document);
-              if (!_this3.disposed) _this3.finishUpload();
-              return _context3.f(5);
+              _context4.p = 5;
+              (0,_image_paste_buffer__WEBPACK_IMPORTED_MODULE_3__.removeImagePasteBuffer)(document);
+              if (!_this4.disposed) _this4.finishUpload();
+              return _context4.f(5);
             case 6:
-              return _context3.a(2, true);
+              return _context4.a(2, true);
           }
-        }, _callee3, null, [[2, 4, 5, 6]]);
+        }, _callee4, null, [[2, 4, 5, 6]]);
       }))();
     },
     showPasteUploadError: function showPasteUploadError(error) {
-      var _this4 = this;
-      return _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee4() {
+      var _this5 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee5() {
         var details;
-        return _regenerator().w(function (_context4) {
-          while (1) switch (_context4.n) {
+        return _regenerator().w(function (_context5) {
+          while (1) switch (_context5.n) {
             case 0:
-              _context4.n = 1;
-              return (0,_image_upload__WEBPACK_IMPORTED_MODULE_3__.imageUploadError)(error, _this4.messages.responseError);
+              _context5.n = 1;
+              return (0,_image_upload__WEBPACK_IMPORTED_MODULE_4__.imageUploadError)(error, _this5.messages.responseError);
             case 1:
-              details = _context4.v;
-              if (!_this4.disposed) Admin.Messages.error(details.title, details.message);
+              details = _context5.v;
+              if (!_this5.disposed) Admin.Messages.error(details.title, details.message);
             case 2:
-              return _context4.a(2);
+              return _context5.a(2);
           }
-        }, _callee4);
+        }, _callee5);
       }))();
     }
   }
@@ -14428,17 +14482,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.runtime.esm-bundler.js");
 /* harmony import */ var _libs_dropzone__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../libs/dropzone */ "./resources/assets/js_owl/libs/dropzone.js");
 /* harmony import */ var _libs_dropzone__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_libs_dropzone__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _image_paste_buffer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./image-paste-buffer */ "./resources/assets/js_owl/admin/form/image-paste-buffer.js");
-/* harmony import */ var _image_upload__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./image-upload */ "./resources/assets/js_owl/admin/form/image-upload.js");
-/* harmony import */ var _image_value__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./image-value */ "./resources/assets/js_owl/admin/form/image-value.js");
-/* harmony import */ var _images_sortable__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./images-sortable */ "./resources/assets/js_owl/admin/form/images-sortable.js");
-/* harmony import */ var _images_upload__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./images-upload */ "./resources/assets/js_owl/admin/form/images-upload.js");
-/* harmony import */ var _images_values__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./images-values */ "./resources/assets/js_owl/admin/form/images-values.js");
-/* harmony import */ var _upload_response__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./upload-response */ "./resources/assets/js_owl/admin/form/upload-response.js");
+/* harmony import */ var _frontend_features_forms_file_download__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../frontend/features/forms/file-download */ "./resources/frontend/features/forms/file-download.js");
+/* harmony import */ var _image_paste_buffer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./image-paste-buffer */ "./resources/assets/js_owl/admin/form/image-paste-buffer.js");
+/* harmony import */ var _image_upload__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./image-upload */ "./resources/assets/js_owl/admin/form/image-upload.js");
+/* harmony import */ var _image_value__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./image-value */ "./resources/assets/js_owl/admin/form/image-value.js");
+/* harmony import */ var _images_sortable__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./images-sortable */ "./resources/assets/js_owl/admin/form/images-sortable.js");
+/* harmony import */ var _images_upload__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./images-upload */ "./resources/assets/js_owl/admin/form/images-upload.js");
+/* harmony import */ var _images_values__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./images-values */ "./resources/assets/js_owl/admin/form/images-values.js");
+/* harmony import */ var _upload_response__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./upload-response */ "./resources/assets/js_owl/admin/form/upload-response.js");
 function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
 function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+
 
 
 
@@ -14508,7 +14564,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       sortable: null,
       uploader: null,
       uploading: false,
-      vals: (0,_images_values__WEBPACK_IMPORTED_MODULE_8__.normalizeImagesValues)(this.values)
+      vals: (0,_images_values__WEBPACK_IMPORTED_MODULE_9__.normalizeImagesValues)(this.values)
     };
   },
   computed: {
@@ -14522,7 +14578,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       return this.lightboxIndex === null ? '' : this.imageUrl(this.vals[this.lightboxIndex]);
     },
     serializedValues: function serializedValues() {
-      return (0,_images_values__WEBPACK_IMPORTED_MODULE_8__.serializeImagesValues)(this.vals);
+      return (0,_images_values__WEBPACK_IMPORTED_MODULE_9__.serializeImagesValues)(this.vals);
     },
     uploadIconClass: function uploadIconClass() {
       return this.uploading ? this.classes.uploadingIcon : this.classes.uploadIcon;
@@ -14540,16 +14596,16 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
     (_this$uploader = this.uploader) === null || _this$uploader === void 0 || _this$uploader.destroy();
     this.sortable = null;
     this.uploader = null;
-    if (this.pasteActive) (0,_image_paste_buffer__WEBPACK_IMPORTED_MODULE_3__.removeImagePasteBuffer)(this.pasteDocument());
+    if (this.pasteActive) (0,_image_paste_buffer__WEBPACK_IMPORTED_MODULE_4__.removeImagePasteBuffer)(this.pasteDocument());
   },
   methods: {
     applyInsertedValue: function applyInsertedValue(value, index) {
-      if (!value) return (0,_image_paste_buffer__WEBPACK_IMPORTED_MODULE_3__.removeImagePasteBuffer)(this.pasteDocument());
-      if ((0,_image_value__WEBPACK_IMPORTED_MODULE_5__.isBlobImageValue)(value)) {
-        if (this.onlyLink) return (0,_image_paste_buffer__WEBPACK_IMPORTED_MODULE_3__.removeImagePasteBuffer)(this.pasteDocument());
+      if (!value) return (0,_image_paste_buffer__WEBPACK_IMPORTED_MODULE_4__.removeImagePasteBuffer)(this.pasteDocument());
+      if ((0,_image_value__WEBPACK_IMPORTED_MODULE_6__.isBlobImageValue)(value)) {
+        if (this.onlyLink) return (0,_image_paste_buffer__WEBPACK_IMPORTED_MODULE_4__.removeImagePasteBuffer)(this.pasteDocument());
         return this.uploadPastedImage(index);
       }
-      (0,_image_paste_buffer__WEBPACK_IMPORTED_MODULE_3__.removeImagePasteBuffer)(this.pasteDocument());
+      (0,_image_paste_buffer__WEBPACK_IMPORTED_MODULE_4__.removeImagePasteBuffer)(this.pasteDocument());
       this.setValue(value, index);
       return true;
     },
@@ -14565,12 +14621,37 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       this.setValue(response === null || response === void 0 ? void 0 : response.value);
     },
     failUpload: function failUpload(response) {
-      var errors = (0,_upload_response__WEBPACK_IMPORTED_MODULE_9__.responseErrors)(response);
+      var errors = (0,_upload_response__WEBPACK_IMPORTED_MODULE_10__.responseErrors)(response);
       if (errors[0]) Admin.Messages.error(response === null || response === void 0 ? void 0 : response.message, errors[0]);
       this.errors = errors;
     },
     finishUpload: function finishUpload() {
       this.uploading = false;
+    },
+    downloadImage: function downloadImage(uri) {
+      var _this = this;
+      return _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
+        var _t;
+        return _regenerator().w(function (_context) {
+          while (1) switch (_context.p = _context.n) {
+            case 0:
+              _context.p = 0;
+              _context.n = 1;
+              return (0,_frontend_features_forms_file_download__WEBPACK_IMPORTED_MODULE_3__.downloadFile)(_this.imageUrl(uri), {
+                document: _this.$el.ownerDocument
+              });
+            case 1:
+              _context.n = 3;
+              break;
+            case 2:
+              _context.p = 2;
+              _t = _context.v;
+              if (!_this.disposed) Admin.Messages.error(_this.messages.responseError, _t.message);
+            case 3:
+              return _context.a(2);
+          }
+        }, _callee, null, [[0, 2]]);
+      }))();
     },
     handleLightboxKey: function handleLightboxKey(event) {
       if (event.key === 'ArrowLeft') this.showPreviousImage();
@@ -14578,7 +14659,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       if (event.key.startsWith('Arrow')) event.preventDefault();
     },
     imageUrl: function imageUrl(uri) {
-      return (0,_image_value__WEBPACK_IMPORTED_MODULE_5__.imagePreviewUrl)(uri, {
+      return (0,_image_value__WEBPACK_IMPORTED_MODULE_6__.imagePreviewUrl)(uri, {
         assetPrefix: this.assetPrefix,
         createUploadUrl: function createUploadUrl(path) {
           return Admin.Url.upload(path);
@@ -14588,41 +14669,41 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
     },
     insert: function insert() {
       var _arguments = arguments,
-        _this = this;
-      return _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
+        _this2 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2() {
         var index, current, result;
-        return _regenerator().w(function (_context) {
-          while (1) switch (_context.p = _context.n) {
+        return _regenerator().w(function (_context2) {
+          while (1) switch (_context2.p = _context2.n) {
             case 0:
               index = _arguments.length > 0 && _arguments[0] !== undefined ? _arguments[0] : null;
-              current = index === null ? null : _this.vals[index];
-              _this.pasteActive = true;
-              _context.p = 1;
-              _context.n = 2;
-              return Admin.Messages.cliptobuffer(_this.labels.insertLink, null, null, current, current === null ? null : _this.imageUrl(current));
+              current = index === null ? null : _this2.vals[index];
+              _this2.pasteActive = true;
+              _context2.p = 1;
+              _context2.n = 2;
+              return Admin.Messages.cliptobuffer(_this2.labels.insertLink, null, null, current, current === null ? null : _this2.imageUrl(current));
             case 2:
-              result = _context.v;
-              if (_this.disposed) {
-                _context.n = 3;
+              result = _context2.v;
+              if (_this2.disposed) {
+                _context2.n = 3;
                 break;
               }
-              _context.n = 3;
-              return _this.applyInsertedValue(result === null || result === void 0 ? void 0 : result.value, index);
+              _context2.n = 3;
+              return _this2.applyInsertedValue(result === null || result === void 0 ? void 0 : result.value, index);
             case 3:
-              _context.p = 3;
-              _this.pasteActive = false;
-              return _context.f(3);
+              _context2.p = 3;
+              _this2.pasteActive = false;
+              return _context2.f(3);
             case 4:
-              return _context.a(2);
+              return _context2.a(2);
           }
-        }, _callee, null, [[1,, 3, 4]]);
+        }, _callee2, null, [[1,, 3, 4]]);
       }))();
     },
     mountSortable: function mountSortable() {
-      this.sortable = (0,_images_sortable__WEBPACK_IMPORTED_MODULE_6__.createImagesSortable)(sortablejs__WEBPACK_IMPORTED_MODULE_0__["default"], this.$refs.gallery, this.classes.sortableGhost, this.reorder);
+      this.sortable = (0,_images_sortable__WEBPACK_IMPORTED_MODULE_7__.createImagesSortable)(sortablejs__WEBPACK_IMPORTED_MODULE_0__["default"], this.$refs.gallery, this.classes.sortableGhost, this.reorder);
     },
     mountUpload: function mountUpload() {
-      this.uploader = (0,_images_upload__WEBPACK_IMPORTED_MODULE_7__.createImagesUpload)((_libs_dropzone__WEBPACK_IMPORTED_MODULE_2___default()), this.$refs.gallery, {
+      this.uploader = (0,_images_upload__WEBPACK_IMPORTED_MODULE_8__.createImagesUpload)((_libs_dropzone__WEBPACK_IMPORTED_MODULE_2___default()), this.$refs.gallery, {
         clickable: this.$refs.uploadButton,
         csrfToken: this.csrfToken,
         fileTooBigText: this.messages.fileTooBig,
@@ -14637,28 +14718,28 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       });
     },
     openLightbox: function openLightbox(index) {
-      var _this2 = this;
-      return _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2() {
+      var _this3 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee3() {
         var dialog;
-        return _regenerator().w(function (_context2) {
-          while (1) switch (_context2.n) {
+        return _regenerator().w(function (_context3) {
+          while (1) switch (_context3.n) {
             case 0:
-              _this2.lightboxIndex = index;
-              _context2.n = 1;
+              _this3.lightboxIndex = index;
+              _context3.n = 1;
               return (0,vue__WEBPACK_IMPORTED_MODULE_1__.nextTick)();
             case 1:
-              dialog = _this2.$refs.lightbox;
-              if (!(!dialog || _this2.disposed)) {
-                _context2.n = 2;
+              dialog = _this3.$refs.lightbox;
+              if (!(!dialog || _this3.disposed)) {
+                _context3.n = 2;
                 break;
               }
-              return _context2.a(2);
+              return _context3.a(2);
             case 2:
               if (typeof dialog.showModal === 'function') dialog.showModal();else dialog.setAttribute('open', '');
             case 3:
-              return _context2.a(2);
+              return _context3.a(2);
           }
-        }, _callee2);
+        }, _callee3);
       }))();
     },
     pasteDocument: function pasteDocument() {
@@ -14668,39 +14749,39 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       return "".concat(this.labels.preview, " ").concat(index + 1);
     },
     remove: function remove(index) {
-      var _this3 = this;
-      return _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee3() {
+      var _this4 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee4() {
         var result;
-        return _regenerator().w(function (_context3) {
-          while (1) switch (_context3.n) {
+        return _regenerator().w(function (_context4) {
+          while (1) switch (_context4.n) {
             case 0:
-              _context3.n = 1;
-              return Admin.Messages.confirm(_this3.messages.confirmRemove);
+              _context4.n = 1;
+              return Admin.Messages.confirm(_this4.messages.confirmRemove);
             case 1:
-              result = _context3.v;
-              if (!(_this3.disposed || !result.value)) {
-                _context3.n = 2;
+              result = _context4.v;
+              if (!(_this4.disposed || !result.value)) {
+                _context4.n = 2;
                 break;
               }
-              return _context3.a(2);
+              return _context4.a(2);
             case 2:
-              _this3.closeLightbox();
-              _this3.vals = (0,_images_values__WEBPACK_IMPORTED_MODULE_8__.removeImageValue)(_this3.vals, index);
+              _this4.closeLightbox();
+              _this4.vals = (0,_images_values__WEBPACK_IMPORTED_MODULE_9__.removeImageValue)(_this4.vals, index);
             case 3:
-              return _context3.a(2);
+              return _context4.a(2);
           }
-        }, _callee3);
+        }, _callee4);
       }))();
     },
     reorder: function reorder(from, to) {
-      this.vals = (0,_images_values__WEBPACK_IMPORTED_MODULE_8__.reorderImageValues)(this.vals, from, to);
+      this.vals = (0,_images_values__WEBPACK_IMPORTED_MODULE_9__.reorderImageValues)(this.vals, from, to);
     },
     resetLightbox: function resetLightbox() {
       this.lightboxIndex = null;
     },
     setValue: function setValue(value) {
       var index = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-      this.vals = index === null ? (0,_images_values__WEBPACK_IMPORTED_MODULE_8__.addImageValue)(this.vals, value) : (0,_images_values__WEBPACK_IMPORTED_MODULE_8__.replaceImageValue)(this.vals, index, value);
+      this.vals = index === null ? (0,_images_values__WEBPACK_IMPORTED_MODULE_9__.addImageValue)(this.vals, value) : (0,_images_values__WEBPACK_IMPORTED_MODULE_9__.replaceImageValue)(this.vals, index, value);
     },
     showNextImage: function showNextImage() {
       if (this.lightboxIndex === null) return;
@@ -14715,61 +14796,61 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       this.closeAlert();
     },
     uploadPastedImage: function uploadPastedImage(index) {
-      var _this4 = this;
-      return _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee4() {
-        var document, buffer, _response$path, response, _t;
-        return _regenerator().w(function (_context4) {
-          while (1) switch (_context4.p = _context4.n) {
+      var _this5 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee5() {
+        var document, buffer, _response$path, response, _t2;
+        return _regenerator().w(function (_context5) {
+          while (1) switch (_context5.p = _context5.n) {
             case 0:
-              document = _this4.pasteDocument();
-              buffer = (0,_image_paste_buffer__WEBPACK_IMPORTED_MODULE_3__.readImagePasteBuffer)(document);
+              document = _this5.pasteDocument();
+              buffer = (0,_image_paste_buffer__WEBPACK_IMPORTED_MODULE_4__.readImagePasteBuffer)(document);
               if (buffer) {
-                _context4.n = 1;
+                _context5.n = 1;
                 break;
               }
-              return _context4.a(2, false);
+              return _context5.a(2, false);
             case 1:
-              _this4.startUpload();
-              _context4.p = 2;
-              _context4.n = 3;
-              return (0,_image_upload__WEBPACK_IMPORTED_MODULE_4__.postPastedImage)(Admin.Http, _this4.url, (0,_image_paste_buffer__WEBPACK_IMPORTED_MODULE_3__.createImagePasteBody)(buffer));
+              _this5.startUpload();
+              _context5.p = 2;
+              _context5.n = 3;
+              return (0,_image_upload__WEBPACK_IMPORTED_MODULE_5__.postPastedImage)(Admin.Http, _this5.url, (0,_image_paste_buffer__WEBPACK_IMPORTED_MODULE_4__.createImagePasteBody)(buffer));
             case 3:
-              response = _context4.v;
-              if (!_this4.disposed) _this4.setValue((_response$path = response === null || response === void 0 ? void 0 : response.path) !== null && _response$path !== void 0 ? _response$path : response === null || response === void 0 ? void 0 : response.value, index);
-              _context4.n = 5;
+              response = _context5.v;
+              if (!_this5.disposed) _this5.setValue((_response$path = response === null || response === void 0 ? void 0 : response.path) !== null && _response$path !== void 0 ? _response$path : response === null || response === void 0 ? void 0 : response.value, index);
+              _context5.n = 5;
               break;
             case 4:
-              _context4.p = 4;
-              _t = _context4.v;
-              _context4.n = 5;
-              return _this4.showPasteUploadError(_t);
+              _context5.p = 4;
+              _t2 = _context5.v;
+              _context5.n = 5;
+              return _this5.showPasteUploadError(_t2);
             case 5:
-              _context4.p = 5;
-              (0,_image_paste_buffer__WEBPACK_IMPORTED_MODULE_3__.removeImagePasteBuffer)(document);
-              if (!_this4.disposed) _this4.finishUpload();
-              return _context4.f(5);
+              _context5.p = 5;
+              (0,_image_paste_buffer__WEBPACK_IMPORTED_MODULE_4__.removeImagePasteBuffer)(document);
+              if (!_this5.disposed) _this5.finishUpload();
+              return _context5.f(5);
             case 6:
-              return _context4.a(2, true);
+              return _context5.a(2, true);
           }
-        }, _callee4, null, [[2, 4, 5, 6]]);
+        }, _callee5, null, [[2, 4, 5, 6]]);
       }))();
     },
     showPasteUploadError: function showPasteUploadError(error) {
-      var _this5 = this;
-      return _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee5() {
+      var _this6 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee6() {
         var details;
-        return _regenerator().w(function (_context5) {
-          while (1) switch (_context5.n) {
+        return _regenerator().w(function (_context6) {
+          while (1) switch (_context6.n) {
             case 0:
-              _context5.n = 1;
-              return (0,_image_upload__WEBPACK_IMPORTED_MODULE_4__.imageUploadError)(error, _this5.messages.responseError);
+              _context6.n = 1;
+              return (0,_image_upload__WEBPACK_IMPORTED_MODULE_5__.imageUploadError)(error, _this6.messages.responseError);
             case 1:
-              details = _context5.v;
-              if (!_this5.disposed) Admin.Messages.error(details.title, details.message);
+              details = _context6.v;
+              if (!_this6.disposed) Admin.Messages.error(details.title, details.message);
             case 2:
-              return _context5.a(2);
+              return _context6.a(2);
           }
-        }, _callee5);
+        }, _callee6);
       }))();
     }
   }
@@ -15417,7 +15498,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onClick: _cache[0] || (_cache[0] = function () {
       return _ctx.closeAlert && _ctx.closeAlert.apply(_ctx, arguments);
     })
-  }, _toConsumableArray(_cache[2] || (_cache[2] = [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  }, _toConsumableArray(_cache[3] || (_cache[3] = [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
     "aria-hidden": "true"
   }, "×", -1 /* CACHED */)])), 2 /* CLASS */), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.errors, function (error) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", {
@@ -15448,7 +15529,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     download: "",
     title: _ctx.labels.download,
     "aria-label": _ctx.labels.download,
-    target: "_blank"
+    onClick: _cache[1] || (_cache[1] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
+      return _ctx.downloadCurrent && _ctx.downloadCurrent.apply(_ctx, arguments);
+    }, ["prevent"]))
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(_ctx.classes.downloadIcon),
     "aria-hidden": "true"
@@ -15459,7 +15542,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(_ctx.classes.removeButton),
     title: _ctx.labels.remove,
     "aria-label": _ctx.labels.remove,
-    onClick: _cache[1] || (_cache[1] = function () {
+    onClick: _cache[2] || (_cache[2] = function () {
       return _ctx.remove && _ctx.remove.apply(_ctx, arguments);
     })
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
@@ -15526,7 +15609,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onClick: _cache[0] || (_cache[0] = function () {
       return _ctx.closeAlert && _ctx.closeAlert.apply(_ctx, arguments);
     })
-  }, _toConsumableArray(_cache[4] || (_cache[4] = [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  }, _toConsumableArray(_cache[5] || (_cache[5] = [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
     "aria-hidden": "true"
   }, "×", -1 /* CACHED */)])), 2 /* CLASS */), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.errors, function (error, index) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", {
@@ -15561,9 +15644,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(_ctx.classes.downloadButton),
     "data-toggle": "tooltip",
     download: "",
-    target: "_blank",
     title: _ctx.labels.download,
-    "aria-label": _ctx.labels.download
+    "aria-label": _ctx.labels.download,
+    onClick: _cache[1] || (_cache[1] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
+      return _ctx.downloadCurrent && _ctx.downloadCurrent.apply(_ctx, arguments);
+    }, ["prevent"]))
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(_ctx.classes.downloadIcon),
     "aria-hidden": "true"
@@ -15575,7 +15660,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "data-toggle": "tooltip",
     title: _ctx.labels.insertLink,
     "aria-label": _ctx.labels.insertLink,
-    onClick: _cache[1] || (_cache[1] = function ($event) {
+    onClick: _cache[2] || (_cache[2] = function ($event) {
       return _ctx.insert(true);
     })
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
@@ -15589,7 +15674,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "data-toggle": "tooltip",
     title: _ctx.labels.remove,
     "aria-label": _ctx.labels.remove,
-    onClick: _cache[2] || (_cache[2] = function () {
+    onClick: _cache[3] || (_cache[3] = function () {
       return _ctx.remove && _ctx.remove.apply(_ctx, arguments);
     })
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
@@ -15612,7 +15697,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "data-toggle": "tooltip",
     title: _ctx.labels.insertLink,
     "aria-label": _ctx.labels.insertLink,
-    onClick: _cache[3] || (_cache[3] = function ($event) {
+    onClick: _cache[4] || (_cache[4] = function ($event) {
       return _ctx.insert(false);
     })
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
@@ -15651,7 +15736,7 @@ var _hoisted_1 = ["aria-label"];
 var _hoisted_2 = ["aria-label", "onClick"];
 var _hoisted_3 = ["src"];
 var _hoisted_4 = ["aria-label", "title"];
-var _hoisted_5 = ["href", "title", "aria-label"];
+var _hoisted_5 = ["href", "title", "aria-label", "onClick"];
 var _hoisted_6 = ["title", "aria-label", "onClick"];
 var _hoisted_7 = ["title", "aria-label", "onClick"];
 var _hoisted_8 = ["title", "aria-label"];
@@ -15731,10 +15816,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       "data-images-download": "",
       "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(_ctx.classes.downloadButton),
       download: "",
-      rel: "noopener",
-      target: "_blank",
       title: _ctx.labels.download,
-      "aria-label": _ctx.labels.download
+      "aria-label": _ctx.labels.download,
+      onClick: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
+        return _ctx.downloadImage(uri);
+      }, ["prevent"])
     }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
       "data-images-download-icon": "",
       "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(_ctx.classes.downloadIcon),
@@ -17927,6 +18013,106 @@ function assertElement(element) {
 function assertNonEmptyString(value, field) {
   if (typeof value !== 'string' || value.length === 0) {
     throw new TypeError("Component definition ".concat(field, " must be a non-empty string."));
+  }
+}
+
+/***/ }),
+
+/***/ "./resources/frontend/features/forms/file-download.js":
+/*!************************************************************!*\
+  !*** ./resources/frontend/features/forms/file-download.js ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "downloadFile": () => (/* binding */ downloadFile)
+/* harmony export */ });
+function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
+function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+function downloadFile(_x) {
+  return _downloadFile.apply(this, arguments);
+}
+function _downloadFile() {
+  _downloadFile = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee(url) {
+    var options,
+      _downloadDependencies,
+      document,
+      fetch,
+      urlApi,
+      response,
+      objectUrl,
+      link,
+      _args = arguments,
+      _t;
+    return _regenerator().w(function (_context) {
+      while (1) switch (_context.n) {
+        case 0:
+          options = _args.length > 1 && _args[1] !== undefined ? _args[1] : {};
+          _downloadDependencies = downloadDependencies(options), document = _downloadDependencies.document, fetch = _downloadDependencies.fetch, urlApi = _downloadDependencies.urlApi;
+          assertDependencies(document, fetch, urlApi);
+          _context.n = 1;
+          return fetch(url, {
+            credentials: 'same-origin'
+          });
+        case 1:
+          response = _context.v;
+          assertResponse(response);
+          _t = urlApi;
+          _context.n = 2;
+          return response.blob();
+        case 2:
+          objectUrl = _t.createObjectURL.call(_t, _context.v);
+          link = document.createElement('a');
+          link.href = objectUrl;
+          link.download = downloadName(url, document.baseURI);
+          link.hidden = true;
+          document.body.append(link);
+          link.click();
+          link.remove();
+          globalThis.setTimeout(function () {
+            return urlApi.revokeObjectURL(objectUrl);
+          }, 0);
+        case 3:
+          return _context.a(2);
+      }
+    }, _callee);
+  }));
+  return _downloadFile.apply(this, arguments);
+}
+function downloadName(url, baseUrl) {
+  try {
+    var _pathname$split$filte;
+    var pathname = new globalThis.URL(url, baseUrl).pathname;
+    return decodeURIComponent((_pathname$split$filte = pathname.split('/').filter(Boolean).pop()) !== null && _pathname$split$filte !== void 0 ? _pathname$split$filte : 'download');
+  } catch (_unused) {
+    return 'download';
+  }
+}
+function downloadDependencies(options) {
+  var _options$document, _options$fetch, _ref, _options$urlApi, _document$defaultView;
+  var document = (_options$document = options.document) !== null && _options$document !== void 0 ? _options$document : globalThis.document;
+  return {
+    document: document,
+    fetch: (_options$fetch = options.fetch) !== null && _options$fetch !== void 0 ? _options$fetch : globalThis.fetch,
+    urlApi: (_ref = (_options$urlApi = options.urlApi) !== null && _options$urlApi !== void 0 ? _options$urlApi : document === null || document === void 0 || (_document$defaultView = document.defaultView) === null || _document$defaultView === void 0 ? void 0 : _document$defaultView.URL) !== null && _ref !== void 0 ? _ref : globalThis.URL
+  };
+}
+function assertResponse(response) {
+  var _response$status;
+  if (response !== null && response !== void 0 && response.ok) return;
+  throw new Error("File download failed with status ".concat((_response$status = response === null || response === void 0 ? void 0 : response.status) !== null && _response$status !== void 0 ? _response$status : 0, "."));
+}
+function assertDependencies(document, fetch, urlApi) {
+  if (!(document !== null && document !== void 0 && document.body) || typeof document.createElement !== 'function') {
+    throw new TypeError('File download requires a document.');
+  }
+  if (typeof fetch !== 'function') throw new TypeError('File download requires fetch.');
+  if (typeof (urlApi === null || urlApi === void 0 ? void 0 : urlApi.createObjectURL) !== 'function') {
+    throw new TypeError('File download requires URL.createObjectURL().');
   }
 }
 

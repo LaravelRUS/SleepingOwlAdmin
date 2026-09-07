@@ -34,9 +34,9 @@
                         :class="classes.downloadButton"
                         data-toggle="tooltip"
                         download
-                        target="_blank"
                         :title="labels.download"
                         :aria-label="labels.download"
+                        @click.prevent="downloadCurrent"
                     >
                         <i :class="classes.downloadIcon" aria-hidden="true"></i>
                     </a>
@@ -100,6 +100,7 @@
 import { defineComponent } from 'vue'
 
 import Dropzone from '../../libs/dropzone'
+import { downloadFile } from '../../../../frontend/features/forms/file-download'
 import {
     createImagePasteBody,
     readImagePasteBuffer,
@@ -188,6 +189,13 @@ export default defineComponent({
 
             this.val = normalizeImageValue(response.value)
             this.useAssetPrefix = false
+        },
+        async downloadCurrent() {
+            try {
+                await downloadFile(this.previewUrl, { document: this.$el.ownerDocument })
+            } catch (error) {
+                if (!this.disposed) Admin.Messages.error(this.messages.responseError, error.message)
+            }
         },
         failUpload(response) {
             const errors = responseErrors(response)

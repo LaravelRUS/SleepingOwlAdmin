@@ -24,6 +24,71 @@ class TableColumnTest extends TestCase
         return new ConcreteTableColumn($label);
     }
 
+    public function test_visibility_receives_column_and_is_evaluated_once_across_rows()
+    {
+        $column = $this->getColumn();
+        $calls = 0;
+        $column->setVisible(function ($argument) use ($column, &$calls) {
+            $this->assertSame($column, $argument);
+            $calls++;
+
+            return false;
+        });
+
+        $this->assertFalse($column->isVisible());
+        $column->setModel(new TableColumnTestModel);
+        $this->assertFalse($column->isVisible());
+        $column->setModel(new TableColumnTestModel);
+        $this->assertFalse($column->isVisible());
+        $this->assertSame(1, $calls);
+
+        $column->setVisibilityCondition(function ($argument) use ($column) {
+            $this->assertSame($column, $argument);
+
+            return true;
+        });
+        $this->assertTrue($column->isVisible());
+        $column->setVisible(false);
+        $this->assertFalse($column->isVisible());
+    }
+
+    public function test_invalid_row_property_in_visibility_hides_column_without_breaking_table()
+    {
+        $column = new \SleepingOwl\Admin\Display\Column\Text('name');
+        $column->setVisible(fn ($m) => $m->id > 1);
+
+        \Illuminate\Support\Facades\Log::shouldReceive('warning')->once()->with(
+            'Column visibility condition failed; the column has been hidden.',
+            m::on(fn ($context) => $context['column'] === get_class($column)
+                && str_contains($context['reason'], '::$id'))
+        );
+
+        // Match Laravel's conversion of PHP warnings to ErrorException.
+        set_error_handler(function ($severity, $message, $file, $line) {
+            throw new \ErrorException($message, 0, $severity, $file, $line);
+        });
+        try {
+            $this->assertFalse($column->isVisible());
+            $column->setModel(new TableColumnTestModel);
+            $this->assertFalse($column->isVisible());
+        } finally {
+            restore_error_handler();
+        }
+
+        $column->setVisible(fn ($column) => true);
+        $this->assertTrue($column->isVisible());
+    }
+
+    public function test_visibility_callback_type_error_is_evaluated_and_logged_only_once()
+    {
+        $column = $this->getColumn();
+        $column->setVisible(fn (TableColumnTestModel $model) => $model->id > 1);
+        \Illuminate\Support\Facades\Log::shouldReceive('warning')->once();
+
+        $this->assertFalse($column->isVisible());
+        $this->assertFalse($column->isVisible());
+    }
+
     /**
      * @covers SleepingOwl\Admin\Display\TableColumn::__construct
      * @covers SleepingOwl\Admin\Display\TableColumn::getHeader

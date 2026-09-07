@@ -65,7 +65,7 @@
                                             <i class="fas fa-fw fa-arrows-alt"></i>
                                         </a>
                                     @endif
-                                    <a href="[%=url%]" download class="btn btn-default btn-sm pull-right mr-1" title="{{ trans('sleeping_owl::lang.button.download') }}" target="_blank">
+                                    <a href="[%=url%]" download class="btn btn-default btn-sm pull-right mr-1" title="{{ trans('sleeping_owl::lang.button.download') }}">
                                         <i class="fas fa-fw fa-cloud-download-alt"></i>
                                     </a>
                                 </div>
@@ -142,7 +142,7 @@
                                             </a>
                                         @endif
                                     @endif
-                                    <a href="{{ @asset($item['url']) }}" download class="btn btn-default btn-sm mr-1{{ $readonly ? '' : ' pull-right' }}" title="{{ trans('sleeping_owl::lang.button.download') }}" target="_blank">
+                                    <a href="{{ @asset($item['url']) }}" download class="btn btn-default btn-sm mr-1{{ $readonly ? '' : ' pull-right' }}" title="{{ trans('sleeping_owl::lang.button.download') }}">
                                         <i class="fas fa-fw fa-cloud-download-alt"></i>
                                     </a>
                                 </div>

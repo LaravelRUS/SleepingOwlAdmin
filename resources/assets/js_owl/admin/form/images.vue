@@ -57,10 +57,9 @@
                         data-images-download
                         :class="classes.downloadButton"
                         download
-                        rel="noopener"
-                        target="_blank"
                         :title="labels.download"
                         :aria-label="labels.download"
+                        @click.prevent="downloadImage(uri)"
                     >
                         <i
                             data-images-download-icon
@@ -202,6 +201,7 @@ import Sortable from 'sortablejs'
 import { defineComponent, nextTick } from 'vue'
 
 import Dropzone from '../../libs/dropzone'
+import { downloadFile } from '../../../../frontend/features/forms/file-download'
 import {
     createImagePasteBody,
     readImagePasteBuffer,
@@ -314,6 +314,13 @@ export default defineComponent({
         },
         finishUpload() {
             this.uploading = false
+        },
+        async downloadImage(uri) {
+            try {
+                await downloadFile(this.imageUrl(uri), { document: this.$el.ownerDocument })
+            } catch (error) {
+                if (!this.disposed) Admin.Messages.error(this.messages.responseError, error.message)
+            }
         },
         handleLightboxKey(event) {
             if (event.key === 'ArrowLeft') this.showPreviousImage()

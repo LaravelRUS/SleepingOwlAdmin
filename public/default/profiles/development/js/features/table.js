@@ -1736,6 +1736,7 @@ function syncDateAttributes(input, config) {
   if (config.type !== 'date' && config.type !== 'datetime') return;
   input.dataset.dateControl = config.type;
   input.dataset.dateFormat = config.dateFormat;
+  input.dataset.dateShowEvent = 'click';
 }
 function syncOptionalAttribute(element, name, value) {
   if (value === null) element.removeAttribute(name);else element.setAttribute(name, value);
@@ -1948,6 +1949,64 @@ function assertHttp(http) {
 
 /***/ }),
 
+/***/ "./resources/frontend/features/table/editing/inline-editor-table-refresh.js":
+/*!**********************************************************************************!*\
+  !*** ./resources/frontend/features/table/editing/inline-editor-table-refresh.js ***!
+  \**********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "bindInlineEditorTableRefresh": () => (/* binding */ bindInlineEditorTableRefresh)
+/* harmony export */ });
+var INLINE_EDIT_SUBMITTED_EVENT = 'inline-edit:submitted';
+var REFRESH_MODES = new Set(['row', 'table']);
+function bindInlineEditorTableRefresh(root, tables) {
+  var mode = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'row';
+  var schedule = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : globalThis.queueMicrotask;
+  assertDependencies(root, tables, mode, schedule);
+  var refresh = function refresh(event) {
+    var _trigger$closest, _trigger$closest2;
+    var trigger = event.target;
+    var table = trigger === null || trigger === void 0 || (_trigger$closest = trigger.closest) === null || _trigger$closest === void 0 ? void 0 : _trigger$closest.call(trigger, 'table.datatables');
+    var row = trigger === null || trigger === void 0 || (_trigger$closest2 = trigger.closest) === null || _trigger$closest2 === void 0 ? void 0 : _trigger$closest2.call(trigger, 'tr');
+    var adapter = table ? tables.get(table) : null;
+    if (!adapter) return;
+    schedule(function () {
+      return refreshTable(adapter, row, mode);
+    });
+  };
+  root.addEventListener(INLINE_EDIT_SUBMITTED_EVENT, refresh);
+  return function () {
+    return root.removeEventListener(INLINE_EDIT_SUBMITTED_EVENT, refresh);
+  };
+}
+function refreshTable(adapter, row, mode) {
+  if (mode === 'row' && typeof adapter.refreshRow === 'function') {
+    adapter.refreshRow(row);
+    return;
+  }
+  if (mode === 'table' && typeof adapter.refresh === 'function') {
+    adapter.refresh();
+    return;
+  }
+  adapter.reload(false);
+}
+function assertDependencies(root, tables, mode, schedule) {
+  var message = 'Inline editor table refresh requires events, tables and a scheduler.';
+  assertMethod(root, 'addEventListener', message);
+  assertMethod(root, 'removeEventListener', message);
+  assertMethod(tables, 'get', message);
+  if (!REFRESH_MODES.has(mode)) throw new TypeError(message);
+  if (typeof schedule !== 'function') throw new TypeError(message);
+}
+function assertMethod(object, method, message) {
+  if (typeof (object === null || object === void 0 ? void 0 : object[method]) !== 'function') throw new TypeError(message);
+}
+
+/***/ }),
+
 /***/ "./resources/frontend/features/table/editing/inline-editor-template.js":
 /*!*****************************************************************************!*\
   !*** ./resources/frontend/features/table/editing/inline-editor-template.js ***!
@@ -2112,21 +2171,47 @@ function bindViewEvents(elements, control, handlers) {
     event.preventDefault();
     handlers.cancel();
   };
-  var backdropClick = function backdropClick(event) {
-    if (event.target === elements.root && elements.root.tagName === 'DIALOG') handlers.cancel();
-  };
+  var removeBackdropEvents = bindBackdropEvents(elements.root, handlers.cancel);
   elements.form.addEventListener('submit', submit);
   elements.form.addEventListener('keydown', keydown);
   elements.cancel.addEventListener('click', cancel);
   elements.root.addEventListener('cancel', dialogCancel);
-  elements.root.addEventListener('click', backdropClick);
   return function () {
     elements.form.removeEventListener('submit', submit);
     elements.form.removeEventListener('keydown', keydown);
     elements.cancel.removeEventListener('click', cancel);
     elements.root.removeEventListener('cancel', dialogCancel);
-    elements.root.removeEventListener('click', backdropClick);
+    removeBackdropEvents();
   };
+}
+function bindBackdropEvents(root, cancel) {
+  var pointerStartedOnBackdrop = false;
+  var pointerEndedOnBackdrop = false;
+  var pointerdown = function pointerdown(event) {
+    pointerStartedOnBackdrop = isDialogBackdrop(root, event);
+    pointerEndedOnBackdrop = false;
+  };
+  var pointerup = function pointerup(event) {
+    pointerEndedOnBackdrop = isDialogBackdrop(root, event);
+  };
+  var click = function click(event) {
+    if (pointerStartedOnBackdrop && pointerEndedOnBackdrop && isDialogBackdrop(root, event)) {
+      cancel();
+    }
+    pointerStartedOnBackdrop = false;
+    pointerEndedOnBackdrop = false;
+  };
+  root.addEventListener('pointerdown', pointerdown);
+  root.addEventListener('pointerup', pointerup);
+  root.addEventListener('click', click);
+  return function () {
+    root.removeEventListener('pointerdown', pointerdown);
+    root.removeEventListener('pointerup', pointerup);
+    root.removeEventListener('click', click);
+  };
+}
+function isDialogBackdrop(root, event) {
+  return event.target === root && root.tagName === 'DIALOG';
 }
 function _setBusy(elements, busy) {
   elements.form.setAttribute('aria-busy', String(busy));
@@ -2483,10 +2568,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "installInlineEditors": () => (/* binding */ installInlineEditors)
 /* harmony export */ });
 /* harmony import */ var _inline_editor_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./inline-editor.js */ "./resources/frontend/features/table/editing/inline-editor.js");
+/* harmony import */ var _inline_editor_table_refresh_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./inline-editor-table-refresh.js */ "./resources/frontend/features/table/editing/inline-editor-table-refresh.js");
+
 
 function installInlineEditors(admin) {
+  var _options$root;
   var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
   assertAdmin(admin);
+  var root = (_options$root = options.root) !== null && _options$root !== void 0 ? _options$root : globalThis.document;
   var definition = (0,_inline_editor_js__WEBPACK_IMPORTED_MODULE_0__.createInlineEditorDefinition)({
     components: admin.Components,
     http: admin.Http,
@@ -2495,22 +2584,32 @@ function installInlineEditors(admin) {
   });
   admin.Components.register(definition);
   var scan = function scan() {
-    var _options$root;
-    var root = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : (_options$root = options.root) !== null && _options$root !== void 0 ? _options$root : globalThis.document;
-    return admin.Components.scan(root, _inline_editor_js__WEBPACK_IMPORTED_MODULE_0__.INLINE_EDITOR_COMPONENT);
+    var scanRoot = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : root;
+    return admin.Components.scan(scanRoot, _inline_editor_js__WEBPACK_IMPORTED_MODULE_0__.INLINE_EDITOR_COMPONENT);
   };
+  var refreshMode = tableRefreshMode(admin);
+  var destroy = refreshMode ? (0,_inline_editor_table_refresh_js__WEBPACK_IMPORTED_MODULE_1__.bindInlineEditorTableRefresh)(root, admin.Tables, refreshMode) : function () {};
   admin.Modules.register('display.columns.inline-edit', function () {
     return scan();
   }, 0, ['bootstrap::tab::shown']);
   return {
     definition: definition,
+    destroy: destroy,
     scan: scan
   };
 }
 function assertAdmin(admin) {
   assertFunction(admin === null || admin === void 0 ? void 0 : admin.Components, 'register', 'Inline editors require Admin.Components.');
+  assertFunction(admin === null || admin === void 0 ? void 0 : admin.Config, 'get', 'Inline editors require Admin.Config.');
   assertFunction(admin === null || admin === void 0 ? void 0 : admin.Modules, 'register', 'Inline editors require Admin.Modules.');
   assertFunction(admin === null || admin === void 0 ? void 0 : admin.Http, 'post', 'Inline editors require Admin.Http.');
+  assertFunction(admin === null || admin === void 0 ? void 0 : admin.Tables, 'get', 'Inline editors require Admin.Tables.');
+}
+function tableRefreshMode(admin) {
+  var mode = admin.Config.get('datatables_inline_edit_refresh', 'row');
+  if (mode === false) return null;
+  if (mode === 'row' || mode === 'table') return mode;
+  throw new TypeError("Unsupported inline edit refresh mode [".concat(String(mode), "]."));
 }
 function assertFunction(object, method, message) {
   if (typeof (object === null || object === void 0 ? void 0 : object[method]) !== 'function') throw new TypeError(message);
@@ -3260,16 +3359,31 @@ var DataTableAdapter = /*#__PURE__*/function () {
   function DataTableAdapter(_ref) {
     var element = _ref.element,
       engineInstance = _ref.engineInstance,
-      registry = _ref.registry;
+      registry = _ref.registry,
+      _ref$serverSide = _ref.serverSide,
+      serverSide = _ref$serverSide === void 0 ? false : _ref$serverSide;
     _classCallCheck(this, DataTableAdapter);
     this.element = element;
     this.engineInstance = engineInstance;
     this.registry = registry;
+    this.serverSide = serverSide;
   }
   return _createClass(DataTableAdapter, [{
     key: "reload",
-    value: function reload() {
-      return this.engineInstance.draw();
+    value: function reload(resetPaging) {
+      return resetPaging === undefined ? this.engineInstance.draw() : this.engineInstance.draw(resetPaging);
+    }
+  }, {
+    key: "refresh",
+    value: function refresh() {
+      if (this.serverSide) return this.reload(false);
+      return this.engineInstance.rows().invalidate('dom').draw(false);
+    }
+  }, {
+    key: "refreshRow",
+    value: function refreshRow(row) {
+      if (this.serverSide || !row) return this.reload(false);
+      return this.engineInstance.row(row).invalidate('dom').draw(false);
     }
   }, {
     key: "destroy",
@@ -3302,7 +3416,8 @@ function mountDataTable(_ref2) {
   var adapter = new DataTableAdapter({
     element: element,
     engineInstance: engineInstance,
-    registry: registry
+    registry: registry,
+    serverSide: Boolean(options.serverSide)
   });
   return registry.register(adapter);
 }
@@ -3395,6 +3510,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _state_filter_state_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../state/filter-state.js */ "./resources/frontend/features/table/state/filter-state.js");
 
 function applyTableStateOptions(options, config) {
+  var stateLoadParams = options.stateLoadParams;
+  options.stateLoadParams = function (settings, state) {
+    var _state$columns;
+    var result = stateLoadParams === null || stateLoadParams === void 0 ? void 0 : stateLoadParams.call(this, settings, state);
+    if (result === false) return false;
+
+    // The section defines column visibility; saved browser state must not override it.
+    (_state$columns = state.columns) === null || _state$columns === void 0 || _state$columns.forEach(function (column) {
+      delete column.visible;
+    });
+    return result;
+  };
   if (config.stateDatatables) {
     options.stateSave = true;
   }
@@ -3961,6 +4088,10 @@ __webpack_require__.r(__webpack_exports__);
 function createRuntimeTableOptions(element, definition, settings) {
   var options = (0,_options_table_options_js__WEBPACK_IMPORTED_MODULE_4__.applyServerOptions)(definition.options, definition);
   if (definition.url) configureServerTable(options, definition, settings);
+  (0,_options_state_options_js__WEBPACK_IMPORTED_MODULE_5__.applyTableStateOptions)(options, {
+    stateDatatables: Boolean(definition.url && settings.admin.Config.get('state_datatables')),
+    stateFilters: !definition.url || settings.stateFilters
+  });
   options.drawCallback = createRuntimeDrawHook(element, settings);
   options.createdRow = _hooks_table_hooks_js__WEBPACK_IMPORTED_MODULE_3__.applyCreatedRowClass;
   return options;
@@ -3973,10 +4104,6 @@ function configureServerTable(options, definition, settings) {
     payload: definition.payload,
     root: settings.root,
     url: definition.url
-  });
-  (0,_options_state_options_js__WEBPACK_IMPORTED_MODULE_5__.applyTableStateOptions)(options, {
-    stateDatatables: Boolean(settings.admin.Config.get('state_datatables')),
-    stateFilters: settings.stateFilters
   });
 }
 function createRuntimeDrawHook(element, settings) {

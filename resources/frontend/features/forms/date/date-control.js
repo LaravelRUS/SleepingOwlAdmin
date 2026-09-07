@@ -19,7 +19,8 @@ export function createDateControlDefinition(Datepicker, locale) {
 export function mountDateControl(input, Datepicker, locale) {
     if (input.disabled || input.readOnly) return componentMountSkipped
 
-    const picker = new Datepicker(input, createDatePickerOptions(input, locale))
+    const options = createDatePickerOptions(input, locale)
+    const picker = new Datepicker(input, options)
     const addon = findAddon(input)
     const show = (event) => {
         event.preventDefault()
@@ -28,7 +29,9 @@ export function mountDateControl(input, Datepicker, locale) {
     }
 
     addon?.addEventListener('click', show)
-    if (input.ownerDocument?.activeElement === input) picker.show()
+    if (options.showEvent !== 'click' && input.ownerDocument?.activeElement === input) {
+        picker.show()
+    }
 
     return {
         destroy() {

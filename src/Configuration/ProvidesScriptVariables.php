@@ -53,6 +53,7 @@ trait ProvidesScriptVariables
             'date_format' => $this->generatePickerFormat($this->config['dateFormat']),
             'state_datatables' => $this->config['state_datatables'],
             'datatables_highlight' => $this->config['datatables_highlight'],
+            'datatables_inline_edit_refresh' => $this->config['datatables_inline_edit_refresh'] ?? 'row',
             'state_tabs' => $this->config['state_tabs'],
             'state_filters' => $state_filters,
             'lang' => $lang,

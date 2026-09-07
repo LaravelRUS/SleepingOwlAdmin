@@ -563,6 +563,7 @@ function profileSharedRoutes(profile, entries) {
 }
 
 const fixtureRequests = new Map()
+const fixtureInlineValues = new Map()
 const defaultFixtureScope = 'default'
 
 function fixtureScope(request) {
@@ -577,6 +578,16 @@ function scopedRequests(request) {
     }
 
     return fixtureRequests.get(scope)
+}
+
+function scopedInlineValues(request) {
+    const scope = fixtureScope(request)
+
+    if (!fixtureInlineValues.has(scope)) {
+        fixtureInlineValues.set(scope, new Map())
+    }
+
+    return fixtureInlineValues.get(scope)
 }
 
 function sendJson(response, value) {
@@ -618,20 +629,21 @@ function recordRequest(kind, request, parameters) {
     })
 }
 
-function editableCell(id) {
+function editableCell(id, values) {
     const templateId = `inline-edit-template-${id}`
+    const value = values.get(String(id)) ?? 'Draft'
 
-    return `<button type="button" class="soa-inline-editable" id="inline-edit-${id}" data-inline-editor="text" data-name="status" data-value="Draft" data-url="/api/inline-edit" data-pk="${id}" data-mode="inline" data-empty-text="empty" data-inline-editor-template-id="${templateId}" aria-expanded="false">Draft</button>${inlineEditorTemplate(templateId)}`
+    return `<button type="button" class="soa-inline-editable" id="inline-edit-${id}" data-inline-editor="text" data-name="status" data-value="${value}" data-url="/api/inline-edit" data-pk="${id}" data-mode="inline" data-empty-text="empty" data-inline-editor-template-id="${templateId}" aria-expanded="false">${value}</button>${inlineEditorTemplate(templateId)}`
 }
 
 function inlineEditorTemplate(id) {
     return `<template id="${id}" data-inline-editor-template="text"><div class="soa-inline-editor soa-inline-editor-inline" data-inline-editor-root role="group"><form class="soa-inline-editor-form" data-inline-editor-form><div class="soa-inline-editor-input"><input class="soa-inline-editor-control" data-inline-editor-control type="text"></div><div class="soa-inline-editor-actions"><button class="soa-inline-editor-submit" type="submit">Save</button><button class="soa-inline-editor-cancel" data-inline-editor-cancel type="button">Cancel</button></div><div class="soa-inline-editor-error" data-inline-editor-error role="alert" hidden></div></form></div></template>`
 }
 
-function fixtureRow(id) {
+function fixtureRow(id, values) {
     return [
         `<input type="checkbox" class="adminCheckboxRow" name="_id[]" value="${id}">`,
-        editableCell(id),
+        editableCell(id, values),
         `2026-09-0${id}`,
         String(id * 10),
         id % 2 === 0 ? 'archived' : 'active',
@@ -641,13 +653,13 @@ function fixtureRow(id) {
     ]
 }
 
-function tableRows(parameters) {
+function tableRows(parameters, values) {
     const ids = [1, 2, 3, 4, 5, 6]
     const start = Number(parameters.start || 0)
     const length = Number(parameters.length || 2)
     const visible = length === -1 ? ids.slice(start) : ids.slice(start, start + length)
 
-    return visible.map(fixtureRow)
+    return visible.map((id) => fixtureRow(id, values))
 }
 
 async function handleTable(request, response, url) {
@@ -657,7 +669,7 @@ async function handleTable(request, response, url) {
         draw: Number(parameters.draw || 0),
         recordsFiltered: 6,
         recordsTotal: 6,
-        data: tableRows(parameters),
+        data: tableRows(parameters, scopedInlineValues(request)),
     })
 }
 
@@ -713,13 +725,12 @@ async function handleInlineEdit(request, response, url) {
         return
     }
 
-    sendJson(response, {
-        newValue:
-            parameters.name === 'status' && parameters.pk === '1'
-                ? 'Server normalized'
-                : (parameters['value[]'] ?? parameters.value),
-        status: true,
-    })
+    const newValue =
+        parameters.name === 'status' && parameters.pk === '1'
+            ? 'Server normalized'
+            : (parameters['value[]'] ?? parameters.value)
+    scopedInlineValues(request).set(parameters.pk, newValue)
+    sendJson(response, { newValue, status: true })
 }
 
 async function handleTreeReorder(request, response, url) {
@@ -793,6 +804,7 @@ function mutationResult(kind) {
 
 function resetFixture(request, response) {
     scopedRequests(request).length = 0
+    scopedInlineValues(request).clear()
     sendJson(response, { ok: true })
 }
 

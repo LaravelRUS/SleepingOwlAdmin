@@ -5,10 +5,11 @@ use SleepingOwl\Admin\Configuration\ProvidesScriptVariables;
 
 class DataTablesRuntimeConfigTest extends TestCase
 {
-    public function test_table_state_and_highlight_flags_are_exported_to_javascript(): void
+    public function test_table_runtime_flags_are_exported_to_javascript(): void
     {
         $variables = $this->scriptVariables([
             'datatables_highlight' => true,
+            'datatables_inline_edit_refresh' => 'table',
             'state_datatables' => true,
             'state_filters' => true,
         ]);
@@ -16,6 +17,17 @@ class DataTablesRuntimeConfigTest extends TestCase
         $this->assertTrue($variables['state_datatables']);
         $this->assertTrue($variables['state_filters']);
         $this->assertTrue($variables['datatables_highlight']);
+        $this->assertSame('table', $variables['datatables_inline_edit_refresh']);
+    }
+
+    public function test_inline_edit_refresh_defaults_to_enabled_for_legacy_project_configs(): void
+    {
+        $config = config('sleeping_owl');
+        unset($config['datatables_inline_edit_refresh']);
+
+        $variables = (new DataTablesScriptVariablesStub($this->app, $config))->scriptVariables();
+
+        $this->assertSame('row', $variables['datatables_inline_edit_refresh']);
     }
 
     public function test_filter_state_is_disabled_when_datatables_state_is_disabled(): void

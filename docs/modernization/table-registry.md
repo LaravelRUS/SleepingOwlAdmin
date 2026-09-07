@@ -25,6 +25,12 @@ Admin.Tables.clearState()
 
 The adapter contract deliberately contains only `element`, `engineInstance`, `reload()`, `destroy()`, `clearState()` and `selectedRows()`. `engineInstance` is an explicit escape hatch for advanced integration and may be `null`; first-party consumers use the four neutral methods.
 
+The concrete DataTables adapter additionally exposes feature-local `refresh()`
+and `refreshRow(row)` operations for inline editing. They are intentionally not
+part of the core registry contract: client-side tables invalidate all DOM rows
+or one DOM row respectively, while server-side tables fall back to
+`draw(false)` because DataTables has no single-record AJAX transport.
+
 Registration of the same adapter is idempotent. A different adapter for an already registered element is rejected, which catches accidental double mount instead of leaking an old engine instance. Unregistering only removes the lookup: lifecycle code calls `destroy()` explicitly, so registry mutation has no hidden UI side effects.
 
 `reload(element)`, `clearState(element)` and `selectedRows(element)` address exactly one registered table. A missing adapter is diagnosed instead of silently falling back to a global table. Calls to `reload()` and `clearState()` without an element intentionally fan out to every registered adapter and return the individual results in registration order. Selection is always scoped: `selectedRows()` requires an element and validates that the adapter returned an array.

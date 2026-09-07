@@ -1,14 +1,29 @@
 import { selectedRowValues } from '../selection/selected-rows.js'
 
 export class DataTableAdapter {
-    constructor({ element, engineInstance, registry }) {
+    constructor({ element, engineInstance, registry, serverSide = false }) {
         this.element = element
         this.engineInstance = engineInstance
         this.registry = registry
+        this.serverSide = serverSide
     }
 
-    reload() {
-        return this.engineInstance.draw()
+    reload(resetPaging) {
+        return resetPaging === undefined
+            ? this.engineInstance.draw()
+            : this.engineInstance.draw(resetPaging)
+    }
+
+    refresh() {
+        if (this.serverSide) return this.reload(false)
+
+        return this.engineInstance.rows().invalidate('dom').draw(false)
+    }
+
+    refreshRow(row) {
+        if (this.serverSide || !row) return this.reload(false)
+
+        return this.engineInstance.row(row).invalidate('dom').draw(false)
     }
 
     destroy() {
@@ -32,7 +47,12 @@ export function mountDataTable({ createEngine, element, options, registry }) {
     assertMountDependencies(createEngine, registry)
 
     const engineInstance = createEngine(element, options)
-    const adapter = new DataTableAdapter({ element, engineInstance, registry })
+    const adapter = new DataTableAdapter({
+        element,
+        engineInstance,
+        registry,
+        serverSide: Boolean(options.serverSide),
+    })
 
     return registry.register(adapter)
 }

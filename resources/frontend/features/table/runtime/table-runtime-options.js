@@ -10,6 +10,11 @@ export function createRuntimeTableOptions(element, definition, settings) {
 
     if (definition.url) configureServerTable(options, definition, settings)
 
+    applyTableStateOptions(options, {
+        stateDatatables: Boolean(definition.url && settings.admin.Config.get('state_datatables')),
+        stateFilters: !definition.url || settings.stateFilters,
+    })
+
     options.drawCallback = createRuntimeDrawHook(element, settings)
     options.createdRow = applyCreatedRowClass
 
@@ -24,10 +29,6 @@ function configureServerTable(options, definition, settings) {
         payload: definition.payload,
         root: settings.root,
         url: definition.url,
-    })
-    applyTableStateOptions(options, {
-        stateDatatables: Boolean(settings.admin.Config.get('state_datatables')),
-        stateFilters: settings.stateFilters,
     })
 }
 

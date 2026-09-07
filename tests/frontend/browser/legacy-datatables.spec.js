@@ -477,23 +477,25 @@ test('bulk and custom actions submit checked rows and fire lifecycle events', as
     expect(pageErrors).toEqual([])
 })
 
-test('inline edit posts its value and is rebound after a draw', async ({ page, request }) => {
+test('inline edit refreshes its server row and is rebound after the automatic draw', async ({
+    page,
+    request,
+}) => {
     await openFixture(page)
     await page.locator('#inline-edit-1').click()
     await page.locator('.soa-inline-editor-control').fill('Published')
     const editResponse = page.waitForResponse((item) => item.url().endsWith('/api/inline-edit'))
+    const drawResponse = page.waitForResponse((item) => item.url().endsWith('/api/datatables'))
     await page.locator('.soa-inline-editor-submit').click()
     await editResponse
+    await drawResponse
     await expect(page.locator('#inline-edit-1')).toHaveText('Server normalized')
 
     const edit = latest(await recordedRequests(request, 'inline-edit')).parameters
     expect(edit).toMatchObject({ name: 'status', pk: '1', value: 'Published' })
-    const drawResponse = page.waitForResponse((item) => item.url().endsWith('/api/datatables'))
-    await page.evaluate(() => {
-        const table = globalThis.document.querySelector('#legacy-table')
-        globalThis.Admin.Tables.get(table).engineInstance.draw(false)
-    })
-    await drawResponse
+    const draws = await recordedRequests(request, 'datatable')
+    expect(draws).toHaveLength(2)
+    expect(latest(draws).parameters.start).toBe('0')
     expect(
         await page.evaluate(() =>
             Boolean(
@@ -505,6 +507,40 @@ test('inline edit posts its value and is rebound after a draw', async ({ page, r
         ),
     ).toBe(true)
     expect(await page.evaluate(() => globalThis.jQuery)).toBeUndefined()
+})
+
+test('inline edit table refresh can be disabled by project config', async ({ page, request }) => {
+    await openFixture(page, '?inline_edit_refresh=false')
+    await page.locator('#inline-edit-1').click()
+    await page.locator('.soa-inline-editor-control').fill('Published')
+    const editResponse = page.waitForResponse((item) => item.url().endsWith('/api/inline-edit'))
+    await page.locator('.soa-inline-editor-submit').click()
+    await editResponse
+    await page.evaluate(() => new Promise((resolve) => globalThis.queueMicrotask(resolve)))
+
+    await expect(page.locator('#inline-edit-1')).toHaveText('Server normalized')
+    expect(await recordedRequests(request, 'datatable')).toHaveLength(1)
+})
+
+test('inline edit can refresh the whole containing table by project config', async ({ page }) => {
+    await openFixture(page, '?inline_edit_refresh=table')
+    await page.evaluate(() => {
+        const table = globalThis.document.querySelector('#legacy-table')
+        const adapter = globalThis.Admin.Tables.get(table)
+        const refresh = adapter.refresh.bind(adapter)
+        globalThis.__tableRefreshCalls = 0
+        adapter.refresh = () => {
+            globalThis.__tableRefreshCalls += 1
+            return refresh()
+        }
+    })
+    await page.locator('#inline-edit-1').click()
+    await page.locator('.soa-inline-editor-control').fill('Published')
+    const drawResponse = page.waitForResponse((item) => item.url().endsWith('/api/datatables'))
+    await page.locator('.soa-inline-editor-submit').click()
+    await drawResponse
+
+    expect(await page.evaluate(() => globalThis.__tableRefreshCalls)).toBe(1)
 })
 
 test('auto-update redraws the table and its close control stops the timer', async ({

@@ -5,6 +5,7 @@ namespace SleepingOwl\Admin\Display;
 use Closure;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 use InvalidArgumentException;
 use SleepingOwl\Admin\Contracts\Display\ColumnInterface;
 use SleepingOwl\Admin\Contracts\Display\OrderByClauseInterface;
@@ -18,11 +19,60 @@ use SleepingOwl\Admin\Traits\Renderable;
 use SleepingOwl\Admin\Traits\SmallDisplay;
 use SleepingOwl\Admin\Traits\VisibleCondition;
 use SleepingOwl\Admin\Traits\Visibled;
+use Throwable;
 
 abstract class TableColumn implements ColumnInterface
 {
-    use HtmlAttributes, Assets, Renderable, VisibleCondition;
+    use HtmlAttributes, Assets, Renderable;
+    use VisibleCondition {
+        setVisible as protected setColumnVisibleCondition;
+    }
     use SmallDisplay, Visibled;
+
+    /**
+     * Cached visibility for the whole column, independent of row models.
+     *
+     * @var bool|null
+     */
+    protected $resolvedVisibility;
+
+    public function isVisible()
+    {
+        if ($this->resolvedVisibility === null) {
+            try {
+                $this->resolvedVisibility = is_callable($this->visibleCondition)
+                    ? (bool) call_user_func($this->visibleCondition, $this)
+                    : (bool) $this->visibleCondition;
+            } catch (Throwable $exception) {
+                // A failed condition must not expose the column or break the table.
+                $this->resolvedVisibility = false;
+                Log::warning('Column visibility condition failed; the column has been hidden.', [
+                    'column' => static::class,
+                    'reason' => $exception->getMessage(),
+                ]);
+            }
+        }
+
+        return $this->resolvedVisibility;
+    }
+
+    /**
+     * Failed callbacks hide the column and log a warning once per condition.
+     *
+     * @param Closure|bool $visibleCondition Callback receives this column.
+     * @return $this
+     */
+    public function setVisible($visibleCondition)
+    {
+        $this->resolvedVisibility = null;
+
+        return $this->setColumnVisibleCondition($visibleCondition);
+    }
+
+    public function setVisibilityCondition($condition)
+    {
+        return $this->setVisible($condition);
+    }
 
     /**
      * @var \Closure

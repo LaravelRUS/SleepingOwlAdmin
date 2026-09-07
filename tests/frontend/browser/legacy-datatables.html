@@ -16,6 +16,7 @@
         <script>
             const fixtureConfig = new URLSearchParams(window.location.search)
             const stateDatatables = fixtureConfig.get('state_datatables') !== 'false'
+            const inlineEditRefresh = fixtureConfig.get('inline_edit_refresh')
 
             window.GlobalConfig = {
                 debug: true,
@@ -31,6 +32,8 @@
                 date_format: 'DD.MM.YYYY',
                 state_datatables: stateDatatables,
                 datatables_highlight: fixtureConfig.get('highlight') === 'true',
+                datatables_inline_edit_refresh:
+                    inlineEditRefresh === 'false' ? false : inlineEditRefresh || 'row',
                 state_tabs: false,
                 state_filters: stateDatatables && fixtureConfig.get('state_filters') !== 'false',
                 wysiwyg: {},

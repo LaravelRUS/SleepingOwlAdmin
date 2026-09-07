@@ -1,3 +1,4 @@
+import { downloadFile } from '../file-download.js'
 import { createFileItem, cssUrl } from './files-template.js'
 import { createFilesUploader } from './files-uploader.js'
 import { serializeFiles } from './files-values.js'
@@ -61,8 +62,17 @@ function handleFieldChange(state, event) {
 function handleClick(state, event) {
     const remove = event.target.closest('.fileRemove')
     const link = event.target.closest('.fileLink')
+    const download = event.target.closest('a[download]')
     if (remove && state.element.contains(remove)) removeFile(state, event, remove)
     if (link && state.element.contains(link)) editFileLink(state, event, link)
+    if (download && state.element.contains(download)) downloadCurrentFile(state, event, download)
+}
+
+function downloadCurrentFile(state, event, control) {
+    event.preventDefault()
+    downloadFile(control.href, { document: state.element.ownerDocument }).catch((error) => {
+        dispatch(state.element, 'files:download-failed', { error })
+    })
 }
 
 function removeFile(state, event, control) {

@@ -14,9 +14,9 @@ export function createDatePickerOptions(input, locale) {
         dateFormat: (date) => formatDateValue(date, format, locale),
         locale,
         selectedDates: selectedDate ? [selectedDate] : false,
+        ...showEventOptions(input),
     }
-    const dialog = input.closest?.('dialog[open]')
-    if (dialog) options.container = dialog
+    applyDialogContainer(input, options)
 
     if (type === 'daterange') {
         return { ...options, ...createDateRangeOptions(input, format, locale) }
@@ -26,6 +26,15 @@ export function createDatePickerOptions(input, locale) {
     if (type === 'time') options.onlyTimepicker = true
 
     return options
+}
+
+function showEventOptions(input) {
+    return input.dataset.dateShowEvent ? { showEvent: input.dataset.dateShowEvent } : {}
+}
+
+function applyDialogContainer(input, options) {
+    const dialog = input.closest?.('dialog[open]')
+    if (dialog) options.container = dialog
 }
 
 function defaultFormat(type) {

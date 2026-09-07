@@ -5,6 +5,46 @@ import { expect, test } from '@playwright/test'
 let fixtureHeaders
 
 for (const profile of ['development', 'production']) {
+    test(`${profile} column visibility overrides previously saved browser state`, async ({
+        page,
+        request,
+    }, testInfo) => {
+        const headers = { 'x-fixture-scope': String(testInfo.workerIndex) }
+        await page.setExtraHTTPHeaders(headers)
+        await request.post('/__fixture/reset', { headers })
+        await useTableProfile(page, profile)
+        await page.goto('/table-logical')
+        await expect(page.locator('#logical-table tbody tr')).toHaveCount(2)
+        await page.evaluate(() => {
+            const table = globalThis.document.getElementById('logical-table')
+            globalThis.Admin.Tables.get(table).engineInstance.state.save()
+        })
+
+        await page.route('**/table-logical', async (route) => {
+            const response = await route.fetch()
+            const body = (await response.text()).replace(
+                '"orderable":true',
+                '"orderable":true,"visible":false',
+            )
+            await route.fulfill({ response, body })
+        })
+        await page.reload()
+        await expect(page.locator('#logical-table tbody tr')).toHaveCount(2)
+        await expect(page.locator('#logical-table thead th')).toHaveCount(6)
+        await expect(page.locator('#logical-table tbody tr').first().locator('td')).toHaveCount(6)
+        expect(
+            await page.evaluate(() => {
+                const table = globalThis.document.getElementById('logical-table')
+                return globalThis.Admin.Tables.get(table).engineInstance.column(1).visible()
+            }),
+        ).toBe(false)
+
+        await page.unroute('**/table-logical')
+        await page.reload()
+        await expect(page.locator('#logical-table tbody tr')).toHaveCount(2)
+        await expect(page.locator('#logical-table thead th')).toHaveCount(7)
+    })
+
     test(`${profile} table entry boots the complete DataTables 3 feature`, async ({
         page,
         request,

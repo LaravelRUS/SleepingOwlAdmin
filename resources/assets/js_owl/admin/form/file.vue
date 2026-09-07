@@ -30,7 +30,7 @@
                         download
                         :title="labels.download"
                         :aria-label="labels.download"
-                        target="_blank"
+                        @click.prevent="downloadCurrent"
                     >
                         <i :class="classes.downloadIcon" aria-hidden="true"></i>
                     </a>
@@ -65,6 +65,7 @@
 import { defineComponent } from 'vue'
 
 import Dropzone from '../../libs/dropzone'
+import { downloadFile } from '../../../../frontend/features/forms/file-download'
 import { createFileUpload } from './file-upload'
 import { fileDownloadUrl, normalizeFileValue } from './file-value'
 import { responseErrors } from './upload-response'
@@ -114,6 +115,13 @@ export default defineComponent({
         },
         completeUpload(response) {
             this.val = normalizeFileValue(response?.value)
+        },
+        async downloadCurrent() {
+            try {
+                await downloadFile(this.downloadUrl, { document: this.$el.ownerDocument })
+            } catch (error) {
+                Admin.Messages.error(this.messages.responseError, error.message)
+            }
         },
         failUpload(response) {
             const errors = responseErrors(response)

@@ -6498,7 +6498,8 @@ function createDateControlDefinition(Datepicker, locale) {
 function mountDateControl(input, Datepicker, locale) {
   var _input$ownerDocument;
   if (input.disabled || input.readOnly) return _core_lifecycle_component_lifecycle_js__WEBPACK_IMPORTED_MODULE_0__.componentMountSkipped;
-  var picker = new Datepicker(input, (0,_date_options_js__WEBPACK_IMPORTED_MODULE_1__.createDatePickerOptions)(input, locale));
+  var options = (0,_date_options_js__WEBPACK_IMPORTED_MODULE_1__.createDatePickerOptions)(input, locale);
+  var picker = new Datepicker(input, options);
   var addon = findAddon(input);
   var show = function show(event) {
     event.preventDefault();
@@ -6506,7 +6507,9 @@ function mountDateControl(input, Datepicker, locale) {
     picker.show();
   };
   addon === null || addon === void 0 || addon.addEventListener('click', show);
-  if (((_input$ownerDocument = input.ownerDocument) === null || _input$ownerDocument === void 0 ? void 0 : _input$ownerDocument.activeElement) === input) picker.show();
+  if (options.showEvent !== 'click' && ((_input$ownerDocument = input.ownerDocument) === null || _input$ownerDocument === void 0 ? void 0 : _input$ownerDocument.activeElement) === input) {
+    picker.show();
+  }
   return {
     destroy: function destroy() {
       addon === null || addon === void 0 || addon.removeEventListener('click', show);
@@ -6794,27 +6797,35 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
 
 var DATE_CONTROL_TYPES = Object.freeze(['date', 'datetime', 'time', 'daterange']);
 function createDatePickerOptions(input, locale) {
-  var _input$closest;
   var type = input.dataset.dateControl;
   assertControlType(type);
   var format = input.dataset.dateFormat || defaultFormat(type);
   var selectedDate = (0,_date_format_js__WEBPACK_IMPORTED_MODULE_0__.parseDateValue)(input.value, format, locale);
-  var options = {
+  var options = _objectSpread({
     autoClose: type === 'date',
     dateFormat: function dateFormat(date) {
       return (0,_date_format_js__WEBPACK_IMPORTED_MODULE_0__.formatDateValue)(date, format, locale);
     },
     locale: locale,
     selectedDates: selectedDate ? [selectedDate] : false
-  };
-  var dialog = (_input$closest = input.closest) === null || _input$closest === void 0 ? void 0 : _input$closest.call(input, 'dialog[open]');
-  if (dialog) options.container = dialog;
+  }, showEventOptions(input));
+  applyDialogContainer(input, options);
   if (type === 'daterange') {
     return _objectSpread(_objectSpread({}, options), (0,_date_range_options_js__WEBPACK_IMPORTED_MODULE_1__.createDateRangeOptions)(input, format, locale));
   }
   if (type === 'datetime' || type === 'time') options.timepicker = true;
   if (type === 'time') options.onlyTimepicker = true;
   return options;
+}
+function showEventOptions(input) {
+  return input.dataset.dateShowEvent ? {
+    showEvent: input.dataset.dateShowEvent
+  } : {};
+}
+function applyDialogContainer(input, options) {
+  var _input$closest;
+  var dialog = (_input$closest = input.closest) === null || _input$closest === void 0 ? void 0 : _input$closest.call(input, 'dialog[open]');
+  if (dialog) options.container = dialog;
 }
 function defaultFormat(type) {
   if (type === 'time') return 'HH:mm';
@@ -6973,6 +6984,106 @@ function assertAdminServices(admin) {
 
 /***/ }),
 
+/***/ "./resources/frontend/features/forms/file-download.js":
+/*!************************************************************!*\
+  !*** ./resources/frontend/features/forms/file-download.js ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "downloadFile": () => (/* binding */ downloadFile)
+/* harmony export */ });
+function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
+function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+function downloadFile(_x) {
+  return _downloadFile.apply(this, arguments);
+}
+function _downloadFile() {
+  _downloadFile = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee(url) {
+    var options,
+      _downloadDependencies,
+      document,
+      fetch,
+      urlApi,
+      response,
+      objectUrl,
+      link,
+      _args = arguments,
+      _t;
+    return _regenerator().w(function (_context) {
+      while (1) switch (_context.n) {
+        case 0:
+          options = _args.length > 1 && _args[1] !== undefined ? _args[1] : {};
+          _downloadDependencies = downloadDependencies(options), document = _downloadDependencies.document, fetch = _downloadDependencies.fetch, urlApi = _downloadDependencies.urlApi;
+          assertDependencies(document, fetch, urlApi);
+          _context.n = 1;
+          return fetch(url, {
+            credentials: 'same-origin'
+          });
+        case 1:
+          response = _context.v;
+          assertResponse(response);
+          _t = urlApi;
+          _context.n = 2;
+          return response.blob();
+        case 2:
+          objectUrl = _t.createObjectURL.call(_t, _context.v);
+          link = document.createElement('a');
+          link.href = objectUrl;
+          link.download = downloadName(url, document.baseURI);
+          link.hidden = true;
+          document.body.append(link);
+          link.click();
+          link.remove();
+          globalThis.setTimeout(function () {
+            return urlApi.revokeObjectURL(objectUrl);
+          }, 0);
+        case 3:
+          return _context.a(2);
+      }
+    }, _callee);
+  }));
+  return _downloadFile.apply(this, arguments);
+}
+function downloadName(url, baseUrl) {
+  try {
+    var _pathname$split$filte;
+    var pathname = new globalThis.URL(url, baseUrl).pathname;
+    return decodeURIComponent((_pathname$split$filte = pathname.split('/').filter(Boolean).pop()) !== null && _pathname$split$filte !== void 0 ? _pathname$split$filte : 'download');
+  } catch (_unused) {
+    return 'download';
+  }
+}
+function downloadDependencies(options) {
+  var _options$document, _options$fetch, _ref, _options$urlApi, _document$defaultView;
+  var document = (_options$document = options.document) !== null && _options$document !== void 0 ? _options$document : globalThis.document;
+  return {
+    document: document,
+    fetch: (_options$fetch = options.fetch) !== null && _options$fetch !== void 0 ? _options$fetch : globalThis.fetch,
+    urlApi: (_ref = (_options$urlApi = options.urlApi) !== null && _options$urlApi !== void 0 ? _options$urlApi : document === null || document === void 0 || (_document$defaultView = document.defaultView) === null || _document$defaultView === void 0 ? void 0 : _document$defaultView.URL) !== null && _ref !== void 0 ? _ref : globalThis.URL
+  };
+}
+function assertResponse(response) {
+  var _response$status;
+  if (response !== null && response !== void 0 && response.ok) return;
+  throw new Error("File download failed with status ".concat((_response$status = response === null || response === void 0 ? void 0 : response.status) !== null && _response$status !== void 0 ? _response$status : 0, "."));
+}
+function assertDependencies(document, fetch, urlApi) {
+  if (!(document !== null && document !== void 0 && document.body) || typeof document.createElement !== 'function') {
+    throw new TypeError('File download requires a document.');
+  }
+  if (typeof fetch !== 'function') throw new TypeError('File download requires fetch.');
+  if (typeof (urlApi === null || urlApi === void 0 ? void 0 : urlApi.createObjectURL) !== 'function') {
+    throw new TypeError('File download requires URL.createObjectURL().');
+  }
+}
+
+/***/ }),
+
 /***/ "./resources/frontend/features/forms/files/files-controller.js":
 /*!*********************************************************************!*\
   !*** ./resources/frontend/features/forms/files/files-controller.js ***!
@@ -6987,9 +7098,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "createFilesDefinition": () => (/* binding */ createFilesDefinition),
 /* harmony export */   "mountFiles": () => (/* binding */ mountFiles)
 /* harmony export */ });
-/* harmony import */ var _files_template_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./files-template.js */ "./resources/frontend/features/forms/files/files-template.js");
-/* harmony import */ var _files_uploader_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./files-uploader.js */ "./resources/frontend/features/forms/files/files-uploader.js");
-/* harmony import */ var _files_values_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./files-values.js */ "./resources/frontend/features/forms/files/files-values.js");
+/* harmony import */ var _file_download_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../file-download.js */ "./resources/frontend/features/forms/file-download.js");
+/* harmony import */ var _files_template_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./files-template.js */ "./resources/frontend/features/forms/files/files-template.js");
+/* harmony import */ var _files_uploader_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./files-uploader.js */ "./resources/frontend/features/forms/files/files-uploader.js");
+/* harmony import */ var _files_values_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./files-values.js */ "./resources/frontend/features/forms/files/files-values.js");
+
 
 
 
@@ -7056,8 +7169,20 @@ function handleFieldChange(state, event) {
 function handleClick(state, event) {
   var remove = event.target.closest('.fileRemove');
   var link = event.target.closest('.fileLink');
+  var download = event.target.closest('a[download]');
   if (remove && state.element.contains(remove)) removeFile(state, event, remove);
   if (link && state.element.contains(link)) editFileLink(state, event, link);
+  if (download && state.element.contains(download)) downloadCurrentFile(state, event, download);
+}
+function downloadCurrentFile(state, event, control) {
+  event.preventDefault();
+  (0,_file_download_js__WEBPACK_IMPORTED_MODULE_0__.downloadFile)(control.href, {
+    document: state.element.ownerDocument
+  })["catch"](function (error) {
+    dispatch(state.element, 'files:download-failed', {
+      error: error
+    });
+  });
 }
 function removeFile(state, event, control) {
   var _control$closest;
@@ -7083,13 +7208,13 @@ function replaceFileLink(item, value) {
   var download = item.querySelector('a[download]');
   if (download) download.href = value;
   var icon = item.querySelector('.fileicon-inner');
-  if (icon) icon.style.backgroundImage = (0,_files_template_js__WEBPACK_IMPORTED_MODULE_0__.cssUrl)(value);
+  if (icon) icon.style.backgroundImage = (0,_files_template_js__WEBPACK_IMPORTED_MODULE_1__.cssUrl)(value);
 }
 function createUploader(state) {
   if (!state.browse || !state.group || !state.template || !state.element.dataset.target) {
     return null;
   }
-  return (0,_files_uploader_js__WEBPACK_IMPORTED_MODULE_1__.createFilesUploader)({
+  return (0,_files_uploader_js__WEBPACK_IMPORTED_MODULE_2__.createFilesUploader)({
     browse: state.browse,
     http: state.dependencies.http,
     onBusy: function onBusy(busy) {
@@ -7108,7 +7233,7 @@ function createUploader(state) {
 function uploadSucceeded(state, payload) {
   try {
     var _state$group;
-    (_state$group = state.group) === null || _state$group === void 0 || _state$group.append((0,_files_template_js__WEBPACK_IMPORTED_MODULE_0__.createFileItem)(state.template, payload));
+    (_state$group = state.group) === null || _state$group === void 0 || _state$group.append((0,_files_template_js__WEBPACK_IMPORTED_MODULE_1__.createFileItem)(state.template, payload));
     syncValue(state, true);
     dispatch(state.element, 'files:uploaded', {
       file: payload
@@ -7135,7 +7260,7 @@ function createSortable(state) {
 }
 function syncValue(state, notify) {
   if (!state.input) return '';
-  state.input.value = (0,_files_values_js__WEBPACK_IMPORTED_MODULE_2__.serializeFiles)(state.element);
+  state.input.value = (0,_files_values_js__WEBPACK_IMPORTED_MODULE_3__.serializeFiles)(state.element);
   if (notify) dispatch(state.element, 'files:changed', {
     value: state.input.value
   });
@@ -10305,6 +10430,7 @@ function syncDateAttributes(input, config) {
   if (config.type !== 'date' && config.type !== 'datetime') return;
   input.dataset.dateControl = config.type;
   input.dataset.dateFormat = config.dateFormat;
+  input.dataset.dateShowEvent = 'click';
 }
 function syncOptionalAttribute(element, name, value) {
   if (value === null) element.removeAttribute(name);else element.setAttribute(name, value);
@@ -10517,6 +10643,64 @@ function assertHttp(http) {
 
 /***/ }),
 
+/***/ "./resources/frontend/features/table/editing/inline-editor-table-refresh.js":
+/*!**********************************************************************************!*\
+  !*** ./resources/frontend/features/table/editing/inline-editor-table-refresh.js ***!
+  \**********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "bindInlineEditorTableRefresh": () => (/* binding */ bindInlineEditorTableRefresh)
+/* harmony export */ });
+var INLINE_EDIT_SUBMITTED_EVENT = 'inline-edit:submitted';
+var REFRESH_MODES = new Set(['row', 'table']);
+function bindInlineEditorTableRefresh(root, tables) {
+  var mode = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'row';
+  var schedule = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : globalThis.queueMicrotask;
+  assertDependencies(root, tables, mode, schedule);
+  var refresh = function refresh(event) {
+    var _trigger$closest, _trigger$closest2;
+    var trigger = event.target;
+    var table = trigger === null || trigger === void 0 || (_trigger$closest = trigger.closest) === null || _trigger$closest === void 0 ? void 0 : _trigger$closest.call(trigger, 'table.datatables');
+    var row = trigger === null || trigger === void 0 || (_trigger$closest2 = trigger.closest) === null || _trigger$closest2 === void 0 ? void 0 : _trigger$closest2.call(trigger, 'tr');
+    var adapter = table ? tables.get(table) : null;
+    if (!adapter) return;
+    schedule(function () {
+      return refreshTable(adapter, row, mode);
+    });
+  };
+  root.addEventListener(INLINE_EDIT_SUBMITTED_EVENT, refresh);
+  return function () {
+    return root.removeEventListener(INLINE_EDIT_SUBMITTED_EVENT, refresh);
+  };
+}
+function refreshTable(adapter, row, mode) {
+  if (mode === 'row' && typeof adapter.refreshRow === 'function') {
+    adapter.refreshRow(row);
+    return;
+  }
+  if (mode === 'table' && typeof adapter.refresh === 'function') {
+    adapter.refresh();
+    return;
+  }
+  adapter.reload(false);
+}
+function assertDependencies(root, tables, mode, schedule) {
+  var message = 'Inline editor table refresh requires events, tables and a scheduler.';
+  assertMethod(root, 'addEventListener', message);
+  assertMethod(root, 'removeEventListener', message);
+  assertMethod(tables, 'get', message);
+  if (!REFRESH_MODES.has(mode)) throw new TypeError(message);
+  if (typeof schedule !== 'function') throw new TypeError(message);
+}
+function assertMethod(object, method, message) {
+  if (typeof (object === null || object === void 0 ? void 0 : object[method]) !== 'function') throw new TypeError(message);
+}
+
+/***/ }),
+
 /***/ "./resources/frontend/features/table/editing/inline-editor-template.js":
 /*!*****************************************************************************!*\
   !*** ./resources/frontend/features/table/editing/inline-editor-template.js ***!
@@ -10681,21 +10865,47 @@ function bindViewEvents(elements, control, handlers) {
     event.preventDefault();
     handlers.cancel();
   };
-  var backdropClick = function backdropClick(event) {
-    if (event.target === elements.root && elements.root.tagName === 'DIALOG') handlers.cancel();
-  };
+  var removeBackdropEvents = bindBackdropEvents(elements.root, handlers.cancel);
   elements.form.addEventListener('submit', submit);
   elements.form.addEventListener('keydown', keydown);
   elements.cancel.addEventListener('click', cancel);
   elements.root.addEventListener('cancel', dialogCancel);
-  elements.root.addEventListener('click', backdropClick);
   return function () {
     elements.form.removeEventListener('submit', submit);
     elements.form.removeEventListener('keydown', keydown);
     elements.cancel.removeEventListener('click', cancel);
     elements.root.removeEventListener('cancel', dialogCancel);
-    elements.root.removeEventListener('click', backdropClick);
+    removeBackdropEvents();
   };
+}
+function bindBackdropEvents(root, cancel) {
+  var pointerStartedOnBackdrop = false;
+  var pointerEndedOnBackdrop = false;
+  var pointerdown = function pointerdown(event) {
+    pointerStartedOnBackdrop = isDialogBackdrop(root, event);
+    pointerEndedOnBackdrop = false;
+  };
+  var pointerup = function pointerup(event) {
+    pointerEndedOnBackdrop = isDialogBackdrop(root, event);
+  };
+  var click = function click(event) {
+    if (pointerStartedOnBackdrop && pointerEndedOnBackdrop && isDialogBackdrop(root, event)) {
+      cancel();
+    }
+    pointerStartedOnBackdrop = false;
+    pointerEndedOnBackdrop = false;
+  };
+  root.addEventListener('pointerdown', pointerdown);
+  root.addEventListener('pointerup', pointerup);
+  root.addEventListener('click', click);
+  return function () {
+    root.removeEventListener('pointerdown', pointerdown);
+    root.removeEventListener('pointerup', pointerup);
+    root.removeEventListener('click', click);
+  };
+}
+function isDialogBackdrop(root, event) {
+  return event.target === root && root.tagName === 'DIALOG';
 }
 function _setBusy(elements, busy) {
   elements.form.setAttribute('aria-busy', String(busy));
@@ -11052,10 +11262,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "installInlineEditors": () => (/* binding */ installInlineEditors)
 /* harmony export */ });
 /* harmony import */ var _inline_editor_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./inline-editor.js */ "./resources/frontend/features/table/editing/inline-editor.js");
+/* harmony import */ var _inline_editor_table_refresh_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./inline-editor-table-refresh.js */ "./resources/frontend/features/table/editing/inline-editor-table-refresh.js");
+
 
 function installInlineEditors(admin) {
+  var _options$root;
   var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
   assertAdmin(admin);
+  var root = (_options$root = options.root) !== null && _options$root !== void 0 ? _options$root : globalThis.document;
   var definition = (0,_inline_editor_js__WEBPACK_IMPORTED_MODULE_0__.createInlineEditorDefinition)({
     components: admin.Components,
     http: admin.Http,
@@ -11064,22 +11278,32 @@ function installInlineEditors(admin) {
   });
   admin.Components.register(definition);
   var scan = function scan() {
-    var _options$root;
-    var root = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : (_options$root = options.root) !== null && _options$root !== void 0 ? _options$root : globalThis.document;
-    return admin.Components.scan(root, _inline_editor_js__WEBPACK_IMPORTED_MODULE_0__.INLINE_EDITOR_COMPONENT);
+    var scanRoot = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : root;
+    return admin.Components.scan(scanRoot, _inline_editor_js__WEBPACK_IMPORTED_MODULE_0__.INLINE_EDITOR_COMPONENT);
   };
+  var refreshMode = tableRefreshMode(admin);
+  var destroy = refreshMode ? (0,_inline_editor_table_refresh_js__WEBPACK_IMPORTED_MODULE_1__.bindInlineEditorTableRefresh)(root, admin.Tables, refreshMode) : function () {};
   admin.Modules.register('display.columns.inline-edit', function () {
     return scan();
   }, 0, ['bootstrap::tab::shown']);
   return {
     definition: definition,
+    destroy: destroy,
     scan: scan
   };
 }
 function assertAdmin(admin) {
   assertFunction(admin === null || admin === void 0 ? void 0 : admin.Components, 'register', 'Inline editors require Admin.Components.');
+  assertFunction(admin === null || admin === void 0 ? void 0 : admin.Config, 'get', 'Inline editors require Admin.Config.');
   assertFunction(admin === null || admin === void 0 ? void 0 : admin.Modules, 'register', 'Inline editors require Admin.Modules.');
   assertFunction(admin === null || admin === void 0 ? void 0 : admin.Http, 'post', 'Inline editors require Admin.Http.');
+  assertFunction(admin === null || admin === void 0 ? void 0 : admin.Tables, 'get', 'Inline editors require Admin.Tables.');
+}
+function tableRefreshMode(admin) {
+  var mode = admin.Config.get('datatables_inline_edit_refresh', 'row');
+  if (mode === false) return null;
+  if (mode === 'row' || mode === 'table') return mode;
+  throw new TypeError("Unsupported inline edit refresh mode [".concat(String(mode), "]."));
 }
 function assertFunction(object, method, message) {
   if (typeof (object === null || object === void 0 ? void 0 : object[method]) !== 'function') throw new TypeError(message);
@@ -11829,16 +12053,31 @@ var DataTableAdapter = /*#__PURE__*/function () {
   function DataTableAdapter(_ref) {
     var element = _ref.element,
       engineInstance = _ref.engineInstance,
-      registry = _ref.registry;
+      registry = _ref.registry,
+      _ref$serverSide = _ref.serverSide,
+      serverSide = _ref$serverSide === void 0 ? false : _ref$serverSide;
     _classCallCheck(this, DataTableAdapter);
     this.element = element;
     this.engineInstance = engineInstance;
     this.registry = registry;
+    this.serverSide = serverSide;
   }
   return _createClass(DataTableAdapter, [{
     key: "reload",
-    value: function reload() {
-      return this.engineInstance.draw();
+    value: function reload(resetPaging) {
+      return resetPaging === undefined ? this.engineInstance.draw() : this.engineInstance.draw(resetPaging);
+    }
+  }, {
+    key: "refresh",
+    value: function refresh() {
+      if (this.serverSide) return this.reload(false);
+      return this.engineInstance.rows().invalidate('dom').draw(false);
+    }
+  }, {
+    key: "refreshRow",
+    value: function refreshRow(row) {
+      if (this.serverSide || !row) return this.reload(false);
+      return this.engineInstance.row(row).invalidate('dom').draw(false);
     }
   }, {
     key: "destroy",
@@ -11871,7 +12110,8 @@ function mountDataTable(_ref2) {
   var adapter = new DataTableAdapter({
     element: element,
     engineInstance: engineInstance,
-    registry: registry
+    registry: registry,
+    serverSide: Boolean(options.serverSide)
   });
   return registry.register(adapter);
 }
@@ -11964,6 +12204,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _state_filter_state_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../state/filter-state.js */ "./resources/frontend/features/table/state/filter-state.js");
 
 function applyTableStateOptions(options, config) {
+  var stateLoadParams = options.stateLoadParams;
+  options.stateLoadParams = function (settings, state) {
+    var _state$columns;
+    var result = stateLoadParams === null || stateLoadParams === void 0 ? void 0 : stateLoadParams.call(this, settings, state);
+    if (result === false) return false;
+
+    // The section defines column visibility; saved browser state must not override it.
+    (_state$columns = state.columns) === null || _state$columns === void 0 || _state$columns.forEach(function (column) {
+      delete column.visible;
+    });
+    return result;
+  };
   if (config.stateDatatables) {
     options.stateSave = true;
   }
@@ -12359,6 +12611,10 @@ __webpack_require__.r(__webpack_exports__);
 function createRuntimeTableOptions(element, definition, settings) {
   var options = (0,_options_table_options_js__WEBPACK_IMPORTED_MODULE_4__.applyServerOptions)(definition.options, definition);
   if (definition.url) configureServerTable(options, definition, settings);
+  (0,_options_state_options_js__WEBPACK_IMPORTED_MODULE_5__.applyTableStateOptions)(options, {
+    stateDatatables: Boolean(definition.url && settings.admin.Config.get('state_datatables')),
+    stateFilters: !definition.url || settings.stateFilters
+  });
   options.drawCallback = createRuntimeDrawHook(element, settings);
   options.createdRow = _hooks_table_hooks_js__WEBPACK_IMPORTED_MODULE_3__.applyCreatedRowClass;
   return options;
@@ -12371,10 +12627,6 @@ function configureServerTable(options, definition, settings) {
     payload: definition.payload,
     root: settings.root,
     url: definition.url
-  });
-  (0,_options_state_options_js__WEBPACK_IMPORTED_MODULE_5__.applyTableStateOptions)(options, {
-    stateDatatables: Boolean(settings.admin.Config.get('state_datatables')),
-    stateFilters: settings.stateFilters
   });
 }
 function createRuntimeDrawHook(element, settings) {

@@ -94,7 +94,10 @@ test('date and datetime editors reuse Air Datepicker and emit native lifecycle e
                 Boolean(globalThis.Admin.Components.get(element, 'date-control')),
             ),
         ).toBe(true)
-        await page.locator('.soa-inline-editor-cancel').click()
+        await expect(page.locator('.air-datepicker.-active-')).toHaveCount(0)
+        await input.click()
+        await expect(page.locator('.air-datepicker.-active-')).toBeVisible()
+        await input.press('Escape')
     }
 
     expect(await page.evaluate(() => globalThis.__inlineEvents)).toEqual([
@@ -124,6 +127,28 @@ test('Laravel validation errors stay visible and Escape closes the editor', asyn
         'inline-edit:failed',
         'inline-edit:closed',
     ])
+})
+
+test('dragging a text selection outside the dialog does not close the editor', async ({ page }) => {
+    await page.locator('#editor-textarea').click()
+    const editor = page.locator('.soa-inline-editor-popup')
+    const control = editor.locator('.soa-inline-editor-control')
+    await control.fill('Text that remains editable while selecting')
+
+    const controlBox = await control.boundingBox()
+    const editorBox = await editor.boundingBox()
+    if (!controlBox || !editorBox) throw new Error('The popup editor must have a layout box.')
+
+    await page.mouse.move(controlBox.x + controlBox.width / 2, controlBox.y + controlBox.height / 2)
+    await page.mouse.down()
+    await page.mouse.move(editorBox.x - 10, editorBox.y + editorBox.height / 2)
+    await page.mouse.up()
+
+    await expect(editor).toBeVisible()
+    await expect(control).toHaveValue('Text that remains editable while selecting')
+
+    await page.mouse.click(editorBox.x - 10, editorBox.y + editorBox.height / 2)
+    await expect(editor).not.toBeVisible()
 })
 
 async function editScalar(page, selector, value) {

@@ -29,6 +29,15 @@ it('builds date, datetime and time options from typed control metadata', () => {
     expect(time.dateFormat(time.selectedDates[0])).toBe('14:25:09')
 })
 
+it('allows inline editors to open the picker only on click', () => {
+    const date = createDatePickerOptions(
+        input('date', '06.09.2026', { dateShowEvent: 'click' }),
+        locale,
+    )
+
+    expect(date.showEvent).toBe('click')
+})
+
 it('preserves daterange separator, placement, boundaries and max span', () => {
     const options = createDatePickerOptions(
         input('daterange', '01.09.2026 - 06.09.2026', {

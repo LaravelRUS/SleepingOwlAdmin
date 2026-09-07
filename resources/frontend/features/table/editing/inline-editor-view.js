@@ -35,23 +35,54 @@ function bindViewEvents(elements, control, handlers) {
         event.preventDefault()
         handlers.cancel()
     }
-    const backdropClick = (event) => {
-        if (event.target === elements.root && elements.root.tagName === 'DIALOG') handlers.cancel()
-    }
+    const removeBackdropEvents = bindBackdropEvents(elements.root, handlers.cancel)
 
     elements.form.addEventListener('submit', submit)
     elements.form.addEventListener('keydown', keydown)
     elements.cancel.addEventListener('click', cancel)
     elements.root.addEventListener('cancel', dialogCancel)
-    elements.root.addEventListener('click', backdropClick)
 
     return () => {
         elements.form.removeEventListener('submit', submit)
         elements.form.removeEventListener('keydown', keydown)
         elements.cancel.removeEventListener('click', cancel)
         elements.root.removeEventListener('cancel', dialogCancel)
-        elements.root.removeEventListener('click', backdropClick)
+        removeBackdropEvents()
     }
+}
+
+function bindBackdropEvents(root, cancel) {
+    let pointerStartedOnBackdrop = false
+    let pointerEndedOnBackdrop = false
+    const pointerdown = (event) => {
+        pointerStartedOnBackdrop = isDialogBackdrop(root, event)
+        pointerEndedOnBackdrop = false
+    }
+    const pointerup = (event) => {
+        pointerEndedOnBackdrop = isDialogBackdrop(root, event)
+    }
+    const click = (event) => {
+        if (pointerStartedOnBackdrop && pointerEndedOnBackdrop && isDialogBackdrop(root, event)) {
+            cancel()
+        }
+
+        pointerStartedOnBackdrop = false
+        pointerEndedOnBackdrop = false
+    }
+
+    root.addEventListener('pointerdown', pointerdown)
+    root.addEventListener('pointerup', pointerup)
+    root.addEventListener('click', click)
+
+    return () => {
+        root.removeEventListener('pointerdown', pointerdown)
+        root.removeEventListener('pointerup', pointerup)
+        root.removeEventListener('click', click)
+    }
+}
+
+function isDialogBackdrop(root, event) {
+    return event.target === root && root.tagName === 'DIALOG'
 }
 
 function setBusy(elements, busy) {

@@ -65,6 +65,7 @@ function syncDateAttributes(input, config) {
 
     input.dataset.dateControl = config.type
     input.dataset.dateFormat = config.dateFormat
+    input.dataset.dateShowEvent = 'click'
 }
 
 function syncOptionalAttribute(element, name, value) {

@@ -74,7 +74,8 @@ Each host uses `data-inline-editor` as its behavior marker. Initial pages,
 DataTables redraws, tabs, and dynamic subtrees use the same idempotent
 `Admin.Components.scan()` and `destroy()` lifecycle. Date and datetime editors
 reuse the existing Air Datepicker component through that lifecycle rather than
-creating a second date implementation.
+creating a second date implementation. Their picker uses `click` as its show
+event, so opening the editor dialog does not immediately open the calendar.
 
 The host dispatches bubbling native `CustomEvent` instances:
 
@@ -88,6 +89,24 @@ Event detail always contains `name` and `pk`; submitting/submitted events also
 contain the relevant value, and failed contains the request error. Escape and
 the localized cancel control close the editor. Closing during a request aborts
 it without publishing a false failure.
+
+The table feature listens for `inline-edit:submitted`. After the editor closes,
+a client-side DataTable invalidates and redraws only the containing DOM row. A
+server-side DataTable reloads its current page with `draw(false)`, preserving
+pagination while allowing server-rendered columns, row classes, ordering and
+filters to reflect the saved model state. Edits outside a registered DataTable
+do not trigger a table refresh. Projects select the behavior globally:
+
+```php
+'datatables_inline_edit_refresh' => 'row',  // Default: invalidate the edited row.
+'datatables_inline_edit_refresh' => 'table', // Redraw the containing table.
+'datatables_inline_edit_refresh' => false,   // Update only the editable trigger.
+```
+
+DataTables does not provide a single-record AJAX transport. Consequently,
+`row` reloads the current page for a server-side table; the distinction between
+`row` and `table` applies fully to client-side tables: the former invalidates
+one DOM row, while the latter invalidates all DOM rows before drawing.
 
 ## Theme ownership
 

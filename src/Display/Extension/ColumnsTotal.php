@@ -55,8 +55,19 @@ class ColumnsTotal extends Extension implements Placable
 
     public function toArray(): array
     {
+        $elements = $this->elements;
+        $display = $this->getDisplay();
+        if ($display instanceof \SleepingOwl\Admin\Display\DisplayTable
+            && ! $display instanceof \SleepingOwl\Admin\Display\DisplayDatatables) {
+            $elements = $elements->filter(function ($element, $index) use ($display) {
+                $column = $display->getColumns()->all()->get($index);
+
+                return $column === null || $column->isVisible();
+            });
+        }
+
         return [
-            'elements' => $this->elements,
+            'elements' => $elements,
             'attributes' => $this->htmlAttributesToString(),
             'attributesArray' => $this->getHtmlAttributes(),
             'tag' => $this->getTag(),

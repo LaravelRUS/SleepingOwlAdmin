@@ -56,6 +56,20 @@ it('leaves readonly and disabled controls native and unmounted', () => {
     expect(Datepicker).not.toHaveBeenCalled()
 })
 
+it('does not show a click-only picker when a dialog initially focuses its input', () => {
+    const picker = { destroy: vi.fn(), show: vi.fn() }
+    const input = control({ dataset: { dateControl: 'date', dateShowEvent: 'click' } }).input
+    input.ownerDocument = { activeElement: input }
+    const Datepicker = vi.fn(function Datepicker() {
+        return picker
+    })
+
+    mountDateControl(input, Datepicker, {})
+
+    expect(Datepicker).toHaveBeenCalledWith(input, expect.objectContaining({ showEvent: 'click' }))
+    expect(picker.show).not.toHaveBeenCalled()
+})
+
 it('publishes a lifecycle definition with a precise behavior selector', () => {
     const definition = createDateControlDefinition(vi.fn(), {})
 

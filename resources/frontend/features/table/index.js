@@ -32,6 +32,7 @@ export {
     mountInlineEditor,
 } from './editing/inline-editor.js'
 export { installInlineEditors } from './editing/install-inline-editors.js'
+export { bindInlineEditorTableRefresh } from './editing/inline-editor-table-refresh.js'
 export {
     inlineEditErrorMessage,
     inlineEditParameters,

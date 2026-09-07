@@ -177,6 +177,16 @@ return [
 
     /*
      * --------------------------------------------------------------------------
+     * Refresh a DataTable after a successful inline edit.
+     * --------------------------------------------------------------------------
+     *
+     * Supported values: 'row', 'table', false. Server-side row refreshes reload
+     * the current page because DataTables cannot request one record by itself.
+     */
+    'datatables_inline_edit_refresh' => 'row',
+
+    /*
+     * --------------------------------------------------------------------------
      * Tabs state remember.
      * --------------------------------------------------------------------------
      */
@@ -504,6 +514,16 @@ return [
     |
     */
     'datatables' => [],
+
+    /*
+    |--------------------------------------------------------------------------
+    | DataTables SOA Settings
+    |--------------------------------------------------------------------------
+    |
+    | Select default settings for datatable
+    |
+    */
+    'datatables_settings' => [],
 
     /*
     |--------------------------------------------------------------------------

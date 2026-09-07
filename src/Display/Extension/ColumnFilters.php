@@ -126,8 +126,20 @@ class ColumnFilters extends Extension implements Initializable, Placable
     {
         $this->setHtmlAttribute('data-display', class_basename($this->getDisplay()));
 
+        $filters = $this->columnFilters;
+        $display = $this->getDisplay();
+        if ($display instanceof \SleepingOwl\Admin\Display\DisplayTable
+            && ! $display instanceof \SleepingOwl\Admin\Display\DisplayDatatables
+            && in_array($this->getPlacement(), ['table.header', 'table.footer'])) {
+            $filters = collect($filters)->filter(function ($filter, $index) use ($display) {
+                $column = $display->getColumns()->all()->get($index);
+
+                return $column === null || $column->isVisible();
+            });
+        }
+
         return [
-            'filters' => $this->columnFilters,
+            'filters' => $filters,
             'attributes' => $this->htmlAttributesToString(),
             'attributesArray' => $this->getHtmlAttributes(),
             'tag' => $this->getPlacement() == 'table.header' ? 'thead' : 'tfoot',
