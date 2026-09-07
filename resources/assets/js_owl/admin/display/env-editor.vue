@@ -1,70 +1,77 @@
 <template>
     <form method="post" :action="action">
         <input type="hidden" name="_token" :value="csrfToken" />
-        <div class="links-row"></div>
-        <div class="card card-default">
-            <div class="card-heading"></div>
-            <table id="env_editor_table" class="table table-striped">
+        <div data-soa-env-links :class="classes.links"></div>
+        <div data-soa-env-card :class="classes.card">
+            <div data-soa-env-card-heading :class="classes.cardHeading"></div>
+            <table id="env_editor_table" data-soa-env-table :class="classes.table">
                 <thead>
                     <tr>
-                        <th class="row-header">{{ labels.key }}</th>
-                        <th class="row-header">{{ labels.value }}</th>
-                        <th class="row-header"></th>
+                        <th :class="classes.header">{{ labels.key }}</th>
+                        <th :class="classes.header">{{ labels.value }}</th>
+                        <th :class="classes.header"></th>
                     </tr>
                 </thead>
-                <thead class="table table-striped table table-striped">
-                    <tr></tr>
-                </thead>
                 <tbody>
-                    <tr v-for="(value, index) in values" :key="index" class="env-row">
-                        <td class="row-link">
+                    <tr
+                        v-for="(value, index) in values"
+                        :key="index"
+                        data-soa-env-row
+                        :class="classes.row"
+                    >
+                        <td :class="classes.keyCell">
                             <span v-if="keysReadonly">{{ value.key }}</span>
                             <input
                                 v-else
                                 v-model="value.key"
-                                class="form-control env-key"
+                                data-soa-env-key
+                                :class="classes.keyInput"
                                 type="text"
                                 :name="`variables[${value.key}][key]`"
                                 :readonly="!value.editable"
                             />
                         </td>
-                        <td class="row-datetime">
+                        <td :class="classes.valueCell">
                             <input
                                 v-model="value.value"
-                                class="form-control env-value"
+                                data-soa-env-value
+                                :class="classes.valueInput"
                                 type="text"
                                 :name="`variables[${value.key}][value]`"
                                 :readonly="!value.editable"
                             />
                         </td>
-                        <td class="row-link" style="vertical-align: inherit">
-                            <div v-if="canDelete" class="pull-right">
+                        <td :class="classes.removeCell">
+                            <div v-if="canDelete" :class="classes.removeWrapper">
                                 <button
-                                    class="btn btn-xs btn-danger text-white env-remove"
-                                    title="delete"
+                                    data-soa-env-remove
+                                    :class="classes.removeButton"
+                                    :title="labels.remove"
+                                    :aria-label="labels.remove"
                                     type="button"
                                     @click="removeEnv(index)"
                                 >
-                                    <i class="fas fa-times"></i>
+                                    <i :class="classes.removeIcon" aria-hidden="true"></i>
                                 </button>
                             </div>
                         </td>
                     </tr>
                 </tbody>
             </table>
-            <div class="card-footer">
+            <div data-soa-env-footer :class="classes.footer">
                 <button
                     v-if="canAdd"
                     id="env_add_entry"
-                    class="btn btn-primary text-white"
+                    data-soa-env-add
+                    :class="classes.addButton"
                     type="button"
                     @click="addEnv"
                 >
-                    <i class="fas fa-plus"></i> {{ labels.add }}
+                    <i :class="classes.addIcon" aria-hidden="true"></i> {{ labels.add }}
                 </button>
-                <div class="pull-right">
-                    <button class="btn btn-primary" type="submit">
-                        <i class="fas fa-check"></i> {{ labels.save }}
+                <div :class="classes.saveWrapper">
+                    <button data-soa-env-save :class="classes.saveButton" type="submit">
+                        <i :class="classes.saveIcon" aria-hidden="true"></i> {{ labels.save }}
                     </button>
                 </div>
             </div>
@@ -83,6 +90,7 @@ export default defineComponent({
         action: { type: String, required: true },
         canAdd: Boolean,
         canDelete: Boolean,
+        classes: { type: Object, default: () => ({}) },
         csrfToken: { type: String, required: true },
         data: { type: [Array, Object], default: () => ({}) },
         errorText: { type: String, required: true },

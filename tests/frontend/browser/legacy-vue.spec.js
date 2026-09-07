@@ -135,7 +135,7 @@ function expectNoUnexpectedPageErrors(errors) {
 async function openFixture(page) {
     await page.goto('/legacy-vue')
     await expect(page.locator('html')).toHaveAttribute('data-ready', 'true')
-    await expect(page.locator('#env-fixture .env-row')).toHaveCount(2)
+    await expect(page.locator('#env-fixture [data-soa-env-row]')).toHaveCount(2)
     await expect.poll(() => page.evaluate(() => globalThis.Admin.VueApps.size)).toBe(8)
 }
 
@@ -533,17 +533,34 @@ test('bounded runtime-only Vue 3 apps preserve env editor behavior', async ({ pa
     await openFixture(page)
     expect(await page.evaluate(() => typeof globalThis.Vue)).toBe('undefined')
     await expectBoundedVueApps(page)
+    await expect(page.locator('#env-fixture [data-soa-env-card]')).toHaveClass('project-env-card')
+    await expect(page.locator('#env-fixture [data-soa-env-table]')).toHaveClass('project-env-table')
+    await expect(page.locator('#env-fixture [data-soa-env-key]').first()).toHaveClass(
+        'project-env-key',
+    )
+    await expect(page.locator('#env-fixture [data-soa-env-value]').first()).toHaveClass(
+        'project-env-value',
+    )
+    await expect(page.locator('#env-fixture [data-soa-env-remove]').first()).toHaveClass(
+        'project-env-remove',
+    )
+    await expect(page.locator('#env-fixture [data-soa-env-remove]').first()).toHaveAttribute(
+        'title',
+        'Remove',
+    )
+    await expect(page.locator('#env-fixture [data-soa-env-add]')).toHaveClass('project-env-add')
+    await expect(page.locator('#env-fixture [data-soa-env-save]')).toHaveClass('project-env-save')
 
-    await page.locator('#env-fixture .env-remove').nth(1).click()
-    await expect(page.locator('#env-fixture .env-row')).toHaveCount(2)
+    await page.locator('#env-fixture [data-soa-env-remove]').nth(1).click()
+    await expect(page.locator('#env-fixture [data-soa-env-row]')).toHaveCount(2)
     expect(await page.evaluate(() => globalThis.__toasts)).toEqual(['Access denied'])
 
-    await page.locator('#env-fixture .env-remove').first().click()
-    await expect(page.locator('#env-fixture .env-row')).toHaveCount(1)
+    await page.locator('#env-fixture [data-soa-env-remove]').first().click()
+    await expect(page.locator('#env-fixture [data-soa-env-row]')).toHaveCount(1)
     await page.locator('#env_add_entry').click()
-    await expect(page.locator('#env-fixture .env-row')).toHaveCount(2)
-    await page.locator('#env-fixture .env-key').last().fill('NEW_KEY')
-    await expect(page.locator('#env-fixture .env-key').last()).toHaveAttribute(
+    await expect(page.locator('#env-fixture [data-soa-env-row]')).toHaveCount(2)
+    await page.locator('#env-fixture [data-soa-env-key]').last().fill('NEW_KEY')
+    await expect(page.locator('#env-fixture [data-soa-env-key]').last()).toHaveAttribute(
         'name',
         'variables[NEW_KEY][key]',
     )

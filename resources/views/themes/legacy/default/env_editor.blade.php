@@ -10,10 +10,32 @@
     </div>
 </div>
 @php
-    $envEditorProps = [
+    $envEditorProps = array_replace([
         'action' => route('admin.env.editor.post'),
         'canAdd' => (bool) config('sleeping_owl.env_can_add'),
         'canDelete' => (bool) config('sleeping_owl.env_can_delete'),
+        'classes' => [
+            'addButton' => 'btn btn-primary text-white',
+            'addIcon' => 'fas fa-plus',
+            'card' => 'card card-default',
+            'cardHeading' => 'card-heading',
+            'footer' => 'card-footer',
+            'header' => 'row-header',
+            'keyCell' => 'row-link',
+            'keyInput' => 'form-control env-key',
+            'links' => 'links-row',
+            'removeButton' => 'btn btn-xs btn-danger text-white env-remove',
+            'removeCell' => 'row-link align-middle',
+            'removeIcon' => 'fas fa-times',
+            'removeWrapper' => 'pull-right',
+            'row' => 'env-row',
+            'saveButton' => 'btn btn-primary',
+            'saveIcon' => 'fas fa-check',
+            'saveWrapper' => 'pull-right',
+            'table' => 'table table-striped',
+            'valueCell' => 'row-datetime',
+            'valueInput' => 'form-control env-value',
+        ],
         'csrfToken' => csrf_token(),
         'data' => $data,
         'errorText' => trans('sleeping_owl::validation.access_denied'),
@@ -21,10 +43,11 @@
         'labels' => [
             'add' => trans('sleeping_owl::lang.button.new-entry'),
             'key' => trans('sleeping_owl::lang.env_editor.key'),
+            'remove' => trans('sleeping_owl::lang.button.remove'),
             'save' => trans('sleeping_owl::lang.button.save'),
             'value' => trans('sleeping_owl::lang.env_editor.var'),
         ],
-    ];
+    ], $envEditorExtraProps ?? []);
 @endphp
 
 <div
