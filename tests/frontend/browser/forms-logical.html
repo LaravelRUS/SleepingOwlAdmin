@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="csrf-token" content="forms-csrf-token" />
+        <title>Logical forms browser fixture</title>
+        <script>
+            window.GlobalConfig = {
+                debug: true,
+                env: 'testing',
+                lang: {
+                    button: { cancel: 'Cancel', yes: 'Yes' },
+                    ckeditor: { upload: { error: { common: 'Upload error' } } },
+                    file: { insert_link: 'Insert link' },
+                    table: {
+                        'delete-confirm': 'Delete?',
+                        'destroy-confirm': 'Destroy?',
+                    },
+                },
+                locale: 'en',
+                template: { asset_dir: 'default' },
+                url: 'http://127.0.0.1:4173',
+                url_path: 'forms-logical',
+                url_prefix: 'admin',
+                user_id: null,
+                wysiwyg: {},
+            }
+        </script>
+    </head>
+    <body>
+        <section class="form-buttons">
+            <button
+                class="btn-delete"
+                data-redirect="/forms"
+                data-url="/forms/10"
+                id="form-delete"
+                type="button"
+            >
+                Delete
+            </button>
+        </section>
+
+        <div class="password-field" id="password-first">
+            <input class="passwd" type="password" />
+            <button class="button-show" type="button"><i class="fa-solid fa-eye"></i></button>
+        </div>
+        <div class="password-field" id="password-second">
+            <input
+                class="passwd"
+                data-generate-chars="p"
+                data-generate-length="4"
+                type="password"
+            />
+            <button class="button-show" type="button"><i class="fa-solid fa-eye"></i></button>
+            <button class="generate" type="button">Generate password</button>
+        </div>
+
+        <div class="form-element-text" id="generated-text">
+            <input
+                class="text-element"
+                data-generate-chars="t"
+                data-generate-length="3"
+                type="text"
+            />
+            <button class="generate" type="button">Generate text</button>
+        </div>
+
+        <div class="input-date">
+            <input
+                data-date-format="DD.MM.YYYY"
+                data-soa-date-control="date"
+                id="published-on"
+                value="07.09.2026"
+            />
+        </div>
+
+        <section class="fileUploadMultiple" id="files-control">
+            <div class="files-group" data-draggable="false">
+                <div class="fileThumbnail">
+                    <div class="thumbnail">
+                        <div data-id="file" data-src="documents/manual.pdf"></div>
+                        <input data-id="title" value="Manual" />
+                        <textarea data-id="description">Reference</textarea>
+                        <input data-id="original_name" value="manual.pdf" />
+                    </div>
+                </div>
+            </div>
+            <input class="fileValue" name="attachments" type="hidden" />
+        </section>
+
+        <textarea data-wysiwyg-editor="ckeditor" id="editor"></textarea>
+        <div id="dynamic-form-host"></div>
+
+        <script src="/public/default/profiles/development/js/admin-core.js"></script>
+        <script src="/public/default/profiles/development/js/shared/compatibility.js"></script>
+        <script>
+            window.__fieldEvents = []
+            window.__submissions = []
+            window.__wysiwygCalls = []
+
+            document.addEventListener('input', (event) => {
+                if (event.target.matches('.passwd, .text-element')) {
+                    window.__fieldEvents.push(['input', event.target.value])
+                }
+            })
+            document.addEventListener('change', (event) => {
+                if (event.target.matches('.passwd, .text-element')) {
+                    window.__fieldEvents.push(['change', event.target.value])
+                }
+            })
+            document.addEventListener('submit', (event) => {
+                event.preventDefault()
+                window.__submissions.push({
+                    action: event.target.getAttribute('action'),
+                    method: event.target.getAttribute('method'),
+                    parameters: Object.fromEntries(new FormData(event.target)),
+                })
+            })
+
+            Admin.Messages.confirm = () => Promise.resolve({ value: true })
+            window.CKEDITOR = {
+                replace: (id, parameters) => {
+                    window.__wysiwygCalls.push(['mount', id, parameters])
+                    return {
+                        destroy: () => window.__wysiwygCalls.push(['destroy', id]),
+                        insertText: (value) => window.__wysiwygCalls.push(['insert', id, value]),
+                        resize: () => {},
+                    }
+                },
+            }
+        </script>
+        <script src="/public/default/profiles/development/js/features/forms.js"></script>
+        <script>
+            Promise.resolve(Admin.WYSIWYG.editor('editor')).then(() => {
+                document.documentElement.dataset.ready = 'true'
+            })
+        </script>
+    </body>
+</html>

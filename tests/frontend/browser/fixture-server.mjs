@@ -26,6 +26,7 @@ const staticRoutes = new Map([
     ],
     ['/legacy-vue', [join(browserDirectory, 'legacy-vue.html'), 'text/html; charset=utf-8']],
     ['/files', [join(browserDirectory, 'files.html'), 'text/html; charset=utf-8']],
+    ['/forms-logical', [join(browserDirectory, 'forms-logical.html'), 'text/html; charset=utf-8']],
     ['/wysiwyg', [join(browserDirectory, 'wysiwyg.html'), 'text/html; charset=utf-8']],
     [
         '/custom-vue-island',
@@ -196,7 +197,7 @@ const staticRoutes = new Map([
             'text/javascript',
         ],
     ],
-    ...profileFeatureRoutes('development', ['lightbox', 'tree']),
+    ...profileFeatureRoutes('development', ['forms', 'lightbox', 'tree']),
     [
         '/public/default/profiles/production/js/shared/vue.js',
         [
@@ -229,7 +230,7 @@ const staticRoutes = new Map([
             'text/javascript',
         ],
     ],
-    ...profileFeatureRoutes('production', ['lightbox', 'tree']),
+    ...profileFeatureRoutes('production', ['forms', 'lightbox', 'tree']),
     [
         '/public/default/css/admin-app.css',
         [join(projectRoot, 'public', 'default', 'css', 'admin-app.css'), 'text/css'],

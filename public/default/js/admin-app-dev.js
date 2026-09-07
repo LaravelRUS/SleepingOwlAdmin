@@ -3132,20 +3132,14 @@ Admin.Modules.register('helpers.dropdown', function () {
   \*******************************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-var _require = __webpack_require__(/*! ../../../../frontend/features/forms/actions/form-buttons */ "./resources/frontend/features/forms/actions/form-buttons.js"),
-  bindFormButtons = _require.bindFormButtons;
-Admin.Modules.register('form.buttons', function () {
-  return bindFormButtons({
-    document: document,
-    events: Admin.Events,
-    messages: Admin.Messages,
-    questions: {
-      "delete": trans('lang.table.delete-confirm'),
-      destroy: trans('lang.table.destroy-confirm')
-    },
-    root: document,
-    token: Admin.token
-  });
+var _require = __webpack_require__(/*! ../../../../frontend/features/forms/actions/install-form-buttons */ "./resources/frontend/features/forms/actions/install-form-buttons.js"),
+  installFormButtons = _require.installFormButtons;
+installFormButtons(Admin, {
+  document: document,
+  questions: {
+    "delete": trans('lang.table.delete-confirm'),
+    destroy: trans('lang.table.destroy-confirm')
+  }
 });
 
 /***/ }),
@@ -3196,53 +3190,11 @@ Admin.Files = installFiles(Admin, {
 /*!********************************************************!*\
   !*** ./resources/assets/js_owl/admin/form/password.js ***!
   \********************************************************/
-/***/ (() => {
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-Admin.Modules.register('form.elements.password', function () {
-  //     Пока только для первого элемента, без перебора
-  var el = document.getElementsByClassName('password-field');
-  // document.querySelectorAll('.Qty').forEach( (x) => { x.value = '100' } )
-
-  if (el && el[0]) {
-    var area = el[0];
-    var showBTN = area.getElementsByClassName('button-show')[0];
-    var field = area.getElementsByClassName('passwd')[0];
-
-    // Показать/скрыть пароль
-    if (showBTN && field) {
-      showBTN.addEventListener('click', function () {
-        if (field.type === 'password') {
-          field.type = 'text';
-          showBTN.getElementsByTagName('i')[0].className = 'fa-solid fa-eye-slash';
-        } else {
-          field.type = 'password';
-          showBTN.getElementsByTagName('i')[0].className = 'fa-solid fa-eye';
-        }
-      });
-    }
-
-    // Генерация пароля
-    var BTN = area.getElementsByClassName('generate');
-    if (BTN && BTN[0]) {
-      var generateBTN = BTN[0];
-      if (generateBTN && field) {
-        generateBTN.addEventListener('click', function () {
-          var chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-          if (field.dataset.generateChars) {
-            chars = field.dataset.generateChars;
-          }
-          var passwordLength = field.dataset.generateLength;
-          var password = '';
-          for (var i = 1; i <= passwordLength; i++) {
-            var randomNumber = Math.floor(Math.random() * chars.length);
-            password += chars.substring(randomNumber, randomNumber + 1);
-          }
-          field.value = password;
-        });
-      }
-    }
-  }
-});
+var _require = __webpack_require__(/*! ../../../../frontend/features/forms/generation/password-control */ "./resources/frontend/features/forms/generation/password-control.js"),
+  installPasswordControls = _require.installPasswordControls;
+installPasswordControls(Admin);
 
 /***/ }),
 
@@ -3250,39 +3202,11 @@ Admin.Modules.register('form.elements.password', function () {
 /*!****************************************************!*\
   !*** ./resources/assets/js_owl/admin/form/text.js ***!
   \****************************************************/
-/***/ (() => {
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-Admin.Modules.register('form.elements.text', function () {
-  //     Пока только для первого элемента, без перебора
-  var el = document.getElementsByClassName('form-element-text');
-  // document.querySelectorAll('.Qty').forEach( (x) => { x.value = '100' } )
-
-  if (el && el[0]) {
-    var area = el[0];
-    var field = area.getElementsByClassName('text-element')[0];
-
-    // Генерация текста
-    var BTN = area.getElementsByClassName('generate');
-    if (BTN && BTN[0]) {
-      var generateBTN = BTN[0];
-      if (generateBTN && field) {
-        generateBTN.addEventListener('click', function () {
-          var chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-          if (field.dataset.generateChars) {
-            chars = field.dataset.generateChars;
-          }
-          var textLength = field.dataset.generateLength;
-          var textGenerated = '';
-          for (var i = 1; i <= textLength; i++) {
-            var randomNumber = Math.floor(Math.random() * chars.length);
-            textGenerated += chars.substring(randomNumber, randomNumber + 1);
-          }
-          field.value = textGenerated;
-        });
-      }
-    }
-  }
-});
+var _require = __webpack_require__(/*! ../../../../frontend/features/forms/generation/text-control */ "./resources/frontend/features/forms/generation/text-control.js"),
+  installTextGenerators = _require.installTextGenerators;
+installTextGenerators(Admin);
 
 /***/ }),
 
@@ -6653,6 +6577,68 @@ function assertDependencies(_ref3) {
 
 /***/ }),
 
+/***/ "./resources/frontend/features/forms/actions/install-form-buttons.js":
+/*!***************************************************************************!*\
+  !*** ./resources/frontend/features/forms/actions/install-form-buttons.js ***!
+  \***************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "FORM_BUTTONS_COMPONENT": () => (/* binding */ FORM_BUTTONS_COMPONENT),
+/* harmony export */   "FORM_BUTTONS_ROOT_SELECTOR": () => (/* binding */ FORM_BUTTONS_ROOT_SELECTOR),
+/* harmony export */   "createFormButtonsDefinition": () => (/* binding */ createFormButtonsDefinition),
+/* harmony export */   "installFormButtons": () => (/* binding */ installFormButtons)
+/* harmony export */ });
+/* harmony import */ var _form_buttons_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./form-buttons.js */ "./resources/frontend/features/forms/actions/form-buttons.js");
+
+var FORM_BUTTONS_COMPONENT = 'form-buttons';
+var FORM_BUTTONS_ROOT_SELECTOR = 'body';
+function installFormButtons(admin, options) {
+  assertAdmin(admin);
+  var definition = createFormButtonsDefinition(admin, options);
+  admin.Components.register(definition);
+  var scan = function scan() {
+    var root = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : options.document;
+    return admin.Components.scan(root, FORM_BUTTONS_COMPONENT);
+  };
+  admin.Modules.register('form.buttons', function () {
+    return scan();
+  });
+  return {
+    definition: definition,
+    scan: scan
+  };
+}
+function createFormButtonsDefinition(admin, options) {
+  return {
+    mount: function mount(body) {
+      return (0,_form_buttons_js__WEBPACK_IMPORTED_MODULE_0__.bindFormButtons)({
+        document: body.ownerDocument,
+        events: admin.Events,
+        messages: admin.Messages,
+        questions: options.questions,
+        root: body,
+        token: admin.token
+      });
+    },
+    name: FORM_BUTTONS_COMPONENT,
+    selector: FORM_BUTTONS_ROOT_SELECTOR
+  };
+}
+function assertAdmin(admin) {
+  var _admin$Components, _admin$Modules;
+  if (typeof (admin === null || admin === void 0 || (_admin$Components = admin.Components) === null || _admin$Components === void 0 ? void 0 : _admin$Components.register) !== 'function') {
+    throw new TypeError('Form buttons require Admin.Components.');
+  }
+  if (typeof (admin === null || admin === void 0 || (_admin$Modules = admin.Modules) === null || _admin$Modules === void 0 ? void 0 : _admin$Modules.register) !== 'function') {
+    throw new TypeError('Form buttons require Admin.Modules.');
+  }
+}
+
+/***/ }),
+
 /***/ "./resources/frontend/features/forms/date/date-control.js":
 /*!****************************************************************!*\
   !*** ./resources/frontend/features/forms/date/date-control.js ***!
@@ -7133,12 +7119,18 @@ function installDateControls(admin) {
   var definition = (0,_date_control_js__WEBPACK_IMPORTED_MODULE_1__.createDateControlDefinition)(Datepicker, (0,_date_locales_js__WEBPACK_IMPORTED_MODULE_2__.resolveDatePickerLocale)(admin.locale));
   admin.Components.register(definition);
   var scan = function scan() {
-    return admin.Components.scan(root, _date_control_js__WEBPACK_IMPORTED_MODULE_1__.DATE_CONTROL_COMPONENT);
+    var scanRoot = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : root;
+    return admin.Components.scan(scanRoot, _date_control_js__WEBPACK_IMPORTED_MODULE_1__.DATE_CONTROL_COMPONENT);
   };
   LEGACY_DATE_MODULES.forEach(function (name) {
-    return admin.Modules.register(name, scan);
+    return admin.Modules.register(name, function () {
+      return scan();
+    });
   });
-  return definition;
+  return {
+    definition: definition,
+    scan: scan
+  };
 }
 function assertAdminServices(admin) {
   var _admin$Components, _admin$Modules;
@@ -7868,6 +7860,194 @@ function assertAdmin(admin) {
 }
 function assertFunction(value, message) {
   if (typeof value !== 'function') throw new TypeError(message);
+}
+
+/***/ }),
+
+/***/ "./resources/frontend/features/forms/generation/field-generator.js":
+/*!*************************************************************************!*\
+  !*** ./resources/frontend/features/forms/generation/field-generator.js ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "bindFieldGenerator": () => (/* binding */ bindFieldGenerator)
+/* harmony export */ });
+/* harmony import */ var _core_dom_listeners_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../core/dom/listeners.js */ "./resources/frontend/core/dom/listeners.js");
+/* harmony import */ var _generated_value_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./generated-value.js */ "./resources/frontend/features/forms/generation/generated-value.js");
+
+
+function bindFieldGenerator(root, field, random) {
+  var control = root.querySelector('.generate');
+  if (!control || !field) return function () {};
+  return (0,_core_dom_listeners_js__WEBPACK_IMPORTED_MODULE_0__.listen)(control, 'click', function () {
+    field.value = (0,_generated_value_js__WEBPACK_IMPORTED_MODULE_1__.generateFieldValue)(field, random);
+    dispatchValueChange(field);
+  });
+}
+function dispatchValueChange(field) {
+  var Event = field.ownerDocument.defaultView.Event;
+  field.dispatchEvent(new Event('input', {
+    bubbles: true
+  }));
+  field.dispatchEvent(new Event('change', {
+    bubbles: true
+  }));
+}
+
+/***/ }),
+
+/***/ "./resources/frontend/features/forms/generation/generated-value.js":
+/*!*************************************************************************!*\
+  !*** ./resources/frontend/features/forms/generation/generated-value.js ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "DEFAULT_GENERATED_CHARACTERS": () => (/* binding */ DEFAULT_GENERATED_CHARACTERS),
+/* harmony export */   "generateFieldValue": () => (/* binding */ generateFieldValue)
+/* harmony export */ });
+var DEFAULT_GENERATED_CHARACTERS = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+function generateFieldValue(field) {
+  var random = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : Math.random;
+  var characters = field.dataset.generateChars || DEFAULT_GENERATED_CHARACTERS;
+  var length = positiveInteger(field.dataset.generateLength, 8);
+  return Array.from({
+    length: length
+  }, function () {
+    return randomCharacter(characters, random);
+  }).join('');
+}
+function randomCharacter(characters, random) {
+  var index = Math.floor(random() * characters.length);
+  return characters.charAt(Math.min(index, characters.length - 1));
+}
+function positiveInteger(value, fallback) {
+  var number = Number.parseInt(value, 10);
+  return Number.isInteger(number) && number > 0 ? number : fallback;
+}
+
+/***/ }),
+
+/***/ "./resources/frontend/features/forms/generation/password-control.js":
+/*!**************************************************************************!*\
+  !*** ./resources/frontend/features/forms/generation/password-control.js ***!
+  \**************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "PASSWORD_COMPONENT": () => (/* binding */ PASSWORD_COMPONENT),
+/* harmony export */   "PASSWORD_SELECTOR": () => (/* binding */ PASSWORD_SELECTOR),
+/* harmony export */   "createPasswordDefinition": () => (/* binding */ createPasswordDefinition),
+/* harmony export */   "installPasswordControls": () => (/* binding */ installPasswordControls),
+/* harmony export */   "mountPasswordControl": () => (/* binding */ mountPasswordControl)
+/* harmony export */ });
+/* harmony import */ var _core_dom_listeners_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../core/dom/listeners.js */ "./resources/frontend/core/dom/listeners.js");
+/* harmony import */ var _field_generator_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./field-generator.js */ "./resources/frontend/features/forms/generation/field-generator.js");
+
+
+var PASSWORD_COMPONENT = 'form-password';
+var PASSWORD_SELECTOR = '.password-field';
+function installPasswordControls(admin) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  var definition = createPasswordDefinition(options.random);
+  admin.Components.register(definition);
+  var scan = function scan() {
+    var _options$root;
+    var root = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : (_options$root = options.root) !== null && _options$root !== void 0 ? _options$root : globalThis.document;
+    return admin.Components.scan(root, PASSWORD_COMPONENT);
+  };
+  admin.Modules.register('form.elements.password', function () {
+    return scan();
+  });
+  return {
+    definition: definition,
+    scan: scan
+  };
+}
+function createPasswordDefinition(random) {
+  return {
+    mount: function mount(element) {
+      return mountPasswordControl(element, random);
+    },
+    name: PASSWORD_COMPONENT,
+    selector: PASSWORD_SELECTOR
+  };
+}
+function mountPasswordControl(element) {
+  var random = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : Math.random;
+  var field = element.querySelector('.passwd');
+  var show = element.querySelector('.button-show');
+  var removers = [(0,_field_generator_js__WEBPACK_IMPORTED_MODULE_1__.bindFieldGenerator)(element, field, random)];
+  if (field && show) removers.push((0,_core_dom_listeners_js__WEBPACK_IMPORTED_MODULE_0__.listen)(show, 'click', function () {
+    return togglePassword(field, show);
+  }));
+  return function () {
+    return removers.reverse().forEach(function (remove) {
+      return remove();
+    });
+  };
+}
+function togglePassword(field, control) {
+  var visible = field.type === 'password';
+  field.type = visible ? 'text' : 'password';
+  control.setAttribute('aria-pressed', String(visible));
+  var icon = control.querySelector('i');
+  icon === null || icon === void 0 || icon.classList.toggle('fa-eye', !visible);
+  icon === null || icon === void 0 || icon.classList.toggle('fa-eye-slash', visible);
+}
+
+/***/ }),
+
+/***/ "./resources/frontend/features/forms/generation/text-control.js":
+/*!**********************************************************************!*\
+  !*** ./resources/frontend/features/forms/generation/text-control.js ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "TEXT_GENERATOR_COMPONENT": () => (/* binding */ TEXT_GENERATOR_COMPONENT),
+/* harmony export */   "TEXT_GENERATOR_SELECTOR": () => (/* binding */ TEXT_GENERATOR_SELECTOR),
+/* harmony export */   "createTextGeneratorDefinition": () => (/* binding */ createTextGeneratorDefinition),
+/* harmony export */   "installTextGenerators": () => (/* binding */ installTextGenerators)
+/* harmony export */ });
+/* harmony import */ var _field_generator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./field-generator.js */ "./resources/frontend/features/forms/generation/field-generator.js");
+
+var TEXT_GENERATOR_COMPONENT = 'form-text-generator';
+var TEXT_GENERATOR_SELECTOR = '.form-element-text';
+function installTextGenerators(admin) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  var definition = createTextGeneratorDefinition(options.random);
+  admin.Components.register(definition);
+  var scan = function scan() {
+    var _options$root;
+    var root = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : (_options$root = options.root) !== null && _options$root !== void 0 ? _options$root : globalThis.document;
+    return admin.Components.scan(root, TEXT_GENERATOR_COMPONENT);
+  };
+  admin.Modules.register('form.elements.text', function () {
+    return scan();
+  });
+  return {
+    definition: definition,
+    scan: scan
+  };
+}
+function createTextGeneratorDefinition(random) {
+  return {
+    mount: function mount(element) {
+      return (0,_field_generator_js__WEBPACK_IMPORTED_MODULE_0__.bindFieldGenerator)(element, element.querySelector('.text-element'), random);
+    },
+    name: TEXT_GENERATOR_COMPONENT,
+    selector: TEXT_GENERATOR_SELECTOR
+  };
 }
 
 /***/ }),

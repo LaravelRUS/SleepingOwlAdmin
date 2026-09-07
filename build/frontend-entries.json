@@ -58,7 +58,7 @@
             },
             {
                 "logicalId": "feature:forms",
-                "source": "resources/frontend/features/forms/index.js",
+                "source": "resources/frontend/features/forms/browser.js",
                 "output": "js/features/forms.js"
             },
             {

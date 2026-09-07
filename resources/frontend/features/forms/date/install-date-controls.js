@@ -21,10 +21,10 @@ export function installDateControls(
     )
     admin.Components.register(definition)
 
-    const scan = () => admin.Components.scan(root, DATE_CONTROL_COMPONENT)
-    LEGACY_DATE_MODULES.forEach((name) => admin.Modules.register(name, scan))
+    const scan = (scanRoot = root) => admin.Components.scan(scanRoot, DATE_CONTROL_COMPONENT)
+    LEGACY_DATE_MODULES.forEach((name) => admin.Modules.register(name, () => scan()))
 
-    return definition
+    return { definition, scan }
 }
 
 function assertAdminServices(admin) {

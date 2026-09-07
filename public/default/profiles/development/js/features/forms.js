@@ -697,6 +697,116 @@ function assertDependencies(_ref3) {
 
 /***/ }),
 
+/***/ "./resources/frontend/features/forms/actions/install-form-buttons.js":
+/*!***************************************************************************!*\
+  !*** ./resources/frontend/features/forms/actions/install-form-buttons.js ***!
+  \***************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "FORM_BUTTONS_COMPONENT": () => (/* binding */ FORM_BUTTONS_COMPONENT),
+/* harmony export */   "FORM_BUTTONS_ROOT_SELECTOR": () => (/* binding */ FORM_BUTTONS_ROOT_SELECTOR),
+/* harmony export */   "createFormButtonsDefinition": () => (/* binding */ createFormButtonsDefinition),
+/* harmony export */   "installFormButtons": () => (/* binding */ installFormButtons)
+/* harmony export */ });
+/* harmony import */ var _form_buttons_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./form-buttons.js */ "./resources/frontend/features/forms/actions/form-buttons.js");
+
+var FORM_BUTTONS_COMPONENT = 'form-buttons';
+var FORM_BUTTONS_ROOT_SELECTOR = 'body';
+function installFormButtons(admin, options) {
+  assertAdmin(admin);
+  var definition = createFormButtonsDefinition(admin, options);
+  admin.Components.register(definition);
+  var scan = function scan() {
+    var root = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : options.document;
+    return admin.Components.scan(root, FORM_BUTTONS_COMPONENT);
+  };
+  admin.Modules.register('form.buttons', function () {
+    return scan();
+  });
+  return {
+    definition: definition,
+    scan: scan
+  };
+}
+function createFormButtonsDefinition(admin, options) {
+  return {
+    mount: function mount(body) {
+      return (0,_form_buttons_js__WEBPACK_IMPORTED_MODULE_0__.bindFormButtons)({
+        document: body.ownerDocument,
+        events: admin.Events,
+        messages: admin.Messages,
+        questions: options.questions,
+        root: body,
+        token: admin.token
+      });
+    },
+    name: FORM_BUTTONS_COMPONENT,
+    selector: FORM_BUTTONS_ROOT_SELECTOR
+  };
+}
+function assertAdmin(admin) {
+  var _admin$Components, _admin$Modules;
+  if (typeof (admin === null || admin === void 0 || (_admin$Components = admin.Components) === null || _admin$Components === void 0 ? void 0 : _admin$Components.register) !== 'function') {
+    throw new TypeError('Form buttons require Admin.Components.');
+  }
+  if (typeof (admin === null || admin === void 0 || (_admin$Modules = admin.Modules) === null || _admin$Modules === void 0 ? void 0 : _admin$Modules.register) !== 'function') {
+    throw new TypeError('Form buttons require Admin.Modules.');
+  }
+}
+
+/***/ }),
+
+/***/ "./resources/frontend/features/forms/browser-options.js":
+/*!**************************************************************!*\
+  !*** ./resources/frontend/features/forms/browser-options.js ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "fileNotifications": () => (/* binding */ fileNotifications),
+/* harmony export */   "formButtonQuestions": () => (/* binding */ formButtonQuestions)
+/* harmony export */ });
+function formButtonQuestions(target) {
+  return {
+    "delete": translate(target, 'lang.table.delete-confirm', 'Delete?'),
+    destroy: translate(target, 'lang.table.destroy-confirm', 'Destroy?')
+  };
+}
+function fileNotifications(target) {
+  return {
+    promptLink: function promptLink(url) {
+      return promptFileLink(target, url);
+    },
+    uploadError: function uploadError(response) {
+      return showUploadError(target, response);
+    }
+  };
+}
+function promptFileLink(target, url) {
+  var title = translate(target, 'lang.file.insert_link', 'Insert link');
+  return target.Admin.Messages.prompt(title, null, null, url, url).then(function (result) {
+    return result === null || result === void 0 ? void 0 : result.value;
+  });
+}
+function showUploadError(target, response) {
+  var error = Array.isArray(response === null || response === void 0 ? void 0 : response.errors) ? response.errors[0] : null;
+  if (error) return target.Admin.Messages.error(response.message, error);
+  var message = translate(target, 'lang.ckeditor.upload.error.common', 'Upload error');
+  return target.Admin.Messages.error(message);
+}
+function translate(target, key, fallback) {
+  if (typeof target.trans !== 'function') return fallback;
+  var value = target.trans(key);
+  return typeof value === 'string' && value !== key ? value : fallback;
+}
+
+/***/ }),
+
 /***/ "./resources/frontend/features/forms/date/date-control.js":
 /*!****************************************************************!*\
   !*** ./resources/frontend/features/forms/date/date-control.js ***!
@@ -1177,12 +1287,18 @@ function installDateControls(admin) {
   var definition = (0,_date_control_js__WEBPACK_IMPORTED_MODULE_1__.createDateControlDefinition)(Datepicker, (0,_date_locales_js__WEBPACK_IMPORTED_MODULE_2__.resolveDatePickerLocale)(admin.locale));
   admin.Components.register(definition);
   var scan = function scan() {
-    return admin.Components.scan(root, _date_control_js__WEBPACK_IMPORTED_MODULE_1__.DATE_CONTROL_COMPONENT);
+    var scanRoot = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : root;
+    return admin.Components.scan(scanRoot, _date_control_js__WEBPACK_IMPORTED_MODULE_1__.DATE_CONTROL_COMPONENT);
   };
   LEGACY_DATE_MODULES.forEach(function (name) {
-    return admin.Modules.register(name, scan);
+    return admin.Modules.register(name, function () {
+      return scan();
+    });
   });
-  return definition;
+  return {
+    definition: definition,
+    scan: scan
+  };
 }
 function assertAdminServices(admin) {
   var _admin$Components, _admin$Modules;
@@ -1916,6 +2032,194 @@ function assertFunction(value, message) {
 
 /***/ }),
 
+/***/ "./resources/frontend/features/forms/generation/field-generator.js":
+/*!*************************************************************************!*\
+  !*** ./resources/frontend/features/forms/generation/field-generator.js ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "bindFieldGenerator": () => (/* binding */ bindFieldGenerator)
+/* harmony export */ });
+/* harmony import */ var _core_dom_listeners_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../core/dom/listeners.js */ "./resources/frontend/core/dom/listeners.js");
+/* harmony import */ var _generated_value_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./generated-value.js */ "./resources/frontend/features/forms/generation/generated-value.js");
+
+
+function bindFieldGenerator(root, field, random) {
+  var control = root.querySelector('.generate');
+  if (!control || !field) return function () {};
+  return (0,_core_dom_listeners_js__WEBPACK_IMPORTED_MODULE_0__.listen)(control, 'click', function () {
+    field.value = (0,_generated_value_js__WEBPACK_IMPORTED_MODULE_1__.generateFieldValue)(field, random);
+    dispatchValueChange(field);
+  });
+}
+function dispatchValueChange(field) {
+  var Event = field.ownerDocument.defaultView.Event;
+  field.dispatchEvent(new Event('input', {
+    bubbles: true
+  }));
+  field.dispatchEvent(new Event('change', {
+    bubbles: true
+  }));
+}
+
+/***/ }),
+
+/***/ "./resources/frontend/features/forms/generation/generated-value.js":
+/*!*************************************************************************!*\
+  !*** ./resources/frontend/features/forms/generation/generated-value.js ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "DEFAULT_GENERATED_CHARACTERS": () => (/* binding */ DEFAULT_GENERATED_CHARACTERS),
+/* harmony export */   "generateFieldValue": () => (/* binding */ generateFieldValue)
+/* harmony export */ });
+var DEFAULT_GENERATED_CHARACTERS = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+function generateFieldValue(field) {
+  var random = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : Math.random;
+  var characters = field.dataset.generateChars || DEFAULT_GENERATED_CHARACTERS;
+  var length = positiveInteger(field.dataset.generateLength, 8);
+  return Array.from({
+    length: length
+  }, function () {
+    return randomCharacter(characters, random);
+  }).join('');
+}
+function randomCharacter(characters, random) {
+  var index = Math.floor(random() * characters.length);
+  return characters.charAt(Math.min(index, characters.length - 1));
+}
+function positiveInteger(value, fallback) {
+  var number = Number.parseInt(value, 10);
+  return Number.isInteger(number) && number > 0 ? number : fallback;
+}
+
+/***/ }),
+
+/***/ "./resources/frontend/features/forms/generation/password-control.js":
+/*!**************************************************************************!*\
+  !*** ./resources/frontend/features/forms/generation/password-control.js ***!
+  \**************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "PASSWORD_COMPONENT": () => (/* binding */ PASSWORD_COMPONENT),
+/* harmony export */   "PASSWORD_SELECTOR": () => (/* binding */ PASSWORD_SELECTOR),
+/* harmony export */   "createPasswordDefinition": () => (/* binding */ createPasswordDefinition),
+/* harmony export */   "installPasswordControls": () => (/* binding */ installPasswordControls),
+/* harmony export */   "mountPasswordControl": () => (/* binding */ mountPasswordControl)
+/* harmony export */ });
+/* harmony import */ var _core_dom_listeners_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../core/dom/listeners.js */ "./resources/frontend/core/dom/listeners.js");
+/* harmony import */ var _field_generator_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./field-generator.js */ "./resources/frontend/features/forms/generation/field-generator.js");
+
+
+var PASSWORD_COMPONENT = 'form-password';
+var PASSWORD_SELECTOR = '.password-field';
+function installPasswordControls(admin) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  var definition = createPasswordDefinition(options.random);
+  admin.Components.register(definition);
+  var scan = function scan() {
+    var _options$root;
+    var root = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : (_options$root = options.root) !== null && _options$root !== void 0 ? _options$root : globalThis.document;
+    return admin.Components.scan(root, PASSWORD_COMPONENT);
+  };
+  admin.Modules.register('form.elements.password', function () {
+    return scan();
+  });
+  return {
+    definition: definition,
+    scan: scan
+  };
+}
+function createPasswordDefinition(random) {
+  return {
+    mount: function mount(element) {
+      return mountPasswordControl(element, random);
+    },
+    name: PASSWORD_COMPONENT,
+    selector: PASSWORD_SELECTOR
+  };
+}
+function mountPasswordControl(element) {
+  var random = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : Math.random;
+  var field = element.querySelector('.passwd');
+  var show = element.querySelector('.button-show');
+  var removers = [(0,_field_generator_js__WEBPACK_IMPORTED_MODULE_1__.bindFieldGenerator)(element, field, random)];
+  if (field && show) removers.push((0,_core_dom_listeners_js__WEBPACK_IMPORTED_MODULE_0__.listen)(show, 'click', function () {
+    return togglePassword(field, show);
+  }));
+  return function () {
+    return removers.reverse().forEach(function (remove) {
+      return remove();
+    });
+  };
+}
+function togglePassword(field, control) {
+  var visible = field.type === 'password';
+  field.type = visible ? 'text' : 'password';
+  control.setAttribute('aria-pressed', String(visible));
+  var icon = control.querySelector('i');
+  icon === null || icon === void 0 || icon.classList.toggle('fa-eye', !visible);
+  icon === null || icon === void 0 || icon.classList.toggle('fa-eye-slash', visible);
+}
+
+/***/ }),
+
+/***/ "./resources/frontend/features/forms/generation/text-control.js":
+/*!**********************************************************************!*\
+  !*** ./resources/frontend/features/forms/generation/text-control.js ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "TEXT_GENERATOR_COMPONENT": () => (/* binding */ TEXT_GENERATOR_COMPONENT),
+/* harmony export */   "TEXT_GENERATOR_SELECTOR": () => (/* binding */ TEXT_GENERATOR_SELECTOR),
+/* harmony export */   "createTextGeneratorDefinition": () => (/* binding */ createTextGeneratorDefinition),
+/* harmony export */   "installTextGenerators": () => (/* binding */ installTextGenerators)
+/* harmony export */ });
+/* harmony import */ var _field_generator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./field-generator.js */ "./resources/frontend/features/forms/generation/field-generator.js");
+
+var TEXT_GENERATOR_COMPONENT = 'form-text-generator';
+var TEXT_GENERATOR_SELECTOR = '.form-element-text';
+function installTextGenerators(admin) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  var definition = createTextGeneratorDefinition(options.random);
+  admin.Components.register(definition);
+  var scan = function scan() {
+    var _options$root;
+    var root = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : (_options$root = options.root) !== null && _options$root !== void 0 ? _options$root : globalThis.document;
+    return admin.Components.scan(root, TEXT_GENERATOR_COMPONENT);
+  };
+  admin.Modules.register('form.elements.text', function () {
+    return scan();
+  });
+  return {
+    definition: definition,
+    scan: scan
+  };
+}
+function createTextGeneratorDefinition(random) {
+  return {
+    mount: function mount(element) {
+      return (0,_field_generator_js__WEBPACK_IMPORTED_MODULE_0__.bindFieldGenerator)(element, element.querySelector('.text-element'), random);
+    },
+    name: TEXT_GENERATOR_COMPONENT,
+    selector: TEXT_GENERATOR_SELECTOR
+  };
+}
+
+/***/ }),
+
 /***/ "./resources/frontend/features/forms/wysiwyg/adapters/ckeditor4.js":
 /*!*************************************************************************!*\
   !*** ./resources/frontend/features/forms/wysiwyg/adapters/ckeditor4.js ***!
@@ -2090,6 +2394,59 @@ function cssEscape(value) {
 
 /***/ }),
 
+/***/ "./resources/frontend/features/forms/wysiwyg/install-wysiwyg-adapters.js":
+/*!*******************************************************************************!*\
+  !*** ./resources/frontend/features/forms/wysiwyg/install-wysiwyg-adapters.js ***!
+  \*******************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "installWysiwygAdapters": () => (/* binding */ installWysiwygAdapters)
+/* harmony export */ });
+/* harmony import */ var _adapters_ckeditor4_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./adapters/ckeditor4.js */ "./resources/frontend/features/forms/wysiwyg/adapters/ckeditor4.js");
+/* harmony import */ var _adapters_ckeditor5_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./adapters/ckeditor5.js */ "./resources/frontend/features/forms/wysiwyg/adapters/ckeditor5.js");
+/* harmony import */ var _adapters_simplemde_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./adapters/simplemde.js */ "./resources/frontend/features/forms/wysiwyg/adapters/simplemde.js");
+/* harmony import */ var _adapters_tinymce_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./adapters/tinymce.js */ "./resources/frontend/features/forms/wysiwyg/adapters/tinymce.js");
+
+
+
+
+function installWysiwygAdapters(registry) {
+  var target = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : globalThis;
+  registerLazy(registry, 'ckeditor', function () {
+    return (0,_adapters_ckeditor4_js__WEBPACK_IMPORTED_MODULE_0__.createCkeditor4Adapter)(target.CKEDITOR);
+  });
+  registerLazy(registry, 'ckeditor5', function () {
+    return (0,_adapters_ckeditor5_js__WEBPACK_IMPORTED_MODULE_1__.createCkeditor5Adapter)(target.ClassicEditor, target.document);
+  });
+  registerLazy(registry, 'simplemde', function () {
+    return (0,_adapters_simplemde_js__WEBPACK_IMPORTED_MODULE_2__.createSimpleMdeAdapter)(target.SimpleMDE, target.document);
+  });
+  registerLazy(registry, 'tinymce', function () {
+    return (0,_adapters_tinymce_js__WEBPACK_IMPORTED_MODULE_3__.createTinyMceAdapter)(target.tinymce);
+  });
+}
+function registerLazy(registry, name, createAdapter) {
+  var adapter;
+  var current = function current() {
+    return adapter !== null && adapter !== void 0 ? adapter : adapter = createAdapter();
+  };
+  registry.register(name, function () {
+    var _current;
+    return (_current = current()).switchOn.apply(_current, arguments);
+  }, function () {
+    var _current2;
+    return (_current2 = current()).switchOff.apply(_current2, arguments);
+  }, function () {
+    var _current3;
+    return (_current3 = current()).exec.apply(_current3, arguments);
+  });
+}
+
+/***/ }),
+
 /***/ "./resources/frontend/features/forms/wysiwyg/install-wysiwyg.js":
 /*!**********************************************************************!*\
   !*** ./resources/frontend/features/forms/wysiwyg/install-wysiwyg.js ***!
@@ -2221,199 +2578,6 @@ function requiredString(value, name) {
     throw new TypeError("".concat(name, " must be a non-empty string."));
   }
   return value;
-}
-
-/***/ }),
-
-/***/ "./resources/frontend/features/forms/wysiwyg/wysiwyg-registry.js":
-/*!***********************************************************************!*\
-  !*** ./resources/frontend/features/forms/wysiwyg/wysiwyg-registry.js ***!
-  \***********************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "createWysiwygRegistry": () => (/* binding */ createWysiwygRegistry)
-/* harmony export */ });
-function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
-function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
-function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
-function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
-function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
-function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
-function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
-function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
-function createWysiwygRegistry() {
-  var _options$log;
-  var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  var adapters = new Map();
-  var records = new Map();
-  var events = options.events;
-  var log = (_options$log = options.log) !== null && _options$log !== void 0 ? _options$log : function () {};
-  return {
-    add: function add(name, switchOn, switchOff, exec) {
-      return this.register(name, switchOn, switchOff, exec);
-    },
-    destroyAll: function destroyAll() {
-      return Promise.all(_toConsumableArray(records.keys()).map(function (id) {
-        return _switchOff(records, id, events, log);
-      }));
-    },
-    editor: function editor(id) {
-      return editorFor(records, id);
-    },
-    exec: function exec(id, command, data) {
-      return execute(records, id, command, data, events);
-    },
-    get: function get(id) {
-      var _records$get;
-      return (_records$get = records.get(id)) === null || _records$get === void 0 ? void 0 : _records$get.adapter;
-    },
-    register: function register(name, on, off, exec) {
-      return registerAdapter(adapters, name, on, off, exec, log);
-    },
-    switchOff: function switchOff(id) {
-      return _switchOff(records, id, events, log);
-    },
-    switchOn: function switchOn(id, name, params) {
-      return _switchOn(adapters, records, id, name, params, events, log);
-    }
-  };
-}
-function registerAdapter(adapters, name, switchOn, switchOff, exec, log) {
-  if (typeof switchOn !== 'function' || typeof switchOff !== 'function') {
-    log('System try to add editor without required callbacks.', 'Wysiwyg');
-    return false;
-  }
-  adapters.set(name, Object.freeze([name, switchOn, switchOff, exec]));
-  return true;
-}
-function _switchOn(_x, _x2, _x3, _x4, _x5, _x6, _x7) {
-  return _switchOn2.apply(this, arguments);
-}
-function _switchOn2() {
-  _switchOn2 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee(adapters, records, id, name, params, events, log) {
-    var adapter, active;
-    return _regenerator().w(function (_context) {
-      while (1) switch (_context.n) {
-        case 0:
-          adapter = adapters.get(name);
-          if (adapter) {
-            _context.n = 1;
-            break;
-          }
-          log("Unknown WYSIWYG editor [".concat(name, "]."), 'Wysiwyg');
-          return _context.a(2, null);
-        case 1:
-          active = records.get(id);
-          if (!((active === null || active === void 0 ? void 0 : active.adapter) === adapter)) {
-            _context.n = 2;
-            break;
-          }
-          return _context.a(2, active.ready);
-        case 2:
-          if (!active) {
-            _context.n = 3;
-            break;
-          }
-          _context.n = 3;
-          return _switchOff(records, id, events, log);
-        case 3:
-          return _context.a(2, activate(records, id, adapter, params, events, log));
-      }
-    }, _callee);
-  }));
-  return _switchOn2.apply(this, arguments);
-}
-function activate(records, id, adapter, params, events, log) {
-  var record = {
-    adapter: adapter,
-    editor: null,
-    ready: null
-  };
-  records.set(id, record);
-  record.ready = Promise.resolve().then(function () {
-    return adapter[1](id, params);
-  }).then(normalizeEditor).then(function (editor) {
-    return editorReady(records, record, id, editor, events);
-  })["catch"](function (error) {
-    return editorFailed(records, record, id, error, log);
-  });
-  return record.ready;
-}
-function editorReady(records, record, id, editor, events) {
-  var _events$fire;
-  record.editor = editor;
-  if (records.get(id) === record) events === null || events === void 0 || (_events$fire = events.fire) === null || _events$fire === void 0 || _events$fire.call(events, 'wysiwyg:switchOn', editor);
-  return editor;
-}
-function editorFailed(records, record, id, error, log) {
-  if (records.get(id) === record) records["delete"](id);
-  log(error, 'Wysiwyg');
-  return null;
-}
-function _switchOff(_x8, _x9, _x0, _x1) {
-  return _switchOff2.apply(this, arguments);
-}
-function _switchOff2() {
-  _switchOff2 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2(records, id, events, log) {
-    var record, _events$fire3, editor, _t;
-    return _regenerator().w(function (_context2) {
-      while (1) switch (_context2.p = _context2.n) {
-        case 0:
-          record = records.get(id);
-          if (record) {
-            _context2.n = 1;
-            break;
-          }
-          return _context2.a(2, false);
-        case 1:
-          records["delete"](id);
-          _context2.p = 2;
-          _context2.n = 3;
-          return record.ready;
-        case 3:
-          editor = _context2.v;
-          if (!editor) {
-            _context2.n = 4;
-            break;
-          }
-          _context2.n = 4;
-          return record.adapter[2](editor, id);
-        case 4:
-          events === null || events === void 0 || (_events$fire3 = events.fire) === null || _events$fire3 === void 0 || _events$fire3.call(events, 'wysiwyg:switchOff', id);
-          return _context2.a(2, true);
-        case 5:
-          _context2.p = 5;
-          _t = _context2.v;
-          log(_t, 'Wysiwyg');
-          return _context2.a(2, false);
-      }
-    }, _callee2, null, [[2, 5]]);
-  }));
-  return _switchOff2.apply(this, arguments);
-}
-function execute(records, id, command, data, events) {
-  var _record$adapter, _events$fire2;
-  var record = records.get(id);
-  if (typeof (record === null || record === void 0 || (_record$adapter = record.adapter) === null || _record$adapter === void 0 ? void 0 : _record$adapter[3]) !== 'function') return undefined;
-  events === null || events === void 0 || (_events$fire2 = events.fire) === null || _events$fire2 === void 0 || _events$fire2.call(events, 'wysiwyg:exec', command, id, data);
-  if (record.editor) return record.adapter[3](record.editor, command, id, data);
-  return record.ready.then(function (editor) {
-    if (editor) return record.adapter[3](editor, command, id, data);
-  });
-}
-function editorFor(records, id) {
-  var _record$editor;
-  var record = records.get(id);
-  return (_record$editor = record === null || record === void 0 ? void 0 : record.editor) !== null && _record$editor !== void 0 ? _record$editor : record === null || record === void 0 ? void 0 : record.ready;
-}
-function normalizeEditor(editor) {
-  var _editor$;
-  return Array.isArray(editor) ? (_editor$ = editor[0]) !== null && _editor$ !== void 0 ? _editor$ : null : editor;
 }
 
 /***/ }),
@@ -5871,80 +6035,27 @@ var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be in strict mode.
 (() => {
 "use strict";
-/*!****************************************************!*\
-  !*** ./resources/frontend/features/forms/index.js ***!
-  \****************************************************/
+/*!******************************************************!*\
+  !*** ./resources/frontend/features/forms/browser.js ***!
+  \******************************************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "DATE_CONTROL_COMPONENT": () => (/* reexport safe */ _date_date_control_js__WEBPACK_IMPORTED_MODULE_1__.DATE_CONTROL_COMPONENT),
-/* harmony export */   "DATE_CONTROL_SELECTOR": () => (/* reexport safe */ _date_date_control_js__WEBPACK_IMPORTED_MODULE_1__.DATE_CONTROL_SELECTOR),
-/* harmony export */   "DATE_CONTROL_TYPES": () => (/* reexport safe */ _date_date_options_js__WEBPACK_IMPORTED_MODULE_4__.DATE_CONTROL_TYPES),
-/* harmony export */   "DATE_RANGE_SEPARATOR": () => (/* reexport safe */ _date_date_range_options_js__WEBPACK_IMPORTED_MODULE_5__.DATE_RANGE_SEPARATOR),
-/* harmony export */   "FILES_COMPONENT": () => (/* reexport safe */ _files_files_controller_js__WEBPACK_IMPORTED_MODULE_7__.FILES_COMPONENT),
-/* harmony export */   "FILES_SELECTOR": () => (/* reexport safe */ _files_files_controller_js__WEBPACK_IMPORTED_MODULE_7__.FILES_SELECTOR),
-/* harmony export */   "FORM_FEATURE_ID": () => (/* binding */ FORM_FEATURE_ID),
-/* harmony export */   "LEGACY_DATE_MODULES": () => (/* reexport safe */ _date_install_date_controls_js__WEBPACK_IMPORTED_MODULE_6__.LEGACY_DATE_MODULES),
-/* harmony export */   "LEGACY_FILES_MODULE": () => (/* reexport safe */ _files_install_files_js__WEBPACK_IMPORTED_MODULE_8__.LEGACY_FILES_MODULE),
-/* harmony export */   "LEGACY_WYSIWYG_MODULE": () => (/* reexport safe */ _wysiwyg_install_wysiwyg_js__WEBPACK_IMPORTED_MODULE_16__.LEGACY_WYSIWYG_MODULE),
-/* harmony export */   "WYSIWYG_COMPONENT": () => (/* reexport safe */ _wysiwyg_wysiwyg_component_js__WEBPACK_IMPORTED_MODULE_18__.WYSIWYG_COMPONENT),
-/* harmony export */   "WYSIWYG_INIT_ATTRIBUTE": () => (/* reexport safe */ _wysiwyg_wysiwyg_component_js__WEBPACK_IMPORTED_MODULE_18__.WYSIWYG_INIT_ATTRIBUTE),
-/* harmony export */   "WYSIWYG_SELECTOR": () => (/* reexport safe */ _wysiwyg_wysiwyg_component_js__WEBPACK_IMPORTED_MODULE_18__.WYSIWYG_SELECTOR),
-/* harmony export */   "baseName": () => (/* reexport safe */ _files_files_values_js__WEBPACK_IMPORTED_MODULE_11__.baseName),
-/* harmony export */   "bindFormButtons": () => (/* reexport safe */ _actions_form_buttons_js__WEBPACK_IMPORTED_MODULE_0__.bindFormButtons),
-/* harmony export */   "collectFiles": () => (/* reexport safe */ _files_files_values_js__WEBPACK_IMPORTED_MODULE_11__.collectFiles),
-/* harmony export */   "createCkeditor4Adapter": () => (/* reexport safe */ _wysiwyg_adapters_ckeditor4_js__WEBPACK_IMPORTED_MODULE_12__.createCkeditor4Adapter),
-/* harmony export */   "createCkeditor5Adapter": () => (/* reexport safe */ _wysiwyg_adapters_ckeditor5_js__WEBPACK_IMPORTED_MODULE_13__.createCkeditor5Adapter),
-/* harmony export */   "createDateControlDefinition": () => (/* reexport safe */ _date_date_control_js__WEBPACK_IMPORTED_MODULE_1__.createDateControlDefinition),
-/* harmony export */   "createDatePickerOptions": () => (/* reexport safe */ _date_date_options_js__WEBPACK_IMPORTED_MODULE_4__.createDatePickerOptions),
-/* harmony export */   "createDateRangeOptions": () => (/* reexport safe */ _date_date_range_options_js__WEBPACK_IMPORTED_MODULE_5__.createDateRangeOptions),
-/* harmony export */   "createFileItem": () => (/* reexport safe */ _files_files_template_js__WEBPACK_IMPORTED_MODULE_9__.createFileItem),
-/* harmony export */   "createFilesDefinition": () => (/* reexport safe */ _files_files_controller_js__WEBPACK_IMPORTED_MODULE_7__.createFilesDefinition),
-/* harmony export */   "createFilesUploader": () => (/* reexport safe */ _files_files_uploader_js__WEBPACK_IMPORTED_MODULE_10__.createFilesUploader),
-/* harmony export */   "createSimpleMdeAdapter": () => (/* reexport safe */ _wysiwyg_adapters_simplemde_js__WEBPACK_IMPORTED_MODULE_14__.createSimpleMdeAdapter),
-/* harmony export */   "createTinyMceAdapter": () => (/* reexport safe */ _wysiwyg_adapters_tinymce_js__WEBPACK_IMPORTED_MODULE_15__.createTinyMceAdapter),
-/* harmony export */   "createWysiwygDefinition": () => (/* reexport safe */ _wysiwyg_wysiwyg_component_js__WEBPACK_IMPORTED_MODULE_18__.createWysiwygDefinition),
-/* harmony export */   "createWysiwygRegistry": () => (/* reexport safe */ _wysiwyg_wysiwyg_registry_js__WEBPACK_IMPORTED_MODULE_19__.createWysiwygRegistry),
-/* harmony export */   "cssUrl": () => (/* reexport safe */ _files_files_template_js__WEBPACK_IMPORTED_MODULE_9__.cssUrl),
-/* harmony export */   "fileExtension": () => (/* reexport safe */ _files_files_values_js__WEBPACK_IMPORTED_MODULE_11__.fileExtension),
-/* harmony export */   "filePresentation": () => (/* reexport safe */ _files_files_values_js__WEBPACK_IMPORTED_MODULE_11__.filePresentation),
-/* harmony export */   "formatDateValue": () => (/* reexport safe */ _date_date_format_js__WEBPACK_IMPORTED_MODULE_2__.formatDateValue),
-/* harmony export */   "installDateControls": () => (/* reexport safe */ _date_install_date_controls_js__WEBPACK_IMPORTED_MODULE_6__.installDateControls),
-/* harmony export */   "installFiles": () => (/* reexport safe */ _files_install_files_js__WEBPACK_IMPORTED_MODULE_8__.installFiles),
-/* harmony export */   "installWysiwyg": () => (/* reexport safe */ _wysiwyg_install_wysiwyg_js__WEBPACK_IMPORTED_MODULE_16__.installWysiwyg),
-/* harmony export */   "isImageExtension": () => (/* reexport safe */ _files_files_values_js__WEBPACK_IMPORTED_MODULE_11__.isImageExtension),
-/* harmony export */   "mountDateControl": () => (/* reexport safe */ _date_date_control_js__WEBPACK_IMPORTED_MODULE_1__.mountDateControl),
-/* harmony export */   "mountFiles": () => (/* reexport safe */ _files_files_controller_js__WEBPACK_IMPORTED_MODULE_7__.mountFiles),
-/* harmony export */   "mountWysiwyg": () => (/* reexport safe */ _wysiwyg_wysiwyg_component_js__WEBPACK_IMPORTED_MODULE_18__.mountWysiwyg),
-/* harmony export */   "parseDateRangeValue": () => (/* reexport safe */ _date_date_range_options_js__WEBPACK_IMPORTED_MODULE_5__.parseDateRangeValue),
-/* harmony export */   "parseDateValue": () => (/* reexport safe */ _date_date_format_js__WEBPACK_IMPORTED_MODULE_2__.parseDateValue),
-/* harmony export */   "parseParameters": () => (/* reexport safe */ _wysiwyg_wysiwyg_config_js__WEBPACK_IMPORTED_MODULE_17__.parseParameters),
-/* harmony export */   "readFile": () => (/* reexport safe */ _files_files_values_js__WEBPACK_IMPORTED_MODULE_11__.readFile),
-/* harmony export */   "readWysiwygConfig": () => (/* reexport safe */ _wysiwyg_wysiwyg_config_js__WEBPACK_IMPORTED_MODULE_17__.readWysiwygConfig),
-/* harmony export */   "resolveDatePickerLocale": () => (/* reexport safe */ _date_date_locales_js__WEBPACK_IMPORTED_MODULE_3__.resolveDatePickerLocale),
-/* harmony export */   "serializeFiles": () => (/* reexport safe */ _files_files_values_js__WEBPACK_IMPORTED_MODULE_11__.serializeFiles),
-/* harmony export */   "toAirDateFormat": () => (/* reexport safe */ _date_date_format_js__WEBPACK_IMPORTED_MODULE_2__.toAirDateFormat)
+/* harmony export */   "bootForms": () => (/* binding */ bootForms)
 /* harmony export */ });
-/* harmony import */ var _actions_form_buttons_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./actions/form-buttons.js */ "./resources/frontend/features/forms/actions/form-buttons.js");
-/* harmony import */ var _date_date_control_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./date/date-control.js */ "./resources/frontend/features/forms/date/date-control.js");
-/* harmony import */ var _date_date_format_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./date/date-format.js */ "./resources/frontend/features/forms/date/date-format.js");
-/* harmony import */ var _date_date_locales_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./date/date-locales.js */ "./resources/frontend/features/forms/date/date-locales.js");
-/* harmony import */ var _date_date_options_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./date/date-options.js */ "./resources/frontend/features/forms/date/date-options.js");
-/* harmony import */ var _date_date_range_options_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./date/date-range-options.js */ "./resources/frontend/features/forms/date/date-range-options.js");
-/* harmony import */ var _date_install_date_controls_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./date/install-date-controls.js */ "./resources/frontend/features/forms/date/install-date-controls.js");
-/* harmony import */ var _files_files_controller_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./files/files-controller.js */ "./resources/frontend/features/forms/files/files-controller.js");
-/* harmony import */ var _files_install_files_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./files/install-files.js */ "./resources/frontend/features/forms/files/install-files.js");
-/* harmony import */ var _files_files_template_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./files/files-template.js */ "./resources/frontend/features/forms/files/files-template.js");
-/* harmony import */ var _files_files_uploader_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./files/files-uploader.js */ "./resources/frontend/features/forms/files/files-uploader.js");
-/* harmony import */ var _files_files_values_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./files/files-values.js */ "./resources/frontend/features/forms/files/files-values.js");
-/* harmony import */ var _wysiwyg_adapters_ckeditor4_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./wysiwyg/adapters/ckeditor4.js */ "./resources/frontend/features/forms/wysiwyg/adapters/ckeditor4.js");
-/* harmony import */ var _wysiwyg_adapters_ckeditor5_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./wysiwyg/adapters/ckeditor5.js */ "./resources/frontend/features/forms/wysiwyg/adapters/ckeditor5.js");
-/* harmony import */ var _wysiwyg_adapters_simplemde_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./wysiwyg/adapters/simplemde.js */ "./resources/frontend/features/forms/wysiwyg/adapters/simplemde.js");
-/* harmony import */ var _wysiwyg_adapters_tinymce_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./wysiwyg/adapters/tinymce.js */ "./resources/frontend/features/forms/wysiwyg/adapters/tinymce.js");
-/* harmony import */ var _wysiwyg_install_wysiwyg_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./wysiwyg/install-wysiwyg.js */ "./resources/frontend/features/forms/wysiwyg/install-wysiwyg.js");
-/* harmony import */ var _wysiwyg_wysiwyg_config_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./wysiwyg/wysiwyg-config.js */ "./resources/frontend/features/forms/wysiwyg/wysiwyg-config.js");
-/* harmony import */ var _wysiwyg_wysiwyg_component_js__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./wysiwyg/wysiwyg-component.js */ "./resources/frontend/features/forms/wysiwyg/wysiwyg-component.js");
-/* harmony import */ var _wysiwyg_wysiwyg_registry_js__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./wysiwyg/wysiwyg-registry.js */ "./resources/frontend/features/forms/wysiwyg/wysiwyg-registry.js");
-var FORM_FEATURE_ID = 'forms';
+/* harmony import */ var _actions_install_form_buttons_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./actions/install-form-buttons.js */ "./resources/frontend/features/forms/actions/install-form-buttons.js");
+/* harmony import */ var _browser_options_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./browser-options.js */ "./resources/frontend/features/forms/browser-options.js");
+/* harmony import */ var _date_install_date_controls_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./date/install-date-controls.js */ "./resources/frontend/features/forms/date/install-date-controls.js");
+/* harmony import */ var _files_install_files_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./files/install-files.js */ "./resources/frontend/features/forms/files/install-files.js");
+/* harmony import */ var _generation_password_control_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./generation/password-control.js */ "./resources/frontend/features/forms/generation/password-control.js");
+/* harmony import */ var _generation_text_control_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./generation/text-control.js */ "./resources/frontend/features/forms/generation/text-control.js");
+/* harmony import */ var _wysiwyg_install_wysiwyg_adapters_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./wysiwyg/install-wysiwyg-adapters.js */ "./resources/frontend/features/forms/wysiwyg/install-wysiwyg-adapters.js");
+/* harmony import */ var _wysiwyg_install_wysiwyg_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./wysiwyg/install-wysiwyg.js */ "./resources/frontend/features/forms/wysiwyg/install-wysiwyg.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 
 
 
@@ -5953,18 +6064,59 @@ var FORM_FEATURE_ID = 'forms';
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+if (globalThis.document) bootForms(globalThis);
+function bootForms(target) {
+  var admin = requireCompatibility(target.Admin);
+  (0,_wysiwyg_install_wysiwyg_adapters_js__WEBPACK_IMPORTED_MODULE_6__.installWysiwygAdapters)(admin.WYSIWYG, target);
+  var features = installFeatures(target, admin);
+  var forms = createFormsRuntime(features, target.document);
+  admin.Forms = forms;
+  admin.WYSIWYG.scan = features.wysiwyg.scan;
+  forms.scan();
+  return forms;
+}
+function installFeatures(target, admin) {
+  var root = target.document;
+  return {
+    buttons: (0,_actions_install_form_buttons_js__WEBPACK_IMPORTED_MODULE_0__.installFormButtons)(admin, {
+      document: root,
+      questions: (0,_browser_options_js__WEBPACK_IMPORTED_MODULE_1__.formButtonQuestions)(target)
+    }),
+    dates: (0,_date_install_date_controls_js__WEBPACK_IMPORTED_MODULE_2__.installDateControls)(admin, {
+      root: root
+    }),
+    files: (0,_files_install_files_js__WEBPACK_IMPORTED_MODULE_3__.installFiles)(admin, {
+      notifications: (0,_browser_options_js__WEBPACK_IMPORTED_MODULE_1__.fileNotifications)(target),
+      root: root
+    }),
+    passwords: (0,_generation_password_control_js__WEBPACK_IMPORTED_MODULE_4__.installPasswordControls)(admin, {
+      root: root
+    }),
+    text: (0,_generation_text_control_js__WEBPACK_IMPORTED_MODULE_5__.installTextGenerators)(admin, {
+      root: root
+    }),
+    wysiwyg: (0,_wysiwyg_install_wysiwyg_js__WEBPACK_IMPORTED_MODULE_7__.installWysiwyg)(admin, {
+      root: root
+    })
+  };
+}
+function createFormsRuntime(features, root) {
+  return {
+    features: Object.freeze(_objectSpread({}, features)),
+    scan: function scan() {
+      var scanRoot = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : root;
+      return Object.values(features).reduce(function (count, feature) {
+        return count + feature.scan(scanRoot);
+      }, 0);
+    }
+  };
+}
+function requireCompatibility(admin) {
+  if (!(admin !== null && admin !== void 0 && admin.Modules) || !(admin !== null && admin !== void 0 && admin.Messages) || !(admin !== null && admin !== void 0 && admin.WYSIWYG)) {
+    throw new TypeError('Forms require the SleepingOwl compatibility runtime.');
+  }
+  return admin;
+}
 })();
 
 /******/ })()

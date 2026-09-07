@@ -103,13 +103,16 @@ it('publishes the legacy API compatibility layer without presentation styles', (
     expect(modernEntry('shared:compatibility', 'styles')).toBeUndefined()
 })
 
-it.each(['lightbox', 'tree'])('publishes %s through an auto-boot browser entry', (feature) => {
-    expect(modernEntry(`feature:${feature}`, 'scripts')).toEqual({
-        logicalId: `feature:${feature}`,
-        source: `resources/frontend/features/${feature}/browser.js`,
-        output: `js/features/${feature}.js`,
-    })
-})
+it.each(['forms', 'lightbox', 'tree'])(
+    'publishes %s through an auto-boot browser entry',
+    (feature) => {
+        expect(modernEntry(`feature:${feature}`, 'scripts')).toEqual({
+            logicalId: `feature:${feature}`,
+            source: `resources/frontend/features/${feature}/browser.js`,
+            output: `js/features/${feature}.js`,
+        })
+    },
+)
 
 describe('behavior-only entries', () => {
     it('keeps alerts free of a generic presentation stylesheet', () => {
