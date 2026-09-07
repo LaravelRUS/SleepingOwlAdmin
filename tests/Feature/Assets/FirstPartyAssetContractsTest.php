@@ -14,6 +14,17 @@ use SleepingOwl\Admin\Facades\PackageManager as PackageManagerFacade;
 
 class FirstPartyAssetContractsTest extends TestCase
 {
+    public function test_package_manifest_does_not_require_legacy_asset_vendor(): void
+    {
+        $manifest = json_decode(
+            file_get_contents(dirname(__DIR__, 3).'/composer.json'),
+            true,
+            flags: JSON_THROW_ON_ERROR
+        );
+
+        $this->assertArrayNotHasKey('kodicms/laravel-assets', $manifest['require']);
+    }
+
     public function test_asset_contract_has_no_vendor_parent_and_stays_narrow(): void
     {
         $this->assertNoKodiCmsParent(AssetsInterface::class);

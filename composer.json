@@ -41,7 +41,6 @@
         "laravel/framework": "^10.0|^11.0|^12.0|^13.0",
         "doctrine/dbal": "^3.0|^4.0",
         "spatie/laravel-html": "^3.11",
-        "kodicms/laravel-assets": "0.*",
         "erusev/parsedown": "1.*",
         "diglactic/laravel-breadcrumbs": "^8.0|^9.0|^10.0"
     },

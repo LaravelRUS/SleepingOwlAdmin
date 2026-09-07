@@ -21,7 +21,7 @@ SleepingOwl Admin — это мощный конструктор админис�
 
 - **PHP:** >= 8.1
 - **Laravel:** >= 10
-- **Зависимости:** `doctrine/dbal`, `spatie/laravel-html`, `kodicms/laravel-assets`, `diglactic/laravel-breadcrumbs`.
+- **Зависимости:** `doctrine/dbal`, `spatie/laravel-html`, `erusev/parsedown`, `diglactic/laravel-breadcrumbs`.
 
 После `php artisan sleeping-owl:install` пакет:
 1. Публикует конфиг `config/sleeping_owl.php`.
