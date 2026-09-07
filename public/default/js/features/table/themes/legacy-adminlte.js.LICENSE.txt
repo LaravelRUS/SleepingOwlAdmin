@@ -1,0 +1,15 @@
+/*! DataTables 3.0.3
+ * Copyright (c) SpryMedia Ltd - datatables.net/license
+ */
+
+/*! DataTables Bootstrap 5 integration
+ * © SpryMedia Ltd - datatables.net/license
+ */
+
+/*! Responsive 4.0.3 for DataTables
+ * Copyright (c) SpryMedia Ltd - datatables.net/license
+ */
+
+/*! Responsive Bootstrap 5 styling 4.0.3 for DataTables
+ * Copyright (c) SpryMedia Ltd - datatables.net/license
+ */
