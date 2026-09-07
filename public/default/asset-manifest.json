@@ -534,8 +534,8 @@
                     "scripts": [
                         {
                             "file": "profiles/development/js/features/table.js",
-                            "version": "3835161506bf4c9d1fb86f5b0b01dcd8",
-                            "checksum": "sha256:5d26d8c37ca0c83557dbebd2957c939e6ce3767903d986927c34bcf34de09936"
+                            "version": "34edf82ecd80b0abb78f6386e5fe96ca",
+                            "checksum": "sha256:ba8efc7c254584f16f9009dd94188b172f40adc478991728304980582413f0d9"
                         }
                     ],
                     "styles": [
@@ -557,8 +557,8 @@
                     "styles": [
                         {
                             "file": "profiles/development/css/features/table/themes/datatables-legacy-adminlte.css",
-                            "version": "56ca677e631ac19bbdc0e9d1054f6ab1",
-                            "checksum": "sha256:ab8f727654e18dd700bd91deb7e1b1c975341f7ff570664058055bb0493a0a30"
+                            "version": "5596c6cb813a07c1085e27102a267a7d",
+                            "checksum": "sha256:66a7e1437312a521fa6485a3f478c4b9afed7f8ca54adb8bb80b9ce59d70087c"
                         }
                     ]
                 },
@@ -567,8 +567,8 @@
                     "styles": [
                         {
                             "file": "profiles/development/css/features/table/themes/tailwind.css",
-                            "version": "2d9c2e8cc20034a870bbc284f1d83226",
-                            "checksum": "sha256:f8bc1c64084a386d59707067975cc7ec2e388fea2c26cdcf8daeb77d5d1cf35f"
+                            "version": "39db024990214dba1cb25983ffeb77c2",
+                            "checksum": "sha256:94a2b5a1c5a7baa03e2d02dd329bc89d6598c62957b073adad426d4ff87164bf"
                         }
                     ]
                 },
@@ -714,8 +714,8 @@
                     "scripts": [
                         {
                             "file": "profiles/development/js/shared/vue.js",
-                            "version": "a3bfa0f5bffeaee204ca87df48b81470",
-                            "checksum": "sha256:d3dac4e241b31d0e1f3aca05b7df6fca5b308e8cd6195dbe71d1bf6f7f7a2a23"
+                            "version": "ea31f96deb0908601d019898607a6ae8",
+                            "checksum": "sha256:3c9c711a974a42de7b3d5bb949d79f627fe936ffac5d411226ecff541819fdfb"
                         }
                     ],
                     "styles": []
@@ -755,5 +755,5 @@
             }
         }
     },
-    "build_id": "sha256:41e39bdef6e750ec92b07a1439acf4a3b186231dee038d8ac285cc25aea7764f"
+    "build_id": "sha256:e7e907c2debda2c7eff716d1a5973e15e5bf52cf3fdbeac1ad4691e5dc618da6"
 }

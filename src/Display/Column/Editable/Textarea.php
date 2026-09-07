@@ -13,6 +13,8 @@ class Textarea extends FormTextarea implements ColumnEditableInterface
 
     protected $view = 'column.editable.textarea';
 
+    protected $maxRows = 0;
+
     public function __construct($name, $label = null, $small = null)
     {
         parent::__construct($name, $label);
@@ -23,7 +25,21 @@ class Textarea extends FormTextarea implements ColumnEditableInterface
     {
         return $this->editableColumnToArray() + [
             'rows' => $this->getRows(),
+            'maxRows' => $this->getMaxRows(),
+            'isolated' => $this->getIsolated(),
         ];
+    }
+
+    public function setMaxRows(int $maxRows)
+    {
+        $this->maxRows = max(0, $maxRows);
+
+        return $this;
+    }
+
+    public function getMaxRows(): int
+    {
+        return $this->maxRows;
     }
 
     public function save(Request $request)

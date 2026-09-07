@@ -8,6 +8,7 @@ export function readTableDefinition(element) {
         method: element.dataset.method || 'GET',
         options: parseOptions(element.dataset.attributes),
         payload: parsePayload(element.dataset.payload),
+        showInfo: parseFlag(element.dataset.displayInfo, true),
         showLength: parseFlag(element.dataset.displayDtlength),
         showSearch: parseFlag(element.dataset.displaySearch),
         url: element.dataset.url || null,
@@ -31,10 +32,10 @@ export function applyServerOptions(options, definition) {
     }
 }
 
-export function tableLayout({ showLength, showSearch }) {
+export function tableLayout({ showInfo = true, showLength, showSearch }) {
     return {
         bottomEnd: 'paging',
-        bottomStart: 'info',
+        bottomStart: showInfo ? 'info' : null,
         topEnd: showSearch ? 'search' : null,
         topStart: showLength ? 'pageLength' : null,
     }
@@ -74,7 +75,9 @@ function parseJson(source, fallback) {
     }
 }
 
-function parseFlag(value) {
+function parseFlag(value, fallback = false) {
+    if (value === undefined || value === '') return fallback
+
     return value === '1' || value === 'true' || value === true || value === 1
 }
 

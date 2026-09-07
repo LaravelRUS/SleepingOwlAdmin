@@ -21,6 +21,8 @@ export function readInlineEditorConfig(element) {
         dateFormat: element.dataset.dateFormat ?? '',
         displayHtml: element.dataset.displayHtml === 'true',
         emptyText: element.dataset.emptyText ?? '',
+        listLimit: optionalCount(element.dataset.listLimit),
+        listMore: element.dataset.listMore ?? '',
         max: element.dataset.max ?? null,
         min: element.dataset.min ?? null,
         mode: normalizeMode(element.dataset.mode),
@@ -33,6 +35,12 @@ export function readInlineEditorConfig(element) {
         url: requiredValue(element.dataset.url, 'url'),
         value: parseValue(element.dataset.value, type),
     })
+}
+
+function optionalCount(value) {
+    const count = Number(value ?? 0)
+
+    return Number.isFinite(count) && count > 0 ? Math.floor(count) : 0
 }
 
 function readOptionsSource(element) {

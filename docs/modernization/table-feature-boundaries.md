@@ -47,8 +47,11 @@ cache-buster parameter.
 
 First-party runtime options use the current names `layout`, `stateSave` and
 `drawCallback`. Async tables receive a layout object with conditional
-`pageLength`/`search` controls and stable `info`/`paging` regions. Published
-config and `setDatatableAttributes()` values using `sDom`, `bStateSave` or
+`pageLength`/`search` controls and a stable `paging` region. The `info` region is
+enabled by default; `datatables_settings.display_info = false` removes it and
+skips the separate unfiltered total-count query while retaining the filtered
+count required by numbered pagination. Published config and
+`setDatatableAttributes()` values using `sDom`, `bStateSave` or
 `fnDrawCallback` pass through a small compatibility normalizer; an explicitly
 provided current option wins over its legacy alias. Raw option migrations are
 documented in [`data-table-options.md`](data-table-options.md).

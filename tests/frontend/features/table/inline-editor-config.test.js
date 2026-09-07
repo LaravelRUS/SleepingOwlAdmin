@@ -15,6 +15,8 @@ describe('inline editor configuration', () => {
                 options: '[{"value":1,"text":"Admin"}]',
                 pk: '5',
                 inlineEditor: 'checklist',
+                listLimit: '1',
+                listMore: 'and __count__ more',
                 url: '/admin/users',
                 value: '1, 2',
             }),
@@ -23,6 +25,8 @@ describe('inline editor configuration', () => {
         expect(config.mode).toBe('inline')
         expect(config.value).toEqual(['1', '2'])
         expect(config.options).toEqual([{ value: '1', text: 'Admin' }])
+        expect(config.listLimit).toBe(1)
+        expect(config.listMore).toBe('and __count__ more')
         expect(Object.isFrozen(config)).toBe(true)
     })
 })

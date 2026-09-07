@@ -517,6 +517,10 @@ return [
         // Table interaction behavior.
         'datatables_highlight' => false,
 
+        // Show the records summary in asynchronous tables. Disabling it also
+        // skips the unfiltered total count query.
+        'display_info' => true,
+
         // Supported values: 'row', 'table', false.
         'datatables_inline_edit_refresh' => 'table',
 

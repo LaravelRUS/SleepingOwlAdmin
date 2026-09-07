@@ -18,7 +18,7 @@ class InlineEditorRenderContractTest extends TestCase
         $this->assertStringContainsString('data-inline-editor-root', $html);
         $this->assertStringContainsString('data-inline-editor-form', $html);
         $this->assertStringContainsString('data-inline-editor-control', $html);
-        if (in_array($type, ['boolean', 'checkbox'], true)) {
+        if (in_array($type, ['boolean', 'checkbox', 'select'], true)) {
             $this->assertStringNotContainsString('data-inline-editor-clear', $html);
         } else {
             $this->assertStringContainsString('data-inline-editor-clear', $html);
@@ -50,6 +50,7 @@ class InlineEditorRenderContractTest extends TestCase
             $select
         );
         $this->assertStringNotContainsString('data-options=', $select);
+        $this->assertStringContainsString('tabindex="-1"', $select);
         $this->assertStringContainsString('data-date-format="DD.MM.YYYY HH:mm"', $date);
         $this->assertStringNotContainsString('data-source=', $select);
         $this->assertStringNotContainsString('data-combodate=', $date);
@@ -81,10 +82,20 @@ class InlineEditorRenderContractTest extends TestCase
     {
         app()->setLocale('ru');
 
-        $html = $this->renderEditor('checklist', ['value' => '1']);
+        $html = $this->renderEditor('checklist', [
+            'limit' => 2,
+            'maxLists' => 2,
+            'text' => null,
+            'value' => '1,2,3',
+            'values' => ['Первый', 'Второй', 'Третий'],
+        ]);
 
         $this->assertStringContainsString('class="soa-inline-editor-clear-all"', $html);
         $this->assertStringContainsString('>Очистить всё</button>', $html);
+        $this->assertStringContainsString('class="badge table-badge" v-pre>Первый</span>', $html);
+        $this->assertStringContainsString('class="badge table-badge" v-pre>Второй</span>', $html);
+        $this->assertStringNotContainsString('v-pre>Третий</span>', $html);
+        $this->assertStringContainsString('и еще 1', $html);
     }
 
     public function test_range_renders_synced_number_control_with_constraints(): void

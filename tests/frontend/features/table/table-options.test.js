@@ -15,6 +15,7 @@ it('reads typed values from the table dataset without jQuery coercion', () => {
         element({
             attributes: '{"pageLength":25}',
             displayDtlength: '1',
+            displayInfo: '0',
             displaySearch: 'false',
             id: 'orders',
             method: 'POST',
@@ -28,6 +29,7 @@ it('reads typed values from the table dataset without jQuery coercion', () => {
         method: 'POST',
         options: { pageLength: 25 },
         payload: { scope: 'active' },
+        showInfo: false,
         showLength: true,
         showSearch: false,
         url: '/orders',
@@ -41,6 +43,7 @@ it('keeps a non-JSON payload string and defaults optional values', () => {
         method: 'GET',
         options: {},
         payload: 'scope=active',
+        showInfo: true,
         showLength: false,
         showSearch: false,
         url: null,
@@ -70,6 +73,12 @@ it('applies server flags and the current engine layout only to async tables', ()
     expect(tableLayout({ showLength: false, showSearch: true })).toEqual({
         bottomEnd: 'paging',
         bottomStart: 'info',
+        topEnd: 'search',
+        topStart: null,
+    })
+    expect(tableLayout({ showInfo: false, showLength: false, showSearch: true })).toEqual({
+        bottomEnd: 'paging',
+        bottomStart: null,
         topEnd: 'search',
         topStart: null,
     })

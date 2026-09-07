@@ -46,23 +46,14 @@ it('clears scalar controls', () => {
     expect(control.read()).toBe('')
 })
 
-it('reads and clears the editable multiselect through its native control', () => {
-    const events = []
-    class TestEvent {
-        constructor(type) {
-            this.type = type
-        }
-    }
+it('reads the editable multiselect without focusing or clearing it externally', () => {
     const native = {
-        dispatchEvent: (event) => events.push(event.type),
-        ownerDocument: { defaultView: { Event: TestEvent } },
         value: 'published',
     }
-    const focus = { focus() {} }
     const element = {
         matches: () => true,
         querySelector: (selector) =>
-            selector === '[data-inline-editor-select-native]' ? native : focus,
+            selector === '[data-inline-editor-select-native]' ? native : null,
     }
     const control = bindInlineEditorControl(element, {
         type: 'select',
@@ -70,11 +61,8 @@ it('reads and clears the editable multiselect through its native control', () =>
     })
 
     expect(control.read()).toBe('published')
-    expect(control.focusElement()).toBe(focus)
-
-    control.clear()
-
-    expect(events).toEqual(['soa:inline-editor-clear'])
+    expect(control.focusElement).toBe(element)
+    expect(control.clear).toBeUndefined()
 })
 
 it('resets an editable range to zero when it is cleared', () => {

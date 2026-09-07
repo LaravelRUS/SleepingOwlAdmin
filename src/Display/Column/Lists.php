@@ -3,9 +3,12 @@
 namespace SleepingOwl\Admin\Display\Column;
 
 use Illuminate\Support\Collection;
+use SleepingOwl\Admin\Display\Column\Concerns\HasListDisplayLimit;
 
 class Lists extends NamedColumn
 {
+    use HasListDisplayLimit;
+
     /**
      * @var string
      */
@@ -25,30 +28,6 @@ class Lists extends NamedColumn
      * @var bool
      */
     protected $sortable = false;
-
-    /**
-     * @var int
-     */
-    protected $maxLists = 0;
-
-    /**
-     * @param  int  $maxListsItem
-     * @return $this
-     */
-    public function setMaxLists($maxListsItem)
-    {
-        $this->maxLists = (int) $maxListsItem;
-
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getMaxLists()
-    {
-        return $this->maxLists;
-    }
 
     /**
      * @param  bool  $sortable

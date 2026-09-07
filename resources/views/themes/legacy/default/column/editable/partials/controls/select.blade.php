@@ -10,7 +10,8 @@
 
 <div class="soa-inline-editor-select"
      data-inline-editor-control
-     data-inline-editor-select>
+     data-inline-editor-select
+     tabindex="-1">
     @include(AdminTemplate::getViewPath('form.element.partials.select_island'), [
         'label' => strip_tags($editorTitle ?? $name),
         'limit' => $limit ?? 0,

@@ -20,6 +20,22 @@ describe('inline editor values', () => {
         expect(
             inlineEditorDisplayValue({ emptyText: 'None', options, type: 'checklist' }, ['1', '2']),
         ).toBe('Admin, Editor')
+        expect(
+            inlineEditorDisplayValue(
+                {
+                    displayHtml: true,
+                    emptyText: 'None',
+                    listLimit: 1,
+                    listMore: 'and __count__ more',
+                    options,
+                    type: 'checklist',
+                },
+                ['1', '2'],
+            ),
+        ).toBe(
+            '<span class="badge table-badge">Admin</span>\n' +
+                '<span class="badge bg-white text-secondary">and 1 more</span>',
+        )
     })
 
     it('updates submitted state and renders developer-owned checkbox markup', () => {

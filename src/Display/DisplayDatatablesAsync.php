@@ -67,6 +67,11 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     protected $displayLength = false;
 
     /**
+     * @var bool
+     */
+    protected $displayInfo = true;
+
+    /**
      * @var
      */
     protected $displayMethod;
@@ -84,6 +89,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
         $this->setName($name);
         $this->setDistinct($distinct);
         $this->displayMethod = config('sleeping_owl.datatables_settings.default_datatables_method', 'GET');
+        $this->displayInfo = (bool) config('sleeping_owl.datatables_settings.display_info', true);
 
         $this->getColumns()->setView('display.extensions.columns_async');
     }
@@ -103,6 +109,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
         $this->setHtmlAttribute('data-url', route('admin.display.async', $attributes, false));
         $this->setHtmlAttribute('data-method', $this->displayMethod);
         $this->setHtmlAttribute('data-payload', json_encode($this->payload));
+        $this->setHtmlAttribute('data-display-info', $this->getDisplayInfo() ? 1 : 0);
 
         if ($this->getDisplaySearch()) {
             $this->setHtmlAttribute('data-display-search', 1);
@@ -130,6 +137,25 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     public function getDisplayLength()
     {
         return $this->displayLength;
+    }
+
+    /**
+     * @param  bool  $display
+     * @return $this
+     */
+    public function setDisplayInfo($display)
+    {
+        $this->displayInfo = (bool) $display;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getDisplayInfo()
+    {
+        return $this->displayInfo;
     }
 
     /**
@@ -198,7 +224,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     public function renderAsync(\Illuminate\Http\Request $request)
     {
         $query = $this->getRepository()->getQuery();
-        $totalCount = $query->count();
+        $totalCount = $this->getDisplayInfo() ? $query->count() : 0;
         $filteredCount = 0;
 
         if (! is_null($this->distinct)) {
@@ -212,6 +238,13 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
             $countQuery = clone $query;
             $countQuery->getQuery()->orders = null;
             $filteredCount = $countQuery->count();
+        }
+
+        if (! $this->getDisplayInfo()) {
+            // DataTables requires recordsTotal even when its info control is
+            // hidden. The filtered count keeps pagination working without a
+            // separate query for the unfiltered total.
+            $totalCount = $filteredCount;
         }
 
         $this->applyOffset($query, $request);

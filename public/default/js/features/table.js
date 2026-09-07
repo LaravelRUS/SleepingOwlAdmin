@@ -1827,13 +1827,15 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
 var INLINE_EDITOR_TYPES = Object.freeze(['boolean', 'checkbox', 'checklist', 'date', 'datetime', 'number', 'range', 'select', 'text', 'textarea']);
 var MULTIPLE_TYPES = new Set(['boolean', 'checkbox', 'checklist']);
 function readInlineEditorConfig(element) {
-  var _element$dataset$date, _element$dataset$empt, _element$dataset$max, _element$dataset$min, _element$dataset$step, _element$dataset$titl;
+  var _element$dataset$date, _element$dataset$empt, _element$dataset$list, _element$dataset$max, _element$dataset$min, _element$dataset$step, _element$dataset$titl;
   var type = element.dataset.inlineEditor;
   assertType(type);
   return Object.freeze({
     dateFormat: (_element$dataset$date = element.dataset.dateFormat) !== null && _element$dataset$date !== void 0 ? _element$dataset$date : '',
     displayHtml: element.dataset.displayHtml === 'true',
     emptyText: (_element$dataset$empt = element.dataset.emptyText) !== null && _element$dataset$empt !== void 0 ? _element$dataset$empt : '',
+    listLimit: optionalCount(element.dataset.listLimit),
+    listMore: (_element$dataset$list = element.dataset.listMore) !== null && _element$dataset$list !== void 0 ? _element$dataset$list : '',
     max: (_element$dataset$max = element.dataset.max) !== null && _element$dataset$max !== void 0 ? _element$dataset$max : null,
     min: (_element$dataset$min = element.dataset.min) !== null && _element$dataset$min !== void 0 ? _element$dataset$min : null,
     mode: normalizeMode(element.dataset.mode),
@@ -1846,6 +1848,10 @@ function readInlineEditorConfig(element) {
     url: requiredValue(element.dataset.url, 'url'),
     value: parseValue(element.dataset.value, type)
   });
+}
+function optionalCount(value) {
+  var count = Number(value !== null && value !== void 0 ? value : 0);
+  return Number.isFinite(count) && count > 0 ? Math.floor(count) : 0;
 }
 function readOptionsSource(element) {
   var _element$ownerDocumen;
@@ -1919,9 +1925,7 @@ var RANGE_INPUT_SELECTOR = '[data-inline-editor-range-input]';
 var RANGE_NUMBER_SELECTOR = '[data-inline-editor-range-number]';
 var RANGE_OUTPUT_SELECTOR = '[data-inline-editor-range-output]';
 var RANGE_EMPTY_VALUE = '0';
-var SELECT_CLEAR_EVENT = 'soa:inline-editor-clear';
 var SELECT_CONTROL_SELECTOR = '[data-inline-editor-select]';
-var SELECT_FOCUS_SELECTOR = '.multiselect__input, .multiselect';
 var SELECT_NATIVE_SELECTOR = '[data-inline-editor-select-native]';
 function bindInlineEditorControl(element, config) {
   var _element$matches;
@@ -1974,6 +1978,7 @@ function bindRange(element, config) {
   var input = requiredRangePart(element, RANGE_INPUT_SELECTOR, 'input');
   var number = element.querySelector(RANGE_NUMBER_SELECTOR);
   var output = requiredRangePart(element, RANGE_OUTPUT_SELECTOR, 'output');
+  var initialValue = config.value === '' ? RANGE_EMPTY_VALUE : config.value;
   var updateFromRange = function updateFromRange() {
     if (number) number.value = input.value;
     setRangeOutput(output, input.value);
@@ -1984,11 +1989,11 @@ function bindRange(element, config) {
     input.value = value;
     setRangeOutput(output, value);
   };
-  input.value = config.value;
+  input.value = initialValue;
   syncNumberAttributes(input, config);
   input.addEventListener('input', updateFromRange);
   if (number) {
-    number.value = config.value;
+    number.value = initialValue;
     syncNumberAttributes(number, config);
     number.addEventListener('input', updateFromNumber);
   }
@@ -2015,17 +2020,7 @@ function bindSelect(element) {
     return element.querySelector(SELECT_NATIVE_SELECTOR);
   };
   return {
-    clear: function clear() {
-      var _control$ownerDocumen, _control$ownerDocumen2;
-      var control = nativeControl();
-      var EventConstructor = (_control$ownerDocumen = control === null || control === void 0 || (_control$ownerDocumen2 = control.ownerDocument) === null || _control$ownerDocumen2 === void 0 || (_control$ownerDocumen2 = _control$ownerDocumen2.defaultView) === null || _control$ownerDocumen2 === void 0 ? void 0 : _control$ownerDocumen2.Event) !== null && _control$ownerDocumen !== void 0 ? _control$ownerDocumen : globalThis.Event;
-      if (control && EventConstructor) {
-        control.dispatchEvent(new EventConstructor(SELECT_CLEAR_EVENT));
-      }
-    },
-    focusElement: function focusElement() {
-      return element.querySelector(SELECT_FOCUS_SELECTOR);
-    },
+    focusElement: element,
     read: function read() {
       var _nativeControl$value, _nativeControl;
       return (_nativeControl$value = (_nativeControl = nativeControl()) === null || _nativeControl === void 0 ? void 0 : _nativeControl.value) !== null && _nativeControl$value !== void 0 ? _nativeControl$value : '';
@@ -2424,9 +2419,25 @@ function inlineEditorDisplayValue(config, value) {
     var labels = value.map(function (item) {
       return optionText(config.options, item);
     }).filter(Boolean);
+    if (config.type === 'checklist' && config.displayHtml && labels.length) {
+      return listDisplay(labels, config);
+    }
     return labels.length ? labels.join(', ') : config.emptyText;
   }
   return String(value !== null && value !== void 0 ? value : '') || config.emptyText;
+}
+function listDisplay(labels, config) {
+  var limit = config.listLimit > 0 ? config.listLimit : labels.length;
+  var visible = labels.slice(0, limit);
+  var more = labels.length - visible.length;
+  var badges = visible.map(function (label) {
+    return "<span class=\"badge table-badge\">".concat(label, "</span>");
+  });
+  if (more > 0) {
+    var text = (config.listMore || "+".concat(more)).replace('__count__', String(more));
+    badges.push("<span class=\"badge bg-white text-secondary\">".concat(text, "</span>"));
+  }
+  return badges.join('\n');
 }
 function serializeInlineEditorValue(value) {
   return Array.isArray(value) ? value.join(',') : String(value !== null && value !== void 0 ? value : '');
@@ -3897,6 +3908,7 @@ function readTableDefinition(element) {
     method: element.dataset.method || 'GET',
     options: parseOptions(element.dataset.attributes),
     payload: parsePayload(element.dataset.payload),
+    showInfo: parseFlag(element.dataset.displayInfo, true),
     showLength: parseFlag(element.dataset.displayDtlength),
     showSearch: parseFlag(element.dataset.displaySearch),
     url: element.dataset.url || null
@@ -3915,11 +3927,13 @@ function applyServerOptions(options, definition) {
   });
 }
 function tableLayout(_ref) {
-  var showLength = _ref.showLength,
+  var _ref$showInfo = _ref.showInfo,
+    showInfo = _ref$showInfo === void 0 ? true : _ref$showInfo,
+    showLength = _ref.showLength,
     showSearch = _ref.showSearch;
   return {
     bottomEnd: 'paging',
-    bottomStart: 'info',
+    bottomStart: showInfo ? 'info' : null,
     topEnd: showSearch ? 'search' : null,
     topStart: showLength ? 'pageLength' : null
   };
@@ -3954,6 +3968,8 @@ function parseJson(source, fallback) {
   }
 }
 function parseFlag(value) {
+  var fallback = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+  if (value === undefined || value === '') return fallback;
   return value === '1' || value === 'true' || value === true || value === 1;
 }
 function assertElement(element) {

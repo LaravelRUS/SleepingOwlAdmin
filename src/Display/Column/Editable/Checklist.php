@@ -10,11 +10,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
+use SleepingOwl\Admin\Display\Column\Concerns\HasListDisplayLimit;
 use SleepingOwl\Admin\Form\Element\MultiSelect;
 use SleepingOwl\Admin\Form\FormDefault;
 
 class Checklist extends Select implements ColumnEditableInterface
 {
+    use HasListDisplayLimit;
+
     protected $view = 'column.editable.checklist';
 
     protected $forceSaveRelation;
@@ -24,6 +27,15 @@ class Checklist extends Select implements ColumnEditableInterface
         return is_callable($this->modifier)
             ? call_user_func($this->modifier, $this)
             : $this->modifier;
+    }
+
+    public function setOptions($options): self
+    {
+        if (is_array($options) && $options !== [] && array_is_list($options)) {
+            $options = array_combine($options, $options);
+        }
+
+        return parent::setOptions($options);
     }
 
     public function getModelValue()
@@ -42,9 +54,81 @@ class Checklist extends Select implements ColumnEditableInterface
             }
         } elseif ($value instanceof Collection) {
             $value = $value->all();
+        } elseif (is_string($value)) {
+            $decoded = json_decode($value, true);
+            if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
+                $value = $decoded;
+            }
         }
 
         return is_array($value) ? implode(',', $value) : $value;
+    }
+
+    public function toArray(): array
+    {
+        $data = parent::toArray();
+
+        return $data + [
+            'values' => $this->getSelectedOptionNames(),
+            'maxLists' => $this->getMaxLists() ?: $this->getLimit(),
+        ];
+    }
+
+    protected function getSelectedOptionNames(): array
+    {
+        return collect(explode(',', (string) $this->getModelValue()))
+            ->map(fn ($value) => trim($value))
+            ->filter(fn ($value) => $value !== '')
+            ->map(fn ($value) => $this->optionList[$value] ?? null)
+            ->filter(fn ($value) => ! is_null($value))
+            ->values()
+            ->all();
+    }
+
+    public function prepareValue($value)
+    {
+        $storesArray = $this->storesChecklistAsArray();
+
+        if ($value === '' || $value === null || $value === []) {
+            if ($this->isNullable()) {
+                return null;
+            }
+
+            return $storesArray ? [] : '';
+        }
+
+        if (is_array($value) && ! $storesArray) {
+            return implode(',', $value);
+        }
+
+        return parent::prepareValue($value);
+    }
+
+    protected function storesChecklistAsArray(): bool
+    {
+        $model = $this->getModel();
+        if (! $model) {
+            return false;
+        }
+
+        $attribute = $this->getModelAttributeKey();
+        if ($model->hasCast($attribute, [
+            'array',
+            'json',
+            'json:unicode',
+            'object',
+            'collection',
+            'encrypted:array',
+            'encrypted:collection',
+            'encrypted:json',
+            'encrypted:object',
+        ])) {
+            return true;
+        }
+
+        $currentValue = $model->getAttribute($attribute);
+
+        return is_array($currentValue) || $currentValue instanceof Collection;
     }
 
     public function save(Request $request)

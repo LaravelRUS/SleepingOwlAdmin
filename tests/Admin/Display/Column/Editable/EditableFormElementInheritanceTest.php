@@ -35,10 +35,13 @@ class EditableFormElementInheritanceTest extends TestCase
     {
         foreach ([EditableSelect::class, EditableChecklist::class] as $editableClass) {
             $column = new $editableClass('status', 'Status', fn () => [2 => 'Two', 1 => 'One']);
+            $queryPreparer = static fn ($element, $query) => $query;
             $column->setSortable(false)->setLimit(3)->nullable();
+            $column->setLoadOptionsQueryPreparer($queryPreparer);
 
             $this->assertSame([2 => 'Two', 1 => 'One'], $column->getOptions());
             $this->assertTrue($column->isNullable());
+            $this->assertSame($queryPreparer, $column->getLoadOptionsQueryPreparer());
         }
     }
 
@@ -53,8 +56,28 @@ class EditableFormElementInheritanceTest extends TestCase
             'value' => ['first', 'second'],
         ]));
 
-        $this->assertSame(['first', 'second'], $model->getAttribute('checklist_col'));
+        $this->assertSame('first,second', $model->getAttribute('checklist_col'));
         $this->assertTrue($model->saved);
+    }
+
+    public function test_checklist_maps_json_ids_to_display_labels(): void
+    {
+        $model = new EditableInheritanceModel;
+        $model->setAttribute('checklist_col', '["8","3"]');
+        $column = new class('checklist_col', 'Checklist', [8 => 'Eight', 3 => 'Three']) extends EditableChecklist
+        {
+            public function displayValues(): array
+            {
+                $this->mutateOptions();
+
+                return $this->getSelectedOptionNames();
+            }
+        };
+        $column->setSortable(false)->setMaxLists(1)->setModel($model);
+
+        $this->assertSame('8,3', $column->getModelValue());
+        $this->assertSame(['Eight', 'Three'], $column->displayValues());
+        $this->assertSame(1, $column->getMaxLists());
     }
 
     public static function editableFormElements(): array

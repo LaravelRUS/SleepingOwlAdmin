@@ -3,9 +3,7 @@ const RANGE_INPUT_SELECTOR = '[data-inline-editor-range-input]'
 const RANGE_NUMBER_SELECTOR = '[data-inline-editor-range-number]'
 const RANGE_OUTPUT_SELECTOR = '[data-inline-editor-range-output]'
 const RANGE_EMPTY_VALUE = '0'
-const SELECT_CLEAR_EVENT = 'soa:inline-editor-clear'
 const SELECT_CONTROL_SELECTOR = '[data-inline-editor-select]'
-const SELECT_FOCUS_SELECTOR = '.multiselect__input, .multiselect'
 const SELECT_NATIVE_SELECTOR = '[data-inline-editor-select-native]'
 
 export function bindInlineEditorControl(element, config) {
@@ -50,6 +48,7 @@ function bindRange(element, config) {
     const input = requiredRangePart(element, RANGE_INPUT_SELECTOR, 'input')
     const number = element.querySelector(RANGE_NUMBER_SELECTOR)
     const output = requiredRangePart(element, RANGE_OUTPUT_SELECTOR, 'output')
+    const initialValue = config.value === '' ? RANGE_EMPTY_VALUE : config.value
     const updateFromRange = () => {
         if (number) number.value = input.value
         setRangeOutput(output, input.value)
@@ -60,11 +59,11 @@ function bindRange(element, config) {
         input.value = value
         setRangeOutput(output, value)
     }
-    input.value = config.value
+    input.value = initialValue
     syncNumberAttributes(input, config)
     input.addEventListener('input', updateFromRange)
     if (number) {
-        number.value = config.value
+        number.value = initialValue
         syncNumberAttributes(number, config)
         number.addEventListener('input', updateFromNumber)
     }
@@ -89,14 +88,7 @@ function bindSelect(element) {
     const nativeControl = () => element.querySelector(SELECT_NATIVE_SELECTOR)
 
     return {
-        clear: () => {
-            const control = nativeControl()
-            const EventConstructor = control?.ownerDocument?.defaultView?.Event ?? globalThis.Event
-            if (control && EventConstructor) {
-                control.dispatchEvent(new EventConstructor(SELECT_CLEAR_EVENT))
-            }
-        },
-        focusElement: () => element.querySelector(SELECT_FOCUS_SELECTOR),
+        focusElement: element,
         read: () => nativeControl()?.value ?? '',
     }
 }

@@ -25,10 +25,28 @@ export function inlineEditorDisplayValue(config, value) {
     if (MULTIPLE_TYPES.has(config.type)) {
         const labels = value.map((item) => optionText(config.options, item)).filter(Boolean)
 
+        if (config.type === 'checklist' && config.displayHtml && labels.length) {
+            return listDisplay(labels, config)
+        }
+
         return labels.length ? labels.join(', ') : config.emptyText
     }
 
     return String(value ?? '') || config.emptyText
+}
+
+function listDisplay(labels, config) {
+    const limit = config.listLimit > 0 ? config.listLimit : labels.length
+    const visible = labels.slice(0, limit)
+    const more = labels.length - visible.length
+    const badges = visible.map((label) => `<span class="badge table-badge">${label}</span>`)
+
+    if (more > 0) {
+        const text = (config.listMore || `+${more}`).replace('__count__', String(more))
+        badges.push(`<span class="badge bg-white text-secondary">${text}</span>`)
+    }
+
+    return badges.join('\n')
 }
 
 export function serializeInlineEditorValue(value) {

@@ -39,4 +39,19 @@ class DisplayDatatablesConfigurationTest extends TestCase
 
         $this->assertSame('PATCH', $display->getMethod());
     }
+
+    public function test_async_display_uses_configured_info_visibility(): void
+    {
+        config()->set('sleeping_owl.datatables_settings.display_info', false);
+
+        $this->assertFalse((new DisplayDatatablesAsync())->getDisplayInfo());
+    }
+
+    public function test_explicit_info_visibility_overrides_the_config_default(): void
+    {
+        config()->set('sleeping_owl.datatables_settings.display_info', false);
+        $display = (new DisplayDatatablesAsync())->setDisplayInfo(true);
+
+        $this->assertTrue($display->getDisplayInfo());
+    }
 }

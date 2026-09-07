@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use SleepingOwl\Admin\Display\Column\Filter\Text as TextFilter;
 use SleepingOwl\Admin\Display\Column\Text;
@@ -86,6 +87,30 @@ class DisplayDatatablesAsyncTest extends \TestCase
         $result = $display->renderAsync($request);
 
         $this->assertSame(6, $result['recordsTotal']);
+        $this->assertSame(2, $result['recordsFiltered']);
+        $this->assertSame(['Alpha', 'Alpine'], $this->columnValues($result, 1));
+    }
+
+    public function test_hidden_info_skips_the_unfiltered_count_query(): void
+    {
+        config()->set('sleeping_owl.datatables_settings.display_info', false);
+        $request = $this->bindRequest([
+            'length' => 2,
+            'search' => ['value' => 'alp'],
+            'order' => [['column' => 0, 'dir' => 'asc']],
+        ]);
+        $display = $this->initializeDisplay();
+        DB::connection()->enableQueryLog();
+
+        $result = $display->renderAsync($request);
+
+        $countQueries = array_filter(
+            DB::connection()->getQueryLog(),
+            fn (array $query): bool => str_contains(strtolower($query['query']), 'count(')
+        );
+
+        $this->assertCount(1, $countQueries);
+        $this->assertSame(2, $result['recordsTotal']);
         $this->assertSame(2, $result['recordsFiltered']);
         $this->assertSame(['Alpha', 'Alpine'], $this->columnValues($result, 1));
     }

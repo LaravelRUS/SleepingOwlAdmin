@@ -71,6 +71,13 @@ AdminSection::registerModel(User::class, function (ModelConfiguration $model) {
 - `AdminDisplay::tree()`: Древовидная структура.
 - `AdminDisplay::tabbed()`: Интерфейс с вкладками.
 
+Для асинхронных DataTables настройка
+`sleeping_owl.datatables_settings.display_info = false` скрывает строку с
+количеством записей и отключает отдельный запрос общего количества записей.
+Подсчёт отфильтрованных записей сохраняется, поскольку он нужен для точной
+постраничной навигации. Для отдельной таблицы настройку можно переопределить
+методом `setDisplayInfo(bool)`.
+
 ### Колонки (Columns)
 | Тип | Метод | Описание |
 | :--- | :--- | :--- |

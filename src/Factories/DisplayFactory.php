@@ -17,6 +17,7 @@ use SleepingOwl\Admin\Navigation\Page;
 /**
  * @method DisplayDatatablesAsync datatables()
  * @method DisplayDatatablesAsync datatablesAsync()
+ * @method DisplayDatatablesAsyncAlterPaginate datatablesAsyncAlterPaginate()
  * @method DisplayTab tab(Renderable $display, $label = null, $icon = null)
  * @method DisplayTabbed tabbed(\Closure|array $tabs = null)
  * @method DisplayTable table()

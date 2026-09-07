@@ -30431,6 +30431,24 @@ iframe.wait-autoplay {
   border-bottom: 0.0625rem dashed var(--soa-inline-editor-accent);
 }
 
+.soa-inline-editable[data-max-rows] {
+  display: -webkit-box;
+  max-width: 100%;
+  overflow: hidden;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+  text-align: start;
+  white-space: pre-wrap;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: var(--soa-inline-editable-max-rows);
+}
+
+.soa-inline-editable[data-inline-editor=textarea] > * {
+  margin-block: 0;
+  font-size: inherit;
+  line-height: inherit;
+}
+
 .soa-inline-editor {
   display: inline-block;
   min-width: 14rem;
