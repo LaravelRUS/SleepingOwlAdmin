@@ -4,6 +4,11 @@ return [
     'dashboard' => 'Dashboard',
     '404' => 'Seite nicht gefunden.',
 
+    'asset_health' => [
+        'message' => 'Die veröffentlichten Admin-Assets (:published) passen nicht zum installierten Paket (:installed).',
+        'command' => 'Assets aktualisieren:',
+    ],
+
     'auth' => [
         'title' => 'Authorisierung',
         'username' => 'Nutzername',

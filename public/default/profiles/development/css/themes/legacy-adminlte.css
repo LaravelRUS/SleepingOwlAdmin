@@ -28545,6 +28545,15 @@
   --soa-content-padding: 0.9375rem;
   --soa-border-radius: 0.25rem;
   --soa-layout-transition-duration: 300ms;
+  --soa-asset-health-surface-color: #fff3cd;
+  --soa-asset-health-text-color: #664d03;
+  --soa-asset-health-border-color: #ffca2c;
+  --soa-asset-health-gap: 0.5rem 1rem;
+  --soa-asset-health-margin-top: 0.75rem;
+  --soa-asset-health-padding-block: 0.5rem;
+  --soa-asset-health-padding-inline: 0.75rem;
+  --soa-asset-health-border-width: 0.1875rem;
+  --soa-font-family-monospace: sfmono-regular, menlo, monaco, consolas, Liberation Mono, monospace;
 }
 
 :root[data-color-scheme=dark] {
@@ -28555,9 +28564,29 @@
   --soa-border-color: #6c757d;
   --soa-sidebar-bg: #343a40;
   --soa-sidebar-text-color: #fff;
+  --soa-asset-health-surface-color: #332701;
+  --soa-asset-health-text-color: #ffda6a;
+  --soa-asset-health-border-color: #997404;
 }
 
 @layer sleepingowl-theme {
+  .asset-health-status {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--soa-asset-health-gap);
+    margin-top: var(--soa-asset-health-margin-top);
+    padding: var(--soa-asset-health-padding-block) var(--soa-asset-health-padding-inline);
+    color: var(--soa-asset-health-text-color);
+    background-color: var(--soa-asset-health-surface-color);
+    border-inline-start: var(--soa-asset-health-border-width) solid var(--soa-asset-health-border-color);
+    border-radius: var(--soa-border-radius);
+  }
+  .asset-health-command {
+    color: inherit;
+    font-family: var(--soa-font-family-monospace);
+  }
   .main-sidebar {
     background-color: var(--soa-sidebar-bg, #343a40);
   }

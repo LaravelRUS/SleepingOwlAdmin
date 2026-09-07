@@ -74,6 +74,17 @@ it('builds a standalone AdminLTE theme without embedding shared icons', () => {
     expect(css).not.toContain('Font Awesome')
 })
 
+it('styles the asset health footer in standalone and compatibility bundles', () => {
+    for (const css of [
+        read('public/default/css/themes/legacy-adminlte.css'),
+        read('public/default/css/admin-app.css'),
+    ]) {
+        expect(css).toContain('.asset-health-status')
+        expect(css).toContain('--soa-asset-health-surface-color')
+        expect(css).toContain('var(--soa-asset-health-border-color)')
+    }
+})
+
 function read(path) {
     return readFileSync(resolve(root, path), 'utf8')
 }

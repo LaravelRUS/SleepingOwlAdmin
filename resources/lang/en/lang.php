@@ -4,6 +4,11 @@ return [
     'dashboard' => 'Dashboard',
     '404' => 'Page not found.',
 
+    'asset_health' => [
+        'message' => 'Published admin assets (:published) do not match the installed package (:installed).',
+        'command' => 'Update assets:',
+    ],
+
     'auth' => [
         'title' => 'Authorization',
         'username' => 'Username',

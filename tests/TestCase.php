@@ -7,6 +7,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+use SleepingOwl\Admin\Assets\AssetManifest;
 use SleepingOwl\Admin\Assets\AssetManifestLoader;
 use SleepingOwl\Admin\Assets\AssetManifestResolver;
 use SleepingOwl\Admin\Assets\AssetProfileSelector;
@@ -186,13 +187,15 @@ final class TestAssetManifestServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        $this->app->singleton(AssetManifestResolver::class, function (Application $app) {
-            $manifest = $app->make(AssetManifestLoader::class)->load(
+        $this->app->singleton(AssetManifest::class, function (Application $app) {
+            return $app->make(AssetManifestLoader::class)->load(
                 dirname(__DIR__).'/public/default/asset-manifest.json'
             );
+        });
 
+        $this->app->singleton(AssetManifestResolver::class, function (Application $app) {
             return new AssetManifestResolver(
-                $manifest,
+                $app->make(AssetManifest::class),
                 $app->make(UrlGenerator::class),
                 'packages/sleepingowl/default',
                 $app->make(AssetProfileSelector::class)->selected()

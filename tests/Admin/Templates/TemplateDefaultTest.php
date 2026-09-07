@@ -49,6 +49,7 @@ class TemplateDefaultTest extends TestCase
             'test',
             'theme' => $theme,
             'themeConfig' => $themeConfig,
+            'assetHealthStatus' => null,
             'template' => $template,
         ];
 

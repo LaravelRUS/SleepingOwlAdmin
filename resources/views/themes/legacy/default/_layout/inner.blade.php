@@ -38,15 +38,23 @@
             </div>
         </div>
 
-        @if(config('sleeping_owl.show_footer'))
-            <footer class="main-footer small">
-                {!! config('sleeping_owl.footer_text') !!}
+        @php($assetHealthStatus = $assetHealthStatus ?? null)
 
-                @if(config('sleeping_owl.show_version'))
-                    <div class="float-right d-none d-sm-inline-block">
-                        {!! $template->getVersion() !!}
-                    </div>
+        @if(config('sleeping_owl.show_footer') || $assetHealthStatus)
+            <footer class="main-footer small">
+                @if(config('sleeping_owl.show_footer'))
+                    {!! config('sleeping_owl.footer_text') !!}
+
+                    @if(config('sleeping_owl.show_version'))
+                        <div class="float-right d-none d-sm-inline-block">
+                            {!! $template->getVersion() !!}
+                        </div>
+                    @endif
                 @endif
+
+                @include(AdminTemplate::getViewPath('_partials.asset_health'), [
+                    'status' => $assetHealthStatus,
+                ])
             </footer>
         @endif
 

@@ -21,6 +21,15 @@
     --soa-content-padding: #{variables.$content-padding};
     --soa-border-radius: #{variables.$border-radius};
     --soa-layout-transition-duration: #{variables.$layout-transition-duration};
+    --soa-asset-health-surface-color: #{colors.$asset-health-surface};
+    --soa-asset-health-text-color: #{colors.$asset-health-text};
+    --soa-asset-health-border-color: #{colors.$asset-health-border};
+    --soa-asset-health-gap: #{variables.$asset-health-gap};
+    --soa-asset-health-margin-top: #{variables.$asset-health-margin-top};
+    --soa-asset-health-padding-block: #{variables.$asset-health-padding-block};
+    --soa-asset-health-padding-inline: #{variables.$asset-health-padding-inline};
+    --soa-asset-health-border-width: #{variables.$asset-health-border-width};
+    --soa-font-family-monospace: #{variables.$font-family-monospace};
   }
 
   :root[data-color-scheme='dark'] {
@@ -31,5 +40,8 @@
     --soa-border-color: #{colors.$dark-border};
     --soa-sidebar-bg: #{colors.$dark-sidebar-background};
     --soa-sidebar-text-color: #{colors.$dark-sidebar-text};
+    --soa-asset-health-surface-color: #{colors.$dark-asset-health-surface};
+    --soa-asset-health-text-color: #{colors.$dark-asset-health-text};
+    --soa-asset-health-border-color: #{colors.$dark-asset-health-border};
   }
 }

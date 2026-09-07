@@ -4,6 +4,11 @@ return [
     'dashboard' => '仪表板',
     '404' => '不能找到此页面。',
 
+    'asset_health' => [
+        'message' => '已发布的管理资源 (:published) 与已安装的软件包版本 (:installed) 不匹配。',
+        'command' => '更新资源：',
+    ],
+
     'auth' => [
         'title' => '验证',
         'username' => '用户名',

@@ -12,16 +12,19 @@ use Illuminate\Support\ServiceProvider;
 use SleepingOwl\Admin\AliasBinder;
 use SleepingOwl\Admin\Assets\AssetAliasNormalizer;
 use SleepingOwl\Admin\Assets\AssetDependencySorter;
+use SleepingOwl\Admin\Assets\AssetManifest;
 use SleepingOwl\Admin\Assets\AssetManifestLoader;
 use SleepingOwl\Admin\Assets\AssetManifestResolver;
 use SleepingOwl\Admin\Assets\AssetPackageRegistry;
 use SleepingOwl\Admin\Assets\AssetProfileSelector;
 use SleepingOwl\Admin\Assets\AssetRegistry;
 use SleepingOwl\Admin\Assets\AssetRenderer;
+use SleepingOwl\Admin\Assets\AssetVersionMatcher;
 use SleepingOwl\Admin\Assets\ComposerPackageVersion;
 use SleepingOwl\Admin\Assets\HtmlAttributes;
 use SleepingOwl\Admin\Assets\LogicalAssetRegistrar;
 use SleepingOwl\Admin\Assets\MetaRenderer;
+use SleepingOwl\Admin\Assets\PublishedAssetHealth;
 use SleepingOwl\Admin\Assets\PublishedAssetVerifier;
 use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
 use SleepingOwl\Admin\Contracts\Form\FormButtonsInterface;
@@ -115,22 +118,26 @@ class AdminServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton(ComposerPackageVersion::class);
+        $this->app->singleton(AssetVersionMatcher::class);
+        $this->app->singleton(AssetManifest::class, function (Application $app) {
+            return $app->make(AssetManifestLoader::class)->load(
+                $app->publicPath('packages/sleepingowl/default/asset-manifest.json')
+            );
+        });
+        $this->app->scoped(PublishedAssetHealth::class);
         $this->app->singleton(PublishedAssetVerifier::class, function (Application $app) {
             return new PublishedAssetVerifier(
                 $app['files'],
                 $app->make(AssetManifestLoader::class),
                 $app->make(AssetProfileSelector::class),
-                $app->make(ComposerPackageVersion::class)
+                $app->make(ComposerPackageVersion::class),
+                $app->make(AssetVersionMatcher::class)
             );
         });
 
         $this->app->singleton(AssetManifestResolver::class, function (Application $app) {
-            $manifestPath = $app->publicPath(
-                'packages/sleepingowl/default/asset-manifest.json'
-            );
-
             return new AssetManifestResolver(
-                $app->make(AssetManifestLoader::class)->load($manifestPath),
+                $app->make(AssetManifest::class),
                 $app->make(UrlGenerator::class),
                 'packages/sleepingowl/default',
                 $app->make(AssetProfileSelector::class)->selected()

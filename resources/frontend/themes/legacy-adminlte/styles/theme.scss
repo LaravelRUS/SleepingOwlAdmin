@@ -1,3 +1,4 @@
+@use 'asset-health';
 @use 'colors';
 @use 'custom-properties';
 @use 'legacy-build';
@@ -7,5 +8,6 @@
 @include custom-properties.define;
 
 @layer sleepingowl-theme {
+  @include asset-health.styles;
   @include sidebar.styles;
 }

@@ -3,6 +3,7 @@
 use Illuminate\Session\ArraySessionHandler;
 use Illuminate\Session\Store;
 use Illuminate\View\ViewException;
+use SleepingOwl\Admin\Assets\AssetHealthStatus;
 use SleepingOwl\Admin\Form\Element\Wysiwyg;
 use SleepingOwl\Admin\Form\Related\Forms\HasMany;
 use SleepingOwl\Admin\Form\Related\Forms\HasManyLocal;
@@ -68,6 +69,28 @@ class LegacyThemeConfigurationTest extends TestCase
         $this->assertStringNotContainsString('<link rel="icon"', $html);
         $this->assertStringNotContainsString('<footer class="main-footer small">', $html);
         $this->assertStringNotContainsString('id="theme-mode"', $html);
+    }
+
+    public function test_asset_health_status_renders_when_the_optional_footer_is_hidden(): void
+    {
+        $this->configureLegacyLayout();
+        config()->set('sleeping_owl.show_footer', false);
+        $this->app->setLocale('en');
+
+        $html = $this->renderLayout(
+            $this->bindLayoutTemplate(),
+            new AssetHealthStatus('12.1.0', '12.0.0')
+        );
+
+        $this->assertContainsAll($html, [
+            '<footer class="main-footer small">',
+            'class="asset-health-status" role="status"',
+            'Published admin assets (12.0.0) do not match the installed package (12.1.0).',
+            'Update assets:',
+            '<code class="asset-health-command">php artisan sleepingowl:update</code>',
+        ]);
+        $this->assertStringNotContainsString('<strong>Legacy footer</strong>', $html);
+        $this->assertStringNotContainsString('<em>Legacy version</em>', $html);
     }
 
     public function test_null_sidebar_color_does_not_emit_a_runtime_override(): void
@@ -163,9 +186,13 @@ class LegacyThemeConfigurationTest extends TestCase
         return $template;
     }
 
-    private function renderLayout(LegacyThemeConfigurationTemplateStub $template): string
+    private function renderLayout(
+        LegacyThemeConfigurationTemplateStub $template,
+        ?AssetHealthStatus $assetHealthStatus = null
+    ): string
     {
         return view('sleeping_owl::default._layout.inner', [
+            'assetHealthStatus' => $assetHealthStatus,
             'breadcrumbKey' => 'theme-config',
             'content' => '<section data-contract="content">Content</section>',
             'pages' => [],

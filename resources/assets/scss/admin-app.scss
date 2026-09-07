@@ -16,6 +16,7 @@
 @use '../../frontend/features/tooltip/themes/legacy-adminlte/styles/legacy' as legacy-tooltip;
 @use '../../frontend/features/tree/themes/legacy-adminlte/styles/legacy' as legacy-tree;
 @use '../../frontend/themes/legacy-adminlte/styles/custom-properties' as theme-properties;
+@use '../../frontend/themes/legacy-adminlte/styles/asset-health' as theme-asset-health;
 @use '../../frontend/themes/legacy-adminlte/styles/legacy-build' as legacy-theme;
 
 @include dropdown-properties.define;
@@ -40,5 +41,6 @@
 @include form-properties.define;
 @include form-date-picker.styles;
 @include theme-properties.define;
+@include theme-asset-health.styles;
 
 @import '../../frontend/shared/icons/styles/font-awesome';

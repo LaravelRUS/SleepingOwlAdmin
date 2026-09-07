@@ -8,6 +8,7 @@ use Diglactic\Breadcrumbs\Exceptions\ViewNotSetException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\View\View;
+use SleepingOwl\Admin\Assets\PublishedAssetHealth;
 use SleepingOwl\Admin\Contracts\AdminInterface;
 use SleepingOwl\Admin\Contracts\Navigation\NavigationInterface;
 use SleepingOwl\Admin\Contracts\Template\MetaInterface;
@@ -182,7 +183,17 @@ abstract class Template implements TemplateInterface
         return [
             'theme' => $this->app->make(ThemeInterface::class),
             'themeConfig' => $this->app->make(ThemeConfiguration::class),
+            'assetHealthStatus' => $this->assetHealthStatus(),
         ];
+    }
+
+    private function assetHealthStatus(): mixed
+    {
+        if (! $this->app->bound(PublishedAssetHealth::class)) {
+            return null;
+        }
+
+        return $this->app->make(PublishedAssetHealth::class)->status();
     }
 
     /**

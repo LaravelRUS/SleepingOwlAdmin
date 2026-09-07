@@ -78,6 +78,8 @@ class ThemeSelectionTest extends TestCase
 
         $this->assertSame($theme, $view->getData()['theme']);
         $this->assertSame($configuration, $view->getData()['themeConfig']);
+        $this->assertArrayHasKey('assetHealthStatus', $view->getData());
+        $this->assertNull($view->getData()['assetHealthStatus']);
 
         $html = $view->render();
         $this->assertContainsAll($html, [
