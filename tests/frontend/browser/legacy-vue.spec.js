@@ -103,6 +103,7 @@ const readonlyRequiredSelectProps = {
         multiple: 'multiple',
         name: 'readonly[]',
     },
+    classes: { required: 'project-required-message project-spacing' },
     labels: {
         deselect: 'Deselect',
         noItems: 'No items',
@@ -252,7 +253,8 @@ async function inspectReadonlyRequiredSelect(page) {
         const result = {
             className: control.className,
             disabled: control.disabled,
-            error: host.querySelector('.text-danger')?.textContent.trim(),
+            error: host.querySelector('[data-soa-select-required]')?.textContent.trim(),
+            errorClass: host.querySelector('[data-soa-select-required]')?.className,
             widgetDisabled: host
                 .querySelector('.multiselect')
                 .classList.contains('multiselect--disabled'),
@@ -377,6 +379,7 @@ async function expectReadonlyRequiredSelect(page) {
         className: 'form-control project-readonly',
         disabled: true,
         error: 'Readonly selection is required',
+        errorClass: 'project-required-message project-spacing',
         widgetDisabled: true,
     })
 }

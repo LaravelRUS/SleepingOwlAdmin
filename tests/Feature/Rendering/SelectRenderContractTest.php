@@ -17,6 +17,7 @@ class SelectRenderContractTest extends TestCase
         $this->assertSame('2', $props['options'][2]['id']);
         $this->assertSame('form-control project-select', $props['attributes']['class']);
         $this->assertSame('Sales & "support"', $props['attributes']['data-contract']);
+        $this->assertSame('text-danger pt-2 pb-3', $props['classes']['required']);
     }
 
     public function test_multiselect_renders_limits_taggable_state_and_array_value(): void
@@ -99,6 +100,29 @@ class SelectRenderContractTest extends TestCase
         $this->assertSame('form-control project-dependent', $props['attributes']['class']);
         $this->assertStringNotContainsString('<select', $html);
         $this->assertStringNotContainsString('input-select-dependent', $html);
+    }
+
+    public function test_select_island_accepts_concrete_theme_classes(): void
+    {
+        $html = view('sleeping_owl::default.form.element.partials.select_island', array_replace(
+            $this->baseData(),
+            [
+                'limit' => 0,
+                'options' => [],
+                'selectAttributesArray' => ['id' => 'custom', 'name' => 'custom[]'],
+                'selectExtraProps' => [
+                    'classes' => ['required' => 'project-required project-spacing'],
+                ],
+                'selectMax' => 0,
+                'selectMultiple' => true,
+                'selectTaggable' => false,
+                'value' => [],
+            ]
+        ))->render();
+        $props = $this->extractIslandProps($html);
+
+        $this->assertSame('project-required project-spacing', $props['classes']['required']);
+        $this->assertStringNotContainsString('class="project-required project-spacing"', $html);
     }
 
     private function renderSelect(string $view, array $data): string

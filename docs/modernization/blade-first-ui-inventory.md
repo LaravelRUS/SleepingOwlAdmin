@@ -99,7 +99,7 @@ classes as the final theme API.
 | `admin/form/file.vue` | `default.form.element.file` | Blade keeps label/help/error/layout ownership and supplies classes/icons. Vue owns upload progress, current file state and interactive inner controls. |
 | `admin/form/image.vue` | `default.form.element.image` | Same boundary as file; preview/upload/paste state remains inside the island. |
 | `admin/form/images.vue` | `default.form.element.images` | Blade supplies gallery/dialog/control classes and icons. Vue owns the dynamic collection, upload, ordering and dialog state. |
-| `admin/form/select.vue` | `default.form.element.partials.select_island`, reached from `select`, `multiselect`, `selectajax` and `dependentselect` | Blade passes final field attributes and theme classes/options. Vue owns selection, remote/dependent loading, tagging and hidden/native submit synchronization. |
+| `[Complete] admin/form/select.vue` | `default.form.element.partials.select_island`, reached from `select`, `multiselect`, `selectajax` and `dependentselect` | Blade passes final field attributes and `classes.required`. Vue owns selection, remote/dependent loading, tagging, the required-state condition and hidden/native submit synchronization; its structural hook does not depend on the AdminLTE class. |
 | `admin/form/related/elements.vue` | `default.form.element.related.inner_element` plus the Blade-rendered `related.group` | Existing group HTML stays Blade-owned. Vue owns collection state, add/remove bookkeeping and Sortable orchestration; its wrapper/action classes become Blade props or Blade-owned outer markup. |
 
 All six components remain precompiled in `shared:vue` for both production and
@@ -169,3 +169,8 @@ For each migrated candidate, tests must prove all of the following:
    neutral fallback contract for minimal custom themes.
 5. Pass concrete classes/options from Blade into every precompiled Vue island
    and verify AdminLTE/Tailwind/custom render boundaries.
+   - [Complete] `select`: the logical Blade partial owns the concrete required
+     message class, while the precompiled component consumes `classes.required`.
+     PHP and browser contracts cover arbitrary project classes without a
+     runtime compiler or consumer rebuild.
+   - [Pending] `related-elements`, `env-editor`, `file`, `image` and `images`.

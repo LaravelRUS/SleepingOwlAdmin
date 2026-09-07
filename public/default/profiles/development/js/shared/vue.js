@@ -14964,6 +14964,12 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       type: Object,
       required: true
     },
+    classes: {
+      type: Object,
+      "default": function _default() {
+        return {};
+      }
+    },
     dependent: {
       type: Object,
       "default": null
@@ -15886,10 +15892,6 @@ var _hoisted_2 = {
 var _hoisted_3 = ["disabled", "value"];
 var _hoisted_4 = ["disabled"];
 var _hoisted_5 = ["selected", "value"];
-var _hoisted_6 = {
-  key: 3,
-  "class": "text-danger pt-2 pb-3"
-};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Multiselect = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Multiselect");
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Multiselect, {
@@ -15943,7 +15945,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       selected: _ctx.optionSelected(option.id),
       value: _ctx.formValue(option.id)
     }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(option.text), 9 /* TEXT, PROPS */, _hoisted_5);
-  }), 128 /* KEYED_FRAGMENT */))], 16 /* FULL_PROPS */, _hoisted_4)), _ctx.required && _ctx.multiple && !_ctx.selectedIds.length ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.labels.required), 1 /* TEXT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
+  }), 128 /* KEYED_FRAGMENT */))], 16 /* FULL_PROPS */, _hoisted_4)), _ctx.required && _ctx.multiple && !_ctx.selectedIds.length ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+    key: 3,
+    "data-soa-select-required": "",
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(_ctx.classes.required)
+  }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.labels.required), 3 /* TEXT, CLASS */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
 }
 
 /***/ }),

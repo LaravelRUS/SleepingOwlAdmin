@@ -58,7 +58,11 @@
             </option>
         </select>
 
-        <div v-if="required && multiple && !selectedIds.length" class="text-danger pt-2 pb-3">
+        <div
+            v-if="required && multiple && !selectedIds.length"
+            data-soa-select-required
+            :class="classes.required"
+        >
             {{ labels.required }}
         </div>
     </div>
@@ -88,6 +92,7 @@ export default defineComponent({
     components: { Multiselect },
     props: {
         attributes: { type: Object, required: true },
+        classes: { type: Object, default: () => ({}) },
         dependent: { type: Object, default: null },
         legacyOptions: { type: Object, default: () => ({}) },
         labels: { type: Object, required: true },

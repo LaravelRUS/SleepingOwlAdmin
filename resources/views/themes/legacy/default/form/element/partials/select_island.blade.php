@@ -4,6 +4,9 @@
         ->getAttributes();
     $selectProps = array_replace([
         'attributes' => $selectAttributes,
+        'classes' => [
+            'required' => 'text-danger pt-2 pb-3',
+        ],
         'labels' => [
             'deselect' => trans('sleeping_owl::lang.select.deselect'),
             'error' => trans('sleeping_owl::lang.message.something_went_wrong'),
