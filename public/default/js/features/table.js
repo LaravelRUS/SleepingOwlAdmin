@@ -3974,12 +3974,20 @@ function applyServerOptions(options, definition) {
   });
 }
 function tableLayout(_ref) {
-  var _ref$showInfo = _ref.showInfo,
+  var _ref$pageJump = _ref.pageJump,
+    pageJump = _ref$pageJump === void 0 ? true : _ref$pageJump,
+    _ref$showInfo = _ref.showInfo,
     showInfo = _ref$showInfo === void 0 ? true : _ref$showInfo,
     showLength = _ref.showLength,
     showSearch = _ref.showSearch;
   return {
-    bottomEnd: 'paging',
+    bottom1End: pageJump ? 'pageJump' : null,
+    bottom1Start: {
+      paging: {
+        type: 'simple_numbers'
+      }
+    },
+    bottomEnd: null,
     bottomStart: showInfo ? 'info' : null,
     topEnd: showSearch ? 'search' : null,
     topStart: showLength ? 'pageLength' : null
@@ -4027,6 +4035,108 @@ function assertElement(element) {
 
 /***/ }),
 
+/***/ "./resources/frontend/features/table/pagination/page-jump.js":
+/*!*******************************************************************!*\
+  !*** ./resources/frontend/features/table/pagination/page-jump.js ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "PAGE_JUMP_FEATURE": () => (/* binding */ PAGE_JUMP_FEATURE),
+/* harmony export */   "createPageJumpControl": () => (/* binding */ createPageJumpControl),
+/* harmony export */   "installPageJumpFeature": () => (/* binding */ installPageJumpFeature)
+/* harmony export */ });
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+var PAGE_JUMP_FEATURE = 'pageJump';
+var DEFAULT_LABELS = Object.freeze({
+  label: 'Page'
+});
+function installPageJumpFeature(engine) {
+  var _engine$feature;
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  if (typeof (engine === null || engine === void 0 || (_engine$feature = engine.feature) === null || _engine$feature === void 0 ? void 0 : _engine$feature.register) !== 'function') {
+    throw new TypeError('DataTables page jump requires the engine feature registry.');
+  }
+  var labels = _objectSpread(_objectSpread({}, DEFAULT_LABELS), options.labels);
+  engine.feature.register(PAGE_JUMP_FEATURE, function (settings) {
+    return createPageJumpControl(settings, labels);
+  });
+}
+function createPageJumpControl(settings) {
+  var labels = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : DEFAULT_LABELS;
+  var document = settings.table.ownerDocument;
+  var api = settings.api;
+  var _createPageJumpElemen = createPageJumpElements(document, labels.label),
+    control = _createPageJumpElemen.control,
+    input = _createPageJumpElemen.input;
+  var sync = function sync() {
+    return syncPageJump(api, control, input);
+  };
+  var jump = function jump() {
+    return jumpToPage(api, input, sync);
+  };
+  bindPageJumpInput(input, jump);
+  api.on('draw.soaPageJump', sync);
+  api.one('destroy.soaPageJump', function () {
+    return api.off('.soaPageJump');
+  });
+  sync();
+  return control;
+}
+function createPageJumpElements(document, label) {
+  var control = document.createElement('label');
+  var input = document.createElement('input');
+  control.className = 'soa-dt-page-jump';
+  control.hidden = true;
+  control.append(document.createTextNode(label), input);
+  input.className = 'soa-dt-page-jump-input';
+  input.type = 'number';
+  input.min = '1';
+  input.step = '1';
+  input.inputMode = 'numeric';
+  input.autocomplete = 'off';
+  input.setAttribute('aria-label', label);
+  return {
+    control: control,
+    input: input
+  };
+}
+function syncPageJump(api, control, input) {
+  var info = api.page.info();
+  control.hidden = info.pages <= 1;
+  input.disabled = info.pages <= 1;
+  input.max = String(Math.max(info.pages, 1));
+  input.value = info.pages > 0 ? String(info.page + 1) : '';
+}
+function jumpToPage(api, input, sync) {
+  var info = api.page.info();
+  var requestedPage = Number.parseInt(input.value, 10);
+  if (!Number.isFinite(requestedPage) || info.pages === 0) return sync();
+  var page = Math.min(Math.max(requestedPage, 1), info.pages) - 1;
+  if (page === info.page) {
+    sync();
+    return;
+  }
+  api.page(page).draw('page');
+}
+function bindPageJumpInput(input, jump) {
+  input.addEventListener('change', jump);
+  input.addEventListener('keydown', function (event) {
+    if (event.key !== 'Enter') return;
+    event.preventDefault();
+    jump();
+  });
+}
+
+/***/ }),
+
 /***/ "./resources/frontend/features/table/runtime/install-data-tables.js":
 /*!**************************************************************************!*\
   !*** ./resources/frontend/features/table/runtime/install-data-tables.js ***!
@@ -4049,8 +4159,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _filters_date_filter_support_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../filters/date-filter-support.js */ "./resources/frontend/features/table/filters/date-filter-support.js");
 /* harmony import */ var _lifecycle_data_table_adapter_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../lifecycle/data-table-adapter.js */ "./resources/frontend/features/table/lifecycle/data-table-adapter.js");
 /* harmony import */ var _options_table_options_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../options/table-options.js */ "./resources/frontend/features/table/options/table-options.js");
-/* harmony import */ var _table_filters_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./table-filters.js */ "./resources/frontend/features/table/runtime/table-filters.js");
-/* harmony import */ var _table_runtime_options_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./table-runtime-options.js */ "./resources/frontend/features/table/runtime/table-runtime-options.js");
+/* harmony import */ var _pagination_page_jump_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../pagination/page-jump.js */ "./resources/frontend/features/table/pagination/page-jump.js");
+/* harmony import */ var _table_filters_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./table-filters.js */ "./resources/frontend/features/table/runtime/table-filters.js");
+/* harmony import */ var _table_runtime_options_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./table-runtime-options.js */ "./resources/frontend/features/table/runtime/table-runtime-options.js");
+
 
 
 
@@ -4066,7 +4178,7 @@ var DATA_TABLE_SELECTOR = '.datatables';
 function installDataTables(admin, options) {
   var settings = normalizeOptions(admin, options);
   var drivers = createFilterDrivers(settings);
-  var filters = (0,_table_filters_js__WEBPACK_IMPORTED_MODULE_8__.createTableFilters)({
+  var filters = (0,_table_filters_js__WEBPACK_IMPORTED_MODULE_9__.createTableFilters)({
     drivers: drivers,
     path: admin.Url.url_path,
     root: settings.root,
@@ -4081,6 +4193,11 @@ function installDataTables(admin, options) {
   (0,_engine_extensions_js__WEBPACK_IMPORTED_MODULE_3__.installDataTableExtensions)(settings.engine, {
     onError: settings.onError
   });
+  if (settings.pageJump.enabled) {
+    (0,_pagination_page_jump_js__WEBPACK_IMPORTED_MODULE_8__.installPageJumpFeature)(settings.engine, {
+      labels: settings.pageJump.labels
+    });
+  }
   publishCompatibility(settings.target, drivers);
   admin.Components.register(definition);
   admin.Modules.register('display.datatables', function () {
@@ -4111,7 +4228,7 @@ function mountTableElement(element, settings, filters) {
   var definition = (0,_options_table_options_js__WEBPACK_IMPORTED_MODULE_7__.readTableDefinition)(element);
   var filterContext = filters.context(definition.id);
   filters.restore(filterContext);
-  var options = (0,_table_runtime_options_js__WEBPACK_IMPORTED_MODULE_9__.createRuntimeTableOptions)(element, definition, settings);
+  var options = (0,_table_runtime_options_js__WEBPACK_IMPORTED_MODULE_10__.createRuntimeTableOptions)(element, definition, settings);
   var adapter = (0,_lifecycle_data_table_adapter_js__WEBPACK_IMPORTED_MODULE_6__.mountDataTable)({
     createEngine: settings.createEngine,
     element: element,
@@ -4147,6 +4264,12 @@ function normalizeOptions(admin) {
     inlineEditor: options.inlineEditor,
     onError: options.onError,
     root: options.root,
+    pageJump: {
+      enabled: Boolean(admin.Config.get('datatables_settings.page_jump', true)),
+      labels: {
+        label: admin.Config.get('lang.table.page_jump.label', 'Page')
+      }
+    },
     stateFilters: Boolean(admin.Config.get('datatables_settings.state_filters')),
     storage: options.storage,
     target: options.target,
@@ -4488,6 +4611,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _hooks_table_hooks_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../hooks/table-hooks.js */ "./resources/frontend/features/table/hooks/table-hooks.js");
 /* harmony import */ var _options_table_options_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../options/table-options.js */ "./resources/frontend/features/table/options/table-options.js");
 /* harmony import */ var _options_state_options_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../options/state-options.js */ "./resources/frontend/features/table/options/state-options.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 
 
 
@@ -4495,7 +4624,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function createRuntimeTableOptions(element, definition, settings) {
-  var options = (0,_options_table_options_js__WEBPACK_IMPORTED_MODULE_4__.applyServerOptions)(definition.options, definition);
+  var options = (0,_options_table_options_js__WEBPACK_IMPORTED_MODULE_4__.applyServerOptions)(definition.options, _objectSpread(_objectSpread({}, definition), {}, {
+    pageJump: settings.pageJump.enabled
+  }));
   if (definition.url) configureServerTable(options, definition, settings);
   (0,_options_state_options_js__WEBPACK_IMPORTED_MODULE_5__.applyTableStateOptions)(options, {
     stateDatatables: Boolean(definition.url && settings.admin.Config.get('datatables_settings.state_datatables')),

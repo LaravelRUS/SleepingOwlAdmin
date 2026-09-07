@@ -87,6 +87,9 @@ return [
             'next' => '&rarr;',
             'last' => '尾页',
         ],
+        'page_jump' => [
+            'label' => '页码',
+        ],
 
         'filters' => [
             'control' => '筛选',

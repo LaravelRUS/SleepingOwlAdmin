@@ -29343,6 +29343,9 @@ html[data-theme=dark] {
   .dataTable .dt-column-order {
     margin-left: 0.5em;
   }
+  div.dt-processing {
+    top: 10em;
+  }
   [class*=sidebar-dark-] .nav-sidebar > .nav-item > .nav-treeview {
     background-color: rgba(255, 255, 255, 0.03);
     padding-left: 1rem;
@@ -30758,7 +30761,46 @@ select.form-control.input-select.column-filter {
 }
 
 .dt-paging .pagination {
+  gap: 0.375rem;
   flex-wrap: wrap;
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+.dt-paging .page-item .page-link {
+  display: inline-flex;
+  min-width: 2.125rem;
+  min-height: 2.125rem;
+  align-items: center;
+  justify-content: center;
+  padding: 0.3125rem 0.625rem;
+  border: 0.0625rem solid var(--soa-border-color);
+  border-radius: 0.375rem;
+  color: var(--soa-text-color);
+  background-color: var(--soa-surface-color);
+  font-size: 0.875rem;
+  line-height: 1;
+}
+.dt-paging .page-item .page-link:hover, .dt-paging .page-item .page-link:focus-visible {
+  z-index: 1;
+  border-color: var(--soa-focus-color);
+  color: var(--soa-primary-color);
+  background-color: var(--soa-surface-color);
+  outline: 0.125rem solid var(--soa-focus-color);
+  outline-offset: 0.0625rem;
+  box-shadow: none;
+}
+
+.dt-paging .page-item.active .page-link {
+  border-color: var(--soa-primary-color);
+  color: var(--soa-surface-color);
+  background-color: var(--soa-primary-color);
+}
+
+.dt-paging .page-item.disabled .page-link {
+  color: var(--soa-muted-text-color);
+  background-color: var(--soa-surface-color);
+  opacity: 0.55;
 }
 
 @media (width <= 48rem) {

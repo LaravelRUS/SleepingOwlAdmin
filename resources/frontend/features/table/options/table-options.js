@@ -32,9 +32,11 @@ export function applyServerOptions(options, definition) {
     }
 }
 
-export function tableLayout({ showInfo = true, showLength, showSearch }) {
+export function tableLayout({ pageJump = true, showInfo = true, showLength, showSearch }) {
     return {
-        bottomEnd: 'paging',
+        bottom1End: pageJump ? 'pageJump' : null,
+        bottom1Start: { paging: { type: 'simple_numbers' } },
+        bottomEnd: null,
         bottomStart: showInfo ? 'info' : null,
         topEnd: showSearch ? 'search' : null,
         topStart: showLength ? 'pageLength' : null,

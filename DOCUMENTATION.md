@@ -80,6 +80,9 @@ AdminSection::registerModel(User::class, function (ModelConfiguration $model) {
 постраничной навигации. Для отдельной таблицы настройку можно переопределить
 методом `setDisplayInfo(bool)`.
 
+Переход к конкретному номеру страницы включён по умолчанию. Его можно отключить
+через `sleeping_owl.datatables_settings.page_jump = false`.
+
 ### Колонки (Columns)
 | Тип | Метод | Описание |
 | :--- | :--- | :--- |

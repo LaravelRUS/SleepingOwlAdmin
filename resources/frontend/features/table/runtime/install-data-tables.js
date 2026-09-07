@@ -10,6 +10,7 @@ import {
 import { createDateFilterSupport } from '../filters/date-filter-support.js'
 import { mountDataTable } from '../lifecycle/data-table-adapter.js'
 import { readTableDefinition } from '../options/table-options.js'
+import { installPageJumpFeature } from '../pagination/page-jump.js'
 import { createTableFilters } from './table-filters.js'
 import { createRuntimeTableOptions } from './table-runtime-options.js'
 
@@ -30,6 +31,9 @@ export function installDataTables(admin, options) {
     const scan = (root = settings.root) => scanTables(settings, filters, root)
 
     installDataTableExtensions(settings.engine, { onError: settings.onError })
+    if (settings.pageJump.enabled) {
+        installPageJumpFeature(settings.engine, { labels: settings.pageJump.labels })
+    }
     publishCompatibility(settings.target, drivers)
     admin.Components.register(definition)
     admin.Modules.register('display.datatables', () => scan())
@@ -98,6 +102,12 @@ function normalizeOptions(admin, options = {}) {
         inlineEditor: options.inlineEditor,
         onError: options.onError,
         root: options.root,
+        pageJump: {
+            enabled: Boolean(admin.Config.get('datatables_settings.page_jump', true)),
+            labels: {
+                label: admin.Config.get('lang.table.page_jump.label', 'Page'),
+            },
+        },
         stateFilters: Boolean(admin.Config.get('datatables_settings.state_filters')),
         storage: options.storage,
         target: options.target,

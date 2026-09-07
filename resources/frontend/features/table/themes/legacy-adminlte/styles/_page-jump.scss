@@ -1,0 +1,38 @@
+@use 'variables';
+
+@mixin styles {
+  .soa-dt-page-jump {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    margin-right: 6rem;
+    color: var(--soa-muted-text-color);
+    font-size: 0.875rem;
+    white-space: nowrap;
+  }
+
+  .soa-dt-page-jump-input {
+    width: 4rem;
+    min-height: 2.125rem;
+    padding: 0.25rem 0.5rem;
+    border: 0.0625rem solid var(--soa-border-color);
+    border-radius: var(--soa-border-radius);
+    color: var(--soa-text-color);
+    background-color: var(--soa-surface-color);
+    font: inherit;
+    text-align: center;
+
+    &:focus-visible {
+      border-color: var(--soa-focus-color);
+      outline: 0.125rem solid var(--soa-focus-color);
+      outline-offset: 0.0625rem;
+    }
+  }
+
+  @media (width <= variables.$mobile-breakpoint) {
+    .soa-dt-page-jump {
+      justify-content: center;
+      margin: 0.5rem 0 0;
+    }
+  }
+}

@@ -178,8 +178,8 @@
                     "scripts": [
                         {
                             "file": "profiles/production/js/features/table.js",
-                            "version": "d93d36509717044e3eeab53b2d07fa3e",
-                            "checksum": "sha256:39570b62e2479a26d3e0eae601eed4967b24bd877c73e824af23a047cfeb2d3b"
+                            "version": "84369d4da97ce94fc9e670fba27792f9",
+                            "checksum": "sha256:97155daa5c09ada4b450a2bbbf03bd049c6fbcfc5b3f056c006f8d4a71dbb200"
                         }
                     ],
                     "styles": [
@@ -211,8 +211,8 @@
                     "styles": [
                         {
                             "file": "profiles/production/css/features/table/themes/datatables-legacy-adminlte.css",
-                            "version": "8fc9b083bdcadf071273ca01d63df05c",
-                            "checksum": "sha256:fd398332f5b63ad7282584fc2a7a8436719c2ba8503ecfa8f8ffdd45fb8c70fe"
+                            "version": "2a19c73ff4025856fa619006c6c036c0",
+                            "checksum": "sha256:577fecbf2e7025669c124cf7e2aa45aa23eeeb89b058f9d0a186dd884a88e1e3"
                         }
                     ]
                 },
@@ -221,8 +221,8 @@
                     "styles": [
                         {
                             "file": "profiles/production/css/features/table/themes/tailwind.css",
-                            "version": "9e18eacbf50e7cae5e18375a6a4dd3f7",
-                            "checksum": "sha256:b54ee0f1563b2313c44d41b129505d34d29bff0b9ad6da64993d4d26b9b6b089"
+                            "version": "6b1f3cdd30d2712e80cd661cf1ff95a3",
+                            "checksum": "sha256:c797062e5a3c71ed3724461c7f867a99bc139295bb5e709f136833112649d9f9"
                         }
                     ]
                 },
@@ -415,8 +415,8 @@
                     "styles": [
                         {
                             "file": "profiles/production/css/themes/legacy-adminlte.css",
-                            "version": "0ed7abdc5a6f0d3202b09b69de955a36",
-                            "checksum": "sha256:d216492bf238c9dbb9603aa52414da850d0aef5476afdef1fc3db0b6228a7e24"
+                            "version": "7bc37b8d265d37ff2d5c5e62057f888e",
+                            "checksum": "sha256:294369f0a1ea43c8d4e13035a8545eaf2879d44a37a8b7ce1d0a85fd822a158e"
                         }
                     ]
                 },
@@ -614,8 +614,8 @@
                     "scripts": [
                         {
                             "file": "profiles/development/js/features/table.js",
-                            "version": "8b18ef058bffad372460eaf173196f80",
-                            "checksum": "sha256:4af74ee857c18379ad89369aa6c220a29eda858039c999a73b91d8bacde67461"
+                            "version": "fd1e72c5390d29857f469b2ff1cd1384",
+                            "checksum": "sha256:82b528227c7e70ae0fcfae9d19aff84835e1dabdf23f0cffb7a350e2120d978f"
                         }
                     ],
                     "styles": [
@@ -647,8 +647,8 @@
                     "styles": [
                         {
                             "file": "profiles/development/css/features/table/themes/datatables-legacy-adminlte.css",
-                            "version": "5596c6cb813a07c1085e27102a267a7d",
-                            "checksum": "sha256:66a7e1437312a521fa6485a3f478c4b9afed7f8ca54adb8bb80b9ce59d70087c"
+                            "version": "85f36fe59bd16c54c655deb13baa6f34",
+                            "checksum": "sha256:4207d8a9dfd6af5046ebb687d82fe398df257de3016f41ce252e4f463f5f3e66"
                         }
                     ]
                 },
@@ -657,8 +657,8 @@
                     "styles": [
                         {
                             "file": "profiles/development/css/features/table/themes/tailwind.css",
-                            "version": "39db024990214dba1cb25983ffeb77c2",
-                            "checksum": "sha256:94a2b5a1c5a7baa03e2d02dd329bc89d6598c62957b073adad426d4ff87164bf"
+                            "version": "91403d6b1565545cfdfde2f545b9fe65",
+                            "checksum": "sha256:e8e9ae2138914cd654fd13b9772b2e35de53c3e533216a8d3fbf4600978b2854"
                         }
                     ]
                 },
@@ -851,8 +851,8 @@
                     "styles": [
                         {
                             "file": "profiles/development/css/themes/legacy-adminlte.css",
-                            "version": "8ba3742e7eda1b0960d057d504bab30d",
-                            "checksum": "sha256:1dff84d99b375362da1a48795b91fb28eedc96a76d627062bd5f9253f806033c"
+                            "version": "3c4066a53f7149869c56c7fa0d957972",
+                            "checksum": "sha256:39ccddf8dd04a26d5fdcdd9407d613f7ef07035c28a3d18df02df65dad8da9da"
                         }
                     ]
                 },
@@ -875,5 +875,5 @@
             }
         }
     },
-    "build_id": "sha256:22a0bcab2e2e9b6e4b720669f8042519cc7d1971f31fba66ecfe9c65ec9d6e08"
+    "build_id": "sha256:c5527c1a642c82eaeea1a5dce52f5bc5f8887fd681c5c9308b59be600c9edde9"
 }

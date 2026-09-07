@@ -87,6 +87,9 @@ return [
             'next' => '&rarr;',
             'last' => 'Letzte',
         ],
+        'page_jump' => [
+            'label' => 'Seite',
+        ],
 
         'filters' => [
             'control' => 'Filter',

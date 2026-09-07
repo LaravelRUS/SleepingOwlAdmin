@@ -6,7 +6,10 @@ import { applyServerOptions } from '../options/table-options.js'
 import { applyTableStateOptions } from '../options/state-options.js'
 
 export function createRuntimeTableOptions(element, definition, settings) {
-    const options = applyServerOptions(definition.options, definition)
+    const options = applyServerOptions(definition.options, {
+        ...definition,
+        pageJump: settings.pageJump.enabled,
+    })
 
     if (definition.url) configureServerTable(options, definition, settings)
 

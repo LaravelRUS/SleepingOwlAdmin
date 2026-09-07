@@ -62,6 +62,11 @@ export {
 } from './runtime/install-table-controls.js'
 export { normalizeDataTableOptions } from './options/option-aliases.js'
 export { applyServerOptions, readTableDefinition, tableLayout } from './options/table-options.js'
+export {
+    createPageJumpControl,
+    installPageJumpFeature,
+    PAGE_JUMP_FEATURE,
+} from './pagination/page-jump.js'
 export { selectedRowValues } from './selection/selected-rows.js'
 export { bindTableCheckboxes, updateRowSelection } from './selection/checkbox-controls.js'
 export {

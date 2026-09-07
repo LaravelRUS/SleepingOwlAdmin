@@ -4,12 +4,14 @@
 @use 'custom-properties';
 @use 'inline-editor';
 @use 'layout';
+@use 'page-jump';
 @use 'table';
 @use 'variables';
 @include custom-properties.define;
 
 @layer sleepingowl-theme.table {
   @include layout.styles;
+  @include page-jump.styles;
   @include controls.styles;
   @include inline-editor.styles;
   @include table.styles;

@@ -87,6 +87,9 @@ return [
             'next' => '&rarr;',
             'last' => 'Остання',
         ],
+        'page_jump' => [
+            'label' => 'Сторінка',
+        ],
 
         'filters' => [
             'control' => 'Фільтр',

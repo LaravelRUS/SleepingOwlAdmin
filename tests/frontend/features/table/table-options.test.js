@@ -60,7 +60,9 @@ it('applies server flags and the current engine layout only to async tables', ()
 
     expect(configured).toEqual({
         layout: {
-            bottomEnd: 'paging',
+            bottom1End: 'pageJump',
+            bottom1Start: { paging: { type: 'simple_numbers' } },
+            bottomEnd: null,
             bottomStart: 'info',
             topEnd: 'search',
             topStart: 'pageLength',
@@ -71,13 +73,17 @@ it('applies server flags and the current engine layout only to async tables', ()
     })
     expect(applyServerOptions(options, { url: null })).toEqual(options)
     expect(tableLayout({ showLength: false, showSearch: true })).toEqual({
-        bottomEnd: 'paging',
+        bottom1End: 'pageJump',
+        bottom1Start: { paging: { type: 'simple_numbers' } },
+        bottomEnd: null,
         bottomStart: 'info',
         topEnd: 'search',
         topStart: null,
     })
     expect(tableLayout({ showInfo: false, showLength: false, showSearch: true })).toEqual({
-        bottomEnd: 'paging',
+        bottom1End: 'pageJump',
+        bottom1Start: { paging: { type: 'simple_numbers' } },
+        bottomEnd: null,
         bottomStart: null,
         topEnd: 'search',
         topStart: null,
