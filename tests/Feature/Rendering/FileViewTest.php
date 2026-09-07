@@ -24,7 +24,36 @@ class FileViewTest extends TestCase
         $this->assertSame(12, $props['maxFileSize']);
         $this->assertFalse($props['readonly']);
         $this->assertSame('/admin/products/file/document/7', $props['url']);
+        $this->assertSame('alert alert-warning', $props['classes']['alert']);
+        $this->assertSame('fas fa-file-upload', $props['classes']['uploadIcon']);
+        $this->assertSame('fas fa-spinner fa-spin', $props['classes']['uploadingIcon']);
         $this->assertStringNotContainsString('<script>', $html);
+    }
+
+    public function test_file_island_accepts_concrete_theme_classes(): void
+    {
+        $this->registerUploadRoute();
+        $model = $this->model();
+        $this->bindViewFacades($model);
+        $fileExtraProps = [
+            'classes' => [
+                'alert' => 'project-alert',
+                'current' => 'project-current',
+                'downloadButton' => 'project-download',
+                'removeButton' => 'project-remove',
+                'uploadButton' => 'project-upload',
+                'uploadIcon' => 'project-upload-icon',
+                'uploadingIcon' => 'project-uploading-icon',
+            ],
+        ];
+        $html = view(
+            'sleeping_owl::default.form.element.file',
+            $this->viewData($model) + compact('fileExtraProps')
+        )->render();
+        $props = $this->extractJsonProps($html);
+
+        $this->assertSame($fileExtraProps['classes'], $props['classes']);
+        $this->assertStringNotContainsString('class="project-alert"', $html);
     }
 
     private function bindViewFacades(Model $model): void

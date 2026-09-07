@@ -185,8 +185,15 @@ describe('precompiled Vue islands', () => {
         expect(view).toContain('data-soa-vue-component="element-file"')
         expect(view).toContain('data-soa-vue-props=')
         expect(view).toContain('v-pre')
+        expect(view).toContain("'alert' => 'alert alert-warning'")
+        expect(view).toContain("'uploadingIcon' => 'fas fa-spinner fa-spin'")
         expect(view).not.toContain('inline-template')
         expect(component).toContain('<template>')
+        expect(component).toContain('data-file-upload')
+        expect(component).toContain(':class="uploadIconClass"')
+        expect(component).not.toMatch(
+            /class="(?:alert|close|form-element-files|btn|fa-fw|fas|upload-button)/,
+        )
         expect(component).not.toMatch(/\$\(|withLegacyInlineTemplate/)
         expect(dropzone).toContain('dropzoneModule.Dropzone')
         expect(dropzone).not.toContain("window.Dropzone = require('dropzone')")

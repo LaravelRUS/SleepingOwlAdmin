@@ -1,52 +1,63 @@
 <template>
     <div>
-        <div v-if="errors.length" class="alert alert-warning">
-            <button type="button" class="close" aria-label="Close" @click="closeAlert">
+        <div v-if="errors.length" data-file-alert :class="classes.alert">
+            <button
+                type="button"
+                data-file-alert-close
+                :class="classes.alertClose"
+                aria-label="Close"
+                @click="closeAlert"
+            >
                 <span aria-hidden="true">&times;</span>
             </button>
 
             <p v-for="error in errors" :key="error">
-                <i class="fas fa-file-alt" aria-hidden="true"></i> {{ error }}
+                <i data-file-error-icon :class="classes.errorIcon" aria-hidden="true"></i>
+                {{ error }}
             </p>
         </div>
 
-        <div v-if="hasValue" class="form-element-files clearfix">
-            <div class="form-element-files__item">
-                <div class="form-element-files__file">
-                    <i class="fa-fw fas fa-file-alt"></i>
+        <div v-if="hasValue" data-file-current :class="classes.current">
+            <div data-file-item :class="classes.item">
+                <div :class="classes.file">
+                    <i :class="classes.fileIcon" aria-hidden="true"></i>
                 </div>
-                <div class="form-element-files__info">
+                <div :class="classes.info">
                     <a
                         :href="downloadUrl"
-                        class="btn btn-default btn-xs pull-right"
-                        data-soa-file-download
+                        data-file-download
+                        :class="classes.downloadButton"
                         download
                         :title="labels.download"
+                        :aria-label="labels.download"
                         target="_blank"
                     >
-                        <i class="fas fa-cloud-upload-alt"></i>
+                        <i :class="classes.downloadIcon" aria-hidden="true"></i>
                     </a>
 
                     <button
                         v-if="!readonly"
                         type="button"
-                        class="btn btn-danger btn-xs"
-                        data-soa-file-remove
+                        data-file-remove
+                        :class="classes.removeButton"
+                        :title="labels.remove"
+                        :aria-label="labels.remove"
                         @click="remove"
                     >
-                        <i class="fas fa-times"></i>
+                        <i :class="classes.removeIcon" aria-hidden="true"></i>
                     </button>
                 </div>
             </div>
         </div>
 
         <div v-if="!readonly">
-            <button ref="uploadButton" type="button" class="btn btn-primary upload-button btn-sm">
-                <i :class="uploadClass"></i> {{ labels.browse }}
+            <button ref="uploadButton" type="button" data-file-upload :class="classes.uploadButton">
+                <i data-file-upload-icon :class="uploadIconClass" aria-hidden="true"></i>
+                {{ labels.browse }}
             </button>
         </div>
 
-        <input data-soa-file-value :name="name" type="hidden" :value="val" />
+        <input data-file-value :name="name" type="hidden" :value="val" />
     </div>
 </template>
 
@@ -61,6 +72,7 @@ import { responseErrors } from './upload-response'
 export default defineComponent({
     name: 'ElementFile',
     props: {
+        classes: { type: Object, default: () => ({}) },
         csrfToken: { type: String, required: true },
         labels: { type: Object, required: true },
         maxFileSize: { type: Number, required: true },
@@ -85,8 +97,8 @@ export default defineComponent({
         hasValue() {
             return this.val.length > 0
         },
-        uploadClass() {
-            return this.uploading ? 'fas fa-spinner fa-spin' : 'fas fa-file-upload'
+        uploadIconClass() {
+            return this.uploading ? this.classes.uploadingIcon : this.classes.uploadIcon
         },
     },
     mounted() {

@@ -11,11 +11,29 @@
         @include(AdminTemplate::getViewPath('form.element.partials.helptext'))
 
         @php
-            $fileProps = [
+            $fileProps = array_replace([
+                'classes' => [
+                    'alert' => 'alert alert-warning',
+                    'alertClose' => 'close',
+                    'current' => 'form-element-files clearfix',
+                    'downloadButton' => 'btn btn-default btn-xs pull-right',
+                    'downloadIcon' => 'fas fa-cloud-upload-alt',
+                    'errorIcon' => 'fas fa-file-alt',
+                    'file' => 'form-element-files__file',
+                    'fileIcon' => 'fa-fw fas fa-file-alt',
+                    'info' => 'form-element-files__info',
+                    'item' => 'form-element-files__item',
+                    'removeButton' => 'btn btn-danger btn-xs',
+                    'removeIcon' => 'fas fa-times',
+                    'uploadButton' => 'btn btn-primary upload-button btn-sm',
+                    'uploadIcon' => 'fas fa-file-upload',
+                    'uploadingIcon' => 'fas fa-spinner fa-spin',
+                ],
                 'csrfToken' => csrf_token(),
                 'labels' => [
                     'browse' => trans('sleeping_owl::lang.file.browse'),
                     'download' => trans('sleeping_owl::lang.button.download'),
+                    'remove' => trans('sleeping_owl::lang.file.remove'),
                 ],
                 'maxFileSize' => $max_file_size,
                 'messages' => [
@@ -33,7 +51,7 @@
                     'id' => $model->getKey(),
                 ], false),
                 'value' => $value,
-            ];
+            ], $fileExtraProps ?? []);
         @endphp
 
         <div

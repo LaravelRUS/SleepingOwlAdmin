@@ -70,8 +70,8 @@
                     "scripts": [
                         {
                             "file": "profiles/production/js/features/forms.js",
-                            "version": "1ea1eda372a4c3be7f30f9c7b7281c63",
-                            "checksum": "sha256:16e160bcedbb27172561949f0ec0837028a8b6dd24def1bb4cea3104ec9aa7fe"
+                            "version": "f8842a7ee29c585d298cbd3d8d92bca7",
+                            "checksum": "sha256:cb3f14eff47dde9c5a5dd26c622c824dc006559adf68956ded5dfe6dae4ff654"
                         }
                     ],
                     "styles": [
@@ -316,8 +316,8 @@
                     "scripts": [
                         {
                             "file": "profiles/production/js/shared/vue.js",
-                            "version": "bb5a44563dbb17ddf9049a62fb5af1c9",
-                            "checksum": "sha256:d6e3fec0c6bd6fd099fef650e56ce1a8daa7374f16ec50933334dca777956172"
+                            "version": "447d1df0a2b65ef6e9c149e8eb53efd0",
+                            "checksum": "sha256:085f5d161c615ca810b69a39f756f0b3ed117355015dbd845e28c912c1f9c713"
                         }
                     ],
                     "styles": []
@@ -670,8 +670,8 @@
                     "scripts": [
                         {
                             "file": "profiles/development/js/shared/vue.js",
-                            "version": "5ca33da86c0b4646749fa7718b8f740b",
-                            "checksum": "sha256:9192b4b026470ede58b6ae139fa35bb3ecbcd86794ba6d6200bceef270bb8eb2"
+                            "version": "b8b7dd861eb5508e8b5249bc8aaa12f6",
+                            "checksum": "sha256:ca13df9b4d1070b49f1552dcee8d2e3e0998c9e9eb8a4fcbc04588c778d5de1c"
                         }
                     ],
                     "styles": []
@@ -711,5 +711,5 @@
             }
         }
     },
-    "build_id": "sha256:fcba66510639b47da3a934f6fb0784fa5e304b30dba27695581220bfa0e98b67"
+    "build_id": "sha256:c322806edb5fa2168a93b92c7a549dfd7feba60be147e179494cafcbdbe5856a"
 }

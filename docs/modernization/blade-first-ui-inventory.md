@@ -96,7 +96,7 @@ classes as the final theme API.
 | Vue component | Current Blade owner | Boundary to preserve or add |
 | --- | --- | --- |
 | `[Complete] admin/display/env-editor.vue` | `default.env_editor` and `default._partials.env_editor` | Blade owns page/header composition and supplies labels plus concrete link/card/table/field/button/icon classes. Vue owns loading, dynamic rows, add/remove/save state and field naming through structural hooks. |
-| `admin/form/file.vue` | `default.form.element.file` | Blade keeps label/help/error/layout ownership and supplies classes/icons. Vue owns upload progress, current file state and interactive inner controls. |
+| `[Complete] admin/form/file.vue` | `default.form.element.file` | Blade keeps label/help/error/layout ownership and supplies concrete alert, current-file, upload/download/remove and icon-state classes. Vue owns errors, upload progress, current file state and interactive inner controls through plain `data-file-*` structural hooks. |
 | `admin/form/image.vue` | `default.form.element.image` | Same boundary as file; preview/upload/paste state remains inside the island. |
 | `admin/form/images.vue` | `default.form.element.images` | Blade supplies gallery/dialog/control classes and icons. Vue owns the dynamic collection, upload, ordering and dialog state. |
 | `[Complete] admin/form/select.vue` | `default.form.element.partials.select_island`, reached from `select`, `multiselect`, `selectajax` and `dependentselect` | Blade passes final field attributes and `classes.required`. Vue owns selection, remote/dependent loading, tagging, the required-state condition and hidden/native submit synchronization; its structural hook does not depend on the AdminLTE class. |
@@ -179,4 +179,7 @@ For each migrated candidate, tests must prove all of the following:
    - [Complete] `env-editor`: the logical page view supplies all concrete link,
      card, table, field, action and icon classes; project/theme overrides may
      replace the final props contract without recompiling Vue.
-   - [Pending] `file`, `image` and `images`.
+   - [Complete] `file`: the logical field view supplies all alert, current-file,
+     action and icon-state classes; Dropzone lifecycle uses a structural hook
+     and does not depend on the legacy `upload-button` class.
+   - [Pending] `image` and `images`.

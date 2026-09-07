@@ -168,6 +168,20 @@ async function runUploadCallback(page, selector, value) {
     )
 }
 
+async function expectFilePresentationClasses(file) {
+    await expect(file.locator('[data-file-current]')).toHaveClass('project-file-current')
+    await expect(file.locator('[data-file-item]')).toHaveClass('project-file-item')
+    await expect(file.locator('.project-file-visual')).toHaveCount(1)
+    await expect(file.locator('.project-file-current-icon')).toHaveCount(1)
+    await expect(file.locator('.project-file-info')).toHaveCount(1)
+    await expect(file.locator('[data-file-download]')).toHaveClass('project-file-download')
+    await expect(file.locator('[data-file-download] i')).toHaveClass('project-file-download-icon')
+    await expect(file.locator('[data-file-remove]')).toHaveClass('project-file-remove')
+    await expect(file.locator('[data-file-remove] i')).toHaveClass('project-file-remove-icon')
+    await expect(file.locator('[data-file-upload]')).toHaveClass(/\bproject-file-upload\b/)
+    await expect(file.locator('[data-file-upload-icon]')).toHaveClass('project-file-upload-icon')
+}
+
 async function inspectReadonlyFile(page) {
     return page.evaluate((props) => {
         const host = globalThis.document.createElement('section')
@@ -178,10 +192,10 @@ async function inspectReadonlyFile(page) {
         globalThis.Admin.Components.scan(host)
 
         const result = {
-            value: host.querySelector('[data-soa-file-value]').value,
-            hasDownload: Boolean(host.querySelector('[data-soa-file-download]')),
-            hasRemove: Boolean(host.querySelector('[data-soa-file-remove]')),
-            hasUpload: Boolean(host.querySelector('.upload-button')),
+            value: host.querySelector('[data-file-value]').value,
+            hasDownload: Boolean(host.querySelector('[data-file-download]')),
+            hasRemove: Boolean(host.querySelector('[data-file-remove]')),
+            hasUpload: Boolean(host.querySelector('[data-file-upload]')),
         }
 
         globalThis.Admin.Components.destroy(host)
@@ -605,18 +619,18 @@ test('legacy tab state restores and updates without leaking globals', async ({ p
 
 test('file, image and images components expose values and upload callbacks', async ({ page }) => {
     await openFixture(page)
-    const fileValue = page.locator('#file-wrapper [data-soa-file-value]')
+    const fileValue = page.locator('#file-wrapper [data-file-value]')
     await expect(fileValue).toHaveValue('docs/start.pdf')
-    await expect(page.locator('#file-wrapper [data-soa-file-download]')).toHaveAttribute(
+    await expect(page.locator('#file-wrapper [data-file-download]')).toHaveAttribute(
         'href',
         /\/docs\/start\.pdf$/,
     )
-    await runUploadCallback(page, '#file-wrapper .upload-button', 'docs/uploaded.pdf')
+    await runUploadCallback(page, '#file-wrapper [data-file-upload]', 'docs/uploaded.pdf')
     await expect(fileValue).toHaveValue('docs/uploaded.pdf')
     await page.evaluate(() => {
         globalThis.Admin.Messages.confirm = () => Promise.resolve({ value: true })
     })
-    await page.locator('#file-wrapper [data-soa-file-remove]').click()
+    await page.locator('#file-wrapper [data-file-remove]').click()
     await expect(fileValue).toHaveValue('')
 
     const imageValue = page.locator('#image-wrapper [data-soa-image-value]')
@@ -641,6 +655,40 @@ test('file, image and images components expose values and upload callbacks', asy
     await expect(page.locator('#images-wrapper [data-soa-images-value]')).toHaveValue(
         'fixtures/second.svg,fixtures/third.svg',
     )
+})
+
+test('file island consumes Blade-owned classes without an AdminLTE class contract', async ({
+    page,
+}) => {
+    const pageErrors = capturePageErrors(page)
+    await openFixture(page)
+    const file = page.locator('#file-wrapper')
+
+    await expectFilePresentationClasses(file)
+
+    await page.evaluate(() => {
+        globalThis.Admin.Messages.error = () => undefined
+        const upload = globalThis.document.querySelector(
+            '#file-wrapper [data-file-upload]',
+        ).dropzone
+        upload.options.sending.call(upload)
+    })
+    await expect(file.locator('[data-file-upload-icon]')).toHaveClass('project-file-uploading-icon')
+
+    await page.evaluate(() => {
+        const upload = globalThis.document.querySelector(
+            '#file-wrapper [data-file-upload]',
+        ).dropzone
+        upload.options.error.call(upload, {}, { errors: ['Upload rejected'] })
+        upload.options.complete.call(upload)
+    })
+    await expect(file.locator('[data-file-alert]')).toHaveClass('project-file-alert')
+    await expect(file.locator('[data-file-alert-close]')).toHaveClass('project-file-alert-close')
+    await expect(file.locator('[data-file-error-icon]')).toHaveClass('project-file-error-icon')
+    await expect(file.locator('[data-file-upload-icon]')).toHaveClass('project-file-upload-icon')
+    await file.locator('[data-file-alert-close]').click()
+    await expect(file.locator('[data-file-alert]')).toHaveCount(0)
+    expectNoUnexpectedPageErrors(pageErrors)
 })
 
 test('images island opens and navigates its native image preview', async ({ page }) => {
@@ -772,7 +820,7 @@ test('file island destroys its upload driver before unmount', async ({ page }) =
 
     const result = await page.evaluate(() => {
         const host = globalThis.document.querySelector('#file-wrapper')
-        const button = host.querySelector('.upload-button')
+        const button = host.querySelector('[data-file-upload]')
 
         return {
             existed: Boolean(button.dropzone),
