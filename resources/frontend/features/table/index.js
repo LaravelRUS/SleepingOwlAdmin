@@ -16,7 +16,7 @@ export { bindFilterControls, clearFilterControls } from './filters/filter-contro
 export { createDateFilterSupport } from './filters/date-filter-support.js'
 export {
     createTableFilterDrivers,
-    dataTables2SearchExtensions,
+    dataTableSearchExtensions,
     isDateInRange,
     isNumberInRange,
 } from './filters/filter-drivers.js'
@@ -57,7 +57,7 @@ export {
     TABLE_CONTROLS_COMPONENT,
     TABLE_CONTROLS_SELECTOR,
 } from './runtime/install-table-controls.js'
-export { normalizeDataTables2Options } from './options/option-aliases.js'
+export { normalizeDataTableOptions } from './options/option-aliases.js'
 export { applyServerOptions, readTableDefinition, tableLayout } from './options/table-options.js'
 export { selectedRowValues } from './selection/selected-rows.js'
 export { bindTableCheckboxes, updateRowSelection } from './selection/checkbox-controls.js'

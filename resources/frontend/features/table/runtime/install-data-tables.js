@@ -1,7 +1,7 @@
 import { componentMountSkipped } from '../../../core/lifecycle/component-lifecycle.js'
 import { resolveDatePickerLocale } from '../../forms/date/date-locales.js'
-import { createDataTables2, dataTables2Runtime } from '../engine/datatables2.js'
-import { installDataTables2Extensions } from '../engine/extensions.js'
+import { createDataTableEngine, dataTableEngineRuntime } from '../engine/data-table-engine.js'
+import { installDataTableExtensions } from '../engine/extensions.js'
 import {
     createTableFilterDrivers,
     isDateInRange,
@@ -29,7 +29,7 @@ export function installDataTables(admin, options) {
     const definition = createDataTableDefinition(settings, filters)
     const scan = (root = settings.root) => scanTables(settings, filters, root)
 
-    installDataTables2Extensions(settings.engine, { onError: settings.onError })
+    installDataTableExtensions(settings.engine, { onError: settings.onError })
     publishCompatibility(settings.target, drivers)
     admin.Components.register(definition)
     admin.Modules.register('display.datatables', () => scan())
@@ -93,8 +93,8 @@ function normalizeOptions(admin, options = {}) {
 
     return {
         admin,
-        createEngine: options.createEngine ?? createDataTables2,
-        engine: options.engine ?? dataTables2Runtime(),
+        createEngine: options.createEngine ?? createDataTableEngine,
+        engine: options.engine ?? dataTableEngineRuntime(),
         inlineEditor: options.inlineEditor,
         onError: options.onError,
         root: options.root,

@@ -1,7 +1,7 @@
 import ProgressBar from 'progressbar.js'
 
 import { installInlineEditors } from './editing/install-inline-editors.js'
-import { dataTables2Versions } from './engine/datatables2.js'
+import { dataTableEngineVersions } from './engine/data-table-engine.js'
 import { tableBrowserOptions } from './browser-options.js'
 import { installDataTables } from './runtime/install-data-tables.js'
 import { installTableAutoUpdates } from './runtime/install-table-auto-updates.js'
@@ -61,7 +61,7 @@ function createTableRuntime(features, root) {
                 features.autoUpdates.scan(scanRoot)
             )
         },
-        versions: dataTables2Versions(),
+        versions: dataTableEngineVersions(),
     })
 }
 

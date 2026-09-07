@@ -5,21 +5,26 @@ import {
     createDrawHook,
 } from '../../../../resources/frontend/features/table/hooks/table-hooks.js'
 
-it('runs draw hooks in stable order with the engine callback context', () => {
+it('preserves the DataTable.Dom callback context and its public api method', () => {
     const calls = []
     const events = { fire: vi.fn(() => calls.push('event')) }
     const draw = createDrawHook({
         events,
-        highlight: () => calls.push('highlight'),
+        highlight: (context) => {
+            expect(context.api()).toBe(api)
+            calls.push('highlight')
+        },
         inlineEditor: () => calls.push('inline-editor'),
         lazyload: () => calls.push('lazyload'),
         tooltips: () => calls.push('tooltips'),
     })
-    const context = { name: 'engine' }
+    const api = { table: vi.fn() }
+    const context = { api: vi.fn(() => api) }
 
     draw.call(context)
 
     expect(events.fire).toHaveBeenCalledWith('datatables::draw', context)
+    expect(context.api).toHaveBeenCalledOnce()
     expect(calls).toEqual(['event', 'inline-editor', 'tooltips', 'lazyload', 'highlight'])
 })
 

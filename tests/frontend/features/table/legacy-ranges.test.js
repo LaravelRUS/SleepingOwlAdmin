@@ -2,7 +2,7 @@ import { expect, it } from 'vitest'
 
 import {
     createTableFilterDrivers,
-    dataTables2SearchExtensions,
+    dataTableSearchExtensions,
     isDateInRange,
     isNumberInRange,
 } from '../../../../resources/frontend/features/table/filters/filter-drivers.js'
@@ -32,7 +32,7 @@ it('resolves custom search registration from the active engine', () => {
     const search = []
     const engine = { ext: { search } }
 
-    expect(dataTables2SearchExtensions(engine)).toBe(search)
+    expect(dataTableSearchExtensions(engine)).toBe(search)
     expect(createTableFilterDrivers(engine)).toMatchObject({
         date: expect.any(Function),
         range: expect.any(Function),

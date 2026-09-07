@@ -99,8 +99,16 @@
         <script>
             window.__logicalTableEvents = []
             window.__swalCalls = []
-            ;['datatables::draw', 'datatables::actions::submitted'].forEach((name) => {
-                Admin.Events.on(name, () => window.__logicalTableEvents.push(name))
+            Admin.Events.on('datatables::draw', (context) => {
+                window.__logicalTableEvents.push('datatables::draw')
+                window.__logicalDrawContext = {
+                    api: typeof context?.api,
+                    jquery: typeof context?.jquery,
+                    tableId: context?.api().table().node().id,
+                }
+            })
+            Admin.Events.on('datatables::actions::submitted', () => {
+                window.__logicalTableEvents.push('datatables::actions::submitted')
             })
             Admin.Messages.confirm = () => Promise.resolve({ value: true })
             Swal.fire = (settings) => {

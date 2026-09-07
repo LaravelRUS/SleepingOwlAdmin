@@ -15,19 +15,23 @@ function readSource(path) {
     return readFileSync(resolve(root, path), 'utf8')
 }
 
-it('pins the agreed DataTables 2 and Responsive 3 package lines', () => {
+it('pins the dependency-free DataTables 3 and Responsive 4 package lines', () => {
     expect(packageJson.dependencies).toMatchObject({
-        'datatables.net': '2.3.8',
-        'datatables.net-bs4': '2.3.8',
-        'datatables.net-responsive': '3.0.8',
-        'datatables.net-responsive-bs4': '3.0.8',
+        'datatables.net': '3.0.3',
+        'datatables.net-bs4': '3.0.3',
+        'datatables.net-responsive': '4.0.3',
+        'datatables.net-responsive-bs4': '4.0.3',
     })
-    expect(packageLock.packages['node_modules/datatables.net'].version).toBe('2.3.8')
-    expect(packageLock.packages['node_modules/datatables.net-responsive'].version).toBe('3.0.8')
+    expect(packageLock.packages['node_modules/datatables.net'].version).toBe('3.0.3')
+    expect(packageLock.packages['node_modules/datatables.net'].dependencies).toBeUndefined()
+    expect(packageLock.packages['node_modules/datatables.net-responsive'].version).toBe('4.0.3')
+    expect(packageLock.packages['node_modules/datatables.net-responsive'].dependencies).toEqual({
+        'datatables.net': '^3',
+    })
 })
 
 it('keeps the engine independent from the legacy theme presentation adapter', () => {
-    const engine = readSource('resources/frontend/features/table/engine/datatables2.js')
+    const engine = readSource('resources/frontend/features/table/engine/data-table-engine.js')
     const presentation = readSource(
         'resources/frontend/features/table/themes/legacy-adminlte/datatables.js',
     )
@@ -36,7 +40,7 @@ it('keeps the engine independent from the legacy theme presentation adapter', ()
     expect(engine).toContain("import 'datatables.net-responsive'")
     expect(engine).not.toMatch(/bootstrap|adminlte|jquery|jQuery|\$\(/i)
     expect(presentation).toContain("from 'datatables.net-bs4'")
-    expect(presentation).toContain("import 'datatables.net-responsive-bs4'")
+    expect(presentation).not.toContain('datatables.net-responsive-bs4')
     expect(presentation).not.toMatch(/oApi|pageButton|\$\(/)
 })
 
@@ -48,14 +52,14 @@ it('removes the handwritten Bootstrap 3 renderer and owns vendor CSS in the adap
     )
 
     expect(existsSync(legacyRenderer)).toBe(false)
-    expect(bootstrap.indexOf('dataTables2Runtime')).toBeLessThan(
+    expect(bootstrap.indexOf('dataTableEngineRuntime')).toBeLessThan(
         bootstrap.indexOf('installLegacyDataTablesPresentation'),
     )
     expect(styles).toContain('datatables.net-bs4/css/dataTables.bootstrap4.css')
     expect(styles).toContain('datatables.net-responsive-bs4/css/responsive.bootstrap4.css')
 })
 
-it('mounts live tables through the DataTables 2 constructor boundary', () => {
+it('mounts live tables through the engine-neutral constructor boundary', () => {
     const bridge = readSource('resources/assets/js_owl/admin/display/datatables.js')
     const orchestration = readSource(
         'resources/frontend/features/table/runtime/install-data-tables.js',
@@ -63,11 +67,11 @@ it('mounts live tables through the DataTables 2 constructor boundary', () => {
 
     expect(bridge).toContain('installDataTables(Admin')
     expect(orchestration).toContain('createEngine: settings.createEngine')
-    expect(orchestration).toContain('options.createEngine ?? createDataTables2')
+    expect(orchestration).toContain('options.createEngine ?? createDataTableEngine')
     expect(`${bridge}\n${orchestration}`).not.toContain('$(table).DataTable(engineOptions)')
 })
 
-it('uses current DataTables 2 option names in first-party runtime code', () => {
+it('uses current DataTables 3 option names in first-party runtime code', () => {
     const orchestration = readSource(
         'resources/frontend/features/table/runtime/table-runtime-options.js',
     )
@@ -91,6 +95,7 @@ it('registers errors, ordering and search through the active engine API', () => 
     expect(extensions).toContain('engine.ext.errMode')
     expect(extensions).toContain('engine.ext.order[DATE_TIME_ORDER]')
     expect(filters).toContain('engine.ext.search')
+    expect(filters).not.toMatch(/settings\(\)\[0\]\.[A-Za-z]+/)
     expect(`${orchestration}\n${filters}`).not.toMatch(/(?:\$|jQuery)\.fn\.dataTable/)
 })
 

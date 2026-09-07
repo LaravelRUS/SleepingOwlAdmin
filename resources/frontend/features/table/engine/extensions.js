@@ -1,6 +1,6 @@
 export const DATE_TIME_ORDER = 'DateTime'
 
-export function installDataTables2Extensions(engine, { onError }) {
+export function installDataTableExtensions(engine, { onError }) {
     assertExtensionDependencies(engine, onError)
 
     engine.ext.errMode = onError

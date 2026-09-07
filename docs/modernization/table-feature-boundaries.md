@@ -1,30 +1,31 @@
 # Table feature boundaries
 
-The published legacy runtime now loads pinned DataTables `2.3.8` and Responsive
-`3.0.8` through the same decomposed feature boundary that will become the
-standalone table driver. The concrete engine is created through
-`createDataTables2(element, options)`, which owns the `new DataTable(...)`
-constructor call; no jQuery object crosses into `Admin.Tables` or the core
-registry.
+The published table runtime loads pinned DataTables `3.0.3` and Responsive
+`4.0.3` through an engine-neutral feature boundary. The concrete engine is
+created through `createDataTableEngine(element, options)`, which owns the
+`new DataTable(...)` constructor call. No jQuery object crosses into
+`Admin.Tables` or the core registry, and the compiled `feature:table` entry does
+not contain the jQuery library.
 
-| Module                             | Responsibility                                                           |
-| ---------------------------------- | ------------------------------------------------------------------------ |
-| `engine/extensions.js`             | error handling, custom ordering and engine extension registration        |
-| `options/table-options.js`         | typed DOM definition, table options and control layout                   |
-| `transport/table-ajax.js`          | unchanged server request payload and named filter data                   |
-| `filters/filter-elements.js`       | filter discovery and native control values                               |
-| `filters/filter-drivers.js`        | native text, select, date, daterange and range behavior                   |
-| `filters/filter-controls.js`       | native execute, clear and Enter-key controls                             |
-| `state/filter-state.js`            | filter persistence key, serialization, restore and search-state clearing |
-| `selection/selected-rows.js`       | checked row identifiers scoped to one table element                      |
-| `hooks/table-hooks.js`             | draw hook order and server-provided row classes                          |
-| `lifecycle/data-table-adapter.js`  | engine creation, registry registration and adapter lifecycle             |
-| `options/option-aliases.js`        | legacy option aliases at the server/config compatibility boundary        |
+| Module                            | Responsibility                                                            |
+| --------------------------------- | ------------------------------------------------------------------------- |
+| `engine/data-table-engine.js`     | dependency-free core/Responsive runtime, constructor and version contract |
+| `engine/extensions.js`            | error handling, custom ordering and engine extension registration         |
+| `options/table-options.js`        | typed DOM definition, table options and control layout                    |
+| `transport/table-ajax.js`         | unchanged server request payload and named filter data                    |
+| `filters/filter-elements.js`      | filter discovery and native control values                                |
+| `filters/filter-drivers.js`       | native text, select, date, daterange and range behavior                   |
+| `filters/filter-controls.js`      | native execute, clear and Enter-key controls                              |
+| `state/filter-state.js`           | filter persistence key, serialization, restore and search-state clearing  |
+| `selection/selected-rows.js`      | checked row identifiers scoped to one table element                       |
+| `hooks/table-hooks.js`            | draw hook order and server-provided row classes                           |
+| `lifecycle/data-table-adapter.js` | engine creation, registry registration and adapter lifecycle              |
+| `options/option-aliases.js`       | legacy option aliases at the server/config compatibility boundary         |
 
 `resources/assets/js_owl/admin/display/datatables.js` is transitional
-orchestration: it reads config, composes the modules, delegates DataTables 2
-creation to the engine factory and binds legacy controls. The previous 413-line
-closure, implicit globals and inline state/filter implementations are removed.
+orchestration: it reads config, composes the modules, delegates engine creation
+to the neutral factory and binds legacy controls. The previous 413-line closure,
+implicit globals and inline state/filter implementations are removed.
 
 The server-side DataTables wire protocol is unchanged. Filter storage uses the
 table-scoped `Filters_/route::<encoded table id>` key while retaining edit-route
@@ -35,30 +36,40 @@ Save, restore and clear operate only on the owning table, including pages with
 multiple displays. Empty range objects are not persisted. State cleanup never
 clears unrelated local storage. Repeated module boot resolves the registered
 adapter instead of initializing a second engine for the same table.
+The DataTables 3 native transport keeps cache busting for `GET`/`HEAD`, while
+`POST` and other mutation methods retain the previous URL without an added
+cache-buster parameter.
 
-First-party runtime options use the DataTables 2 names `layout`, `stateSave`
-and `drawCallback`. Async tables receive a layout object with conditional
+First-party runtime options use the current names `layout`, `stateSave` and
+`drawCallback`. Async tables receive a layout object with conditional
 `pageLength`/`search` controls and stable `info`/`paging` regions. Published
 config and `setDatatableAttributes()` values using `sDom`, `bStateSave` or
 `fnDrawCallback` pass through a small compatibility normalizer; an explicitly
-provided current option wins over its legacy alias.
+provided current option wins over its legacy alias. Raw option migrations are
+documented in [`data-table-options.md`](data-table-options.md).
 
-The engine module under `features/table/engine` imports only DataTables core and
-Responsive. The legacy AdminLTE feature adapter separately imports the
-official Bootstrap 4 core/Responsive adapters and owns their CSS. The deleted
-`resources/assets/js_owl/libs/datatables.js` no longer publishes
-`window.DataTable`, overrides pagination or calls the private `settings.oApi`.
+The engine module imports only DataTables core and the dependency-free
+Responsive core. The legacy AdminLTE presentation adapter imports the official
+Bootstrap 4 DataTables core adapter. It owns both Bootstrap 4 stylesheets, but
+uses `datatables.net-responsive-bs4` as CSS-only: that package's JavaScript modal
+renderer still asks DataTables for jQuery and is not included. Responsive
+behavior comes from `datatables.net-responsive` and the project does not use the
+optional Bootstrap modal renderer.
 
 Error handling, custom `DateTime` ordering and range-search registration use
 the extension registries exposed by the active engine. Date ordering creates a
-public `DataTable.Api` instance and reads native `dataset.value`; first-party
-runtime code no longer reaches the extension API through `$.fn.dataTable`.
+public `DataTable.Api` instance and reads native `dataset.value`. A range-search
+callback compares its callback settings object with the active table settings by
+identity; it does not read private settings fields. DataTables 3 invokes draw
+callbacks with a `DataTable.Dom` context that retains the public `.api()` method.
+The legacy `datatables::draw` event currently receives that raw context for soft
+compatibility, but no `.jquery` surface is exposed.
 
 Reusable filter drivers read values and selected options from native controls,
 bind DOM events with `addEventListener`, and register client range predicates
 through the injected engine. Filter execute, clear and Enter-key behavior is a
-separate native module. The modern table profile contains neither jQuery nor
-Moment.
+separate native module. The modern table profile contains neither the jQuery
+library nor Moment.
 
 The date, datetime, range, and Vue Multiselect controls now dispatch native
 `change` events. Table date filters share the Air Datepicker format parser, so
@@ -70,5 +81,4 @@ Shared reload, state and selection consumers no longer call the DataTables API
 directly. Bulk actions and custom action forms resolve the adapter for their
 table and read `Admin.Tables.selectedRows(element)`; action submission and the
 auto-update view use `Admin.Tables.reload(...)`. No first-party runtime path
-creates a table through `$(element).DataTable(...)`. The remaining jQuery-based
-tooltip and highlight bindings are tracked by the draw-hooks checkpoint.
+creates a table through `$(element).DataTable(...)`.

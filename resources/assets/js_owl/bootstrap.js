@@ -9,12 +9,12 @@ installCompatibilityRuntime(window);
 
 require('./libs/dropzone');
 const {
-    dataTables2Runtime,
-} = require('../../frontend/features/table/engine/datatables2');
+    dataTableEngineRuntime,
+} = require('../../frontend/features/table/engine/data-table-engine');
 const {
     installLegacyDataTablesPresentation,
 } = require('../../frontend/features/table/themes/legacy-adminlte/datatables');
-installLegacyDataTablesPresentation(dataTables2Runtime());
+installLegacyDataTablesPresentation(dataTableEngineRuntime());
 require('./libs/progressbar');
 require('./libs/lazyload');
 

@@ -12,7 +12,7 @@ const REMOVED_DATATABLES1_OPTIONS = Object.freeze([
     ['sAjaxDataProp', 'Use ajax.dataSrc.'],
 ])
 
-export function normalizeDataTables2Options(options, { warn = warnRemovedOption } = {}) {
+export function normalizeDataTableOptions(options, { warn = warnRemovedOption } = {}) {
     const normalized = { ...options }
 
     LEGACY_OPTION_ALIASES.forEach(([legacyName, currentName]) => {
@@ -45,7 +45,7 @@ function removeUnsupportedOption(options, legacyName, migration, warn) {
 function formatRemovedOptionWarning(legacyName, migration) {
     return (
         `[SleepingOwl Admin] DataTables 1 option "${legacyName}" ` +
-        `is not supported by DataTables 2. ${migration}`
+        `is not supported by DataTables 3. ${migration}`
     )
 }
 

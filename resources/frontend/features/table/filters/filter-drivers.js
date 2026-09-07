@@ -5,7 +5,7 @@ const NO_COMPATIBILITY_EVENTS = Object.freeze({
 })
 
 export function createTableFilterDrivers(engine, compatibilityEvents = NO_COMPATIBILITY_EVENTS) {
-    const searchExtensions = dataTables2SearchExtensions(engine)
+    const searchExtensions = dataTableSearchExtensions(engine)
     const events = normalizeCompatibilityEvents(compatibilityEvents)
 
     return {
@@ -19,7 +19,7 @@ export function createTableFilterDrivers(engine, compatibilityEvents = NO_COMPAT
     }
 }
 
-export function dataTables2SearchExtensions(engine) {
+export function dataTableSearchExtensions(engine) {
     if (!Array.isArray(engine?.ext?.search)) {
         throw new TypeError('Table range filters require a DataTables search registry.')
     }
@@ -135,7 +135,7 @@ function searchRange(from, to, table, column, serverSide) {
 }
 
 function filterRange(settings, data, table, index, from, to, isDateRange, parseDate) {
-    if (table.settings()[0].sTableId !== settings.sTableId) return true
+    if (table.settings()[0] !== settings) return true
 
     const value = orderedValue(data[index])
 

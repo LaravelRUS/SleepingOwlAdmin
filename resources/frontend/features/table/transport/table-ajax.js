@@ -4,6 +4,7 @@ export function createTableAjax({ events, id, method, payload, root, url }) {
     assertEvents(events)
 
     return {
+        cache: allowsRequestCaching(method),
         data(parameters) {
             events.fire('datatables::ajax::data', parameters)
             appendNamedFilterData(parameters, root, id)
@@ -12,6 +13,10 @@ export function createTableAjax({ events, id, method, payload, root, url }) {
         type: method,
         url,
     }
+}
+
+function allowsRequestCaching(method) {
+    return !['GET', 'HEAD'].includes(method.toUpperCase())
 }
 
 export function appendNamedFilterData(parameters, root, tableId) {

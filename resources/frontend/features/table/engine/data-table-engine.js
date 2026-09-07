@@ -1,15 +1,15 @@
 import DataTable from 'datatables.net'
 import 'datatables.net-responsive'
 
-export function createDataTables2(element, options) {
+export function createDataTableEngine(element, options) {
     return new DataTable(element, options)
 }
 
-export function dataTables2Runtime() {
+export function dataTableEngineRuntime() {
     return DataTable
 }
 
-export function dataTables2Versions() {
+export function dataTableEngineVersions() {
     return Object.freeze({
         core: DataTable.version,
         responsive: DataTable.Responsive?.version,

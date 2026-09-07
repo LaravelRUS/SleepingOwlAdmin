@@ -111,6 +111,26 @@ describe('compiled core boundaries', () => {
     })
 })
 
+describe('compiled table boundaries', () => {
+    it('excludes jQuery and the Responsive Bootstrap JavaScript adapter', () => {
+        const sources = readJson(
+            'public/default/profiles/development/js/features/table.js.map',
+        ).sources.map((source) => source.replaceAll('\\', '/'))
+        const license = readFileSync(
+            resolve(root, 'public/default/profiles/production/js/features/table.js.LICENSE.txt'),
+            'utf8',
+        )
+
+        expect(sources.some((source) => source.includes('/node_modules/jquery/'))).toBe(false)
+        expect(
+            sources.some((source) =>
+                source.includes('/node_modules/datatables.net-responsive-bs4/js/'),
+            ),
+        ).toBe(false)
+        expect(license).not.toMatch(/jQuery JavaScript Library|OpenJS Foundation/i)
+    })
+})
+
 describe('logical asset manifest', () => {
     it('publishes schema and build metadata', () => {
         expect(assetManifest.schema_version).toBe(1)

@@ -1,4 +1,4 @@
-import { normalizeDataTables2Options } from './option-aliases.js'
+import { normalizeDataTableOptions } from './option-aliases.js'
 
 export function readTableDefinition(element) {
     assertElement(element)
@@ -15,7 +15,7 @@ export function readTableDefinition(element) {
 }
 
 export function applyServerOptions(options, definition) {
-    const normalized = normalizeDataTables2Options(options)
+    const normalized = normalizeDataTableOptions(options)
 
     if (!definition.url) {
         return normalized

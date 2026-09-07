@@ -3,7 +3,6 @@ import { expect, it, vi } from 'vitest'
 const { BootstrapDataTable } = vi.hoisted(() => ({ BootstrapDataTable: vi.fn() }))
 
 vi.mock('datatables.net-bs4', () => ({ default: BootstrapDataTable }))
-vi.mock('datatables.net-responsive-bs4', () => ({}))
 
 import {
     DATATABLES_PRESENTATION_ID,

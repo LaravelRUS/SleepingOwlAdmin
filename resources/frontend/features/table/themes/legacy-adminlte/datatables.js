@@ -1,5 +1,4 @@
 import BootstrapDataTable from 'datatables.net-bs4'
-import 'datatables.net-responsive-bs4'
 
 export const DATATABLES_PRESENTATION_ID = 'legacy-adminlte.bootstrap4'
 

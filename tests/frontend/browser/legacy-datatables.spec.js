@@ -421,11 +421,11 @@ test('state config disables DataTables and custom filter persistence together', 
             filters: globalThis.localStorage.getItem(
                 'Filters_/legacy-datatables::legacy-table-fixture',
             ),
-            stateSave: table.settings()[0].oFeatures.bStateSave,
+            stateSave: Boolean(table.init().stateSave),
         }
     })
 
-    expect(state).toEqual({ dataTables: null, filters: null, stateSave: null })
+    expect(state).toEqual({ dataTables: null, filters: null, stateSave: false })
 })
 
 test('highlight config marks only the hovered DataTables column', async ({ page }) => {

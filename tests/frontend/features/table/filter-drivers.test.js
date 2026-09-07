@@ -19,6 +19,12 @@ function engine() {
     return { ext: { search: [] } }
 }
 
+function tableWithSettings() {
+    const settings = {}
+
+    return { settings, table: { settings: () => [settings] } }
+}
+
 function compatibilityEvents() {
     const dateChanges = new Map()
     const syntheticChanges = new Map()
@@ -76,10 +82,8 @@ it('binds range inputs natively and registers client search on the active engine
     const to = control({ value: '40' })
     const container = { querySelectorAll: () => [from, to] }
     const column = { search: vi.fn() }
-    const table = {
-        draw: vi.fn(),
-        settings: () => [{ sTableId: 'orders' }],
-    }
+    const { settings, table } = tableWithSettings()
+    table.draw = vi.fn()
 
     drivers.range(container, table, column, 3, false)
     from.emit('change')
@@ -88,9 +92,9 @@ it('binds range inputs natively and registers client search on the active engine
     expect(to.dataset.ajaxDataName).toBe('to')
     expect(table.draw).toHaveBeenCalledOnce()
     expect(runtime.ext.search).toHaveLength(1)
-    expect(runtime.ext.search[0]({ sTableId: 'orders' }, [null, null, null, '25'])).toBe(true)
-    expect(runtime.ext.search[0]({ sTableId: 'orders' }, [null, null, null, '50'])).toBe(false)
-    expect(runtime.ext.search[0]({ sTableId: 'users' }, [])).toBe(true)
+    expect(runtime.ext.search[0](settings, [null, null, null, '25'])).toBe(true)
+    expect(runtime.ext.search[0](settings, [null, null, null, '50'])).toBe(false)
+    expect(runtime.ext.search[0]({}, [])).toBe(true)
 })
 
 it('sends the unchanged range wire format for server-side tables', () => {
@@ -113,7 +117,7 @@ it('delegates client-side date parsing without adding a date library to the driv
     const to = control({ closest: wrapper, value: '20' })
     from.dataset.dateFormat = 'fixture'
     events.parseDate.mockImplementation((value) => new Date(2026, 0, Number(value)))
-    const table = { settings: () => [{ sTableId: 'orders' }] }
+    const { settings, table } = tableWithSettings()
 
     createTableFilterDrivers(runtime, events).range(
         { querySelectorAll: () => [from, to] },
@@ -123,6 +127,6 @@ it('delegates client-side date parsing without adding a date library to the driv
         false,
     )
 
-    expect(runtime.ext.search[0]({ sTableId: 'orders' }, [null, '15'])).toBe(true)
+    expect(runtime.ext.search[0](settings, [null, '15'])).toBe(true)
     expect(events.parseDate).toHaveBeenCalledWith('15', 'fixture')
 })

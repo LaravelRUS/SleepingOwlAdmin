@@ -6,11 +6,7 @@
         {
             "selector": {
                 "prefix": "aliases",
-                "exclude": [
-                    "aliases.Assets",
-                    "aliases.Meta",
-                    "aliases.PackageManager"
-                ]
+                "exclude": ["aliases.Assets", "aliases.Meta", "aliases.PackageManager"]
             },
             "status": "unchanged",
             "owner": "core:aliases",
@@ -18,11 +14,7 @@
         },
         {
             "selector": {
-                "keys": [
-                    "aliases.Assets",
-                    "aliases.Meta",
-                    "aliases.PackageManager"
-                ]
+                "keys": ["aliases.Assets", "aliases.Meta", "aliases.PackageManager"]
             },
             "status": "same key/new implementation",
             "owner": "compatibility:assets",
@@ -70,13 +62,11 @@
             },
             "status": "same key/new implementation",
             "owner": "feature:tables",
-            "contract": "Keep the PHP/config surface while native modules and the DataTables 2 driver replace the legacy implementation. Incompatible raw DataTables 1 options are listed in docs/modernization/datatables2-options.md."
+            "contract": "Keep the PHP/config surface while native modules and the DataTables 3 engine replace the legacy implementation. Incompatible raw DataTables 1 options are listed in docs/modernization/data-table-options.md."
         },
         {
             "selector": {
-                "keys": [
-                    "dev_assets"
-                ]
+                "keys": ["dev_assets"]
             },
             "status": "same key/new implementation",
             "owner": "core:assets",
@@ -84,11 +74,7 @@
         },
         {
             "selector": {
-                "keys": [
-                    "dateFormat",
-                    "datetimeFormat",
-                    "timeFormat"
-                ]
+                "keys": ["dateFormat", "datetimeFormat", "timeFormat"]
             },
             "status": "same key/new implementation",
             "owner": "feature:date-time",
@@ -112,12 +98,7 @@
         },
         {
             "selector": {
-                "keys": [
-                    "imageLazyLoad",
-                    "imageLazyLoadFile",
-                    "scroll_to_bottom",
-                    "scroll_to_top"
-                ]
+                "keys": ["imageLazyLoad", "imageLazyLoadFile", "scroll_to_bottom", "scroll_to_top"]
             },
             "status": "same key/new implementation",
             "owner": "feature:dom-helpers",
@@ -125,9 +106,7 @@
         },
         {
             "selector": {
-                "keys": [
-                    "template"
-                ]
+                "keys": ["template"]
             },
             "status": "same key/new implementation",
             "owner": "core:themes",

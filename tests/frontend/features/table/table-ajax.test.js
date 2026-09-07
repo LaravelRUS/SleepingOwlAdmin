@@ -33,12 +33,25 @@ it('builds the unchanged DataTables wire transport and fires the compatibility h
 
     ajax.data(parameters)
 
-    expect(ajax).toMatchObject({ type: 'POST', url: '/orders' })
+    expect(ajax).toMatchObject({ cache: true, type: 'POST', url: '/orders' })
     expect(events.fire).toHaveBeenCalledWith('datatables::ajax::data', parameters)
     expect(parameters).toMatchObject({
         columns: [{}, { search: { exact: 'Alice', value: '' } }],
         payload: { scope: 'active' },
     })
+})
+
+it('keeps cache busting on read requests only', () => {
+    const ajax = createTableAjax({
+        events: { fire: vi.fn() },
+        id: 'orders',
+        method: 'GET',
+        payload: undefined,
+        root: filterRoot({ dataset: {} }),
+        url: '/orders',
+    })
+
+    expect(ajax.cache).toBe(false)
 })
 
 it('ignores named filter data when the DataTables column is absent', () => {

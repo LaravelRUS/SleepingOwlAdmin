@@ -1,12 +1,12 @@
 import { expect, it, vi } from 'vitest'
 
-import { normalizeDataTables2Options } from '../../../../resources/frontend/features/table/options/option-aliases.js'
+import { normalizeDataTableOptions } from '../../../../resources/frontend/features/table/options/option-aliases.js'
 
 it('moves supported legacy aliases to current DataTables option names', () => {
     const drawCallback = vi.fn()
 
     expect(
-        normalizeDataTables2Options({
+        normalizeDataTableOptions({
             bStateSave: true,
             fnDrawCallback: drawCallback,
             sDom: 't',
@@ -18,7 +18,7 @@ it('keeps explicit current options ahead of their legacy aliases', () => {
     const currentCallback = vi.fn()
 
     expect(
-        normalizeDataTables2Options({
+        normalizeDataTableOptions({
             bStateSave: false,
             dom: 'modern',
             drawCallback: currentCallback,
@@ -29,9 +29,9 @@ it('keeps explicit current options ahead of their legacy aliases', () => {
     ).toEqual({ dom: 'modern', drawCallback: currentCallback, stateSave: true })
 })
 
-it('reports and removes only options dropped by DataTables 2', () => {
+it('reports and removes only options unsupported by DataTables 3', () => {
     const warn = vi.fn()
-    const options = normalizeDataTables2Options(
+    const options = normalizeDataTableOptions(
         {
             asStripeClasses: ['odd', 'even'],
             fnServerData: vi.fn(),
@@ -64,6 +64,6 @@ it('passes supported Hungarian and extension-specific options through unchanged'
         sScrollX: '100%',
     }
 
-    expect(normalizeDataTables2Options(options, { warn })).toEqual(options)
+    expect(normalizeDataTableOptions(options, { warn })).toEqual(options)
     expect(warn).not.toHaveBeenCalled()
 })

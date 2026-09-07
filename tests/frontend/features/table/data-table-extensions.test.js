@@ -3,7 +3,7 @@ import { expect, it, vi } from 'vitest'
 import {
     DATE_TIME_ORDER,
     dateTimeOrderValues,
-    installDataTables2Extensions,
+    installDataTableExtensions,
 } from '../../../../resources/frontend/features/table/engine/extensions.js'
 
 function fixture() {
@@ -23,13 +23,13 @@ function fixture() {
 it('registers error and DateTime ordering through the engine extension API', () => {
     const { engine } = fixture()
     const onError = vi.fn()
-    const extensions = installDataTables2Extensions(engine, { onError })
+    const extensions = installDataTableExtensions(engine, { onError })
 
     expect(extensions.errMode).toBe(onError)
     expect(extensions.order[DATE_TIME_ORDER]).toBeTypeOf('function')
 })
 
-it('reads DateTime order values through DataTables 2 Api and native datasets', () => {
+it('reads DateTime order values through the active engine Api and native datasets', () => {
     const { Api, column, engine, nodes } = fixture()
     const settings = { table: 'orders' }
     const values = dateTimeOrderValues(engine, settings, 3)
@@ -41,10 +41,10 @@ it('reads DateTime order values through DataTables 2 Api and native datasets', (
 })
 
 it('rejects incomplete extension dependencies', () => {
-    expect(() => installDataTables2Extensions({}, { onError: vi.fn() })).toThrow(
+    expect(() => installDataTableExtensions({}, { onError: vi.fn() })).toThrow(
         'engine extension registry',
     )
-    expect(() => installDataTables2Extensions(fixture().engine, { onError: null })).toThrow(
+    expect(() => installDataTableExtensions(fixture().engine, { onError: null })).toThrow(
         'error handler',
     )
 })

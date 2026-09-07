@@ -47,7 +47,7 @@ it('keeps a non-JSON payload string and defaults optional values', () => {
     })
 })
 
-it('applies server flags and DataTables 2 control layout only to async tables', () => {
+it('applies server flags and the current engine layout only to async tables', () => {
     const options = { pageLength: 10 }
     const configured = applyServerOptions(options, {
         showLength: true,

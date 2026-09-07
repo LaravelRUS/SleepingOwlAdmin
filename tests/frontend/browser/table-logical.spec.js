@@ -5,7 +5,7 @@ import { expect, test } from '@playwright/test'
 let fixtureHeaders
 
 for (const profile of ['development', 'production']) {
-    test(`${profile} table entry boots the complete DataTables 2 feature`, async ({
+    test(`${profile} table entry boots the complete DataTables 3 feature`, async ({
         page,
         request,
     }, testInfo) => {
@@ -51,6 +51,7 @@ function inspectRuntime(page) {
                 columnFilters: Object.keys(globalThis.columnFilters).sort(),
             },
             events: globalThis.__logicalTableEvents,
+            drawContext: globalThis.__logicalDrawContext,
             forbidden: Object.fromEntries(
                 [
                     '$',
@@ -81,6 +82,11 @@ function expectedRuntime() {
             columnFilters: ['date', 'daterange', 'range', 'select', 'text'],
         },
         events: ['datatables::draw'],
+        drawContext: {
+            api: 'function',
+            jquery: 'undefined',
+            tableId: 'logical-table',
+        },
         forbidden: Object.fromEntries(
             [
                 '$',
@@ -96,7 +102,7 @@ function expectedRuntime() {
         registrySize: 1,
         rescan: 0,
         runtime: 'function',
-        versions: { core: '2.3.8', responsive: '3.0.8' },
+        versions: { core: '3.0.3', responsive: '4.0.3' },
     }
 }
 
