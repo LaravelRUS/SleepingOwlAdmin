@@ -4,11 +4,11 @@ use Illuminate\Session\ArraySessionHandler;
 use Illuminate\Session\Store;
 use Illuminate\View\ViewException;
 use SleepingOwl\Admin\Assets\AssetHealthStatus;
+use SleepingOwl\Admin\Facades\Template as TemplateFacade;
 use SleepingOwl\Admin\Form\Element\Wysiwyg;
 use SleepingOwl\Admin\Form\Related\Forms\HasMany;
 use SleepingOwl\Admin\Form\Related\Forms\HasManyLocal;
 use SleepingOwl\Admin\Templates\TemplateDefault;
-use SleepingOwl\Admin\Facades\Template as TemplateFacade;
 
 class LegacyThemeConfigurationTest extends TestCase
 {
@@ -189,8 +189,7 @@ class LegacyThemeConfigurationTest extends TestCase
     private function renderLayout(
         LegacyThemeConfigurationTemplateStub $template,
         ?AssetHealthStatus $assetHealthStatus = null
-    ): string
-    {
+    ): string {
         return view('sleeping_owl::default._layout.inner', [
             'assetHealthStatus' => $assetHealthStatus,
             'breadcrumbKey' => 'theme-config',
