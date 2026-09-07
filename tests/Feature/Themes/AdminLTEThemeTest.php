@@ -1,5 +1,11 @@
 <?php
 
+use Illuminate\Contracts\Routing\UrlGenerator;
+use SleepingOwl\Admin\Assets\AssetManifestLoader;
+use SleepingOwl\Admin\Assets\AssetManifestResolver;
+use SleepingOwl\Admin\Assets\AssetRegistry;
+use SleepingOwl\Admin\Assets\LogicalAssetRegistrar;
+use SleepingOwl\Admin\Contracts\Template\MetaInterface;
 use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 use SleepingOwl\Admin\Contracts\Theme\ThemeInterface;
 use SleepingOwl\Admin\Themes\AdminLTETheme;
@@ -29,6 +35,7 @@ class AdminLTEThemeTest extends TestCase
         $this->assertSame([
             'shared:icons',
             'shared:compatibility',
+            'shared:modules',
             'shared:vue',
             'theme:legacy-adminlte',
             'feature:dropdown:theme:legacy-adminlte',
@@ -42,6 +49,7 @@ class AdminLTEThemeTest extends TestCase
         $this->assertSame([
             'shared:icons',
             'shared:compatibility',
+            'shared:modules',
             'shared:vue',
             'theme:legacy-adminlte',
             'feature:tabs:theme:legacy-adminlte',
@@ -61,5 +69,98 @@ class AdminLTEThemeTest extends TestCase
             ),
             $theme->capabilities()
         );
+    }
+
+    public function test_it_initializes_the_versioned_logical_runtime_with_legacy_handles(): void
+    {
+        foreach (['production' => false, 'development' => true] as $profile => $development) {
+            config()->set('sleeping_owl.dev_assets', $development);
+            $this->useSourceAssetManifest($profile);
+            $registry = $this->app->make(AssetRegistry::class);
+            $registry->clear();
+
+            $this->app->make(AdminLTETheme::class)->initialize();
+
+            $this->assertLogicalRuntime($registry, $profile);
+        }
+    }
+
+    public function test_legacy_handles_keep_project_assets_before_the_final_module_boot(): void
+    {
+        $this->useSourceAssetManifest('production');
+        $registry = $this->app->make(AssetRegistry::class);
+        $registry->clear();
+        $meta = $this->app->make(MetaInterface::class);
+        $meta->addJs('project-vue', '/project/vue.js', 'admin-vue-init');
+        $meta->addJs('project-runtime', '/project/runtime.js', 'admin-default');
+
+        $this->app->make(AdminLTETheme::class)->initialize();
+
+        $handles = array_map(fn ($asset) => $asset->handle(), $registry->scripts(true));
+        $this->assertHandleOrder($handles, 'admin-vue-init', 'project-vue');
+        $this->assertHandleOrder($handles, 'admin-default', 'project-runtime');
+        $this->assertHandleOrder($handles, 'project-runtime', 'admin-modules-load');
+    }
+
+    private function useSourceAssetManifest(string $profile): void
+    {
+        $manifest = $this->app->make(AssetManifestLoader::class)->load(
+            dirname(__DIR__, 3).'/public/default/asset-manifest.json'
+        );
+        $resolver = new AssetManifestResolver(
+            $manifest,
+            $this->app->make(UrlGenerator::class),
+            'packages/sleepingowl/default',
+            $profile
+        );
+
+        $this->app->instance(AssetManifestResolver::class, $resolver);
+        $this->app->forgetInstance(LogicalAssetRegistrar::class);
+    }
+
+    private function assertLogicalRuntime(AssetRegistry $registry, string $profile): void
+    {
+        $scripts = $registry->registeredScripts();
+        $styles = $registry->registeredStyles();
+        $scriptSources = array_map(fn ($asset) => $asset->source(), $scripts);
+        $styleSources = array_map(fn ($asset) => $asset->source(), $styles);
+
+        $this->assertCount(15, $scripts);
+        $this->assertCount(17, $styles);
+        $this->assertLegacyHandles($scripts, $styles);
+        $this->assertRuntimeProfile($scriptSources, "profiles/{$profile}");
+        $this->assertRuntimeProfile($styleSources, "profiles/{$profile}");
+        $this->assertStringNotContainsString('tailwind', implode('|', [...$scriptSources, ...$styleSources]));
+        $this->assertStringNotContainsString('js/admin-app', implode('|', $scriptSources));
+        $this->assertStringNotContainsString('/js/vue.js', implode('|', $scriptSources));
+        $this->assertStringNotContainsString('/js/modules.js', implode('|', $scriptSources));
+    }
+
+    private function assertLegacyHandles(array $scripts, array $styles): void
+    {
+        $scriptHandles = array_map(fn ($asset) => $asset->handle(), $scripts);
+        $styleHandles = array_map(fn ($asset) => $asset->handle(), $styles);
+
+        $this->assertContains('admin-default', $scriptHandles);
+        $this->assertContains('admin-default', $styleHandles);
+        $this->assertContains('admin-vue-init', $scriptHandles);
+        $this->assertSame('admin-modules-load', $scripts[array_key_last($scripts)]->handle());
+    }
+
+    private function assertRuntimeProfile(array $sources, string $profile): void
+    {
+        foreach ($sources as $source) {
+            $this->assertStringContainsString($profile, $source);
+        }
+    }
+
+    private function assertHandleOrder(array $handles, string $first, string $second): void
+    {
+        $firstIndex = array_search($first, $handles, true);
+        $secondIndex = array_search($second, $handles, true);
+
+        $this->assertIsInt($firstIndex);
+        $this->assertIsInt($secondIndex);
+        $this->assertLessThan($secondIndex, $firstIndex);
     }
 }

@@ -9,7 +9,7 @@ Manifest создаётся после Laravel Mix build из `build/frontend-en
 Текущие группы logical ids:
 
 - `core`;
-- общие `shared:icons` и profile-aware `shared:vue`;
+- общие `shared:icons`, `shared:compatibility`, profile-aware `shared:vue` и завершающий `shared:modules`;
 - behavior entries `feature:<feature-id>`;
 - presentation adapters `feature:<feature-id>:theme:<theme-id>`;
 - встроенные `theme:legacy-adminlte` и `theme:tailwind`.
@@ -55,7 +55,7 @@ Tracked manifest одновременно содержит `production` и `deve
 ADMIN_DEV_ASSETS=false
 ```
 
-Значение `false` выбирает `production`, `true` — `development`. Будущий Vue 3 milestone положит development runtime с warnings/devtools в те же logical entries; selector и no-build contract при этом не меняются.
+Значение `false` выбирает `production`, `true` — `development`. Оба профиля уже содержат Vue 3 runtime-only в одном logical entry: development сохраняет diagnostics/source map, production собирается minified без source map. Selector и no-build contract при этом не меняются.
 
 ## PHP responsibilities
 
@@ -64,9 +64,11 @@ ADMIN_DEV_ASSETS=false
 - `AssetProfileSelector` преобразует только существующий config flag в `production` или `development`;
 - `AssetManifestResolver` выбирает logical bundles только внутри этого профиля, сохраняет их порядок, удаляет дубликаты и строит URL через Laravel `UrlGenerator`;
 - `ResolvedAssetBundle` возвращает отдельные списки scripts и styles;
-- `LogicalAssetRegistrar` передаёт эти URL в first-party meta/asset registry со стабильными handles и явной цепочкой зависимостей внутри CSS и JS, не читая manifest самостоятельно.
+- `LogicalAssetRegistrar` передаёт эти URL в first-party meta/asset registry со стабильными handles и явной цепочкой зависимостей внутри CSS и JS, не читая manifest самостоятельно; точечные aliases logical entry сохраняют исторические public handles без привязки consumer-кода к filenames.
 
-Resolver и registrar зарегистрированы в container, но `TemplateDefault` пока продолжает загружать legacy aggregate. Переключение template на `core + selected theme + detected features` выполняется только после готовности самодостаточных browser entries, чтобы не смешать незавершённые modern entries с рабочим legacy runtime.
+Resolver и registrar зарегистрированы в container. Новый config default `AdminLTETheme` загружает только versioned logical runtime в порядке `core`, shared entries, выбранная тема, feature entries с её adapters и завершающий `shared:modules`. Последний entry выполняет один `Admin.Modules.boot()` и финальный идемпотентный component scan. Исторические handles сохранены: `admin-vue-init` обозначает готовый Vue public API, `admin-default` — полностью загруженный theme/feature runtime, `admin-modules-load` — завершённый module boot. Это оставляет существующим project assets рабочие dependency points.
+
+`TemplateDefault` намеренно остаётся отдельным deprecated compatibility path и продолжает загружать `admin-app.js`, `vue.js` и `modules.js` для старых опубликованных config. Одна страница не смешивает этот aggregate с logical runtime.
 
 Если опубликованный manifest отсутствует, повреждён или не содержит запрошенный entry/profile, loader/resolver выбрасывает `AssetManifestException` с единственным штатным способом восстановления:
 

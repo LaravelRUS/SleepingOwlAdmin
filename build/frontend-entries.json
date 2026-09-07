@@ -42,6 +42,11 @@
                 "output": "js/shared/compatibility.js"
             },
             {
+                "logicalId": "shared:modules",
+                "source": "resources/frontend/shared/modules/browser.js",
+                "output": "js/shared/modules.js"
+            },
+            {
                 "logicalId": "shared:vue",
                 "source": "resources/frontend/shared/vue/browser.js",
                 "output": "js/shared/vue.js"

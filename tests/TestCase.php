@@ -1,9 +1,15 @@
 <?php
 
 use Diglactic\Breadcrumbs\Manager as BreadcrumbsManager;
+use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Contracts\View\Factory as ViewFactory;
+use Illuminate\Foundation\Application;
+use Illuminate\Support\ServiceProvider;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+use SleepingOwl\Admin\Assets\AssetManifestLoader;
+use SleepingOwl\Admin\Assets\AssetManifestResolver;
+use SleepingOwl\Admin\Assets\AssetProfileSelector;
 use SleepingOwl\Admin\Providers\SleepingOwlServiceProvider;
 
 class TestCase extends Orchestra\Testbench\TestCase
@@ -29,6 +35,7 @@ class TestCase extends Orchestra\Testbench\TestCase
     {
         return [
             SleepingOwlServiceProvider::class,
+            TestAssetManifestServiceProvider::class,
         ];
     }
 
@@ -172,5 +179,24 @@ class TestCase extends Orchestra\Testbench\TestCase
         }
 
         $this->replacedServices = [];
+    }
+}
+
+final class TestAssetManifestServiceProvider extends ServiceProvider
+{
+    public function register(): void
+    {
+        $this->app->singleton(AssetManifestResolver::class, function (Application $app) {
+            $manifest = $app->make(AssetManifestLoader::class)->load(
+                dirname(__DIR__).'/public/default/asset-manifest.json'
+            );
+
+            return new AssetManifestResolver(
+                $manifest,
+                $app->make(UrlGenerator::class),
+                'packages/sleepingowl/default',
+                $app->make(AssetProfileSelector::class)->selected()
+            );
+        });
     }
 }

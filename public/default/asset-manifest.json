@@ -318,6 +318,16 @@
                         }
                     ]
                 },
+                "shared:modules": {
+                    "scripts": [
+                        {
+                            "file": "profiles/production/js/shared/modules.js",
+                            "version": "8e6abcb6c9baa1f71b0de0096471f82a",
+                            "checksum": "sha256:5113ba17104bd973e1c9c23eed6e4a3ba6051e7b35e6aa4438cbcb5cb70f0b45"
+                        }
+                    ],
+                    "styles": []
+                },
                 "shared:vue": {
                     "scripts": [
                         {
@@ -678,6 +688,16 @@
                         }
                     ]
                 },
+                "shared:modules": {
+                    "scripts": [
+                        {
+                            "file": "profiles/development/js/shared/modules.js",
+                            "version": "2d85fe15df2faf8fa80bafafc8b060c1",
+                            "checksum": "sha256:7db1d7e4dc37f3d459fc7374dce5fc375b9dbc828656a3822c26bc46936330c5"
+                        }
+                    ],
+                    "styles": []
+                },
                 "shared:vue": {
                     "scripts": [
                         {
@@ -723,5 +743,5 @@
             }
         }
     },
-    "build_id": "sha256:99d29bbd41678f7a3abdf282c9322322567170d708b6129c4e5c431e1b376b36"
+    "build_id": "sha256:3cdd4c065a1b1492d7598f7dcbaef4ed2228d3eebcf3734607d2be1f8fe0ca33"
 }

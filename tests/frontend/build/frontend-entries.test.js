@@ -103,6 +103,15 @@ it('publishes the legacy API compatibility layer without presentation styles', (
     expect(modernEntry('shared:compatibility', 'styles')).toBeUndefined()
 })
 
+it('publishes the final compatibility module boot as an independent shared script', () => {
+    expect(modernEntry('shared:modules', 'scripts')).toEqual({
+        logicalId: 'shared:modules',
+        source: 'resources/frontend/shared/modules/browser.js',
+        output: 'js/shared/modules.js',
+    })
+    expect(modernEntry('shared:modules', 'styles')).toBeUndefined()
+})
+
 it.each(['forms', 'lightbox', 'table', 'tree'])(
     'publishes %s through an auto-boot browser entry',
     (feature) => {

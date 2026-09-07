@@ -10,6 +10,10 @@ const staticRoutes = new Map([
     ['/', [join(browserDirectory, 'island-props.html'), 'text/html; charset=utf-8']],
     ['/admin-core', [join(browserDirectory, 'admin-core.html'), 'text/html; charset=utf-8']],
     [
+        '/adminlte-logical-runtime',
+        [join(browserDirectory, 'adminlte-logical-runtime.html'), 'text/html; charset=utf-8'],
+    ],
+    [
         '/compatibility-runtime',
         [join(browserDirectory, 'compatibility-runtime.html'), 'text/html; charset=utf-8'],
     ],
@@ -207,7 +211,10 @@ const staticRoutes = new Map([
         ],
     ],
     ...profileFeatureRoutes('development', ['forms', 'lightbox', 'table', 'tooltip', 'tree']),
+    ...profileFeatureRoutes('development', ['alert', 'dropdown', 'sidebar', 'tabs']),
     ...profileThemeAdapterRoutes('development', [['tree', 'legacy-adminlte']]),
+    ...profileThemeRoutes('development', ['legacy-adminlte']),
+    ...profileSharedRoutes('development', ['modules']),
     [
         '/public/default/profiles/production/js/shared/vue.js',
         [
@@ -241,7 +248,10 @@ const staticRoutes = new Map([
         ],
     ],
     ...profileFeatureRoutes('production', ['forms', 'lightbox', 'table', 'tooltip', 'tree']),
+    ...profileFeatureRoutes('production', ['alert', 'dropdown', 'sidebar', 'tabs']),
     ...profileThemeAdapterRoutes('production', [['tree', 'legacy-adminlte']]),
+    ...profileThemeRoutes('production', ['legacy-adminlte']),
+    ...profileSharedRoutes('production', ['modules']),
     [
         '/public/default/css/admin-app.css',
         [join(projectRoot, 'public', 'default', 'css', 'admin-app.css'), 'text/css'],
@@ -531,6 +541,24 @@ function profileThemeAdapterRoutes(profile, adapters) {
     return adapters.map(([feature, theme]) => [
         `/public/default/profiles/${profile}/js/features/${feature}/themes/${theme}.js`,
         [join(profileRoot, 'features', feature, 'themes', `${theme}.js`), 'text/javascript'],
+    ])
+}
+
+function profileThemeRoutes(profile, themes) {
+    const profileRoot = join(projectRoot, 'public', 'default', 'profiles', profile, 'js')
+
+    return themes.map((theme) => [
+        `/public/default/profiles/${profile}/js/themes/${theme}.js`,
+        [join(profileRoot, 'themes', `${theme}.js`), 'text/javascript'],
+    ])
+}
+
+function profileSharedRoutes(profile, entries) {
+    const profileRoot = join(projectRoot, 'public', 'default', 'profiles', profile, 'js')
+
+    return entries.map((entry) => [
+        `/public/default/profiles/${profile}/js/shared/${entry}.js`,
+        [join(profileRoot, 'shared', `${entry}.js`), 'text/javascript'],
     ])
 }
 

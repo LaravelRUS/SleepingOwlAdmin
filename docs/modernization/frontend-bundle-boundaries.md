@@ -1,13 +1,16 @@
 # Frontend bundle boundaries
 
-## Transitional build topology
+## Published build topology
 
-The modernization build publishes independent entrypoints while the existing UI continues to use the legacy bundle. This prevents an incomplete feature migration from changing runtime behavior.
+The modernization build publishes independent entrypoints for the default `AdminLTETheme`. The deprecated `TemplateDefault` keeps a separate legacy aggregate for old published configuration; a page uses one path or the other and never mixes them.
 
 | Logical id | JavaScript | Sass/CSS | Owner |
 |---|---|---|---|
 | `core` | `js/admin-core.js` | `css/admin-core.css` | framework-neutral runtime and shared primitives |
+| `shared:icons` | — | `css/icons.css` | common Font Awesome presentation shared by themes |
+| `shared:compatibility` | `js/shared/compatibility.js` | — | bounded legacy `Admin.*`, translation and notification services without jQuery/Bootstrap/AdminLTE |
 | `shared:vue` | `js/shared/vue.js` | — | Vue 3 runtime, precompiled package islands and public extension API |
+| `shared:modules` | `js/shared/modules.js` | — | final compatibility module boot and idempotent component scan |
 | `feature:forms` | `js/features/forms.js` | `css/features/forms.css` | form behavior independent of a concrete theme |
 | `feature:table` | `js/features/table.js` | `css/features/table.css` | table registry and drivers independent of presentation |
 | `feature:table:theme:legacy-adminlte` | — | `css/features/table/themes/datatables-legacy-adminlte.css` | Bootstrap 4/DataTables presentation owned by the AdminLTE table adapter |
@@ -58,7 +61,9 @@ The following outputs remain available and unchanged during incremental migratio
 - `js/vue.js`;
 - `js/modules.js`.
 
-`TemplateDefault` continues to load only these legacy assets while the new resolver is integrated with both profiles and the first-party asset registry. The legacy aggregate temporarily includes the runtime theme properties and sidebar consumer, so `sidebar_background_color` works before that controlled switch. A page must not load both the legacy aggregate and its migrated modern replacements once a feature is switched over, because that would initialize behavior twice.
+Only the deprecated `TemplateDefault` loads these files. The direct `AdminLTETheme` resolves the selected manifest profile as `core → shared entries → theme → features/adapters → shared:modules`; it does not request `admin-app.js`, `vue.js` or `modules.js`. A page must not load both paths because that would initialize behavior twice.
+
+The logical registrar preserves the public handles used by existing projects. `admin-vue-init` follows `shared:vue`; `admin-default` follows the complete AdminLTE theme/feature runtime; `admin-modules-load` is the final `shared:modules` entry. A project asset depending on `admin-default` therefore executes after all standard drivers but before `Admin.Modules.boot()`, so existing custom module registration keeps working without a consumer rebuild.
 
 ## Dependency rules
 

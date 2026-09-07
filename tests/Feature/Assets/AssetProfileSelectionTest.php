@@ -2,6 +2,7 @@
 
 use Illuminate\Filesystem\Filesystem;
 use SleepingOwl\Admin\Assets\AssetManifestResolver;
+use SleepingOwl\Admin\Assets\LogicalAssetRegistrar;
 
 class AssetProfileSelectionTest extends TestCase
 {
@@ -48,6 +49,8 @@ class AssetProfileSelectionTest extends TestCase
     private function resolvedCoreScript(bool $development): string
     {
         config()->set('sleeping_owl.dev_assets', $development);
+        $this->app->forgetInstance(AssetManifestResolver::class);
+        $this->app->forgetInstance(LogicalAssetRegistrar::class);
 
         return $this->app
             ->make(AssetManifestResolver::class)

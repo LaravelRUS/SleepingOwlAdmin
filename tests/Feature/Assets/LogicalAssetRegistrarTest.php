@@ -41,6 +41,27 @@ class LogicalAssetRegistrarTest extends TestCase
         $this->assertNotSame($productionUrls, $this->urls());
     }
 
+    public function test_logical_entries_can_preserve_public_legacy_handles(): void
+    {
+        $registrar = new LogicalAssetRegistrar($this->resolver(), $this->recordingMeta());
+
+        $registrar->register(
+            ['core', 'feature:forms'],
+            ['core' => 'admin-default', 'feature:forms' => 'admin-modules-load']
+        );
+
+        $this->assertSame(
+            ['admin-default', 'admin-modules-load'],
+            array_column($this->scripts, 'handle')
+        );
+        $this->assertSame(
+            ['admin-default', 'admin-modules-load'],
+            array_column($this->styles, 'handle')
+        );
+        $this->assertDependencyChain($this->scripts, 'script', true);
+        $this->assertDependencyChain($this->styles, 'style', true);
+    }
+
     private function resolver(string $profile = 'production'): AssetManifestResolver
     {
         $url = m::mock(UrlGenerator::class);
@@ -73,13 +94,15 @@ class LogicalAssetRegistrarTest extends TestCase
         return $meta;
     }
 
-    private function assertDependencyChain(array $assets, string $type): void
+    private function assertDependencyChain(array $assets, string $type, bool $aliased = false): void
     {
         foreach ($assets as $index => $asset) {
-            $this->assertMatchesRegularExpression(
-                "/^sleepingowl-logical-{$type}-[a-f0-9]{16}$/",
-                $asset['handle']
-            );
+            if (! $aliased) {
+                $this->assertMatchesRegularExpression(
+                    "/^sleepingowl-logical-{$type}-[a-f0-9]{16}$/",
+                    $asset['handle']
+                );
+            }
             $this->assertSame($assets[$index - 1]['handle'] ?? null, $asset['dependency']);
         }
     }

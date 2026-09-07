@@ -40,6 +40,7 @@ class AssetManifestLoaderTest extends TestCase
             'feature:tree:theme:tailwind',
             'shared:compatibility',
             'shared:icons',
+            'shared:modules',
             'shared:vue',
             'theme:legacy-adminlte',
             'theme:tailwind',
