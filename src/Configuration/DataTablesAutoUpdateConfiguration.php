@@ -21,15 +21,15 @@ final class DataTablesAutoUpdateConfiguration
 
     public function __construct(Repository $config)
     {
-        $this->enabled = (bool) $config->get('sleeping_owl.dt_autoupdate', false);
+        $this->enabled = (bool) $config->get('sleeping_owl.datatables_settings.dt_autoupdate', false);
         $this->intervalMinutes = $this->normalizeInterval(
-            $config->get('sleeping_owl.dt_autoupdate_interval')
+            $config->get('sleeping_owl.datatables_settings.dt_autoupdate_interval')
         );
         $this->tableClass = $this->normalizeClass(
-            $config->get('sleeping_owl.dt_autoupdate_class')
+            $config->get('sleeping_owl.datatables_settings.dt_autoupdate_class')
         );
         $this->color = $this->normalizeColor(
-            $config->get('sleeping_owl.dt_autoupdate_color')
+            $config->get('sleeping_owl.datatables_settings.dt_autoupdate_color')
         );
     }
 
@@ -85,6 +85,6 @@ final class DataTablesAutoUpdateConfiguration
             return self::DEFAULT_COLOR;
         }
 
-        return CssColor::from($color, 'sleeping_owl.dt_autoupdate_color')->value();
+        return CssColor::from($color, 'sleeping_owl.datatables_settings.dt_autoupdate_color')->value();
     }
 }

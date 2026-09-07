@@ -50,7 +50,7 @@ class DataTablesAutoUpdateConfigurationTest extends TestCase
     public function test_it_rejects_an_unsafe_progress_color(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('[sleeping_owl.dt_autoupdate_color]');
+        $this->expectExceptionMessage('[sleeping_owl.datatables_settings.dt_autoupdate_color]');
 
         $this->configuration([
             'dt_autoupdate_color' => '#fff; } body { display: none',
@@ -60,7 +60,7 @@ class DataTablesAutoUpdateConfigurationTest extends TestCase
     private function configuration(array $values): DataTablesAutoUpdateConfiguration
     {
         return new DataTablesAutoUpdateConfiguration(new Repository([
-            'sleeping_owl' => $values,
+            'sleeping_owl' => ['datatables_settings' => $values],
         ]));
     }
 }

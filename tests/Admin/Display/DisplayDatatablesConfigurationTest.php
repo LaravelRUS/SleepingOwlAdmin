@@ -27,14 +27,14 @@ class DisplayDatatablesConfigurationTest extends TestCase
 
     public function test_async_display_uses_configured_request_method(): void
     {
-        config()->set('sleeping_owl.default_datatables_method', 'POST');
+        config()->set('sleeping_owl.datatables_settings.default_datatables_method', 'POST');
 
         $this->assertSame('POST', (new DisplayDatatablesAsync())->getMethod());
     }
 
     public function test_explicit_request_method_overrides_the_config_default(): void
     {
-        config()->set('sleeping_owl.default_datatables_method', 'POST');
+        config()->set('sleeping_owl.datatables_settings.default_datatables_method', 'POST');
         $display = (new DisplayDatatablesAsync())->setMethod('PATCH');
 
         $this->assertSame('PATCH', $display->getMethod());

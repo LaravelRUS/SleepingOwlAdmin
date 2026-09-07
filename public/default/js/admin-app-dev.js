@@ -11300,7 +11300,7 @@ function assertAdmin(admin) {
   assertFunction(admin === null || admin === void 0 ? void 0 : admin.Tables, 'get', 'Inline editors require Admin.Tables.');
 }
 function tableRefreshMode(admin) {
-  var mode = admin.Config.get('datatables_inline_edit_refresh', 'row');
+  var mode = admin.Config.get('datatables_settings.datatables_inline_edit_refresh', 'row');
   if (mode === false) return null;
   if (mode === 'row' || mode === 'table') return mode;
   throw new TypeError("Unsupported inline edit refresh mode [".concat(String(mode), "]."));
@@ -12442,7 +12442,7 @@ function normalizeOptions(admin) {
     inlineEditor: options.inlineEditor,
     onError: options.onError,
     root: options.root,
-    stateFilters: Boolean(admin.Config.get('state_filters')),
+    stateFilters: Boolean(admin.Config.get('datatables_settings.state_filters')),
     storage: options.storage,
     target: options.target,
     tooltips: (_options$tooltips = options.tooltips) !== null && _options$tooltips !== void 0 ? _options$tooltips : function (root) {
@@ -12612,7 +12612,7 @@ function createRuntimeTableOptions(element, definition, settings) {
   var options = (0,_options_table_options_js__WEBPACK_IMPORTED_MODULE_4__.applyServerOptions)(definition.options, definition);
   if (definition.url) configureServerTable(options, definition, settings);
   (0,_options_state_options_js__WEBPACK_IMPORTED_MODULE_5__.applyTableStateOptions)(options, {
-    stateDatatables: Boolean(definition.url && settings.admin.Config.get('state_datatables')),
+    stateDatatables: Boolean(definition.url && settings.admin.Config.get('datatables_settings.state_datatables')),
     stateFilters: !definition.url || settings.stateFilters
   });
   options.drawCallback = createRuntimeDrawHook(element, settings);
@@ -12633,7 +12633,7 @@ function createRuntimeDrawHook(element, settings) {
   return (0,_hooks_table_hooks_js__WEBPACK_IMPORTED_MODULE_3__.createDrawHook)({
     events: settings.admin.Events,
     highlight: function highlight(engineContext) {
-      return (0,_hooks_column_highlight_js__WEBPACK_IMPORTED_MODULE_1__.syncColumnHighlight)(element, engineContext.api(), Boolean(settings.admin.Config.get('datatables_highlight')));
+      return (0,_hooks_column_highlight_js__WEBPACK_IMPORTED_MODULE_1__.syncColumnHighlight)(element, engineContext.api(), Boolean(settings.admin.Config.get('datatables_settings.datatables_highlight')));
     },
     inlineEditor: function inlineEditor() {
       return settings.inlineEditor.scan(element);

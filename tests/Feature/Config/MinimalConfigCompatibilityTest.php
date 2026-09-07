@@ -26,6 +26,7 @@ class MinimalConfigCompatibilityTest extends TestCase
         $this->assertFalse($config['enable_editor']);
         $this->assertTrue($config['show_mode']);
         $this->assertIsArray($config['datatables']);
+        $this->assertIsArray($config['datatables_settings']);
         $this->assertArrayHasKey('AdminTemplate', $config['aliases']);
     }
 

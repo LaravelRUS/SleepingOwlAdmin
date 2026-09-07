@@ -6,7 +6,6 @@
         <title>AdminLTE logical runtime fixture</title>
         <script>
             window.GlobalConfig = {
-                datatables_highlight: false,
                 datetime_format: 'DD.MM.YYYY HH:mm',
                 date_format: 'DD.MM.YYYY',
                 debug: true,
@@ -29,8 +28,11 @@
                     },
                 },
                 locale: 'en',
-                state_datatables: false,
-                state_filters: false,
+                datatables_settings: {
+                    state_datatables: false,
+                    state_filters: false,
+                    datatables_highlight: false,
+                },
                 state_tabs: false,
                 template: { asset_dir: 'default' },
                 url: 'http://127.0.0.1:4173',

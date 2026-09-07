@@ -8,44 +8,48 @@ class DataTablesRuntimeConfigTest extends TestCase
     public function test_table_runtime_flags_are_exported_to_javascript(): void
     {
         $variables = $this->scriptVariables([
-            'datatables_highlight' => true,
-            'datatables_inline_edit_refresh' => 'table',
-            'state_datatables' => true,
-            'state_filters' => true,
+            'datatables_settings' => [
+                'datatables_highlight' => true,
+                'datatables_inline_edit_refresh' => 'table',
+                'state_datatables' => true,
+                'state_filters' => true,
+            ],
         ]);
 
-        $this->assertTrue($variables['state_datatables']);
-        $this->assertTrue($variables['state_filters']);
-        $this->assertTrue($variables['datatables_highlight']);
-        $this->assertSame('table', $variables['datatables_inline_edit_refresh']);
+        $this->assertTrue($variables['datatables_settings']['state_datatables']);
+        $this->assertTrue($variables['datatables_settings']['state_filters']);
+        $this->assertTrue($variables['datatables_settings']['datatables_highlight']);
+        $this->assertSame('table', $variables['datatables_settings']['datatables_inline_edit_refresh']);
     }
 
     public function test_inline_edit_refresh_defaults_to_enabled_for_legacy_project_configs(): void
     {
         $config = config('sleeping_owl');
-        unset($config['datatables_inline_edit_refresh']);
+        unset($config['datatables_settings']['datatables_inline_edit_refresh']);
 
         $variables = (new DataTablesScriptVariablesStub($this->app, $config))->scriptVariables();
 
-        $this->assertSame('row', $variables['datatables_inline_edit_refresh']);
+        $this->assertSame('row', $variables['datatables_settings']['datatables_inline_edit_refresh']);
     }
 
     public function test_filter_state_is_disabled_when_datatables_state_is_disabled(): void
     {
         $variables = $this->scriptVariables([
-            'datatables_highlight' => false,
-            'state_datatables' => false,
-            'state_filters' => true,
+            'datatables_settings' => [
+                'datatables_highlight' => false,
+                'state_datatables' => false,
+                'state_filters' => true,
+            ],
         ]);
 
-        $this->assertFalse($variables['state_datatables']);
-        $this->assertFalse($variables['state_filters']);
-        $this->assertFalse($variables['datatables_highlight']);
+        $this->assertFalse($variables['datatables_settings']['state_datatables']);
+        $this->assertFalse($variables['datatables_settings']['state_filters']);
+        $this->assertFalse($variables['datatables_settings']['datatables_highlight']);
     }
 
     private function scriptVariables(array $overrides): array
     {
-        $config = array_replace(config('sleeping_owl'), $overrides);
+        $config = array_replace_recursive(config('sleeping_owl'), $overrides);
 
         return (new DataTablesScriptVariablesStub($this->app, $config))->scriptVariables();
     }

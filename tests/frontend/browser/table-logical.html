@@ -6,7 +6,11 @@
         <title>Logical table browser fixture</title>
         <script>
             window.GlobalConfig = {
-                datatables_highlight: true,
+                datatables_settings: {
+                    state_datatables: true,
+                    state_filters: true,
+                    datatables_highlight: true,
+                },
                 debug: true,
                 env: 'testing',
                 lang: {
@@ -21,8 +25,6 @@
                     },
                 },
                 locale: 'en',
-                state_datatables: true,
-                state_filters: true,
                 template: { asset_dir: 'default' },
                 url: 'http://127.0.0.1:4173',
                 url_path: 'table-logical',

@@ -269,7 +269,7 @@ class DefaultThemeRenderContractTest extends TestCase
     {
         config()->set([
             'sleeping_owl.body_default_class' => 'contract-body',
-            'sleeping_owl.dt_autoupdate' => false,
+            'sleeping_owl.datatables_settings.dt_autoupdate' => false,
             'sleeping_owl.favicon' => null,
             'sleeping_owl.footer_text' => 'Contract footer',
             'sleeping_owl.scroll_to_bottom' => false,
@@ -277,8 +277,8 @@ class DefaultThemeRenderContractTest extends TestCase
             'sleeping_owl.show_footer' => true,
             'sleeping_owl.show_mode' => false,
             'sleeping_owl.show_version' => true,
-            'sleeping_owl.state_datatables' => false,
-            'sleeping_owl.state_filters' => false,
+            'sleeping_owl.datatables_settings.state_datatables' => false,
+            'sleeping_owl.datatables_settings.state_filters' => false,
             'sleeping_owl.state_tabs' => false,
             'sleeping_owl.url_prefix' => 'admin',
         ]);

@@ -162,44 +162,6 @@ return [
     'env_editor_policy' => '',
 
     /*
-     * --------------------------------------------------------------------------
-     * DataTables state saving.
-     * --------------------------------------------------------------------------
-     */
-    'state_datatables' => true,
-
-    /*
-     * --------------------------------------------------------------------------
-     * Default DataTables send method.
-     * --------------------------------------------------------------------------
-     */
-    'default_datatables_method' => 'GET',
-
-    /*
-     * --------------------------------------------------------------------------
-     * Refresh a DataTable after a successful inline edit.
-     * --------------------------------------------------------------------------
-     *
-     * Supported values: 'row', 'table', false. Server-side row refreshes reload
-     * the current page because DataTables cannot request one record by itself.
-     */
-    'datatables_inline_edit_refresh' => 'row',
-
-    /*
-     * --------------------------------------------------------------------------
-     * Tabs state remember.
-     * --------------------------------------------------------------------------
-     */
-    'state_tabs' => false,
-
-    /*
-     * --------------------------------------------------------------------------
-     * Filters state remember in DataTables.
-     * --------------------------------------------------------------------------
-     */
-    'state_filters' => false,
-
-    /*
     |--------------------------------------------------------------------------
     | Authentication default provider
     |--------------------------------------------------------------------------
@@ -305,6 +267,26 @@ return [
      * Show Theme Mode
      */
     'show_mode' => true,
+
+    /*
+     * Remember tabs state.
+     */
+    'state_tabs' => false,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Breadcrumbs
+    |--------------------------------------------------------------------------
+    */
+    'breadcrumbs' => true,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Page scroll controls
+    |--------------------------------------------------------------------------
+    */
+    'scroll_to_top' => true,
+    'scroll_to_bottom' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -510,64 +492,40 @@ return [
     | DataTables
     |--------------------------------------------------------------------------
     |
-    | Select default settings for datatable
+    | Options passed directly to DataTables.
     |
     */
     'datatables' => [],
 
     /*
     |--------------------------------------------------------------------------
-    | DataTables SOA Settings
+    | SleepingOwl DataTables settings
     |--------------------------------------------------------------------------
     |
-    | Select default settings for datatable
-    |
-    */
-    'datatables_settings' => [],
-
-    /*
-    |--------------------------------------------------------------------------
-    | DataTables column highlight
-    |--------------------------------------------------------------------------
-    |
-    | Highlight DataTables column on mouseover
+    | Package behavior around DataTables. These values are not passed to the
+    | DataTables constructor.
     |
     */
-    'datatables_highlight' => false,
+    'datatables_settings' => [
+        // HTTP method used by asynchronous tables.
+        'default_datatables_method' => 'GET',
 
-    /*
-    |--------------------------------------------------------------------------
-    | Breadcrumbs
-    |--------------------------------------------------------------------------
-    |
-    */
-    'breadcrumbs' => true,
+        // DataTables and filters state stored in localStorage.
+        'state_datatables' => true,
+        'state_filters' => false,
 
-    /*
-    |--------------------------------------------------------------------------
-    | Autoupdate datatables
-    |--------------------------------------------------------------------------
-    |
-    | Interval in minutes. Do not set too low.
-    | dt_autoupdate_interval >= 1 and (int)
-    | dt_autoupdate_class - custom class if need (can be null)
-    | dt_autoupdate_color - color ProgressBar (can be null)
-    |
-    */
-    'dt_autoupdate' => false,
-    'dt_autoupdate_interval' => 5, //minutes
-    'dt_autoupdate_class' => '',
-    'dt_autoupdate_color' => '#dc3545',
+        // Table interaction behavior.
+        'datatables_highlight' => false,
 
-    /*
-    |--------------------------------------------------------------------------
-    | Add scrolls button
-    |--------------------------------------------------------------------------
-    |
-    */
+        // Supported values: 'row', 'table', false.
+        'datatables_inline_edit_refresh' => 'table',
 
-    'scroll_to_top' => true,
-    'scroll_to_bottom' => true,
+        // Automatic refresh. The interval is expressed in minutes and must be >= 1.
+        'dt_autoupdate' => false,
+        'dt_autoupdate_interval' => 5,
+        'dt_autoupdate_class' => '',
+        'dt_autoupdate_color' => '#dc3545',
+    ],
 
     /*
     |--------------------------------------------------------------------------

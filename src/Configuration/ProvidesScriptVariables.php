@@ -33,9 +33,11 @@ trait ProvidesScriptVariables
 
         // $maxFileSize = $this->convertMB(ini_get('upload_max_filesize'));
 
-        $state_filters = $this->config['state_filters'];
-        if (! $this->config['state_datatables']) {
-            $state_filters = false;
+        $datatablesSettings = $this->config['datatables_settings'] ?? [];
+        $stateDatatables = $datatablesSettings['state_datatables'] ?? true;
+        $stateFilters = $datatablesSettings['state_filters'] ?? false;
+        if (! $stateDatatables) {
+            $stateFilters = false;
         }
 
         return [
@@ -51,11 +53,13 @@ trait ProvidesScriptVariables
             'max_file_size' => $this->getMaxFileSize(),
             'datetime_format' => $this->generatePickerFormat($this->config['datetimeFormat']),
             'date_format' => $this->generatePickerFormat($this->config['dateFormat']),
-            'state_datatables' => $this->config['state_datatables'],
-            'datatables_highlight' => $this->config['datatables_highlight'],
-            'datatables_inline_edit_refresh' => $this->config['datatables_inline_edit_refresh'] ?? 'row',
+            'datatables_settings' => [
+                'state_datatables' => $stateDatatables,
+                'state_filters' => $stateFilters,
+                'datatables_highlight' => $datatablesSettings['datatables_highlight'] ?? false,
+                'datatables_inline_edit_refresh' => $datatablesSettings['datatables_inline_edit_refresh'] ?? 'row',
+            ],
             'state_tabs' => $this->config['state_tabs'],
-            'state_filters' => $state_filters,
             'lang' => $lang,
         ];
     }

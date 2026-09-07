@@ -11,7 +11,9 @@ export function createRuntimeTableOptions(element, definition, settings) {
     if (definition.url) configureServerTable(options, definition, settings)
 
     applyTableStateOptions(options, {
-        stateDatatables: Boolean(definition.url && settings.admin.Config.get('state_datatables')),
+        stateDatatables: Boolean(
+            definition.url && settings.admin.Config.get('datatables_settings.state_datatables'),
+        ),
         stateFilters: !definition.url || settings.stateFilters,
     })
 
@@ -39,7 +41,7 @@ function createRuntimeDrawHook(element, settings) {
             syncColumnHighlight(
                 element,
                 engineContext.api(),
-                Boolean(settings.admin.Config.get('datatables_highlight')),
+                Boolean(settings.admin.Config.get('datatables_settings.datatables_highlight')),
             ),
         inlineEditor: () => settings.inlineEditor.scan(element),
         lazyload: () => loadLazyImages(element),

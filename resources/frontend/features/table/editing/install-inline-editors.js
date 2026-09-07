@@ -33,7 +33,7 @@ function assertAdmin(admin) {
 }
 
 function tableRefreshMode(admin) {
-    const mode = admin.Config.get('datatables_inline_edit_refresh', 'row')
+    const mode = admin.Config.get('datatables_settings.datatables_inline_edit_refresh', 'row')
 
     if (mode === false) return null
     if (mode === 'row' || mode === 'table') return mode

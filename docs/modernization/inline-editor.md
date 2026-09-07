@@ -98,9 +98,10 @@ filters to reflect the saved model state. Edits outside a registered DataTable
 do not trigger a table refresh. Projects select the behavior globally:
 
 ```php
-'datatables_inline_edit_refresh' => 'row',  // Default: invalidate the edited row.
-'datatables_inline_edit_refresh' => 'table', // Redraw the containing table.
-'datatables_inline_edit_refresh' => false,   // Update only the editable trigger.
+'datatables_settings' => [
+    // 'row' invalidates the edited row; 'table' redraws the table; false disables refresh.
+    'datatables_inline_edit_refresh' => 'row',
+],
 ```
 
 DataTables does not provide a single-record AJAX transport. Consequently,

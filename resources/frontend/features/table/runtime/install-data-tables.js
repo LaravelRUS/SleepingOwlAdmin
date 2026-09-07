@@ -98,7 +98,7 @@ function normalizeOptions(admin, options = {}) {
         inlineEditor: options.inlineEditor,
         onError: options.onError,
         root: options.root,
-        stateFilters: Boolean(admin.Config.get('state_filters')),
+        stateFilters: Boolean(admin.Config.get('datatables_settings.state_filters')),
         storage: options.storage,
         target: options.target,
         tooltips: options.tooltips ?? ((root) => admin.Tooltips?.scan(root) ?? 0),

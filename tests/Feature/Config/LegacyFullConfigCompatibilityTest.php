@@ -22,7 +22,7 @@ class LegacyFullConfigCompatibilityTest extends TestCase
         $config = config('sleeping_owl');
 
         $this->assertSame('Legacy Admin', $config['title']);
-        $this->assertSame('POST', $config['default_datatables_method']);
+        $this->assertSame('POST', $config['datatables_settings']['default_datatables_method']);
         $this->assertSame('d-m-Y H:i', $config['datetimeFormat']);
         $this->assertSame('ckeditor', $config['wysiwyg']['default']);
         $this->assertSame(
