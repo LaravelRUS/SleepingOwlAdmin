@@ -5,8 +5,8 @@ use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Contracts\View\Factory as ViewFactory;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
-use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+use Mockery as m;
 use SleepingOwl\Admin\Assets\AssetManifest;
 use SleepingOwl\Admin\Assets\AssetManifestLoader;
 use SleepingOwl\Admin\Assets\AssetManifestResolver;
@@ -158,6 +158,7 @@ class TestCase extends Orchestra\Testbench\TestCase
      * Replace one container service for a test without breaking Testbench cleanup.
      *
      * @template TMock of object
+     *
      * @param  class-string|string  $abstract
      * @param  TMock  $mock
      * @return TMock

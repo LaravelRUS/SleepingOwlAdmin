@@ -1,7 +1,7 @@
 <?php
 
-use SleepingOwl\Admin\Support\HtmlAttributes;
 use SleepingOwl\Admin\Support\HtmlAttributeBag;
+use SleepingOwl\Admin\Support\HtmlAttributes;
 
 class HtmlAttributesTest extends TestCase
 {

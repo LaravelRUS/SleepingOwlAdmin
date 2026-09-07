@@ -92,7 +92,6 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
         if (! is_null($badge)) {
             $this->setBadge($badge);
         }
-
     }
 
     /**

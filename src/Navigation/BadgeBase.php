@@ -33,7 +33,6 @@ class BadgeBase implements BadgeInterface
         }
 
         $this->setPriority($priority);
-
     }
 
     /**

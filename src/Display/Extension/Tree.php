@@ -140,6 +140,5 @@ class Tree extends Extension implements Initializable, Renderable
         $this->allWithControl()->each(function (ColumnInterface $column) {
             $column->initialize();
         });
-
     }
 }
