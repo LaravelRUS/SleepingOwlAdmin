@@ -146,15 +146,19 @@ describe('table presentation entries', () => {
 })
 
 describe('tree presentation entries', () => {
-    it.each(['legacy-adminlte', 'tailwind'])(
-        'publishes the %s adapter as an independent stylesheet',
-        (theme) => {
-            const logicalId = `feature:tree:theme:${theme}`
+    it('publishes the AdminLTE presentation and notification adapter together', () => {
+        const logicalId = 'feature:tree:theme:legacy-adminlte'
 
-            expect(modernEntry(logicalId, 'styles')).toBeDefined()
-            expect(modernEntry(logicalId, 'scripts')).toBeUndefined()
-        },
-    )
+        expect(modernEntry(logicalId, 'styles')).toBeDefined()
+        expect(modernEntry(logicalId, 'scripts')).toBeDefined()
+    })
+
+    it('keeps the Tailwind adapter presentation-only', () => {
+        const logicalId = 'feature:tree:theme:tailwind'
+
+        expect(modernEntry(logicalId, 'styles')).toBeDefined()
+        expect(modernEntry(logicalId, 'scripts')).toBeUndefined()
+    })
 })
 
 describe('lightbox presentation entries', () => {

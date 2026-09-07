@@ -94,6 +94,10 @@ const staticRoutes = new Map([
     ],
     ['/trees', [join(browserDirectory, 'trees.html'), 'text/html; charset=utf-8']],
     [
+        '/tree-notifications',
+        [join(browserDirectory, 'tree-notifications.html'), 'text/html; charset=utf-8'],
+    ],
+    [
         '/tree-presentation',
         [join(browserDirectory, 'tree-presentation.html'), 'text/html; charset=utf-8'],
     ],
@@ -203,6 +207,7 @@ const staticRoutes = new Map([
         ],
     ],
     ...profileFeatureRoutes('development', ['forms', 'lightbox', 'table', 'tooltip', 'tree']),
+    ...profileThemeAdapterRoutes('development', [['tree', 'legacy-adminlte']]),
     [
         '/public/default/profiles/production/js/shared/vue.js',
         [
@@ -236,6 +241,7 @@ const staticRoutes = new Map([
         ],
     ],
     ...profileFeatureRoutes('production', ['forms', 'lightbox', 'table', 'tooltip', 'tree']),
+    ...profileThemeAdapterRoutes('production', [['tree', 'legacy-adminlte']]),
     [
         '/public/default/css/admin-app.css',
         [join(projectRoot, 'public', 'default', 'css', 'admin-app.css'), 'text/css'],
@@ -517,6 +523,15 @@ function profileFeatureRoutes(profile, features) {
     ])
 
     return [core, ...entries]
+}
+
+function profileThemeAdapterRoutes(profile, adapters) {
+    const profileRoot = join(projectRoot, 'public', 'default', 'profiles', profile, 'js')
+
+    return adapters.map(([feature, theme]) => [
+        `/public/default/profiles/${profile}/js/features/${feature}/themes/${theme}.js`,
+        [join(profileRoot, 'features', feature, 'themes', `${theme}.js`), 'text/javascript'],
+    ])
 }
 
 const fixtureRequests = new Map()

@@ -85,7 +85,14 @@ After a successful save the host dispatches the bubbling native
 `tree:changed` event with serialized `data`. The compatibility event
 `display.tree::changed` remains available through `Admin.Events`. A failed
 request leaves `data-tree-save-state="error"`, dispatches the bubbling
-`tree:failed` event, and uses the selected theme's notification adapter.
+`tree:failed` event with the request error in `detail.error`.
+
+The AdminLTE tree adapter listens to those native events and maps them to its
+own localized SweetAlert policy: success is a short toast, while failure uses
+`Admin.Messages.error`. It does not register or mount the tree controller, so
+it may load before or after the neutral feature entry without creating a
+second tree instance. Tailwind intentionally remains event-only until it owns
+a notification component; it does not load SweetAlert or the AdminLTE policy.
 
 ## Theme and asset ownership
 
@@ -95,9 +102,12 @@ and Tailwind each provide a separate Sass presentation adapter. Palette values
 come from `_colors.scss`; dimensions and motion come from `_variables.scss`;
 runtime overrides use public `--soa-tree-*` custom properties.
 
-A custom theme can style the stable `soa-tree-*` DOM contract and provide its
-own notification adapter without importing Bootstrap, AdminLTE, or Tailwind
-and without reimplementing tree state or transport.
+A custom theme can style the stable `soa-tree-*` DOM contract and listen to
+`tree:changed`/`tree:failed` for its own notifications without importing
+Bootstrap, AdminLTE, SweetAlert, or Tailwind and without reimplementing tree
+state or transport. Code that installs the library API directly may also pass
+the optional `notifications.success()`/`notifications.error(error)` dependency
+to `installTrees()`.
 
 The no-build distribution exposes these logical entries in both profiles:
 

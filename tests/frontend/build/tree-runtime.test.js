@@ -28,6 +28,43 @@ it('keeps the tree driver and both theme adapters in separate owned sources', ()
     files.forEach((file) => expect(existsSync(resolve(root, file))).toBe(true))
 })
 
+it('keeps AdminLTE notification policy out of the neutral and Tailwind tree entries', () => {
+    const entries = readJson('build/frontend-entries.json').modern
+    const scripts = entries.scripts.filter(({ logicalId }) => logicalId.includes('tree'))
+    const adminlte = scripts.find(
+        ({ logicalId }) => logicalId === 'feature:tree:theme:legacy-adminlte',
+    )
+
+    expect(adminlte?.source).toBe(
+        'resources/frontend/features/tree/themes/legacy-adminlte/browser.js',
+    )
+    expect(scripts).not.toContainEqual(
+        expect.objectContaining({ logicalId: 'feature:tree:theme:tailwind' }),
+    )
+    expect(read('resources/frontend/features/tree/browser.js')).not.toMatch(
+        /Swal|SweetAlert|Admin\.Messages|legacy-adminlte/,
+    )
+    expect(read('resources/frontend/themes/tailwind/index.js')).not.toMatch(
+        /Swal|SweetAlert|Admin\.Messages|legacy-adminlte/,
+    )
+})
+
+it.each(['production', 'development'])(
+    '%s manifest publishes only the AdminLTE tree notification adapter',
+    (profile) => {
+        const entries = readJson('public/default/asset-manifest.json').profiles[profile].entries
+        const adminlte = entries['feature:tree:theme:legacy-adminlte']
+        const tailwind = entries['feature:tree:theme:tailwind']
+
+        expect(adminlte.scripts.map(({ file }) => file)).toEqual([
+            `profiles/${profile}/js/features/tree/themes/legacy-adminlte.js`,
+        ])
+        expect(adminlte.styles).toHaveLength(1)
+        expect(tailwind.scripts).toEqual([])
+        expect(tailwind.styles).toHaveLength(1)
+    },
+)
+
 it('keeps visible tree controls in the Blade item template', () => {
     const view = read('resources/frontend/features/tree/tree-view.js')
     const template = read('resources/views/themes/legacy/default/display/tree_children.blade.php')

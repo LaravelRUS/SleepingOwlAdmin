@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="csrf-token" content="tree-notifications-token" />
+        <title>Tree notification adapter fixture</title>
+        <script>
+            window.GlobalConfig = {
+                debug: true,
+                env: 'testing',
+                lang: {
+                    button: { cancel: 'Cancel', yes: 'Yes' },
+                    table: { error: 'Unable to reorder' },
+                    tree: {
+                        collapse: 'Collapse all',
+                        expand: 'Expand all',
+                        reorderCompleted: 'Item moved',
+                    },
+                },
+                locale: 'en',
+                template: { asset_dir: 'default' },
+                url: 'http://127.0.0.1:4173',
+                url_path: 'tree-notifications',
+                url_prefix: 'admin',
+                user_id: null,
+                wysiwyg: {},
+            }
+        </script>
+    </head>
+    <body>
+        <section
+            data-reorderable="false"
+            data-tree
+            data-url="/api/tree/reorder"
+            id="tree-notification-success"
+        >
+            <ol data-tree-list data-tree-root>
+                <li data-id="1" data-tree-item><span>Catalog</span></li>
+            </ol>
+        </section>
+        <section
+            data-reorderable="false"
+            data-tree
+            data-url="/api/tree/reorder?fail=1"
+            id="tree-notification-failure"
+        >
+            <ol data-tree-list data-tree-root>
+                <li data-id="2" data-tree-item><span>Archive</span></li>
+            </ol>
+        </section>
+
+        <script src="/public/default/profiles/development/js/admin-core.js"></script>
+        <script src="/public/default/profiles/development/js/shared/compatibility.js"></script>
+        <script>
+            window.__treeNotificationCalls = { errors: [], mixes: [], toasts: [] }
+            Admin.Messages.error = (title) => window.__treeNotificationCalls.errors.push(title)
+            Swal.mixin = (settings) => {
+                const { didOpen, ...serializable } = settings
+                window.__treeNotificationCalls.mixes.push(serializable)
+
+                return {
+                    fire: (toast) => window.__treeNotificationCalls.toasts.push(toast),
+                }
+            }
+            window.__treeNotificationEvents = []
+            ;['tree:changed', 'tree:failed'].forEach((name) => {
+                document.addEventListener(name, () => window.__treeNotificationEvents.push(name))
+            })
+        </script>
+        <script src="/public/default/profiles/development/js/features/tree/themes/legacy-adminlte.js"></script>
+        <script src="/public/default/profiles/development/js/features/tree.js"></script>
+    </body>
+</html>

@@ -92,6 +92,11 @@
                 "output": "js/features/tree.js"
             },
             {
+                "logicalId": "feature:tree:theme:legacy-adminlte",
+                "source": "resources/frontend/features/tree/themes/legacy-adminlte/browser.js",
+                "output": "js/features/tree/themes/legacy-adminlte.js"
+            },
+            {
                 "logicalId": "theme:legacy-adminlte",
                 "source": "resources/frontend/themes/legacy-adminlte/index.js",
                 "output": "js/themes/legacy-adminlte.js"
