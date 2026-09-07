@@ -18,14 +18,22 @@ test('tree lifecycle, serialization and expand controls stay scoped per tree', a
     })
     expect(mounted).toEqual([true, true])
 
+    const rootToggle = page.locator('#tree-primary [data-id="1"] > [data-soa-tree-toggle]')
+    await expect(rootToggle).toHaveClass(/project-tree-toggle/)
+    await expect(rootToggle.locator('.project-tree-toggle-glyph')).toHaveCount(1)
+
     await page.locator('#tree-primary [data-soa-tree-action="collapse-all"]').click()
     await expect(page.locator('#tree-primary [data-id="1"] > [data-soa-tree-list]')).toBeHidden()
+    await expect(rootToggle.locator('[data-soa-tree-toggle-expanded]')).toBeHidden()
+    await expect(rootToggle.locator('[data-soa-tree-toggle-collapsed]')).toBeVisible()
     await expect(
         page.locator('#tree-secondary [data-id="10"] > [data-soa-tree-list]'),
     ).toBeVisible()
 
     await page.locator('#tree-primary [data-soa-tree-action="expand-all"]').click()
     await expect(page.locator('#tree-primary [data-id="1"] > [data-soa-tree-list]')).toBeVisible()
+    await expect(rootToggle.locator('[data-soa-tree-toggle-expanded]')).toBeVisible()
+    await expect(rootToggle.locator('[data-soa-tree-toggle-collapsed]')).toBeHidden()
     expect(await serializedTree(page, 'tree-primary')).toEqual([
         { id: '1', children: [{ id: '2' }] },
         { id: '3', children: [{ id: '5' }] },
@@ -33,25 +41,35 @@ test('tree lifecycle, serialization and expand controls stay scoped per tree', a
     ])
 })
 
-test('SortableJS moves a nested branch and preserves the backend payload', async ({
+test('drag-and-drop reuses a Blade leaf toggle and preserves the backend payload', async ({
     page,
     request,
 }) => {
+    const sourceParentToggle = page.locator('#tree-primary [data-id="1"] > [data-soa-tree-toggle]')
+    const targetParentToggle = page.locator('#tree-primary [data-id="4"] > [data-soa-tree-toggle]')
+    await expect(targetParentToggle).toBeHidden()
+    await page.locator('#tree-primary').evaluate((tree) => {
+        tree.dataset.soaTreeDragging = 'true'
+    })
+
     const response = page.waitForResponse((item) => item.url().includes('/api/tree/reorder'))
     await page
         .locator('#tree-primary [data-id="2"] > [data-soa-tree-handle]')
-        .dragTo(page.locator('#tree-primary [data-id="3"] > [data-soa-tree-list]'), {
-            targetPosition: { x: 12, y: 4 },
+        .dragTo(page.locator('#tree-primary [data-id="4"] > [data-soa-tree-list]'), {
+            targetPosition: { x: 64, y: 4 },
         })
     await response
 
-    await expect.poll(() => parentTreeId(page, '2')).toBe('3')
+    await expect.poll(() => parentTreeId(page, '2')).toBe('4')
+    await expect(targetParentToggle).toBeVisible()
+    await expect(targetParentToggle).toHaveClass(/project-leaf-toggle/)
+    await expect(sourceParentToggle).toBeHidden()
     await expect(page.locator('#tree-primary')).toHaveAttribute('data-soa-tree-save-state', 'idle')
 
     const recorded = await treeRequests(request)
     const parameters = recorded.at(-1).parameters
     expect(Object.entries(parameters)).toContainEqual([
-        expect.stringMatching(/^data\[1]\[children]\[\d+]\[id]$/),
+        expect.stringMatching(/^data\[2\]\[children\]\[\d+\]\[id\]$/),
         '2',
     ])
     expect(parameters['parameters[scope]']).toBe('catalog')

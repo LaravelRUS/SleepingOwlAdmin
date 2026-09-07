@@ -45,6 +45,10 @@ function inspectRuntime(page) {
         return {
             adapter: Boolean(adapter?.engineInstance),
             autoUpdate: table.classList.contains('autoupdater'),
+            autoUpdateControl: {
+                label: table.querySelector('.project-auto-update-label')?.textContent,
+                nested: Boolean(table.querySelector(':scope > .project-auto-update-shell')),
+            },
             compatibility: {
                 checkDateRange: typeof globalThis.checkDateRange,
                 checkNumberRange: typeof globalThis.checkNumberRange,
@@ -76,6 +80,7 @@ function expectedRuntime() {
     return {
         adapter: true,
         autoUpdate: true,
+        autoUpdateControl: { label: 'Pause', nested: true },
         compatibility: {
             checkDateRange: 'function',
             checkNumberRange: 'function',

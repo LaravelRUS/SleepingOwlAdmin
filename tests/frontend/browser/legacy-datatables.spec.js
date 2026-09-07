@@ -513,6 +513,12 @@ test('auto-update redraws the table and its close control stops the timer', asyn
 }) => {
     await openFixture(page, '?autoupdate=1')
     await expect(page.locator('#legacy-table')).toHaveClass(/autoupdater/)
+    await expect(page.locator('#legacy-table > .fixture-autoupdate-shell')).toHaveCount(1)
+    await expect(page.locator('.fixture-autoupdate-close')).toHaveAttribute(
+        'aria-label',
+        'Stop auto-update',
+    )
+    await expect(page.locator('.fixture-autoupdate-label')).toHaveText('Stop')
     await expect
         .poll(async () => (await recordedRequests(request, 'datatable')).length)
         .toBeGreaterThan(1)
@@ -523,4 +529,5 @@ test('auto-update redraws the table and its close control stops the timer', asyn
     await page.waitForTimeout(500)
     expect((await recordedRequests(request, 'datatable')).length).toBe(stoppedAt)
     await expect(page.locator('.autoupdater-close')).toHaveCount(0)
+    await expect(page.locator('.fixture-autoupdate-shell')).toHaveCount(0)
 })

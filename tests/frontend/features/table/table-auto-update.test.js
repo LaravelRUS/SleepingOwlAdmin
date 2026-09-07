@@ -9,20 +9,12 @@ import {
 function fixture() {
     let click
     const properties = new Map()
-    const close = {
-        addEventListener: vi.fn((_event, listener) => {
-            click = listener
-        }),
-        remove: vi.fn(),
-        removeEventListener: vi.fn(),
-        setAttribute: vi.fn(),
-    }
+    const view = controlView((listener) => {
+        click = listener
+    })
     const table = {
         appendChild: vi.fn(),
         classList: { add: vi.fn(), remove: vi.fn() },
-        ownerDocument: {
-            createElement: vi.fn(() => close),
-        },
         style: {
             removeProperty: vi.fn((name) => properties.delete(name)),
             setProperty: vi.fn((name, value) => properties.set(name, value)),
@@ -35,7 +27,28 @@ function fixture() {
     const scheduler = { clearTimeout: vi.fn(), setTimeout: vi.fn(() => 17) }
     const tables = { reload: vi.fn() }
 
-    return { bar, click: () => click(), close, Line, scheduler, table, tables }
+    return { bar, click: () => click(), Line, scheduler, table, tables, ...view }
+}
+
+function controlView(registerClick) {
+    const close = {
+        addEventListener: vi.fn((_event, listener) => {
+            registerClick(listener)
+        }),
+        removeEventListener: vi.fn(),
+    }
+    const root = {
+        matches: vi.fn(() => false),
+        querySelector: vi.fn(() => close),
+        remove: vi.fn(),
+    }
+    const controlTemplate = {
+        content: {
+            cloneNode: vi.fn(() => ({ children: [root], firstElementChild: root })),
+        },
+    }
+
+    return { close, controlTemplate, root }
 }
 
 it('reads typed config from the no-script Blade host', () => {
@@ -62,6 +75,7 @@ it('reloads one registered table and destroys its timer, bar and control indepen
         item.table,
         { closeLabel: 'Stop', color: '#123456', interval: 250, tableClass: null },
         {
+            controlTemplate: item.controlTemplate,
             ProgressBar: { Line: item.Line },
             scheduler: item.scheduler,
             tables: item.tables,
@@ -77,13 +91,14 @@ it('reloads one registered table and destroys its timer, bar and control indepen
         item.table,
         expect.objectContaining({ color: `var(${AUTO_UPDATE_COLOR_PROPERTY})`, duration: 250 }),
     )
+    expect(item.table.appendChild).toHaveBeenCalledWith(item.root)
 
     item.click()
     controller.destroy()
 
     expect(item.scheduler.clearTimeout).toHaveBeenCalledOnce()
     expect(item.bar.destroy).toHaveBeenCalledOnce()
-    expect(item.close.remove).toHaveBeenCalledOnce()
+    expect(item.root.remove).toHaveBeenCalledOnce()
     expect(item.table.classList.remove).toHaveBeenCalledWith('autoupdater')
 })
 

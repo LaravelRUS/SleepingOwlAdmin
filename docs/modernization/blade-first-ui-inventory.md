@@ -49,16 +49,18 @@ read-only reference project is intentionally not scanned again.
 
 ## Blade-template candidates
 
-These paths currently construct visible first-party UI in JavaScript and must
-be migrated before the direct theme runtime switch.
+This list records the visible first-party UI that was constructed in
+JavaScript when the inventory was created. Completed rows have already moved
+their presentation to Blade; the remaining rows must be migrated before the
+direct theme runtime switch.
 
-| Priority | Current JavaScript owner | Visible DOM created today | Blade owner / target contract | Compatibility strategy |
-| --- | --- | --- | --- | --- |
-| 1 | `features/table/autoupdate/table-auto-update.js` | `.autoupdater-close` button and its `×` text | Historical logical view `default.helper.autoupdate`, backed by the feature host `features.datatables.autoupdate`, supplies a rendered control template | Keep the existing config keys, host marker, label, color property and table matching. JavaScript clones the control, binds stop behavior and owns only the ProgressBar lifecycle. A project override may replace tag, classes, icon and nesting. |
-| 1 | `features/tree/tree-view.js` | `.soa-tree-toggle` button and `+`/`−` presentation | `default.display.tree_children` renders a toggle for every item that can accept children | Keep `data-soa-tree-toggle` as the behavior hook. Blade renders both states/text or icons; JavaScript changes `hidden`, `aria-expanded`, `aria-label` and collapsed state. Leaf toggles stay rendered but hidden so drag-and-drop can reveal them without creating markup. |
-| 2 | `features/table/editing/inline-editor-view.js` | Entire editor root, form, title, input area, actions, error block, buttons and all nine control shapes | Existing logical view `default.column.editable.partials.editor` emits the trigger plus per-editor Blade `<template>` partials | Preserve every editable-column PHP class and logical view path. The template carries arbitrary project classes/nesting. JavaScript clones it, resolves documented hooks, fills values/options as text, binds submit/cancel/Escape/date lifecycle, and never chooses presentation classes. |
-| 3 | `features/sidebar/sidebars.js` | `#sidebar-overlay` | Theme layout, currently `default._layout.inner` (optionally through a theme-local partial) | Keep the established id and `data-widget="pushmenu"`; do not add `data-soa-sidebar*`. JavaScript only shows/hides the existing overlay and handles click/Escape/focus/persistence. |
-| 4 | `features/tooltip/tooltips.js` | Active `role="tooltip"` popup | A theme layout-level `<template>` supplied to the neutral tooltip feature | Keep `data-toggle="tooltip"`, `title`, `data-original-title` and `data-placement`. JavaScript clones the popup, assigns a unique id and text content, positions it, and manages focus/ARIA. A narrowly documented neutral fallback may remain for custom themes that omit the optional presentation template. |
+| Status | Priority | JavaScript behavior owner | Original visible DOM | Blade owner / target contract | Compatibility strategy |
+| --- | --- | --- | --- | --- | --- |
+| Complete | 1 | `features/table/autoupdate/table-auto-update.js` | `.autoupdater-close` button and its `×` text | Historical logical view `default.helper.autoupdate`, backed by the feature host `features.datatables.autoupdate`, supplies a rendered control template | The existing config keys, host marker, label, color property and table matching remain. JavaScript clones exactly one control root, binds stop behavior and owns only the ProgressBar lifecycle. A project override may replace tag, classes, icon and nesting while preserving the documented hooks. |
+| Complete | 1 | `features/tree/tree-view.js` | `.soa-tree-toggle` button and `+`/`−` presentation | `default.display.tree_children` renders a toggle for every item that can accept children | `data-soa-tree-toggle` remains the behavior hook. Blade renders both states/text or icons; JavaScript changes only `hidden`, `aria-expanded`, `aria-label` and collapsed state. Leaf toggles stay rendered but hidden so drag-and-drop can reveal them without creating markup. |
+| Pending | 2 | `features/table/editing/inline-editor-view.js` | Entire editor root, form, title, input area, actions, error block, buttons and all nine control shapes | Existing logical view `default.column.editable.partials.editor` emits the trigger plus per-editor Blade `<template>` partials | Preserve every editable-column PHP class and logical view path. The template carries arbitrary project classes/nesting. JavaScript clones it, resolves documented hooks, fills values/options as text, binds submit/cancel/Escape/date lifecycle, and never chooses presentation classes. |
+| Pending | 3 | `features/sidebar/sidebars.js` | `#sidebar-overlay` | Theme layout, currently `default._layout.inner` (optionally through a theme-local partial) | Keep the established id and `data-widget="pushmenu"`; do not add `data-soa-sidebar*`. JavaScript only shows/hides the existing overlay and handles click/Escape/focus/persistence. |
+| Pending | 4 | `features/tooltip/tooltips.js` | Active `role="tooltip"` popup | A theme layout-level `<template>` supplied to the neutral tooltip feature | Keep `data-toggle="tooltip"`, `title`, `data-original-title` and `data-placement`. JavaScript clones the popup, assigns a unique id and text content, positions it, and manages focus/ARIA. A narrowly documented neutral fallback may remain for custom themes that omit the optional presentation template. |
 
 ### Inline editor template hooks
 
@@ -157,8 +159,8 @@ For each migrated candidate, tests must prove all of the following:
 
 ## Implementation order
 
-1. Move the table auto-update close control and tree toggle to Blade templates;
-   add unit, PHP render and browser override contracts.
+1. [Complete] Move the table auto-update close control and tree toggle to
+   Blade templates; add unit, PHP render and browser override contracts.
 2. Move the complete inline editor presentation to per-editor Blade templates;
    cover every editor type, arbitrary classes and changed nesting.
 3. Render the sidebar overlay in each theme layout and remove JavaScript DOM

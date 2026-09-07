@@ -28,6 +28,17 @@ it('keeps the tree driver and both theme adapters in separate owned sources', ()
     files.forEach((file) => expect(existsSync(resolve(root, file))).toBe(true))
 })
 
+it('keeps visible tree controls in the Blade item template', () => {
+    const view = read('resources/frontend/features/tree/tree-view.js')
+    const template = read('resources/views/themes/legacy/default/display/tree_children.blade.php')
+
+    expect(view).not.toContain('createElement')
+    expect(view).not.toContain("toggle.textContent = collapsed ? '+' : '−'")
+    expect(template).toContain('data-soa-tree-toggle')
+    expect(template).toContain('data-soa-tree-toggle-expanded')
+    expect(template).toContain('data-soa-tree-toggle-collapsed')
+})
+
 function read(path) {
     return readFileSync(resolve(root, path), 'utf8')
 }

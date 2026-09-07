@@ -5,6 +5,7 @@
         <meta name="csrf-token" content="tree-token" />
         <title>Tree browser fixture</title>
         <link rel="stylesheet" href="/public/default/css/admin-app.css" />
+        <link rel="stylesheet" href="/public/default/css/features/tree.css" />
         <script>
             window.GlobalConfig = {
                 debug: true,
@@ -53,12 +54,39 @@
                 </menu>
                 <ol class="soa-tree-list" data-soa-tree-list data-soa-tree-root>
                     <li class="soa-tree-item" data-soa-tree-item data-id="1">
+                        <button
+                            type="button"
+                            class="soa-tree-toggle project-tree-toggle"
+                            data-soa-tree-toggle
+                            aria-expanded="true"
+                            aria-label="Collapse"
+                        >
+                            <span class="project-tree-toggle-glyph">
+                                <span data-soa-tree-toggle-expanded aria-hidden="true">−</span>
+                                <span data-soa-tree-toggle-collapsed aria-hidden="true" hidden
+                                    >+</span
+                                >
+                            </span>
+                        </button>
                         <button type="button" class="soa-tree-handle" data-soa-tree-handle>
                             ≡
                         </button>
                         <div class="soa-tree-content">Catalog</div>
                         <ol class="soa-tree-list" data-soa-tree-list>
                             <li class="soa-tree-item" data-soa-tree-item data-id="2">
+                                <button
+                                    type="button"
+                                    class="soa-tree-toggle project-leaf-toggle"
+                                    data-soa-tree-toggle
+                                    aria-expanded="false"
+                                    aria-label="Collapse"
+                                    hidden
+                                >
+                                    <span data-soa-tree-toggle-expanded aria-hidden="true">−</span>
+                                    <span data-soa-tree-toggle-collapsed aria-hidden="true" hidden
+                                        >+</span
+                                    >
+                                </button>
                                 <button type="button" class="soa-tree-handle" data-soa-tree-handle>
                                     ≡
                                 </button>
@@ -68,12 +96,35 @@
                         </ol>
                     </li>
                     <li class="soa-tree-item" data-soa-tree-item data-id="3">
+                        <button
+                            type="button"
+                            class="soa-tree-toggle"
+                            data-soa-tree-toggle
+                            aria-expanded="true"
+                            aria-label="Collapse"
+                        >
+                            <span data-soa-tree-toggle-expanded aria-hidden="true">−</span>
+                            <span data-soa-tree-toggle-collapsed aria-hidden="true" hidden>+</span>
+                        </button>
                         <button type="button" class="soa-tree-handle" data-soa-tree-handle>
                             ≡
                         </button>
                         <div class="soa-tree-content">Archive</div>
                         <ol class="soa-tree-list" data-soa-tree-list>
                             <li class="soa-tree-item" data-soa-tree-item data-id="5">
+                                <button
+                                    type="button"
+                                    class="soa-tree-toggle"
+                                    data-soa-tree-toggle
+                                    aria-expanded="false"
+                                    aria-label="Collapse"
+                                    hidden
+                                >
+                                    <span data-soa-tree-toggle-expanded aria-hidden="true">−</span>
+                                    <span data-soa-tree-toggle-collapsed aria-hidden="true" hidden
+                                        >+</span
+                                    >
+                                </button>
                                 <button type="button" class="soa-tree-handle" data-soa-tree-handle>
                                     ≡
                                 </button>
@@ -83,6 +134,17 @@
                         </ol>
                     </li>
                     <li class="soa-tree-item" data-soa-tree-item data-id="4">
+                        <button
+                            type="button"
+                            class="soa-tree-toggle project-leaf-toggle"
+                            data-soa-tree-toggle
+                            aria-expanded="false"
+                            aria-label="Collapse"
+                            hidden
+                        >
+                            <span data-soa-tree-toggle-expanded aria-hidden="true">−</span>
+                            <span data-soa-tree-toggle-collapsed aria-hidden="true" hidden>+</span>
+                        </button>
                         <button type="button" class="soa-tree-handle" data-soa-tree-handle>
                             ≡
                         </button>
@@ -105,6 +167,16 @@
             >
                 <ol class="soa-tree-list" data-soa-tree-list data-soa-tree-root>
                     <li class="soa-tree-item" data-soa-tree-item data-id="10">
+                        <button
+                            type="button"
+                            class="soa-tree-toggle"
+                            data-soa-tree-toggle
+                            aria-expanded="true"
+                            aria-label="Collapse"
+                        >
+                            <span data-soa-tree-toggle-expanded aria-hidden="true">−</span>
+                            <span data-soa-tree-toggle-collapsed aria-hidden="true" hidden>+</span>
+                        </button>
                         <button type="button" class="soa-tree-handle" data-soa-tree-handle>
                             ≡
                         </button>

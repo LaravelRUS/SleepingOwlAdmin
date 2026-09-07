@@ -27,8 +27,13 @@ orchestration: it reads config, composes the modules, delegates engine creation
 to the neutral factory and binds legacy controls. The previous 413-line closure,
 implicit globals and inline state/filter implementations are removed.
 
-The server-side DataTables wire protocol is unchanged. Filter storage uses the
-table-scoped `Filters_/route::<encoded table id>` key while retaining edit-route
+The server-side DataTables wire protocol is unchanged. Async displays still
+send the established DataTables request fields, including `draw`, pagination,
+ordering, global search, per-column search and named SleepingOwl filters. The
+endpoint still responds with `draw`, `recordsTotal`, `recordsFiltered` and
+`data`; `AdminDisplay::datatables()` and the existing async PHP implementation
+remain the public API. Filter storage uses the table-scoped
+`Filters_/route::<encoded table id>` key while retaining edit-route
 normalization. Existing positional `Filters_/route` data is migrated once by
 matching its containers to `data-datatables-id`; a current scoped value is
 never overwritten, and an incomplete migration retains the legacy source.
@@ -82,3 +87,17 @@ directly. Bulk actions and custom action forms resolve the adapter for their
 table and read `Admin.Tables.selectedRows(element)`; action submission and the
 auto-update view use `Admin.Tables.reload(...)`. No first-party runtime path
 creates a table through `$(element).DataTable(...)`.
+
+## Blade-owned auto-update control
+
+The historical `default.helper.autoupdate` logical view still owns the feature
+host through `features.datatables.autoupdate`. It now renders a
+`template[data-admin-table-autoupdate-control]` containing exactly one root and
+a descendant marked with `data-admin-table-autoupdate-close`. The table runtime
+clones that root for each matching table and binds the timer teardown to the
+close hook. It does not create the button, text, icon or presentation classes.
+
+A project view override may replace the element type, classes and internal
+nesting while retaining the template and close hooks. Existing auto-update
+config keys, table-class matching, labels, interval, color property, reload
+behavior and server-side table flow remain unchanged.

@@ -31,7 +31,18 @@ data-soa-tree-list
 data-soa-tree-item
 data-soa-tree-handle
 data-soa-tree-action
+data-soa-tree-toggle
+data-soa-tree-toggle-expanded
+data-soa-tree-toggle-collapsed
 ```
+
+`default.display.tree_children` renders each available toggle and both of its
+expanded/collapsed presentation states in Blade. JavaScript does not create or
+replace toggle markup: it changes `hidden`, `aria-expanded`, `aria-label` and
+the item collapsed state. A leaf that can receive children keeps a hidden
+toggle in the DOM, allowing drag-and-drop to reveal the same project-owned
+markup when the leaf becomes a parent. Project overrides may change the tag,
+classes, icons and nesting while retaining these behavior/state hooks.
 
 Parameters are encoded with `Illuminate\Support\Js::encode()` in an inert
 `application/json` script referenced by id. They are not embedded as raw JSON

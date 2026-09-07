@@ -10,6 +10,7 @@ for (const theme of ['legacy-adminlte', 'tailwind']) {
             'solid',
         )
         await expect(page.locator('.soa-tree-handle')).toHaveCSS('cursor', 'grab')
+        await expect(page.locator('.soa-tree-toggle')).toHaveCSS('position', 'absolute')
         await expect(page.locator('.soa-tree-list .soa-tree-list')).toHaveCSS(
             'padding-left',
             '24px',

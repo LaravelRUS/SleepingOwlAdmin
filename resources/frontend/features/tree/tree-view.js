@@ -2,6 +2,8 @@ import { childTreeList, directTreeItems, TREE_ITEM_SELECTOR } from './tree-struc
 
 const TREE_ACTION_SELECTOR = '[data-soa-tree-action]'
 const TREE_TOGGLE_SELECTOR = '[data-soa-tree-toggle]'
+const TREE_TOGGLE_COLLAPSED_SELECTOR = '[data-soa-tree-toggle-collapsed]'
+const TREE_TOGGLE_EXPANDED_SELECTOR = '[data-soa-tree-toggle-expanded]'
 
 export function bindTreeControls(element, labels) {
     const click = (event) => handleTreeClick(element, labels, event)
@@ -56,7 +58,7 @@ function syncTreeItem(item, labels) {
     const toggle = directToggle(item)
 
     if (!hasChildren) {
-        toggle?.remove()
+        hideTreeToggle(toggle)
         delete item.dataset.soaTreeCollapsed
         if (list) list.hidden = false
         return
@@ -69,26 +71,36 @@ function setTreeItemCollapsed(item, collapsed, labels) {
     const list = childTreeList(item)
     if (!list) return
 
-    const toggle = directToggle(item) ?? createToggle(item.ownerDocument)
-    if (!toggle.parentElement) item.prepend(toggle)
+    const toggle = directToggle(item)
     item.dataset.soaTreeCollapsed = String(collapsed)
     list.hidden = collapsed
-    toggle.textContent = collapsed ? '+' : '−'
-    toggle.setAttribute('aria-expanded', String(!collapsed))
-    toggle.setAttribute('aria-label', collapsed ? labels.expand : labels.collapse)
+    syncTreeToggle(toggle, collapsed, labels)
 }
 
 function directToggle(item) {
     return [...item.children].find((child) => child.matches(TREE_TOGGLE_SELECTOR)) ?? null
 }
 
-function createToggle(document) {
-    const button = document.createElement('button')
-    button.className = 'soa-tree-toggle'
-    button.dataset.soaTreeToggle = ''
-    button.type = 'button'
+function hideTreeToggle(toggle) {
+    if (!toggle) return
 
-    return button
+    toggle.hidden = true
+    toggle.setAttribute('aria-expanded', 'false')
+}
+
+function syncTreeToggle(toggle, collapsed, labels) {
+    if (!toggle) return
+
+    toggle.hidden = false
+    toggle.setAttribute('aria-expanded', String(!collapsed))
+    toggle.setAttribute('aria-label', collapsed ? labels.expand : labels.collapse)
+    setToggleState(toggle, TREE_TOGGLE_COLLAPSED_SELECTOR, collapsed)
+    setToggleState(toggle, TREE_TOGGLE_EXPANDED_SELECTOR, !collapsed)
+}
+
+function setToggleState(toggle, selector, visible) {
+    const state = toggle.querySelector(selector)
+    if (state) state.hidden = !visible
 }
 
 function emptyList() {

@@ -12,5 +12,14 @@
     @endif
     style="--soa-datatables-autoupdate-color: {{ $autoupdate->color() }}"
     hidden
-  ></span>
+  >
+    <template data-admin-table-autoupdate-control>
+      <button
+        class="autoupdater-close"
+        data-admin-table-autoupdate-close
+        type="button"
+        aria-label="{{ trans('sleeping_owl::lang.button.cancel') }}"
+      ><span aria-hidden="true">×</span></button>
+    </template>
+  </span>
 @endif

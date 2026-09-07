@@ -1,10 +1,14 @@
 export const AUTO_UPDATE_COLOR_PROPERTY = '--soa-datatables-autoupdate-color'
 
+const CONTROL_TEMPLATE_SELECTOR = 'template[data-admin-table-autoupdate-control]'
+const CLOSE_CONTROL_SELECTOR = '[data-admin-table-autoupdate-close]'
+
 export function mountTableAutoUpdates(host, dependencies) {
     assertTableCollection(dependencies.tables)
     const config = readAutoUpdateConfig(host)
+    const controlTemplate = readControlTemplate(host)
     const controllers = matchingTables(dependencies.tables, config.tableClass).map((table) =>
-        mountTableAutoUpdate(table, config, dependencies),
+        mountTableAutoUpdate(table, config, { ...dependencies, controlTemplate }),
     )
 
     return {
@@ -17,14 +21,14 @@ export function mountTableAutoUpdates(host, dependencies) {
 export function mountTableAutoUpdate(table, config, dependencies) {
     assertDependencies(dependencies)
 
-    const close = createCloseControl(table.ownerDocument, config.closeLabel)
+    const view = cloneControl(dependencies.controlTemplate)
     const bar = createProgressBar(table, config, dependencies.ProgressBar)
     let timer = null
     let stopped = false
 
     table.classList.add('autoupdater')
     table.style.setProperty(AUTO_UPDATE_COLOR_PROPERTY, config.color)
-    table.appendChild(close)
+    table.appendChild(view.root)
 
     const schedule = () => {
         bar.animate(1)
@@ -42,15 +46,15 @@ export function mountTableAutoUpdate(table, config, dependencies) {
 
         stopped = true
         dependencies.scheduler.clearTimeout(timer)
-        close.removeEventListener('click', destroy)
-        close.remove()
+        view.close.removeEventListener('click', destroy)
+        view.root.remove()
         bar.set(0)
         bar.destroy?.()
         table.classList.remove('autoupdater')
         table.style.removeProperty(AUTO_UPDATE_COLOR_PROPERTY)
     }
 
-    close.addEventListener('click', destroy)
+    view.close.addEventListener('click', destroy)
     schedule()
 
     return { destroy }
@@ -82,14 +86,30 @@ function matchingTables(tables, tableClass) {
         .filter((table) => !tableClass || table.classList.contains(tableClass))
 }
 
-function createCloseControl(document, label) {
-    const control = document.createElement('button')
-    control.className = 'autoupdater-close'
-    control.type = 'button'
-    control.setAttribute('aria-label', label)
-    control.textContent = '\u00d7'
+function readControlTemplate(host) {
+    const template = host.querySelector?.(CONTROL_TEMPLATE_SELECTOR)
+    if (typeof template?.content?.cloneNode !== 'function') {
+        throw new TypeError('Table auto-update requires a Blade-rendered control template.')
+    }
 
-    return control
+    return template
+}
+
+function cloneControl(template) {
+    const fragment = template.content.cloneNode(true)
+    if (fragment.children?.length !== 1) {
+        throw new TypeError('Table auto-update control template requires one root element.')
+    }
+
+    const root = fragment.firstElementChild
+    const close = root.matches?.(CLOSE_CONTROL_SELECTOR)
+        ? root
+        : root.querySelector?.(CLOSE_CONTROL_SELECTOR)
+    if (!close) {
+        throw new TypeError('Table auto-update control template requires a close control.')
+    }
+
+    return { close, root }
 }
 
 function createProgressBar(table, config, ProgressBar) {

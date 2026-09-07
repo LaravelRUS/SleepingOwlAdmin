@@ -1248,12 +1248,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "mountTableAutoUpdates": () => (/* binding */ mountTableAutoUpdates),
 /* harmony export */   "readAutoUpdateConfig": () => (/* binding */ readAutoUpdateConfig)
 /* harmony export */ });
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 var AUTO_UPDATE_COLOR_PROPERTY = '--soa-datatables-autoupdate-color';
+var CONTROL_TEMPLATE_SELECTOR = 'template[data-admin-table-autoupdate-control]';
+var CLOSE_CONTROL_SELECTOR = '[data-admin-table-autoupdate-close]';
 function mountTableAutoUpdates(host, dependencies) {
   assertTableCollection(dependencies.tables);
   var config = readAutoUpdateConfig(host);
+  var controlTemplate = readControlTemplate(host);
   var controllers = matchingTables(dependencies.tables, config.tableClass).map(function (table) {
-    return mountTableAutoUpdate(table, config, dependencies);
+    return mountTableAutoUpdate(table, config, _objectSpread(_objectSpread({}, dependencies), {}, {
+      controlTemplate: controlTemplate
+    }));
   });
   return {
     destroy: function destroy() {
@@ -1265,13 +1276,13 @@ function mountTableAutoUpdates(host, dependencies) {
 }
 function mountTableAutoUpdate(table, config, dependencies) {
   assertDependencies(dependencies);
-  var close = createCloseControl(table.ownerDocument, config.closeLabel);
+  var view = cloneControl(dependencies.controlTemplate);
   var bar = createProgressBar(table, config, dependencies.ProgressBar);
   var timer = null;
   var stopped = false;
   table.classList.add('autoupdater');
   table.style.setProperty(AUTO_UPDATE_COLOR_PROPERTY, config.color);
-  table.appendChild(close);
+  table.appendChild(view.root);
   var schedule = function schedule() {
     bar.animate(1);
     timer = dependencies.scheduler.setTimeout(refresh, config.interval);
@@ -1287,14 +1298,14 @@ function mountTableAutoUpdate(table, config, dependencies) {
     if (stopped) return;
     stopped = true;
     dependencies.scheduler.clearTimeout(timer);
-    close.removeEventListener('click', _destroy);
-    close.remove();
+    view.close.removeEventListener('click', _destroy);
+    view.root.remove();
     bar.set(0);
     (_bar$destroy = bar.destroy) === null || _bar$destroy === void 0 || _bar$destroy.call(bar);
     table.classList.remove('autoupdater');
     table.style.removeProperty(AUTO_UPDATE_COLOR_PROPERTY);
   };
-  close.addEventListener('click', _destroy);
+  view.close.addEventListener('click', _destroy);
   schedule();
   return {
     destroy: _destroy
@@ -1323,13 +1334,29 @@ function matchingTables(tables, tableClass) {
     return !tableClass || table.classList.contains(tableClass);
   });
 }
-function createCloseControl(document, label) {
-  var control = document.createElement('button');
-  control.className = 'autoupdater-close';
-  control.type = 'button';
-  control.setAttribute('aria-label', label);
-  control.textContent = "\xD7";
-  return control;
+function readControlTemplate(host) {
+  var _host$querySelector, _template$content;
+  var template = (_host$querySelector = host.querySelector) === null || _host$querySelector === void 0 ? void 0 : _host$querySelector.call(host, CONTROL_TEMPLATE_SELECTOR);
+  if (typeof (template === null || template === void 0 || (_template$content = template.content) === null || _template$content === void 0 ? void 0 : _template$content.cloneNode) !== 'function') {
+    throw new TypeError('Table auto-update requires a Blade-rendered control template.');
+  }
+  return template;
+}
+function cloneControl(template) {
+  var _fragment$children, _root$matches, _root$querySelector;
+  var fragment = template.content.cloneNode(true);
+  if (((_fragment$children = fragment.children) === null || _fragment$children === void 0 ? void 0 : _fragment$children.length) !== 1) {
+    throw new TypeError('Table auto-update control template requires one root element.');
+  }
+  var root = fragment.firstElementChild;
+  var close = (_root$matches = root.matches) !== null && _root$matches !== void 0 && _root$matches.call(root, CLOSE_CONTROL_SELECTOR) ? root : (_root$querySelector = root.querySelector) === null || _root$querySelector === void 0 ? void 0 : _root$querySelector.call(root, CLOSE_CONTROL_SELECTOR);
+  if (!close) {
+    throw new TypeError('Table auto-update control template requires a close control.');
+  }
+  return {
+    close: close,
+    root: root
+  };
 }
 function createProgressBar(table, config, ProgressBar) {
   return new ProgressBar.Line(table, {

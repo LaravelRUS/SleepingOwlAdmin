@@ -2,11 +2,25 @@
     @php
         $hasChildren = $entry->children && $entry->children->count() > 0;
         $collapsed = (isset($entry->level) && $entry->level >= $collapsedLevel) || $collapsedLevel == 0;
+        $canHaveChildren = $hasChildren || $depth < $max_depth;
+        $isCollapsed = $hasChildren && $collapsed;
+        $isExpanded = $hasChildren && !$collapsed;
     @endphp
     <li class="soa-tree-item{{ $reorderable ? '' : ' soa-tree-item-static' }}"
         data-soa-tree-item
-        data-soa-tree-collapsed="{{ $hasChildren && $collapsed ? 'true' : 'false' }}"
+        data-soa-tree-collapsed="{{ $isCollapsed ? 'true' : 'false' }}"
         data-id="{{ $entry->id }}">
+        @if ($canHaveChildren)
+            <button type="button"
+                    class="soa-tree-toggle"
+                    data-soa-tree-toggle
+                    aria-expanded="{{ $isExpanded ? 'true' : 'false' }}"
+                    aria-label="@lang($isCollapsed ? 'sleeping_owl::lang.tree.expand' : 'sleeping_owl::lang.tree.collapse')"
+                    @if (!$hasChildren) hidden @endif>
+                <span data-soa-tree-toggle-expanded aria-hidden="true" @if ($isCollapsed) hidden @endif>−</span>
+                <span data-soa-tree-toggle-collapsed aria-hidden="true" @if (!$isCollapsed) hidden @endif>+</span>
+            </button>
+        @endif
         @if ($reorderable)
             <button type="button"
                     class="soa-tree-handle"

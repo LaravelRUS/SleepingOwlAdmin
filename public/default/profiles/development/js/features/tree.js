@@ -373,6 +373,8 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
 
 var TREE_ACTION_SELECTOR = '[data-soa-tree-action]';
 var TREE_TOGGLE_SELECTOR = '[data-soa-tree-toggle]';
+var TREE_TOGGLE_COLLAPSED_SELECTOR = '[data-soa-tree-toggle-collapsed]';
+var TREE_TOGGLE_EXPANDED_SELECTOR = '[data-soa-tree-toggle-expanded]';
 function bindTreeControls(element, labels) {
   var click = function click(event) {
     return handleTreeClick(element, labels, event);
@@ -422,7 +424,7 @@ function syncTreeItem(item, labels) {
   var hasChildren = list && (0,_tree_structure_js__WEBPACK_IMPORTED_MODULE_0__.directTreeItems)(list).length > 0;
   var toggle = directToggle(item);
   if (!hasChildren) {
-    toggle === null || toggle === void 0 || toggle.remove();
+    hideTreeToggle(toggle);
     delete item.dataset.soaTreeCollapsed;
     if (list) list.hidden = false;
     return;
@@ -430,16 +432,12 @@ function syncTreeItem(item, labels) {
   setTreeItemCollapsed(item, item.dataset.soaTreeCollapsed === 'true', labels);
 }
 function setTreeItemCollapsed(item, collapsed, labels) {
-  var _directToggle;
   var list = (0,_tree_structure_js__WEBPACK_IMPORTED_MODULE_0__.childTreeList)(item);
   if (!list) return;
-  var toggle = (_directToggle = directToggle(item)) !== null && _directToggle !== void 0 ? _directToggle : createToggle(item.ownerDocument);
-  if (!toggle.parentElement) item.prepend(toggle);
+  var toggle = directToggle(item);
   item.dataset.soaTreeCollapsed = String(collapsed);
   list.hidden = collapsed;
-  toggle.textContent = collapsed ? '+' : '−';
-  toggle.setAttribute('aria-expanded', String(!collapsed));
-  toggle.setAttribute('aria-label', collapsed ? labels.expand : labels.collapse);
+  syncTreeToggle(toggle, collapsed, labels);
 }
 function directToggle(item) {
   var _find;
@@ -447,12 +445,22 @@ function directToggle(item) {
     return child.matches(TREE_TOGGLE_SELECTOR);
   })) !== null && _find !== void 0 ? _find : null;
 }
-function createToggle(document) {
-  var button = document.createElement('button');
-  button.className = 'soa-tree-toggle';
-  button.dataset.soaTreeToggle = '';
-  button.type = 'button';
-  return button;
+function hideTreeToggle(toggle) {
+  if (!toggle) return;
+  toggle.hidden = true;
+  toggle.setAttribute('aria-expanded', 'false');
+}
+function syncTreeToggle(toggle, collapsed, labels) {
+  if (!toggle) return;
+  toggle.hidden = false;
+  toggle.setAttribute('aria-expanded', String(!collapsed));
+  toggle.setAttribute('aria-label', collapsed ? labels.expand : labels.collapse);
+  setToggleState(toggle, TREE_TOGGLE_COLLAPSED_SELECTOR, collapsed);
+  setToggleState(toggle, TREE_TOGGLE_EXPANDED_SELECTOR, !collapsed);
+}
+function setToggleState(toggle, selector, visible) {
+  var state = toggle.querySelector(selector);
+  if (state) state.hidden = !visible;
 }
 function emptyList() {
   return {

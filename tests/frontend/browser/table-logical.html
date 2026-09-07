@@ -91,7 +91,20 @@
             data-table-class="autorefresh"
             hidden
             style="--soa-datatables-autoupdate-color: currentColor"
-        ></span>
+        >
+            <template data-admin-table-autoupdate-control>
+                <span class="project-auto-update-shell">
+                    <button
+                        class="autoupdater-close project-auto-update-close"
+                        data-admin-table-autoupdate-close
+                        type="button"
+                        aria-label="Pause project updates"
+                    >
+                        <strong class="project-auto-update-label">Pause</strong>
+                    </button>
+                </span>
+            </template>
+        </span>
         <div id="dynamic-table-host"></div>
 
         <script src="/public/default/profiles/development/js/admin-core.js"></script>

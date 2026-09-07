@@ -10,6 +10,17 @@ class TreeRenderContractTest extends TestCase
         $this->assertStringContainsString('data-soa-tree-root', $html);
         $this->assertStringContainsString('data-soa-tree-item', $html);
         $this->assertStringContainsString('data-soa-tree-handle', $html);
+        $this->assertSame(2, substr_count($html, 'class="soa-tree-toggle"'));
+        $this->assertSame(2, substr_count($html, 'data-soa-tree-toggle-expanded'));
+        $this->assertSame(2, substr_count($html, 'data-soa-tree-toggle-collapsed'));
+        $this->assertMatchesRegularExpression(
+            '/<button[^>]+class="soa-tree-toggle"[^>]+data-soa-tree-toggle[^>]+aria-expanded="false"/s',
+            $html
+        );
+        $this->assertMatchesRegularExpression(
+            '/<button[^>]+class="soa-tree-toggle"[^>]+data-soa-tree-toggle[^>]+hidden/s',
+            $html
+        );
         $this->assertStringContainsString('data-reorderable="true"', $html);
         $this->assertStringContainsString('class="soa-tree pb-3 project-tree"', $html);
         $this->assertStringContainsString('data-project="catalog"', $html);
