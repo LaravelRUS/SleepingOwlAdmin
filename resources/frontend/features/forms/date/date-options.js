@@ -4,7 +4,7 @@ import { createDateRangeOptions } from './date-range-options.js'
 export const DATE_CONTROL_TYPES = Object.freeze(['date', 'datetime', 'time', 'daterange'])
 
 export function createDatePickerOptions(input, locale) {
-    const type = input.dataset.soaDateControl
+    const type = input.dataset.dateControl
     assertControlType(type)
 
     const format = input.dataset.dateFormat || defaultFormat(type)

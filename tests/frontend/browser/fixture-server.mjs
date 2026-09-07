@@ -574,11 +574,11 @@ function recordRequest(kind, request, parameters) {
 function editableCell(id) {
     const templateId = `inline-edit-template-${id}`
 
-    return `<button type="button" class="soa-inline-editable" id="inline-edit-${id}" data-soa-inline-editor="text" data-name="status" data-value="Draft" data-url="/api/inline-edit" data-pk="${id}" data-mode="inline" data-empty-text="empty" data-soa-inline-editor-template-id="${templateId}" aria-expanded="false">Draft</button>${inlineEditorTemplate(templateId)}`
+    return `<button type="button" class="soa-inline-editable" id="inline-edit-${id}" data-inline-editor="text" data-name="status" data-value="Draft" data-url="/api/inline-edit" data-pk="${id}" data-mode="inline" data-empty-text="empty" data-inline-editor-template-id="${templateId}" aria-expanded="false">Draft</button>${inlineEditorTemplate(templateId)}`
 }
 
 function inlineEditorTemplate(id) {
-    return `<template id="${id}" data-soa-inline-editor-template="text"><div class="soa-inline-editor soa-inline-editor-inline" data-soa-inline-editor-root role="group"><form class="soa-inline-editor-form" data-soa-inline-editor-form><div class="soa-inline-editor-input"><input class="soa-inline-editor-control" data-soa-inline-editor-control type="text"></div><div class="soa-inline-editor-actions"><button class="soa-inline-editor-submit" type="submit">Save</button><button class="soa-inline-editor-cancel" data-soa-inline-editor-cancel type="button">Cancel</button></div><div class="soa-inline-editor-error" data-soa-inline-editor-error role="alert" hidden></div></form></div></template>`
+    return `<template id="${id}" data-inline-editor-template="text"><div class="soa-inline-editor soa-inline-editor-inline" data-inline-editor-root role="group"><form class="soa-inline-editor-form" data-inline-editor-form><div class="soa-inline-editor-input"><input class="soa-inline-editor-control" data-inline-editor-control type="text"></div><div class="soa-inline-editor-actions"><button class="soa-inline-editor-submit" type="submit">Save</button><button class="soa-inline-editor-cancel" data-inline-editor-cancel type="button">Cancel</button></div><div class="soa-inline-editor-error" data-inline-editor-error role="alert" hidden></div></form></div></template>`
 }
 
 function fixtureRow(id) {

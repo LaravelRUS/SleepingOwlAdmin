@@ -50,7 +50,7 @@ class LegacyThemePresentationTest extends TestCase
             'aria-expanded="false"',
             '<button data-contract="group-action">Run</button>',
         ]);
-        $this->assertStringNotContainsString('data-soa-dropdown', $html);
+        $this->assertStringNotContainsString('data-dropdown', $html);
     }
 
     public function test_grid_column_renders_numeric_width_in_legacy_theme(): void
@@ -141,7 +141,7 @@ class LegacyThemePresentationTest extends TestCase
 
         $this->assertContainsAll($html, [
             'class="nav-item nav-link active user-tab"',
-            'data-soa-tab',
+            'data-tab',
             'data-contract="tab"',
             'href="#nav-orders"',
         ]);

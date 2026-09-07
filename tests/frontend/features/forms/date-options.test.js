@@ -9,7 +9,7 @@ function input(type, value = '', dataset = {}) {
     return {
         dataset: {
             dateFormat: type === 'time' ? 'HH:mm:ss' : 'DD.MM.YYYY HH:mm',
-            soaDateControl: type,
+            dateControl: type,
             ...dataset,
         },
         value,

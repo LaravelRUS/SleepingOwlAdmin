@@ -1,7 +1,7 @@
 import { parseJsonProps } from '../../core/data/island-props'
 import { createVueComponentCatalog, VueComponentCatalog } from './component-catalog'
 
-export const vueAppSelector = '[data-soa-vue-app]'
+export const vueAppSelector = '[data-vue-app]'
 
 export class VueAppRegistry {
     constructor(createApp, components = {}) {
@@ -70,7 +70,7 @@ export class VueAppRegistry {
     }
 
     canMount(element) {
-        const name = element.dataset?.soaVueComponent
+        const name = element.dataset?.vueComponent
 
         return !name || this.components.has(name)
     }
@@ -85,7 +85,7 @@ function registerComponents(app, components) {
 }
 
 function resolveRootComponent(element, components) {
-    const name = element.dataset?.soaVueComponent
+    const name = element.dataset?.vueComponent
     if (!name) return { component: {}, props: undefined }
 
     const component = components.get(name)
@@ -100,8 +100,8 @@ function resolveRootComponent(element, components) {
 }
 
 function readPropsSource(element) {
-    const propsId = element.dataset?.soaVuePropsId
-    if (!propsId) return element.dataset?.soaVueProps || '{}'
+    const propsId = element.dataset?.vuePropsId
+    if (!propsId) return element.dataset?.vueProps || '{}'
 
     return readReferencedProps(element, propsId)
 }

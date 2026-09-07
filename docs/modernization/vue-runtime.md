@@ -44,7 +44,7 @@ Vue as a browser global.
 ## Bounded legacy app registry
 
 The page-wide `new Vue({ el: '#vueApp' })` root has been removed. The Vue entry
-creates one small native app for every top-level `[data-soa-vue-app]` host and
+creates one small native app for every top-level `[data-vue-app]` host and
 keeps their internal migration registry as `Admin.VueApps`:
 
 - `mount(element)` and `mountAll(root)` are idempotent;
@@ -67,7 +67,7 @@ catalog. The package does not call global `Vue.component` or `Vue.extend`, and
 no consumer component is inherited from a browser global. Custom modules add
 precompiled definitions through the public `Admin.Vue` extension API.
 
-`data-soa-vue-app` is the stable server marker, while `Admin.VueApps` is an
+`data-vue-app` is the stable server marker, while `Admin.VueApps` is an
 internal migration diagnostic. Custom modules register through `Admin.Vue`.
 A dynamically inserted Vue-only subtree calls `Admin.Vue.scan(insertedRoot)`
 after insertion and `Admin.Vue.destroy(removedRoot)` before removal. Mixed
@@ -85,10 +85,10 @@ Blade view renders an empty host with one compiler guard and lifecycle
 attributes:
 
 - `v-pre` protects the empty host when it is nested in a legacy compiled template;
-- `data-soa-vue-app` marks lifecycle ownership;
-- `data-soa-vue-component` names a definition from the app-local catalog;
-- `data-soa-vue-props` contains one HTML-escaped JSON object; or
-- `data-soa-vue-props-id` references a sibling
+- `data-vue-app` marks lifecycle ownership;
+- `data-vue-component` names a definition from the app-local catalog;
+- `data-vue-props` contains one HTML-escaped JSON object; or
+- `data-vue-props-id` references a sibling
   `<script type="application/json">` for a payload too large for an attribute.
 
 The registry resolves the component and parses the props before it creates an

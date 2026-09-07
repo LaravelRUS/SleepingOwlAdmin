@@ -49,10 +49,10 @@ test('delegation supports compatibility markers inserted after boot', async ({ p
 
 test('uses a neutral fallback when a minimal custom theme omits the template', async ({ page }) => {
     await page.goto('/tooltips')
-    await page.locator('[data-soa-tooltip-template]').evaluate((template) => template.remove())
+    await page.locator('[data-tooltip-template]').evaluate((template) => template.remove())
 
     await page.locator('#native-tooltip').hover()
-    const tooltip = page.locator('[data-soa-tooltip-popup]')
+    const tooltip = page.locator('[data-tooltip-popup]')
 
     await expect(tooltip).toHaveText('Native tooltip')
     await expect(tooltip).toHaveAttribute('role', 'tooltip')

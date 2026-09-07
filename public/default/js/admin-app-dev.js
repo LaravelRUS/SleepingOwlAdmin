@@ -2889,11 +2889,11 @@ Admin.Modules.register('display.theme', function () {
     mode = mode === 'dark' ? 'dark' : 'light';
     if (mode === 'dark') {
       document.body.classList.add('dark-mode');
-      document.documentElement.dataset.soaColorScheme = 'dark';
+      document.documentElement.dataset.colorScheme = 'dark';
       theme_icon.classList = 'fa-regular fa-lightbulb';
     } else {
       document.body.classList.remove('dark-mode');
-      document.documentElement.dataset.soaColorScheme = 'light';
+      document.documentElement.dataset.colorScheme = 'light';
       theme_icon.classList = 'fa-solid fa-moon';
     }
     window.localStorage.setItem('theme-mode', mode);
@@ -6482,7 +6482,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var DATE_CONTROL_COMPONENT = 'date-control';
-var DATE_CONTROL_SELECTOR = 'input[data-soa-date-control]';
+var DATE_CONTROL_SELECTOR = 'input[data-date-control]';
 function createDateControlDefinition(Datepicker, locale) {
   if (typeof Datepicker !== 'function') {
     throw new TypeError('Date controls require an Air Datepicker constructor.');
@@ -6792,7 +6792,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
 
 var DATE_CONTROL_TYPES = Object.freeze(['date', 'datetime', 'time', 'daterange']);
 function createDatePickerOptions(input, locale) {
-  var type = input.dataset.soaDateControl;
+  var type = input.dataset.dateControl;
   assertControlType(type);
   var format = input.dataset.dateFormat || defaultFormat(type);
   var selectedDate = (0,_date_format_js__WEBPACK_IMPORTED_MODULE_0__.parseDateValue)(input.value, format, locale);
@@ -8459,7 +8459,7 @@ function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) 
 function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
 function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
-var LIGHTBOX_TRIGGER_SELECTOR = '[data-soa-lightbox], [data-toggle="lightbox"]';
+var LIGHTBOX_TRIGGER_SELECTOR = '[data-lightbox], [data-toggle="lightbox"]';
 function findLightboxTrigger(root, target) {
   var _target$closest;
   var trigger = target === null || target === void 0 || (_target$closest = target.closest) === null || _target$closest === void 0 ? void 0 : _target$closest.call(target, LIGHTBOX_TRIGGER_SELECTOR);
@@ -10144,7 +10144,7 @@ var INLINE_EDITOR_TYPES = Object.freeze(['checkbox', 'checklist', 'date', 'datet
 var MULTIPLE_TYPES = new Set(['checkbox', 'checklist']);
 function readInlineEditorConfig(element) {
   var _element$dataset$date, _element$dataset$empt, _element$dataset$max, _element$dataset$min, _element$dataset$step, _element$dataset$titl;
-  var type = element.dataset.soaInlineEditor;
+  var type = element.dataset.inlineEditor;
   assertType(type);
   return Object.freeze({
     dateFormat: (_element$dataset$date = element.dataset.dateFormat) !== null && _element$dataset$date !== void 0 ? _element$dataset$date : '',
@@ -10165,7 +10165,7 @@ function readInlineEditorConfig(element) {
 }
 function readOptionsSource(element) {
   var _element$ownerDocumen;
-  var id = element.dataset.soaInlineEditorOptionsId;
+  var id = element.dataset.inlineEditorOptionsId;
   if (!id) return element.dataset.options;
   var script = (_element$ownerDocumen = element.ownerDocument) === null || _element$ownerDocumen === void 0 ? void 0 : _element$ownerDocumen.getElementById(id);
   if (!script) throw new Error("Inline editor options [".concat(id, "] were not found."));
@@ -10230,9 +10230,9 @@ function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) 
 function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
 function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
-var CHECK_INPUT_SELECTOR = '[data-soa-inline-editor-check-input]';
-var RANGE_INPUT_SELECTOR = '[data-soa-inline-editor-range-input]';
-var RANGE_OUTPUT_SELECTOR = '[data-soa-inline-editor-range-output]';
+var CHECK_INPUT_SELECTOR = '[data-inline-editor-check-input]';
+var RANGE_INPUT_SELECTOR = '[data-inline-editor-range-input]';
+var RANGE_OUTPUT_SELECTOR = '[data-inline-editor-range-output]';
 function bindInlineEditorControl(element, config) {
   if (config.type === 'checkbox' || config.type === 'checklist') {
     return bindChecklist(element, config.value);
@@ -10298,7 +10298,7 @@ function syncNumberAttributes(input, config) {
 }
 function syncDateAttributes(input, config) {
   if (config.type !== 'date' && config.type !== 'datetime') return;
-  input.dataset.soaDateControl = config.type;
+  input.dataset.dateControl = config.type;
   input.dataset.dateFormat = config.dateFormat;
 }
 function syncOptionalAttribute(element, name, value) {
@@ -10523,13 +10523,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "cloneInlineEditorTemplate": () => (/* binding */ cloneInlineEditorTemplate)
 /* harmony export */ });
-var TEMPLATE_ID_ATTRIBUTE = 'soaInlineEditorTemplateId';
-var TEMPLATE_SELECTOR = '[data-soa-inline-editor-template]';
-var ROOT_SELECTOR = '[data-soa-inline-editor-root]';
-var FORM_SELECTOR = '[data-soa-inline-editor-form]';
-var CONTROL_SELECTOR = '[data-soa-inline-editor-control]';
-var CANCEL_SELECTOR = '[data-soa-inline-editor-cancel]';
-var ERROR_SELECTOR = '[data-soa-inline-editor-error]';
+var TEMPLATE_ID_ATTRIBUTE = 'inlineEditorTemplateId';
+var TEMPLATE_SELECTOR = '[data-inline-editor-template]';
+var ROOT_SELECTOR = '[data-inline-editor-root]';
+var FORM_SELECTOR = '[data-inline-editor-form]';
+var CONTROL_SELECTOR = '[data-inline-editor-control]';
+var CANCEL_SELECTOR = '[data-inline-editor-cancel]';
+var ERROR_SELECTOR = '[data-inline-editor-error]';
 function cloneInlineEditorTemplate(trigger) {
   var template = readTemplate(trigger);
   var root = cloneSingleRoot(template);
@@ -10736,7 +10736,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 
 
 var INLINE_EDITOR_COMPONENT = 'inline-editor';
-var INLINE_EDITOR_SELECTOR = '[data-soa-inline-editor]';
+var INLINE_EDITOR_SELECTOR = '[data-inline-editor]';
 function createInlineEditorDefinition(dependencies) {
   var settings = normalizeDependencies(dependencies);
   return {
@@ -12261,7 +12261,7 @@ function updateRowSelection(checkbox) {
   if (!row) {
     return;
   }
-  row.toggleAttribute('data-soa-selected', checkbox.checked);
+  row.toggleAttribute('data-selected', checkbox.checked);
   row.setAttribute('aria-selected', String(checkbox.checked));
   if (selectedRowClass) {
     row.classList.toggle(selectedRowClass, checkbox.checked);
@@ -12736,8 +12736,8 @@ function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) 
 function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
 function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
-var TAB_SELECTOR = '[data-soa-tab], [data-toggle="tab"]';
-var TAB_LIST_SELECTOR = '[data-soa-tablist], [role="tablist"]';
+var TAB_SELECTOR = '[data-tab], [data-toggle="tab"]';
+var TAB_LIST_SELECTOR = '[data-tablist], [role="tablist"]';
 function findTab(root, target) {
   var _target$closest;
   var tab = target === null || target === void 0 || (_target$closest = target.closest) === null || _target$closest === void 0 ? void 0 : _target$closest.call(target, TAB_SELECTOR);
@@ -13216,9 +13216,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "createTooltipElement": () => (/* binding */ createTooltipElement)
 /* harmony export */ });
-var TOOLTIP_TEMPLATE_SELECTOR = 'template[data-soa-tooltip-template]';
-var TOOLTIP_POPUP_SELECTOR = '[data-soa-tooltip-popup]';
-var TOOLTIP_CONTENT_SELECTOR = '[data-soa-tooltip-content]';
+var TOOLTIP_TEMPLATE_SELECTOR = 'template[data-tooltip-template]';
+var TOOLTIP_POPUP_SELECTOR = '[data-tooltip-popup]';
+var TOOLTIP_CONTENT_SELECTOR = '[data-tooltip-content]';
 function createTooltipElement(root, content, placement, id) {
   var _cloneTooltip;
   var tooltip = (_cloneTooltip = cloneTooltip(root)) !== null && _cloneTooltip !== void 0 ? _cloneTooltip : createFallbackTooltip(root.ownerDocument);
@@ -13233,13 +13233,13 @@ function cloneTooltip(root) {
 }
 function createFallbackTooltip(document) {
   var tooltip = document.createElement('div');
-  tooltip.dataset.soaTooltipPopup = '';
+  tooltip.dataset.tooltipPopup = '';
   return tooltip;
 }
 function prepareTooltip(tooltip, content, placement, id) {
   tooltip.id = id;
   tooltip.dataset.placement = placement;
-  tooltip.setAttribute('data-soa-tooltip-popup', '');
+  tooltip.setAttribute('data-tooltip-popup', '');
   tooltip.setAttribute('role', 'tooltip');
   findContentTarget(tooltip).textContent = content;
 }
@@ -13386,7 +13386,7 @@ function createCurrent(trigger, tooltip, reason) {
 }
 function applyOpenState(current) {
   current.trigger.removeAttribute('title');
-  current.trigger.dataset.soaTooltipOpen = '';
+  current.trigger.dataset.tooltipOpen = '';
   current.trigger.setAttribute('aria-describedby', [current.describedBy, current.tooltip.id].filter(Boolean).join(' '));
 }
 function repositionTooltip(state) {
@@ -13411,7 +13411,7 @@ function hideTooltip(state) {
   return true;
 }
 function restoreTrigger(current) {
-  delete current.trigger.dataset.soaTooltipOpen;
+  delete current.trigger.dataset.tooltipOpen;
   restoreAttribute(current.trigger, 'aria-describedby', current.describedBy);
   restoreAttribute(current.trigger, 'title', current.title);
 }
@@ -13575,7 +13575,7 @@ function readTreeConfig(element) {
   });
 }
 function readParameters(element) {
-  var id = element.dataset.soaTreeParametersId;
+  var id = element.dataset.treeParametersId;
   var source = id ? referencedParameters(element, id) : element.dataset.parameters;
   if (!source) return {};
   var parameters = JSON.parse(source);
@@ -13733,7 +13733,7 @@ function sortableOptions(element, root, group, config, handlers) {
     fallbackOnBody: true,
     ghostClass: 'soa-tree-ghost',
     group: group,
-    handle: '[data-soa-tree-handle]',
+    handle: '[data-tree-handle]',
     invertSwap: true,
     onEnd: function onEnd(event) {
       return endDrag(element, handlers, event);
@@ -13742,13 +13742,13 @@ function sortableOptions(element, root, group, config, handlers) {
       return (0,_tree_structure_js__WEBPACK_IMPORTED_MODULE_0__.canMoveTreeItem)(root, event.dragged, event.to, config.maxDepth);
     },
     onStart: function onStart() {
-      element.dataset.soaTreeDragging = 'true';
+      element.dataset.treeDragging = 'true';
     },
     swapThreshold: 0.65
   };
 }
 function endDrag(element, handlers, event) {
-  delete element.dataset.soaTreeDragging;
+  delete element.dataset.treeDragging;
   handlers.end(event);
 }
 function matchingLists(element) {
@@ -13794,8 +13794,8 @@ function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) 
 function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
 function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
-var TREE_ITEM_SELECTOR = '[data-soa-tree-item]';
-var TREE_LIST_SELECTOR = '[data-soa-tree-list]';
+var TREE_ITEM_SELECTOR = '[data-tree-item]';
+var TREE_LIST_SELECTOR = '[data-tree-list]';
 function serializeTree(element) {
   return serializeTreeList(rootTreeList(element));
 }
@@ -13816,7 +13816,7 @@ function childTreeList(item) {
   })) !== null && _find !== void 0 ? _find : null;
 }
 function rootTreeList(element) {
-  var list = element.querySelector('[data-soa-tree-root]');
+  var list = element.querySelector('[data-tree-root]');
   if (!list) throw new Error('Tree root list was not found.');
   return list;
 }
@@ -13877,10 +13877,10 @@ function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Sym
 function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 
-var TREE_ACTION_SELECTOR = '[data-soa-tree-action]';
-var TREE_TOGGLE_SELECTOR = '[data-soa-tree-toggle]';
-var TREE_TOGGLE_COLLAPSED_SELECTOR = '[data-soa-tree-toggle-collapsed]';
-var TREE_TOGGLE_EXPANDED_SELECTOR = '[data-soa-tree-toggle-expanded]';
+var TREE_ACTION_SELECTOR = '[data-tree-action]';
+var TREE_TOGGLE_SELECTOR = '[data-tree-toggle]';
+var TREE_TOGGLE_COLLAPSED_SELECTOR = '[data-tree-toggle-collapsed]';
+var TREE_TOGGLE_EXPANDED_SELECTOR = '[data-tree-toggle-expanded]';
 function bindTreeControls(element, labels) {
   var click = function click(event) {
     return handleTreeClick(element, labels, event);
@@ -13906,20 +13906,20 @@ function setAllTreeItemsCollapsed(element, collapsed, labels) {
 }
 function setTreeBusy(element, busy) {
   element.setAttribute('aria-busy', String(busy));
-  if (busy) element.dataset.soaTreeSaveState = 'saving';else if (element.dataset.soaTreeSaveState !== 'error') element.dataset.soaTreeSaveState = 'idle';
+  if (busy) element.dataset.treeSaveState = 'saving';else if (element.dataset.treeSaveState !== 'error') element.dataset.treeSaveState = 'idle';
 }
 function handleTreeClick(element, labels, event) {
   var action = event.target.closest(TREE_ACTION_SELECTOR);
   if (action && element.contains(action)) {
     event.preventDefault();
-    handleTreeAction(element, labels, action.dataset.soaTreeAction);
+    handleTreeAction(element, labels, action.dataset.treeAction);
     return;
   }
   var toggle = event.target.closest(TREE_TOGGLE_SELECTOR);
   if (!toggle || !element.contains(toggle)) return;
   event.preventDefault();
   var item = toggle.closest(_tree_structure_js__WEBPACK_IMPORTED_MODULE_0__.TREE_ITEM_SELECTOR);
-  setTreeItemCollapsed(item, item.dataset.soaTreeCollapsed !== 'true', labels);
+  setTreeItemCollapsed(item, item.dataset.treeCollapsed !== 'true', labels);
 }
 function handleTreeAction(element, labels, action) {
   if (action === 'expand-all') setAllTreeItemsCollapsed(element, false, labels);
@@ -13931,17 +13931,17 @@ function syncTreeItem(item, labels) {
   var toggle = directToggle(item);
   if (!hasChildren) {
     hideTreeToggle(toggle);
-    delete item.dataset.soaTreeCollapsed;
+    delete item.dataset.treeCollapsed;
     if (list) list.hidden = false;
     return;
   }
-  setTreeItemCollapsed(item, item.dataset.soaTreeCollapsed === 'true', labels);
+  setTreeItemCollapsed(item, item.dataset.treeCollapsed === 'true', labels);
 }
 function setTreeItemCollapsed(item, collapsed, labels) {
   var list = (0,_tree_structure_js__WEBPACK_IMPORTED_MODULE_0__.childTreeList)(item);
   if (!list) return;
   var toggle = directToggle(item);
-  item.dataset.soaTreeCollapsed = String(collapsed);
+  item.dataset.treeCollapsed = String(collapsed);
   list.hidden = collapsed;
   syncTreeToggle(toggle, collapsed, labels);
 }
@@ -14001,7 +14001,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var TREE_COMPONENT = 'tree';
-var TREE_SELECTOR = '[data-soa-tree]';
+var TREE_SELECTOR = '[data-tree]';
 function createTreeDefinition(dependencies) {
   var settings = normalizeDependencies(dependencies);
   return {
@@ -14074,7 +14074,7 @@ function handleTreeSaved(state, data) {
 function handleTreeFailure(state, error) {
   if (!state.destroyed) {
     var _state$dependencies$n3, _state$dependencies$n4;
-    state.element.dataset.soaTreeSaveState = 'error';
+    state.element.dataset.treeSaveState = 'error';
     dispatchTreeEvent(state.element, 'tree:failed', {
       error: error
     });
@@ -14090,7 +14090,7 @@ function destroyTree(state, removeControls, sortables) {
   state.destroyed = true;
   removeControls();
   sortables.destroy();
-  delete state.element.dataset.soaTreeDragging;
+  delete state.element.dataset.treeDragging;
   state.element.removeAttribute('aria-busy');
 }
 function dispatchTreeEvent(element, name, detail) {

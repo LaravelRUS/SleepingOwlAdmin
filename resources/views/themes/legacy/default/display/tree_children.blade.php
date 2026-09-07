@@ -7,24 +7,24 @@
         $isExpanded = $hasChildren && !$collapsed;
     @endphp
     <li class="soa-tree-item{{ $reorderable ? '' : ' soa-tree-item-static' }}"
-        data-soa-tree-item
-        data-soa-tree-collapsed="{{ $isCollapsed ? 'true' : 'false' }}"
+        data-tree-item
+        data-tree-collapsed="{{ $isCollapsed ? 'true' : 'false' }}"
         data-id="{{ $entry->id }}">
         @if ($canHaveChildren)
             <button type="button"
                     class="soa-tree-toggle"
-                    data-soa-tree-toggle
+                    data-tree-toggle
                     aria-expanded="{{ $isExpanded ? 'true' : 'false' }}"
                     aria-label="@lang($isCollapsed ? 'sleeping_owl::lang.tree.expand' : 'sleeping_owl::lang.tree.collapse')"
                     @if (!$hasChildren) hidden @endif>
-                <span data-soa-tree-toggle-expanded aria-hidden="true" @if ($isCollapsed) hidden @endif>−</span>
-                <span data-soa-tree-toggle-collapsed aria-hidden="true" @if (!$isCollapsed) hidden @endif>+</span>
+                <span data-tree-toggle-expanded aria-hidden="true" @if ($isCollapsed) hidden @endif>−</span>
+                <span data-tree-toggle-collapsed aria-hidden="true" @if (!$isCollapsed) hidden @endif>+</span>
             </button>
         @endif
         @if ($reorderable)
             <button type="button"
                     class="soa-tree-handle"
-                    data-soa-tree-handle
+                    data-tree-handle
                     aria-label="@lang('sleeping_owl::lang.tree.move')"
                     @if (!is_callable($value)) title="{{ $entry->{$value} }}" @endif>≡</button>
         @endif
@@ -50,7 +50,7 @@
         </div>
 
         @if ($hasChildren || $depth < $max_depth)
-            <ol class="soa-tree-list" data-soa-tree-list @if($hasChildren && $collapsed) hidden @endif>
+            <ol class="soa-tree-list" data-tree-list @if($hasChildren && $collapsed) hidden @endif>
                 @include(AdminTemplate::getViewPath('display.tree_children'), [
                     'children' => $entry->children ?? collect(),
                     'depth' => $depth + 1,

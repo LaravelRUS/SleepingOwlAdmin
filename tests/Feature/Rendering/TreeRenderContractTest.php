@@ -6,19 +6,19 @@ class TreeRenderContractTest extends TestCase
     {
         $html = $this->renderTree();
 
-        $this->assertStringContainsString('data-soa-tree', $html);
-        $this->assertStringContainsString('data-soa-tree-root', $html);
-        $this->assertStringContainsString('data-soa-tree-item', $html);
-        $this->assertStringContainsString('data-soa-tree-handle', $html);
+        $this->assertStringContainsString('data-tree', $html);
+        $this->assertStringContainsString('data-tree-root', $html);
+        $this->assertStringContainsString('data-tree-item', $html);
+        $this->assertStringContainsString('data-tree-handle', $html);
         $this->assertSame(2, substr_count($html, 'class="soa-tree-toggle"'));
-        $this->assertSame(2, substr_count($html, 'data-soa-tree-toggle-expanded'));
-        $this->assertSame(2, substr_count($html, 'data-soa-tree-toggle-collapsed'));
+        $this->assertSame(2, substr_count($html, 'data-tree-toggle-expanded'));
+        $this->assertSame(2, substr_count($html, 'data-tree-toggle-collapsed'));
         $this->assertMatchesRegularExpression(
-            '/<button[^>]+class="soa-tree-toggle"[^>]+data-soa-tree-toggle[^>]+aria-expanded="false"/s',
+            '/<button[^>]+class="soa-tree-toggle"[^>]+data-tree-toggle[^>]+aria-expanded="false"/s',
             $html
         );
         $this->assertMatchesRegularExpression(
-            '/<button[^>]+class="soa-tree-toggle"[^>]+data-soa-tree-toggle[^>]+hidden/s',
+            '/<button[^>]+class="soa-tree-toggle"[^>]+data-tree-toggle[^>]+hidden/s',
             $html
         );
         $this->assertStringContainsString('data-reorderable="true"', $html);
@@ -35,10 +35,10 @@ class TreeRenderContractTest extends TestCase
     {
         $html = $this->renderTree();
 
-        $this->assertSame(3, substr_count($html, 'data-soa-tree-list'));
-        $this->assertStringContainsString('data-soa-tree-collapsed="true"', $html);
+        $this->assertSame(3, substr_count($html, 'data-tree-list'));
+        $this->assertStringContainsString('data-tree-collapsed="true"', $html);
         $this->assertMatchesRegularExpression(
-            '/<ol class="soa-tree-list" data-soa-tree-list\s+hidden/',
+            '/<ol class="soa-tree-list" data-tree-list\s+hidden/',
             $html
         );
     }

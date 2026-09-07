@@ -1,12 +1,12 @@
 @mixin styles {
-    [data-soa-tablist],
+    [data-tablist],
     [role='tablist'] {
         display: flex;
         gap: var(--soa-tabs-gap);
         border-block-end: var(--soa-tabs-border-width) solid var(--soa-tabs-border);
     }
 
-    [data-soa-tab],
+    [data-tab],
     [data-toggle='tab'] {
         padding: var(--soa-tabs-padding-block) var(--soa-tabs-padding-inline);
         border-radius: var(--soa-tabs-radius) var(--soa-tabs-radius) 0 0;
@@ -14,13 +14,13 @@
         text-decoration: none;
     }
 
-    [data-soa-tab].active,
+    [data-tab].active,
     [data-toggle='tab'].active {
         background: var(--soa-tabs-active-surface);
         color: var(--soa-tabs-active-text);
     }
 
-    [data-soa-tab]:focus-visible,
+    [data-tab]:focus-visible,
     [data-toggle='tab']:focus-visible {
         outline: var(--soa-tabs-focus-width) solid var(--soa-tabs-focus);
         outline-offset: var(--soa-tabs-focus-width);

@@ -5,7 +5,7 @@ import { mountTreeSortables } from './tree-sortable.js'
 import { bindTreeControls, setTreeBusy, syncTreeView } from './tree-view.js'
 
 export const TREE_COMPONENT = 'tree'
-export const TREE_SELECTOR = '[data-soa-tree]'
+export const TREE_SELECTOR = '[data-tree]'
 
 export function createTreeDefinition(dependencies) {
     const settings = normalizeDependencies(dependencies)
@@ -77,7 +77,7 @@ function handleTreeSaved(state, data) {
 
 function handleTreeFailure(state, error) {
     if (!state.destroyed) {
-        state.element.dataset.soaTreeSaveState = 'error'
+        state.element.dataset.treeSaveState = 'error'
         dispatchTreeEvent(state.element, 'tree:failed', { error })
         state.dependencies.notifications.error?.(error)
     }
@@ -94,7 +94,7 @@ function destroyTree(state, removeControls, sortables) {
     state.destroyed = true
     removeControls()
     sortables.destroy()
-    delete state.element.dataset.soaTreeDragging
+    delete state.element.dataset.treeDragging
     state.element.removeAttribute('aria-busy')
 }
 

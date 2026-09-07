@@ -135,7 +135,7 @@ function expectNoUnexpectedPageErrors(errors) {
 async function openFixture(page) {
     await page.goto('/legacy-vue')
     await expect(page.locator('html')).toHaveAttribute('data-ready', 'true')
-    await expect(page.locator('#env-fixture [data-soa-env-row]')).toHaveCount(2)
+    await expect(page.locator('#env-fixture [data-env-row]')).toHaveCount(2)
     await expect.poll(() => page.evaluate(() => globalThis.Admin.VueApps.size)).toBe(8)
 }
 
@@ -185,9 +185,9 @@ async function expectFilePresentationClasses(file) {
 async function inspectReadonlyFile(page) {
     return page.evaluate((props) => {
         const host = globalThis.document.createElement('section')
-        host.dataset.soaVueApp = ''
-        host.dataset.soaVueComponent = 'element-file'
-        host.dataset.soaVueProps = JSON.stringify(props)
+        host.dataset.vueApp = ''
+        host.dataset.vueComponent = 'element-file'
+        host.dataset.vueProps = JSON.stringify(props)
         globalThis.document.body.append(host)
         globalThis.Admin.Components.scan(host)
 
@@ -208,18 +208,18 @@ async function inspectReadonlyFile(page) {
 async function inspectReadonlyImage(page) {
     return page.evaluate((props) => {
         const host = globalThis.document.createElement('section')
-        host.dataset.soaVueApp = ''
-        host.dataset.soaVueComponent = 'element-image'
-        host.dataset.soaVueProps = JSON.stringify(props)
+        host.dataset.vueApp = ''
+        host.dataset.vueComponent = 'element-image'
+        host.dataset.vueProps = JSON.stringify(props)
         globalThis.document.body.append(host)
         globalThis.Admin.Components.scan(host)
 
         const result = {
-            hasInsert: Boolean(host.querySelector('[data-soa-image-insert-current]')),
-            hasRemove: Boolean(host.querySelector('[data-soa-image-remove]')),
+            hasInsert: Boolean(host.querySelector('[data-image-insert-current]')),
+            hasRemove: Boolean(host.querySelector('[data-image-remove]')),
             hasUpload: Boolean(host.querySelector('.upload-button')),
-            preview: host.querySelector('[data-soa-image-preview]').getAttribute('src'),
-            value: host.querySelector('[data-soa-image-value]').value,
+            preview: host.querySelector('[data-image-preview]').getAttribute('src'),
+            value: host.querySelector('[data-image-value]').value,
         }
 
         globalThis.Admin.Components.destroy(host)
@@ -232,19 +232,19 @@ async function inspectReadonlyImage(page) {
 async function inspectReadonlyImages(page) {
     return page.evaluate((props) => {
         const host = globalThis.document.createElement('section')
-        host.dataset.soaVueApp = ''
-        host.dataset.soaVueComponent = 'element-images'
-        host.dataset.soaVueProps = JSON.stringify(props)
+        host.dataset.vueApp = ''
+        host.dataset.vueComponent = 'element-images'
+        host.dataset.vueProps = JSON.stringify(props)
         globalThis.document.body.append(host)
         globalThis.Admin.Components.scan(host)
 
         const result = {
-            dragHandles: host.querySelectorAll('[data-soa-images-drag-handle]').length,
-            editControls: host.querySelectorAll('[data-soa-images-insert]').length,
-            firstPreview: host.querySelector('[data-soa-images-preview] img').src,
-            removeControls: host.querySelectorAll('[data-soa-images-remove]').length,
-            uploadControls: host.querySelectorAll('[data-soa-images-upload]').length,
-            value: host.querySelector('[data-soa-images-value]').value,
+            dragHandles: host.querySelectorAll('[data-images-drag-handle]').length,
+            editControls: host.querySelectorAll('[data-images-insert]').length,
+            firstPreview: host.querySelector('[data-images-preview] img').src,
+            removeControls: host.querySelectorAll('[data-images-remove]').length,
+            uploadControls: host.querySelectorAll('[data-images-upload]').length,
+            value: host.querySelector('[data-images-value]').value,
         }
 
         globalThis.Admin.Components.destroy(host)
@@ -257,18 +257,18 @@ async function inspectReadonlyImages(page) {
 async function inspectReadonlyRequiredSelect(page) {
     return page.evaluate((props) => {
         const host = globalThis.document.createElement('section')
-        host.dataset.soaVueApp = ''
-        host.dataset.soaVueComponent = 'element-select'
-        host.dataset.soaVueProps = JSON.stringify(props)
+        host.dataset.vueApp = ''
+        host.dataset.vueComponent = 'element-select'
+        host.dataset.vueProps = JSON.stringify(props)
         globalThis.document.body.append(host)
         globalThis.Admin.Components.scan(host)
 
-        const control = host.querySelector('[data-soa-select-native]')
+        const control = host.querySelector('[data-select-native]')
         const result = {
             className: control.className,
             disabled: control.disabled,
-            error: host.querySelector('[data-soa-select-required]')?.textContent.trim(),
-            errorClass: host.querySelector('[data-soa-select-required]')?.className,
+            error: host.querySelector('[data-select-required]')?.textContent.trim(),
+            errorClass: host.querySelector('[data-select-required]')?.className,
             widgetDisabled: host
                 .querySelector('.multiselect')
                 .classList.contains('multiselect--disabled'),
@@ -285,9 +285,9 @@ async function mountOnlyLinkImage(page) {
     await page.evaluate((baseProps) => {
         const host = globalThis.document.createElement('section')
         host.id = 'only-link-image'
-        host.dataset.soaVueApp = ''
-        host.dataset.soaVueComponent = 'element-image'
-        host.dataset.soaVueProps = JSON.stringify({
+        host.dataset.vueApp = ''
+        host.dataset.vueComponent = 'element-image'
+        host.dataset.vueProps = JSON.stringify({
             ...baseProps,
             name: 'only-link-image',
             onlyLink: true,
@@ -311,9 +311,9 @@ async function mountOnlyLinkImages(page) {
     await page.evaluate((baseProps) => {
         const host = globalThis.document.createElement('section')
         host.id = 'only-link-images'
-        host.dataset.soaVueApp = ''
-        host.dataset.soaVueComponent = 'element-images'
-        host.dataset.soaVueProps = JSON.stringify({
+        host.dataset.vueApp = ''
+        host.dataset.vueComponent = 'element-images'
+        host.dataset.vueProps = JSON.stringify({
             ...baseProps,
             name: 'only-link-images',
             onlyLink: true,
@@ -400,7 +400,7 @@ async function expectReadonlyRequiredSelect(page) {
 
 async function readBoundedVueOwnership(page) {
     return page.evaluate((componentNames) => {
-        const hosts = [...globalThis.document.querySelectorAll('[data-soa-vue-app]')]
+        const hosts = [...globalThis.document.querySelectorAll('[data-vue-app]')]
         const mountedHosts = hosts.filter((element) => element.__vue_app__)
         const firstApp = globalThis.Admin.VueApps.get(mountedHosts[0])
 
@@ -442,29 +442,29 @@ async function expectBoundedVueApps(page) {
 }
 
 async function expectInitialRelatedGroup(page) {
-    await expect(page.locator('#related-fixture [data-soa-related-root]')).toHaveClass(
+    await expect(page.locator('#related-fixture [data-related-root]')).toHaveClass(
         'project-related-root',
     )
-    await expect(page.locator('#related-fixture [data-soa-related-groups]')).toHaveClass(
+    await expect(page.locator('#related-fixture [data-related-groups]')).toHaveClass(
         'project-related-groups',
     )
-    await expect(page.locator('#related-fixture [data-soa-related-actions]')).toHaveClass(
+    await expect(page.locator('#related-fixture [data-related-actions]')).toHaveClass(
         'project-related-actions',
     )
-    await expect(page.locator('#related-fixture [data-soa-related-add]')).toHaveClass(
+    await expect(page.locator('#related-fixture [data-related-add]')).toHaveClass(
         'project-related-add',
     )
-    await expect(page.locator('#related-fixture [data-soa-related-add-icon]')).toHaveClass(
+    await expect(page.locator('#related-fixture [data-related-add-icon]')).toHaveClass(
         'project-related-icon',
     )
     await expect(page.locator('#existing-related-group')).toHaveAttribute(
         'data-lifecycle-mounted',
         'true',
     )
-    await expect(page.locator('#nested-image-wrapper [data-soa-image-value]')).toHaveValue(
+    await expect(page.locator('#nested-image-wrapper [data-image-value]')).toHaveValue(
         'fixtures/pixel.svg',
     )
-    await expect(page.locator('#nested-image-wrapper [data-soa-image-value]')).toHaveAttribute(
+    await expect(page.locator('#nested-image-wrapper [data-image-value]')).toHaveAttribute(
         'name',
         'items[42][image]',
     )
@@ -472,43 +472,55 @@ async function expectInitialRelatedGroup(page) {
 }
 
 async function addAndExpectRelatedGroup(page) {
-    await page.locator('[data-soa-related-add]').click()
-    await expect(page.locator('[data-soa-related-index="2"]')).toHaveAttribute(
+    await page.locator('[data-related-add]').click()
+    await expectFirstAddedRelatedGroup(page)
+
+    await page.locator('[data-related-add]').click()
+    await expectSecondAddedRelatedGroup(page)
+}
+
+async function expectFirstAddedRelatedGroup(page) {
+    await expect(page.locator('[data-related-index="2"]')).toHaveAttribute(
         'data-lifecycle-mounted',
         'true',
     )
-    await expect(page.locator('[data-soa-related-index="2"] [data-soa-image-value]')).toHaveValue(
+    await expect(page.locator('[data-related-index="2"] [data-image-value]')).toHaveValue(
         'fixtures/second.svg',
     )
-    await expect(
-        page.locator('[data-soa-related-index="2"] [data-soa-image-value]'),
-    ).toHaveAttribute('name', 'items[new_2][image]')
-    await expect(
-        page.locator('[data-soa-related-index="2"] .dynamic-nested-image'),
-    ).toHaveAttribute('data-soa-vue-props-id', 'dynamic-image-props--new-2-0')
+    await expect(page.locator('[data-related-index="2"] [data-image-value]')).toHaveAttribute(
+        'name',
+        'items[new_2][image]',
+    )
+    await expect(page.locator('[data-related-index="2"] .dynamic-nested-image')).toHaveAttribute(
+        'data-vue-props-id',
+        'dynamic-image-props--new-2-0',
+    )
     await expect.poll(() => page.evaluate(() => globalThis.Admin.VueApps.size)).toBe(9)
     await expect(page.locator('#related-title_2')).toHaveAttribute('name', 'items[new_2][title]')
     await expect(page.locator('#related-status_2')).toHaveAttribute('name', 'items[new_2][status]')
     await expect(page.locator('#related-status_2')).toHaveClass('input-select')
-    await expect(page.locator('[data-soa-related-index="2"] .select2-container')).toHaveCount(0)
-    await expect(
-        page.locator('[data-soa-related-index="2"] .raw-related-template-probe'),
-    ).toHaveText('Server HTML stays inert')
+    await expect(page.locator('[data-related-index="2"] .select2-container')).toHaveCount(0)
+    await expect(page.locator('[data-related-index="2"] .raw-related-template-probe')).toHaveText(
+        'Server HTML stays inert',
+    )
+}
 
-    await page.locator('[data-soa-related-add]').click()
-    await expect(page.locator('[data-soa-related-index="3"]')).toHaveAttribute(
+async function expectSecondAddedRelatedGroup(page) {
+    await expect(page.locator('[data-related-index="3"]')).toHaveAttribute(
         'data-lifecycle-mounted',
         'true',
     )
     await expect(page.locator('#related-title_3')).toHaveAttribute('name', 'items[new_3][title]')
     await expect(page.locator('#related-status_3')).toHaveAttribute('name', 'items[new_3][status]')
-    await expect(
-        page.locator('[data-soa-related-index="3"] [data-soa-image-value]'),
-    ).toHaveAttribute('name', 'items[new_3][image]')
-    await expect(
-        page.locator('[data-soa-related-index="3"] .dynamic-nested-image'),
-    ).toHaveAttribute('data-soa-vue-props-id', 'dynamic-image-props--new-3-0')
-    await expect(page.locator('[data-soa-related-add]')).toHaveCount(0)
+    await expect(page.locator('[data-related-index="3"] [data-image-value]')).toHaveAttribute(
+        'name',
+        'items[new_3][image]',
+    )
+    await expect(page.locator('[data-related-index="3"] .dynamic-nested-image')).toHaveAttribute(
+        'data-vue-props-id',
+        'dynamic-image-props--new-3-0',
+    )
+    await expect(page.locator('[data-related-add]')).toHaveCount(0)
     await expect.poll(() => page.evaluate(() => globalThis.Admin.VueApps.size)).toBe(10)
 }
 
@@ -528,11 +540,8 @@ async function removeAndExpectRelatedGroups(page) {
     await page.locator('#remove-existing-group').click()
     await expect(page.locator('.existing-related-group')).toHaveCount(0)
     await expect.poll(() => page.evaluate(() => globalThis.Admin.VueApps.size)).toBe(9)
-    await expect(page.locator('[data-soa-related-removed]')).toHaveValue('42')
-    await expect(page.locator('[data-soa-related-removed]')).toHaveAttribute(
-        'name',
-        'items[remove][]',
-    )
+    await expect(page.locator('[data-related-removed]')).toHaveValue('42')
+    await expect(page.locator('[data-related-removed]')).toHaveAttribute('name', 'items[remove][]')
     await page.locator('.remove-new-group').first().click()
     await page.locator('.remove-new-group').click()
     await expect(page.locator('.new-related-group')).toHaveCount(0)
@@ -547,34 +556,32 @@ test('bounded runtime-only Vue 3 apps preserve env editor behavior', async ({ pa
     await openFixture(page)
     expect(await page.evaluate(() => typeof globalThis.Vue)).toBe('undefined')
     await expectBoundedVueApps(page)
-    await expect(page.locator('#env-fixture [data-soa-env-card]')).toHaveClass('project-env-card')
-    await expect(page.locator('#env-fixture [data-soa-env-table]')).toHaveClass('project-env-table')
-    await expect(page.locator('#env-fixture [data-soa-env-key]').first()).toHaveClass(
-        'project-env-key',
-    )
-    await expect(page.locator('#env-fixture [data-soa-env-value]').first()).toHaveClass(
+    await expect(page.locator('#env-fixture [data-env-card]')).toHaveClass('project-env-card')
+    await expect(page.locator('#env-fixture [data-env-table]')).toHaveClass('project-env-table')
+    await expect(page.locator('#env-fixture [data-env-key]').first()).toHaveClass('project-env-key')
+    await expect(page.locator('#env-fixture [data-env-value]').first()).toHaveClass(
         'project-env-value',
     )
-    await expect(page.locator('#env-fixture [data-soa-env-remove]').first()).toHaveClass(
+    await expect(page.locator('#env-fixture [data-env-remove]').first()).toHaveClass(
         'project-env-remove',
     )
-    await expect(page.locator('#env-fixture [data-soa-env-remove]').first()).toHaveAttribute(
+    await expect(page.locator('#env-fixture [data-env-remove]').first()).toHaveAttribute(
         'title',
         'Remove',
     )
-    await expect(page.locator('#env-fixture [data-soa-env-add]')).toHaveClass('project-env-add')
-    await expect(page.locator('#env-fixture [data-soa-env-save]')).toHaveClass('project-env-save')
+    await expect(page.locator('#env-fixture [data-env-add]')).toHaveClass('project-env-add')
+    await expect(page.locator('#env-fixture [data-env-save]')).toHaveClass('project-env-save')
 
-    await page.locator('#env-fixture [data-soa-env-remove]').nth(1).click()
-    await expect(page.locator('#env-fixture [data-soa-env-row]')).toHaveCount(2)
+    await page.locator('#env-fixture [data-env-remove]').nth(1).click()
+    await expect(page.locator('#env-fixture [data-env-row]')).toHaveCount(2)
     expect(await page.evaluate(() => globalThis.__toasts)).toEqual(['Access denied'])
 
-    await page.locator('#env-fixture [data-soa-env-remove]').first().click()
-    await expect(page.locator('#env-fixture [data-soa-env-row]')).toHaveCount(1)
+    await page.locator('#env-fixture [data-env-remove]').first().click()
+    await expect(page.locator('#env-fixture [data-env-row]')).toHaveCount(1)
     await page.locator('#env_add_entry').click()
-    await expect(page.locator('#env-fixture [data-soa-env-row]')).toHaveCount(2)
-    await page.locator('#env-fixture [data-soa-env-key]').last().fill('NEW_KEY')
-    await expect(page.locator('#env-fixture [data-soa-env-key]').last()).toHaveAttribute(
+    await expect(page.locator('#env-fixture [data-env-row]')).toHaveCount(2)
+    await page.locator('#env-fixture [data-env-key]').last().fill('NEW_KEY')
+    await expect(page.locator('#env-fixture [data-env-key]').last()).toHaveAttribute(
         'name',
         'variables[NEW_KEY][key]',
     )
@@ -633,26 +640,26 @@ test('file, image and images components expose values and upload callbacks', asy
     await page.locator('#file-wrapper [data-file-remove]').click()
     await expect(fileValue).toHaveValue('')
 
-    const imageValue = page.locator('#image-wrapper [data-soa-image-value]')
-    const imagePreview = page.locator('#image-wrapper [data-soa-image-preview]')
+    const imageValue = page.locator('#image-wrapper [data-image-value]')
+    const imagePreview = page.locator('#image-wrapper [data-image-preview]')
     await expect(imagePreview).toHaveAttribute('src', /\/fixtures\/pixel\.svg$/)
     await runUploadCallback(page, '#image-wrapper .upload-button', 'fixtures/uploaded.svg')
     await expect(imageValue).toHaveValue('fixtures/uploaded.svg')
     await expect(imagePreview).toHaveAttribute('src', /\/fixtures\/uploaded\.svg$/)
-    await page.locator('#image-wrapper [data-soa-image-insert-current]').click()
+    await page.locator('#image-wrapper [data-image-insert-current]').click()
     await expect(imageValue).toHaveValue('fixtures/linked.svg')
-    await page.locator('#image-wrapper [data-soa-image-remove]').click()
+    await page.locator('#image-wrapper [data-image-remove]').click()
     await expect(imageValue).toHaveValue('')
 
-    await expect(page.locator('#images-wrapper [data-soa-images-value]')).toHaveValue(
+    await expect(page.locator('#images-wrapper [data-images-value]')).toHaveValue(
         'fixtures/pixel.svg,fixtures/second.svg',
     )
     await runUploadCallback(page, '#images-wrapper .dropzone', 'fixtures/third.svg')
-    await expect(page.locator('#images-wrapper [data-soa-images-value]')).toHaveValue(
+    await expect(page.locator('#images-wrapper [data-images-value]')).toHaveValue(
         'fixtures/pixel.svg,fixtures/second.svg,fixtures/third.svg',
     )
     await page.locator('#images-wrapper .gallery-remove').first().click()
-    await expect(page.locator('#images-wrapper [data-soa-images-value]')).toHaveValue(
+    await expect(page.locator('#images-wrapper [data-images-value]')).toHaveValue(
         'fixtures/second.svg,fixtures/third.svg',
     )
 })
@@ -695,17 +702,17 @@ test('images island opens and navigates its native image preview', async ({ page
     const pageErrors = capturePageErrors(page)
     await openFixture(page)
 
-    await page.locator('#images-wrapper [data-soa-images-preview]').first().click()
-    const dialog = page.locator('[data-soa-images-dialog]')
+    await page.locator('#images-wrapper [data-images-preview]').first().click()
+    const dialog = page.locator('[data-images-dialog]')
     await expect(dialog).toBeVisible()
     await expect(dialog.locator('.soa-images-dialog__position')).toHaveText('1 / 2')
-    await dialog.locator('[data-soa-images-dialog-next]').click()
+    await dialog.locator('[data-images-dialog-next]').click()
     await expect(dialog.locator('.soa-images-dialog__image')).toHaveAttribute(
         'src',
         /\/fixtures\/second\.svg$/,
     )
     await expect(dialog.locator('.soa-images-dialog__position')).toHaveText('2 / 2')
-    await dialog.locator('[data-soa-images-dialog-close]').click()
+    await dialog.locator('[data-images-dialog-close]').click()
     await expect(dialog).not.toBeVisible()
     expectNoUnexpectedPageErrors(pageErrors)
 })
@@ -715,16 +722,16 @@ test('images island applies sortable order and destroys both drivers', async ({ 
     await openFixture(page)
     await page.evaluate(() => {
         const host = globalThis.document.querySelector('#images-wrapper')
-        const gallery = host.querySelector('[data-soa-images-gallery]')
+        const gallery = host.querySelector('[data-images-gallery]')
         const sortableKey = Object.keys(gallery).find((key) => key.startsWith('Sortable'))
         gallery[sortableKey].options.onEnd({ newDraggableIndex: 1, oldDraggableIndex: 0 })
     })
-    await expect(page.locator('#images-wrapper [data-soa-images-value]')).toHaveValue(
+    await expect(page.locator('#images-wrapper [data-images-value]')).toHaveValue(
         'fixtures/second.svg,fixtures/pixel.svg',
     )
     const result = await page.evaluate(() => {
         const host = globalThis.document.querySelector('#images-wrapper')
-        const gallery = host.querySelector('[data-soa-images-gallery]')
+        const gallery = host.querySelector('[data-images-gallery]')
         const sortableKey = Object.keys(gallery).find((key) => key.startsWith('Sortable'))
         const existed = Boolean(gallery.dropzone && gallery[sortableKey])
         const lifecycleDestroyed = globalThis.Admin.Components.destroy(host)
@@ -766,9 +773,9 @@ test('link-only images island rejects blobs without creating an uploader', async
     await openFixture(page)
     await mountOnlyLinkImages(page)
 
-    await expect(page.locator('#only-link-images [data-soa-images-upload]')).toHaveCount(0)
-    await page.locator('#only-link-images [data-soa-images-insert-new]').click()
-    await expect(page.locator('#only-link-images [data-soa-images-value]')).toHaveValue('')
+    await expect(page.locator('#only-link-images [data-images-upload]')).toHaveCount(0)
+    await page.locator('#only-link-images [data-images-insert-new]').click()
+    await expect(page.locator('#only-link-images [data-images-value]')).toHaveValue('')
     await expect(page.locator('#image-paste-in-buffer')).toHaveCount(0)
     expect(
         await page.evaluate(() => {
@@ -802,8 +809,8 @@ test('images island uploads a pasted blob into the selected position', async ({ 
         }
     })
 
-    await page.locator('#images-wrapper [data-soa-images-insert]').first().click()
-    await expect(page.locator('#images-wrapper [data-soa-images-value]')).toHaveValue(
+    await page.locator('#images-wrapper [data-images-insert]').first().click()
+    await expect(page.locator('#images-wrapper [data-images-value]')).toHaveValue(
         'fixtures/replaced.svg,fixtures/second.svg',
     )
     await expect(page.locator('#image-paste-in-buffer')).toHaveCount(0)
@@ -903,8 +910,8 @@ test('link-only image island rejects blob values without creating an uploader', 
     await mountOnlyLinkImage(page)
 
     await expect(page.locator('#only-link-image .upload-button')).toHaveCount(0)
-    await page.locator('#only-link-image [data-soa-image-insert-new]').click()
-    await expect(page.locator('#only-link-image [data-soa-image-value]')).toHaveValue('')
+    await page.locator('#only-link-image [data-image-insert-new]').click()
+    await expect(page.locator('#only-link-image [data-image-value]')).toHaveValue('')
     await expect(page.locator('#image-paste-in-buffer')).toHaveCount(0)
     expect(
         await page.evaluate(() => {
@@ -938,8 +945,8 @@ test('image island uploads a pasted blob through native Admin.Http', async ({ pa
         }
     })
 
-    await page.locator('#image-wrapper [data-soa-image-insert-new]').click()
-    await expect(page.locator('#image-wrapper [data-soa-image-value]')).toHaveValue(
+    await page.locator('#image-wrapper [data-image-insert-new]').click()
+    await expect(page.locator('#image-wrapper [data-image-value]')).toHaveValue(
         'fixtures/pasted.svg',
     )
     await expect(page.locator('#image-paste-in-buffer')).toHaveCount(0)

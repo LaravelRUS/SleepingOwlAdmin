@@ -56,9 +56,9 @@
 
         <div
             v-pre
-            data-soa-vue-app
-            data-soa-vue-component="element-file"
-            data-soa-vue-props="{{ json_encode($fileProps, JSON_THROW_ON_ERROR) }}"
+            data-vue-app
+            data-vue-component="element-file"
+            data-vue-props="{{ json_encode($fileProps, JSON_THROW_ON_ERROR) }}"
         ></div>
 
         <div class="errors">

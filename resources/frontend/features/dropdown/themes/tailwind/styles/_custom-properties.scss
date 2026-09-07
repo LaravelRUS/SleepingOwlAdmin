@@ -23,7 +23,7 @@
         --soa-dropdown-shadow: #{variables.$shadow} #{colors.$shadow};
     }
 
-    :root[data-soa-color-scheme='dark'] {
+    :root[data-color-scheme='dark'] {
         --soa-dropdown-surface: #{colors.$dark-surface};
         --soa-dropdown-text: #{colors.$dark-text};
         --soa-dropdown-border: #{colors.$dark-border};

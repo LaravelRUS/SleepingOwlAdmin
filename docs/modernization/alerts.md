@@ -16,7 +16,7 @@ Existing markup remains valid:
 ```
 
 `data-dismiss="alert"`, `.alert`, `.fade` and `.show` are intentionally kept.
-No `data-soa-alert*` replacement attributes are introduced. A dismiss button
+No `data-alert*` replacement attributes are introduced. A dismiss button
 outside the alert may keep using `data-target="#alert-id"` or `href="#alert-id"`.
 
 The behavior is delegated from the page root, so alerts inserted after initial

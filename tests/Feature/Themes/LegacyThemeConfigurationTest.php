@@ -32,11 +32,11 @@ class LegacyThemeConfigurationTest extends TestCase
         $html = $this->renderLayout($template);
 
         $this->assertContainsAll($html, [
-            '<html lang="en" data-soa-color-scheme="light">',
+            '<html lang="en" data-color-scheme="light">',
             '<link rel="stylesheet" href="/legacy-theme.css">',
             '<link rel="icon" href="/favicon.svg?tenant=main&amp;size=small">',
-            '<style data-soa-runtime-properties>',
-            ':root[data-soa-color-scheme="dark"] {',
+            '<style data-runtime-properties>',
+            ':root[data-color-scheme="dark"] {',
             '--soa-sidebar-bg: #102030;',
             '<body class="legacy-layout compact">',
             '<svg data-contract="logo"></svg>',
@@ -50,7 +50,7 @@ class LegacyThemeConfigurationTest extends TestCase
         ]);
         $this->assertGreaterThan(
             strpos($html, '<link rel="stylesheet" href="/legacy-theme.css">'),
-            strpos($html, '<style data-soa-runtime-properties>')
+            strpos($html, '<style data-runtime-properties>')
         );
     }
 
@@ -77,7 +77,7 @@ class LegacyThemeConfigurationTest extends TestCase
 
         $html = $this->renderLayout($this->bindLayoutTemplate());
 
-        $this->assertStringNotContainsString('data-soa-runtime-properties', $html);
+        $this->assertStringNotContainsString('data-runtime-properties', $html);
     }
 
     public function test_invalid_sidebar_color_is_rejected_before_css_rendering(): void

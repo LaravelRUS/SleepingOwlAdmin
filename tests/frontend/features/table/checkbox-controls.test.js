@@ -45,7 +45,7 @@ it('marks a selected row with neutral state and an injected legacy class', () =>
 
     updateRowSelection(checkbox, 'info')
 
-    expect(row.toggleAttribute).toHaveBeenCalledWith('data-soa-selected', true)
+    expect(row.toggleAttribute).toHaveBeenCalledWith('data-selected', true)
     expect(row.setAttribute).toHaveBeenCalledWith('aria-selected', 'true')
     expect(row.classList.toggle).toHaveBeenCalledWith('info', true)
 })

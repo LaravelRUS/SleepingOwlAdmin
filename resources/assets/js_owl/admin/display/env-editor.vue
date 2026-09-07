@@ -1,10 +1,10 @@
 <template>
     <form method="post" :action="action">
         <input type="hidden" name="_token" :value="csrfToken" />
-        <div data-soa-env-links :class="classes.links"></div>
-        <div data-soa-env-card :class="classes.card">
-            <div data-soa-env-card-heading :class="classes.cardHeading"></div>
-            <table id="env_editor_table" data-soa-env-table :class="classes.table">
+        <div data-env-links :class="classes.links"></div>
+        <div data-env-card :class="classes.card">
+            <div data-env-card-heading :class="classes.cardHeading"></div>
+            <table id="env_editor_table" data-env-table :class="classes.table">
                 <thead>
                     <tr>
                         <th :class="classes.header">{{ labels.key }}</th>
@@ -16,7 +16,7 @@
                     <tr
                         v-for="(value, index) in values"
                         :key="index"
-                        data-soa-env-row
+                        data-env-row
                         :class="classes.row"
                     >
                         <td :class="classes.keyCell">
@@ -24,7 +24,7 @@
                             <input
                                 v-else
                                 v-model="value.key"
-                                data-soa-env-key
+                                data-env-key
                                 :class="classes.keyInput"
                                 type="text"
                                 :name="`variables[${value.key}][key]`"
@@ -34,7 +34,7 @@
                         <td :class="classes.valueCell">
                             <input
                                 v-model="value.value"
-                                data-soa-env-value
+                                data-env-value
                                 :class="classes.valueInput"
                                 type="text"
                                 :name="`variables[${value.key}][value]`"
@@ -44,7 +44,7 @@
                         <td :class="classes.removeCell">
                             <div v-if="canDelete" :class="classes.removeWrapper">
                                 <button
-                                    data-soa-env-remove
+                                    data-env-remove
                                     :class="classes.removeButton"
                                     :title="labels.remove"
                                     :aria-label="labels.remove"
@@ -58,11 +58,11 @@
                     </tr>
                 </tbody>
             </table>
-            <div data-soa-env-footer :class="classes.footer">
+            <div data-env-footer :class="classes.footer">
                 <button
                     v-if="canAdd"
                     id="env_add_entry"
-                    data-soa-env-add
+                    data-env-add
                     :class="classes.addButton"
                     type="button"
                     @click="addEnv"
@@ -70,7 +70,7 @@
                     <i :class="classes.addIcon" aria-hidden="true"></i> {{ labels.add }}
                 </button>
                 <div :class="classes.saveWrapper">
-                    <button data-soa-env-save :class="classes.saveButton" type="submit">
+                    <button data-env-save :class="classes.saveButton" type="submit">
                         <i :class="classes.saveIcon" aria-hidden="true"></i> {{ labels.save }}
                     </button>
                 </div>

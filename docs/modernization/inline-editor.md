@@ -70,7 +70,7 @@ instead of displaying an HTML exception page or stack trace.
 
 ## Runtime lifecycle
 
-Each host uses `data-soa-inline-editor` as its behavior marker. Initial pages,
+Each host uses `data-inline-editor` as its behavior marker. Initial pages,
 DataTables redraws, tabs, and dynamic subtrees use the same idempotent
 `Admin.Components.scan()` and `destroy()` lifecycle. Date and datetime editors
 reuse the existing Air Datepicker component through that lifecycle rather than

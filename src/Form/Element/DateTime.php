@@ -86,7 +86,7 @@ class DateTime extends NamedFormElement
             'data-date-pickdate' => 'true',
             'data-date-picktime' => 'false',
             'data-date-useseconds' => $this->hasSeconds() ? 'true' : 'false',
-            'data-soa-date-control' => $this->getPickerControlType(),
+            'data-date-control' => $this->getPickerControlType(),
             'type' => 'text',
         ]);
 

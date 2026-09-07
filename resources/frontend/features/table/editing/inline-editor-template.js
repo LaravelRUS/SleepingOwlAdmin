@@ -1,10 +1,10 @@
-const TEMPLATE_ID_ATTRIBUTE = 'soaInlineEditorTemplateId'
-const TEMPLATE_SELECTOR = '[data-soa-inline-editor-template]'
-const ROOT_SELECTOR = '[data-soa-inline-editor-root]'
-const FORM_SELECTOR = '[data-soa-inline-editor-form]'
-const CONTROL_SELECTOR = '[data-soa-inline-editor-control]'
-const CANCEL_SELECTOR = '[data-soa-inline-editor-cancel]'
-const ERROR_SELECTOR = '[data-soa-inline-editor-error]'
+const TEMPLATE_ID_ATTRIBUTE = 'inlineEditorTemplateId'
+const TEMPLATE_SELECTOR = '[data-inline-editor-template]'
+const ROOT_SELECTOR = '[data-inline-editor-root]'
+const FORM_SELECTOR = '[data-inline-editor-form]'
+const CONTROL_SELECTOR = '[data-inline-editor-control]'
+const CANCEL_SELECTOR = '[data-inline-editor-cancel]'
+const ERROR_SELECTOR = '[data-inline-editor-error]'
 
 export function cloneInlineEditorTemplate(trigger) {
     const template = readTemplate(trigger)

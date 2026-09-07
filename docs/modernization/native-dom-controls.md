@@ -63,7 +63,7 @@ An `.adminCheckboxAll` control changes only `.adminCheckboxRow` elements in its 
 Each row change exposes engine- and theme-neutral state:
 
 ```html
-<tr data-soa-selected aria-selected="true">
+<tr data-selected aria-selected="true">
 ```
 
 The shared table feature does not choose a visual class. The legacy adapter injects `info` to

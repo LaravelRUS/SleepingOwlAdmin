@@ -12,7 +12,7 @@ it('creates a handle-only Sortable driver when related ordering is enabled', () 
 
     expect(sortable.target).toBe(element)
     expect(sortable.options).toMatchObject({
-        draggable: '[data-soa-related-group]',
+        draggable: '[data-related-group]',
         handle: '.drag-handle',
     })
     expect(createRelatedSortable(Sortable, element, false)).toBeNull()

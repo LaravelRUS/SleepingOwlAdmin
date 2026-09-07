@@ -14,7 +14,7 @@ describe('inline editor configuration', () => {
                 name: 'roles',
                 options: '[{"value":1,"text":"Admin"}]',
                 pk: '5',
-                soaInlineEditor: 'checklist',
+                inlineEditor: 'checklist',
                 url: '/admin/users',
                 value: '1, 2',
             }),
@@ -37,8 +37,8 @@ describe('inline editor referenced configuration', () => {
         const host = element({
             name: 'status',
             pk: '5',
-            soaInlineEditor: 'select',
-            soaInlineEditorOptionsId: 'editor-options-5',
+            inlineEditor: 'select',
+            inlineEditorOptionsId: 'editor-options-5',
             url: '/admin/users',
             value: 'published',
         })
@@ -52,11 +52,10 @@ describe('inline editor referenced configuration', () => {
     it('defaults unknown modes to popup and rejects unknown types', () => {
         const base = { name: 'status', pk: '1', url: '/admin/users', value: 'draft' }
         expect(
-            readInlineEditorConfig(element({ ...base, mode: 'drawer', soaInlineEditor: 'text' }))
-                .mode,
+            readInlineEditorConfig(element({ ...base, mode: 'drawer', inlineEditor: 'text' })).mode,
         ).toBe('popup')
-        expect(() =>
-            readInlineEditorConfig(element({ ...base, soaInlineEditor: 'wysiwyg' })),
-        ).toThrow('Unsupported inline editor type')
+        expect(() => readInlineEditorConfig(element({ ...base, inlineEditor: 'wysiwyg' }))).toThrow(
+            'Unsupported inline editor type',
+        )
     })
 })

@@ -1,5 +1,5 @@
-export const TREE_ITEM_SELECTOR = '[data-soa-tree-item]'
-export const TREE_LIST_SELECTOR = '[data-soa-tree-list]'
+export const TREE_ITEM_SELECTOR = '[data-tree-item]'
+export const TREE_LIST_SELECTOR = '[data-tree-list]'
 
 export function serializeTree(element) {
     return serializeTreeList(rootTreeList(element))
@@ -18,7 +18,7 @@ export function childTreeList(item) {
 }
 
 export function rootTreeList(element) {
-    const list = element.querySelector('[data-soa-tree-root]')
+    const list = element.querySelector('[data-tree-root]')
     if (!list) throw new Error('Tree root list was not found.')
 
     return list

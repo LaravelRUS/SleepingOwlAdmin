@@ -12,14 +12,14 @@
 
         <div v-if="hasValue" class="form-element-files clearfix">
             <div class="form-element-files__item">
-                <a :href="previewUrl" class="form-element-files__image" data-soa-lightbox>
-                    <img :src="previewUrl" alt="" data-soa-image-preview />
+                <a :href="previewUrl" class="form-element-files__image" data-lightbox>
+                    <img :src="previewUrl" alt="" data-image-preview />
                 </a>
                 <div class="form-element-files__info">
                     <a
                         :href="previewUrl"
                         class="btn btn-default btn-sm pull-right"
-                        data-soa-image-download
+                        data-image-download
                         data-toggle="tooltip"
                         download
                         target="_blank"
@@ -31,7 +31,7 @@
                         v-if="!readonly"
                         type="button"
                         class="btn btn-default btn-sm pull-right mr-1"
-                        data-soa-image-insert-current
+                        data-image-insert-current
                         data-toggle="tooltip"
                         :title="labels.insertLink"
                         @click="insert(true)"
@@ -42,7 +42,7 @@
                         v-if="!readonly"
                         type="button"
                         class="btn btn-danger btn-xs"
-                        data-soa-image-remove
+                        data-image-remove
                         data-toggle="tooltip"
                         :title="labels.remove"
                         @click="remove"
@@ -65,7 +65,7 @@
             <button
                 type="button"
                 class="btn btn-default btn-sm"
-                data-soa-image-insert-new
+                data-image-insert-new
                 data-toggle="tooltip"
                 :title="labels.insertLink"
                 @click="insert(false)"
@@ -74,7 +74,7 @@
             </button>
         </div>
 
-        <input data-soa-image-value :name="name" type="hidden" :value="val" />
+        <input data-image-value :name="name" type="hidden" :value="val" />
     </div>
 </template>
 

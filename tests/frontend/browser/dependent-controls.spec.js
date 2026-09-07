@@ -114,7 +114,7 @@ test('parent changes replace options and errors keep the dependent control disab
     )
     await page.selectOption('#country', 'error')
     await errorResponse
-    await expect(page.locator('#dependent-city-fixture [data-soa-select-status]')).toHaveText(
+    await expect(page.locator('#dependent-city-fixture [data-select-status]')).toHaveText(
         'Something went wrong',
     )
     await expect(page.locator('#city')).toBeDisabled()

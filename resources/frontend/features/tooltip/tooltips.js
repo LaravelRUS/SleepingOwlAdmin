@@ -116,7 +116,7 @@ function createCurrent(trigger, tooltip, reason) {
 
 function applyOpenState(current) {
     current.trigger.removeAttribute('title')
-    current.trigger.dataset.soaTooltipOpen = ''
+    current.trigger.dataset.tooltipOpen = ''
     current.trigger.setAttribute(
         'aria-describedby',
         [current.describedBy, current.tooltip.id].filter(Boolean).join(' '),
@@ -152,7 +152,7 @@ function hideTooltip(state) {
 }
 
 function restoreTrigger(current) {
-    delete current.trigger.dataset.soaTooltipOpen
+    delete current.trigger.dataset.tooltipOpen
     restoreAttribute(current.trigger, 'aria-describedby', current.describedBy)
     restoreAttribute(current.trigger, 'title', current.title)
 }

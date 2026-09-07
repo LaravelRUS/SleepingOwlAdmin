@@ -10,7 +10,7 @@ export function readTreeConfig(element) {
 }
 
 function readParameters(element) {
-    const id = element.dataset.soaTreeParametersId
+    const id = element.dataset.treeParametersId
     const source = id ? referencedParameters(element, id) : element.dataset.parameters
     if (!source) return {}
 

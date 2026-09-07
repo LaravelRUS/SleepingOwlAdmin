@@ -25,7 +25,7 @@ async function recordedSearches(request) {
 async function enterShortRemoteQuery(page, request) {
     await page.locator('#ajax-select-fixture .multiselect').click()
     await page.locator('#ajax-select-fixture .multiselect__input').fill('a')
-    await expect(page.locator('#ajax-select-fixture [data-soa-select-status]')).toHaveText(
+    await expect(page.locator('#ajax-select-fixture [data-select-status]')).toHaveText(
         'Type at least 2 characters',
     )
     expect(await recordedSearches(request)).toHaveLength(0)
@@ -56,7 +56,7 @@ async function triggerRemoteError(page) {
     )
     await page.locator('#ajax-select-fixture .multiselect__input').fill('error')
     await response
-    await expect(page.locator('#ajax-select-fixture [data-soa-select-status]')).toHaveText(
+    await expect(page.locator('#ajax-select-fixture [data-select-status]')).toHaveText(
         'Something went wrong',
     )
 }

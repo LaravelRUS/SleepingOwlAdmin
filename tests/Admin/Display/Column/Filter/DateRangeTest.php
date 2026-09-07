@@ -20,7 +20,7 @@ class DateRangeTest extends TestCase
 
         $this->assertTrue($filter->hasClassProperty('column-filter'));
         $this->assertEquals('daterange', $filter->getHtmlAttribute('data-type'));
-        $this->assertEquals('daterange', $filter->getHtmlAttribute('data-soa-date-control'));
+        $this->assertEquals('daterange', $filter->getHtmlAttribute('data-date-control'));
     }
 
     public function test_gets_operator()

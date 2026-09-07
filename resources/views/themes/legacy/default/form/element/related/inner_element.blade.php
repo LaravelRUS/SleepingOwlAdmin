@@ -39,7 +39,7 @@
 <script id="{{ $relatedPropsId }}" type="application/json">{!! \Illuminate\Support\Js::encode($relatedProps) !!}</script>
 <div
     v-pre
-    data-soa-vue-app
-    data-soa-vue-component="related-elements"
-    data-soa-vue-props-id="{{ $relatedPropsId }}"
+    data-vue-app
+    data-vue-component="related-elements"
+    data-vue-props-id="{{ $relatedPropsId }}"
 ></div>

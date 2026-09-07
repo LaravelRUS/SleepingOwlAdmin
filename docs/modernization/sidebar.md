@@ -20,7 +20,7 @@ Existing package and consumer views keep their public markers and classes:
 </ul>
 ```
 
-No replacement `data-soa-sidebar*` attributes are introduced. The controller
+No replacement `data-sidebar*` attributes are introduced. The controller
 continues to use `sidebar-open`, `sidebar-collapse`, `sidebar-closed` and
 `menu-open`, so published views and custom theme classes do not need a marker
 migration. PHP still passes classes and attributes through without semantic

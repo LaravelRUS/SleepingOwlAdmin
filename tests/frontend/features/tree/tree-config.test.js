@@ -12,7 +12,7 @@ it('reads bounded tree configuration and referenced inert parameters', () => {
         dataset: {
             maxDepth: '4',
             reorderable: 'false',
-            soaTreeParametersId: 'tree-parameters',
+            treeParametersId: 'tree-parameters',
             url: '/admin/tree/reorder',
         },
         nodeType: 1,

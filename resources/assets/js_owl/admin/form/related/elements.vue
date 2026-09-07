@@ -1,16 +1,16 @@
 <template>
-    <div data-soa-related-root :class="classes.root" @click="handleClick">
-        <div ref="groups" data-soa-related-groups :class="classes.groups"></div>
+    <div data-related-root :class="classes.root" @click="handleClick">
+        <div ref="groups" data-related-groups :class="classes.groups"></div>
 
-        <div v-if="!readonly" data-soa-related-actions :class="classes.actions">
+        <div v-if="!readonly" data-related-actions :class="classes.actions">
             <button
                 v-if="canAddMore"
                 type="button"
-                data-soa-related-add
+                data-related-add
                 :class="classes.add"
                 @click="addNewGroup"
             >
-                <i data-soa-related-add-icon :class="classes.addIcon" aria-hidden="true"></i>
+                <i data-related-add-icon :class="classes.addIcon" aria-hidden="true"></i>
                 {{ labels.add }}
             </button>
         </div>
@@ -21,7 +21,7 @@
             type="hidden"
             :name="`${name}[remove][]`"
             :value="id"
-            data-soa-related-removed
+            data-related-removed
         />
     </div>
 </template>
@@ -108,11 +108,11 @@ export default defineComponent({
         handleClick(event) {
             if (this.readonly) return
 
-            const button = event.target?.closest?.('[data-soa-related-remove]')
+            const button = event.target?.closest?.('[data-related-remove]')
             if (!button || !this.$refs.groups.contains(button)) return
 
-            const group = button.closest('[data-soa-related-group]')
-            if (group) this.removeGroup(group.dataset.soaRelatedKey)
+            const group = button.closest('[data-related-group]')
+            if (group) this.removeGroup(group.dataset.relatedKey)
         },
         mountGroup(group, isNew) {
             const context = { ...group, isNew, name: this.name }

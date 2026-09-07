@@ -98,8 +98,8 @@ function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) 
 function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
 function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
-var TAB_SELECTOR = '[data-soa-tab], [data-toggle="tab"]';
-var TAB_LIST_SELECTOR = '[data-soa-tablist], [role="tablist"]';
+var TAB_SELECTOR = '[data-tab], [data-toggle="tab"]';
+var TAB_LIST_SELECTOR = '[data-tablist], [role="tablist"]';
 function findTab(root, target) {
   var _target$closest;
   var tab = target === null || target === void 0 || (_target$closest = target.closest) === null || _target$closest === void 0 ? void 0 : _target$closest.call(target, TAB_SELECTOR);

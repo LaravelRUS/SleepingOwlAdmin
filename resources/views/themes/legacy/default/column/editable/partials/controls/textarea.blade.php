@@ -1,2 +1,2 @@
 <textarea class="soa-inline-editor-control"
-          data-soa-inline-editor-control>{{ $value }}</textarea>
+          data-inline-editor-control>{{ $value }}</textarea>

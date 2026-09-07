@@ -2,7 +2,7 @@ import { componentMountSkipped } from '../../../core/lifecycle/component-lifecyc
 import { createDatePickerOptions } from './date-options.js'
 
 export const DATE_CONTROL_COMPONENT = 'date-control'
-export const DATE_CONTROL_SELECTOR = 'input[data-soa-date-control]'
+export const DATE_CONTROL_SELECTOR = 'input[data-date-control]'
 
 export function createDateControlDefinition(Datepicker, locale) {
     if (typeof Datepicker !== 'function') {

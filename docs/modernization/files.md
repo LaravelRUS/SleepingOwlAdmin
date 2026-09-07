@@ -14,7 +14,7 @@ Existing theme and project views may keep these selectors and attributes:
 - `data-id="file|title|description|original_name"` — fields serialized to the hidden value;
 - `.fileRemove`, `.fileLink` and `.drag-handle` — existing actions.
 
-No replacement `data-soa-files*` attributes are required. User classes and attributes remain untouched and are not translated by PHP.
+No replacement `data-files*` attributes are required. User classes and attributes remain untouched and are not translated by PHP.
 
 Both the existing `<script type="text/html" class="RenderFile">` form and an HTML `<template class="RenderFile">` are accepted. The template is parsed as inert DOM and known fields are populated through DOM properties and `textContent`; response data is never executed as JavaScript or interpolated as HTML.
 

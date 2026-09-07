@@ -81,9 +81,9 @@ Vue template:
 </script>
 <section
     v-pre
-    data-soa-vue-app
-    data-soa-vue-component="order-status"
-    data-soa-vue-props-id="{{ $propsId }}"
+    data-vue-app
+    data-vue-component="order-status"
+    data-vue-props-id="{{ $propsId }}"
 ></section>
 ```
 
@@ -91,7 +91,7 @@ Do not use `:prop="{{ $value }}"`, `inline-template` or runtime template
 strings. Do not self-close custom HTML elements: write `<my-widget></my-widget>`
 when a custom tag is unavoidable. An ordinary empty `section` host is safer.
 
-For a small payload, `data-soa-vue-props` may contain one HTML-escaped JSON
+For a small payload, `data-vue-props` may contain one HTML-escaped JSON
 object. Use a referenced `application/json` node for large or nested data.
 
 Dynamic DOM owners call `Admin.Vue.scan(insertedRoot)` after insertion and

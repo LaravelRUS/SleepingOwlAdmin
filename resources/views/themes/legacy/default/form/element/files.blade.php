@@ -26,7 +26,7 @@
                                 <div class="fileicon-inner" style="background-image:url('[%=img%]')">
                                     <span class="file-extension">[%=ext%]</span>
                                     <span class="file-mime">[%=mime%]</span>
-                                    <a href="[%=img%]" data-soa-lightbox style="[%=lightbox_style%]" class="file-image"></a>
+                                    <a href="[%=img%]" data-lightbox style="[%=lightbox_style%]" class="file-image"></a>
                                 </div>
                             </div>
                             <div class="file-actions">
@@ -96,7 +96,7 @@
                                             <span class="file-mime small text-secondary">{{ $item['mime'] }}</span>
                                         @endif
                                     @else
-                                        <a href="{{ asset($item['url']) }}" data-soa-lightbox class="file-image"></a>
+                                        <a href="{{ asset($item['url']) }}" data-lightbox class="file-image"></a>
                                     @endif
                                 </div>
                             </div>

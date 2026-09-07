@@ -10,7 +10,7 @@
   --soa-lightbox-transition-duration: 150ms;
 }
 
-:root[data-soa-color-scheme=dark] {
+:root[data-color-scheme=dark] {
   --soa-lightbox-caption-surface: #111827;
   --soa-lightbox-caption-text: #f9fafb;
 }

@@ -20,7 +20,7 @@ class ApplicationViewOverrideTest extends TestCase
 
         $this->assertSame(realpath($expected), realpath($path));
         $this->assertStringContainsString('class="application-tooltip-override"', $html);
-        $this->assertStringContainsString('data-soa-tooltip-content', $html);
-        $this->assertStringNotContainsString('<div data-soa-tooltip-popup', $html);
+        $this->assertStringContainsString('data-tooltip-content', $html);
+        $this->assertStringNotContainsString('<div data-tooltip-popup', $html);
     }
 }

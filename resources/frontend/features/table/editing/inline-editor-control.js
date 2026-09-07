@@ -1,6 +1,6 @@
-const CHECK_INPUT_SELECTOR = '[data-soa-inline-editor-check-input]'
-const RANGE_INPUT_SELECTOR = '[data-soa-inline-editor-range-input]'
-const RANGE_OUTPUT_SELECTOR = '[data-soa-inline-editor-range-output]'
+const CHECK_INPUT_SELECTOR = '[data-inline-editor-check-input]'
+const RANGE_INPUT_SELECTOR = '[data-inline-editor-range-input]'
+const RANGE_OUTPUT_SELECTOR = '[data-inline-editor-range-output]'
 
 export function bindInlineEditorControl(element, config) {
     if (config.type === 'checkbox' || config.type === 'checklist') {
@@ -63,7 +63,7 @@ function syncNumberAttributes(input, config) {
 function syncDateAttributes(input, config) {
     if (config.type !== 'date' && config.type !== 'datetime') return
 
-    input.dataset.soaDateControl = config.type
+    input.dataset.dateControl = config.type
     input.dataset.dateFormat = config.dateFormat
 }
 

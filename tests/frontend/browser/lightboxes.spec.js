@@ -29,7 +29,7 @@ test('delegated controller opens a dynamically inserted image without rescanning
         const link = globalThis.document.createElement('a')
         link.id = 'dynamic-lightbox'
         link.href = '/fixtures/pixel.svg?slide=dynamic'
-        link.dataset.soaLightbox = ''
+        link.dataset.lightbox = ''
         link.innerHTML = '<img src="/fixtures/pixel.svg" alt="Dynamic preview">'
         globalThis.document.querySelector('main').append(link)
     })

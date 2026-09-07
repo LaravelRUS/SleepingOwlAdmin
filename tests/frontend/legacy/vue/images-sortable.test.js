@@ -16,8 +16,8 @@ describe('images sortable driver', () => {
 
         expect(sortable.target).toBe(element)
         expect(sortable.options).toMatchObject({
-            draggable: '[data-soa-images-item]',
-            handle: '[data-soa-images-drag-handle]',
+            draggable: '[data-images-item]',
+            handle: '[data-images-drag-handle]',
         })
     })
 

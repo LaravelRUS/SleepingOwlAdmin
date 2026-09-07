@@ -32,19 +32,19 @@ export function sortableOptions(element, root, group, config, handlers) {
         fallbackOnBody: true,
         ghostClass: 'soa-tree-ghost',
         group,
-        handle: '[data-soa-tree-handle]',
+        handle: '[data-tree-handle]',
         invertSwap: true,
         onEnd: (event) => endDrag(element, handlers, event),
         onMove: (event) => canMoveTreeItem(root, event.dragged, event.to, config.maxDepth),
         onStart: () => {
-            element.dataset.soaTreeDragging = 'true'
+            element.dataset.treeDragging = 'true'
         },
         swapThreshold: 0.65,
     }
 }
 
 function endDrag(element, handlers, event) {
-    delete element.dataset.soaTreeDragging
+    delete element.dataset.treeDragging
     handlers.end(event)
 }
 

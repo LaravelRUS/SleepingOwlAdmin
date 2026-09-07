@@ -19,7 +19,7 @@ export function updateRowSelection(checkbox, selectedRowClass = null) {
         return
     }
 
-    row.toggleAttribute('data-soa-selected', checkbox.checked)
+    row.toggleAttribute('data-selected', checkbox.checked)
     row.setAttribute('aria-selected', String(checkbox.checked))
 
     if (selectedRowClass) {

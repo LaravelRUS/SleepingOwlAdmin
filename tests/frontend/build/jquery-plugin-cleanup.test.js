@@ -39,6 +39,15 @@ it('keeps first-party runtime sources free of jQuery calls', () => {
     expect(sources).not.toMatch(/jquery|jQuery|\$\(/i)
 })
 
+it('keeps first-party data attributes free of a package prefix', () => {
+    const sources = ['src', 'resources/assets/js_owl', 'resources/frontend', 'resources/views']
+        .flatMap(sourceFiles)
+        .map(read)
+        .join('\n')
+
+    expect(sources).not.toContain('data-soa-')
+})
+
 it('removes the legacy theme callback adapter and dead jQuery table draft', () => {
     const callbacks = read('resources/frontend/features/table/actions/named-action-callbacks.js')
     const table = read('resources/assets/js_owl/admin/display/table.js')
@@ -76,5 +85,5 @@ function sourceFiles(path) {
 }
 
 function runtimeSource(path) {
-    return /\.(?:blade\.php|js|vue)$/.test(path) ? [path] : []
+    return /\.(?:php|js|vue)$/.test(path) ? [path] : []
 }

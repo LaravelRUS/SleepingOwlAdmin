@@ -15,8 +15,8 @@
                     "styles": [
                         {
                             "file": "profiles/production/css/admin-core.css",
-                            "version": "0ab8b34c6e46477fc5066f206cf3da97",
-                            "checksum": "sha256:37d4db29ea56899bc3f2046c6984b056a5ed1701e9574a28984976a53856d154"
+                            "version": "673ae120ea5b35e359bd47334d354533",
+                            "checksum": "sha256:391d4346d93f7d2279b8fcf28035697ef544a68dd9d0cbe725acc23b3d406f44"
                         }
                     ]
                 },
@@ -51,8 +51,8 @@
                     "styles": [
                         {
                             "file": "profiles/production/css/features/dropdown/themes/legacy-adminlte.css",
-                            "version": "9200339d717d862e2c292824ff94ca7b",
-                            "checksum": "sha256:cb24ce0624b2c0ad6d0748287d2650bd1edb3611f45fb5c88b297da94d2b0c78"
+                            "version": "22f1908021a089498c46feb97833e685",
+                            "checksum": "sha256:bdc843a8f22dd298944571cff4b471f0217ac8810fb03f6ef16f84b2f8625854"
                         }
                     ]
                 },
@@ -61,8 +61,8 @@
                     "styles": [
                         {
                             "file": "profiles/production/css/features/dropdown/themes/tailwind.css",
-                            "version": "ab7854bbef6ae0b8612729d6d2a761d6",
-                            "checksum": "sha256:6233ee3d5801ead4330d18150373d53bf661092468c7f74fbae1d0a7853c4136"
+                            "version": "7f90827a3323a2688732dc68189e8c8f",
+                            "checksum": "sha256:c0c58379fe9adb9bcca45611f928a45307fc851bc32d305951e635e7f6d70bd5"
                         }
                     ]
                 },
@@ -70,8 +70,8 @@
                     "scripts": [
                         {
                             "file": "profiles/production/js/features/forms.js",
-                            "version": "f8842a7ee29c585d298cbd3d8d92bca7",
-                            "checksum": "sha256:cb3f14eff47dde9c5a5dd26c622c824dc006559adf68956ded5dfe6dae4ff654"
+                            "version": "e9a6810926f20e95ce926c821b0e22f4",
+                            "checksum": "sha256:6a483468580ceecab312306d39521e8bf8f5d676ef11f14f157c94ecff15fedf"
                         }
                     ],
                     "styles": [
@@ -86,8 +86,8 @@
                     "scripts": [
                         {
                             "file": "profiles/production/js/features/lightbox.js",
-                            "version": "1a2dcaadd52d6034da3cb8e37d600820",
-                            "checksum": "sha256:615ed4acaadb3c28e2c03fafa8cde503b8ee9c61d67377719f103a813234760d"
+                            "version": "ca9121f081f9d7d8339986afb5301073",
+                            "checksum": "sha256:7885f3f47608bd45ea5e9e7cec4b4116d6f4e1472396628c9e2ff38a6197e974"
                         }
                     ],
                     "styles": [
@@ -103,8 +103,8 @@
                     "styles": [
                         {
                             "file": "profiles/production/css/features/lightbox/themes/legacy-adminlte.css",
-                            "version": "90305ac70d49e0ae1dd1c7268f1c0486",
-                            "checksum": "sha256:cb69e7f7ef2110975180a1ef5f5819754d2ed13a9ba9f206cdd356badf98b0e9"
+                            "version": "b2ad9d34ee0ab88d09a66e77cc0447ed",
+                            "checksum": "sha256:564008c427a13c7cce7a01610ac1c1cde0a77bd6546ea70794fc3ddd3d84df55"
                         }
                     ]
                 },
@@ -113,8 +113,8 @@
                     "styles": [
                         {
                             "file": "profiles/production/css/features/lightbox/themes/tailwind.css",
-                            "version": "5a1882b166d986c61825c1eaae1175be",
-                            "checksum": "sha256:aba420b5bbfd9dd3638cae7aa80674e0148e3fb2de2a61fd545261c764b83c21"
+                            "version": "a9f6995e25fb7dd04a5f5e6aa232f442",
+                            "checksum": "sha256:2ce77c9757550652a9a9fe4f3a650bc8d8d5def20ad321f41826a4378bf2e25c"
                         }
                     ]
                 },
@@ -158,8 +158,8 @@
                     "scripts": [
                         {
                             "file": "profiles/production/js/features/table.js",
-                            "version": "38bfadc18bf00437797005fd4fadfbeb",
-                            "checksum": "sha256:bace66706f9f181ab640f2978e0b18b6489e81da53e8d9304b3f88b4c0e4fe52"
+                            "version": "e3a516cb459c326f68c30ead76794eb2",
+                            "checksum": "sha256:2ce2b4d2830a91de89cc047cd10eb4ddeceb0e674cc7bfb82585144fb32492f3"
                         }
                     ],
                     "styles": [
@@ -175,8 +175,8 @@
                     "styles": [
                         {
                             "file": "profiles/production/css/features/table/themes/datatables-legacy-adminlte.css",
-                            "version": "8bb29183b9d7a02a4d68b1b93962e6f6",
-                            "checksum": "sha256:f29f9598abbe59e25776cf89440c4a0944b84d50fd2c0b9f8d7a7bcf36be2a37"
+                            "version": "5a23be26f9cf586c2e93bcf2461689fc",
+                            "checksum": "sha256:bdc8409c409fb06d5e1a2eacd10752646f371e5b824f1957ba2f23d0a3ee2b11"
                         }
                     ]
                 },
@@ -185,8 +185,8 @@
                     "styles": [
                         {
                             "file": "profiles/production/css/features/table/themes/tailwind.css",
-                            "version": "0526912c6138ddd82fc53784fe4486f8",
-                            "checksum": "sha256:df45cd34e248908183a13b0d63ae642f256f0e4ffc5e2f847592a08095e6f5e1"
+                            "version": "b6ba9aaf62b94ac5bea668aa61418e3d",
+                            "checksum": "sha256:56a9af450b3213691ae9f9c35c6a7ad720048e0d300da37425a2a873884e93dc"
                         }
                     ]
                 },
@@ -194,8 +194,8 @@
                     "scripts": [
                         {
                             "file": "profiles/production/js/features/tabs.js",
-                            "version": "aae3e59064b6d0177cbcd9d712db2bdb",
-                            "checksum": "sha256:c347c9d8f496ee4bbdeeb359955fafb4a7b5052931f5bca62f8436d49afe9def"
+                            "version": "193400aadb809ace842501181788c7fd",
+                            "checksum": "sha256:437b4d2f3a013a3b536a295b518dca70548abd39095dd7cc7027dc27b68f8edc"
                         }
                     ],
                     "styles": []
@@ -205,8 +205,8 @@
                     "styles": [
                         {
                             "file": "profiles/production/css/features/tabs/themes/legacy-adminlte.css",
-                            "version": "44bbb507c57cc5cf724f8c30357b956f",
-                            "checksum": "sha256:90236fc26360880bc649ba75e93fab28e4aea4f7ccbb887c11d8d28038893356"
+                            "version": "e16a5d6c5f142ce3c6a7b0bf0b1aa9c4",
+                            "checksum": "sha256:81de3290501f25f086ab2555aeb53507c9718b7448958db6cfe34a74dabd7345"
                         }
                     ]
                 },
@@ -215,8 +215,8 @@
                     "styles": [
                         {
                             "file": "profiles/production/css/features/tabs/themes/tailwind.css",
-                            "version": "529eb0a5cdf56a07415db263904561c0",
-                            "checksum": "sha256:c258e38faaa74d33e80bea263eb2e0c2d3c6374cc573af141ce7794a7cad2ee1"
+                            "version": "144f95420814534395e4d4a35c9c2546",
+                            "checksum": "sha256:1fff315282e6fea22a76a3644d759422b9f7e6578fb78a5a546c1a0f6964ba96"
                         }
                     ]
                 },
@@ -224,15 +224,15 @@
                     "scripts": [
                         {
                             "file": "profiles/production/js/features/tooltip.js",
-                            "version": "13fd8d0a56fe53f19f4b1fe5d5f7d9c5",
-                            "checksum": "sha256:ac90c61369659c0abd74911a3d72512ce852a08615fb25a61d9ccf50f919b554"
+                            "version": "2074e43244d4b675fe5c9b90d387943b",
+                            "checksum": "sha256:aa647a05f68100b09a7df5b9afe4a5a7a5b8952662b4ebe1cf3646cc975d201d"
                         }
                     ],
                     "styles": [
                         {
                             "file": "profiles/production/css/features/tooltip.css",
-                            "version": "8f27349ac20d217772f1d9b21b29d2b7",
-                            "checksum": "sha256:786a55e21d77e88fa4d1356bcc2d9e9fde4cfe38b34d1457bf61c938e5ef4e29"
+                            "version": "cebef987087c2e9b1fa14c6b7331f24d",
+                            "checksum": "sha256:fd034421d69dbda3748d5b996a4bb4e2b38e68a2b412736c05135549c2d4259a"
                         }
                     ]
                 },
@@ -241,8 +241,8 @@
                     "styles": [
                         {
                             "file": "profiles/production/css/features/tooltip/themes/legacy-adminlte.css",
-                            "version": "1d6125ce0c769a3284adfdd13a0609ed",
-                            "checksum": "sha256:9064707bfa5cd467ed3cf8cae76eb224d17e8017596a115a159992826a9ddbd8"
+                            "version": "d55c2962f4d968824f9ae3356b0d7852",
+                            "checksum": "sha256:203e316fa4f4cbee422e5adfa29df62c0402c294643ef6402c3c519b1a0f74b8"
                         }
                     ]
                 },
@@ -251,8 +251,8 @@
                     "styles": [
                         {
                             "file": "profiles/production/css/features/tooltip/themes/tailwind.css",
-                            "version": "8abf20569a9e622e2e90523dc4c0bdee",
-                            "checksum": "sha256:7bcccaacda5519b234b1f932402c848683c536f464904bf9e4df7585a3097466"
+                            "version": "bdb7bc3869ef0e3f3cd4d7906b3c537d",
+                            "checksum": "sha256:7952e488724d2a74a2a05ed8e1d883555d460a439e3f4edb9a5fa1f859d2ad9c"
                         }
                     ]
                 },
@@ -260,15 +260,15 @@
                     "scripts": [
                         {
                             "file": "profiles/production/js/features/tree.js",
-                            "version": "873d2783881b610de0d50883f007dadc",
-                            "checksum": "sha256:ee5beb92c311e1677b9cfd2c0d61e391b70541ad4145fb5d81103b49e2ad4fff"
+                            "version": "1ff65d73493f8c611da26dc01b07d86a",
+                            "checksum": "sha256:5233f88672b74352e4d24e3e7fefa0e9762c36f9a2c63bb387fad32a239b72f9"
                         }
                     ],
                     "styles": [
                         {
                             "file": "profiles/production/css/features/tree.css",
-                            "version": "39845e6738864a229a7844d89d22954a",
-                            "checksum": "sha256:b858bc85cffd1f6b318ec6d540e3bad4cb3289f9bcd5084f90d42401a9a87632"
+                            "version": "53474f288a3d0832d2a9f0a0d51942fc",
+                            "checksum": "sha256:e67235d3ca4fd6d03aa28da1f4dd95e57d006ca424917261671c61f9b3ea29f9"
                         }
                     ]
                 },
@@ -277,8 +277,8 @@
                     "styles": [
                         {
                             "file": "profiles/production/css/features/tree/themes/legacy-adminlte.css",
-                            "version": "b68e7f2b889b064cb14404582490323a",
-                            "checksum": "sha256:8bfa22065779ef1229678d36c33885686e4339dd8ce4d668908c924e88d473f6"
+                            "version": "7704a1b9702d53c8f9b8c1a1ab0ea77e",
+                            "checksum": "sha256:90bfb8e83a37a1b696e58770b62ea710d8d1df3b98f240db11e25f879581f9ae"
                         }
                     ]
                 },
@@ -287,8 +287,8 @@
                     "styles": [
                         {
                             "file": "profiles/production/css/features/tree/themes/tailwind.css",
-                            "version": "a849fe964e171fccec4f6f586bf45b7e",
-                            "checksum": "sha256:cfeeb6115e71550931fbe7008e0159d532a0aedda12ddb896f9c59151a14d52f"
+                            "version": "e70be6d822de6041423d30b3bc6219df",
+                            "checksum": "sha256:37a13dfd54846f411e9d493c0bd3631d71f548e32a8da284120d326f418c0451"
                         }
                     ]
                 },
@@ -316,8 +316,8 @@
                     "scripts": [
                         {
                             "file": "profiles/production/js/shared/vue.js",
-                            "version": "447d1df0a2b65ef6e9c149e8eb53efd0",
-                            "checksum": "sha256:085f5d161c615ca810b69a39f756f0b3ed117355015dbd845e28c912c1f9c713"
+                            "version": "d787ae45359964508b20b2f590595137",
+                            "checksum": "sha256:dab18a659d4c13fdab2d3f57321e0c50c367d88f9912e1a6ef9b7e353bfb5dfc"
                         }
                     ],
                     "styles": []
@@ -333,8 +333,8 @@
                     "styles": [
                         {
                             "file": "profiles/production/css/themes/legacy-adminlte.css",
-                            "version": "28489e0965f909ab5635afb7ce8f94e6",
-                            "checksum": "sha256:48b19f0a05cbf8606166f7a6d931b878c3ab5a8fc85c671b39667cbe1d5bac27"
+                            "version": "bacda260e1310c255678b7cb56db044f",
+                            "checksum": "sha256:14e09969bf16899db0e67bbdbdee4cf9067709d2aa606e19d65e01a764237e1d"
                         }
                     ]
                 },
@@ -349,8 +349,8 @@
                     "styles": [
                         {
                             "file": "profiles/production/css/themes/tailwind.css",
-                            "version": "5f4e442f6740a37639edde2e1f62ac7c",
-                            "checksum": "sha256:147f593c9ce68462d32a715cd9694ddcca8c151485b2b8c4317a8e5f10c0d4c9"
+                            "version": "f5e8718a4d0371e1d28ea2371091f4cb",
+                            "checksum": "sha256:08db8b514f5602e5c7333d43cb9629a4ba9ee47064ffc1aa6bbdc95dce88178f"
                         }
                     ]
                 }
@@ -369,8 +369,8 @@
                     "styles": [
                         {
                             "file": "profiles/development/css/admin-core.css",
-                            "version": "88b89141e2c7c516a41f41695050b389",
-                            "checksum": "sha256:67a0c0d8c43827ebc28c681330d7d88b106720307a112eec9a728207bc2bd532"
+                            "version": "6de4d83fe930574ffe7406ab0fb48f43",
+                            "checksum": "sha256:c93b0f26b364491f3bf347867c4e27b82280264f37679c08377db4740aa93473"
                         }
                     ]
                 },
@@ -405,8 +405,8 @@
                     "styles": [
                         {
                             "file": "profiles/development/css/features/dropdown/themes/legacy-adminlte.css",
-                            "version": "bf9ec50ac94494604de70a923d1f4381",
-                            "checksum": "sha256:d3faa9ed763aed0def9fe5827cd2f2ba595ab91866d99ff533847efcabfbc505"
+                            "version": "6127bcec5f92fbc8807e0a8c115be050",
+                            "checksum": "sha256:1dad786780ce532d523073d6447ced64f8842ff071327eb905a0f81b52c1a80d"
                         }
                     ]
                 },
@@ -415,8 +415,8 @@
                     "styles": [
                         {
                             "file": "profiles/development/css/features/dropdown/themes/tailwind.css",
-                            "version": "2de98c816ba9d98993171fc92ebfe0f0",
-                            "checksum": "sha256:ce6200b3a61d7ce46bb95e799b05340b5b20b76eb18f6f296785160bbb45f857"
+                            "version": "0fb85180ac28c2824a1bb2b09ca143ee",
+                            "checksum": "sha256:4b8145e206e075f16fd928b9f38740853bb2c16c25158cc17d80b46681b8564c"
                         }
                     ]
                 },
@@ -424,8 +424,8 @@
                     "scripts": [
                         {
                             "file": "profiles/development/js/features/forms.js",
-                            "version": "182f71140eac07da3429c552ad5b219e",
-                            "checksum": "sha256:a3b10472989e9a49edac8cb2469b7f2b3a0fc1de339d144b1caefec833284529"
+                            "version": "9d8ad521dda0c1efb8ef2b9da0371a10",
+                            "checksum": "sha256:6d91d29667fba465969a39b81a204135323f5b2112a9f01adecdd48e5e2f8dce"
                         }
                     ],
                     "styles": [
@@ -440,8 +440,8 @@
                     "scripts": [
                         {
                             "file": "profiles/development/js/features/lightbox.js",
-                            "version": "c66008ac585ae47387254542b56fb793",
-                            "checksum": "sha256:6cb11ed7b216bc8ef3a05fea15478d649ca61e724e6d05984e75b5e1ee768680"
+                            "version": "b819aebd37f275b7053fdac7b27229b9",
+                            "checksum": "sha256:fd822644a406a89b14efe56afd8b1296e3e03c30e376ee970cdd121d6d351b8b"
                         }
                     ],
                     "styles": [
@@ -457,8 +457,8 @@
                     "styles": [
                         {
                             "file": "profiles/development/css/features/lightbox/themes/legacy-adminlte.css",
-                            "version": "0697ac71cfa875f0ed3fa06c7b4f0138",
-                            "checksum": "sha256:47532839b0a404b93a6c6fdd0c9c5f730608307050a1c332dae2c278f9181697"
+                            "version": "a41cf729c57872305a97a94297dac484",
+                            "checksum": "sha256:146186dc4f664f21d0f5bb22c6947d516a37596f2dd4f5f6ab9d15a8f44a2391"
                         }
                     ]
                 },
@@ -467,8 +467,8 @@
                     "styles": [
                         {
                             "file": "profiles/development/css/features/lightbox/themes/tailwind.css",
-                            "version": "4dd4a8370390b6e87136c3880398c2c3",
-                            "checksum": "sha256:b73dc3b2c0dc0cf047a7d54c73d401d727fccc1da3db087e9019075ce46b3901"
+                            "version": "c952e8fc8fa0c61fa3de70d9bd7665f5",
+                            "checksum": "sha256:49bfaa81f51534104dc843c6b994c51c9ea06cf77454d59fd65d763c1bca06a6"
                         }
                     ]
                 },
@@ -512,8 +512,8 @@
                     "scripts": [
                         {
                             "file": "profiles/development/js/features/table.js",
-                            "version": "980a55397955d829fc57ae4423174b5a",
-                            "checksum": "sha256:f040a833480def3b14b4869bbb911923f62fa518fbfc299431cfffc609de482f"
+                            "version": "7e46ceab3de021468e54db64028e9f85",
+                            "checksum": "sha256:8f129a6435a297605a6eab8ca1dbcbf7469f558591e541ab6fb2174025ec2fe6"
                         }
                     ],
                     "styles": [
@@ -529,8 +529,8 @@
                     "styles": [
                         {
                             "file": "profiles/development/css/features/table/themes/datatables-legacy-adminlte.css",
-                            "version": "84453bc08f414a035eef85fe5429e670",
-                            "checksum": "sha256:377a54816ca7e89c110e7381402d79939e9354b07ec5b3af84361269eb6a00cd"
+                            "version": "61d37cad54c6c70bcf7b6ed6daee5979",
+                            "checksum": "sha256:3fb0b1525845aa98d8ce5967ca5f028c603ad42ef30bd3233f57698c565f1999"
                         }
                     ]
                 },
@@ -539,8 +539,8 @@
                     "styles": [
                         {
                             "file": "profiles/development/css/features/table/themes/tailwind.css",
-                            "version": "6e5801be1d22f21becbfa8b0d76c42e5",
-                            "checksum": "sha256:d4b5ed1372b94b87b2bc5a2b9dd0b25843af3d2d83aa05269173cafbc9c5c2d1"
+                            "version": "681eb2223a54fd6687e0378029703de4",
+                            "checksum": "sha256:66c60a126ed306ccaba3ba6ad4814a7ec532e1d0f98662f0b65682bb9a8c1e01"
                         }
                     ]
                 },
@@ -548,8 +548,8 @@
                     "scripts": [
                         {
                             "file": "profiles/development/js/features/tabs.js",
-                            "version": "10e3d29b089847abe21942f2b84129ca",
-                            "checksum": "sha256:5d6669678256b34aa4b0186fae4aa70afc997faf2bf40394674a0d74914ace05"
+                            "version": "9ca5db06a3fe7487b16befc0178fb7c1",
+                            "checksum": "sha256:1b88a0cbdc53148a99ab06f062f25fd4adff062df30359e75ae8c07ac83e43ec"
                         }
                     ],
                     "styles": []
@@ -559,8 +559,8 @@
                     "styles": [
                         {
                             "file": "profiles/development/css/features/tabs/themes/legacy-adminlte.css",
-                            "version": "764782e13dafbfc7346d5111d4d375f3",
-                            "checksum": "sha256:4951b9ea5eb46b0ed62fd7528da0eac62bbeb21c9a4ed20452a8b78f843fb4a6"
+                            "version": "6aeedaafe0d08fd5a26a87e6ff03ba2c",
+                            "checksum": "sha256:17916487d31690a45b5091ef8541d02a3babe8643cb8944b4608707bd1e919c8"
                         }
                     ]
                 },
@@ -569,8 +569,8 @@
                     "styles": [
                         {
                             "file": "profiles/development/css/features/tabs/themes/tailwind.css",
-                            "version": "318d944d8fad675ae4e766b24744c2f1",
-                            "checksum": "sha256:4a481a7339f29ebb0679fe47378e1ecce85e6f546fbfd70c175887dc010b43af"
+                            "version": "fd93eace3ee1ba56632fec06bf963eae",
+                            "checksum": "sha256:5aa231b7724ed61f72d2bcaeab57af88d2c6e608e3c8a0f22633f6660c6167af"
                         }
                     ]
                 },
@@ -578,15 +578,15 @@
                     "scripts": [
                         {
                             "file": "profiles/development/js/features/tooltip.js",
-                            "version": "b1d2ae5fce34bf3fd492ef935e2ebabe",
-                            "checksum": "sha256:619820f74748df12d07d9f828428024198304274123985c27db66413881be86c"
+                            "version": "92e560306380e676a3daedd8b6fc013e",
+                            "checksum": "sha256:c2152c884c9a4bfe6cd419ac5745822d863dc44ba7b265cfefed8f54c5bfc32d"
                         }
                     ],
                     "styles": [
                         {
                             "file": "profiles/development/css/features/tooltip.css",
-                            "version": "05f715e114167675020240539188dae4",
-                            "checksum": "sha256:513318886e69c7d87aaf41be44b50414b03e515d7ed727071bea147a2c6c0b5e"
+                            "version": "47c702bd00ad8ca7a6f4d92b8bc7d20c",
+                            "checksum": "sha256:746467087b4f4eb3f8fc5526404a5b4eddf9c347080151ea3161d13279ee0d1d"
                         }
                     ]
                 },
@@ -595,8 +595,8 @@
                     "styles": [
                         {
                             "file": "profiles/development/css/features/tooltip/themes/legacy-adminlte.css",
-                            "version": "f7dbcca700123e81d36f82b100e9a5c4",
-                            "checksum": "sha256:c2ebe39588ff22e6694b873e6a11dd156cfa93872b61b60d78ceb2d21e229dbf"
+                            "version": "b5b8c3974977ff6e18441d68a4d9e582",
+                            "checksum": "sha256:c355ae2151c88fdf4456557d70c1cc99df52457e49b94206c6ac62a03a3463c5"
                         }
                     ]
                 },
@@ -605,8 +605,8 @@
                     "styles": [
                         {
                             "file": "profiles/development/css/features/tooltip/themes/tailwind.css",
-                            "version": "995392343f46aed528b3bf8b9783f2ce",
-                            "checksum": "sha256:a7e35009d865937d9c199fe81ee106ac18b2ebe97f1410da450abd663418c9e5"
+                            "version": "48aab740dbe6cf7a49614b004aac7d1a",
+                            "checksum": "sha256:238362d76e92743ee71b9dee31b0d2f70ce9a97ca4147388e8561a0edd384da2"
                         }
                     ]
                 },
@@ -614,15 +614,15 @@
                     "scripts": [
                         {
                             "file": "profiles/development/js/features/tree.js",
-                            "version": "0dc11b6c7bbcd568615f1209a0f30c4b",
-                            "checksum": "sha256:bdade2cb34fd575b5e25140dd4e5bea87dc2b3f6912a2e3ad091ceba8c3fefb5"
+                            "version": "97d93e09316454b42409119599a84f1f",
+                            "checksum": "sha256:a8b92d8cd2c62a38d678d9d8471aff3e62a22359ff9cddf2ee217610478430c5"
                         }
                     ],
                     "styles": [
                         {
                             "file": "profiles/development/css/features/tree.css",
-                            "version": "22c45ffe0fdc22d7fdc0e16c79626d61",
-                            "checksum": "sha256:5dd2e4d843ac5b8270ab19d8c44dd21f71670a84460a7c4cb42d09733135457d"
+                            "version": "0e67e2ef584d9309140b6c4b3db4522e",
+                            "checksum": "sha256:898a49dbf18cd3ca0cff02068c6e9acad7667095023529dac4ba48c9ca46c72b"
                         }
                     ]
                 },
@@ -631,8 +631,8 @@
                     "styles": [
                         {
                             "file": "profiles/development/css/features/tree/themes/legacy-adminlte.css",
-                            "version": "4c605556defb84e346ae669eb433e644",
-                            "checksum": "sha256:15cdf7ec77c3afff4599b09c024f72bc2ee1e1baf07257222181a74afac2e319"
+                            "version": "c9c2cccca13e3f73818fef02838a821c",
+                            "checksum": "sha256:acbae922945c6186adeb984573748bcf7db22ca9b15c563db5ff4155dd96ba1d"
                         }
                     ]
                 },
@@ -641,8 +641,8 @@
                     "styles": [
                         {
                             "file": "profiles/development/css/features/tree/themes/tailwind.css",
-                            "version": "b0e10a58de95c906bbc7d51bc7e26a1f",
-                            "checksum": "sha256:e98acf432437e652542df02de2c4a4c8267d6d3c306d261d8395a62b3efd4b94"
+                            "version": "ff074e46446da7341abec06251c8b9bb",
+                            "checksum": "sha256:cdb53a39dae1f4394f5846ed5baac2189296b94ffabe3bccd14d4bad0d185ce5"
                         }
                     ]
                 },
@@ -670,8 +670,8 @@
                     "scripts": [
                         {
                             "file": "profiles/development/js/shared/vue.js",
-                            "version": "b8b7dd861eb5508e8b5249bc8aaa12f6",
-                            "checksum": "sha256:ca13df9b4d1070b49f1552dcee8d2e3e0998c9e9eb8a4fcbc04588c778d5de1c"
+                            "version": "48a40588b29d1a0407197ebcceed776f",
+                            "checksum": "sha256:b34bcecc730db8ff6bc7685f60e1f505b65294fd92da09d66f96597c1c9d2f7c"
                         }
                     ],
                     "styles": []
@@ -687,8 +687,8 @@
                     "styles": [
                         {
                             "file": "profiles/development/css/themes/legacy-adminlte.css",
-                            "version": "2968e5553365b831cec4234b1e0ae9e0",
-                            "checksum": "sha256:d9808b82ee66764f45250b56d3ba4262e48cc01e78d67ad87e6ab90cc1978b2f"
+                            "version": "588f257d42d456d05364bbf9d16f7387",
+                            "checksum": "sha256:9abe5587c6ae10c97c492c5b0ad3c249e7d7ee06373b65d064a5c65bfab6780c"
                         }
                     ]
                 },
@@ -703,13 +703,13 @@
                     "styles": [
                         {
                             "file": "profiles/development/css/themes/tailwind.css",
-                            "version": "01217eb6c506fcf6c5369dba43d01300",
-                            "checksum": "sha256:170ead9dfd2a2d73889759442459bb9523c1ece91bf8494f63dc70158778fdd6"
+                            "version": "2d2a4212bc17feccd85d04165c816b58",
+                            "checksum": "sha256:14684001c9aff6895929faef055db3da376fbd001bb193462f172f35b0478392"
                         }
                     ]
                 }
             }
         }
     },
-    "build_id": "sha256:c322806edb5fa2168a93b92c7a549dfd7feba60be147e179494cafcbdbe5856a"
+    "build_id": "sha256:253f9cf1a762197e0ca506487e43e2fe2b9598d206901a45b75e9e0259dbbb8f"
 }

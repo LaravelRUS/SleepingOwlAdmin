@@ -1,5 +1,5 @@
 <template>
-    <div class="soa-images" data-soa-images-root>
+    <div class="soa-images" data-images-root>
         <div v-if="errors.length" class="alert alert-warning">
             <button type="button" class="close" aria-label="Close" @click="closeAlert">
                 <span aria-hidden="true">&times;</span>
@@ -14,18 +14,18 @@
             ref="gallery"
             class="form-element-files dropzone clearfix soa-images__grid"
             :class="{ 'dropzone-disabled': readonly }"
-            data-soa-images-gallery
+            data-images-gallery
         >
             <article
                 v-for="(uri, index) in vals"
                 :key="`${uri}-${index}`"
                 class="form-element-files__item soa-images__item"
-                data-soa-images-item
+                data-images-item
             >
                 <button
                     type="button"
                     class="form-element-files__image soa-images__preview"
-                    data-soa-images-preview
+                    data-images-preview
                     :aria-label="previewLabel(index)"
                     @click="openLightbox(index)"
                 >
@@ -38,7 +38,7 @@
                         v-if="!readonly && draggable"
                         type="button"
                         class="btn btn-clear btn-sm pull-right drag-cursor"
-                        data-soa-images-drag-handle
+                        data-images-drag-handle
                         :aria-label="labels.reorder"
                         :title="labels.reorder"
                     >
@@ -47,7 +47,7 @@
                     <a
                         :href="imageUrl(uri)"
                         class="btn btn-default btn-sm pull-right"
-                        data-soa-images-download
+                        data-images-download
                         download
                         rel="noopener"
                         target="_blank"
@@ -59,7 +59,7 @@
                         v-if="!readonly"
                         type="button"
                         class="btn btn-default btn-sm pull-right mr-1"
-                        data-soa-images-insert
+                        data-images-insert
                         :title="labels.insertLink"
                         @click="insert(index)"
                     >
@@ -69,7 +69,7 @@
                         v-if="!readonly"
                         type="button"
                         class="btn btn-danger btn-xs gallery-remove"
-                        data-soa-images-remove
+                        data-images-remove
                         :title="labels.remove"
                         @click="remove(index)"
                     >
@@ -85,14 +85,14 @@
                 ref="uploadButton"
                 type="button"
                 class="btn btn-primary upload-button btn-sm"
-                data-soa-images-upload
+                data-images-upload
             >
                 <i :class="uploadClass" aria-hidden="true"></i> {{ labels.browse }}
             </button>
             <button
                 type="button"
                 class="btn btn-default btn-sm"
-                data-soa-images-insert-new
+                data-images-insert-new
                 :title="labels.insertLink"
                 @click="insert()"
             >
@@ -100,14 +100,14 @@
             </button>
         </div>
 
-        <input data-soa-images-value :name="name" type="hidden" :value="serializedValues" />
+        <input data-images-value :name="name" type="hidden" :value="serializedValues" />
 
         <Teleport to="body">
             <dialog
                 v-if="hasValues"
                 ref="lightbox"
                 class="soa-images-dialog"
-                data-soa-images-dialog
+                data-images-dialog
                 :aria-label="labels.preview"
                 @cancel="resetLightbox"
                 @click.self="closeLightbox"
@@ -117,7 +117,7 @@
                 <button
                     type="button"
                     class="btn btn-default soa-images-dialog__close"
-                    data-soa-images-dialog-close
+                    data-images-dialog-close
                     :aria-label="labels.close"
                     :title="labels.close"
                     @click="closeLightbox"
@@ -128,7 +128,7 @@
                     <button
                         type="button"
                         class="btn btn-default soa-images-dialog__previous"
-                        data-soa-images-dialog-previous
+                        data-images-dialog-previous
                         :aria-label="labels.previous"
                         :title="labels.previous"
                         @click="showPreviousImage"
@@ -139,7 +139,7 @@
                     <button
                         type="button"
                         class="btn btn-default soa-images-dialog__next"
-                        data-soa-images-dialog-next
+                        data-images-dialog-next
                         :aria-label="labels.next"
                         :title="labels.next"
                         @click="showNextImage"

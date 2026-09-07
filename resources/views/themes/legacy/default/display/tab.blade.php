@@ -1,6 +1,6 @@
 @php
     $tabAttributes = (new \SleepingOwl\Admin\Support\HtmlAttributeBag($attributesArray))
-        ->merge(['data-soa-tab' => true])
+        ->merge(['data-tab' => true])
         ->class(['nav-item', 'nav-link', 'active' => $active]);
 @endphp
 <a {!! $tabAttributes !!}

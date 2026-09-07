@@ -55,7 +55,7 @@ test('row and select-all checkboxes work for dynamically inserted rows', async (
     await openFixture(page)
     await page.locator('#row-one-checkbox').check()
     await expect(page.locator('#row-one')).toHaveClass(/info/)
-    await expect(page.locator('#row-one')).toHaveAttribute('data-soa-selected', '')
+    await expect(page.locator('#row-one')).toHaveAttribute('data-selected', '')
     await expect(page.locator('#row-one')).toHaveAttribute('aria-selected', 'true')
 
     await page.locator('#control-table tbody').evaluate((body) => {

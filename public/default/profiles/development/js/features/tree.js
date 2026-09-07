@@ -73,7 +73,7 @@ function readTreeConfig(element) {
   });
 }
 function readParameters(element) {
-  var id = element.dataset.soaTreeParametersId;
+  var id = element.dataset.treeParametersId;
   var source = id ? referencedParameters(element, id) : element.dataset.parameters;
   if (!source) return {};
   var parameters = JSON.parse(source);
@@ -229,7 +229,7 @@ function sortableOptions(element, root, group, config, handlers) {
     fallbackOnBody: true,
     ghostClass: 'soa-tree-ghost',
     group: group,
-    handle: '[data-soa-tree-handle]',
+    handle: '[data-tree-handle]',
     invertSwap: true,
     onEnd: function onEnd(event) {
       return endDrag(element, handlers, event);
@@ -238,13 +238,13 @@ function sortableOptions(element, root, group, config, handlers) {
       return (0,_tree_structure_js__WEBPACK_IMPORTED_MODULE_0__.canMoveTreeItem)(root, event.dragged, event.to, config.maxDepth);
     },
     onStart: function onStart() {
-      element.dataset.soaTreeDragging = 'true';
+      element.dataset.treeDragging = 'true';
     },
     swapThreshold: 0.65
   };
 }
 function endDrag(element, handlers, event) {
-  delete element.dataset.soaTreeDragging;
+  delete element.dataset.treeDragging;
   handlers.end(event);
 }
 function matchingLists(element) {
@@ -289,8 +289,8 @@ function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) 
 function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
 function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
-var TREE_ITEM_SELECTOR = '[data-soa-tree-item]';
-var TREE_LIST_SELECTOR = '[data-soa-tree-list]';
+var TREE_ITEM_SELECTOR = '[data-tree-item]';
+var TREE_LIST_SELECTOR = '[data-tree-list]';
 function serializeTree(element) {
   return serializeTreeList(rootTreeList(element));
 }
@@ -311,7 +311,7 @@ function childTreeList(item) {
   })) !== null && _find !== void 0 ? _find : null;
 }
 function rootTreeList(element) {
-  var list = element.querySelector('[data-soa-tree-root]');
+  var list = element.querySelector('[data-tree-root]');
   if (!list) throw new Error('Tree root list was not found.');
   return list;
 }
@@ -371,10 +371,10 @@ function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Sym
 function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 
-var TREE_ACTION_SELECTOR = '[data-soa-tree-action]';
-var TREE_TOGGLE_SELECTOR = '[data-soa-tree-toggle]';
-var TREE_TOGGLE_COLLAPSED_SELECTOR = '[data-soa-tree-toggle-collapsed]';
-var TREE_TOGGLE_EXPANDED_SELECTOR = '[data-soa-tree-toggle-expanded]';
+var TREE_ACTION_SELECTOR = '[data-tree-action]';
+var TREE_TOGGLE_SELECTOR = '[data-tree-toggle]';
+var TREE_TOGGLE_COLLAPSED_SELECTOR = '[data-tree-toggle-collapsed]';
+var TREE_TOGGLE_EXPANDED_SELECTOR = '[data-tree-toggle-expanded]';
 function bindTreeControls(element, labels) {
   var click = function click(event) {
     return handleTreeClick(element, labels, event);
@@ -400,20 +400,20 @@ function setAllTreeItemsCollapsed(element, collapsed, labels) {
 }
 function setTreeBusy(element, busy) {
   element.setAttribute('aria-busy', String(busy));
-  if (busy) element.dataset.soaTreeSaveState = 'saving';else if (element.dataset.soaTreeSaveState !== 'error') element.dataset.soaTreeSaveState = 'idle';
+  if (busy) element.dataset.treeSaveState = 'saving';else if (element.dataset.treeSaveState !== 'error') element.dataset.treeSaveState = 'idle';
 }
 function handleTreeClick(element, labels, event) {
   var action = event.target.closest(TREE_ACTION_SELECTOR);
   if (action && element.contains(action)) {
     event.preventDefault();
-    handleTreeAction(element, labels, action.dataset.soaTreeAction);
+    handleTreeAction(element, labels, action.dataset.treeAction);
     return;
   }
   var toggle = event.target.closest(TREE_TOGGLE_SELECTOR);
   if (!toggle || !element.contains(toggle)) return;
   event.preventDefault();
   var item = toggle.closest(_tree_structure_js__WEBPACK_IMPORTED_MODULE_0__.TREE_ITEM_SELECTOR);
-  setTreeItemCollapsed(item, item.dataset.soaTreeCollapsed !== 'true', labels);
+  setTreeItemCollapsed(item, item.dataset.treeCollapsed !== 'true', labels);
 }
 function handleTreeAction(element, labels, action) {
   if (action === 'expand-all') setAllTreeItemsCollapsed(element, false, labels);
@@ -425,17 +425,17 @@ function syncTreeItem(item, labels) {
   var toggle = directToggle(item);
   if (!hasChildren) {
     hideTreeToggle(toggle);
-    delete item.dataset.soaTreeCollapsed;
+    delete item.dataset.treeCollapsed;
     if (list) list.hidden = false;
     return;
   }
-  setTreeItemCollapsed(item, item.dataset.soaTreeCollapsed === 'true', labels);
+  setTreeItemCollapsed(item, item.dataset.treeCollapsed === 'true', labels);
 }
 function setTreeItemCollapsed(item, collapsed, labels) {
   var list = (0,_tree_structure_js__WEBPACK_IMPORTED_MODULE_0__.childTreeList)(item);
   if (!list) return;
   var toggle = directToggle(item);
-  item.dataset.soaTreeCollapsed = String(collapsed);
+  item.dataset.treeCollapsed = String(collapsed);
   list.hidden = collapsed;
   syncTreeToggle(toggle, collapsed, labels);
 }
@@ -494,7 +494,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var TREE_COMPONENT = 'tree';
-var TREE_SELECTOR = '[data-soa-tree]';
+var TREE_SELECTOR = '[data-tree]';
 function createTreeDefinition(dependencies) {
   var settings = normalizeDependencies(dependencies);
   return {
@@ -567,7 +567,7 @@ function handleTreeSaved(state, data) {
 function handleTreeFailure(state, error) {
   if (!state.destroyed) {
     var _state$dependencies$n3, _state$dependencies$n4;
-    state.element.dataset.soaTreeSaveState = 'error';
+    state.element.dataset.treeSaveState = 'error';
     dispatchTreeEvent(state.element, 'tree:failed', {
       error: error
     });
@@ -583,7 +583,7 @@ function destroyTree(state, removeControls, sortables) {
   state.destroyed = true;
   removeControls();
   sortables.destroy();
-  delete state.element.dataset.soaTreeDragging;
+  delete state.element.dataset.treeDragging;
   state.element.removeAttribute('aria-busy');
 }
 function dispatchTreeEvent(element, name, detail) {

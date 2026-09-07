@@ -20,7 +20,7 @@
   --soa-layout-transition-duration: 200ms;
 }
 
-:root[data-soa-color-scheme=dark] {
+:root[data-color-scheme=dark] {
   --soa-surface-color: #1e293b;
   --soa-page-background-color: #0f172a;
   --soa-text-color: #f8fafc;

@@ -30,7 +30,7 @@ it('keeps existing PushMenu and Treeview markers without replacement attributes'
     expect(elements).toContain('[data-widget="treeview"]')
     expect(sidebar).not.toContain('createElement(')
     expect(`${header}\n${layout}\n${navigation}\n${elements}\n${sidebar}`).not.toContain(
-        'data-soa-sidebar',
+        'data-sidebar',
     )
 })
 

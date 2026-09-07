@@ -30,7 +30,7 @@ class Date extends Text
     {
         parent::initialize();
         $this->setHtmlAttribute('data-type', 'date');
-        $this->setHtmlAttribute('data-soa-date-control', $this->getPickerControlType());
+        $this->setHtmlAttribute('data-date-control', $this->getPickerControlType());
     }
 
     /**

@@ -59,9 +59,9 @@ class DateTimeTest extends TestCase
             'timestamp' => (new Timestamp('timestamp'))->setExactValue('06-09-2026 14:25'),
         ];
 
-        $this->assertSame('date', $elements['date']->toArray()['attributesArray']['data-soa-date-control']);
-        $this->assertSame('datetime', $elements['datetime']->toArray()['attributesArray']['data-soa-date-control']);
-        $this->assertSame('time', $elements['time']->toArray()['attributesArray']['data-soa-date-control']);
-        $this->assertSame('datetime', $elements['timestamp']->toArray()['attributesArray']['data-soa-date-control']);
+        $this->assertSame('date', $elements['date']->toArray()['attributesArray']['data-date-control']);
+        $this->assertSame('datetime', $elements['datetime']->toArray()['attributesArray']['data-date-control']);
+        $this->assertSame('time', $elements['time']->toArray()['attributesArray']['data-date-control']);
+        $this->assertSame('datetime', $elements['timestamp']->toArray()['attributesArray']['data-date-control']);
     }
 }

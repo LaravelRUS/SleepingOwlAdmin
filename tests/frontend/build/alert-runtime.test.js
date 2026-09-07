@@ -18,7 +18,7 @@ it('replaces Bootstrap alert execution while preserving the public marker', () =
     ].join('\n')
 
     expect(views).toContain('data-dismiss="alert"')
-    expect(views).not.toContain('data-soa-alert')
+    expect(views).not.toContain('data-alert')
     expect(runtime).toContain('[data-dismiss="alert"]')
     expect(runtime).not.toMatch(/jquery|jQuery|\$\(|bootstrap/i)
 })

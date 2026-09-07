@@ -6,7 +6,7 @@ trait InteractsWithJsonProps
 {
     protected function extractJsonProps(string $html): array
     {
-        preg_match('/data-soa-vue-props="([^"]*)"/', $html, $matches);
+        preg_match('/data-vue-props="([^"]*)"/', $html, $matches);
         $this->assertArrayHasKey(1, $matches);
 
         $json = html_entity_decode($matches[1], ENT_QUOTES | ENT_HTML5, 'UTF-8');
@@ -16,7 +16,7 @@ trait InteractsWithJsonProps
 
     protected function extractReferencedJsonProps(string $html): array
     {
-        preg_match('/data-soa-vue-props-id="([^"]*)"/', $html, $idMatches);
+        preg_match('/data-vue-props-id="([^"]*)"/', $html, $idMatches);
         $this->assertArrayHasKey(1, $idMatches);
 
         $id = html_entity_decode($idMatches[1], ENT_QUOTES | ENT_HTML5, 'UTF-8');

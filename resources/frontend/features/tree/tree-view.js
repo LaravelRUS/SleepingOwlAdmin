@@ -1,9 +1,9 @@
 import { childTreeList, directTreeItems, TREE_ITEM_SELECTOR } from './tree-structure.js'
 
-const TREE_ACTION_SELECTOR = '[data-soa-tree-action]'
-const TREE_TOGGLE_SELECTOR = '[data-soa-tree-toggle]'
-const TREE_TOGGLE_COLLAPSED_SELECTOR = '[data-soa-tree-toggle-collapsed]'
-const TREE_TOGGLE_EXPANDED_SELECTOR = '[data-soa-tree-toggle-expanded]'
+const TREE_ACTION_SELECTOR = '[data-tree-action]'
+const TREE_TOGGLE_SELECTOR = '[data-tree-toggle]'
+const TREE_TOGGLE_COLLAPSED_SELECTOR = '[data-tree-toggle-collapsed]'
+const TREE_TOGGLE_EXPANDED_SELECTOR = '[data-tree-toggle-expanded]'
 
 export function bindTreeControls(element, labels) {
     const click = (event) => handleTreeClick(element, labels, event)
@@ -27,15 +27,15 @@ export function setAllTreeItemsCollapsed(element, collapsed, labels) {
 
 export function setTreeBusy(element, busy) {
     element.setAttribute('aria-busy', String(busy))
-    if (busy) element.dataset.soaTreeSaveState = 'saving'
-    else if (element.dataset.soaTreeSaveState !== 'error') element.dataset.soaTreeSaveState = 'idle'
+    if (busy) element.dataset.treeSaveState = 'saving'
+    else if (element.dataset.treeSaveState !== 'error') element.dataset.treeSaveState = 'idle'
 }
 
 function handleTreeClick(element, labels, event) {
     const action = event.target.closest(TREE_ACTION_SELECTOR)
     if (action && element.contains(action)) {
         event.preventDefault()
-        handleTreeAction(element, labels, action.dataset.soaTreeAction)
+        handleTreeAction(element, labels, action.dataset.treeAction)
         return
     }
 
@@ -44,7 +44,7 @@ function handleTreeClick(element, labels, event) {
 
     event.preventDefault()
     const item = toggle.closest(TREE_ITEM_SELECTOR)
-    setTreeItemCollapsed(item, item.dataset.soaTreeCollapsed !== 'true', labels)
+    setTreeItemCollapsed(item, item.dataset.treeCollapsed !== 'true', labels)
 }
 
 function handleTreeAction(element, labels, action) {
@@ -59,12 +59,12 @@ function syncTreeItem(item, labels) {
 
     if (!hasChildren) {
         hideTreeToggle(toggle)
-        delete item.dataset.soaTreeCollapsed
+        delete item.dataset.treeCollapsed
         if (list) list.hidden = false
         return
     }
 
-    setTreeItemCollapsed(item, item.dataset.soaTreeCollapsed === 'true', labels)
+    setTreeItemCollapsed(item, item.dataset.treeCollapsed === 'true', labels)
 }
 
 function setTreeItemCollapsed(item, collapsed, labels) {
@@ -72,7 +72,7 @@ function setTreeItemCollapsed(item, collapsed, labels) {
     if (!list) return
 
     const toggle = directToggle(item)
-    item.dataset.soaTreeCollapsed = String(collapsed)
+    item.dataset.treeCollapsed = String(collapsed)
     list.hidden = collapsed
     syncTreeToggle(toggle, collapsed, labels)
 }

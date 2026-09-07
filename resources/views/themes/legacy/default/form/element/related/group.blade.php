@@ -1,5 +1,5 @@
 @php($groupLabel = $group->getLabel())
-<div class="grouped-element" data-soa-related-group>
+<div class="grouped-element" data-related-group>
         @if ($groupLabel)
           <div class="grouped-element__head">
             <span><b>{{ $groupLabel }}</b></span>
@@ -26,7 +26,7 @@
             @if ($deletable)
               <button
                 type="button"
-                data-soa-related-remove
+                data-related-remove
                 data-original-text="{{ trans('sleeping_owl::lang.button.remove') }}"
                 data-toggle="tooltip"
                 class="btn btn-warning pull-right btn-sm grouped-element__delete"

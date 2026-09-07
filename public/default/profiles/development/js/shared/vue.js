@@ -14899,10 +14899,10 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
     handleClick: function handleClick(event) {
       var _event$target, _event$target$closest;
       if (this.readonly) return;
-      var button = (_event$target = event.target) === null || _event$target === void 0 || (_event$target$closest = _event$target.closest) === null || _event$target$closest === void 0 ? void 0 : _event$target$closest.call(_event$target, '[data-soa-related-remove]');
+      var button = (_event$target = event.target) === null || _event$target === void 0 || (_event$target$closest = _event$target.closest) === null || _event$target$closest === void 0 ? void 0 : _event$target$closest.call(_event$target, '[data-related-remove]');
       if (!button || !this.$refs.groups.contains(button)) return;
-      var group = button.closest('[data-soa-related-group]');
-      if (group) this.removeGroup(group.dataset.soaRelatedKey);
+      var group = button.closest('[data-related-group]');
+      if (group) this.removeGroup(group.dataset.relatedKey);
     },
     mountGroup: function mountGroup(group, isNew) {
       var context = _objectSpread(_objectSpread({}, group), {}, {
@@ -15274,17 +15274,17 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     name: "_token",
     value: _ctx.csrfToken
   }, null, 8 /* PROPS */, _hoisted_2), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-    "data-soa-env-links": "",
+    "data-env-links": "",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(_ctx.classes.links)
   }, null, 2 /* CLASS */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-    "data-soa-env-card": "",
+    "data-env-card": "",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(_ctx.classes.card)
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-    "data-soa-env-card-heading": "",
+    "data-env-card-heading": "",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(_ctx.classes.cardHeading)
   }, null, 2 /* CLASS */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("table", {
     id: "env_editor_table",
-    "data-soa-env-table": "",
+    "data-env-table": "",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(_ctx.classes.table)
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("thead", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(_ctx.classes.header)
@@ -15295,7 +15295,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, null, 2 /* CLASS */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.values, function (value, index) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tr", {
       key: index,
-      "data-soa-env-row": "",
+      "data-env-row": "",
       "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(_ctx.classes.row)
     }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", {
       "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(_ctx.classes.keyCell)
@@ -15304,7 +15304,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       "onUpdate:modelValue": function onUpdateModelValue($event) {
         return value.key = $event;
       },
-      "data-soa-env-key": "",
+      "data-env-key": "",
       "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(_ctx.classes.keyInput),
       type: "text",
       name: "variables[".concat(value.key, "][key]"),
@@ -15315,7 +15315,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       "onUpdate:modelValue": function onUpdateModelValue($event) {
         return value.value = $event;
       },
-      "data-soa-env-value": "",
+      "data-env-value": "",
       "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(_ctx.classes.valueInput),
       type: "text",
       name: "variables[".concat(value.key, "][value]"),
@@ -15326,7 +15326,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       key: 0,
       "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(_ctx.classes.removeWrapper)
     }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-      "data-soa-env-remove": "",
+      "data-env-remove": "",
       "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(_ctx.classes.removeButton),
       title: _ctx.labels.remove,
       "aria-label": _ctx.labels.remove,
@@ -15339,12 +15339,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       "aria-hidden": "true"
     }, null, 2 /* CLASS */)], 10 /* CLASS, PROPS */, _hoisted_6)], 2 /* CLASS */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 2 /* CLASS */)], 2 /* CLASS */);
   }), 128 /* KEYED_FRAGMENT */))])], 2 /* CLASS */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-    "data-soa-env-footer": "",
+    "data-env-footer": "",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(_ctx.classes.footer)
   }, [_ctx.canAdd ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
     key: 0,
     id: "env_add_entry",
-    "data-soa-env-add": "",
+    "data-env-add": "",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(_ctx.classes.addButton),
     type: "button",
     onClick: _cache[0] || (_cache[0] = function () {
@@ -15356,7 +15356,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, null, 2 /* CLASS */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.labels.add), 1 /* TEXT */)], 2 /* CLASS */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(_ctx.classes.saveWrapper)
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-    "data-soa-env-save": "",
+    "data-env-save": "",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(_ctx.classes.saveButton),
     type: "submit"
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
@@ -15541,15 +15541,15 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }), 128 /* KEYED_FRAGMENT */))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _ctx.hasValue ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
     href: _ctx.previewUrl,
     "class": "form-element-files__image",
-    "data-soa-lightbox": ""
+    "data-lightbox": ""
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
     src: _ctx.previewUrl,
     alt: "",
-    "data-soa-image-preview": ""
+    "data-image-preview": ""
   }, null, 8 /* PROPS */, _hoisted_5)], 8 /* PROPS */, _hoisted_4), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
     href: _ctx.previewUrl,
     "class": "btn btn-default btn-sm pull-right",
-    "data-soa-image-download": "",
+    "data-image-download": "",
     "data-toggle": "tooltip",
     download: "",
     target: "_blank",
@@ -15560,7 +15560,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     key: 0,
     type: "button",
     "class": "btn btn-default btn-sm pull-right mr-1",
-    "data-soa-image-insert-current": "",
+    "data-image-insert-current": "",
     "data-toggle": "tooltip",
     title: _ctx.labels.insertLink,
     onClick: _cache[1] || (_cache[1] = function ($event) {
@@ -15572,7 +15572,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     key: 1,
     type: "button",
     "class": "btn btn-danger btn-xs",
-    "data-soa-image-remove": "",
+    "data-image-remove": "",
     "data-toggle": "tooltip",
     title: _ctx.labels.remove,
     onClick: _cache[2] || (_cache[2] = function () {
@@ -15585,7 +15585,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, null, 2 /* CLASS */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.labels.browse), 1 /* TEXT */)], 512 /* NEED_PATCH */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     type: "button",
     "class": "btn btn-default btn-sm",
-    "data-soa-image-insert-new": "",
+    "data-image-insert-new": "",
     "data-toggle": "tooltip",
     title: _ctx.labels.insertLink,
     onClick: _cache[3] || (_cache[3] = function ($event) {
@@ -15594,7 +15594,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, _toConsumableArray(_cache[9] || (_cache[9] = [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
     "class": "fa-fw fas fa-link"
   }, null, -1 /* CACHED */)])), 8 /* PROPS */, _hoisted_12)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-    "data-soa-image-value": "",
+    "data-image-value": "",
     name: _ctx.name,
     type: "hidden",
     value: _ctx.val
@@ -15624,7 +15624,7 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
 
 var _hoisted_1 = {
   "class": "soa-images",
-  "data-soa-images-root": ""
+  "data-images-root": ""
 };
 var _hoisted_2 = {
   key: 0,
@@ -15652,7 +15652,7 @@ var _hoisted_12 = {
   ref: "uploadButton",
   type: "button",
   "class": "btn btn-primary upload-button btn-sm",
-  "data-soa-images-upload": ""
+  "data-images-upload": ""
 };
 var _hoisted_13 = ["title"];
 var _hoisted_14 = ["name", "value"];
@@ -15690,16 +15690,16 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["form-element-files dropzone clearfix soa-images__grid", {
       'dropzone-disabled': _ctx.readonly
     }]),
-    "data-soa-images-gallery": ""
+    "data-images-gallery": ""
   }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.vals, function (uri, index) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("article", {
       key: "".concat(uri, "-").concat(index),
       "class": "form-element-files__item soa-images__item",
-      "data-soa-images-item": ""
+      "data-images-item": ""
     }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
       type: "button",
       "class": "form-element-files__image soa-images__preview",
-      "data-soa-images-preview": "",
+      "data-images-preview": "",
       "aria-label": _ctx.previewLabel(index),
       onClick: function onClick($event) {
         return _ctx.openLightbox(index);
@@ -15711,7 +15711,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       key: 0,
       type: "button",
       "class": "btn btn-clear btn-sm pull-right drag-cursor",
-      "data-soa-images-drag-handle": "",
+      "data-images-drag-handle": "",
       "aria-label": _ctx.labels.reorder,
       title: _ctx.labels.reorder
     }, _toConsumableArray(_cache[11] || (_cache[11] = [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
@@ -15720,7 +15720,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }, null, -1 /* CACHED */)])), 8 /* PROPS */, _hoisted_7)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
       href: _ctx.imageUrl(uri),
       "class": "btn btn-default btn-sm pull-right",
-      "data-soa-images-download": "",
+      "data-images-download": "",
       download: "",
       rel: "noopener",
       target: "_blank",
@@ -15732,7 +15732,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       key: 1,
       type: "button",
       "class": "btn btn-default btn-sm pull-right mr-1",
-      "data-soa-images-insert": "",
+      "data-images-insert": "",
       title: _ctx.labels.insertLink,
       onClick: function onClick($event) {
         return _ctx.insert(index);
@@ -15744,7 +15744,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       key: 2,
       type: "button",
       "class": "btn btn-danger btn-xs gallery-remove",
-      "data-soa-images-remove": "",
+      "data-images-remove": "",
       title: _ctx.labels.remove,
       onClick: function onClick($event) {
         return _ctx.remove(index);
@@ -15759,7 +15759,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, null, 2 /* CLASS */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.labels.browse), 1 /* TEXT */)], 512 /* NEED_PATCH */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     type: "button",
     "class": "btn btn-default btn-sm",
-    "data-soa-images-insert-new": "",
+    "data-images-insert-new": "",
     title: _ctx.labels.insertLink,
     onClick: _cache[1] || (_cache[1] = function ($event) {
       return _ctx.insert();
@@ -15768,7 +15768,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "fa-fw fas fa-link",
     "aria-hidden": "true"
   }, null, -1 /* CACHED */)])), 8 /* PROPS */, _hoisted_13)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-    "data-soa-images-value": "",
+    "data-images-value": "",
     name: _ctx.name,
     type: "hidden",
     value: _ctx.serializedValues
@@ -15778,7 +15778,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     key: 0,
     ref: "lightbox",
     "class": "soa-images-dialog",
-    "data-soa-images-dialog": "",
+    "data-images-dialog": "",
     "aria-label": _ctx.labels.preview,
     onCancel: _cache[5] || (_cache[5] = function () {
       return _ctx.resetLightbox && _ctx.resetLightbox.apply(_ctx, arguments);
@@ -15795,7 +15795,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     type: "button",
     "class": "btn btn-default soa-images-dialog__close",
-    "data-soa-images-dialog-close": "",
+    "data-images-dialog-close": "",
     "aria-label": _ctx.labels.close,
     title: _ctx.labels.close,
     onClick: _cache[2] || (_cache[2] = function () {
@@ -15807,7 +15807,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, null, -1 /* CACHED */)])), 8 /* PROPS */, _hoisted_16), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     type: "button",
     "class": "btn btn-default soa-images-dialog__previous",
-    "data-soa-images-dialog-previous": "",
+    "data-images-dialog-previous": "",
     "aria-label": _ctx.labels.previous,
     title: _ctx.labels.previous,
     onClick: _cache[3] || (_cache[3] = function () {
@@ -15823,7 +15823,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, null, 8 /* PROPS */, _hoisted_19), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     type: "button",
     "class": "btn btn-default soa-images-dialog__next",
-    "data-soa-images-dialog-next": "",
+    "data-images-dialog-next": "",
     "aria-label": _ctx.labels.next,
     title: _ctx.labels.next,
     onClick: _cache[4] || (_cache[4] = function () {
@@ -15853,29 +15853,29 @@ __webpack_require__.r(__webpack_exports__);
 var _hoisted_1 = ["name", "value"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
-    "data-soa-related-root": "",
+    "data-related-root": "",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(_ctx.classes.root),
     onClick: _cache[1] || (_cache[1] = function () {
       return _ctx.handleClick && _ctx.handleClick.apply(_ctx, arguments);
     })
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     ref: "groups",
-    "data-soa-related-groups": "",
+    "data-related-groups": "",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(_ctx.classes.groups)
   }, null, 2 /* CLASS */), !_ctx.readonly ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
     key: 0,
-    "data-soa-related-actions": "",
+    "data-related-actions": "",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(_ctx.classes.actions)
   }, [_ctx.canAddMore ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
     key: 0,
     type: "button",
-    "data-soa-related-add": "",
+    "data-related-add": "",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(_ctx.classes.add),
     onClick: _cache[0] || (_cache[0] = function () {
       return _ctx.addNewGroup && _ctx.addNewGroup.apply(_ctx, arguments);
     })
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-    "data-soa-related-add-icon": "",
+    "data-related-add-icon": "",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(_ctx.classes.addIcon),
     "aria-hidden": "true"
   }, null, 2 /* CLASS */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.labels.add), 1 /* TEXT */)], 2 /* CLASS */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 2 /* CLASS */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.removedExistingGroups, function (id) {
@@ -15884,7 +15884,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       type: "hidden",
       name: "".concat(_ctx.name, "[remove][]"),
       value: id,
-      "data-soa-related-removed": ""
+      "data-related-removed": ""
     }, null, 8 /* PROPS */, _hoisted_1);
   }), 128 /* KEYED_FRAGMENT */))], 2 /* CLASS */);
 }
@@ -15905,11 +15905,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.runtime.esm-bundler.js");
 
 var _hoisted_1 = {
-  "data-soa-select-root": ""
+  "data-select-root": ""
 };
 var _hoisted_2 = {
   key: 0,
-  "data-soa-select-status": "",
+  "data-select-status": "",
   "aria-live": "polite"
 };
 var _hoisted_3 = ["disabled", "value"];
@@ -15950,7 +15950,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     key: 1,
     ref: "nativeControl"
   }, _ctx.attributes, {
-    "data-soa-select-native": "",
+    "data-select-native": "",
     type: "hidden",
     disabled: _ctx.effectiveDisabled,
     value: _ctx.singleValue
@@ -15958,7 +15958,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     key: 2,
     ref: "nativeControl"
   }, _ctx.attributes, {
-    "data-soa-select-native": "",
+    "data-select-native": "",
     hidden: "",
     multiple: "",
     disabled: _ctx.effectiveDisabled
@@ -15970,7 +15970,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(option.text), 9 /* TEXT, PROPS */, _hoisted_5);
   }), 128 /* KEYED_FRAGMENT */))], 16 /* FULL_PROPS */, _hoisted_4)), _ctx.required && _ctx.multiple && !_ctx.selectedIds.length ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
     key: 3,
-    "data-soa-select-required": "",
+    "data-select-required": "",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(_ctx.classes.required)
   }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.labels.required), 3 /* TEXT, CLASS */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
 }
@@ -16364,9 +16364,9 @@ function createImagesSortable(Sortable, element, onReorder) {
 function imagesSortableOptions(onReorder) {
   return {
     animation: 150,
-    draggable: '[data-soa-images-item]',
+    draggable: '[data-images-item]',
     ghostClass: 'soa-images__item--moving',
-    handle: '[data-soa-images-drag-handle]',
+    handle: '[data-images-drag-handle]',
     onEnd: function onEnd(event) {
       return notifyReorder(event, onReorder);
     }
@@ -16522,7 +16522,7 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
 
 
 var CONTROL_SELECTOR = 'input, select, textarea';
-var ISLAND_SELECTOR = '[data-soa-vue-app][data-soa-vue-component]';
+var ISLAND_SELECTOR = '[data-vue-app][data-vue-component]';
 function createRelatedGroup(document, html, context) {
   var group = parseGroup(document, html);
   markGroup(group, context);
@@ -16539,10 +16539,10 @@ function parseGroup(document, html) {
   return template.content.firstElementChild;
 }
 function markGroup(group, context) {
-  group.dataset.soaRelatedGroup = '';
-  group.dataset.soaRelatedIndex = String(context.index);
-  group.dataset.soaRelatedKey = context.key;
-  group.dataset.soaRelatedPrimary = context.primary;
+  group.dataset.relatedGroup = '';
+  group.dataset.relatedIndex = String(context.index);
+  group.dataset.relatedKey = context.key;
+  group.dataset.relatedPrimary = context.primary;
 }
 function rewriteControls(group, context) {
   group.querySelectorAll(CONTROL_SELECTOR).forEach(function (control) {
@@ -16568,7 +16568,7 @@ function rewriteIslands(group, context) {
   });
 }
 function islandPropsBinding(group, host, context, position) {
-  var id = host.dataset.soaVuePropsId;
+  var id = host.dataset.vuePropsId;
   if (!id) return inlinePropsBinding(host);
   var script = findPropsScript(group, id);
   if (!script) throw new Error("Related island props script [".concat(id, "] was not found."));
@@ -16577,9 +16577,9 @@ function islandPropsBinding(group, host, context, position) {
 }
 function inlinePropsBinding(host) {
   return {
-    source: host.dataset.soaVueProps || '{}',
+    source: host.dataset.vueProps || '{}',
     write: function write(source) {
-      host.dataset.soaVueProps = source;
+      host.dataset.vueProps = source;
     }
   };
 }
@@ -16599,7 +16599,7 @@ function findPropsScript(group, id) {
 function assignUniquePropsId(host, script, key, position) {
   var suffix = "".concat(safeIdPart(key), "-").concat(position);
   script.id = "".concat(script.id, "--").concat(suffix);
-  host.dataset.soaVuePropsId = script.id;
+  host.dataset.vuePropsId = script.id;
 }
 function safeIdPart(value) {
   return String(value).replace(/[^a-zA-Z0-9_-]/g, '-');
@@ -16704,7 +16704,7 @@ function createRelatedSortable(Sortable, element, enabled) {
   if (!enabled) return null;
   return new Sortable(element, {
     animation: 150,
-    draggable: '[data-soa-related-group]',
+    draggable: '[data-related-group]',
     handle: '.drag-handle'
   });
 }
@@ -18029,7 +18029,7 @@ function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" 
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 
 
-var vueAppSelector = '[data-soa-vue-app]';
+var vueAppSelector = '[data-vue-app]';
 var VueAppRegistry = /*#__PURE__*/function () {
   function VueAppRegistry(createApp) {
     var components = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
@@ -18106,7 +18106,7 @@ var VueAppRegistry = /*#__PURE__*/function () {
     key: "canMount",
     value: function canMount(element) {
       var _element$dataset;
-      var name = (_element$dataset = element.dataset) === null || _element$dataset === void 0 ? void 0 : _element$dataset.soaVueComponent;
+      var name = (_element$dataset = element.dataset) === null || _element$dataset === void 0 ? void 0 : _element$dataset.vueComponent;
       return !name || this.components.has(name);
     }
   }]);
@@ -18124,7 +18124,7 @@ function registerComponents(app, components) {
 }
 function resolveRootComponent(element, components) {
   var _element$dataset2;
-  var name = (_element$dataset2 = element.dataset) === null || _element$dataset2 === void 0 ? void 0 : _element$dataset2.soaVueComponent;
+  var name = (_element$dataset2 = element.dataset) === null || _element$dataset2 === void 0 ? void 0 : _element$dataset2.vueComponent;
   if (!name) return {
     component: {},
     props: undefined
@@ -18140,8 +18140,8 @@ function resolveRootComponent(element, components) {
 }
 function readPropsSource(element) {
   var _element$dataset3, _element$dataset4;
-  var propsId = (_element$dataset3 = element.dataset) === null || _element$dataset3 === void 0 ? void 0 : _element$dataset3.soaVuePropsId;
-  if (!propsId) return ((_element$dataset4 = element.dataset) === null || _element$dataset4 === void 0 ? void 0 : _element$dataset4.soaVueProps) || '{}';
+  var propsId = (_element$dataset3 = element.dataset) === null || _element$dataset3 === void 0 ? void 0 : _element$dataset3.vuePropsId;
+  if (!propsId) return ((_element$dataset4 = element.dataset) === null || _element$dataset4 === void 0 ? void 0 : _element$dataset4.vueProps) || '{}';
   return readReferencedProps(element, propsId);
 }
 function readReferencedProps(element, propsId) {

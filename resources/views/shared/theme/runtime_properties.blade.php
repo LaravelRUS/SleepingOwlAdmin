@@ -3,9 +3,9 @@
 @endphp
 
 @if($properties !== [])
-<style data-soa-runtime-properties>
+<style data-runtime-properties>
     :root,
-    :root[data-soa-color-scheme="dark"] {
+    :root[data-color-scheme="dark"] {
         @foreach($properties as $name => $value)
         {{ $name }}: {{ $value }};
         @endforeach

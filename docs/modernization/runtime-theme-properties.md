@@ -28,7 +28,7 @@ The complete executable list is emitted by the `_custom-properties.scss` module 
 
 ## Color scheme
 
-Light values are declared in `:root`. A theme changes only property values under `:root[data-soa-color-scheme="dark"]`; it does not duplicate component rules. The legacy theme keeps its existing `dark-mode` body class during migration and mirrors the selected mode to `data-soa-color-scheme` on the root element.
+Light values are declared in `:root`. A theme changes only property values under `:root[data-color-scheme="dark"]`; it does not duplicate component rules. The legacy theme keeps its existing `dark-mode` body class during migration and mirrors the selected mode to `data-color-scheme` on the root element.
 
 ## Sidebar config
 

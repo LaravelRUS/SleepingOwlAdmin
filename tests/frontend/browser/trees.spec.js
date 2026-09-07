@@ -18,22 +18,20 @@ test('tree lifecycle, serialization and expand controls stay scoped per tree', a
     })
     expect(mounted).toEqual([true, true])
 
-    const rootToggle = page.locator('#tree-primary [data-id="1"] > [data-soa-tree-toggle]')
+    const rootToggle = page.locator('#tree-primary [data-id="1"] > [data-tree-toggle]')
     await expect(rootToggle).toHaveClass(/project-tree-toggle/)
     await expect(rootToggle.locator('.project-tree-toggle-glyph')).toHaveCount(1)
 
-    await page.locator('#tree-primary [data-soa-tree-action="collapse-all"]').click()
-    await expect(page.locator('#tree-primary [data-id="1"] > [data-soa-tree-list]')).toBeHidden()
-    await expect(rootToggle.locator('[data-soa-tree-toggle-expanded]')).toBeHidden()
-    await expect(rootToggle.locator('[data-soa-tree-toggle-collapsed]')).toBeVisible()
-    await expect(
-        page.locator('#tree-secondary [data-id="10"] > [data-soa-tree-list]'),
-    ).toBeVisible()
+    await page.locator('#tree-primary [data-tree-action="collapse-all"]').click()
+    await expect(page.locator('#tree-primary [data-id="1"] > [data-tree-list]')).toBeHidden()
+    await expect(rootToggle.locator('[data-tree-toggle-expanded]')).toBeHidden()
+    await expect(rootToggle.locator('[data-tree-toggle-collapsed]')).toBeVisible()
+    await expect(page.locator('#tree-secondary [data-id="10"] > [data-tree-list]')).toBeVisible()
 
-    await page.locator('#tree-primary [data-soa-tree-action="expand-all"]').click()
-    await expect(page.locator('#tree-primary [data-id="1"] > [data-soa-tree-list]')).toBeVisible()
-    await expect(rootToggle.locator('[data-soa-tree-toggle-expanded]')).toBeVisible()
-    await expect(rootToggle.locator('[data-soa-tree-toggle-collapsed]')).toBeHidden()
+    await page.locator('#tree-primary [data-tree-action="expand-all"]').click()
+    await expect(page.locator('#tree-primary [data-id="1"] > [data-tree-list]')).toBeVisible()
+    await expect(rootToggle.locator('[data-tree-toggle-expanded]')).toBeVisible()
+    await expect(rootToggle.locator('[data-tree-toggle-collapsed]')).toBeHidden()
     expect(await serializedTree(page, 'tree-primary')).toEqual([
         { id: '1', children: [{ id: '2' }] },
         { id: '3', children: [{ id: '5' }] },
@@ -45,17 +43,17 @@ test('drag-and-drop reuses a Blade leaf toggle and preserves the backend payload
     page,
     request,
 }) => {
-    const sourceParentToggle = page.locator('#tree-primary [data-id="1"] > [data-soa-tree-toggle]')
-    const targetParentToggle = page.locator('#tree-primary [data-id="4"] > [data-soa-tree-toggle]')
+    const sourceParentToggle = page.locator('#tree-primary [data-id="1"] > [data-tree-toggle]')
+    const targetParentToggle = page.locator('#tree-primary [data-id="4"] > [data-tree-toggle]')
     await expect(targetParentToggle).toBeHidden()
     await page.locator('#tree-primary').evaluate((tree) => {
-        tree.dataset.soaTreeDragging = 'true'
+        tree.dataset.treeDragging = 'true'
     })
 
     const response = page.waitForResponse((item) => item.url().includes('/api/tree/reorder'))
     await page
-        .locator('#tree-primary [data-id="2"] > [data-soa-tree-handle]')
-        .dragTo(page.locator('#tree-primary [data-id="4"] > [data-soa-tree-list]'), {
+        .locator('#tree-primary [data-id="2"] > [data-tree-handle]')
+        .dragTo(page.locator('#tree-primary [data-id="4"] > [data-tree-list]'), {
             targetPosition: { x: 64, y: 4 },
         })
     await response
@@ -64,7 +62,7 @@ test('drag-and-drop reuses a Blade leaf toggle and preserves the backend payload
     await expect(targetParentToggle).toBeVisible()
     await expect(targetParentToggle).toHaveClass(/project-leaf-toggle/)
     await expect(sourceParentToggle).toBeHidden()
-    await expect(page.locator('#tree-primary')).toHaveAttribute('data-soa-tree-save-state', 'idle')
+    await expect(page.locator('#tree-primary')).toHaveAttribute('data-tree-save-state', 'idle')
 
     const recorded = await treeRequests(request)
     const parameters = recorded.at(-1).parameters
@@ -91,10 +89,7 @@ test('failed reorder remains visible in state and emits a native failure event',
         }
     })
 
-    await expect(page.locator('#tree-secondary')).toHaveAttribute(
-        'data-soa-tree-save-state',
-        'error',
-    )
+    await expect(page.locator('#tree-secondary')).toHaveAttribute('data-tree-save-state', 'error')
     expect(await page.evaluate(() => globalThis.__treeEvents)).toContain('tree:failed')
 })
 
@@ -107,7 +102,7 @@ async function serializedTree(page, id) {
 
 async function parentTreeId(page, id) {
     return page.locator(`[data-id="${id}"]`).evaluate((item) => {
-        return item.parentElement.closest('[data-soa-tree-item]')?.dataset.id ?? 'root'
+        return item.parentElement.closest('[data-tree-item]')?.dataset.id ?? 'root'
     })
 }
 

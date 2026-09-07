@@ -27,7 +27,7 @@ Package controls expose an explicit behavior marker instead of relying on a
 presentation class:
 
 ```html
-<input data-soa-date-control="date" data-date-format="DD.MM.YYYY">
+<input data-date-control="date" data-date-format="DD.MM.YYYY">
 ```
 
 The supported marker values are `date`, `datetime`, `time`, and `daterange`.

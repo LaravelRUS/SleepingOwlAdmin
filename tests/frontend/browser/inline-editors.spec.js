@@ -88,7 +88,7 @@ test('date and datetime editors reuse Air Datepicker and emit native lifecycle e
     for (const type of ['date', 'datetime']) {
         await page.locator(`#editor-${type}`).click()
         const input = page.locator('.soa-inline-editor-control')
-        await expect(input).toHaveAttribute('data-soa-date-control', type)
+        await expect(input).toHaveAttribute('data-date-control', type)
         expect(
             await input.evaluate((element) =>
                 Boolean(globalThis.Admin.Components.get(element, 'date-control')),

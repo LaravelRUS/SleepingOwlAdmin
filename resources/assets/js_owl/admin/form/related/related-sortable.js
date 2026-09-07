@@ -3,7 +3,7 @@ export function createRelatedSortable(Sortable, element, enabled) {
 
     return new Sortable(element, {
         animation: 150,
-        draggable: '[data-soa-related-group]',
+        draggable: '[data-related-group]',
         handle: '.drag-handle',
     })
 }

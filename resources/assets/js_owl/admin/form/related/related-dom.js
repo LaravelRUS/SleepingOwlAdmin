@@ -6,7 +6,7 @@ import {
 } from './related-fields'
 
 const CONTROL_SELECTOR = 'input, select, textarea'
-const ISLAND_SELECTOR = '[data-soa-vue-app][data-soa-vue-component]'
+const ISLAND_SELECTOR = '[data-vue-app][data-vue-component]'
 
 export function createRelatedGroup(document, html, context) {
     const group = parseGroup(document, html)
@@ -28,10 +28,10 @@ function parseGroup(document, html) {
 }
 
 function markGroup(group, context) {
-    group.dataset.soaRelatedGroup = ''
-    group.dataset.soaRelatedIndex = String(context.index)
-    group.dataset.soaRelatedKey = context.key
-    group.dataset.soaRelatedPrimary = context.primary
+    group.dataset.relatedGroup = ''
+    group.dataset.relatedIndex = String(context.index)
+    group.dataset.relatedKey = context.key
+    group.dataset.relatedPrimary = context.primary
 }
 
 function rewriteControls(group, context) {
@@ -64,7 +64,7 @@ function rewriteIslands(group, context) {
 }
 
 function islandPropsBinding(group, host, context, position) {
-    const id = host.dataset.soaVuePropsId
+    const id = host.dataset.vuePropsId
     if (!id) return inlinePropsBinding(host)
 
     const script = findPropsScript(group, id)
@@ -76,9 +76,9 @@ function islandPropsBinding(group, host, context, position) {
 
 function inlinePropsBinding(host) {
     return {
-        source: host.dataset.soaVueProps || '{}',
+        source: host.dataset.vueProps || '{}',
         write: (source) => {
-            host.dataset.soaVueProps = source
+            host.dataset.vueProps = source
         },
     }
 }
@@ -101,7 +101,7 @@ function findPropsScript(group, id) {
 function assignUniquePropsId(host, script, key, position) {
     const suffix = `${safeIdPart(key)}-${position}`
     script.id = `${script.id}--${suffix}`
-    host.dataset.soaVuePropsId = script.id
+    host.dataset.vuePropsId = script.id
 }
 
 function safeIdPart(value) {

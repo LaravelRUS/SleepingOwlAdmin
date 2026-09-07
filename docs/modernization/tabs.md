@@ -8,13 +8,13 @@ driver directly; it does not depend on the transitional legacy module runner.
 
 ## Markup and accessibility
 
-New markup uses `data-soa-tab` inside a tab list identified by
-`data-soa-tablist` or `role="tablist"`:
+New markup uses `data-tab` inside a tab list identified by
+`data-tablist` or `role="tablist"`:
 
 ```html
-<div data-soa-tablist role="tablist">
-    <button data-soa-tab aria-controls="general">General</button>
-    <button data-soa-tab aria-controls="advanced">Advanced</button>
+<div data-tablist role="tablist">
+    <button data-tab aria-controls="general">General</button>
+    <button data-tab aria-controls="advanced">Advanced</button>
 </div>
 <section id="general" role="tabpanel">...</section>
 <section id="advanced" role="tabpanel">...</section>
@@ -27,7 +27,7 @@ to the first and last enabled tab.
 
 The previous `data-toggle="tab"` marker remains a deprecated compatibility
 selector for custom or published views. Package-owned views use only
-`data-soa-tab`; PHP continues to pass user classes and attributes directly.
+`data-tab`; PHP continues to pass user classes and attributes directly.
 
 ## State and events
 

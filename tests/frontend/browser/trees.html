@@ -42,114 +42,106 @@
             <section
                 id="tree-primary"
                 class="soa-tree"
-                data-soa-tree
+                data-tree
                 data-max-depth="3"
                 data-reorderable="true"
                 data-url="/api/tree/reorder"
-                data-soa-tree-parameters-id="tree-primary-parameters"
+                data-tree-parameters-id="tree-primary-parameters"
             >
                 <menu class="soa-tree-menu">
-                    <button type="button" data-soa-tree-action="expand-all">Expand all</button>
-                    <button type="button" data-soa-tree-action="collapse-all">Collapse all</button>
+                    <button type="button" data-tree-action="expand-all">Expand all</button>
+                    <button type="button" data-tree-action="collapse-all">Collapse all</button>
                 </menu>
-                <ol class="soa-tree-list" data-soa-tree-list data-soa-tree-root>
-                    <li class="soa-tree-item" data-soa-tree-item data-id="1">
+                <ol class="soa-tree-list" data-tree-list data-tree-root>
+                    <li class="soa-tree-item" data-tree-item data-id="1">
                         <button
                             type="button"
                             class="soa-tree-toggle project-tree-toggle"
-                            data-soa-tree-toggle
+                            data-tree-toggle
                             aria-expanded="true"
                             aria-label="Collapse"
                         >
                             <span class="project-tree-toggle-glyph">
-                                <span data-soa-tree-toggle-expanded aria-hidden="true">−</span>
-                                <span data-soa-tree-toggle-collapsed aria-hidden="true" hidden
-                                    >+</span
-                                >
+                                <span data-tree-toggle-expanded aria-hidden="true">−</span>
+                                <span data-tree-toggle-collapsed aria-hidden="true" hidden>+</span>
                             </span>
                         </button>
-                        <button type="button" class="soa-tree-handle" data-soa-tree-handle>
-                            ≡
-                        </button>
+                        <button type="button" class="soa-tree-handle" data-tree-handle>≡</button>
                         <div class="soa-tree-content">Catalog</div>
-                        <ol class="soa-tree-list" data-soa-tree-list>
-                            <li class="soa-tree-item" data-soa-tree-item data-id="2">
+                        <ol class="soa-tree-list" data-tree-list>
+                            <li class="soa-tree-item" data-tree-item data-id="2">
                                 <button
                                     type="button"
                                     class="soa-tree-toggle project-leaf-toggle"
-                                    data-soa-tree-toggle
+                                    data-tree-toggle
                                     aria-expanded="false"
                                     aria-label="Collapse"
                                     hidden
                                 >
-                                    <span data-soa-tree-toggle-expanded aria-hidden="true">−</span>
-                                    <span data-soa-tree-toggle-collapsed aria-hidden="true" hidden
+                                    <span data-tree-toggle-expanded aria-hidden="true">−</span>
+                                    <span data-tree-toggle-collapsed aria-hidden="true" hidden
                                         >+</span
                                     >
                                 </button>
-                                <button type="button" class="soa-tree-handle" data-soa-tree-handle>
+                                <button type="button" class="soa-tree-handle" data-tree-handle>
                                     ≡
                                 </button>
                                 <div class="soa-tree-content">Phones</div>
-                                <ol class="soa-tree-list" data-soa-tree-list></ol>
+                                <ol class="soa-tree-list" data-tree-list></ol>
                             </li>
                         </ol>
                     </li>
-                    <li class="soa-tree-item" data-soa-tree-item data-id="3">
+                    <li class="soa-tree-item" data-tree-item data-id="3">
                         <button
                             type="button"
                             class="soa-tree-toggle"
-                            data-soa-tree-toggle
+                            data-tree-toggle
                             aria-expanded="true"
                             aria-label="Collapse"
                         >
-                            <span data-soa-tree-toggle-expanded aria-hidden="true">−</span>
-                            <span data-soa-tree-toggle-collapsed aria-hidden="true" hidden>+</span>
+                            <span data-tree-toggle-expanded aria-hidden="true">−</span>
+                            <span data-tree-toggle-collapsed aria-hidden="true" hidden>+</span>
                         </button>
-                        <button type="button" class="soa-tree-handle" data-soa-tree-handle>
-                            ≡
-                        </button>
+                        <button type="button" class="soa-tree-handle" data-tree-handle>≡</button>
                         <div class="soa-tree-content">Archive</div>
-                        <ol class="soa-tree-list" data-soa-tree-list>
-                            <li class="soa-tree-item" data-soa-tree-item data-id="5">
+                        <ol class="soa-tree-list" data-tree-list>
+                            <li class="soa-tree-item" data-tree-item data-id="5">
                                 <button
                                     type="button"
                                     class="soa-tree-toggle"
-                                    data-soa-tree-toggle
+                                    data-tree-toggle
                                     aria-expanded="false"
                                     aria-label="Collapse"
                                     hidden
                                 >
-                                    <span data-soa-tree-toggle-expanded aria-hidden="true">−</span>
-                                    <span data-soa-tree-toggle-collapsed aria-hidden="true" hidden
+                                    <span data-tree-toggle-expanded aria-hidden="true">−</span>
+                                    <span data-tree-toggle-collapsed aria-hidden="true" hidden
                                         >+</span
                                     >
                                 </button>
-                                <button type="button" class="soa-tree-handle" data-soa-tree-handle>
+                                <button type="button" class="soa-tree-handle" data-tree-handle>
                                     ≡
                                 </button>
                                 <div class="soa-tree-content">Old phones</div>
-                                <ol class="soa-tree-list" data-soa-tree-list></ol>
+                                <ol class="soa-tree-list" data-tree-list></ol>
                             </li>
                         </ol>
                     </li>
-                    <li class="soa-tree-item" data-soa-tree-item data-id="4">
+                    <li class="soa-tree-item" data-tree-item data-id="4">
                         <button
                             type="button"
                             class="soa-tree-toggle project-leaf-toggle"
-                            data-soa-tree-toggle
+                            data-tree-toggle
                             aria-expanded="false"
                             aria-label="Collapse"
                             hidden
                         >
-                            <span data-soa-tree-toggle-expanded aria-hidden="true">−</span>
-                            <span data-soa-tree-toggle-collapsed aria-hidden="true" hidden>+</span>
+                            <span data-tree-toggle-expanded aria-hidden="true">−</span>
+                            <span data-tree-toggle-collapsed aria-hidden="true" hidden>+</span>
                         </button>
-                        <button type="button" class="soa-tree-handle" data-soa-tree-handle>
-                            ≡
-                        </button>
+                        <button type="button" class="soa-tree-handle" data-tree-handle>≡</button>
                         <div class="soa-tree-content">Accessories</div>
-                        <ol class="soa-tree-list" data-soa-tree-list></ol>
+                        <ol class="soa-tree-list" data-tree-list></ol>
                     </li>
                 </ol>
                 <script id="tree-primary-parameters" type="application/json">
@@ -160,30 +152,28 @@
             <section
                 id="tree-secondary"
                 class="soa-tree"
-                data-soa-tree
+                data-tree
                 data-max-depth="2"
                 data-reorderable="true"
                 data-url="/api/tree/reorder?fail=1"
             >
-                <ol class="soa-tree-list" data-soa-tree-list data-soa-tree-root>
-                    <li class="soa-tree-item" data-soa-tree-item data-id="10">
+                <ol class="soa-tree-list" data-tree-list data-tree-root>
+                    <li class="soa-tree-item" data-tree-item data-id="10">
                         <button
                             type="button"
                             class="soa-tree-toggle"
-                            data-soa-tree-toggle
+                            data-tree-toggle
                             aria-expanded="true"
                             aria-label="Collapse"
                         >
-                            <span data-soa-tree-toggle-expanded aria-hidden="true">−</span>
-                            <span data-soa-tree-toggle-collapsed aria-hidden="true" hidden>+</span>
+                            <span data-tree-toggle-expanded aria-hidden="true">−</span>
+                            <span data-tree-toggle-collapsed aria-hidden="true" hidden>+</span>
                         </button>
-                        <button type="button" class="soa-tree-handle" data-soa-tree-handle>
-                            ≡
-                        </button>
+                        <button type="button" class="soa-tree-handle" data-tree-handle>≡</button>
                         <div class="soa-tree-content">Secondary</div>
-                        <ol class="soa-tree-list" data-soa-tree-list>
-                            <li class="soa-tree-item" data-soa-tree-item data-id="11">
-                                <button type="button" class="soa-tree-handle" data-soa-tree-handle>
+                        <ol class="soa-tree-list" data-tree-list>
+                            <li class="soa-tree-item" data-tree-item data-id="11">
+                                <button type="button" class="soa-tree-handle" data-tree-handle>
                                     ≡
                                 </button>
                                 <div class="soa-tree-content">Secondary child</div>

@@ -9,17 +9,17 @@ class InlineEditorRenderContractTest extends TestCase
     {
         $html = $this->renderEditor($view);
 
-        $this->assertStringContainsString('data-soa-inline-editor="'.$type.'"', $html);
+        $this->assertStringContainsString('data-inline-editor="'.$type.'"', $html);
         $this->assertStringContainsString('data-name="status"', $html);
         $this->assertStringContainsString('data-pk="17"', $html);
         $this->assertStringContainsString('data-url="/admin/orders/async-inline"', $html);
-        $this->assertStringContainsString('data-soa-inline-editor-template-id="soa-inline-editor-template-', $html);
-        $this->assertStringContainsString('data-soa-inline-editor-template="'.$type.'"', $html);
-        $this->assertStringContainsString('data-soa-inline-editor-root', $html);
-        $this->assertStringContainsString('data-soa-inline-editor-form', $html);
-        $this->assertStringContainsString('data-soa-inline-editor-control', $html);
-        $this->assertStringContainsString('data-soa-inline-editor-cancel', $html);
-        $this->assertStringContainsString('data-soa-inline-editor-error', $html);
+        $this->assertStringContainsString('data-inline-editor-template-id="soa-inline-editor-template-', $html);
+        $this->assertStringContainsString('data-inline-editor-template="'.$type.'"', $html);
+        $this->assertStringContainsString('data-inline-editor-root', $html);
+        $this->assertStringContainsString('data-inline-editor-form', $html);
+        $this->assertStringContainsString('data-inline-editor-control', $html);
+        $this->assertStringContainsString('data-inline-editor-cancel', $html);
+        $this->assertStringContainsString('data-inline-editor-error', $html);
         $this->assertStringContainsString('class="project-column"', $html);
         $this->assertStringContainsString('data-project="orders"', $html);
         $this->assertStringNotContainsString('class="inline-editable"', $html);
@@ -33,7 +33,7 @@ class InlineEditorRenderContractTest extends TestCase
         $date = $this->renderEditor('datetime');
 
         $this->assertMatchesRegularExpression(
-            '/data-soa-inline-editor-options-id="(soa-inline-editor-options-[^"]+)"/',
+            '/data-inline-editor-options-id="(soa-inline-editor-options-[^"]+)"/',
             $select
         );
         $this->assertStringContainsString(
@@ -54,7 +54,7 @@ class InlineEditorRenderContractTest extends TestCase
     {
         $html = $this->renderEditor('text', ['isReadonly' => true]);
 
-        $this->assertStringNotContainsString('data-soa-inline-editor', $html);
+        $this->assertStringNotContainsString('data-inline-editor', $html);
         $this->assertStringContainsString('<strong>Draft</strong>', $html);
     }
 
@@ -78,8 +78,8 @@ class InlineEditorRenderContractTest extends TestCase
         $this->assertStringContainsString('class="project-editor-shell"', $html);
         $this->assertStringContainsString('class="project-editor-nesting"', $html);
         $this->assertStringContainsString('class="project-text-control"', $html);
-        $this->assertStringContainsString('data-soa-inline-editor-root', $html);
-        $this->assertStringContainsString('data-soa-inline-editor-control', $html);
+        $this->assertStringContainsString('data-inline-editor-root', $html);
+        $this->assertStringContainsString('data-inline-editor-control', $html);
         $this->assertStringNotContainsString('class="soa-inline-editor soa-inline-editor-popup"', $html);
     }
 
@@ -101,12 +101,12 @@ class InlineEditorRenderContractTest extends TestCase
     public static function editorControlMarkers(): array
     {
         return [
-            ['checkbox', 'data-soa-inline-editor-check-input'],
-            ['checklist', 'data-soa-inline-editor-check-input'],
-            ['date', 'data-soa-date-control="date"'],
-            ['datetime', 'data-soa-date-control="datetime"'],
+            ['checkbox', 'data-inline-editor-check-input'],
+            ['checklist', 'data-inline-editor-check-input'],
+            ['date', 'data-date-control="date"'],
+            ['datetime', 'data-date-control="datetime"'],
             ['number', 'type="number"'],
-            ['range', 'data-soa-inline-editor-range-input'],
+            ['range', 'data-inline-editor-range-input'],
             ['select', '<select class="soa-inline-editor-control"'],
             ['text', 'type="text"'],
             ['textarea', '<textarea class="soa-inline-editor-control"'],

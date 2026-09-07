@@ -6,13 +6,13 @@
 }
 
 @layer sleepingowl-core {
-  [data-soa-cloak] {
+  [data-cloak] {
     display: none;
   }
-  [data-soa-loading=true] {
+  [data-loading=true] {
     pointer-events: none;
   }
-  [data-soa-visually-hidden] {
+  [data-visually-hidden] {
     position: absolute;
     width: 1px;
     height: 1px;

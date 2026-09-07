@@ -1,5 +1,5 @@
 <template>
-    <div data-soa-select-root>
+    <div data-select-root>
         <Multiselect
             track-by="id"
             label="text"
@@ -26,7 +26,7 @@
             <template #noOptions>{{ emptyMessage }}</template>
         </Multiselect>
 
-        <span v-if="statusMessage" data-soa-select-status aria-live="polite">
+        <span v-if="statusMessage" data-select-status aria-live="polite">
             {{ statusMessage }}
         </span>
 
@@ -34,7 +34,7 @@
             v-if="!multiple"
             ref="nativeControl"
             v-bind="attributes"
-            data-soa-select-native
+            data-select-native
             type="hidden"
             :disabled="effectiveDisabled"
             :value="singleValue"
@@ -43,7 +43,7 @@
             v-else
             ref="nativeControl"
             v-bind="attributes"
-            data-soa-select-native
+            data-select-native
             hidden
             multiple
             :disabled="effectiveDisabled"
@@ -60,7 +60,7 @@
 
         <div
             v-if="required && multiple && !selectedIds.length"
-            data-soa-select-required
+            data-select-required
             :class="classes.required"
         >
             {{ labels.required }}

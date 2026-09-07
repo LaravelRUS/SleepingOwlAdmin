@@ -182,9 +182,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "createTooltipElement": () => (/* binding */ createTooltipElement)
 /* harmony export */ });
-var TOOLTIP_TEMPLATE_SELECTOR = 'template[data-soa-tooltip-template]';
-var TOOLTIP_POPUP_SELECTOR = '[data-soa-tooltip-popup]';
-var TOOLTIP_CONTENT_SELECTOR = '[data-soa-tooltip-content]';
+var TOOLTIP_TEMPLATE_SELECTOR = 'template[data-tooltip-template]';
+var TOOLTIP_POPUP_SELECTOR = '[data-tooltip-popup]';
+var TOOLTIP_CONTENT_SELECTOR = '[data-tooltip-content]';
 function createTooltipElement(root, content, placement, id) {
   var _cloneTooltip;
   var tooltip = (_cloneTooltip = cloneTooltip(root)) !== null && _cloneTooltip !== void 0 ? _cloneTooltip : createFallbackTooltip(root.ownerDocument);
@@ -199,13 +199,13 @@ function cloneTooltip(root) {
 }
 function createFallbackTooltip(document) {
   var tooltip = document.createElement('div');
-  tooltip.dataset.soaTooltipPopup = '';
+  tooltip.dataset.tooltipPopup = '';
   return tooltip;
 }
 function prepareTooltip(tooltip, content, placement, id) {
   tooltip.id = id;
   tooltip.dataset.placement = placement;
-  tooltip.setAttribute('data-soa-tooltip-popup', '');
+  tooltip.setAttribute('data-tooltip-popup', '');
   tooltip.setAttribute('role', 'tooltip');
   findContentTarget(tooltip).textContent = content;
 }
@@ -351,7 +351,7 @@ function createCurrent(trigger, tooltip, reason) {
 }
 function applyOpenState(current) {
   current.trigger.removeAttribute('title');
-  current.trigger.dataset.soaTooltipOpen = '';
+  current.trigger.dataset.tooltipOpen = '';
   current.trigger.setAttribute('aria-describedby', [current.describedBy, current.tooltip.id].filter(Boolean).join(' '));
 }
 function repositionTooltip(state) {
@@ -376,7 +376,7 @@ function hideTooltip(state) {
   return true;
 }
 function restoreTrigger(current) {
-  delete current.trigger.dataset.soaTooltipOpen;
+  delete current.trigger.dataset.tooltipOpen;
   restoreAttribute(current.trigger, 'aria-describedby', current.describedBy);
   restoreAttribute(current.trigger, 'title', current.title);
 }

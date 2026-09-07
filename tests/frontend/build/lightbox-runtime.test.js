@@ -37,7 +37,7 @@ it('uses the native behavior marker in package-owned image views', () => {
     ]
 
     files.forEach((file) => {
-        expect(read(file)).toContain('data-soa-lightbox')
+        expect(read(file)).toContain('data-lightbox')
         expect(read(file)).not.toContain('data-toggle="lightbox"')
     })
 })

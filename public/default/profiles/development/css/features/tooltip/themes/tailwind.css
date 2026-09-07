@@ -9,13 +9,13 @@
   --soa-tooltip-shadow: 0 0.5rem 1rem rgba(15, 23, 42, 0.18);
 }
 
-:root[data-soa-color-scheme=dark] {
+:root[data-color-scheme=dark] {
   --soa-tooltip-surface: #f9fafb;
   --soa-tooltip-text: #111827;
 }
 
 @layer sleepingowl-theme.tooltip {
-  [data-soa-tooltip-popup] {
+  [data-tooltip-popup] {
     padding: var(--soa-tooltip-padding-block) var(--soa-tooltip-padding-inline);
     border-radius: var(--soa-tooltip-radius);
     background: var(--soa-tooltip-surface);

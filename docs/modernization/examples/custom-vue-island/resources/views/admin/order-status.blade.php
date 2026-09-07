@@ -8,7 +8,7 @@
 </script>
 <section
     v-pre
-    data-soa-vue-app
-    data-soa-vue-component="order-status"
-    data-soa-vue-props-id="{{ $propsId }}"
+    data-vue-app
+    data-vue-component="order-status"
+    data-vue-props-id="{{ $propsId }}"
 ></section>

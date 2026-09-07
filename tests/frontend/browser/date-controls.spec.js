@@ -69,7 +69,7 @@ test('addon, dynamic scan and scoped teardown use the shared component lifecycle
     const result = await page.evaluate(() => {
         const host = globalThis.document.getElementById('dynamic-date-host')
         host.innerHTML =
-            '<input id="dynamic-date" value="07.09.2026" data-date-format="DD.MM.YYYY" data-soa-date-control="date">'
+            '<input id="dynamic-date" value="07.09.2026" data-date-format="DD.MM.YYYY" data-date-control="date">'
         const input = host.querySelector('input')
         const mounted = globalThis.Admin.Components.scan(host)
         const instance = globalThis.Admin.Components.get(input, 'date-control')

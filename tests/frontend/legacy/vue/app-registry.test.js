@@ -92,8 +92,8 @@ it('mounts a named precompiled component with JSON props', () => {
     const component = { name: 'PrecompiledFixture' }
     const factory = fakeAppFactory([])
     host.dataset = {
-        soaVueComponent: 'fixture',
-        soaVueProps: '{"message":"ready","enabled":true}',
+        vueComponent: 'fixture',
+        vueProps: '{"message":"ready","enabled":true}',
     }
 
     createVueAppRegistry(factory, { fixture: component }).mount(host)
@@ -113,7 +113,7 @@ it('reads large precompiled props from a referenced JSON script', () => {
         textContent: '{"html":"<fieldset>Trusted fields</fieldset>"}',
         type: 'application/json',
     }
-    host.dataset = { soaVueComponent: 'fixture', soaVuePropsId: 'fixture-props' }
+    host.dataset = { vueComponent: 'fixture', vuePropsId: 'fixture-props' }
     host.ownerDocument = { getElementById: vi.fn(() => script) }
 
     createVueAppRegistry(factory, { fixture: component }).mount(host)
@@ -127,7 +127,7 @@ it('reads large precompiled props from a referenced JSON script', () => {
 it('rejects missing and incorrectly typed referenced props scripts', () => {
     const registry = createVueAppRegistry(fakeAppFactory([]), { fixture: {} })
     const host = createElement('precompiled', true)
-    host.dataset = { soaVueComponent: 'fixture', soaVuePropsId: 'fixture-props' }
+    host.dataset = { vueComponent: 'fixture', vuePropsId: 'fixture-props' }
     host.ownerDocument = { getElementById: vi.fn(() => null) }
 
     expect(() => registry.mount(host)).toThrow('props script [fixture-props] was not found')
@@ -144,9 +144,9 @@ it('rejects unknown precompiled components and invalid props before creating an 
     const factory = fakeAppFactory([])
     const registry = createVueAppRegistry(factory, { fixture: {} })
     const unknown = createElement('unknown', true)
-    unknown.dataset = { soaVueComponent: 'missing' }
+    unknown.dataset = { vueComponent: 'missing' }
     const invalid = createElement('invalid', true)
-    invalid.dataset = { soaVueComponent: 'fixture', soaVueProps: '[]' }
+    invalid.dataset = { vueComponent: 'fixture', vueProps: '[]' }
 
     expect(() => registry.mount(unknown)).toThrow('Unknown Vue app component [missing]')
     expect(() => registry.mount(invalid)).toThrow('props JSON must contain an object')
@@ -159,7 +159,7 @@ it('observes components registered after the app registry is created', () => {
     const factory = fakeAppFactory([])
     const catalog = createVueComponentCatalog()
     const registry = createVueAppRegistry(factory, catalog)
-    host.dataset = { soaVueComponent: 'late-component' }
+    host.dataset = { vueComponent: 'late-component' }
 
     expect(registry.canMount(host)).toBe(false)
     expect(() => registry.mount(host)).toThrow('Unknown Vue app component [late-component]')

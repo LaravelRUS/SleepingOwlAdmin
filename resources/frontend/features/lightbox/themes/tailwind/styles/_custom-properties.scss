@@ -14,7 +14,7 @@
         --soa-lightbox-transition-duration: #{variables.$transition-duration};
     }
 
-    :root[data-soa-color-scheme='dark'] {
+    :root[data-color-scheme='dark'] {
         --soa-lightbox-caption-surface: #{colors.$dark-caption-surface};
         --soa-lightbox-caption-text: #{colors.$dark-caption-text};
     }

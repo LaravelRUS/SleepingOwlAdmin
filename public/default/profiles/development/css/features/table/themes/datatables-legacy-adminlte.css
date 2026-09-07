@@ -13,7 +13,7 @@
   --soa-inline-editor-shadow: rgba(0, 0, 0, 0.18);
 }
 
-:root[data-soa-color-scheme=dark] {
+:root[data-color-scheme=dark] {
   --soa-table-row-hover-color: #3f474e;
   --soa-table-row-selected-color: #24485d;
   --soa-inline-editor-surface: #343a40;

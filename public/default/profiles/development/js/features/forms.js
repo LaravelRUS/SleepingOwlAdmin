@@ -826,7 +826,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var DATE_CONTROL_COMPONENT = 'date-control';
-var DATE_CONTROL_SELECTOR = 'input[data-soa-date-control]';
+var DATE_CONTROL_SELECTOR = 'input[data-date-control]';
 function createDateControlDefinition(Datepicker, locale) {
   if (typeof Datepicker !== 'function') {
     throw new TypeError('Date controls require an Air Datepicker constructor.');
@@ -1136,7 +1136,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
 
 var DATE_CONTROL_TYPES = Object.freeze(['date', 'datetime', 'time', 'daterange']);
 function createDatePickerOptions(input, locale) {
-  var type = input.dataset.soaDateControl;
+  var type = input.dataset.dateControl;
   assertControlType(type);
   var format = input.dataset.dateFormat || defaultFormat(type);
   var selectedDate = (0,_date_format_js__WEBPACK_IMPORTED_MODULE_0__.parseDateValue)(input.value, format, locale);

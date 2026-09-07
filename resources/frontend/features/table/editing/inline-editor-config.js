@@ -13,7 +13,7 @@ export const INLINE_EDITOR_TYPES = Object.freeze([
 const MULTIPLE_TYPES = new Set(['checkbox', 'checklist'])
 
 export function readInlineEditorConfig(element) {
-    const type = element.dataset.soaInlineEditor
+    const type = element.dataset.inlineEditor
     assertType(type)
 
     return Object.freeze({
@@ -35,7 +35,7 @@ export function readInlineEditorConfig(element) {
 }
 
 function readOptionsSource(element) {
-    const id = element.dataset.soaInlineEditorOptionsId
+    const id = element.dataset.inlineEditorOptionsId
     if (!id) return element.dataset.options
 
     const script = element.ownerDocument?.getElementById(id)

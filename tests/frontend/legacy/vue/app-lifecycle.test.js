@@ -110,7 +110,7 @@ it('mounts dynamic nested islands once and destroys children before their parent
 
 it('leaves unknown component hosts pending until their definition is registered', () => {
     const pending = createElement('custom', true)
-    pending.dataset = { soaVueComponent: 'custom-status' }
+    pending.dataset = { vueComponent: 'custom-status' }
     const root = createElement('document', false, [pending])
     const events = []
     const vueApps = createVueAppRegistry(fakeAppFactory(events), {})

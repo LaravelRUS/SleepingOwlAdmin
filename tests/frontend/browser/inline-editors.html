@@ -36,35 +36,35 @@
             <button
                 id="editor-text"
                 type="button"
-                data-soa-inline-editor="text"
+                data-inline-editor="text"
                 data-name="title"
                 data-pk="2"
                 data-url="/api/inline-edit"
                 data-value="Draft"
                 data-mode="inline"
                 data-empty-text="empty"
-                data-soa-inline-editor-template-id="editor-text-template"
+                data-inline-editor-template-id="editor-text-template"
             >
                 Draft
             </button>
             <button
                 id="editor-textarea"
                 type="button"
-                data-soa-inline-editor="textarea"
+                data-inline-editor="textarea"
                 data-name="description"
                 data-pk="2"
                 data-url="/api/inline-edit"
                 data-value="Notes"
                 data-mode="popup"
                 data-empty-text="empty"
-                data-soa-inline-editor-template-id="editor-textarea-template"
+                data-inline-editor-template-id="editor-textarea-template"
             >
                 Notes
             </button>
             <button
                 id="editor-number"
                 type="button"
-                data-soa-inline-editor="number"
+                data-inline-editor="number"
                 data-name="amount"
                 data-pk="2"
                 data-url="/api/inline-edit"
@@ -74,14 +74,14 @@
                 data-min="1"
                 data-max="10"
                 data-step="1"
-                data-soa-inline-editor-template-id="editor-number-template"
+                data-inline-editor-template-id="editor-number-template"
             >
                 5
             </button>
             <button
                 id="editor-range"
                 type="button"
-                data-soa-inline-editor="range"
+                data-inline-editor="range"
                 data-name="progress"
                 data-pk="2"
                 data-url="/api/inline-edit"
@@ -91,23 +91,23 @@
                 data-min="0"
                 data-max="100"
                 data-step="10"
-                data-soa-inline-editor-template-id="editor-range-template"
+                data-inline-editor-template-id="editor-range-template"
             >
                 40
             </button>
             <button
                 id="editor-select"
                 type="button"
-                data-soa-inline-editor="select"
+                data-inline-editor="select"
                 data-name="state"
                 data-pk="2"
                 data-url="/api/inline-edit"
                 data-value="draft"
                 data-mode="popup"
                 data-title="State"
-                data-soa-inline-editor-options-id="editor-select-options"
+                data-inline-editor-options-id="editor-select-options"
                 data-empty-text="No items"
-                data-soa-inline-editor-template-id="editor-select-template"
+                data-inline-editor-template-id="editor-select-template"
             >
                 Draft
             </button>
@@ -120,16 +120,16 @@
             <button
                 id="editor-checklist"
                 type="button"
-                data-soa-inline-editor="checklist"
+                data-inline-editor="checklist"
                 data-name="roles"
                 data-pk="2"
                 data-url="/api/inline-edit"
                 data-value="1"
                 data-mode="popup"
                 data-title="Roles"
-                data-soa-inline-editor-options-id="editor-checklist-options"
+                data-inline-editor-options-id="editor-checklist-options"
                 data-empty-text="None"
-                data-soa-inline-editor-template-id="editor-checklist-template"
+                data-inline-editor-template-id="editor-checklist-template"
             >
                 Admin
             </button>
@@ -142,15 +142,15 @@
             <button
                 id="editor-checkbox"
                 type="button"
-                data-soa-inline-editor="checkbox"
+                data-inline-editor="checkbox"
                 data-name="active"
                 data-pk="2"
                 data-url="/api/inline-edit"
                 data-value="1"
                 data-mode="inline"
-                data-soa-inline-editor-options-id="editor-checkbox-options"
+                data-inline-editor-options-id="editor-checkbox-options"
                 data-empty-text="No"
-                data-soa-inline-editor-template-id="editor-checkbox-template"
+                data-inline-editor-template-id="editor-checkbox-template"
             >
                 Yes
             </button>
@@ -160,7 +160,7 @@
             <button
                 id="editor-date"
                 type="button"
-                data-soa-inline-editor="date"
+                data-inline-editor="date"
                 data-name="published_on"
                 data-pk="2"
                 data-url="/api/inline-edit"
@@ -168,14 +168,14 @@
                 data-mode="popup"
                 data-empty-text="empty"
                 data-date-format="DD.MM.YYYY"
-                data-soa-inline-editor-template-id="editor-date-template"
+                data-inline-editor-template-id="editor-date-template"
             >
                 06.09.2026
             </button>
             <button
                 id="editor-datetime"
                 type="button"
-                data-soa-inline-editor="datetime"
+                data-inline-editor="datetime"
                 data-name="published_at"
                 data-pk="2"
                 data-url="/api/inline-edit"
@@ -183,20 +183,20 @@
                 data-mode="popup"
                 data-empty-text="empty"
                 data-date-format="DD.MM.YYYY HH:mm"
-                data-soa-inline-editor-template-id="editor-datetime-template"
+                data-inline-editor-template-id="editor-datetime-template"
             >
                 06.09.2026 15:30
             </button>
 
-            <template id="editor-text-template" data-soa-inline-editor-template="text">
-                <article class="project-editor-shell" data-soa-inline-editor-root role="group">
+            <template id="editor-text-template" data-inline-editor-template="text">
+                <article class="project-editor-shell" data-inline-editor-root role="group">
                     <div class="project-editor-nesting">
-                        <form class="project-editor-form" data-soa-inline-editor-form>
+                        <form class="project-editor-form" data-inline-editor-form>
                             <div class="soa-inline-editor-input project-input-shell">
                                 <span>
                                     <input
                                         class="soa-inline-editor-control project-text-control"
-                                        data-soa-inline-editor-control
+                                        data-inline-editor-control
                                         type="text"
                                     />
                                 </span>
@@ -208,7 +208,7 @@
                                 <span>
                                     <button
                                         class="soa-inline-editor-cancel project-cancel"
-                                        data-soa-inline-editor-cancel
+                                        data-inline-editor-cancel
                                         type="button"
                                     >
                                         Dismiss
@@ -217,7 +217,7 @@
                             </div>
                             <div
                                 class="soa-inline-editor-error project-error"
-                                data-soa-inline-editor-error
+                                data-inline-editor-error
                                 role="alert"
                                 hidden
                             ></div>
@@ -225,98 +225,83 @@
                     </div>
                 </article>
             </template>
-            <template id="editor-textarea-template" data-soa-inline-editor-template="textarea">
-                <div class="soa-inline-editor soa-inline-editor-popup" data-soa-inline-editor-root>
-                    <form class="soa-inline-editor-form" data-soa-inline-editor-form>
+            <template id="editor-textarea-template" data-inline-editor-template="textarea">
+                <div class="soa-inline-editor soa-inline-editor-popup" data-inline-editor-root>
+                    <form class="soa-inline-editor-form" data-inline-editor-form>
                         <div class="soa-inline-editor-input">
                             <textarea
                                 class="soa-inline-editor-control"
-                                data-soa-inline-editor-control
+                                data-inline-editor-control
                             ></textarea>
                         </div>
                         <button class="soa-inline-editor-submit" type="submit">Save</button>
                         <button
                             class="soa-inline-editor-cancel"
-                            data-soa-inline-editor-cancel
+                            data-inline-editor-cancel
                             type="button"
                         >
                             Cancel
                         </button>
-                        <div
-                            class="soa-inline-editor-error"
-                            data-soa-inline-editor-error
-                            hidden
-                        ></div>
+                        <div class="soa-inline-editor-error" data-inline-editor-error hidden></div>
                     </form>
                 </div>
             </template>
-            <template id="editor-number-template" data-soa-inline-editor-template="number">
-                <div class="soa-inline-editor soa-inline-editor-inline" data-soa-inline-editor-root>
-                    <form class="soa-inline-editor-form" data-soa-inline-editor-form>
+            <template id="editor-number-template" data-inline-editor-template="number">
+                <div class="soa-inline-editor soa-inline-editor-inline" data-inline-editor-root>
+                    <form class="soa-inline-editor-form" data-inline-editor-form>
                         <div class="soa-inline-editor-input">
                             <input
                                 class="soa-inline-editor-control"
-                                data-soa-inline-editor-control
+                                data-inline-editor-control
                                 type="number"
                             />
                         </div>
                         <button class="soa-inline-editor-submit" type="submit">Save</button>
                         <button
                             class="soa-inline-editor-cancel"
-                            data-soa-inline-editor-cancel
+                            data-inline-editor-cancel
                             type="button"
                         >
                             Cancel
                         </button>
-                        <div
-                            class="soa-inline-editor-error"
-                            data-soa-inline-editor-error
-                            hidden
-                        ></div>
+                        <div class="soa-inline-editor-error" data-inline-editor-error hidden></div>
                     </form>
                 </div>
             </template>
-            <template id="editor-range-template" data-soa-inline-editor-template="range">
-                <div class="soa-inline-editor soa-inline-editor-inline" data-soa-inline-editor-root>
-                    <form class="soa-inline-editor-form" data-soa-inline-editor-form>
+            <template id="editor-range-template" data-inline-editor-template="range">
+                <div class="soa-inline-editor soa-inline-editor-inline" data-inline-editor-root>
+                    <form class="soa-inline-editor-form" data-inline-editor-form>
                         <div class="soa-inline-editor-input">
-                            <div class="soa-inline-editor-range" data-soa-inline-editor-control>
+                            <div class="soa-inline-editor-range" data-inline-editor-control>
                                 <input
                                     class="soa-inline-editor-control"
-                                    data-soa-inline-editor-range-input
+                                    data-inline-editor-range-input
                                     type="range"
                                 />
                                 <output
                                     class="soa-inline-editor-range-value"
-                                    data-soa-inline-editor-range-output
+                                    data-inline-editor-range-output
                                 ></output>
                             </div>
                         </div>
                         <button class="soa-inline-editor-submit" type="submit">Save</button>
                         <button
                             class="soa-inline-editor-cancel"
-                            data-soa-inline-editor-cancel
+                            data-inline-editor-cancel
                             type="button"
                         >
                             Cancel
                         </button>
-                        <div
-                            class="soa-inline-editor-error"
-                            data-soa-inline-editor-error
-                            hidden
-                        ></div>
+                        <div class="soa-inline-editor-error" data-inline-editor-error hidden></div>
                     </form>
                 </div>
             </template>
-            <template id="editor-select-template" data-soa-inline-editor-template="select">
-                <div class="soa-inline-editor soa-inline-editor-popup" data-soa-inline-editor-root>
-                    <form class="soa-inline-editor-form" data-soa-inline-editor-form>
+            <template id="editor-select-template" data-inline-editor-template="select">
+                <div class="soa-inline-editor soa-inline-editor-popup" data-inline-editor-root>
+                    <form class="soa-inline-editor-form" data-inline-editor-form>
                         <div class="soa-inline-editor-title">State</div>
                         <div class="soa-inline-editor-input">
-                            <select
-                                class="soa-inline-editor-control"
-                                data-soa-inline-editor-control
-                            >
+                            <select class="soa-inline-editor-control" data-inline-editor-control>
                                 <option value="draft">Draft</option>
                                 <option value="published">Published</option>
                             </select>
@@ -324,31 +309,27 @@
                         <button class="soa-inline-editor-submit" type="submit">Save</button>
                         <button
                             class="soa-inline-editor-cancel"
-                            data-soa-inline-editor-cancel
+                            data-inline-editor-cancel
                             type="button"
                         >
                             Cancel
                         </button>
-                        <div
-                            class="soa-inline-editor-error"
-                            data-soa-inline-editor-error
-                            hidden
-                        ></div>
+                        <div class="soa-inline-editor-error" data-inline-editor-error hidden></div>
                     </form>
                 </div>
             </template>
-            <template id="editor-checklist-template" data-soa-inline-editor-template="checklist">
-                <div class="soa-inline-editor soa-inline-editor-popup" data-soa-inline-editor-root>
-                    <form class="soa-inline-editor-form" data-soa-inline-editor-form>
+            <template id="editor-checklist-template" data-inline-editor-template="checklist">
+                <div class="soa-inline-editor soa-inline-editor-popup" data-inline-editor-root>
+                    <form class="soa-inline-editor-form" data-inline-editor-form>
                         <div class="soa-inline-editor-input">
                             <fieldset
                                 class="soa-inline-editor-checklist"
-                                data-soa-inline-editor-control
+                                data-inline-editor-control
                             >
                                 <label class="soa-inline-editor-check-option">
                                     <input
                                         class="soa-inline-editor-check-input"
-                                        data-soa-inline-editor-check-input
+                                        data-inline-editor-check-input
                                         type="checkbox"
                                         value="1"
                                     />
@@ -357,7 +338,7 @@
                                 <label class="soa-inline-editor-check-option">
                                     <input
                                         class="soa-inline-editor-check-input"
-                                        data-soa-inline-editor-check-input
+                                        data-inline-editor-check-input
                                         type="checkbox"
                                         value="2"
                                     />
@@ -368,31 +349,27 @@
                         <button class="soa-inline-editor-submit" type="submit">Save</button>
                         <button
                             class="soa-inline-editor-cancel"
-                            data-soa-inline-editor-cancel
+                            data-inline-editor-cancel
                             type="button"
                         >
                             Cancel
                         </button>
-                        <div
-                            class="soa-inline-editor-error"
-                            data-soa-inline-editor-error
-                            hidden
-                        ></div>
+                        <div class="soa-inline-editor-error" data-inline-editor-error hidden></div>
                     </form>
                 </div>
             </template>
-            <template id="editor-checkbox-template" data-soa-inline-editor-template="checkbox">
-                <div class="soa-inline-editor soa-inline-editor-inline" data-soa-inline-editor-root>
-                    <form class="soa-inline-editor-form" data-soa-inline-editor-form>
+            <template id="editor-checkbox-template" data-inline-editor-template="checkbox">
+                <div class="soa-inline-editor soa-inline-editor-inline" data-inline-editor-root>
+                    <form class="soa-inline-editor-form" data-inline-editor-form>
                         <div class="soa-inline-editor-input">
                             <fieldset
                                 class="soa-inline-editor-checklist"
-                                data-soa-inline-editor-control
+                                data-inline-editor-control
                             >
                                 <label class="soa-inline-editor-check-option">
                                     <input
                                         class="soa-inline-editor-check-input"
-                                        data-soa-inline-editor-check-input
+                                        data-inline-editor-check-input
                                         type="checkbox"
                                         value="1"
                                     />
@@ -403,70 +380,58 @@
                         <button class="soa-inline-editor-submit" type="submit">Save</button>
                         <button
                             class="soa-inline-editor-cancel"
-                            data-soa-inline-editor-cancel
+                            data-inline-editor-cancel
                             type="button"
                         >
                             Cancel
                         </button>
-                        <div
-                            class="soa-inline-editor-error"
-                            data-soa-inline-editor-error
-                            hidden
-                        ></div>
+                        <div class="soa-inline-editor-error" data-inline-editor-error hidden></div>
                     </form>
                 </div>
             </template>
-            <template id="editor-date-template" data-soa-inline-editor-template="date">
-                <div class="soa-inline-editor soa-inline-editor-popup" data-soa-inline-editor-root>
-                    <form class="soa-inline-editor-form" data-soa-inline-editor-form>
+            <template id="editor-date-template" data-inline-editor-template="date">
+                <div class="soa-inline-editor soa-inline-editor-popup" data-inline-editor-root>
+                    <form class="soa-inline-editor-form" data-inline-editor-form>
                         <div class="soa-inline-editor-input">
                             <input
                                 class="soa-inline-editor-control"
-                                data-soa-inline-editor-control
-                                data-soa-date-control="date"
+                                data-inline-editor-control
+                                data-date-control="date"
                                 type="text"
                             />
                         </div>
                         <button class="soa-inline-editor-submit" type="submit">Save</button>
                         <button
                             class="soa-inline-editor-cancel"
-                            data-soa-inline-editor-cancel
+                            data-inline-editor-cancel
                             type="button"
                         >
                             Cancel
                         </button>
-                        <div
-                            class="soa-inline-editor-error"
-                            data-soa-inline-editor-error
-                            hidden
-                        ></div>
+                        <div class="soa-inline-editor-error" data-inline-editor-error hidden></div>
                     </form>
                 </div>
             </template>
-            <template id="editor-datetime-template" data-soa-inline-editor-template="datetime">
-                <div class="soa-inline-editor soa-inline-editor-popup" data-soa-inline-editor-root>
-                    <form class="soa-inline-editor-form" data-soa-inline-editor-form>
+            <template id="editor-datetime-template" data-inline-editor-template="datetime">
+                <div class="soa-inline-editor soa-inline-editor-popup" data-inline-editor-root>
+                    <form class="soa-inline-editor-form" data-inline-editor-form>
                         <div class="soa-inline-editor-input">
                             <input
                                 class="soa-inline-editor-control"
-                                data-soa-inline-editor-control
-                                data-soa-date-control="datetime"
+                                data-inline-editor-control
+                                data-date-control="datetime"
                                 type="text"
                             />
                         </div>
                         <button class="soa-inline-editor-submit" type="submit">Save</button>
                         <button
                             class="soa-inline-editor-cancel"
-                            data-soa-inline-editor-cancel
+                            data-inline-editor-cancel
                             type="button"
                         >
                             Cancel
                         </button>
-                        <div
-                            class="soa-inline-editor-error"
-                            data-soa-inline-editor-error
-                            hidden
-                        ></div>
+                        <div class="soa-inline-editor-error" data-inline-editor-error hidden></div>
                     </form>
                 </div>
             </template>

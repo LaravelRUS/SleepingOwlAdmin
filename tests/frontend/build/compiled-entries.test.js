@@ -105,8 +105,8 @@ describe('compiled core boundaries', () => {
         const core = readFileSync(resolve(root, 'public/default/css/admin-core.css'), 'utf8')
 
         expect(core).toContain('@layer sleepingowl-core, sleepingowl-feature, sleepingowl-theme')
-        expect(core).toContain('[data-soa-cloak]')
-        expect(core).toContain('[data-soa-visually-hidden]')
+        expect(core).toContain('[data-cloak]')
+        expect(core).toContain('[data-visually-hidden]')
         expect(core).not.toMatch(/bootstrap|adminlte|tailwind|dataTables/i)
     })
 })
@@ -230,7 +230,7 @@ describe('compiled runtime properties', () => {
         )
         const legacy = readFileSync(resolve(root, 'public/default/css/admin-app.css'), 'utf8')
 
-        expect(theme).toContain('data-soa-color-scheme')
+        expect(theme).toContain('data-color-scheme')
         expect(theme).toContain('var(--soa-sidebar-bg')
         expect(legacy).toContain('var(--soa-sidebar-bg')
     })

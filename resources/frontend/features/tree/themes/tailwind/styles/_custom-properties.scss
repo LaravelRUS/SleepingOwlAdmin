@@ -27,7 +27,7 @@
         --soa-tree-shadow-blur: #{variables.$shadow-blur};
     }
 
-    :root[data-soa-color-scheme='dark'] {
+    :root[data-color-scheme='dark'] {
         --soa-tree-surface: #{colors.$dark-surface};
         --soa-tree-text: #{colors.$dark-text};
         --soa-tree-border: #{colors.$dark-border};

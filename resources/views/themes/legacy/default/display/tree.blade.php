@@ -31,19 +31,19 @@
                 ->class(['soa-tree', 'pb-3']);
         @endphp
         <div {!! $treeAttributes !!}
-             data-soa-tree
-             data-soa-tree-parameters-id="{{ $treeParametersId }}"
+             data-tree
+             data-tree-parameters-id="{{ $treeParametersId }}"
              data-url="{{ $url }}/reorder"
              data-reorderable="{{ $reorderable ? 'true' : 'false' }}">
             @if($max_depth > 1)
                 <menu class="soa-tree-menu no-gutters p-3">
-                    <button type="button" data-soa-tree-action="expand-all"
+                    <button type="button" data-tree-action="expand-all"
                             class="btn btn-primary btn-sm">@lang('sleeping_owl::lang.tree.expand')</button>
-                    <button type="button" data-soa-tree-action="collapse-all"
+                    <button type="button" data-tree-action="collapse-all"
                             class="btn btn-secondary btn-sm">@lang('sleeping_owl::lang.tree.collapse')</button>
                 </menu>
             @endif
-            <ol class="soa-tree-list" data-soa-tree-list data-soa-tree-root>
+            <ol class="soa-tree-list" data-tree-list data-tree-root>
                 @include(AdminTemplate::getViewPath('display.tree_children'), [
                     'children' => $items,
                     'depth' => 1,

@@ -120,13 +120,13 @@ labels and error region. Nine independently overrideable views below
 JavaScript requires only the following structural hooks:
 
 ```text
-data-soa-inline-editor-template-id
-data-soa-inline-editor-template
-data-soa-inline-editor-root
-data-soa-inline-editor-form
-data-soa-inline-editor-control
-data-soa-inline-editor-cancel
-data-soa-inline-editor-error
+data-inline-editor-template-id
+data-inline-editor-template
+data-inline-editor-root
+data-inline-editor-form
+data-inline-editor-control
+data-inline-editor-cancel
+data-inline-editor-error
 ```
 
 Checklist inputs and range input/output elements have type-specific hooks.

@@ -34,9 +34,9 @@ it('keeps visible tree controls in the Blade item template', () => {
 
     expect(view).not.toContain('createElement')
     expect(view).not.toContain("toggle.textContent = collapsed ? '+' : '−'")
-    expect(template).toContain('data-soa-tree-toggle')
-    expect(template).toContain('data-soa-tree-toggle-expanded')
-    expect(template).toContain('data-soa-tree-toggle-collapsed')
+    expect(template).toContain('data-tree-toggle')
+    expect(template).toContain('data-tree-toggle-expanded')
+    expect(template).toContain('data-tree-toggle-collapsed')
 })
 
 function read(path) {

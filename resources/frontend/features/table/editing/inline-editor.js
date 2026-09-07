@@ -4,7 +4,7 @@ import { applyInlineEditorValue } from './inline-editor-value.js'
 import { createInlineEditorView } from './inline-editor-view.js'
 
 export const INLINE_EDITOR_COMPONENT = 'inline-editor'
-export const INLINE_EDITOR_SELECTOR = '[data-soa-inline-editor]'
+export const INLINE_EDITOR_SELECTOR = '[data-inline-editor]'
 
 export function createInlineEditorDefinition(dependencies) {
     const settings = normalizeDependencies(dependencies)

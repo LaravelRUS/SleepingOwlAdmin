@@ -16,7 +16,7 @@
         --soa-tabs-focus-width: #{variables.$tab-focus-width};
     }
 
-    :root[data-soa-color-scheme='dark'] {
+    :root[data-color-scheme='dark'] {
         --soa-tabs-text: #{colors.$dark-tab-text};
         --soa-tabs-active-text: #{colors.$dark-tab-active-text};
         --soa-tabs-active-surface: #{colors.$dark-tab-active-surface};

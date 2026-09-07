@@ -13,7 +13,7 @@
         --soa-tooltip-shadow: #{variables.$shadow} #{colors.$shadow};
     }
 
-    :root[data-soa-color-scheme='dark'] {
+    :root[data-color-scheme='dark'] {
         --soa-tooltip-surface: #{colors.$dark-surface};
         --soa-tooltip-text: #{colors.$dark-text};
     }

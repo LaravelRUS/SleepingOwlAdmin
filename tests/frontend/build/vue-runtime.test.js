@@ -105,7 +105,7 @@ describe('Vue asset profiles', () => {
 
 describe('bounded legacy Vue apps', () => {
     it.each(legacyVueViews)('marks the Vue host in %s', (path) => {
-        expect(readSource(path)).toContain('data-soa-vue-app')
+        expect(readSource(path)).toContain('data-vue-app')
     })
 
     it('mounts bounded hosts through the tolerant shared lifecycle', () => {
@@ -163,15 +163,15 @@ describe('precompiled Vue islands', () => {
         const component = readSource('resources/assets/js_owl/admin/display/env-editor.vue')
 
         expect(readSource('webpack.mix.js')).toContain('mix.vue({ version: 3 })')
-        expect(view).toContain('data-soa-vue-component="env_editor"')
-        expect(view).toContain('data-soa-vue-props=')
+        expect(view).toContain('data-vue-component="env_editor"')
+        expect(view).toContain('data-vue-props=')
         expect(view).toContain('v-pre')
         expect(view).toContain("'removeCell' => 'row-link align-middle'")
         expect(view).toContain("'saveIcon' => 'fas fa-check'")
         expect(view).not.toContain('inline-template')
         expect(component).toContain('<template>')
         expect(component).toContain(':class="classes.card"')
-        expect(component).toContain('data-soa-env-remove')
+        expect(component).toContain('data-env-remove')
         expect(component).not.toContain('style="vertical-align: inherit"')
         expect(component).not.toMatch(/class="(?:card|table|row-|form-control|btn|pull-right|fas)/)
         expect(component).not.toContain('withLegacyInlineTemplate')
@@ -182,8 +182,8 @@ describe('precompiled Vue islands', () => {
         const component = readSource('resources/assets/js_owl/admin/form/file.vue')
         const dropzone = readSource('resources/assets/js_owl/libs/dropzone.js')
 
-        expect(view).toContain('data-soa-vue-component="element-file"')
-        expect(view).toContain('data-soa-vue-props=')
+        expect(view).toContain('data-vue-component="element-file"')
+        expect(view).toContain('data-vue-props=')
         expect(view).toContain('v-pre')
         expect(view).toContain("'alert' => 'alert alert-warning'")
         expect(view).toContain("'uploadingIcon' => 'fas fa-spinner fa-spin'")
@@ -213,7 +213,7 @@ it('keeps both related theme shells in Blade', () => {
 
     expect(card).toContain('card card-outline card-info')
     expect(plain).toContain('HtmlAttributeBag')
-    expect(group).toContain('data-soa-related-remove')
+    expect(group).toContain('data-related-remove')
     expect([card, plain, group].join('\n')).not.toContain('inline-template')
 })
 
@@ -222,8 +222,8 @@ it('passes trusted related group HTML through referenced JSON props', () => {
         'resources/views/themes/legacy/default/form/element/related/inner_element.blade.php',
     )
 
-    expect(island).toContain('data-soa-vue-component="related-elements"')
-    expect(island).toContain('data-soa-vue-props-id=')
+    expect(island).toContain('data-vue-component="related-elements"')
+    expect(island).toContain('data-vue-props-id=')
     expect(island).toContain('Illuminate\\Support\\Js::encode')
     expect(island).toContain("'root' => 'grouped-elements clearfix'")
     expect(island).toContain("'addIcon' => 'fas fa-plus'")
@@ -269,13 +269,13 @@ describe('precompiled select island', () => {
         const component = readSource('resources/assets/js_owl/admin/form/select.vue')
         const catalog = readSource('resources/assets/js_owl/admin/vue-components.js')
 
-        expect(partial).toContain('data-soa-vue-component="element-select"')
-        expect(partial).toContain('data-soa-vue-props=')
+        expect(partial).toContain('data-vue-component="element-select"')
+        expect(partial).toContain('data-vue-props=')
         expect(partial).toContain('v-pre')
         expect(partial).toContain("'required' => 'text-danger pt-2 pb-3'")
         expect(component).toContain('<template>')
         expect(component).toContain(':class="classes.required"')
-        expect(component).toContain('data-soa-select-required')
+        expect(component).toContain('data-select-required')
         expect(component).toContain('v-bind="attributes"')
         expect(component).toContain("new EventConstructor('change', { bubbles: true })")
         expect(component).toContain("import Multiselect from 'vue-multiselect'")
@@ -327,8 +327,8 @@ describe('precompiled image island', () => {
         const catalog = readSource('resources/assets/js_owl/admin/vue-components.js')
 
         expect(existsSync(resolve(root, 'resources/assets/js_owl/admin/form/image.js'))).toBe(false)
-        expect(view).toContain('data-soa-vue-component="element-image"')
-        expect(view).toContain('data-soa-vue-props=')
+        expect(view).toContain('data-vue-component="element-image"')
+        expect(view).toContain('data-vue-props=')
         expect(view).toContain('v-pre')
         expect(view).not.toContain('inline-template')
         expect(component).toContain('<template>')
@@ -349,8 +349,8 @@ describe('precompiled images island', () => {
         expect(existsSync(resolve(root, 'resources/assets/js_owl/admin/form/images.js'))).toBe(
             false,
         )
-        expect(view).toContain('data-soa-vue-component="element-images"')
-        expect(view).toContain('data-soa-vue-props=')
+        expect(view).toContain('data-vue-component="element-images"')
+        expect(view).toContain('data-vue-props=')
         expect(view).toContain('v-pre')
         expect(view).not.toContain('inline-template')
         expect(component).toContain('<template>')

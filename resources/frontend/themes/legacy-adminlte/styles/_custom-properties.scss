@@ -23,7 +23,7 @@
     --soa-layout-transition-duration: #{variables.$layout-transition-duration};
   }
 
-  :root[data-soa-color-scheme='dark'] {
+  :root[data-color-scheme='dark'] {
     --soa-surface-color: #{colors.$dark-surface};
     --soa-page-background-color: #{colors.$dark-page-background};
     --soa-text-color: #{colors.$dark-text};

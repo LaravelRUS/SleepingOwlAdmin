@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 @php($colorScheme = ($_COOKIE['theme-mode'] ?? 'light') === 'dark' ? 'dark' : 'light')
-<html lang="{{ app()->getLocale() }}" data-soa-color-scheme="{{ $colorScheme }}">
+<html lang="{{ app()->getLocale() }}" data-color-scheme="{{ $colorScheme }}">
 <head>
 	{!! $template->renderMeta($title) !!}
 	@include('sleeping_owl::shared.theme.runtime_properties')

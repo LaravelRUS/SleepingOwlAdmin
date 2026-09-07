@@ -13,7 +13,7 @@ function control(overrides = {}) {
     }
     const input = {
         closest: () => ({ querySelector: () => addon }),
-        dataset: { dateFormat: 'DD.MM.YYYY', soaDateControl: 'date' },
+        dataset: { dateFormat: 'DD.MM.YYYY', dateControl: 'date' },
         disabled: false,
         focus: vi.fn(),
         readOnly: false,
@@ -61,6 +61,6 @@ it('publishes a lifecycle definition with a precise behavior selector', () => {
 
     expect(definition).toMatchObject({
         name: 'date-control',
-        selector: 'input[data-soa-date-control]',
+        selector: 'input[data-date-control]',
     })
 })

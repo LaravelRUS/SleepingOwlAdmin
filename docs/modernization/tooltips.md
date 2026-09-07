@@ -39,9 +39,9 @@ The default layout includes the logical view `default._partials.tooltip`. It ren
 inert template rather than a live popup:
 
 ```html
-<template data-soa-tooltip-template>
-    <div data-soa-tooltip-popup role="tooltip">
-        <span data-soa-tooltip-content></span>
+<template data-tooltip-template>
+    <div data-tooltip-popup role="tooltip">
+        <span data-tooltip-content></span>
     </div>
 </template>
 ```
@@ -52,7 +52,7 @@ three structural hooks. The text hook is populated with `textContent`; classes a
 resolved or translated by PHP or JavaScript.
 
 Minimal custom themes may omit the optional template. In that case the adapter creates
-one neutral classless `<div data-soa-tooltip-popup role="tooltip">` as a compatibility
+one neutral classless `<div data-tooltip-popup role="tooltip">` as a compatibility
 fallback. This is the only presentation-DOM fallback; the normal built-in and project
 theme path is Blade-owned and requires no consumer asset rebuild.
 
@@ -77,4 +77,4 @@ only the implementation and never invokes Bootstrap's `$(element).tooltip()` API
 Presentation belongs to the selected theme. The common feature stylesheet contains only
 positioning behavior; AdminLTE and Tailwind provide separate Sass adapters and
 `--soa-tooltip-*` properties. A custom theme can override the Blade template and style
-the same `data-soa-tooltip-popup` hook without importing either built-in theme.
+the same `data-tooltip-popup` hook without importing either built-in theme.

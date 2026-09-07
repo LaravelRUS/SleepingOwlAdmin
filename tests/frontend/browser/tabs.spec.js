@@ -59,7 +59,7 @@ test('delegated controller activates a dynamically inserted tablist', async ({ p
             .querySelector('main')
             .insertAdjacentHTML(
                 'beforeend',
-                '<div role="tablist"><button data-soa-tab id="dynamic-tab" aria-controls="dynamic-panel">Dynamic</button></div><section id="dynamic-panel" hidden>Dynamic panel</section>',
+                '<div role="tablist"><button data-tab id="dynamic-tab" aria-controls="dynamic-panel">Dynamic</button></div><section id="dynamic-panel" hidden>Dynamic panel</section>',
             )
     })
 

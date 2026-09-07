@@ -36,9 +36,9 @@ class DefaultThemeRenderContractTest extends TestCase
             '<section data-contract="content">Body</section>',
             '<footer class="main-footer small">',
             '<div id="sidebar-overlay"></div>',
-            '<template data-soa-tooltip-template>',
-            '<div data-soa-tooltip-popup role="tooltip">',
-            '<span data-soa-tooltip-content></span>',
+            '<template data-tooltip-template>',
+            '<div data-tooltip-popup role="tooltip">',
+            '<span data-tooltip-content></span>',
             '<span data-contract="scripts"></span>',
         ]);
     }
@@ -61,11 +61,11 @@ class DefaultThemeRenderContractTest extends TestCase
         ])->render();
 
         $this->assertContainsAll($html, [
-            '<aside class="project-tooltip-shell" data-soa-tooltip-popup role="tooltip">',
+            '<aside class="project-tooltip-shell" data-tooltip-popup role="tooltip">',
             '<span class="project-tooltip-nesting">',
-            '<strong data-soa-tooltip-content></strong>',
+            '<strong data-tooltip-content></strong>',
         ]);
-        $this->assertStringNotContainsString('<div data-soa-tooltip-popup', $html);
+        $this->assertStringNotContainsString('<div data-tooltip-popup', $html);
     }
 
     public function test_navigation_parent_keeps_nested_active_state_and_attributes(): void

@@ -15,7 +15,7 @@
     --soa-inline-editor-shadow: #{colors.$inline-editor-shadow};
   }
 
-  :root[data-soa-color-scheme='dark'] {
+  :root[data-color-scheme='dark'] {
     --soa-table-row-hover-color: #{colors.$dark-row-hover};
     --soa-table-row-selected-color: #{colors.$dark-row-selected};
     --soa-inline-editor-surface: #{colors.$dark-inline-editor-surface};

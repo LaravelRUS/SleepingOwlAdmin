@@ -1,5 +1,5 @@
-export const TAB_SELECTOR = '[data-soa-tab], [data-toggle="tab"]'
-export const TAB_LIST_SELECTOR = '[data-soa-tablist], [role="tablist"]'
+export const TAB_SELECTOR = '[data-tab], [data-toggle="tab"]'
+export const TAB_LIST_SELECTOR = '[data-tablist], [role="tablist"]'
 
 export function findTab(root, target) {
     const tab = target?.closest?.(TAB_SELECTOR)

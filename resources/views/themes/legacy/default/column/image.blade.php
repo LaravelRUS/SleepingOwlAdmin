@@ -1,7 +1,7 @@
 <div {!! new \SleepingOwl\Admin\Support\HtmlAttributeBag($attributesArray ?? []) !!}>
 	@if ($visibled)
 		@if (!empty($value))
-			<a href="{{ $value }}" data-soa-lightbox>
+			<a href="{{ $value }}" data-lightbox>
 				@if ($lazy)
 					<img class="thumbnail lazyload" src="{{ config('sleeping_owl.imageLazyLoadFile') }}" data-src="{{ $value }}" width="{{ $imageWidth }}">
 				@else

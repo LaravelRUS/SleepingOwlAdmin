@@ -5,9 +5,9 @@ export function createImagesSortable(Sortable, element, onReorder) {
 export function imagesSortableOptions(onReorder) {
     return {
         animation: 150,
-        draggable: '[data-soa-images-item]',
+        draggable: '[data-images-item]',
         ghostClass: 'soa-images__item--moving',
-        handle: '[data-soa-images-drag-handle]',
+        handle: '[data-images-drag-handle]',
         onEnd: (event) => notifyReorder(event, onReorder),
     }
 }

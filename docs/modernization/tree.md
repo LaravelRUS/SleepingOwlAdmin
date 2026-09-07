@@ -25,15 +25,15 @@ theme owns its standard card, controls, and presentation markup.
 The stable behavior markers are:
 
 ```text
-data-soa-tree
-data-soa-tree-root
-data-soa-tree-list
-data-soa-tree-item
-data-soa-tree-handle
-data-soa-tree-action
-data-soa-tree-toggle
-data-soa-tree-toggle-expanded
-data-soa-tree-toggle-collapsed
+data-tree
+data-tree-root
+data-tree-list
+data-tree-item
+data-tree-handle
+data-tree-action
+data-tree-toggle
+data-tree-toggle-expanded
+data-tree-toggle-collapsed
 ```
 
 `default.display.tree_children` renders each available toggle and both of its
@@ -84,7 +84,7 @@ request cannot overwrite a later drag with stale order.
 After a successful save the host dispatches the bubbling native
 `tree:changed` event with serialized `data`. The compatibility event
 `display.tree::changed` remains available through `Admin.Events`. A failed
-request leaves `data-soa-tree-save-state="error"`, dispatches the bubbling
+request leaves `data-tree-save-state="error"`, dispatches the bubbling
 `tree:failed` event, and uses the selected theme's notification adapter.
 
 ## Theme and asset ownership

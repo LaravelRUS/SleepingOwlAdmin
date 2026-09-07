@@ -1580,7 +1580,7 @@ var INLINE_EDITOR_TYPES = Object.freeze(['checkbox', 'checklist', 'date', 'datet
 var MULTIPLE_TYPES = new Set(['checkbox', 'checklist']);
 function readInlineEditorConfig(element) {
   var _element$dataset$date, _element$dataset$empt, _element$dataset$max, _element$dataset$min, _element$dataset$step, _element$dataset$titl;
-  var type = element.dataset.soaInlineEditor;
+  var type = element.dataset.inlineEditor;
   assertType(type);
   return Object.freeze({
     dateFormat: (_element$dataset$date = element.dataset.dateFormat) !== null && _element$dataset$date !== void 0 ? _element$dataset$date : '',
@@ -1601,7 +1601,7 @@ function readInlineEditorConfig(element) {
 }
 function readOptionsSource(element) {
   var _element$ownerDocumen;
-  var id = element.dataset.soaInlineEditorOptionsId;
+  var id = element.dataset.inlineEditorOptionsId;
   if (!id) return element.dataset.options;
   var script = (_element$ownerDocumen = element.ownerDocument) === null || _element$ownerDocumen === void 0 ? void 0 : _element$ownerDocumen.getElementById(id);
   if (!script) throw new Error("Inline editor options [".concat(id, "] were not found."));
@@ -1666,9 +1666,9 @@ function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) 
 function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
 function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
-var CHECK_INPUT_SELECTOR = '[data-soa-inline-editor-check-input]';
-var RANGE_INPUT_SELECTOR = '[data-soa-inline-editor-range-input]';
-var RANGE_OUTPUT_SELECTOR = '[data-soa-inline-editor-range-output]';
+var CHECK_INPUT_SELECTOR = '[data-inline-editor-check-input]';
+var RANGE_INPUT_SELECTOR = '[data-inline-editor-range-input]';
+var RANGE_OUTPUT_SELECTOR = '[data-inline-editor-range-output]';
 function bindInlineEditorControl(element, config) {
   if (config.type === 'checkbox' || config.type === 'checklist') {
     return bindChecklist(element, config.value);
@@ -1734,7 +1734,7 @@ function syncNumberAttributes(input, config) {
 }
 function syncDateAttributes(input, config) {
   if (config.type !== 'date' && config.type !== 'datetime') return;
-  input.dataset.soaDateControl = config.type;
+  input.dataset.dateControl = config.type;
   input.dataset.dateFormat = config.dateFormat;
 }
 function syncOptionalAttribute(element, name, value) {
@@ -1959,13 +1959,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "cloneInlineEditorTemplate": () => (/* binding */ cloneInlineEditorTemplate)
 /* harmony export */ });
-var TEMPLATE_ID_ATTRIBUTE = 'soaInlineEditorTemplateId';
-var TEMPLATE_SELECTOR = '[data-soa-inline-editor-template]';
-var ROOT_SELECTOR = '[data-soa-inline-editor-root]';
-var FORM_SELECTOR = '[data-soa-inline-editor-form]';
-var CONTROL_SELECTOR = '[data-soa-inline-editor-control]';
-var CANCEL_SELECTOR = '[data-soa-inline-editor-cancel]';
-var ERROR_SELECTOR = '[data-soa-inline-editor-error]';
+var TEMPLATE_ID_ATTRIBUTE = 'inlineEditorTemplateId';
+var TEMPLATE_SELECTOR = '[data-inline-editor-template]';
+var ROOT_SELECTOR = '[data-inline-editor-root]';
+var FORM_SELECTOR = '[data-inline-editor-form]';
+var CONTROL_SELECTOR = '[data-inline-editor-control]';
+var CANCEL_SELECTOR = '[data-inline-editor-cancel]';
+var ERROR_SELECTOR = '[data-inline-editor-error]';
 function cloneInlineEditorTemplate(trigger) {
   var template = readTemplate(trigger);
   var root = cloneSingleRoot(template);
@@ -2172,7 +2172,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 
 
 var INLINE_EDITOR_COMPONENT = 'inline-editor';
-var INLINE_EDITOR_SELECTOR = '[data-soa-inline-editor]';
+var INLINE_EDITOR_SELECTOR = '[data-inline-editor]';
 function createInlineEditorDefinition(dependencies) {
   var settings = normalizeDependencies(dependencies);
   return {
@@ -3868,7 +3868,7 @@ function updateRowSelection(checkbox) {
   if (!row) {
     return;
   }
-  row.toggleAttribute('data-soa-selected', checkbox.checked);
+  row.toggleAttribute('data-selected', checkbox.checked);
   row.setAttribute('aria-selected', String(checkbox.checked));
   if (selectedRowClass) {
     row.classList.toggle(selectedRowClass, checkbox.checked);

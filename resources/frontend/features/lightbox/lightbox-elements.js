@@ -1,4 +1,4 @@
-export const LIGHTBOX_TRIGGER_SELECTOR = '[data-soa-lightbox], [data-toggle="lightbox"]'
+export const LIGHTBOX_TRIGGER_SELECTOR = '[data-lightbox], [data-toggle="lightbox"]'
 
 export function findLightboxTrigger(root, target) {
     const trigger = target?.closest?.(LIGHTBOX_TRIGGER_SELECTOR)

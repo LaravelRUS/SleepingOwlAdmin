@@ -1,1 +1,1 @@
-:root{--soa-tree-empty-target-color:transparent;--soa-tree-empty-target-size:1.25rem}@layer sleepingowl-feature.tree{[data-soa-tree-dragging] [data-soa-tree-list]:empty{background:var(--soa-tree-empty-target-color);min-block-size:var(--soa-tree-empty-target-size)}}
+:root{--soa-tree-empty-target-color:transparent;--soa-tree-empty-target-size:1.25rem}@layer sleepingowl-feature.tree{[data-tree-dragging] [data-tree-list]:empty{background:var(--soa-tree-empty-target-color);min-block-size:var(--soa-tree-empty-target-size)}}

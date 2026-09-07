@@ -28547,7 +28547,7 @@
   --soa-layout-transition-duration: 300ms;
 }
 
-:root[data-soa-color-scheme=dark] {
+:root[data-color-scheme=dark] {
   --soa-surface-color: #343a40;
   --soa-page-background-color: #454d55;
   --soa-text-color: #fff;

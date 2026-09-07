@@ -5,7 +5,7 @@
 }
 
 @layer sleepingowl-feature.tree {
-  [data-soa-tree-dragging] [data-soa-tree-list]:empty {
+  [data-tree-dragging] [data-tree-list]:empty {
     min-block-size: var(--soa-tree-empty-target-size);
     background: var(--soa-tree-empty-target-color);
   }

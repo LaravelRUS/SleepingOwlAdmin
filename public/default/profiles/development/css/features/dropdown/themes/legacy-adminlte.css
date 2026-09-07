@@ -19,7 +19,7 @@
   --soa-dropdown-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.175);
 }
 
-:root[data-soa-color-scheme=dark],
+:root[data-color-scheme=dark],
 .dark-mode {
   --soa-dropdown-surface: #343a40;
   --soa-dropdown-text: #f8f9fa;

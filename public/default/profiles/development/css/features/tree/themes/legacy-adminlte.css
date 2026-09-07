@@ -23,7 +23,7 @@
   --soa-tree-shadow-blur: 1rem;
 }
 
-:root[data-soa-color-scheme=dark] {
+:root[data-color-scheme=dark] {
   --soa-tree-surface: #343a40;
   --soa-tree-text: #f8f9fa;
   --soa-tree-border: #6c757d;

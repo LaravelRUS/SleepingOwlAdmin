@@ -1,5 +1,5 @@
 @mixin styles {
-    [data-soa-tooltip-popup] {
+    [data-tooltip-popup] {
         padding: var(--soa-tooltip-padding-block) var(--soa-tooltip-padding-inline);
         border-radius: var(--soa-tooltip-radius);
         background: var(--soa-tooltip-surface);

@@ -18,7 +18,7 @@ it('uses the native tab marker in package-owned tab views', () => {
         'resources/views/themes/legacy/default/display/tab.blade.php',
         'resources/views/themes/legacy/default/form/tabbed.blade.php',
     ]) {
-        expect(read(file)).toContain('data-soa-tab')
+        expect(read(file)).toContain('data-tab')
         expect(read(file)).not.toContain('data-toggle')
     }
 })

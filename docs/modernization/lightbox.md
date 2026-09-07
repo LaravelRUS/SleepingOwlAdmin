@@ -12,7 +12,7 @@ Package-owned image columns, Gravatar columns, the single-image Vue island,
 and the legacy multiple-file element use the stable behavior marker:
 
 ```html
-<a href="/images/full.jpg" data-soa-lightbox>
+<a href="/images/full.jpg" data-lightbox>
     <img src="/images/thumbnail.jpg" alt="Preview" />
 </a>
 ```
@@ -24,7 +24,7 @@ inserts its title through `innerHTML`; user content is rendered only as text.
 
 The previous `data-toggle="lightbox"` marker remains a deprecated compatibility
 selector for existing published/custom views. New markup should use only
-`data-soa-lightbox`; PHP does not generate framework-specific classes or map
+`data-lightbox`; PHP does not generate framework-specific classes or map
 user classes.
 
 ## Dynamic content and galleries
@@ -40,8 +40,8 @@ An ungrouped link opens as a single image, preserving the old behavior. Links
 with the same non-empty `data-gallery` value form one gallery in document order:
 
 ```html
-<a href="/images/one.jpg" data-soa-lightbox data-gallery="product"></a>
-<a href="/images/two.jpg" data-soa-lightbox data-gallery="product"></a>
+<a href="/images/one.jpg" data-lightbox data-gallery="product"></a>
+<a href="/images/two.jpg" data-lightbox data-gallery="product"></a>
 ```
 
 The grouping is resolved when the user clicks, so newly inserted links are

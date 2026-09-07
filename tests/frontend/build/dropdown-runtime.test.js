@@ -18,9 +18,9 @@ it('keeps the public marker without introducing replacement attributes', () => {
     const elements = read('resources/frontend/features/dropdown/dropdown-elements.js')
 
     expect(view).toContain('data-toggle="dropdown"')
-    expect(view).not.toContain('data-soa-dropdown')
+    expect(view).not.toContain('data-dropdown')
     expect(elements).toContain('[data-toggle="dropdown"]')
-    expect(elements).not.toContain('data-soa-dropdown')
+    expect(elements).not.toContain('data-dropdown')
 })
 
 it('ships independent behavior and AdminLTE/Tailwind Sass adapters', () => {

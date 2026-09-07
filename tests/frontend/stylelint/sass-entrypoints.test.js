@@ -88,8 +88,8 @@ describe('Core Sass boundary', () => {
             .map((path) => readFileSync(resolve(coreRoot, path), 'utf8'))
             .join('\n')
 
-        expect(source).toContain('[data-soa-cloak]')
-        expect(source).toContain('[data-soa-visually-hidden]')
+        expect(source).toContain('[data-cloak]')
+        expect(source).toContain('[data-visually-hidden]')
         expect(source).not.toMatch(/bootstrap|adminlte|tailwind|datatable|normalize|reset/i)
         expect(source).not.toMatch(
             /(^|[},]\s*)(html|body|main|header|nav|section|table|button|input|select|textarea|\*)\s*[{,]/m,

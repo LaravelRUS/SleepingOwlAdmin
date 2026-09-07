@@ -24,13 +24,13 @@ it('keeps the legacy trigger and renders the normal popup from a Blade template'
     const template = read('resources/frontend/features/tooltip/tooltip-template.js')
 
     expect(base).toContain('_partials.tooltip')
-    expect(partial).toContain('data-soa-tooltip-template')
-    expect(partial).toContain('data-soa-tooltip-popup')
-    expect(partial).toContain('data-soa-tooltip-content')
+    expect(partial).toContain('data-tooltip-template')
+    expect(partial).toContain('data-tooltip-popup')
+    expect(partial).toContain('data-tooltip-content')
     expect(elements).toContain('[data-toggle="tooltip"]')
     expect(runtime).not.toContain('createElement(')
     expect(template).toContain("document.createElement('div')")
-    expect(`${base}\n${partial}\n${elements}`).not.toContain('data-soa-tooltip="')
+    expect(`${base}\n${partial}\n${elements}`).not.toContain('data-tooltip="')
 })
 
 function read(path) {

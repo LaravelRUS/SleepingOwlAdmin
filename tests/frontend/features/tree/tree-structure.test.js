@@ -32,7 +32,7 @@ it('rejects cycles and branches that exceed the configured max depth', () => {
 
 function treeHost(root) {
     const host = treeNode('host', [root])
-    host.querySelector = (selector) => (selector === '[data-soa-tree-root]' ? root : null)
+    host.querySelector = (selector) => (selector === '[data-tree-root]' ? root : null)
 
     return host
 }
@@ -78,7 +78,7 @@ function closestNode(node, selector) {
 
 function matchesNode(kind, selector) {
     return (
-        (kind === 'item' && selector === '[data-soa-tree-item]') ||
-        (kind === 'list' && selector === '[data-soa-tree-list]')
+        (kind === 'item' && selector === '[data-tree-item]') ||
+        (kind === 'list' && selector === '[data-tree-list]')
     )
 }

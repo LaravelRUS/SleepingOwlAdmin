@@ -27,7 +27,7 @@ same-page `href`, the next sibling, or the nearest dropdown root. The legacy
 `data-toggle="dropdown"` is intentionally still the public marker rather than
 being renamed. `.dropdown`, `.btn-group`, `.dropdown-menu` and `.dropdown-item`
 remain the structural contract for published and custom views. No replacement
-`data-soa-dropdown*` attributes are introduced. PHP does not translate
+`data-dropdown*` attributes are introduced. PHP does not translate
 semantic variants into theme classes; consumer attributes and classes continue
 to pass through unchanged.
 

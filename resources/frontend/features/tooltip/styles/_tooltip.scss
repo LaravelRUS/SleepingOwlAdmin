@@ -1,5 +1,5 @@
 @mixin styles {
-    [data-soa-tooltip-popup] {
+    [data-tooltip-popup] {
         position: fixed;
         z-index: var(--soa-tooltip-z-index);
         max-inline-size: min(var(--soa-tooltip-max-width), calc(100vw - 0.5rem));

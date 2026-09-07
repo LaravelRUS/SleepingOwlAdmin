@@ -22,7 +22,7 @@ class RelatedViewTest extends TestCase
 
         $this->assertStringContainsString('card card-outline card-info', $html);
         $this->assertStringContainsString('project-related', $html);
-        $this->assertStringContainsString('data-soa-vue-component="related-elements"', $html);
+        $this->assertStringContainsString('data-vue-component="related-elements"', $html);
         $this->assertStringNotContainsString('inline-template', $html);
         $this->assertStringNotContainsString('</script><script data-escape>', $html);
         $this->assertSame('items', $props['name']);
@@ -53,7 +53,7 @@ class RelatedViewTest extends TestCase
 
         $this->assertStringContainsString('class="project-related"', $html);
         $this->assertStringNotContainsString('card card-outline', $html);
-        $this->assertStringContainsString('data-soa-vue-props-id=', $html);
+        $this->assertStringContainsString('data-vue-props-id=', $html);
         $this->assertSame('items', $props['name']);
         $this->assertSame('42', $props['groups'][0]['primary']);
     }

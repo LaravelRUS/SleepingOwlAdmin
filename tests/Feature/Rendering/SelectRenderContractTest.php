@@ -194,7 +194,7 @@ class SelectRenderContractTest extends TestCase
 
     private function extractIslandProps(string $html): array
     {
-        $this->assertSame(1, preg_match('/data-soa-vue-props="([^"]+)"/', $html, $match));
+        $this->assertSame(1, preg_match('/data-vue-props="([^"]+)"/', $html, $match));
         $json = html_entity_decode($match[1], ENT_QUOTES | ENT_HTML5, 'UTF-8');
 
         return json_decode($json, true, 512, JSON_THROW_ON_ERROR);
@@ -202,8 +202,8 @@ class SelectRenderContractTest extends TestCase
 
     private function assertIslandHost(string $html): void
     {
-        $this->assertStringContainsString('data-soa-vue-app', $html);
-        $this->assertStringContainsString('data-soa-vue-component="element-select"', $html);
+        $this->assertStringContainsString('data-vue-app', $html);
+        $this->assertStringContainsString('data-vue-component="element-select"', $html);
         $this->assertStringContainsString('v-pre', $html);
         $this->assertStringNotContainsString('inline-template', $html);
         $this->assertStringNotContainsString('<deselect', $html);

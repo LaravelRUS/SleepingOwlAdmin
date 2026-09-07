@@ -1,6 +1,6 @@
-const TOOLTIP_TEMPLATE_SELECTOR = 'template[data-soa-tooltip-template]'
-const TOOLTIP_POPUP_SELECTOR = '[data-soa-tooltip-popup]'
-const TOOLTIP_CONTENT_SELECTOR = '[data-soa-tooltip-content]'
+const TOOLTIP_TEMPLATE_SELECTOR = 'template[data-tooltip-template]'
+const TOOLTIP_POPUP_SELECTOR = '[data-tooltip-popup]'
+const TOOLTIP_CONTENT_SELECTOR = '[data-tooltip-content]'
 
 export function createTooltipElement(root, content, placement, id) {
     const tooltip = cloneTooltip(root) ?? createFallbackTooltip(root.ownerDocument)
@@ -18,7 +18,7 @@ function cloneTooltip(root) {
 
 function createFallbackTooltip(document) {
     const tooltip = document.createElement('div')
-    tooltip.dataset.soaTooltipPopup = ''
+    tooltip.dataset.tooltipPopup = ''
 
     return tooltip
 }
@@ -26,7 +26,7 @@ function createFallbackTooltip(document) {
 function prepareTooltip(tooltip, content, placement, id) {
     tooltip.id = id
     tooltip.dataset.placement = placement
-    tooltip.setAttribute('data-soa-tooltip-popup', '')
+    tooltip.setAttribute('data-tooltip-popup', '')
     tooltip.setAttribute('role', 'tooltip')
     findContentTarget(tooltip).textContent = content
 }
