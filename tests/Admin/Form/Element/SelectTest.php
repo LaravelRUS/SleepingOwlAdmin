@@ -1,9 +1,9 @@
 <?php
 
-use SleepingOwl\Admin\Form\Element\MultiSelect;
-use SleepingOwl\Admin\Form\Element\MultiSelectAjax;
 use SleepingOwl\Admin\Form\Element\DependentSelect;
 use SleepingOwl\Admin\Form\Element\MultiDependentSelect;
+use SleepingOwl\Admin\Form\Element\MultiSelect;
+use SleepingOwl\Admin\Form\Element\MultiSelectAjax;
 use SleepingOwl\Admin\Form\Element\Select;
 use SleepingOwl\Admin\Form\Element\SelectAjax;
 

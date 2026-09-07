@@ -72,8 +72,7 @@ class AdminController extends Controller
         AdminInterface $admin,
         Application $application,
         InlineEditHandler $inlineEdits
-    )
-    {
+    ) {
         $this->app = $application;
         $this->admin = $admin;
         $this->breadcrumbs = $admin->template()->breadcrumbs();

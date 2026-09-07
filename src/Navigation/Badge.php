@@ -17,7 +17,6 @@ class Badge extends BadgeBase
         }
 
         $this->setPriority($priority);
-
     }
 
     // end fix

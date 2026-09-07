@@ -1,9 +1,9 @@
 <?php
 
-use SleepingOwl\Admin\Templates\TemplateDefault;
 use SleepingOwl\Admin\Facades\Assets;
 use SleepingOwl\Admin\Facades\Meta;
 use SleepingOwl\Admin\Facades\PackageManager;
+use SleepingOwl\Admin\Templates\TemplateDefault;
 
 class LegacyFullConfigCompatibilityTest extends TestCase
 {

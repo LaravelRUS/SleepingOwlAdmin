@@ -2,7 +2,6 @@
 
 use Mockery as m;
 use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
-use SleepingOwl\Admin\Contracts\Theme\ThemeInterface;
 use SleepingOwl\Admin\Templates\TemplateDefault;
 use SleepingOwl\Admin\Themes\LegacyTemplateThemeAdapter;
 use SleepingOwl\Admin\Themes\ThemeCapability;

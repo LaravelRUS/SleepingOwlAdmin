@@ -87,7 +87,6 @@ class DisplayTable extends Display
                 return $q->withTrashed();
             });
         }
-
     }
 
     /**
