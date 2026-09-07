@@ -150,8 +150,7 @@ function rebaseStylesheetFontUrls(string $path, string $publicPath): bool
     $fontPath = str_repeat('../', substr_count(dirname($publicPath), '/') + 1).'fonts/';
     $updated = preg_replace_callback(
         '#url\\(([\'\"]?)(?:\.\./)+fonts/(.+?)\\1\\)#',
-        static fn (array $matches): string =>
-            "url({$matches[1]}{$fontPath}{$matches[2]}{$matches[1]})",
+        static fn (array $matches): string => "url({$matches[1]}{$fontPath}{$matches[2]}{$matches[1]})",
         $contents
     );
 

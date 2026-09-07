@@ -68,5 +68,4 @@ final class AdminLTETheme extends TemplateDefault implements ThemeInterface
             ThemeCapability::cases()
         );
     }
-
 }

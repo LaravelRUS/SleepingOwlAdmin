@@ -3,8 +3,8 @@
 namespace SleepingOwl\Admin\Display\Column\Filter;
 
 use Closure;
-use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Builder;
 use SleepingOwl\Admin\Contracts\Display\ColumnInterface;
