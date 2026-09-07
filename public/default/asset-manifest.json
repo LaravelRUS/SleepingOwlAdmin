@@ -316,8 +316,8 @@
                     "scripts": [
                         {
                             "file": "profiles/production/js/shared/vue.js",
-                            "version": "0ab5cbe425d3bcf44647d49a9bf73fad",
-                            "checksum": "sha256:88e3a5137c6e3d36c5bdbc0b9479639b927ac026e5d213fa9ebc3f8718942371"
+                            "version": "1df58279787057a0b81e11b5d383b6b4",
+                            "checksum": "sha256:c1493418f442a06c57c6d5965e03f1227d140c6c4651132f2e204ff1559e397e"
                         }
                     ],
                     "styles": []
@@ -670,8 +670,8 @@
                     "scripts": [
                         {
                             "file": "profiles/development/js/shared/vue.js",
-                            "version": "2407404355c202e24f4b5586cb2a39a5",
-                            "checksum": "sha256:57766073b725cbce12f1eedb1d9e53b52c6d931320d734452592308736ce51f8"
+                            "version": "afa6e81262058aed36b57b1af43d0145",
+                            "checksum": "sha256:100aa01d260a282f768c348bc5e697327e518f5c805c6bd9d450b073e6891fb0"
                         }
                     ],
                     "styles": []
@@ -711,5 +711,5 @@
             }
         }
     },
-    "build_id": "sha256:37c0e23250ecbc88dbf97635e97df0e924f6f7fc42738d395ee28bbabbc4eec9"
+    "build_id": "sha256:293216d000f3285174711a442db30faa0a838987e375245dbb09d87193df7c43"
 }

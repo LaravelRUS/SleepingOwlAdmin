@@ -28,6 +28,14 @@ class RelatedViewTest extends TestCase
         $this->assertSame('items', $props['name']);
         $this->assertSame(3, $props['limit']);
         $this->assertTrue($props['draggable']);
+        $this->assertSame('grouped-elements clearfix', $props['classes']['root']);
+        $this->assertSame('related-elements__draggable', $props['classes']['groups']);
+        $this->assertSame('d-block clearfix', $props['classes']['actions']);
+        $this->assertSame(
+            'grouped-elements__action pull-right related-action_add btn btn-success btn-sm',
+            $props['classes']['add']
+        );
+        $this->assertSame('fas fa-plus', $props['classes']['addIcon']);
         $this->assertSame(['7'], $props['removed']);
         $this->assertSame('42', $props['groups'][0]['primary']);
         $this->assertStringContainsString('items[42][title]', $props['groups'][0]['html']);
@@ -48,6 +56,29 @@ class RelatedViewTest extends TestCase
         $this->assertStringContainsString('data-soa-vue-props-id=', $html);
         $this->assertSame('items', $props['name']);
         $this->assertSame('42', $props['groups'][0]['primary']);
+    }
+
+    public function test_related_island_accepts_concrete_theme_classes(): void
+    {
+        $this->bindTemplateFacade();
+        $data = $this->viewData();
+        $data['relatedExtraProps'] = [
+            'classes' => [
+                'actions' => 'project-actions',
+                'add' => 'project-add',
+                'addIcon' => 'project-icon',
+                'groups' => 'project-groups',
+                'root' => 'project-root',
+            ],
+        ];
+        $html = view(
+            'sleeping_owl::default.form.element.related.inner_element',
+            $data
+        )->render();
+        $props = $this->extractReferencedJsonProps($html);
+
+        $this->assertSame($data['relatedExtraProps']['classes'], $props['classes']);
+        $this->assertStringNotContainsString('class="project-root"', $html);
     }
 
     private function bindTemplateFacade(): void

@@ -428,6 +428,21 @@ async function expectBoundedVueApps(page) {
 }
 
 async function expectInitialRelatedGroup(page) {
+    await expect(page.locator('#related-fixture [data-soa-related-root]')).toHaveClass(
+        'project-related-root',
+    )
+    await expect(page.locator('#related-fixture [data-soa-related-groups]')).toHaveClass(
+        'project-related-groups',
+    )
+    await expect(page.locator('#related-fixture [data-soa-related-actions]')).toHaveClass(
+        'project-related-actions',
+    )
+    await expect(page.locator('#related-fixture [data-soa-related-add]')).toHaveClass(
+        'project-related-add',
+    )
+    await expect(page.locator('#related-fixture [data-soa-related-add-icon]')).toHaveClass(
+        'project-related-icon',
+    )
     await expect(page.locator('#existing-related-group')).toHaveAttribute(
         'data-lifecycle-mounted',
         'true',

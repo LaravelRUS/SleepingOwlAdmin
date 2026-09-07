@@ -212,6 +212,8 @@ it('passes trusted related group HTML through referenced JSON props', () => {
     expect(island).toContain('data-soa-vue-component="related-elements"')
     expect(island).toContain('data-soa-vue-props-id=')
     expect(island).toContain('Illuminate\\Support\\Js::encode')
+    expect(island).toContain("'root' => 'grouped-elements clearfix'")
+    expect(island).toContain("'addIcon' => 'fas fa-plus'")
     expect(island).not.toContain('inline-template')
 })
 
@@ -220,9 +222,14 @@ it('uses precompiled related state, native Sortable and shared lifecycle modules
     const catalog = readSource('resources/assets/js_owl/admin/vue-components.js')
 
     expect(component).toContain('<template>')
+    expect(component).toContain(':class="classes.root"')
+    expect(component).toContain(':class="classes.addIcon"')
     expect(component).toContain("import Sortable from 'sortablejs'")
     expect(component).toContain('initializeRelatedGroup(Admin, element)')
     expect(component).not.toMatch(/\$\(|vuedraggable|withLegacyInlineTemplate/)
+    expect(component).not.toMatch(
+        /class="(?:grouped-elements|related-elements__draggable|d-block|fas fa-plus)/,
+    )
     expect(catalog).toContain("'related-elements': RelatedElements")
     expect(catalog).not.toContain("'related-group'")
     expect(packageJson.dependencies).not.toHaveProperty('vuedraggable')

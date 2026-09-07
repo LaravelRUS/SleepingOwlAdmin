@@ -16,7 +16,14 @@
     }
 
     $stubGroup = new \SleepingOwl\Admin\Form\Related\Group(null, $stub->all());
-    $relatedProps = [
+    $relatedProps = array_replace([
+        'classes' => [
+            'actions' => 'd-block clearfix',
+            'add' => 'grouped-elements__action pull-right related-action_add btn btn-success btn-sm',
+            'addIcon' => 'fas fa-plus',
+            'groups' => 'related-elements__draggable',
+            'root' => 'grouped-elements clearfix',
+        ],
         'draggable' => (bool) ($draggable ?? false),
         'groups' => $relatedGroups,
         'labels' => ['add' => trans('sleeping_owl::lang.button.add')],
@@ -25,7 +32,7 @@
         'readonly' => (bool) $readonly,
         'removed' => array_values(array_map('strval', $remove->all())),
         'stubHtml' => view($relatedGroupView, [...$relatedGroupContext, 'group' => $stubGroup])->render(),
-    ];
+    ], $relatedExtraProps ?? []);
     $relatedPropsId = 'soa-related-props-' . \Illuminate\Support\Str::uuid();
 @endphp
 

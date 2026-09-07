@@ -100,7 +100,7 @@ classes as the final theme API.
 | `admin/form/image.vue` | `default.form.element.image` | Same boundary as file; preview/upload/paste state remains inside the island. |
 | `admin/form/images.vue` | `default.form.element.images` | Blade supplies gallery/dialog/control classes and icons. Vue owns the dynamic collection, upload, ordering and dialog state. |
 | `[Complete] admin/form/select.vue` | `default.form.element.partials.select_island`, reached from `select`, `multiselect`, `selectajax` and `dependentselect` | Blade passes final field attributes and `classes.required`. Vue owns selection, remote/dependent loading, tagging, the required-state condition and hidden/native submit synchronization; its structural hook does not depend on the AdminLTE class. |
-| `admin/form/related/elements.vue` | `default.form.element.related.inner_element` plus the Blade-rendered `related.group` | Existing group HTML stays Blade-owned. Vue owns collection state, add/remove bookkeeping and Sortable orchestration; its wrapper/action classes become Blade props or Blade-owned outer markup. |
+| `[Complete] admin/form/related/elements.vue` | `default.form.element.related.inner_element` plus the Blade-rendered `related.group` | Existing group HTML stays Blade-owned. The logical inner partial supplies concrete root/groups/actions/add/icon classes. Vue owns collection state, add/remove bookkeeping and Sortable orchestration through structural hooks. |
 
 All six components remain precompiled in `shared:vue` for both production and
 development profiles. No runtime compiler, HTML template string, global Vue or
@@ -173,4 +173,7 @@ For each migrated candidate, tests must prove all of the following:
      message class, while the precompiled component consumes `classes.required`.
      PHP and browser contracts cover arbitrary project classes without a
      runtime compiler or consumer rebuild.
-   - [Pending] `related-elements`, `env-editor`, `file`, `image` and `images`.
+   - [Complete] `related-elements`: the logical inner partial supplies all
+     wrapper, action and icon classes; Sortable and nested-island lifecycle use
+     refs/hooks instead of those classes.
+   - [Pending] `env-editor`, `file`, `image` and `images`.

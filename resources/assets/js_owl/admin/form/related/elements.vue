@@ -1,16 +1,16 @@
 <template>
-    <div class="grouped-elements clearfix" @click="handleClick">
-        <div ref="groups" class="related-elements__draggable"></div>
+    <div data-soa-related-root :class="classes.root" @click="handleClick">
+        <div ref="groups" data-soa-related-groups :class="classes.groups"></div>
 
-        <div v-if="!readonly" class="d-block clearfix">
+        <div v-if="!readonly" data-soa-related-actions :class="classes.actions">
             <button
                 v-if="canAddMore"
                 type="button"
-                class="grouped-elements__action pull-right related-action_add btn btn-success btn-sm"
                 data-soa-related-add
+                :class="classes.add"
                 @click="addNewGroup"
             >
-                <i class="fas fa-plus" aria-hidden="true"></i>
+                <i data-soa-related-add-icon :class="classes.addIcon" aria-hidden="true"></i>
                 {{ labels.add }}
             </button>
         </div>
@@ -44,6 +44,7 @@ import {
 export default defineComponent({
     name: 'RelatedElements',
     props: {
+        classes: { type: Object, default: () => ({}) },
         draggable: Boolean,
         groups: { type: Array, required: true },
         labels: { type: Object, required: true },
