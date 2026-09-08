@@ -7,6 +7,7 @@
 - Общие декларации поставляются отдельным logical entry `shared:ui`, автоматически подключаемым для любой `ThemeInterface`; headless `core` не получает presentation.
 - Общий CSS может использовать только semantic `soa-*` classes, behavior hooks и canonical `--soa-*` variables. Тема задаёт значения tokens и действительно отличающиеся overrides.
 - В общем слое запрещены Bootstrap/AdminLTE/Tailwind imports, vendor selectors и literal palette. Одинаковые structural rules удаляются из theme adapters.
+- Список общих элементов открыт для дополнений; новый элемент сначала получает отдельный checklist с обязательными states, затем переносится в shared layer.
 - После каждого пункта: `[x]`, узкая проверка, запись в журнал и отдельный commit без чужих изменений.
 
 ## Целевая структура scripts/styles
@@ -77,6 +78,11 @@ Manifest dependencies являются единственным источник
 - [ ] Button groups/toolbars: horizontal/vertical layout, wrapping и gaps.
 - [ ] `.soa-input`, `.soa-select`, `.soa-textarea`, checkbox/radio/switch: sizing, font inheritance, focus и disabled geometry.
 - [ ] Input group, addon, label/help/error layout.
+- [ ] `checkbox`: control/label/group geometry и checked, unchecked, indeterminate, focus, disabled, readonly, help/error states.
+- [ ] `image`: preview, upload/replace/remove/download/insert actions, progress, empty, error и readonly states.
+- [ ] `images`: gallery grid, item preview/order/actions, upload queue/progress, empty, error и readonly states.
+- [ ] `file`: file icon/name/metadata, browse/upload/replace/remove/download actions, progress, empty, error и readonly states.
+- [ ] `files`: file list/grid, item actions, upload queue/progress, empty, error и readonly states.
 - [ ] Card shell: header/body/footer layout, collapsed/maximized geometry; palette/shadow остаются tokens темы.
 - [ ] Dialog shell: viewport sizing, form/actions layout и backdrop hook; palette/shadow остаются tokens темы.
 
@@ -113,3 +119,4 @@ Manifest dependencies являются единственным источник
 | Дата | Checkpoint | Результат | Commit |
 | --- | --- | --- | --- |
 | 2026-09-09 | Inventory и source layout | Выделены четыре приоритетных группы: application shell, common controls, все inline editable поля и fixed scroll controls. Зафиксировано разделение `core`, общего `shared`, отдельной папки каждого `themes/<id>` и последнего `themes/<id>/overrides` для изменений/исправлений конкретного шаблона. CSS/JS получают детерминированный manifest order; public paths/logical ids сохраняются. Код/assets не менялись, tests не запускались. | текущий commit |
+| 2026-09-09 | Дополнение component inventory | В общий design checklist отдельными пунктами добавлены `checkbox`, `image`, `images`, `file` и `files` со всеми interactive/loading/empty/error/readonly states. Список остаётся открытым для следующих дополнений. Код/assets не менялись, tests не запускались. | текущий commit |
