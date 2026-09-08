@@ -89,7 +89,7 @@ class DefaultThemeRenderContractTest extends TestCase
         ]);
 
         $this->assertContainsAll($html, [
-            '<li class="nav-item has-treeview menu-open">',
+            '<li class="nav-item menu-open">',
             'class="nav-link active has-child user-parent"',
             'data-contract="parent"',
             'aria-label="Catalog"',
@@ -121,7 +121,7 @@ class DefaultThemeRenderContractTest extends TestCase
             'href="/admin/orders"',
             'class="nav-link active user-attribute"',
             'data-contract="leaf"',
-            '<p class="">',
+            '<p>',
             'Orders',
         ]);
     }

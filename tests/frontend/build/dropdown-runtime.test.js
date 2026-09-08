@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs'
+import { existsSync, readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 
 import { expect, it } from 'vitest'
@@ -41,9 +41,7 @@ it('ships independent behavior and AdminLTE/Tailwind Sass adapters', () => {
 })
 
 it('removes the legacy AdminLTE and aggregate dropdown style owners', () => {
-    expect(read('resources/assets/scss/adminLte.scss')).not.toContain(
-        'admin-lte/build/scss/dropdown',
-    )
+    expect(existsSync(resolve(root, 'resources/assets/scss/adminLte.scss'))).toBe(false)
     expect(read('resources/assets/scss/components.scss')).not.toContain('components/dropdown')
 })
 

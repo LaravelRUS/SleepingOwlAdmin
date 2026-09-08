@@ -26,9 +26,10 @@ it('keeps framework imports behind the legacy AdminLTE theme boundary', () => {
     }
 
     for (const owner of [
-        'bootstrap/scss/bootstrap',
-        'assets/scss/adminLte',
-        'assets/scss/adminLte-dark',
+        'assets/scss/variables',
+        'assets/scss/colors',
+        'admin-lte/src/scss/adminlte',
+        'assets/scss/font',
         'assets/scss/components',
         'assets/scss/addition',
     ]) {
@@ -46,10 +47,10 @@ it('preserves the structural AdminLTE selectors in the legacy aggregate', () => 
     const css = read('public/default/css/admin-app.css')
 
     for (const selector of [
-        '.main-header',
-        '.main-sidebar',
-        '.content-wrapper',
-        '.main-footer',
+        '.app-header',
+        '.app-sidebar',
+        '.app-main',
+        '.app-footer',
         '.card',
         '.navbar',
     ]) {
@@ -61,10 +62,10 @@ it('builds a standalone AdminLTE theme without embedding shared icons', () => {
     const css = read('public/default/css/themes/legacy-adminlte.css')
 
     for (const selector of [
-        '.main-header',
-        '.main-sidebar',
-        '.content-wrapper',
-        '.main-footer',
+        '.app-header',
+        '.app-sidebar',
+        '.app-main',
+        '.app-footer',
         '.card',
         '.navbar',
     ]) {

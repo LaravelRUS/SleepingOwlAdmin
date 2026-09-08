@@ -15643,6 +15643,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "data-image-download": "",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(_ctx.classes.downloadButton),
     "data-toggle": "tooltip",
+    "data-bs-toggle": "tooltip",
     download: "",
     title: _ctx.labels.download,
     "aria-label": _ctx.labels.download,
@@ -15658,6 +15659,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "data-image-insert-current": "",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(_ctx.classes.insertCurrentButton),
     "data-toggle": "tooltip",
+    "data-bs-toggle": "tooltip",
     title: _ctx.labels.insertLink,
     "aria-label": _ctx.labels.insertLink,
     onClick: _cache[2] || (_cache[2] = function ($event) {
@@ -15672,6 +15674,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "data-image-remove": "",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(_ctx.classes.removeButton),
     "data-toggle": "tooltip",
+    "data-bs-toggle": "tooltip",
     title: _ctx.labels.remove,
     "aria-label": _ctx.labels.remove,
     onClick: _cache[3] || (_cache[3] = function () {
@@ -15695,6 +15698,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "data-image-insert-new": "",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(_ctx.classes.insertNewButton),
     "data-toggle": "tooltip",
+    "data-bs-toggle": "tooltip",
     title: _ctx.labels.insertLink,
     "aria-label": _ctx.labels.insertLink,
     onClick: _cache[4] || (_cache[4] = function ($event) {

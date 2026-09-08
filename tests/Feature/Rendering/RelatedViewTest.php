@@ -31,7 +31,7 @@ class RelatedViewTest extends TestCase
         $this->assertSame('related-elements__draggable', $props['classes']['groups']);
         $this->assertSame('d-block clearfix', $props['classes']['actions']);
         $this->assertSame(
-            'grouped-elements__action pull-right related-action_add btn btn-success btn-sm',
+            'grouped-elements__action float-end related-action_add btn btn-success btn-sm',
             $props['classes']['add']
         );
         $this->assertSame('fas fa-plus', $props['classes']['addIcon']);

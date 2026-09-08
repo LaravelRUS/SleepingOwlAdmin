@@ -13,14 +13,18 @@ it('replaces Bootstrap tab calls with the native feature driver', () => {
     expect(`${legacy}\n${runtime}`).not.toMatch(/jquery|jQuery|\$\(|\.tab\(['"]show/i)
 })
 
-it('uses the native tab marker in package-owned tab views', () => {
+it('uses the native tab marker without replacing legacy compatibility attributes', () => {
     for (const file of [
         'resources/views/themes/legacy/default/display/tab.blade.php',
         'resources/views/themes/legacy/default/form/tabbed.blade.php',
     ]) {
         expect(read(file)).toContain('data-tab')
-        expect(read(file)).not.toContain('data-toggle')
+        expect(read(file)).not.toContain('data-soa-')
     }
+
+    const tabbedForm = read('resources/views/themes/legacy/default/form/tabbed.blade.php')
+    expect(tabbedForm).toContain('data-toggle="tab"')
+    expect(tabbedForm).toContain('data-bs-toggle="tab"')
 })
 
 it('ships theme-independent behavior and both presentation adapters', () => {
