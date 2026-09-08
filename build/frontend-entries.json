@@ -282,6 +282,12 @@
                 "logicalId": "theme:tailwind",
                 "source": "resources/frontend/themes/tailwind/styles/theme.scss",
                 "output": "css/themes/tailwind.css"
+            },
+            {
+                "logicalId": "theme:tailwind",
+                "source": "resources/frontend/themes/tailwind/tailwind.input.css",
+                "output": "css/themes/tailwind-utilities.css",
+                "processor": "postcss"
             }
         ]
     }

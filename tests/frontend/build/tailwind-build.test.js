@@ -1,0 +1,66 @@
+import { readFileSync } from 'node:fs'
+import { resolve } from 'node:path'
+
+import { expect, it } from 'vitest'
+
+const root = resolve(import.meta.dirname, '../../..')
+
+it('pins Tailwind 4 build-only dependencies and an explicit PostCSS entry', () => {
+    const packageJson = readJson('package.json')
+    const entries = readJson('build/frontend-entries.json').modern.styles.filter(
+        ({ logicalId }) => logicalId === 'theme:tailwind',
+    )
+
+    expect(packageJson.dependencies.tailwindcss).toBeUndefined()
+    expect(packageJson.dependencies['@tailwindcss/postcss']).toBeUndefined()
+    expect(packageJson.devDependencies.tailwindcss).toBe('4.3.3')
+    expect(packageJson.devDependencies['@tailwindcss/postcss']).toBe('4.3.3')
+    expect(entries).toContainEqual({
+        logicalId: 'theme:tailwind',
+        output: 'css/themes/tailwind-utilities.css',
+        processor: 'postcss',
+        source: 'resources/frontend/themes/tailwind/tailwind.input.css',
+    })
+})
+
+it('uses explicit Tailwind sources and a canonical-token preset without preflight', () => {
+    const input = read('resources/frontend/themes/tailwind/tailwind.input.css')
+    const config = read('resources/frontend/themes/tailwind/tailwind.config.cjs')
+    const preset = read('resources/frontend/themes/tailwind/tailwind.preset.cjs')
+
+    expect(input).toContain("tailwindcss/utilities.css' layer(utilities) source(none)")
+    expect(input).toContain("@config './tailwind.config.cjs'")
+    expect(input).toContain("@source '../../../views/themes/tailwind'")
+    expect(input).toContain("@source inline('flex grid')")
+    expect(config).toContain('./resources/views/themes/tailwind/**/*.blade.php')
+    expect(config).toContain("require('./tailwind.preset.cjs')")
+    expect(preset).toContain('var(--soa-primary-color)')
+    expect(preset).toContain('var(--soa-surface-color)')
+    expect(preset).not.toMatch(/#[\da-f]{3,8}\b|oklch\(/i)
+    expect(input).not.toMatch(/preflight|tailwindcss\/preflight/i)
+})
+
+it.each(['production', 'development'])(
+    'ships a framework-free %s Tailwind utility layer',
+    (profile) => {
+        const css = read(`public/default/profiles/${profile}/css/themes/tailwind-utilities.css`)
+
+        expect(css).toContain('@layer utilities')
+        expect(css).toMatch(/\.flex\b/)
+        expect(css).toMatch(/\.grid\b/)
+        expect(css).toMatch(/\.hidden\b/)
+        expect(css).toMatch(/\.text-center\b/)
+        expect(css).toContain('var(--soa-on-primary-color)')
+        expect(css).not.toMatch(
+            /bootstrap|admin-lte|adminlte|jquery|react|radix|lucide|oklch\(|#[\da-f]{3,8}\b/i,
+        )
+    },
+)
+
+function read(path) {
+    return readFileSync(resolve(root, path), 'utf8')
+}
+
+function readJson(path) {
+    return JSON.parse(read(path))
+}

@@ -56,7 +56,18 @@ function registerScripts(group) {
 }
 
 function registerStyles(group) {
-    group.styles.forEach(({ source, output }) => mix.sass(source, output))
+    group.styles.forEach(({ source, output, processor = 'sass' }) => {
+        if (processor === 'postcss') {
+            mix.postCss(source, output, [require('@tailwindcss/postcss')])
+            return
+        }
+
+        if (processor !== 'sass') {
+            throw new Error(`Unsupported stylesheet processor [${processor}].`)
+        }
+
+        mix.sass(source, output)
+    })
 }
 
 function generateAssetManifest(profile) {

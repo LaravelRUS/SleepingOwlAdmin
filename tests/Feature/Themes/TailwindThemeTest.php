@@ -107,6 +107,7 @@ class TailwindThemeTest extends TestCase
 
             $this->assertStringContainsString("profiles/{$profile}/js/themes/tailwind.js", $joined);
             $this->assertStringContainsString("profiles/{$profile}/css/themes/tailwind.css", $joined);
+            $this->assertStringContainsString("profiles/{$profile}/css/themes/tailwind-utilities.css", $joined);
             $this->assertStringContainsString("profiles/{$profile}/css/icons.css", $joined);
             $this->assertStringNotContainsString('legacy-adminlte', $joined);
             $this->assertStringContainsString('features/dropdown/themes/tailwind.css', $joined);

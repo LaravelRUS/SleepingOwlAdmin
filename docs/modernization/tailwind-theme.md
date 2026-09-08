@@ -135,6 +135,29 @@ view namespace mechanism, and an external package can use the existing
 Invalid classes, malformed metadata and missing logical assets raise the
 existing diagnostic exceptions. There is no fallback to `AdminLTETheme`.
 
+## Maintainer build and distribution
+
+Tailwind `4.3.3` and `@tailwindcss/postcss` `4.3.3` are exact, lockfile-backed
+development dependencies. They are not browser dependencies and are not needed
+by Composer consumers. `tailwind.input.css` loads only the utilities layer—no
+preflight—and limits source discovery to the Tailwind theme namespace. Its
+`tailwind.config.cjs` uses `tailwind.preset.cjs`, whose colors, fonts, radii and
+shadows resolve to canonical `--soa-*` properties.
+
+The build matrix publishes two files under the single logical
+`theme:tailwind` entry:
+
+```text
+css/themes/tailwind.css
+css/themes/tailwind-utilities.css
+```
+
+The first is the handwritten Sass/token layer; the second is generated and is
+never edited manually. `npm run production` builds and checksums both
+production and development profiles. `php artisan sleepingowl:update` copies
+those ready files, so selecting TailwindTheme or changing asset profile never
+runs Tailwind, PostCSS or a content scan in the application.
+
 ## Design check
 
 The first pass risked becoming a generic blue Tailwind admin. The retained

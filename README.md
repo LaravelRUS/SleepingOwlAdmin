@@ -72,9 +72,12 @@ source maps and Vue diagnostics. Changing the profile does not compile assets.
 The read-only `--check` command validates both published profiles and returns a
 non-zero deployment health-check exit code if a manifest, file or checksum is invalid.
 
-AdminLTE remains the default ready theme. Applications may select a ready custom
-`ThemeInterface`, override individual Blade views, add their own CSS/JavaScript,
-or change supported `--soa-*` properties without rebuilding SleepingOwl. Start
+AdminLTE remains the default ready theme. The package also ships the ready,
+framework-independent `SleepingOwl\Admin\Themes\TailwindTheme`; select it through
+the existing `sleeping_owl.template` key without Node.js or a frontend rebuild.
+Applications may select a ready custom `ThemeInterface`, override individual
+Blade views, add their own CSS/JavaScript, or change supported `--soa-*`
+properties without rebuilding SleepingOwl. Start
 with the [major upgrade guide](docs/modernization/upgrade-guide.md), the
 [AdminLTE 4 migration](docs/modernization/adminlte-4-migration.md), and the
 [theme customization guide](docs/modernization/theme-customization.md).

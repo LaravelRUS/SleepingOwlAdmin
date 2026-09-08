@@ -60,5 +60,6 @@
     "/css/features/lightbox.css": "/css/features/lightbox.css?id=f7cebd6cd32f0abbdd668b46fb324f1f",
     "/css/features/sidebar.css": "/css/features/sidebar.css?id=adf22fa4bd52f592f9ea502adde514a7",
     "/css/features/forms/themes/tailwind.css": "/css/features/forms/themes/tailwind.css?id=042bc38d04fe807e9da509a6ec42bcc9",
-    "/css/features/forms.css": "/css/features/forms.css?id=c8f9ca6d852ed02410e54faf05218f73"
+    "/css/features/forms.css": "/css/features/forms.css?id=c8f9ca6d852ed02410e54faf05218f73",
+    "/css/themes/tailwind-utilities.css": "/css/themes/tailwind-utilities.css?id=ad408e3f68f420fafeb772320c237955"
 }

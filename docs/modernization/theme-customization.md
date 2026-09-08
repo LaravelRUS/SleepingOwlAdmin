@@ -151,3 +151,42 @@ Shared entries are allowed only when declared by the theme. Core resolves unchan
 ## Blade overrides
 
 Application views under `resources/views/vendor/sleeping_owl` retain priority over package views. External themes use their own namespace and may document a matching application override path. Keep documented behavior markers and ARIA/field names; `data-toggle`, `data-dismiss` and `data-widget` remain compatibility markers. Do not introduce `data-soa-*`. Concrete classes and safe nesting belong to Blade, and PHP does not translate semantic variants into framework classes.
+
+## TailwindTheme utilities in application views
+
+The built-in TailwindTheme works without Node.js. Select it with the existing
+config key and use the committed production/development CSS:
+
+```php
+'template' => SleepingOwl\Admin\Themes\TailwindTheme::class,
+```
+
+The precompiled utility snapshot scans package views only. An override in
+`resources/views/vendor/sleeping_owl_tailwind` may freely reuse utilities that
+already exist in that snapshot. If it introduces an arbitrary or previously
+unused utility, the application owns a small extra Tailwind build; it does not
+rebuild package core or overwrite `public/packages/sleepingowl`.
+
+An application build can reuse the shipped canonical-token preset:
+
+```js
+// tailwind.admin.config.js
+const preset = require('./vendor/laravelrus/sleepingowl/resources/frontend/themes/tailwind/tailwind.preset.cjs')
+
+module.exports = {
+    content: ['./resources/views/vendor/sleeping_owl_tailwind/**/*.blade.php'],
+    presets: [preset],
+}
+```
+
+```css
+/* resources/css/admin-tailwind.css */
+@import 'tailwindcss/utilities.css' layer(utilities) source(none);
+@config '../../tailwind.admin.config.js';
+@source '../views/vendor/sleeping_owl_tailwind';
+```
+
+Compile that file with the application's own Tailwind 4/PostCSS toolchain and
+register the result through `MetaInterface` after the selected theme. Simple
+branding, spacing, colors and component adjustments should use application CSS
+and documented `--soa-*` properties instead; those changes require no Node.js.

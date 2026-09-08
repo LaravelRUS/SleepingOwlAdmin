@@ -2,9 +2,9 @@
 
 ## Статус и границы
 
-- Статус: **полный набор theme-owned views и adapters закрыт; следующий checkpoint — Tailwind 4 maintainer build, customization и no-build acceptance**.
+- Статус: **Tailwind 4 maintainer build, customization и no-build distribution закрыты; следующий checkpoint — acceptance matrix и release gate**.
 - Выбранная основа: **shadcn/ui** как registry component recipes и визуальный язык TailwindTheme. Это не подключение React-приложения и не новый browser runtime.
-- Следующий checkpoint: закрепить Tailwind 4 toolchain/input/preset/content contract, документировать consumer customization boundary и проверить Composer/no-build publication.
+- Следующий checkpoint: закрыть browser/visual acceptance matrix, clean Composer smoke и итоговую release-документацию.
 - Основа: завершённый публичный contract из [`ADMIN_UI_MODERNIZATION_PLAN.md`](ADMIN_UI_MODERNIZATION_PLAN.md) — headless core, `ThemeInterface`, logical asset manifest, Blade-first views, Vue 3 islands, DataTables 3 и no-build publication.
 - Эта тема не блокирует основной major-релиз и не меняет compatibility contract существующей `AdminLTETheme`.
 - Каждый самостоятельный пункт выполняется тем же циклом: реализация, релевантные проверки, обновление этого файла, отдельный checkpoint-коммит и чистое дерево.
@@ -121,13 +121,13 @@ docs/modernization/
 
 ## 3. Собрать независимые Tailwind assets
 
-- [ ] Зафиксировать поддерживаемую Tailwind 4.x версию и build dependencies.
-- [ ] Добавить `tailwind.input.css`, preset/source/content configuration и отдельный theme build entry.
-- [ ] Определить theme-owned `_colors.scss`, `_variables.scss`, handwritten `theme.scss` и публичные `--soa-*` defaults; generated utility layer не редактировать вручную.
+- [x] Зафиксировать поддерживаемую Tailwind 4.x версию и build dependencies.
+- [x] Добавить `tailwind.input.css`, preset/source/content configuration и отдельный theme build entry.
+- [x] Определить theme-owned `_colors.scss`, `_variables.scss`, handwritten `theme.scss` и публичные `--soa-*` defaults; generated utility layer не редактировать вручную.
 - [x] Реализовать dark mode через переопределение custom properties и небольшой theme-owned toggle runtime без Bootstrap/AdminLTE.
 - [x] Поддержать валидированный `sidebar_background_color` через canonical `--soa-sidebar-bg`; shell и sidebar adapter не вводят вторую палитру.
-- [ ] Собрать полный стандартный production CSS и development profile; consumer не устанавливает Tailwind CLI и не выполняет content scan.
-- [ ] Доказать, что `theme:tailwind` и её adapters не содержат Bootstrap/AdminLTE CSS, JavaScript, fonts или transitive runtime dependencies.
+- [x] Собрать полный стандартный production CSS и development profile; consumer не устанавливает Tailwind CLI и не выполняет content scan.
+- [x] Доказать, что `theme:tailwind` и её adapters не содержат Bootstrap/AdminLTE CSS, JavaScript, fonts или transitive runtime dependencies.
 
 ## 4. Закрыть feature presentation
 
@@ -140,11 +140,11 @@ docs/modernization/
 
 ## 5. Customisation и no-build workflow
 
-- [ ] Документировать preset/source/content для проектов, которым нужны произвольные utilities в переопределённых Blade views.
-- [ ] Документировать дополнительный CSS и простые theme settings/custom properties без пересборки core.
-- [ ] Явно описать границу: стандартная тема работает без Node.js, а новые произвольные utilities требуют отдельного пользовательского CSS build.
-- [ ] Поставлять готовые production/development assets и checksums через существующий `sleepingowl:update`.
-- [ ] Переключение между AdminLTE и Tailwind через config не требует изменения package sources или package rebuild.
+- [x] Документировать preset/source/content для проектов, которым нужны произвольные utilities в переопределённых Blade views.
+- [x] Документировать дополнительный CSS и простые theme settings/custom properties без пересборки core.
+- [x] Явно описать границу: стандартная тема работает без Node.js, а новые произвольные utilities требуют отдельного пользовательского CSS build.
+- [x] Поставлять готовые production/development assets и checksums через существующий `sleepingowl:update`.
+- [x] Переключение между AdminLTE и Tailwind через config не требует изменения package sources или package rebuild.
 
 ## 6. Acceptance matrix
 
@@ -171,3 +171,4 @@ docs/modernization/
 | 2026-09-08 | Displays, DataTables 3 presentation и actions | Все 68 стабильных `display/*` и `column/*` logical paths зеркалированы в Tailwind namespace; добавлены shadcn-derived table/pagination/empty/checkbox/input/native-select/button-group/alert-dialog primitives и `soa-*` presentation для sync/async tables, Responsive details, filters, pagination, selection rail, bulk/row actions, processing/error и inline editor. Field names, user attributes/classes, CSRF/method fields, DataTables/layout slots, selection/edit/date/lightbox/tooltip hooks и ARIA сохранены. Table adapter больше не имеет собственной literal palette: значения alias canonical `--soa-*`; после render gate Tailwind объявляет `feature:table:theme:tailwind` и `table-presentation`. Оба profiles пересобраны и 96 файлов проверены manifest MD5/SHA-256; production theme/table CSS — 16 870/14 032 bytes, development — 20 591/17 475 bytes. Gate: PHP 42 tests / 396 assertions плюс asset 26 / 168, frontend source 109 и compiled 221 tests, Stylelint и forbidden Bootstrap/AdminLTE/jQuery/React/Radix/lucide/color-literal scan прошли. Следующая точка — forms, Vue island props, uploads, editors и related elements. | текущий commit |
 | 2026-09-08 | Forms, Vue islands, uploads, editors и related | Все 46 `form/*` logical paths принадлежат Tailwind namespace; добавлены field/card/input-group/label/textarea/radio-group/switch/attachment/progress/dialog/skeleton/spinner primitives. Отдельный `feature:forms:theme:tailwind` adapter оформляет native controls, 12-column responsive grid, actions, files/gallery, Vue Multiselect, image dialog, WYSIWYG/Trix и related groups только через canonical `--soa-*`. Vue file/image/images/select/related получают `soa-*` только из Blade props; сохранены names, attributes, required/readonly, CSRF/method/redirect, upload hooks и `data-card-widget`. Collapse/maximize обслуживает native theme driver без AdminLTE/jQuery. Оба профиля пересобраны; 98 manifest files прошли MD5/SHA-256, forms CSS production/development — 17 200/21 950 bytes, forbidden scan чист. Gate: PHP 76 tests / 414 assertions, frontend 366 tests и полный Stylelint. Следующая точка — tabs/tree/lightbox adapters и widget/auth views. | текущий commit |
 | 2026-09-08 | Content adapters и полный view namespace | TailwindTheme подключает независимые lightbox/tabs/tree adapters; их palette сведена к canonical `--soa-*`, а tree success/error policy слушает только `tree:changed`/`tree:failed` и обновляет Blade-owned live region. Добавлены последние dashboard/env-editor/login/tab-badge/CKEditor logical views; inventory подтверждает полный паритет namespace, config classes/props, field names, ARIA и hooks сохранены. Оба профиля содержат по 50 manifest assets; production/development: theme CSS 18 246/22 368, lightbox 1 082/1 257, tabs 1 164/1 374, tree CSS 3 144/3 736, tree JS 1 389/7 476 bytes. Gate: PHP 20/321, frontend 267, ESLint и Stylelint. Следующая точка — Tailwind 4 build/customization/no-build acceptance. | текущий commit |
+| 2026-09-08 | Tailwind 4 build и no-build distribution | Exact maintainer-only `tailwindcss`/`@tailwindcss/postcss` 4.3.3 собирают отдельный utility layer без preflight; scan ограничен Tailwind Blade namespace, preset ссылается на canonical `--soa-*`. `theme:tailwind` публикует handwritten и generated CSS, по 51 проверяемому asset на production/development; utility CSS — 2 156/2 819 bytes, без Bootstrap/AdminLTE/jQuery/React/Radix/lucide, color literals и `oklch`. Документированы application utilities/custom properties и граница Node.js; config switch и `sleepingowl:update` используют готовые assets. Gate: production build, PHP 14/61, frontend 268, ESLint, Prettier и PHP syntax. Следующая точка — acceptance matrix и release gate. | текущий commit |

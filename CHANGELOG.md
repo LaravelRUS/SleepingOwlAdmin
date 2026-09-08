@@ -14,6 +14,9 @@
 - Theme markup and concrete classes remain in overridable Blade views. The
   unchanged `sleeping_owl.template` key selects `AdminLTETheme` or a ready custom
   `ThemeInterface` implementation.
+- A precompiled `TailwindTheme` is included with Blade-first views, Vue 3
+  islands and canonical `--soa-*` customization; Tailwind 4 is maintainer-only
+  and is not required by Composer consumers.
 
 ### Removed
 

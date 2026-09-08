@@ -6,6 +6,7 @@ use Illuminate\Contracts\Console\Kernel;
 use SleepingOwl\Admin\Assets\AssetRegistry;
 use SleepingOwl\Admin\Contracts\Theme\ThemeInterface;
 use SleepingOwl\Admin\Themes\AdminLTETheme;
+use SleepingOwl\Admin\Themes\TailwindTheme;
 use SleepingOwl\Admin\Themes\ThemeRuntimeAssets;
 
 function fail(string $message): never
@@ -156,6 +157,19 @@ function verifyThemes(string $appRoot): void
 
     if (str_contains($sources, 'legacy-adminlte')) {
         fail('The framework-free test theme resolved AdminLTE assets.');
+    }
+
+    $registry->clear();
+    $app->make(ThemeRuntimeAssets::class)->register(new TailwindTheme());
+    $assets = [...$registry->registeredScripts(), ...$registry->registeredStyles()];
+    $sources = implode("\n", array_map(static fn ($asset): string => $asset->source(), $assets));
+
+    if (! str_contains($sources, 'css/themes/tailwind-utilities.css')) {
+        fail('TailwindTheme did not resolve its precompiled utility layer.');
+    }
+
+    if (str_contains($sources, 'legacy-adminlte')) {
+        fail('TailwindTheme resolved AdminLTE assets.');
     }
 }
 
