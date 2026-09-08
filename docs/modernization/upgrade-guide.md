@@ -8,11 +8,12 @@ standard frontend assets through Composer.
 
 1. Update the Composer package.
 2. Run `php artisan sleepingowl:update` to publish both ready asset profiles.
-3. Keep the application's existing `config/sleeping_owl.php`; package defaults
+3. Run `php artisan sleepingowl:update --check` as a read-only deployment health check.
+4. Keep the application's existing `config/sleeping_owl.php`; package defaults
    supply missing keys.
-4. Clear or rebuild Laravel's config cache using the application's normal
+5. Clear or rebuild Laravel's config cache using the application's normal
    deployment process.
-5. Review only application-owned Blade overrides and custom JavaScript.
+6. Review only application-owned Blade overrides and custom JavaScript.
 
 `ADMIN_DEV_ASSETS=false` selects the minified production profile.
 `ADMIN_DEV_ASSETS=true` selects the prebuilt development profile with source

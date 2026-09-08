@@ -67,9 +67,25 @@ create_clean_application() {
 run_consumer_workflow() {
     php "${APP_ROOT}/artisan" sleepingowl:install --no-interaction
     php "${APP_ROOT}/artisan" sleepingowl:update --no-interaction
+    php "${APP_ROOT}/artisan" sleepingowl:update --check --no-interaction
     php "${PROJECT_ROOT}/scripts/ci/verify-no-build-consumer.php" "${APP_ROOT}"
+    assert_check_is_read_only
     ADMIN_DEV_ASSETS=true php "${APP_ROOT}/artisan" sleepingowl:update --no-interaction
     php "${APP_ROOT}/artisan" route:list --path=admin --no-ansi > /dev/null
+}
+
+assert_check_is_read_only() {
+    local manifest="${APP_ROOT}/public/packages/sleepingowl/default/asset-manifest.json"
+    local invalid_manifest='{"invalid":true}'
+
+    printf '%s' "${invalid_manifest}" > "${manifest}"
+    if php "${APP_ROOT}/artisan" sleepingowl:update --check --no-interaction; then
+        echo 'The read-only asset check accepted an invalid manifest.' >&2
+        return 1
+    fi
+
+    test "$(< "${manifest}")" = "${invalid_manifest}"
+    php "${APP_ROOT}/artisan" sleepingowl:update --no-interaction
 }
 
 assert_no_frontend_toolchain() {

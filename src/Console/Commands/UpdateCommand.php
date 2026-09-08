@@ -4,7 +4,9 @@ namespace SleepingOwl\Admin\Console\Commands;
 
 use Illuminate\Config\Repository;
 use Illuminate\Filesystem\Filesystem;
+use SleepingOwl\Admin\Assets\PublishedAssetVerifier;
 use SleepingOwl\Admin\Console\Installation;
+use SleepingOwl\Admin\Exceptions\AssetManifestException;
 
 class UpdateCommand extends Installation\Command
 {
@@ -13,7 +15,8 @@ class UpdateCommand extends Installation\Command
      *
      * @var string
      */
-    protected $signature = 'sleepingowl:update';
+    protected $signature = 'sleepingowl:update
+                {--check : Verify both published asset profiles without changing files}';
 
     /**
      * The console command description.
@@ -29,7 +32,7 @@ class UpdateCommand extends Installation\Command
      */
     public function fire(Filesystem $files)
     {
-        $this->runInstaller();
+        return $this->executeCommand(app(PublishedAssetVerifier::class));
     }
 
     /**
@@ -37,7 +40,37 @@ class UpdateCommand extends Installation\Command
      */
     public function handle(Filesystem $files)
     {
+        return $this->executeCommand(app(PublishedAssetVerifier::class));
+    }
+
+    private function executeCommand(PublishedAssetVerifier $verifier): int
+    {
+        if ($this->option('check')) {
+            return $this->checkAssets($verifier);
+        }
+
         $this->runInstaller();
+
+        return self::SUCCESS;
+    }
+
+    private function checkAssets(PublishedAssetVerifier $verifier): int
+    {
+        try {
+            $reports = $verifier->verifyAll(public_path('packages/sleepingowl/default'));
+        } catch (AssetManifestException $exception) {
+            $this->components->error($exception->getMessage());
+
+            return self::FAILURE;
+        }
+
+        foreach ($reports as $report) {
+            $this->line(
+                "Asset profile [{$report->profile()}], {$report->fileCount()} files verified: <info>✔</info>"
+            );
+        }
+
+        return self::SUCCESS;
     }
 
     protected function runInstaller()

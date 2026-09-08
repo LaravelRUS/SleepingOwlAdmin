@@ -7,15 +7,20 @@ use SleepingOwl\Admin\Assets\PublishedAssetVerifier;
 
 class PublishAssets extends Installator
 {
-    private ?AssetPublicationReport $report = null;
+    /** @var list<AssetPublicationReport> */
+    private array $reports = [];
 
     public function showInfo()
     {
-        $profile = $this->report?->profile() ?? 'unknown';
-        $files = $this->report?->fileCount() ?? 0;
+        foreach ($this->reports as $report) {
+            $this->showReport($report);
+        }
+    }
 
+    private function showReport(AssetPublicationReport $report): void
+    {
         $this->command->line(
-            "Publish asset profile [{$profile}], {$files} files verified: <info>✔</info>"
+            "Publish asset profile [{$report->profile()}], {$report->fileCount()} files verified: <info>✔</info>"
         );
     }
 
@@ -31,7 +36,7 @@ class PublishAssets extends Installator
             '--force' => true,
         ]);
 
-        $this->report = app(PublishedAssetVerifier::class)->verify(
+        $this->reports = app(PublishedAssetVerifier::class)->verifyAll(
             public_path('packages/sleepingowl/default')
         );
     }

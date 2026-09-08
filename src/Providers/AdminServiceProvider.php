@@ -101,19 +101,34 @@ class AdminServiceProvider extends ServiceProvider
 
     private function initializeAdmin(): void
     {
-        if ($this->awaitingInitialAssetPublish()) {
+        if ($this->shouldDeferAdminInitialization()) {
             return;
         }
 
         $this->app['sleeping_owl']->initialize();
     }
 
-    private function awaitingInitialAssetPublish(): bool
+    private function shouldDeferAdminInitialization(): bool
     {
-        return $this->app->runningInConsole()
-            && ! $this->app['files']->exists(
-                $this->app->publicPath('packages/sleepingowl/default/asset-manifest.json')
-            );
+        if (! $this->app->runningInConsole()) {
+            return false;
+        }
+
+        return $this->isAssetPublicationCommand()
+            || ! $this->app['files']->exists($this->publishedManifestPath());
+    }
+
+    private function isAssetPublicationCommand(): bool
+    {
+        return in_array($_SERVER['argv'][1] ?? null, [
+            'sleepingowl:install',
+            'sleepingowl:update',
+        ], true);
+    }
+
+    private function publishedManifestPath(): string
+    {
+        return $this->app->publicPath('packages/sleepingowl/default/asset-manifest.json');
     }
 
     protected function registerTemplate(): void

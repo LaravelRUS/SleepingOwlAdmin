@@ -20,12 +20,43 @@ final class PublishedAssetVerifier
     public function verify(string $assetRoot): AssetPublicationReport
     {
         $assetRoot = rtrim($assetRoot, '/\\');
+        $manifest = $this->loadManifest($assetRoot);
+
+        return $this->verifyManifestProfile($assetRoot, $manifest, $this->profiles->selected());
+    }
+
+    /**
+     * @return list<AssetPublicationReport>
+     */
+    public function verifyAll(string $assetRoot): array
+    {
+        $assetRoot = rtrim($assetRoot, '/\\');
+        $manifest = $this->loadManifest($assetRoot);
+
+        return array_map(
+            fn (string $profile): AssetPublicationReport => $this->verifyManifestProfile(
+                $assetRoot,
+                $manifest,
+                $profile
+            ),
+            [AssetProfileSelector::PRODUCTION, AssetProfileSelector::DEVELOPMENT]
+        );
+    }
+
+    private function loadManifest(string $assetRoot): AssetManifest
+    {
         $manifest = $this->loader->load($assetRoot.'/asset-manifest.json');
         $this->assertPackageVersion($manifest);
 
-        $profileId = $this->profiles->selected();
-        $profile = $this->profile($manifest, $profileId);
-        $fileCount = $this->verifyProfile($assetRoot, $profile);
+        return $manifest;
+    }
+
+    private function verifyManifestProfile(
+        string $assetRoot,
+        AssetManifest $manifest,
+        string $profileId
+    ): AssetPublicationReport {
+        $fileCount = $this->verifyProfile($assetRoot, $this->profile($manifest, $profileId));
 
         return new AssetPublicationReport(
             $profileId,

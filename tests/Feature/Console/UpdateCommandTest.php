@@ -39,12 +39,33 @@ class UpdateCommandTest extends TestCase
         $this->assertFileExists($license);
         $this->assertStringContainsString(basename($license), (new Filesystem())->get($asset));
         $this->assertSame(48, app(PublishedAssetVerifier::class)->verify($assetRoot)->fileCount());
+        $this->assertSame(
+            ['production', 'development'],
+            array_map(
+                static fn ($report): string => $report->profile(),
+                app(PublishedAssetVerifier::class)->verifyAll($assetRoot)
+            )
+        );
 
         (new Filesystem())->put($asset, 'corrupt');
         $this->artisan('sleepingowl:update')->assertSuccessful();
 
         $this->assertNotSame('corrupt', (new Filesystem())->get($asset));
         $this->assertSame(48, app(PublishedAssetVerifier::class)->verify($assetRoot)->fileCount());
+    }
+
+    public function test_check_is_read_only_and_validates_both_profiles(): void
+    {
+        $this->artisan('sleepingowl:update')->assertSuccessful();
+
+        $asset = $this->publishedRoot.'/packages/sleepingowl/default/profiles/development/js/admin-core.js';
+        (new Filesystem())->put($asset, 'corrupt');
+
+        $this->artisan('sleepingowl:update', ['--check' => true])->assertFailed();
+        $this->assertSame('corrupt', (new Filesystem())->get($asset));
+
+        $this->artisan('sleepingowl:update')->assertSuccessful();
+        $this->artisan('sleepingowl:update', ['--check' => true])->assertSuccessful();
     }
 
     public function test_install_and_update_paths_do_not_invoke_a_frontend_toolchain(): void

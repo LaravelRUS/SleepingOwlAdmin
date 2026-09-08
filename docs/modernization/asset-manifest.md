@@ -106,11 +106,22 @@ php artisan sleepingowl:install
 php artisan sleepingowl:update
 ```
 
-Обе команды используют один `PublishAssets` installer. Он выполняет forced `vendor:publish --tag=assets`, затем `PublishedAssetVerifier` проверяет выбранный через `ADMIN_DEV_ASSETS` профиль:
+Обе команды используют один `PublishAssets` installer. Он выполняет forced `vendor:publish --tag=assets`, затем `PublishedAssetVerifier` проверяет оба готовых профиля:
 
 - manifest читается из опубликованного `packages/sleepingowl/default`;
 - `package_version` совпадает с установленной Composer-версией пакета;
-- каждый JS/CSS существует;
+- каждый production/development JS/CSS существует;
 - MD5 content version и SHA-256 checksum совпадают.
 
 `sleepingowl:update` остаётся неинтерактивным forced publish, поэтому существующие deployment scripts продолжают обновлять уже опубликованные файлы. Повреждение или неполная публикация завершают команду ошибкой вместо запуска старых assets или frontend toolchain.
+
+Deployment health check не изменяет файлов:
+
+```bash
+php artisan sleepingowl:update --check
+```
+
+Команда проверяет manifest version и checksums обоих профилей. Успех возвращает exit code
+`0`, любая отсутствующая/повреждённая/несовместимая публикация — `1` с той же точной
+командой восстановления. `ADMIN_DEV_ASSETS` влияет только на runtime selection и не сужает
+проверку.

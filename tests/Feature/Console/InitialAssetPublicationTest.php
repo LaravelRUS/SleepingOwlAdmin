@@ -34,6 +34,9 @@ final class InitialAssetPublicationTest extends OrchestraTestCase
         $this->assertFileDoesNotExist($manifest);
         $this->assertFalse($this->app->resolved(AssetManifest::class));
 
+        $this->artisan('sleepingowl:update', ['--check' => true])->assertFailed();
+        $this->assertFileDoesNotExist($manifest);
+
         $this->artisan('sleepingowl:update')->assertSuccessful();
 
         $this->assertFileExists($manifest);
