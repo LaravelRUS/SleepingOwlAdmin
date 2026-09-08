@@ -158,7 +158,10 @@
             "source": "D:/domains/laluna.kit/config/sleeping_owl.php",
             "status": "deprecated",
             "owner": "core:env-editor",
+            "reason": "The replacement key was introduced before the frontend modernization, but long-lived published configs still use the old name.",
             "replacement": "enable_editor",
+            "fallback": "When enable_editor is absent, copy the configured show_editor value at provider registration.",
+            "timeline": "Deprecated in 13.x, supported throughout 13.x, and removable no earlier than 14.0.",
             "contract": "When enable_editor is absent, normalize show_editor to enable_editor and emit a deprecation notice for the major migration window."
         },
         {

@@ -95,10 +95,24 @@ function validateSupplementalRows(array $matrix): array
     foreach (['legacyKeys', 'plannedKeys'] as $group) {
         foreach ($matrix[$group] ?? [] as $index => $row) {
             validateStatus($row, $index, $errors);
+            validateMigrationDetails($row, $group, $index, $errors);
         }
     }
 
     return $errors;
+}
+
+function validateMigrationDetails(array $row, string $group, int $index, array &$errors): void
+{
+    if (! in_array($row['status'] ?? null, ['deprecated', 'removed'], true)) {
+        return;
+    }
+
+    foreach (['reason', 'replacement', 'fallback', 'timeline'] as $field) {
+        if (! is_string($row[$field] ?? null) || trim($row[$field]) === '') {
+            $errors[] = "{$group} row {$index} with status {$row['status']} requires {$field}.";
+        }
+    }
 }
 
 function statusSummary(array $inventory, array $rules): array

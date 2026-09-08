@@ -22,8 +22,20 @@ class LegacyFullConfigCompatibilityTest extends TestCase
         $config = config('sleeping_owl');
 
         $this->assertSame('Legacy Admin', $config['title']);
+        $this->assertSame('admin', $config['url_prefix']);
+        $this->assertFalse($config['domain']);
+        $this->assertSame(['web', 'admin'], $config['middleware']);
+        $this->assertSame('users', $config['auth_provider']);
+        $this->assertSame('env/editor', $config['env_editor_url']);
+        $this->assertSame(['APP_KEY', 'DB_*'], $config['env_editor_excluded_keys']);
+        $this->assertSame('app/Admin', $config['bootstrapDirectory']);
+        $this->assertSame('images/uploads', $config['imagesUploadDirectory']);
+        $this->assertSame('files/uploads', $config['filesUploadDirectory']);
         $this->assertSame('POST', $config['datatables_settings']['default_datatables_method']);
         $this->assertSame('d-m-Y H:i', $config['datetimeFormat']);
+        $this->assertSame('d-m-Y', $config['dateFormat']);
+        $this->assertSame('H:i', $config['timeFormat']);
+        $this->assertSame('UTC', $config['timezone']);
         $this->assertSame('ckeditor', $config['wysiwyg']['default']);
         $this->assertSame(
             Assets::class,
@@ -44,7 +56,7 @@ class LegacyFullConfigCompatibilityTest extends TestCase
         $this->assertArrayNotHasKey('show_mode', $this->legacyConfig);
 
         $this->assertFalse(config('sleeping_owl.dev_assets'));
-        $this->assertFalse(config('sleeping_owl.enable_editor'));
+        $this->assertTrue(config('sleeping_owl.enable_editor'));
         $this->assertTrue(config('sleeping_owl.show_mode'));
         $this->assertNull(config('sleeping_owl.sidebar_background_color'));
     }

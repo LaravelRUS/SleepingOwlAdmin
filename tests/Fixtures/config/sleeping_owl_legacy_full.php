@@ -24,7 +24,7 @@ return [
     'env_editor_url' => 'env/editor',
     'env_editor_excluded_keys' => ['APP_KEY', 'DB_*'],
     'env_editor_middlewares' => [],
-    'show_editor' => false,
+    'show_editor' => true,
     'env_keys_readonly' => false,
     'env_can_delete' => false,
     'env_can_add' => false,
