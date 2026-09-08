@@ -11,6 +11,10 @@ const themes = [
         id: 'framework-free-test',
         route: '/theme-capabilities-framework-free',
     },
+    {
+        id: 'tailwind',
+        route: '/theme-capabilities-tailwind',
+    },
 ]
 
 for (const profile of ['development', 'production']) {
@@ -23,7 +27,39 @@ for (const profile of ['development', 'production']) {
             results.push(await exerciseTheme(context, theme, profile))
         }
 
-        expect(results[1].behavior).toEqual(results[0].behavior)
+        for (const result of results.slice(1)) {
+            expect(result.behavior).toEqual(results[0].behavior)
+        }
+    })
+
+    test(`${profile} Tailwind covers mode, focus, reduced motion and responsive sidebar`, async ({
+        page,
+    }) => {
+        await page.setViewportSize({ width: 390, height: 800 })
+        await page.emulateMedia({ reducedMotion: 'reduce' })
+        await page.addInitScript(() => globalThis.localStorage.removeItem('theme-mode'))
+        await useProfile(page, profile)
+        await page.goto('/theme-capabilities-tailwind')
+
+        const sidebar = page.locator('#capability-sidebar-panel')
+        await expect(sidebar).toHaveCSS('background-color', 'rgb(12, 34, 56)')
+        await expect(page.locator('body')).toHaveClass(/sidebar-collapse/)
+        await expect(sidebar).not.toHaveCSS('transform', 'none')
+
+        await page.keyboard.press('Tab')
+        await expect(page.locator('#theme-mode')).toBeFocused()
+        await expect(page.locator('#theme-mode')).toHaveCSS('outline-style', 'solid')
+        await page.keyboard.press('Enter')
+        await expect(page.locator('html')).toHaveAttribute('data-color-scheme', 'dark')
+
+        const transitionSeconds = await sidebar.evaluate((element) =>
+            Number.parseFloat(globalThis.getComputedStyle(element).transitionDuration),
+        )
+        expect(transitionSeconds).toBeLessThanOrEqual(0.001)
+
+        await page.locator('#capability-sidebar').click()
+        await expect(page.locator('body')).toHaveClass(/sidebar-open/)
+        await expect(sidebar).toHaveCSS('transform', 'none')
     })
 }
 
@@ -145,7 +181,9 @@ function assertIsolatedThemeRequests(requests, profile, selectedTheme) {
         }
     }
 
-    expect(requests.some((path) => path.includes('tailwind'))).toBe(false)
+    if (selectedTheme === 'tailwind') {
+        expect(requests).toContain(`${profileRoot}css/themes/tailwind-utilities.css`)
+    }
     if (selectedTheme === 'framework-free-test') {
         expect(requests.some((path) => path.endsWith('/css/icons.css'))).toBe(false)
     }

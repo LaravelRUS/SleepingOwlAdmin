@@ -2,6 +2,7 @@
 
 use Illuminate\Session\ArraySessionHandler;
 use Illuminate\Session\Store;
+use SleepingOwl\Admin\Assets\AssetHealthStatus;
 use SleepingOwl\Admin\Themes\TailwindTheme;
 
 class TailwindThemeShellTest extends TestCase
@@ -69,6 +70,23 @@ class TailwindThemeShellTest extends TestCase
             '<template data-tooltip-template>',
             '<div class="soa-tooltip" data-tooltip-popup role="tooltip">',
             '<div id="sidebar-overlay"></div>',
+        ]);
+        $this->assertStringNotContainsString('asset-health-status', $html);
+    }
+
+    public function test_asset_health_partial_uses_locale_fallback(): void
+    {
+        $this->app['translator']->setFallback('en');
+        $this->app->setLocale('fr');
+
+        $html = view('sleeping_owl_tailwind::default._partials.asset_health', [
+            'status' => new AssetHealthStatus('12.1.0', '12.0.0'),
+        ])->render();
+
+        $this->assertContainsAll($html, [
+            'class="asset-health-status" role="status"',
+            'Published admin assets (12.0.0) do not match the installed package (12.1.0).',
+            '<code class="asset-health-command">php artisan sleepingowl:update</code>',
         ]);
     }
 

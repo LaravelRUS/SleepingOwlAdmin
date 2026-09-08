@@ -25,6 +25,10 @@ const staticRoutes = new Map([
         ],
     ],
     [
+        '/theme-capabilities-tailwind',
+        [join(browserDirectory, 'theme-capabilities-tailwind.html'), 'text/html; charset=utf-8'],
+    ],
+    [
         '/compatibility-runtime',
         [join(browserDirectory, 'compatibility-runtime.html'), 'text/html; charset=utf-8'],
     ],
@@ -227,8 +231,11 @@ const staticRoutes = new Map([
     ],
     ...profileFeatureRoutes('development', ['forms', 'lightbox', 'table', 'tooltip', 'tree']),
     ...profileFeatureRoutes('development', ['alert', 'dropdown', 'sidebar', 'tabs']),
-    ...profileThemeAdapterRoutes('development', [['tree', 'legacy-adminlte']]),
-    ...profileThemeRoutes('development', ['legacy-adminlte']),
+    ...profileThemeAdapterRoutes('development', [
+        ['tree', 'legacy-adminlte'],
+        ['tree', 'tailwind'],
+    ]),
+    ...profileThemeRoutes('development', ['legacy-adminlte', 'tailwind']),
     ...profileSharedRoutes('development', ['modules']),
     ...profileStyleRoutes('development', themeCapabilityStyles()),
     [
@@ -265,8 +272,11 @@ const staticRoutes = new Map([
     ],
     ...profileFeatureRoutes('production', ['forms', 'lightbox', 'table', 'tooltip', 'tree']),
     ...profileFeatureRoutes('production', ['alert', 'dropdown', 'sidebar', 'tabs']),
-    ...profileThemeAdapterRoutes('production', [['tree', 'legacy-adminlte']]),
-    ...profileThemeRoutes('production', ['legacy-adminlte']),
+    ...profileThemeAdapterRoutes('production', [
+        ['tree', 'legacy-adminlte'],
+        ['tree', 'tailwind'],
+    ]),
+    ...profileThemeRoutes('production', ['legacy-adminlte', 'tailwind']),
     ...profileSharedRoutes('production', ['modules']),
     ...profileStyleRoutes('production', themeCapabilityStyles()),
     [
@@ -588,6 +598,21 @@ function profileStyleRoutes(profile, entries) {
     ])
 }
 
+function tailwindCapabilityStyles() {
+    return [
+        'themes/tailwind.css',
+        'themes/tailwind-utilities.css',
+        'features/dropdown/themes/tailwind.css',
+        'features/forms/themes/tailwind.css',
+        'features/lightbox/themes/tailwind.css',
+        'features/sidebar/themes/tailwind.css',
+        'features/table/themes/tailwind.css',
+        'features/tabs/themes/tailwind.css',
+        'features/tooltip/themes/tailwind.css',
+        'features/tree/themes/tailwind.css',
+    ]
+}
+
 function themeCapabilityStyles() {
     const base = [
         'admin-core.css',
@@ -618,8 +643,7 @@ function themeCapabilityStyles() {
         'features/tabs/themes/framework-free-test.css',
         'features/tooltip/themes/framework-free-test.css',
     ]
-
-    return [...base, ...legacy, ...frameworkFree]
+    return [...base, ...legacy, ...frameworkFree, ...tailwindCapabilityStyles()]
 }
 
 const fixtureRequests = new Map()

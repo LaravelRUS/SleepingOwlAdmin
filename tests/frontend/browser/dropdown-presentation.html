@@ -9,10 +9,15 @@
             const supported = ['legacy-adminlte', 'tailwind']
             if (!supported.includes(theme)) throw new Error(`Unsupported fixture theme: ${theme}`)
 
-            const link = document.createElement('link')
-            link.rel = 'stylesheet'
-            link.href = `/public/default/css/features/dropdown/themes/${theme}.css`
-            document.head.append(link)
+            for (const href of [
+                `/public/default/css/themes/${theme}.css`,
+                `/public/default/css/features/dropdown/themes/${theme}.css`,
+            ]) {
+                const link = document.createElement('link')
+                link.rel = 'stylesheet'
+                link.href = href
+                document.head.append(link)
+            }
         </script>
     </head>
     <body>

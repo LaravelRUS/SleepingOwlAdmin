@@ -21,11 +21,11 @@ test('Tailwind table adapter is standalone, compact and theme-token driven', asy
     await expect(page.locator('thead th').first()).toHaveCSS('text-transform', 'uppercase')
     await expect(page.locator('tbody tr.selected')).toHaveCSS(
         'background-color',
-        'rgb(239, 246, 255)',
+        'rgb(230, 238, 252)',
     )
     await expect(page.locator('.dt-paging-button.current')).toHaveCSS(
         'background-color',
-        'rgb(37, 99, 235)',
+        'rgb(36, 87, 214)',
     )
 })
 

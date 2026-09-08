@@ -76,10 +76,21 @@ Direct `KodiCMS\Assets` facade imports must move to the package-owned facades
 listed in [first-party assets](first-party-assets.md). Exact old facade strings
 inside an existing published config are normalized automatically.
 
-The default ready theme is `AdminLTETheme`. A ready external theme may register
-its own Blade views and production/development manifest fragment through
+The default ready theme is `AdminLTETheme`. The package also includes the
+framework-independent `TailwindTheme`; select it with the unchanged key and no
+frontend rebuild:
+
+```php
+'template' => SleepingOwl\Admin\Themes\TailwindTheme::class,
+```
+
+Its full Blade namespace, Tailwind 4 utility snapshot and production/development
+assets are precompiled. Application overrides may reuse shipped utilities or
+own a separate application Tailwind build for new arbitrary utilities. A ready
+external theme may register its own Blade views and manifest fragment through
 `ThemeRegistry`. Application CSS/JS, supported `--soa-*` properties, the sidebar
 background and Blade overrides require no package rebuild. See the
+[Tailwind theme](tailwind-theme.md) and
 [theme customization guide](theme-customization.md) for complete examples.
 
 ## Application verification

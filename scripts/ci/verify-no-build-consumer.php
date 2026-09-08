@@ -132,7 +132,7 @@ function frameworkFreeCapabilities(): array
     return ['dropdown', 'notification', 'sidebar', 'table-presentation', 'tabs', 'tooltip'];
 }
 
-function verifyThemes(string $appRoot): void
+function verifyThemes(string $appRoot, string $expectedTheme): void
 {
     chdir($appRoot);
     require $appRoot.'/vendor/autoload.php';
@@ -140,8 +140,14 @@ function verifyThemes(string $appRoot): void
     $app = require $appRoot.'/bootstrap/app.php';
     $app->make(Kernel::class)->bootstrap();
 
-    if (! $app->make(ThemeInterface::class) instanceof AdminLTETheme) {
-        fail('The clean application did not resolve AdminLTETheme by default.');
+    $expectedClass = match ($expectedTheme) {
+        'legacy-adminlte' => AdminLTETheme::class,
+        'tailwind' => TailwindTheme::class,
+        default => fail("Unsupported expected theme [{$expectedTheme}]."),
+    };
+
+    if (! $app->make(ThemeInterface::class) instanceof $expectedClass) {
+        fail("The clean application did not resolve expected theme [{$expectedTheme}].");
     }
 
     $registry = $app->make(AssetRegistry::class);
@@ -177,14 +183,15 @@ function main(array $arguments): void
 {
     $appRoot = isset($arguments[1]) ? realpath($arguments[1]) : false;
     if ($appRoot === false || ! is_dir($appRoot)) {
-        fail('Usage: php verify-no-build-consumer.php <laravel-application>');
+        fail('Usage: php verify-no-build-consumer.php <laravel-application> [legacy-adminlte|tailwind]');
     }
+    $expectedTheme = $arguments[2] ?? 'legacy-adminlte';
 
     $assetRoot = $appRoot.'/public/packages/sleepingowl/default';
     verifyProfiles($assetRoot, loadManifest($assetRoot));
-    verifyThemes($appRoot);
+    verifyThemes($appRoot, $expectedTheme);
 
-    fwrite(STDOUT, 'Both asset profiles and theme runtimes verified.'.PHP_EOL);
+    fwrite(STDOUT, "Both asset profiles and [{$expectedTheme}] theme runtime verified.".PHP_EOL);
 }
 
 main($argv);
