@@ -3,39 +3,60 @@
 ## Статус и правила
 
 - Статус: **inventory готов; реализация не начата**.
-- Следующий checkpoint: разложить sources по общей/theme/override структуре и создать общий asset layer.
+- Следующий checkpoint: собрать self-contained каталоги тем, отдельный override layer и общий asset layer.
 - Общие декларации поставляются отдельным logical entry `shared:ui`, автоматически подключаемым для любой `ThemeInterface`; headless `core` не получает presentation.
 - Общий CSS может использовать только semantic `soa-*` classes, behavior hooks и canonical `--soa-*` variables. Тема задаёт значения tokens и действительно отличающиеся overrides.
 - В общем слое запрещены Bootstrap/AdminLTE/Tailwind imports, vendor selectors и literal palette. Одинаковые structural rules удаляются из theme adapters.
 - Список общих элементов открыт для дополнений; новый элемент сначала получает отдельный checklist с обязательными states, затем переносится в shared layer.
 - После каждого пункта: `[x]`, узкая проверка, запись в журнал и отдельный commit без чужих изменений.
 
-## Целевая структура scripts/styles
+## Целевая структура
 
 ```text
-resources/frontend/
-├── core/
-│   ├── scripts/                  # headless API/runtime
-│   └── styles/                   # только behavior/accessibility contracts
-├── shared/                       # используется всеми темами
-│   ├── scripts/
-│   ├── styles/                   # shared:ui
-│   └── features/<feature>/
-│       ├── scripts/              # общий feature driver
-│       └── styles/               # общая feature geometry
-└── themes/<theme-id>/            # отдельная папка каждого шаблона
-    ├── scripts/                  # runtime выбранной темы
-    ├── styles/                   # tokens и собственная presentation
-    ├── features/<feature>/
-    │   ├── scripts/              # adapter только этой темы
-    │   └── styles/
-    └── overrides/                # изменения и исправления конкретного шаблона
-        ├── scripts/
-        ├── styles/
-        └── README.md             # причина, upstream/version и условие удаления
+resources/
+├── frontend/
+│   ├── core/
+│   │   ├── scripts/              # headless API/runtime
+│   │   └── styles/               # только behavior/accessibility contracts
+│   └── shared/                   # используется всеми темами
+│       ├── scripts/
+│       ├── styles/               # shared:ui
+│       └── features/<feature>/
+│           ├── scripts/          # общий feature driver
+│           └── styles/           # общая feature geometry
+├── themes/<theme-id>/            # переносимая папка конкретной темы
+│   ├── views/                    # полный Blade namespace темы
+│   ├── scripts/                  # runtime выбранной темы
+│   ├── styles/                   # tokens и собственная presentation
+│   ├── features/<feature>/
+│   │   ├── scripts/              # adapter только этой темы
+│   │   └── styles/
+│   └── README.md                 # contract, capabilities и build/publication
+└── theme-overrides/<theme-id>/   # изменения и исправления конкретной темы
+    ├── scripts/
+    ├── styles/
+    └── README.md                 # причина, target version и условие удаления
 ```
 
-Публичные output paths и logical ids при перемещении sources не меняются. `overrides/` не содержит обычные компоненты темы: он применяется только к выбранному template и всегда идёт последним среди package styles/scripts.
+Сторонняя Composer-тема повторяет тот же переносимый unit в своём package:
+
+```text
+vendor-theme/
+├── src/<ThemeClass>.php
+├── resources/theme/
+│   ├── views/
+│   ├── scripts/
+│   ├── styles/
+│   └── features/
+├── public/                       # готовые no-build assets
+└── asset-manifest.json           # logical manifest fragment
+```
+
+Application регистрирует class и manifest fragment через публичный theme contract, не копируя sources внутрь SleepingOwlAdmin.
+
+`theme-overrides/<theme-id>` находится вне переносимой папки темы: он содержит локальные изменения/исправления, применяется только к выбранной теме и всегда идёт последним среди package styles/scripts. Обычные компоненты и исправления, являющиеся частью самой темы, остаются внутри `themes/<theme-id>`.
+
+Публичные output paths, logical ids и Blade logical view names при перемещении sources не меняются.
 
 ## Порядок подключения
 
@@ -48,10 +69,14 @@ Manifest dependencies являются единственным источник
 ## 0. Общая инфраструктура
 
 - [x] Провести source inventory постоянных блоков и их дубликатов в AdminLTE/Tailwind.
-- [ ] Создать каталоги `core/{scripts,styles}`, `shared/{scripts,styles,features}` и `themes/<theme-id>/{scripts,styles,features,overrides}`.
+- [x] Зафиксировать тему как self-contained unit: `views`, `scripts`, `styles`, `features` и документация лежат в одном `themes/<theme-id>`.
+- [x] Отделить локальные изменения/исправления от переносимой темы в `theme-overrides/<theme-id>`.
+- [ ] Создать каталоги `frontend/core`, `frontend/shared`, `themes/<theme-id>` и `theme-overrides/<theme-id>` по целевой структуре.
 - [ ] Переместить общий core/runtime и feature sources без изменения public output paths и logical ids.
-- [ ] Собрать все adapters конкретной темы под `themes/<theme-id>/features`; удалить разбросанные `features/*/themes/*` после проверки imports.
+- [ ] Переместить Blade namespace, scripts, styles и все adapters конкретной темы в один `themes/<theme-id>`; удалить прежние разбросанные paths после проверки imports/resolution.
 - [ ] Ввести отдельный logical entry `theme:<id>:overrides`, подключаемый только для выбранной темы и после всех её base/feature entries.
+- [ ] Расширить custom-theme scaffold и `ThemeRegistry`: внешний package регистрирует self-contained theme root и готовый manifest fragment без копирования в package.
+- [ ] Добавить no-build contract: сторонняя Composer-тема устанавливается с готовыми assets без Node.js и package source edits.
 - [ ] Зафиксировать для каждого файла один owner: `core`, `shared`, `theme` или `theme override`; перекрёстные копии запрещены.
 - [ ] Проверить одинаковый детерминированный порядок CSS и JavaScript в production/development manifests.
 - [ ] Создать `resources/frontend/shared/ui/styles/shared-ui.scss` и logical entry `shared:ui` в обоих asset profiles.
@@ -120,3 +145,4 @@ Manifest dependencies являются единственным источник
 | --- | --- | --- | --- |
 | 2026-09-09 | Inventory и source layout | Выделены четыре приоритетных группы: application shell, common controls, все inline editable поля и fixed scroll controls. Зафиксировано разделение `core`, общего `shared`, отдельной папки каждого `themes/<id>` и последнего `themes/<id>/overrides` для изменений/исправлений конкретного шаблона. CSS/JS получают детерминированный manifest order; public paths/logical ids сохраняются. Код/assets не менялись, tests не запускались. | текущий commit |
 | 2026-09-09 | Дополнение component inventory | В общий design checklist отдельными пунктами добавлены `checkbox`, `image`, `images`, `file` и `files` со всеми interactive/loading/empty/error/readonly states. Список остаётся открытым для следующих дополнений. Код/assets не менялись, tests не запускались. | текущий commit |
+| 2026-09-09 | Self-contained theme structure | Структура скорректирована для сторонних авторов: каждая тема является переносимым unit с собственными views/scripts/styles/features, а локальный `theme-overrides/<id>` вынесен наружу и загружается последним. Добавлены external Composer theme, manifest fragment, scaffold и no-build contracts; public paths/logical ids/view names сохраняются. Код/assets не менялись, tests не запускались. | текущий commit |
