@@ -1,9 +1,11 @@
 @use 'variables';
 
 @mixin define {
-  :root {
-    --soa-focus-ring-width: #{variables.$focus-ring-width};
-    --soa-motion-duration-fast: #{variables.$motion-duration-fast};
-    --soa-motion-duration-normal: #{variables.$motion-duration-normal};
+  @layer sleepingowl-core {
+    :root {
+      --soa-focus-ring-width: #{variables.$focus-ring-width};
+      --soa-motion-duration-fast: #{variables.$motion-duration-fast};
+      --soa-motion-duration-normal: #{variables.$motion-duration-normal};
+    }
   }
 }

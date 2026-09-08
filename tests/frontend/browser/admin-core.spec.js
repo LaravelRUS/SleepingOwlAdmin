@@ -71,3 +71,11 @@ test('production HTTP service sends native CSRF requests', async ({ page }) => {
         'x-requested-with': 'XMLHttpRequest',
     })
 })
+
+test('production core disables animation tokens for reduced motion', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' })
+    await page.reload()
+
+    await expect(page.locator('html')).toHaveCSS('--soa-motion-duration-fast', '0ms')
+    await expect(page.locator('html')).toHaveCSS('--soa-motion-duration-normal', '0ms')
+})

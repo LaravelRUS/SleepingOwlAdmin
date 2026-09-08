@@ -15,8 +15,8 @@
                     "styles": [
                         {
                             "file": "profiles/production/css/admin-core.css",
-                            "version": "816701582abfc28dacedad8fc41399eb",
-                            "checksum": "sha256:b805d77b3c8ee9c0ebd65c0b97caaf86d502489d9588825ab81d6465b155f19d"
+                            "version": "e62a4a0c1b32afad6ab1f5ff2b1e9a06",
+                            "checksum": "sha256:1c83eed8758c8fa2e04ae34f66858e98eec1bf47c42955b8b5a59aacd8520701"
                         }
                     ]
                 },
@@ -451,8 +451,8 @@
                     "styles": [
                         {
                             "file": "profiles/development/css/admin-core.css",
-                            "version": "6de4d83fe930574ffe7406ab0fb48f43",
-                            "checksum": "sha256:c93b0f26b364491f3bf347867c4e27b82280264f37679c08377db4740aa93473"
+                            "version": "18607ca2d3c931582323cc30d4569688",
+                            "checksum": "sha256:e34b8aabd598ffc10a6a9631b4a4df8f18a16badb24281e8e347d75b194c1e9d"
                         }
                     ]
                 },
@@ -875,5 +875,5 @@
             }
         }
     },
-    "build_id": "sha256:0de25baee3ccc56609464dae3d32e763c2c10c6e5f4e2e187171c14377109b01"
+    "build_id": "sha256:cae3f35e4fd52ad120037433f88c91719f0d2ec2677867cb7342dea676479508"
 }

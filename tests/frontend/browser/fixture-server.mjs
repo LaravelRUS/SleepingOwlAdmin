@@ -136,6 +136,10 @@ const staticRoutes = new Map([
         [join(projectRoot, 'public', 'default', 'js', 'admin-core.js'), 'text/javascript'],
     ],
     [
+        '/public/default/css/admin-core.css',
+        [join(projectRoot, 'public', 'default', 'css', 'admin-core.css'), 'text/css'],
+    ],
+    [
         '/public/default/js/features/alert.js',
         [join(projectRoot, 'public', 'default', 'js', 'features', 'alert.js'), 'text/javascript'],
     ],

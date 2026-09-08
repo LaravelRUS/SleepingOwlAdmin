@@ -1,10 +1,11 @@
 @layer sleepingowl-core, sleepingowl-feature, sleepingowl-theme;
-:root {
-  --soa-focus-ring-width: 0.1875rem;
-  --soa-motion-duration-fast: 150ms;
-  --soa-motion-duration-normal: 250ms;
+@layer sleepingowl-core {
+  :root {
+    --soa-focus-ring-width: 0.1875rem;
+    --soa-motion-duration-fast: 150ms;
+    --soa-motion-duration-normal: 250ms;
+  }
 }
-
 @layer sleepingowl-core {
   [data-cloak] {
     display: none;

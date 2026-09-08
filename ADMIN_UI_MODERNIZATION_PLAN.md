@@ -4,7 +4,7 @@
 
 - Статус: активен; основной release scope отделён от будущих встроенных тем.
 - Текущий этап: **этап 7 — завершение публичного theme extension contract**; реализация основной темы ведётся отдельным планом, этап 8 закрыт.
-- Точка возобновления: structural AdminLTE 4/Bootstrap 5 migration и application migration guide закрыты в [`ADMIN_ADMINLTE_THEME_PLAN.md`](ADMIN_ADMINLTE_THEME_PLAN.md); production build/tests отложены до завершения стилистической доводки. Следующий отдельный пункт — финальная сборка и functional acceptance.
+- Точка возобновления: AdminLTE 4 production/development profiles и functional acceptance закрыты в [`ADMIN_ADMINLTE_THEME_PLAN.md`](ADMIN_ADMINLTE_THEME_PLAN.md). Следующий отдельный пункт — release-документация, затем clean Composer application без Node.js.
 - Рабочая ветка: `codex/remove-jquery-datatables2`.
 - Read-only reference project: `D:\domains\laluna.kit`; считать ранее собранный inventory достаточным, не сканировать проект/`Modules` повторно и обращаться только к конкретному файлу при точечной необходимости; не изменять и не запускать команды с побочными эффектами без отдельного разрешения.
 - База ветки: `ia11`, commit `17752e62`.
@@ -36,8 +36,8 @@
 3. Выполнить только выбранный пункт, не захватывая следующий независимый checkpoint.
 4. Для промежуточного checkpoint запустить только узкие tests затронутого contract, lint/format изменённых sources и зафиксировать результат в журнале. Frontend build выполнять только при фактическом изменении публикуемых assets; полный PHPUnit/Vitest/Playwright gate запускать один раз ближе к завершению release gate, а не повторять после каждого пункта.
 5. Отметить выполненный пункт и однозначную точку возобновления.
-6. Создать отдельный checkpoint-коммит и отправить рабочую ветку в `origin`.
-7. Убедиться, что после push рабочее дерево чистое, и остановить задачу.
+6. Создать отдельный локальный checkpoint-коммит; push выполняет пользователь, Codex ветку в `origin` не отправляет.
+7. Убедиться, что после commit рабочее дерево чистое, и остановить задачу.
 8. Следующий пункт начинать в новой задаче с шага 1.
 
 Если перед началом пункта обнаружены посторонние незакоммиченные изменения, их нельзя изменять, удалять или включать в checkpoint. Сначала необходимо отделить их либо остановиться и согласовать состояние рабочего дерева.
@@ -725,7 +725,7 @@ No-build consumer contract является release-blocking:
 - [x] Добавить отдельные translation keys сообщения и команды во все штатные locales с проверяемым fallback, не собирать пользовательский текст в JavaScript.
 - [x] Для custom theme предоставить нейтральный публичный asset health status без CSS-классов и оставить отображение теме.
 - [x] Покрыть общий PHP contract asset version match/mismatch, locale fallback и отсутствие status при совпадении; presentation tests принадлежат плану каждой темы.
-- [ ] Измерить core, feature и theme bundles по отдельности.
+- [x] Измерить core, feature и theme bundles по отдельности.
 
 Критерий завершения: установка выбирает реализацию `ThemeInterface` без изменения core, custom theme не получает чужие assets транзитивно, а обязательный [`ADMIN_ADMINLTE_THEME_PLAN.md`](ADMIN_ADMINLTE_THEME_PLAN.md) закрыт. Tailwind и следующие темы проверяются отдельными планами поверх того же публичного контракта.
 
@@ -1150,3 +1150,4 @@ Tailwind acceptance matrix находится только в [`ADMIN_TAILWIND_T
 | 2026-09-08 | AdminLTE 4 version/dependency/license checkpoint | По официальным npm tags/package metadata выбраны exact pins `admin-lte@4.9.1`, `bootstrap@5.3.8`, `@popperjs/core@2.11.8`. Runtime dependency graph — только peer chain AdminLTE → Bootstrap → Popper без runtime jQuery; все три пакета MIT, содержат license notice и не имеют bundled packages. Зафиксированы AdminLTE Node ≥20, package exports и более строгий ES2022/browser target; локальный Node 24/npm 11/lockfile v3 совместимы. Ни dependencies/lock, ни PHP/Blade/JS/Sass/DataTables/assets не менялись, tests/build по ускоренной политике не запускались. Следующая точка — отдельный dependency-only exact lock checkpoint в theme plan; Tailwind не начинать. | текущий commit |
 | 2026-09-08 | AdminLTE 4 dependency/lock checkpoint | Root manifest и lock обновлены до exact `admin-lte@4.9.1`, `bootstrap@5.3.8`, `@popperjs/core@2.11.8`; AdminLTE 3, Bootstrap 4 и `popper@1` удалены. npm удалил 582 legacy transitive packages; exact root versions подтверждены, `npm ls jquery --all` пуст. Публикуемые assets не менялись, поэтому build и полные suites не запускались. Следующая точка — отдельный DataTables Bootstrap 5 presentation/BS4 cleanup checkpoint в theme plan. | текущий commit |
 | 2026-09-08 | AdminLTE 4 structural migration | Package-owned Blade/Sass/JS переведены по официальной migration guide на AdminLTE 4 layout, Bootstrap 5 utilities/forms и `data-bs-theme`; AdminLTE 3 Sass удалён. DataTables presentation уже использует BS5 packages, legacy BS4 adapters отсутствуют. Старые публичные HTML markers сохранены рядом с официальными v4 markers и обслуживаются native adapters; footer остаётся Blade-owned и содержит `app-footer main-footer`. Development assets пересобраны пользовательским watcher и вручную просмотрены на dashboard/table/form/footer; production build и tests по прямому указанию не запускались. | текущий commit |
+| 2026-09-08 | AdminLTE 4 final asset acceptance | Оба готовых профиля пересобраны; production runtime содержит 33 файла, 1 890 962 bytes / 502 187 gzip (`−26.9%` / `−14.6%` к legacy baseline), development — 5 044 837 / 1 010 443. Новый автоматический bundle report измеряет core/shared/features/adapters/theme после каждой production-сборки. Static gates подтверждают отсутствие jQuery в dependency tree и опубликованных JS/maps/licenses. Полный PHP gate: 591 test, 2461 assertion, 11 skipped; frontend gate: Prettier/ESLint/Stylelint, 698 Vitest + 140 Playwright. Config matrix: 113 keys, legacy/minimal fixtures: 42/1. Следующая точка — release-документация и clean Composer application без Node.js; push оставлен пользователю. | текущий commit |
