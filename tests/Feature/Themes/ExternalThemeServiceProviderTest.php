@@ -23,6 +23,7 @@ class ExternalThemeServiceProviderTest extends TestCase
     public function test_provider_can_replace_the_configured_theme_and_its_ready_assets(): void
     {
         $theme = app(ThemeInterface::class);
+        $this->app['sleeping_owl']->initialize();
         $registry = app(AssetRegistry::class);
         $sources = array_map(
             static fn ($asset): string => $asset->source(),

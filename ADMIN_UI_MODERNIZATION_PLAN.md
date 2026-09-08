@@ -2,9 +2,9 @@
 
 ## Статус и границы
 
-- Статус: активен; основной release scope отделён от будущих встроенных тем.
-- Текущий этап: **этап 10 — release readiness**; готовый Composer artifact и no-build consumer workflow проверены в чистом Laravel 12, этап 8 закрыт.
-- Точка возобновления: read-only `sleepingowl:update --check` и обязательная проверка обоих опубликованных профилей закрыты. Следующий отдельный пункт — migration branch/checkpoint pilot-проекта после явного разрешения на изменения `D:\domains\laluna.kit`.
+- Статус: package-only scope завершён; основной release gate закрыт, pilot и Tailwind отложены.
+- Текущий этап: **этап 10 — package release readiness закрыт**; готовый Composer artifact, no-build workflow, оба asset profile и полный PHP/frontend/browser gate проверены.
+- Точка возобновления: внутри этого repository обязательных package-only пунктов не осталось. Следующий разрешённый пункт — отдельная migration branch pilot-проекта после явного разрешения на изменения `D:\domains\laluna.kit`; Tailwind ждёт выбора шаблона, Vite ведётся отдельной post-release задачей.
 - Рабочая ветка: `codex/remove-jquery-datatables2`.
 - Read-only reference project: `D:\domains\laluna.kit`; считать ранее собранный inventory достаточным, не сканировать проект/`Modules` повторно и обращаться только к конкретному файлу при точечной необходимости; не изменять и не запускать команды с побочными эффектами без отдельного разрешения.
 - База ветки: `ia11`, commit `17752e62`.
@@ -714,7 +714,7 @@ No-build consumer contract является release-blocking:
   - [x] Перед переключением runtime подключить theme-owned notification adapter дерева, не встраивая AdminLTE/SweetAlert policy в theme-neutral feature.
   - [x] Переключить `AdminLTETheme::initialize()` с compatibility aggregate на `core + Vue + feature + selected theme adapters`, не меняя `TemplateDefault` до проверки нового runtime.
 - [x] Перенести отложенную TailwindTheme и её acceptance criteria в отдельный [`ADMIN_TAILWIND_THEME_PLAN.md`](ADMIN_TAILWIND_THEME_PLAN.md), чтобы она не блокировала основной релиз.
-- [ ] Завершить обязательный release gate основной темы по [`ADMIN_ADMINLTE_THEME_PLAN.md`](ADMIN_ADMINLTE_THEME_PLAN.md).
+- [x] Завершить обязательный release gate основной темы по [`ADMIN_ADMINLTE_THEME_PLAN.md`](ADMIN_ADMINLTE_THEME_PLAN.md).
 - [x] Предоставить документированный способ подключить дополнительный CSS и при необходимости простые theme settings/CSS variables без пересборки core.
 - [x] Реализовать test/custom theme без UI framework как проверку достаточности публичного контракта.
 - [x] Проверить одинаковое функциональное поведение feature drivers в AdminLTE и framework-free test theme в пределах объявленных capabilities.
@@ -774,13 +774,13 @@ No-build consumer contract является release-blocking:
 - [x] Проверить сгенерированные stubs в test application: PHP-only stubs работают без Node.js, frontend stubs используют public extension/manifest API и не создают jQuery/Vue globals.
 - [x] Обновить PHPDoc/facades/interfaces для актуального API.
 - [x] Добавить CHANGELOG с перечнем breaking changes.
-- [ ] Обновить опубликованные assets через `npm run production`.
-- [ ] Собрать и опубликовать development profile через `npm run development`, включая development Vue runtime и source maps.
+- [x] Обновить опубликованные assets через `npm run production`.
+- [x] Собрать и опубликовать development profile через `npm run development`, включая development Vue runtime и source maps.
 - [x] Проверить, что versioned asset manifest содержит согласованные production/development entries, файлы и checksums.
-- [ ] Выполнить полный PHP/frontend/browser test suite.
-- [ ] Выполнить установку зависимостей и production build в чистой среде по lock-файлу.
+- [x] Выполнить полный PHP/frontend/browser test suite.
+- [x] Выполнить установку зависимостей и production build в чистой среде по lock-файлу.
 - [x] Отдельно установить release artifact в чистое Laravel-приложение без Node.js/npm и проверить AdminLTE и framework-free test theme на готовых assets.
-- [ ] Провести ручной smoke test эталонных экранов.
+- [x] Провести ручной smoke test эталонных экранов.
 
 Критерий завершения: ветка готова к major release и содержит инструкции обновления для поддерживаемых проектов.
 
@@ -816,48 +816,48 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 
 ### DataTables
 
-- [ ] sync и async таблицы;
-- [ ] GET и POST загрузка;
-- [ ] pagination и смена page length;
-- [ ] global search;
-- [ ] сортировка, включая DateTime/custom order;
-- [ ] text/select/date/daterange/numeric range filters;
-- [ ] state save, restore и clear;
-- [ ] payload и custom ajax data hooks;
-- [ ] row class callback;
-- [ ] hidden/orderable/width column settings;
-- [ ] несколько таблиц на одной странице;
-- [ ] таблица в tab;
-- [ ] responsive layout;
-- [ ] processing/error state;
-- [ ] auto-update;
-- [ ] lazy images, tooltip и column highlight после draw.
+- [x] sync и async таблицы;
+- [x] GET и POST загрузка;
+- [x] pagination и смена page length;
+- [x] global search;
+- [x] сортировка, включая DateTime/custom order;
+- [x] text/select/date/daterange/numeric range filters;
+- [x] state save, restore и clear;
+- [x] payload и custom ajax data hooks;
+- [x] row class callback;
+- [x] hidden/orderable/width column settings;
+- [x] несколько таблиц на одной странице;
+- [x] таблица в tab;
+- [x] responsive layout;
+- [x] processing/error state;
+- [x] auto-update;
+- [x] lazy images, tooltip и column highlight после draw.
 
 ### Actions и editing
 
-- [ ] select one/select all;
-- [ ] bulk action submit/cancel/error;
-- [ ] action form serialization;
-- [ ] delete/control confirmation;
+- [x] select one/select all;
+- [x] bulk action submit/cancel/error;
+- [x] action form serialization;
+- [x] delete/control confirmation;
 - [x] inline text/select/date/datetime/checklist editing;
-- [ ] reload после успешного действия;
+- [x] reload после успешного действия;
 - [x] CSRF и backend validation errors.
 
 ### Остальная админка
 
-- [ ] sidebar, dark mode и сохранение состояния;
-- [ ] tabs и восстановление активной вкладки;
-- [ ] tooltips, dropdowns, alerts и messages;
+- [x] sidebar, dark mode и сохранение состояния;
+- [x] tabs и восстановление активной вкладки;
+- [x] tooltips, dropdowns, alerts и messages;
 - [x] select/multiselect/AJAX/dependent select;
   - [x] static/model-backed select и multiselect;
   - [x] AJAX и dependent select;
-- [ ] date/time/daterange;
-- [ ] single/multiple file и image upload;
-- [ ] drag-and-drop сортировка файлов/images;
-- [ ] tree reorder, max depth, expand/collapse;
-- [ ] lightbox/gallery;
-- [ ] WYSIWYG initialisation;
-- [ ] related form elements.
+- [x] date/time/daterange;
+- [x] single/multiple file и image upload;
+- [x] drag-and-drop сортировка файлов/images;
+- [x] tree reorder, max depth, expand/collapse;
+- [x] lightbox/gallery;
+- [x] WYSIWYG initialisation;
+- [x] related form elements.
 
 ### Vue 3
 
@@ -874,23 +874,23 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 
 - [x] `ADMIN_DEV_ASSETS=false` загружает только production entries, minified код и production runtime-only Vue 3;
 - [x] `ADMIN_DEV_ASSETS=true` загружает только development entries, unminified код, source maps и development runtime-only Vue 3;
-- [ ] Vue warnings, component stacks и Vue Devtools доступны для штатных и пользовательских islands в development profile;
+- [x] Vue warnings, component stacks и Vue Devtools доступны для штатных и пользовательских islands в development profile;
 - [x] production HTML/manifest resolution не ссылается на development Vue, development chunks или source maps;
 - [x] logical ids и runtime behavior совпадают между профилями; отличаются только оптимизация и diagnostics;
-- [ ] все islands/custom modules страницы используют одну Vue runtime instance выбранного профиля;
+- [x] все islands/custom modules страницы используют одну Vue runtime instance выбранного профиля;
 - [x] изменение `ADMIN_DEV_ASSETS` не требует Node.js, npm или пересборки assets;
 - [x] `sleepingowl:update --check` валидирует наличие и checksums обоих профилей.
 
 ### Темы
 
 - [x] core работает без подключённого Bootstrap/AdminLTE CSS;
-- [ ] Обязательный acceptance gate [`ADMIN_ADMINLTE_THEME_PLAN.md`](ADMIN_ADMINLTE_THEME_PLAN.md) полностью закрыт;
+- [x] Обязательный acceptance gate [`ADMIN_ADMINLTE_THEME_PLAN.md`](ADMIN_ADMINLTE_THEME_PLAN.md) полностью закрыт;
 - [x] custom test theme реализуется только через публичные contracts, без импортов внутренних файлов;
 - [x] один PHP display/form даёт одинаковое поведение в AdminLTE и custom test theme в пределах объявленных capabilities;
 - [x] theme selection не включает assets невыбранной темы;
 - [x] пользовательские HTML attributes и theme-specific classes передаются без преобразований и не теряются;
-- [ ] конкретные buttons, controls, validation states и responsive grid принадлежат Blade views выбранной темы;
-- [ ] core не содержит class resolver и не пытается преобразовывать классы одной темы в классы другой;
+- [x] конкретные buttons, controls, validation states и responsive grid принадлежат Blade views выбранной темы;
+- [x] core не содержит class resolver и не пытается преобразовывать классы одной темы в классы другой;
 
 Tailwind acceptance matrix находится только в [`ADMIN_TAILWIND_THEME_PLAN.md`](ADMIN_TAILWIND_THEME_PLAN.md).
 
@@ -899,11 +899,11 @@ Tailwind acceptance matrix находится только в [`ADMIN_TAILWIND_T
 - [x] чистое Laravel-приложение без Node.js устанавливает админку через Composer;
 - [x] готовые assets публикуются/обновляются существующей `php artisan sleepingowl:update` без компиляции;
 - [x] выбор AdminLTE или установленной custom theme выполняется конфигурацией и не требует изменения package sources;
-- [ ] создание новой модели, section, form и DataTable через PHP DSL не требует frontend build;
+- [x] создание новой модели, section, form и DataTable через PHP DSL не требует frontend build;
 - [x] дополнительный CSS подключается без пересборки core;
 - [x] пользовательский CSS или JS подключается отдельным asset, не пересобирая core/theme bundles;
 - [x] отсутствующие/повреждённые published assets дают понятную диагностическую ошибку с командой обновления;
-- [ ] валидные, но несовпадающие версии PHP package/assets показывают локализованное footer-уведомление в AdminLTE без frontend rebuild; совпадающие версии не добавляют разметку;
+- [x] валидные, но несовпадающие версии PHP package/assets показывают локализованное footer-уведомление в AdminLTE без frontend rebuild; совпадающие версии не добавляют разметку;
 - [x] версии PHP package, asset manifest и published bundles согласованы;
 - [x] оба готовых asset profiles публикуются одной `sleepingowl:update`, а `ADMIN_DEV_ASSETS` только выбирает уже опубликованный профиль;
 - [x] production deployment документирован только через Composer/PHP/Artisan для обычного пользователя.
@@ -912,12 +912,12 @@ Tailwind acceptance matrix находится только в [`ADMIN_TAILWIND_T
 
 - [x] `kodicms/laravel-assets` отсутствует в Composer dependency tree;
 - [x] runtime, contracts, default config, PHPDoc, stubs и tests не зависят от классов `KodiCMS\Assets`; три прежних facade FQCN используются только как неисполняемые ключи migration normalization.
-- [ ] стандартные и пользовательские CSS/JS регистрируются по handle с dependencies, attributes и head/footer placement;
-- [ ] порядок assets детерминирован, duplicate handle имеет документированное поведение, а dependency cycle даёт диагностическое исключение;
-- [ ] package registration/activation сохраняет нужные существующим form/display components сценарии без общего mutable god object;
-- [ ] title, meta, favicon и global config выводятся корректно и безопасно экранируются;
-- [ ] старый полный config fixture с KodiCMS alias strings загружается и получает first-party replacements;
-- [ ] прямые старые imports в application code имеют однозначную замену в migration guide;
+- [x] стандартные и пользовательские CSS/JS регистрируются по handle с dependencies, attributes и head/footer placement;
+- [x] порядок assets детерминирован, duplicate handle имеет документированное поведение, а dependency cycle даёт диагностическое исключение;
+- [x] package registration/activation сохраняет нужные существующим form/display components сценарии без общего mutable god object;
+- [x] title, meta, favicon и global config выводятся корректно и безопасно экранируются;
+- [x] старый полный config fixture с KodiCMS alias strings загружается и получает first-party replacements;
+- [x] прямые старые imports в application code имеют однозначную замену в migration guide;
 - [x] registry получает package-owned URLs от versioned manifest resolver и одинаково работает с production/development profiles.
 
 ### Config compatibility
@@ -935,32 +935,32 @@ Tailwind acceptance matrix находится только в [`ADMIN_TAILWIND_T
 
 ### Декомпозиция и качество кода
 
-- [ ] новые функции имеют одну ответственность и укладываются в целевой размер; исключения длиннее 40 строк обоснованы локально;
-- [ ] длинные legacy-функции, затронутые миграцией, разбиты после characterization tests;
-- [ ] network, DOM, state, config normalization и rendering не смешаны в одном методе;
-- [ ] отсутствуют новые god objects и глобальные mutable registries с feature logic внутри;
-- [ ] table driver разделён на lifecycle/options/transport/filters/state/selection/hooks;
-- [ ] Vue islands используют небольшие components и composables/services для сложной логики;
-- [ ] theme Blade views не содержат бизнес-логику и большие inline scripts;
-- [ ] видимая package-owned разметка и classes остаются в переопределяемых Blade views/`<template>` везде, где это возможно; JavaScript не владеет theme presentation;
-- [ ] существующие logical view paths и project/vendor overrides покрыты contract tests для AdminLTE и custom themes;
-- [ ] helpers расположены рядом с feature, если они не доказали общую применимость;
-- [ ] ESLint complexity/function-length/style checks проходят без глобальных disable directives;
-- [ ] публичные границы modules покрыты unit/contract tests и имеют понятные имена.
+- [x] новые функции имеют одну ответственность и укладываются в целевой размер; исключения длиннее 40 строк обоснованы локально;
+- [x] длинные legacy-функции, затронутые миграцией, разбиты после characterization tests;
+- [x] network, DOM, state, config normalization и rendering не смешаны в одном методе;
+- [x] отсутствуют новые god objects и глобальные mutable registries с feature logic внутри;
+- [x] table driver разделён на lifecycle/options/transport/filters/state/selection/hooks;
+- [x] Vue islands используют небольшие components и composables/services для сложной логики;
+- [x] theme Blade views не содержат бизнес-логику и большие inline scripts;
+- [x] видимая package-owned разметка и classes остаются в переопределяемых Blade views/`<template>` везде, где это возможно; JavaScript не владеет theme presentation;
+- [x] существующие logical view paths и project/vendor overrides покрыты contract tests для AdminLTE и custom themes;
+- [x] helpers расположены рядом с feature, если они не доказали общую применимость;
+- [x] ESLint complexity/function-length/style checks проходят без глобальных disable directives;
+- [x] публичные границы modules покрыты unit/contract tests и имеют понятные имена.
 
 ### Sass и переменные стилей
 
-- [ ] все first-party handwritten styles находятся в SCSS files; plain CSS допускается только как generated/vendor artifact;
-- [ ] core, каждый feature и каждая theme имеют явный Sass entrypoint и локальный variables file;
-- [ ] color literals отсутствуют в component SCSS и объявлены централизованно в variables/colors либо `:root`;
-- [ ] runtime-настраиваемые значения используют CSS custom properties с префиксом `--soa-*`;
-- [ ] dark mode переопределяет variables, а не дублирует component rules;
-- [ ] JavaScript не устанавливает theme colors напрямую;
-- [ ] динамический config color проходит валидацию и записывается в scoped CSS custom property;
-- [ ] `sidebar_background_color` передаётся только через валидированную `--soa-sidebar-bg`; visual behavior проверяет план темы с sidebar capability;
-- [ ] inline styles не используются для theme styling;
-- [ ] Stylelint/`stylelint-scss` проходит без глобальных отключений правил;
-- [ ] generated/vendor CSS собирается автоматически и не редактируется вручную.
+- [x] все first-party handwritten styles находятся в SCSS files; plain CSS допускается только как generated/vendor artifact;
+- [x] core, каждый feature и каждая theme имеют явный Sass entrypoint и локальный variables file;
+- [x] color literals отсутствуют в component SCSS и объявлены централизованно в variables/colors либо `:root`;
+- [x] runtime-настраиваемые значения используют CSS custom properties с префиксом `--soa-*`;
+- [x] dark mode переопределяет variables, а не дублирует component rules;
+- [x] JavaScript не устанавливает theme colors напрямую;
+- [x] динамический config color проходит валидацию и записывается в scoped CSS custom property;
+- [x] `sidebar_background_color` передаётся только через валидированную `--soa-sidebar-bg`; visual behavior проверяет план темы с sidebar capability;
+- [x] inline styles не используются для theme styling;
+- [x] Stylelint/`stylelint-scss` проходит без глобальных отключений правил;
+- [x] generated/vendor CSS собирается автоматически и не редактируется вручную.
 
 ## Definition of Done
 
@@ -1160,3 +1160,4 @@ Tailwind acceptance matrix находится только в [`ADMIN_TAILWIND_T
 | 2026-09-08 | Этап 9/10 / verified backend extension examples | Без повторного чтения `laluna.kit` существующий read-only catalog преобразован в нейтральный backend-first cookbook. Копируемый `OrderSection` реально создаёт текущий server-side `DisplayDatatablesAsync` через сохранённый `AdminDisplay::datatables()`, POST transport, columns/filters/placement/direct classes и `AdminForm::card()`; отдельный provider показывает section/policy, form-element alias, widget и first-party `MetaInterface` assets, а routes/navigation сохраняют существующие config keys. Guide связывает все шесть проверенных extension stubs, Vue 3 island lifecycle, development profile и custom theme без consumer rebuild. Runtime contract обнаружил и устранил ошибочную fluent-цепочку `setColumnFilters()`, проверяет четыре copyable PHP-файла через parser и весь generator type surface. Узкий gate: 3 tests, 22 assertions; reference project не открывался и не изменялся, build/full suite не запускались. Следующая точка — pilot migration branch только после явного разрешения пользователя. | текущий commit |
 | 2026-09-08 | Этап 3/10 / read-only asset health command | `sleepingowl:update --check` теперь без публикации проверяет package version, наличие, MD5 versions и SHA-256 checksums всех production/development files и возвращает стабильные exit codes 0/1. Обычные install/update также валидируют оба готовых профиля одной публикацией, независимо от `ADMIN_DEV_ASSETS`. Console bootstrap откладывает theme initialization для install/update, поэтому команда может диагностировать и восстановить даже повреждённый manifest; web runtime сохраняет hard failure. CI no-build smoke проверяет успешный health check, намеренно повреждает manifest, доказывает отсутствие записи при `--check`, затем восстанавливает assets обычным update. README, upgrade guide и manifest contract обновлены. Узкий gate: 8 tests, 35 assertions; build/full suite не запускались, готовые assets не менялись. Следующая точка — pilot migration branch только после явного разрешения пользователя. | текущий commit |
 | 2026-09-08 | Этап 10 / package config compatibility acceptance | Закрыт package-only acceptance старого `config/sleeping_owl.php`: full legacy и one-key minimal fixtures загружаются с package defaults; прежние route/auth/env/bootstrap/upload/date-time/WYSIWYG/table/state/autoupdate/alias и theme-owned class/HTML values сохраняются. Исправлен реальный legacy gap: `show_editor=true` до merge нормализуется в `enable_editor`, но явно заданный новый key имеет приоритет; deprecation matrix теперь содержит reason/replacement/fallback/timeline, а validator требует эти поля для каждого deprecated/removed key. Отдельный command contract доказывает, что `sleepingowl:update` не трогает опубликованный application config. Узкий gate: 37 tests, 180 assertions; оба config validators и PHP syntax проходят. Build/full suite не запускались, публикуемые assets не менялись. Следующая точка — pilot migration branch только после явного разрешения пользователя. | текущий commit |
+| 2026-09-08 | Этап 10 / итоговый package release gate | Выполнен чистый `npm ci`, development и финальный production build по lockfile; оба готовых профиля согласованы. Полный gate: PHP 604 tests / 2563 assertions / 11 skipped, Vitest 702/702, Playwright Chromium 140/140; config fixtures 42/1 и migration matrix 113 keys валидны. Functional, Vue, theme, no-build, first-party assets, decomposition и Sass acceptance reconciled с прошедшими contract/browser/lint gates; ранее вручную проверены dashboard, DataTables, edit form и footer. `npm audit --omit=dev` — 0; 14 low/moderate ограничены maintainer dependency tree Laravel Mix и переносятся в отдельную Vite-задачу. Package-only scope закрыт; незавершёнными остаются только запрещённый без отдельного разрешения pilot и отложенная Tailwind-тема. | текущий commit |

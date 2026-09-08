@@ -2,9 +2,9 @@
 
 ## Статус и границы
 
-- Статус: **активен; обязательный release gate основного major-релиза**.
+- Статус: **завершён; обязательный release gate основного major-релиза закрыт**.
 - Текущая реализация: dependency tree, Sass framework boundary и package-owned Blade/JS presentation переведены на exact AdminLTE 4.9.1/Bootstrap 5.3.8/Popper 2.11.8 без jQuery и AdminLTE 3 Sass. Production/development profiles пересобраны, функциональный gate пройден, а размеры runtime фиксируются автоматическим отчётом.
-- Точка возобновления: clean Laravel 12 no-build gate закрыт. Следующий отдельный пункт — итоговый clean lock/full-suite/manual release gate вместе с основным планом.
+- Точка возобновления: все пункты этого плана закрыты. Дальнейшие изменения AdminLTE выполняются только как отдельные post-release задачи; pilot и Tailwind остаются за пределами этого плана.
 - Общий platform/core scope находится в [`ADMIN_UI_MODERNIZATION_PLAN.md`](ADMIN_UI_MODERNIZATION_PLAN.md). Tailwind не входит в этот файл и ведётся в [`ADMIN_TAILWIND_THEME_PLAN.md`](ADMIN_TAILWIND_THEME_PLAN.md).
 - Каждый самостоятельный пункт: реализация, узкие tests затронутого contract, lint/format только изменённых sources, обновление этого файла, отдельный checkpoint-коммит и чистое рабочее дерево. Build выполняется только при изменении публикуемых assets; полный PHPUnit/Vitest/Playwright gate — один раз перед финальным release gate, не на каждом промежуточном checkpoint.
 
@@ -104,7 +104,7 @@ Lock checkpoint заменил root `popper@1` на `@popperjs/core@2.11.8`; exa
   - [x] PHPDoc публичных theme/asset contracts и facades обновлён; существующие install/section/provider stubs приведены к текущим assets, Font Awesome и Bootstrap 5.
   - [x] Добавить и проверить новые extension generator stubs.
 - [x] Commit final production/development assets, manifest paths/checksums and bundle measurements.
-- [ ] Run clean lock-file build, complete PHP/frontend/browser suite and manual reference-screen smoke test.
+- [x] Run clean lock-file build, complete PHP/frontend/browser suite and manual reference-screen smoke test.
 
 ## Definition of Done
 
@@ -131,3 +131,4 @@ Lock checkpoint заменил root `popper@1` на `@popperjs/core@2.11.8`; exa
 | 2026-09-08 | Public PHPDoc и legacy stubs | `ThemeInterface`, `AssetsInterface`, `MetaInterface` и first-party facades получили актуальные типы и IDE-visible public methods. Installation bootstrap использует first-party facades и стабильный `admin-default` handle; section/provider stubs используют Bootstrap 5 grid, Font Awesome 7 и PHP 8 signatures. Все девять PHP/stub files проходят `php -l`; следующий пункт — отдельные extension generator stubs. | текущий commit |
 | 2026-09-08 | Extension generator stubs | `sleepingowl:extension:make` генерирует form element+Blade, widget+Blade, policy, module provider, Vue island+Blade+asset provider и custom theme contract. Общий scaffold atomically проверяет collisions и требует `--force` для overwrite. PHP templates реально загружаются в test application; Vue stub использует только `Admin.Vue.runtime/register`, а provider — `MetaInterface`/`admin-vue-init`. Узкий gate: 5 tests, 51 assertion. Следующая точка — clean Composer application без Node.js. | текущий commit |
 | 2026-09-08 | Clean no-build consumer | Release ZIP очищен от локальных `vendor`/`node_modules` и уменьшен с 258 MB до 11.45 MB. Console bootstrap допускает первую публикацию manifest, не ослабляя web-runtime diagnostics. Архив установлен копированием без symlink в чистый Laravel 12.69.1; Composer discovery, `sleepingowl:install`, production/development `sleepingowl:update`, AdminLTE resolution и 26 admin routes проходят без frontend toolchain. Все MD5/SHA-256 обоих готовых профилей и framework-free isolation проверяет отдельный CI verifier; Node/npm и аналоги перекрыты аварийными shims. Узкий PHP gate: 3 tests, 18 assertions; полный suite/build не повторялись, assets не менялись. Следующая точка — общий итоговый clean lock/full-suite/manual release gate. | текущий commit |
+| 2026-09-08 | Итоговый release gate | Чистый `npm ci` по lockfile и последовательные development/production builds успешны; финальное tracked состояние соответствует production manifest и содержит оба готовых профиля. Полный gate: PHP 604 tests / 2563 assertions / 11 skipped, Vitest 702/702, Playwright Chromium 140/140; config fixtures 42/1 и migration matrix 113 keys валидны. Ранее вручную просмотрены dashboard, DataTables, edit form и footer; финальный browser gate повторно проверил reference-screen behavior. `npm audit --omit=dev` — 0; 14 low/moderate находятся только в maintainer tree Laravel Mix и относятся к отдельной будущей миграции на Vite. | текущий commit |
