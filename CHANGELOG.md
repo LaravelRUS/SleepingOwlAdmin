@@ -1,5 +1,38 @@
 # [Unreleased] (Only in SleepingOwl <code class="language-php">development</code> branch)
 
+## Next major frontend modernization
+
+### Changed
+
+- The default theme now uses AdminLTE 4.9.1, Bootstrap 5.3.8 and Popper 2.11.8.
+- DataTables 3 replaces the old jQuery table runtime behind the existing
+  `AdminDisplay::datatables()` PHP DSL and keeps server-side processing.
+- Vue 3 precompiled islands replace Vue 2 globals and `inline-template`; custom
+  islands use the public `Admin.Vue` API and one shared runtime.
+- Production and development asset profiles are both distributed with the
+  Composer package and selected by `ADMIN_DEV_ASSETS` without a consumer build.
+- Theme markup and concrete classes remain in overridable Blade views. The
+  unchanged `sleeping_owl.template` key selects `AdminLTETheme` or a ready custom
+  `ThemeInterface` implementation.
+
+### Removed
+
+- jQuery and jQuery-only UI plugins are removed from dependencies and published
+  browser assets.
+- `kodicms/laravel-assets` is replaced by the package-owned asset registry and
+  compatibility aliases.
+- Global Vue, global DataTable and the general `i18next` runtime are no longer
+  published.
+
+### Upgrade
+
+- Run `php artisan sleepingowl:update` after the Composer update. Do not
+  republish the complete configuration or views.
+- Review application Blade overrides and custom JavaScript against the
+  [major upgrade guide](docs/modernization/upgrade-guide.md).
+- Bootstrap/AdminLTE markup changes are listed in the
+  [AdminLTE 4 migration](docs/modernization/adminlte-4-migration.md).
+
 ## 2026-08-26
 * [Add] Added a callable to the Select `setOption`
 * [Add] Added setVisibled(bool|Closure) in DisplayFilterColumns

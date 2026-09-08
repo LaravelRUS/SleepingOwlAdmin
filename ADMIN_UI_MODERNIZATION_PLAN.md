@@ -4,7 +4,7 @@
 
 - Статус: активен; основной release scope отделён от будущих встроенных тем.
 - Текущий этап: **этап 7 — завершение публичного theme extension contract**; реализация основной темы ведётся отдельным планом, этап 8 закрыт.
-- Точка возобновления: AdminLTE 4 production/development profiles и functional acceptance закрыты в [`ADMIN_ADMINLTE_THEME_PLAN.md`](ADMIN_ADMINLTE_THEME_PLAN.md). Следующий отдельный пункт — release-документация, затем clean Composer application без Node.js.
+- Точка возобновления: public release-документация обновлена. Следующий отдельный пункт — PHPDoc/public interfaces и generator stubs, затем clean Composer application без Node.js.
 - Рабочая ветка: `codex/remove-jquery-datatables2`.
 - Read-only reference project: `D:\domains\laluna.kit`; считать ранее собранный inventory достаточным, не сканировать проект/`Modules` повторно и обращаться только к конкретному файлу при точечной необходимости; не изменять и не запускать команды с побочными эффектами без отдельного разрешения.
 - База ветки: `ia11`, commit `17752e62`.
@@ -764,16 +764,16 @@ No-build consumer contract является release-blocking:
 
 ### Этап 10. Документация, compatibility и выпуск
 
-- [ ] Обновить README и frontend build instructions.
-- [ ] Добавить migration guide с заменой пользовательских jQuery hooks, Bootstrap/AdminLTE classes/selectors, Vue 2 extensions, `inline-template` и DataTables 1 options.
-- [ ] Добавить в migration guide таблицу замен прямых `KodiCMS\Assets` imports/facades и примеры нового first-party asset API.
-- [ ] Опубликовать config migration matrix и примеры только новых/изменённых keys вместо требования перепубликовать весь конфиг.
-- [ ] Добавить руководство по выбору основной темы и созданию custom theme; документация каждой будущей темы принадлежит её отдельному плану.
+- [x] Обновить README и frontend build instructions.
+- [x] Добавить migration guide с заменой пользовательских jQuery hooks, Bootstrap/AdminLTE classes/selectors, Vue 2 extensions, `inline-template` и DataTables 1 options.
+- [x] Добавить в migration guide таблицу замен прямых `KodiCMS\Assets` imports/facades и примеры нового first-party asset API.
+- [x] Опубликовать config migration matrix и примеры только новых/изменённых keys вместо требования перепубликовать весь конфиг.
+- [x] Добавить руководство по выбору основной темы и созданию custom theme; документация каждой будущей темы принадлежит её отдельному плану.
 - [ ] Подготовить нейтральные проверенные примеры по сценариям reference project: section/table/DataTables, card form, custom form element, widget, policy, module Admin service provider, navigation/route, custom assets и Vue 3 island.
 - [ ] Обновить generator stubs для section, custom form element, widget, policy и module Admin service provider; после стабилизации contracts добавить отдельные stubs Vue island и custom theme.
 - [ ] Проверить сгенерированные stubs в test application: PHP-only stubs работают без Node.js, frontend stubs используют public extension/manifest API и не создают jQuery/Vue globals.
 - [ ] Обновить PHPDoc/facades/interfaces для актуального API.
-- [ ] Добавить CHANGELOG с перечнем breaking changes.
+- [x] Добавить CHANGELOG с перечнем breaking changes.
 - [ ] Обновить опубликованные assets через `npm run production`.
 - [ ] Собрать и опубликовать development profile через `npm run development`, включая development Vue runtime и source maps.
 - [ ] Проверить, что versioned asset manifest содержит согласованные production/development entries, файлы и checksums.
@@ -906,7 +906,7 @@ Tailwind acceptance matrix находится только в [`ADMIN_TAILWIND_T
 - [ ] валидные, но несовпадающие версии PHP package/assets показывают локализованное footer-уведомление в AdminLTE без frontend rebuild; совпадающие версии не добавляют разметку;
 - [ ] версии PHP package, asset manifest и published bundles согласованы;
 - [ ] оба готовых asset profiles публикуются одной `sleepingowl:update`, а `ADMIN_DEV_ASSETS` только выбирает уже опубликованный профиль;
-- [ ] production deployment документирован только через Composer/PHP/Artisan для обычного пользователя.
+- [x] production deployment документирован только через Composer/PHP/Artisan для обычного пользователя.
 
 ### First-party asset registry
 
@@ -1153,3 +1153,4 @@ Tailwind acceptance matrix находится только в [`ADMIN_TAILWIND_T
 | 2026-09-08 | AdminLTE 4 structural migration | Package-owned Blade/Sass/JS переведены по официальной migration guide на AdminLTE 4 layout, Bootstrap 5 utilities/forms и `data-bs-theme`; AdminLTE 3 Sass удалён. DataTables presentation уже использует BS5 packages, legacy BS4 adapters отсутствуют. Старые публичные HTML markers сохранены рядом с официальными v4 markers и обслуживаются native adapters; footer остаётся Blade-owned и содержит `app-footer main-footer`. Development assets пересобраны пользовательским watcher и вручную просмотрены на dashboard/table/form/footer; production build и tests по прямому указанию не запускались. | текущий commit |
 | 2026-09-08 | AdminLTE 4 final asset acceptance | Оба готовых профиля пересобраны; production runtime содержит 33 файла, 1 890 962 bytes / 502 187 gzip (`−26.9%` / `−14.6%` к legacy baseline), development — 5 044 837 / 1 010 443. Новый автоматический bundle report измеряет core/shared/features/adapters/theme после каждой production-сборки. Static gates подтверждают отсутствие jQuery в dependency tree и опубликованных JS/maps/licenses. Полный PHP gate: 591 test, 2461 assertion, 11 skipped; frontend gate: Prettier/ESLint/Stylelint, 698 Vitest + 140 Playwright. Config matrix: 113 keys, legacy/minimal fixtures: 42/1. Следующая точка — release-документация и clean Composer application без Node.js; push оставлен пользователю. | текущий commit |
 | 2026-09-08 | Этап 8 / минимальный translator | `i18next` удалён из package/lock/runtime; отдельный маленький translator читает уже переданные Laravel translations по dot notation, сохраняет глобальный compatibility API `trans(key, parameters)` и key fallback, но не вводит Vue-specific i18n layer. Удалён прежний бесхозный wrapper. Оба asset-профиля пересобраны: production AdminLTE runtime 1 848 057 bytes / 489 337 gzip (`−28.5%` / `−16.7%` к legacy baseline), development 4 962 428 / 992 190. Узкий gate: Prettier/ESLint, 6 Vitest и 2 Playwright; dependency/source/bundle scan не находит `i18next`. Следующая точка — release-документация. | текущий commit |
+| 2026-09-08 | Этап 10 / release documentation | README и `DOCUMENTATION.md` больше не описывают AdminLTE 3/Bootstrap 4 как текущую границу и явно разделяют no-build consumer workflow от maintainer build. Новый единый upgrade guide покрывает сохранённые PHP/config/view contracts, jQuery/Vue 2/DataTables migration, AdminLTE 4 Blade overrides, asset health и выбор готовой темы. CHANGELOG содержит breaking changes; first-party asset guide — точные замены трёх `KodiCMS\Assets` facades; legacy globals guide приведён к фактическому runtime. Code/assets не менялись. Следующая точка — PHPDoc/public interfaces и generator stubs. | текущий commit |

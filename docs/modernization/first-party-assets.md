@@ -29,4 +29,15 @@ Manifest classes остаются отдельной подсистемой. `As
 
 Default config указывает на first-party facades. `AssetAliasNormalizer` заменяет только три точных legacy-значения `KodiCMS\Assets\Facades\Assets`, `Meta` и `PackageManager` в старом опубликованном config; имена aliases и любые пользовательские facade classes не меняются. Нормализованный массив сохраняется обратно в runtime config до регистрации Laravel aliases.
 
-Composer dependency удаляется отдельным пунктом после обновления publish/update flow и проверки, что compatibility data остаётся обычными строками и не требует загрузки vendor classes.
+`kodicms/laravel-assets` удалён из Composer dependency tree. Для прямых imports в
+application code используются следующие first-party replacements:
+
+| Старый import | Replacement |
+| --- | --- |
+| `KodiCMS\Assets\Facades\Assets` | `SleepingOwl\Admin\Facades\Assets` |
+| `KodiCMS\Assets\Facades\Meta` | `SleepingOwl\Admin\Facades\Meta` |
+| `KodiCMS\Assets\Facades\PackageManager` | `SleepingOwl\Admin\Facades\PackageManager` |
+
+Строки старых facades в опубликованном config можно оставить на время обновления:
+точный normalizer заменит их при загрузке. Новый код должен импортировать
+first-party facades или соответствующие contracts напрямую.

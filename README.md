@@ -52,7 +52,34 @@ Powered by Laravel 5.5 - 10. (latest tested version 10.48.2)
 
 * [Docs Github](https://github.com/SleepingOwlAdmin/docs/tree/new)
 
-For the next major release, selecting a `ThemeInterface`, adding application CSS/JS, overriding supported `--soa-*` properties, and installing an external ready-built theme are all no-build workflows. See the [theme customization contract](docs/modernization/theme-customization.md).
+## Next major frontend
+
+The next major release ships a prebuilt, jQuery-free frontend with AdminLTE 4,
+Bootstrap 5, Vue 3 islands and DataTables 3. Application developers continue to
+define sections, forms and displays in PHP and do not install Node.js or rebuild
+package assets.
+
+```bash
+composer update laravelrus/sleepingowl
+php artisan sleepingowl:update
+```
+
+Keep the existing published `config/sleeping_owl.php`; missing keys use package
+defaults. `ADMIN_DEV_ASSETS=false` selects the production profile, while
+`ADMIN_DEV_ASSETS=true` selects the already-built development profile with
+source maps and Vue diagnostics. Changing the profile does not compile assets.
+
+AdminLTE remains the default ready theme. Applications may select a ready custom
+`ThemeInterface`, override individual Blade views, add their own CSS/JavaScript,
+or change supported `--soa-*` properties without rebuilding SleepingOwl. Start
+with the [major upgrade guide](docs/modernization/upgrade-guide.md), the
+[AdminLTE 4 migration](docs/modernization/adminlte-4-migration.md), and the
+[theme customization guide](docs/modernization/theme-customization.md).
+
+Node.js is required only for package maintainers and theme authors. Maintainers
+install the locked toolchain with `npm ci`, use `npm run watch` while developing,
+run `npm run production` to regenerate both distributable profiles and manifests,
+and run `npm run check:ci` for the complete frontend gate.
 
 
 ## Install `ver 8.*` <small>(last Released)</small>

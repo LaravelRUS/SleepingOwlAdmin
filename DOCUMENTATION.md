@@ -324,4 +324,8 @@ $model->addToNavigation($priority = 100, $badge = null);
 
 [Расширение] Вы можете создавать свои типы колонок и элементов форм, наследуя базовые классы `TableColumn` или `NamedFormElement` и регистрируя их через `AliasBinder`.
 
-[Ограничение] Пакет сильно завязан на AdminLTE 3 и Bootstrap 4 (в дефолтном шаблоне). Кастомизация UI требует глубокого понимания структуры Blade-шаблонов пакета.
+[Frontend] По умолчанию используется готовая `AdminLTETheme` на AdminLTE 4 и Bootstrap 5. Поведение core и feature drivers не зависит от CSS-фреймворка; конкретная разметка и классы остаются в переопределяемых Blade-шаблонах выбранной темы.
+
+[No-build] Пользователь выбирает готовую тему через существующий ключ `template`, меняет поддерживаемые `--soa-*` свойства и подключает собственные CSS/JS без сборки пакета. Production/development assets публикуются командой `php artisan sleepingowl:update`; Node.js нужен только разработчикам пакета и авторам распространяемых тем.
+
+Подробности: [`docs/modernization/upgrade-guide.md`](docs/modernization/upgrade-guide.md) и [`docs/modernization/theme-customization.md`](docs/modernization/theme-customization.md).

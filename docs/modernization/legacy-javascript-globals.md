@@ -1,29 +1,27 @@
-# Legacy JavaScript global boundary
+# Legacy JavaScript compatibility boundary
 
-First-party legacy JavaScript is part of the ESLint gate even while individual plugin adapters
-still await migration. The checked scope contains the aggregate entry files plus `admin`,
-`components` and `wysiwyg`; copied or wrapped third-party sources under `libs` are excluded.
+The direct `AdminLTETheme` runtime is jQuery-free and does not publish global
+Vue, DataTable, Bootstrap or AdminLTE objects. The headless core exposes only
+the stable `Admin` services required by independent feature drivers.
 
-`no-undef`, `no-global-assign` and `no-implicit-globals` are mandatory for this boundary. Browser
-APIs and current compatibility globals such as `Admin`, `Vue`, jQuery, Lodash and concrete editor
-runtimes are listed explicitly as read-only in `eslint.config.mjs`. The allowlist documents an
-existing adapter dependency; it does not permit a module to create another global or add one to
-core.
+`shared:compatibility` keeps the bounded browser API used by existing project
+modules: `Admin.Config`, `Admin.Url`, `Admin.User`, `Admin.Messages`,
+`Admin.Modules`, `Admin.WYSIWYG`, `_`, `axios`, `Swal` and `trans`. It does not
+import a UI framework, table engine, Vue or jQuery.
 
-The initial guarded pass removed all discovered accidental globals:
+Laravel remains the source of translated strings. The package-owned `trans`
+function resolves the server-provided map by dot notation, substitutes legacy
+`:parameter` placeholders and returns the key when a string is missing. No
+general `i18next` or Vue-specific i18n runtime is shipped.
 
-- tab persistence now keeps its storage key, restored values and parsed map in lexical scope;
-- Vue env editor iteration and Select2 dependency iteration declare their keys;
-- clipboard confirmation keeps its extension and cleanup element local to their callbacks;
-- the env editor uses the valid `String` Vue prop constructor instead of an unresolved `Text`;
-- custom action feedback calls the configured `Swal.fire` runtime instead of an undeclared
-  lowercase alias;
-- `urlName` and `activeFilters` had already disappeared with table feature decomposition.
+| Legacy usage | Current boundary |
+| --- | --- |
+| `$()` / `jQuery()` and delegated plugin calls | native DOM APIs, `Admin.Components` and documented feature events |
+| global `DataTable` / `$.fn.dataTable` | `Admin.Tables` and `data-table-engine` options |
+| global `Vue`, `Vue.component`, `Vue.prototype` | precompiled islands registered through `Admin.Vue` |
+| Bootstrap/AdminLTE jQuery plugins | native drivers using retained `data-toggle`, `data-dismiss` and `data-widget` markers |
+| global event mutation | `Admin.Events` or bubbling `CustomEvent` contracts |
 
-The lint command names the legacy roots directly, so this protection runs in `npm run lint`,
-`npm run check` and CI. Removing an external runtime later also requires removing its global from
-the allowlist; otherwise the boundary would hide a stale dependency.
-
-This milestone does not make plugin adapters headless. Their declared jQuery, Bootstrap, Select2,
-date/time, tree and editor globals remain compatibility dependencies until their dedicated
-feature/theme migrations.
+The ESLint and compiled-asset gates reject accidental return of removed globals
+or jQuery runtime code. `TemplateDefault` remains a deprecated compatibility
+adapter for older published configuration, not a target for new extensions.
