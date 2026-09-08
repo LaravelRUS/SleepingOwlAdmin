@@ -23,7 +23,7 @@ SleepingOwl Admin — это мощный конструктор админис�
 - **Laravel:** >= 10
 - **Зависимости:** `doctrine/dbal`, `spatie/laravel-html`, `erusev/parsedown`, `diglactic/laravel-breadcrumbs`.
 
-После `php artisan sleeping-owl:install` пакет:
+После `php artisan sleepingowl:install` пакет:
 1. Публикует конфиг `config/sleeping_owl.php`.
 2. Публикует ассеты в `public/packages/sleepingowl`.
 3. Создает директорию `app/Admin` (по умолчанию) для регистрации секций.
@@ -329,3 +329,7 @@ $model->addToNavigation($priority = 100, $badge = null);
 [No-build] Пользователь выбирает готовую тему через существующий ключ `template`, меняет поддерживаемые `--soa-*` свойства и подключает собственные CSS/JS без сборки пакета. Production/development assets публикуются командой `php artisan sleepingowl:update`; Node.js нужен только разработчикам пакета и авторам распространяемых тем.
 
 Подробности: [`docs/modernization/upgrade-guide.md`](docs/modernization/upgrade-guide.md) и [`docs/modernization/theme-customization.md`](docs/modernization/theme-customization.md).
+
+Цельный backend-first пример Section, server-side DataTables, card form, module provider,
+policy, widget, custom element/assets и Vue 3 island находится в
+[`docs/modernization/backend-extension-cookbook.md`](docs/modernization/backend-extension-cookbook.md).

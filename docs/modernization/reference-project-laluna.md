@@ -103,6 +103,11 @@ Module views выводятся раньше footer assets legacy layout. Поэ
 
 Каждый пример должен запускаться на поддерживаемом Laravel, использовать только публичный API и явно указывать, требуется ли frontend toolchain автору расширения. Обычные PHP section/form/widget examples не требуют Node.js.
 
+Готовый результат: [`backend-extension-cookbook.md`](backend-extension-cookbook.md) связывает
+копируемые Section/provider/routes/navigation examples с проверенными generator stubs. Его
+contract test реально создаёт server-side DataTables display и card form через public PHP API,
+проверяет все поддерживаемые extension types и синтаксис копируемых PHP-файлов.
+
 ## Кандидаты для generator stubs
 
 - section: metadata, display, create/edit form и небольшие методы с одной ответственностью;
