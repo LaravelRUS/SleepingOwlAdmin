@@ -47,6 +47,7 @@
         "progressbar.js": "^1.1.0",
         "sortablejs": "^1.15.0",
         "sweetalert2": "^11.4.8",
+        "tom-select": "^2.6.2",
         "vue": "3.5.42",
         "vue-multiselect": "3.5.0"
     },
