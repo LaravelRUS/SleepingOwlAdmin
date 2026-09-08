@@ -1,24 +1,109 @@
-# Отложенный план встроенной TailwindTheme
+# План встроенной TailwindTheme на shadcn/ui
 
 ## Статус и границы
 
-- Статус: **отложен по решению владельца проекта**.
-- Условие возобновления: выбран и зафиксирован подходящий готовый admin template с совместимой лицензией; до этого код TailwindTheme, её Blade views и новые зависимости не добавляются.
+- Статус: **основа выбрана, структура создания зафиксирована; реализация ещё не начата**.
+- Выбранная основа: **shadcn/ui** как registry component recipes и визуальный язык TailwindTheme. Это не подключение React-приложения и не новый browser runtime.
+- Следующий checkpoint до начала полноценной реализации: зафиксировать точный upstream snapshot/CLI version, license/provenance, список используемых registry components и допустимый способ обновления vendored recipes.
 - Основа: завершённый публичный contract из [`ADMIN_UI_MODERNIZATION_PLAN.md`](ADMIN_UI_MODERNIZATION_PLAN.md) — headless core, `ThemeInterface`, logical asset manifest, Blade-first views, Vue 3 islands, DataTables 3 и no-build publication.
 - Эта тема не блокирует основной major-релиз и не меняет compatibility contract существующей `AdminLTETheme`.
 - Каждый самостоятельный пункт выполняется тем же циклом: реализация, релевантные проверки, обновление этого файла, отдельный checkpoint-коммит и чистое дерево.
 
+## Зафиксированная архитектура shadcn/ui
+
+### Граница upstream
+
+- shadcn/ui используется как проверяемый исходник markup, Tailwind class recipes, accessibility patterns и design tokens, а не как готовая React-зависимость.
+- `react`, `react-dom`, Next.js и React/Radix packages не добавляются в runtime SleepingOwlAdmin. Интерактивность реализуют уже существующие `Admin.Components`, feature drivers и ограниченные Vue 3 islands.
+- Каждый перенесённый recipe получает запись с upstream registry name, snapshot/commit, license и локальным owner view; массовое копирование registry не допускается.
+- shadcn CLI может использоваться только maintainer-ом для получения/сравнения исходного snapshot. Composer-пользователь не запускает CLI, Tailwind, npm или frontend build.
+- Иконки не берутся из `lucide-react`: обе штатные темы продолжают использовать отдельный `shared:icons` bundle Font Awesome 7, а конечные icon classes остаются в Blade.
+- Публичные `data-dismiss`, `data-toggle`, `data-widget` и остальные действующие structural `data-*` hooks сохраняются; новые `data-soa-*` не вводятся.
+
+### Слои и владельцы
+
+1. **Design brief и tokens.** До компонентов фиксируются плотность data-heavy admin UI, typography, palette, radius, shadows, motion и один отличительный motif. Color literals принадлежат только `_colors.scss`, остальные build-time defaults — `_variables.scss`, runtime values — `--soa-*` в `_custom-properties.scss`.
+2. **shadcn token bridge.** Tailwind/shadcn semantic utilities ссылаются на `--soa-*`; параллельная независимая палитра `--background`/`--primary` не становится вторым источником истины.
+3. **Blade UI primitives.** Кнопки, labels, inputs, cards, alerts, badges, tables и overlays оформляются маленькими theme-owned partials на основе выбранных shadcn recipes. В PHP не добавляется resolver классов.
+4. **SleepingOwl view mapping.** Полный набор существующих logical views зеркалируется под TailwindTheme и собирается из primitives; application/vendor overrides сохраняют прежний приоритет.
+5. **Feature presentation adapters.** Tabs, dropdown, tooltip, sidebar, tree, DataTables, forms, uploads и lightbox получают только theme-owned Sass/Blade presentation. Transport, state и lifecycle не копируются из core/features.
+6. **Precompiled delivery.** Tailwind scan выполняется maintainer build-ом по package Blade/Vue sources. В Composer artifact входят готовые production/development assets, manifest и checksums.
+
+### Планируемая структура файлов
+
+```text
+src/Themes/
+└── TailwindTheme.php
+
+resources/views/themes/tailwind/
+├── components/
+│   ├── ui/                 # выбранные shadcn-derived Blade primitives
+│   └── patterns/           # admin shell, toolbar, empty/error states
+└── default/                # зеркало стабильных logical view paths
+    ├── _layout/
+    ├── _partials/
+    ├── column/
+    ├── display/
+    ├── form/
+    ├── helper/
+    └── pages/
+
+resources/frontend/themes/tailwind/
+├── index.js                # только theme runtime composition, если требуется
+├── tailwind.input.css      # только Tailwind directives/source configuration
+└── styles/
+    ├── _colors.scss
+    ├── _variables.scss
+    ├── _custom-properties.scss
+    ├── _shadcn-theme.scss  # aliases shadcn/Tailwind → --soa-*, без color literals
+    ├── _base.scss
+    ├── _components.scss
+    └── theme.scss
+
+resources/frontend/features/*/themes/tailwind/styles/
+└── *.scss                  # presentation adapters рядом с feature ownership
+
+tests/Feature/Themes/
+└── TailwindThemeTest.php
+
+tests/frontend/browser/
+└── tailwind-*.spec.js
+
+docs/modernization/
+├── shadcn-component-inventory.md
+└── tailwind-theme.md
+```
+
+`tailwind.input.css` является только build-tool input. Все написанные вручную rules и значения остаются в Sass; generated Tailwind output публикуется сборкой и вручную не редактируется.
+
+Существующие минимальные `resources/frontend/themes/tailwind` и `features/*/themes/tailwind` являются contract/presentation stubs, созданными для проверки изоляции headless core. Они не считаются готовой TailwindTheme и будут поэтапно приведены к выбранным shadcn recipes без изменения feature behavior.
+
+### Порядок checkpoint-ов
+
+1. Upstream snapshot, license/provenance и точный component inventory.
+2. Design brief, token map и shadcn-to-`--soa-*` bridge.
+3. `TailwindTheme` skeleton, selection/config и пустой изолированный logical asset entry.
+4. Blade primitives и layout/navigation shell.
+5. Displays, DataTables presentation и actions.
+6. Forms, Vue island props, uploads, editors и related elements.
+7. Остальные feature adapters, asset-health footer и accessibility states.
+8. Production/development build, no-build artifact, browser/visual acceptance и документация.
+
+Каждый checkpoint заканчивается отдельным локальным commit. Полный suite и production acceptance выполняются один раз после закрытия feature matrix; промежуточно запускаются только затронутые contracts.
+
 ## 0. Выбрать основу темы
 
-- [ ] Сравнить готовые Tailwind admin templates по лицензии, активности проекта, accessibility, dark mode, sidebar/navigation, form/table coverage и совместимости с Tailwind 4.
-- [ ] Зафиксировать выбранный template, точную версию, лицензию и допустимый способ vendor updates.
+- [x] Зафиксировать shadcn/ui как основу темы по решению владельца проекта; сравнение других admin templates больше не требуется.
+- [ ] Зафиксировать точный shadcn/ui snapshot/CLI version, лицензию, provenance и допустимый способ vendor updates.
+- [ ] Создать `shadcn-component-inventory.md`: registry name, upstream snapshot, local Blade owner, required states и причина включения каждого recipe.
+- [ ] Подтвердить, что выбранные recipes не требуют React/Radix runtime и сопоставлены существующим native/Vue feature behavior.
 - [ ] Составить mapping существующих SleepingOwlAdmin views/components на template primitives без копирования feature behavior.
 - [ ] Зафиксировать визуальное направление, typography, palette и один отличительный design motif до написания theme CSS.
 - [ ] Подтвердить, что лицензия допускает поставку готового production CSS внутри Composer artifact.
 
 ## 1. Создать прямую TailwindTheme
 
-- [ ] Добавить `TailwindTheme`, напрямую реализующую `ThemeInterface`, с id `tailwind`, отдельным view namespace, capabilities и theme-owned icons.
+- [ ] Добавить `TailwindTheme`, напрямую реализующую `ThemeInterface`, с id `tailwind`, отдельным view namespace/capabilities и существующим отдельным `shared:icons` bundle.
 - [ ] Объявить `shared:icons`, `theme:tailwind` и только реально поддерживаемые `feature:<id>:theme:tailwind` logical entries.
 - [ ] Реализовать initialize/runtime composition через публичный logical asset registrar без imports внутренних файлов AdminLTE.
 - [ ] Добавить выбор TailwindTheme существующим config key `sleeping_owl.template` и документированный service-provider hook.
@@ -75,3 +160,4 @@
 | Дата | Checkpoint | Результат | Commit |
 | --- | --- | --- | --- |
 | 2026-09-07 | Разделение планов | TailwindTheme вынесена из release-blocking checklist основного плана; реализация остаётся отложенной до выбора готового шаблона. | текущий commit |
+| 2026-09-08 | Выбор shadcn/ui и структура | По решению владельца shadcn/ui выбран как источник проверяемых recipes и визуального языка, без React/Next/Radix runtime. Зафиксированы владельцы слоёв, Blade-first mapping, единый `--soa-*` token source, общий Font Awesome entry, дерево файлов и восемь последовательных checkpoint-ов. Код темы и зависимости ещё не добавлялись; следующий пункт — upstream snapshot/license/component inventory. | текущий commit |
