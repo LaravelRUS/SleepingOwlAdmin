@@ -518,7 +518,7 @@ return [
         'datatables_highlight' => false,
 
         // Show an input for jumping directly to a page next to pagination.
-        'page_jump' => true,
+        'page_jump' => false,
 
         // Show the records summary in asynchronous tables. Disabling it also
         // skips the unfiltered total count query.
