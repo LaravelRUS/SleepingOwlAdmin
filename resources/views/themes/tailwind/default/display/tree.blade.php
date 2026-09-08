@@ -35,6 +35,7 @@
              data-tree-parameters-id="{{ $treeParametersId }}"
              data-url="{{ $url }}/reorder"
              data-reorderable="{{ $reorderable ? 'true' : 'false' }}">
+            <div class="soa-tree-notification" data-tree-notification role="status" aria-live="polite" aria-atomic="true" hidden></div>
             @if($max_depth > 1)
                 <menu class="soa-tree-menu g-0 p-3 soa-toolbar">
                     <button type="button" data-tree-action="expand-all"

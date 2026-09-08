@@ -7,7 +7,8 @@
     }
 
     [data-tab],
-    [data-toggle='tab'] {
+    [data-toggle='tab'],
+    [data-bs-toggle='tab'] {
         padding: var(--soa-tabs-padding-block) var(--soa-tabs-padding-inline);
         border-radius: var(--soa-tabs-radius) var(--soa-tabs-radius) 0 0;
         color: var(--soa-tabs-text);
@@ -15,13 +16,15 @@
     }
 
     [data-tab].active,
-    [data-toggle='tab'].active {
+    [data-toggle='tab'].active,
+    [data-bs-toggle='tab'].active {
         background: var(--soa-tabs-active-surface);
         color: var(--soa-tabs-active-text);
     }
 
     [data-tab]:focus-visible,
-    [data-toggle='tab']:focus-visible {
+    [data-toggle='tab']:focus-visible,
+    [data-bs-toggle='tab']:focus-visible {
         outline: var(--soa-tabs-focus-width) solid var(--soa-tabs-focus);
         outline-offset: var(--soa-tabs-focus-width);
     }

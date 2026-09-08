@@ -28,18 +28,21 @@ it('keeps the tree driver and both theme adapters in separate owned sources', ()
     files.forEach((file) => expect(existsSync(resolve(root, file))).toBe(true))
 })
 
-it('keeps AdminLTE notification policy out of the neutral and Tailwind tree entries', () => {
+it('keeps theme notification policies out of the neutral tree entry', () => {
     const entries = readJson('build/frontend-entries.json').modern
     const scripts = entries.scripts.filter(({ logicalId }) => logicalId.includes('tree'))
     const adminlte = scripts.find(
         ({ logicalId }) => logicalId === 'feature:tree:theme:legacy-adminlte',
     )
+    const tailwind = scripts.find(
+        ({ logicalId }) => logicalId === 'feature:tree:theme:tailwind',
+    )
 
     expect(adminlte?.source).toBe(
         'resources/frontend/features/tree/themes/legacy-adminlte/browser.js',
     )
-    expect(scripts).not.toContainEqual(
-        expect.objectContaining({ logicalId: 'feature:tree:theme:tailwind' }),
+    expect(tailwind?.source).toBe(
+        'resources/frontend/features/tree/themes/tailwind/browser.js',
     )
     expect(read('resources/frontend/features/tree/browser.js')).not.toMatch(
         /Swal|SweetAlert|Admin\.Messages|legacy-adminlte/,
@@ -47,10 +50,11 @@ it('keeps AdminLTE notification policy out of the neutral and Tailwind tree entr
     expect(read('resources/frontend/themes/tailwind/index.js')).not.toMatch(
         /Swal|SweetAlert|Admin\.Messages|legacy-adminlte/,
     )
+    expect(read(tailwind.source)).not.toMatch(/Swal|SweetAlert|Admin\.Messages|legacy-adminlte/)
 })
 
 it.each(['production', 'development'])(
-    '%s manifest publishes only the AdminLTE tree notification adapter',
+    '%s manifest publishes isolated AdminLTE and Tailwind tree notification adapters',
     (profile) => {
         const entries = readJson('public/default/asset-manifest.json').profiles[profile].entries
         const adminlte = entries['feature:tree:theme:legacy-adminlte']
@@ -60,7 +64,9 @@ it.each(['production', 'development'])(
             `profiles/${profile}/js/features/tree/themes/legacy-adminlte.js`,
         ])
         expect(adminlte.styles).toHaveLength(1)
-        expect(tailwind.scripts).toEqual([])
+        expect(tailwind.scripts.map(({ file }) => file)).toEqual([
+            `profiles/${profile}/js/features/tree/themes/tailwind.js`,
+        ])
         expect(tailwind.styles).toHaveLength(1)
     },
 )

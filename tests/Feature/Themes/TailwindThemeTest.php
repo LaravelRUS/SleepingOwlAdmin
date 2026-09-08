@@ -39,11 +39,12 @@ class TailwindThemeTest extends TestCase
             'icons',
             'sidebar',
             'table-presentation',
+            'tabs',
         ], $theme->capabilities());
         $this->assertSame([], $theme->icons());
     }
 
-    public function test_it_declares_only_implemented_shell_and_table_adapters(): void
+    public function test_it_declares_only_implemented_feature_adapters(): void
     {
         $manifest = ThemeAssetManifest::fromTheme(app(TailwindTheme::class));
 
@@ -55,9 +56,12 @@ class TailwindThemeTest extends TestCase
             'theme:tailwind',
             'feature:dropdown:theme:tailwind',
             'feature:forms:theme:tailwind',
+            'feature:lightbox:theme:tailwind',
             'feature:sidebar:theme:tailwind',
             'feature:table:theme:tailwind',
+            'feature:tabs:theme:tailwind',
             'feature:tooltip:theme:tailwind',
+            'feature:tree:theme:tailwind',
         ], $manifest->entries());
         $this->assertSame([
             'core',
@@ -73,12 +77,15 @@ class TailwindThemeTest extends TestCase
             'feature:sidebar',
             'feature:sidebar:theme:tailwind',
             'feature:lightbox',
+            'feature:lightbox:theme:tailwind',
             'feature:table:theme:tailwind',
             'feature:table',
             'feature:tabs',
+            'feature:tabs:theme:tailwind',
             'feature:forms',
             'feature:forms:theme:tailwind',
             'feature:tree',
+            'feature:tree:theme:tailwind',
             'shared:modules',
         ], app(ThemeRuntimeAssets::class)->logicalEntries(app(TailwindTheme::class)));
     }
@@ -104,9 +111,13 @@ class TailwindThemeTest extends TestCase
             $this->assertStringNotContainsString('legacy-adminlte', $joined);
             $this->assertStringContainsString('features/dropdown/themes/tailwind.css', $joined);
             $this->assertStringContainsString('features/forms/themes/tailwind.css', $joined);
+            $this->assertStringContainsString('features/lightbox/themes/tailwind.css', $joined);
             $this->assertStringContainsString('features/sidebar/themes/tailwind.css', $joined);
             $this->assertStringContainsString('features/table/themes/tailwind.css', $joined);
+            $this->assertStringContainsString('features/tabs/themes/tailwind.css', $joined);
             $this->assertStringContainsString('features/tooltip/themes/tailwind.css', $joined);
+            $this->assertStringContainsString('features/tree/themes/tailwind.css', $joined);
+            $this->assertStringContainsString('features/tree/themes/tailwind.js', $joined);
         }
     }
 

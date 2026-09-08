@@ -57,7 +57,9 @@ describe('compiled frontend entries', () => {
             expect(versionedPath).toBe(`${manifestPath(output)}?id=${contentHash(publicPath)}`)
         },
     )
+})
 
+describe('compiled form entries', () => {
     it('publishes multiple-file styles in the forms feature and legacy aggregate', () => {
         const forms = readFileSync(resolve(root, 'public/default/css/features/forms.css'), 'utf8')
         const legacy = readFileSync(resolve(root, 'public/default/css/admin-app.css'), 'utf8')
@@ -95,6 +97,27 @@ describe('compiled frontend entries', () => {
             expect(forms).toContain('.soa-attachment-list')
             expect(forms).not.toMatch(/bootstrap|admin-lte|adminlte|jquery|react|radix|lucide/i)
             expect(forms).not.toMatch(/#[\da-f]{3,8}\b/i)
+        }
+    })
+})
+
+describe('compiled Tailwind content adapters', () => {
+    it('publishes Tailwind content adapters from canonical theme tokens only', () => {
+        for (const profile of ['production', 'development']) {
+            for (const feature of ['lightbox', 'tabs', 'tree']) {
+                const css = readFileSync(
+                    resolve(
+                        root,
+                        `public/default/profiles/${profile}/css/features/${feature}/themes/tailwind.css`,
+                    ),
+                    'utf8',
+                )
+
+                expect(css).toContain(`@layer sleepingowl-theme.${feature}`)
+                expect(css).toMatch(/var\(--soa-(?:primary|text|surface|border|muted)/)
+                expect(css).not.toMatch(/bootstrap|admin-lte|adminlte|jquery|react|radix|lucide/i)
+                expect(css).not.toMatch(/#[\da-f]{3,8}\b/i)
+            }
         }
     })
 })

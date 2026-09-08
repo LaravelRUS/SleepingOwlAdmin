@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "sourceManifest": "public/default/asset-manifest.json",
   "packageVersion": "dev-master",
-  "buildId": "sha256:3f1eb669a31a4362c6b16d9e30808d36ee5c1c13ee92c3dddd46a67d06123a4f",
+  "buildId": "sha256:52ed31e900b2165abe61a6b21027be5a9a315a72e42a8cff6e63656e1e06042a",
   "baseline": {
     "source": "docs/modernization/baseline/frontend.json",
     "bytes": 2585357,

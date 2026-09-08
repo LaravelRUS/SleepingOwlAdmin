@@ -2,9 +2,9 @@
 
 ## Статус и границы
 
-- Статус: **forms, Vue islands, uploads, editors и related elements готовы; следующий checkpoint — оставшиеся tabs/tree/lightbox adapters и theme-owned widget/auth views**.
+- Статус: **полный набор theme-owned views и adapters закрыт; следующий checkpoint — Tailwind 4 maintainer build, customization и no-build acceptance**.
 - Выбранная основа: **shadcn/ui** как registry component recipes и визуальный язык TailwindTheme. Это не подключение React-приложения и не новый browser runtime.
-- Следующий checkpoint: подключить существующие CSS-only tabs/tree/lightbox adapters к TailwindTheme, закрыть их behavior contracts и зеркалировать оставшиеся widget/auth logical views.
+- Следующий checkpoint: закрепить Tailwind 4 toolchain/input/preset/content contract, документировать consumer customization boundary и проверить Composer/no-build publication.
 - Основа: завершённый публичный contract из [`ADMIN_UI_MODERNIZATION_PLAN.md`](ADMIN_UI_MODERNIZATION_PLAN.md) — headless core, `ThemeInterface`, logical asset manifest, Blade-first views, Vue 3 islands, DataTables 3 и no-build publication.
 - Эта тема не блокирует основной major-релиз и не меняет compatibility contract существующей `AdminLTETheme`.
 - Каждый самостоятельный пункт выполняется тем же циклом: реализация, релевантные проверки, обновление этого файла, отдельный checkpoint-коммит и чистое дерево.
@@ -113,11 +113,11 @@ docs/modernization/
 
 - [x] Создать первый theme-owned slice: `components/ui` primitives для button/alert/badge/breadcrumb/separator/tooltip, sidebar pattern и logical layout/header/navigation/messages/helper shell.
 - [x] Сохранить в shell прямую структуру `.nav-item > .nav-link + .nav-treeview`, config classes, пользовательские attributes и hooks `data-widget`, `data-lte-toggle`, `data-toggle`, `data-bs-toggle`, `data-dismiss`, `data-bs-dismiss`, tooltip template и sidebar state classes.
-- [ ] Создать полный theme-owned набор layout, navigation, display, table, filter, form, action, widget, auth и helper views.
-- [ ] Сохранить логические пути views и приоритет application overrides.
+- [x] Создать полный theme-owned набор layout, navigation, display, table, filter, form, action, widget, auth и helper views.
+- [x] Сохранить логические пути views и приоритет application overrides.
 - [x] Передавать Tailwind classes/options Vue islands только из Blade props; не зашивать utilities в Vue/feature JavaScript.
-- [ ] Сохранить публичные `data-dismiss`, `data-toggle`, `data-widget`, field names, ARIA и остальные documented behavior hooks.
-- [ ] Проверить пользовательские HTML attributes/classes и hook-compatible изменённую вложенность без frontend rebuild.
+- [x] Сохранить публичные `data-dismiss`, `data-toggle`, `data-widget`, field names, ARIA и остальные documented behavior hooks.
+- [x] Проверить пользовательские HTML attributes/classes и hook-compatible изменённую вложенность без frontend rebuild.
 
 ## 3. Собрать независимые Tailwind assets
 
@@ -132,10 +132,10 @@ docs/modernization/
 ## 4. Закрыть feature presentation
 
 - [x] Закрыть shell subset alerts/messages/notifications, dropdowns, tooltips и sidebar: presentation использует canonical `--soa-*`, а behavior остаётся в общих feature drivers.
-- [ ] Реализовать alerts, dropdowns, tooltips, tabs, sidebar/tree, messages и notifications.
+- [x] Реализовать alerts, dropdowns, tooltips, tabs, sidebar/tree, messages и notifications.
 - [x] Реализовать DataTables 3 и Responsive presentation, filters, pagination, processing/error и inline editing.
 - [x] Реализовать date/time/daterange, select/multiselect, uploads, gallery/lightbox, WYSIWYG wrappers и related elements.
-- [ ] Реализовать tree success/error notification adapter через публичные native events без копии tree driver logic.
+- [x] Реализовать tree success/error notification adapter через публичные native events без копии tree driver logic.
 - [x] Добавить asset health footer partial: `role="status"`, локализованный текст, Sass/custom-property presentation, без modal/toast.
 
 ## 5. Customisation и no-build workflow
@@ -170,3 +170,4 @@ docs/modernization/
 | 2026-09-08 | Blade primitives и layout/navigation shell | Созданы shadcn-derived button/alert/badge/breadcrumb/separator/tooltip primitives, sidebar pattern и theme-owned logical shell: base/inner layout, header, breadcrumbs, navigation tree, четыре message type, asset-health и helpers. Сохранены config classes, user attributes, direct sidebar selectors, public legacy/new `data-*` hooks, ARIA, mobile/collapsed state и 3px ledger rail. Dropdown/sidebar/tooltip adapters теперь ссылаются только на canonical `--soa-*`; Tailwind заявляет только готовые dropdown/sidebar/tooltip/notification/icons capabilities. Theme-owned runtime сохраняет light/dark mode в localStorage/cookie без Bootstrap/AdminLTE. Оба profiles пересобраны: production theme CSS/JS 12 952/1 287 bytes, development 15 596/6 751 bytes; production adapters dropdown/sidebar/tooltip 1 881/2 227/701 bytes. Gate: Stylelint, forbidden runtime/framework scan, PHP 21 tests / 87 assertions и frontend 70 tests прошли; manifest checksums/asset health согласованы. Следующая точка — displays, DataTables 3 presentation и actions. | текущий commit |
 | 2026-09-08 | Displays, DataTables 3 presentation и actions | Все 68 стабильных `display/*` и `column/*` logical paths зеркалированы в Tailwind namespace; добавлены shadcn-derived table/pagination/empty/checkbox/input/native-select/button-group/alert-dialog primitives и `soa-*` presentation для sync/async tables, Responsive details, filters, pagination, selection rail, bulk/row actions, processing/error и inline editor. Field names, user attributes/classes, CSRF/method fields, DataTables/layout slots, selection/edit/date/lightbox/tooltip hooks и ARIA сохранены. Table adapter больше не имеет собственной literal palette: значения alias canonical `--soa-*`; после render gate Tailwind объявляет `feature:table:theme:tailwind` и `table-presentation`. Оба profiles пересобраны и 96 файлов проверены manifest MD5/SHA-256; production theme/table CSS — 16 870/14 032 bytes, development — 20 591/17 475 bytes. Gate: PHP 42 tests / 396 assertions плюс asset 26 / 168, frontend source 109 и compiled 221 tests, Stylelint и forbidden Bootstrap/AdminLTE/jQuery/React/Radix/lucide/color-literal scan прошли. Следующая точка — forms, Vue island props, uploads, editors и related elements. | текущий commit |
 | 2026-09-08 | Forms, Vue islands, uploads, editors и related | Все 46 `form/*` logical paths принадлежат Tailwind namespace; добавлены field/card/input-group/label/textarea/radio-group/switch/attachment/progress/dialog/skeleton/spinner primitives. Отдельный `feature:forms:theme:tailwind` adapter оформляет native controls, 12-column responsive grid, actions, files/gallery, Vue Multiselect, image dialog, WYSIWYG/Trix и related groups только через canonical `--soa-*`. Vue file/image/images/select/related получают `soa-*` только из Blade props; сохранены names, attributes, required/readonly, CSRF/method/redirect, upload hooks и `data-card-widget`. Collapse/maximize обслуживает native theme driver без AdminLTE/jQuery. Оба профиля пересобраны; 98 manifest files прошли MD5/SHA-256, forms CSS production/development — 17 200/21 950 bytes, forbidden scan чист. Gate: PHP 76 tests / 414 assertions, frontend 366 tests и полный Stylelint. Следующая точка — tabs/tree/lightbox adapters и widget/auth views. | текущий commit |
+| 2026-09-08 | Content adapters и полный view namespace | TailwindTheme подключает независимые lightbox/tabs/tree adapters; их palette сведена к canonical `--soa-*`, а tree success/error policy слушает только `tree:changed`/`tree:failed` и обновляет Blade-owned live region. Добавлены последние dashboard/env-editor/login/tab-badge/CKEditor logical views; inventory подтверждает полный паритет namespace, config classes/props, field names, ARIA и hooks сохранены. Оба профиля содержат по 50 manifest assets; production/development: theme CSS 18 246/22 368, lightbox 1 082/1 257, tabs 1 164/1 374, tree CSS 3 144/3 736, tree JS 1 389/7 476 bytes. Gate: PHP 20/321, frontend 267, ESLint и Stylelint. Следующая точка — Tailwind 4 build/customization/no-build acceptance. | текущий commit |

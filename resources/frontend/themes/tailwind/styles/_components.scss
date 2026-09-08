@@ -342,6 +342,88 @@
     padding: 0;
   }
 
+  .soa-dashboard-grid {
+    display: grid;
+    gap: var(--soa-space-4);
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    margin-block-end: var(--soa-space-4);
+  }
+
+  .soa-dashboard-column {
+    grid-column: 1 / -1;
+    min-inline-size: 0;
+  }
+
+  .soa-env-card {
+    overflow-x: auto;
+  }
+
+  .soa-env-links:empty,
+  .soa-env-card-heading:empty {
+    display: none;
+  }
+
+  .soa-env-table {
+    border-collapse: collapse;
+    inline-size: 100%;
+    min-inline-size: 40rem;
+  }
+
+  .soa-env-header,
+  .soa-env-key-cell,
+  .soa-env-value-cell,
+  .soa-env-remove-cell {
+    border-block-end: var(--soa-border-width) solid var(--soa-border-color);
+    padding: var(--soa-space-2) var(--soa-space-3);
+    text-align: start;
+  }
+
+  .soa-env-header {
+    background: var(--soa-muted-surface-color);
+    color: var(--soa-muted-text-color);
+    font-size: var(--soa-font-size-caption);
+    font-weight: var(--soa-font-weight-semibold);
+  }
+
+  .soa-env-action {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .soa-login-page {
+    align-items: center;
+    background: var(--soa-page-background-color);
+    display: grid;
+    min-block-size: 100dvh;
+    padding: var(--soa-content-padding);
+  }
+
+  .soa-login-card {
+    inline-size: min(24rem, 100%);
+    margin: 0 auto;
+  }
+
+  .soa-login-header {
+    justify-content: center;
+  }
+
+  .soa-login-title {
+    text-align: center;
+  }
+
+  .soa-auth-form {
+    display: grid;
+    gap: var(--soa-space-4);
+  }
+
+  .soa-auth-form .soa-field {
+    margin: 0;
+  }
+
+  .soa-login-submit {
+    inline-size: 100%;
+  }
+
   .soa-input,
   .soa-select {
     background: var(--soa-surface-color);
@@ -579,6 +661,20 @@
 
     .soa-footer {
       padding-inline: var(--soa-content-padding-compact);
+    }
+  }
+
+  @media (width >= 48rem) {
+    .soa-dashboard-column-quarter {
+      grid-column: span 3;
+    }
+
+    .soa-dashboard-column-wide {
+      grid-column: span 8;
+    }
+
+    .soa-dashboard-column-narrow {
+      grid-column: span 4;
     }
   }
 }

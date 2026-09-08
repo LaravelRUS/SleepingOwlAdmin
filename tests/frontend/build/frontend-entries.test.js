@@ -178,11 +178,11 @@ describe('tree presentation entries', () => {
         expect(modernEntry(logicalId, 'scripts')).toBeDefined()
     })
 
-    it('keeps the Tailwind adapter presentation-only', () => {
+    it('publishes Tailwind presentation with its native-event notification adapter', () => {
         const logicalId = 'feature:tree:theme:tailwind'
 
         expect(modernEntry(logicalId, 'styles')).toBeDefined()
-        expect(modernEntry(logicalId, 'scripts')).toBeUndefined()
+        expect(modernEntry(logicalId, 'scripts')).toBeDefined()
     })
 })
 

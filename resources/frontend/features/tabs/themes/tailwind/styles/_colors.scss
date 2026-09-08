@@ -1,9 +1,5 @@
-$tab-text: #475569 !default;
-$tab-active-text: #2563eb !default;
-$tab-active-surface: #eff6ff !default;
-$tab-border: #cbd5e1 !default;
-$tab-focus: #2563eb !default;
-$dark-tab-text: #cbd5e1 !default;
-$dark-tab-active-text: #bfdbfe !default;
-$dark-tab-active-surface: #1e3a8a !default;
-$dark-tab-border: #475569 !default;
+$tab-text: var(--soa-muted-text-color) !default;
+$tab-active-text: var(--soa-primary-color) !default;
+$tab-active-surface: var(--soa-accent-surface-color) !default;
+$tab-border: var(--soa-border-color) !default;
+$tab-focus: var(--soa-focus-color) !default;

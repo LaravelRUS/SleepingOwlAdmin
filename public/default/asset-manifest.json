@@ -133,8 +133,8 @@
                     "styles": [
                         {
                             "file": "profiles/production/css/features/lightbox/themes/tailwind.css",
-                            "version": "a9f6995e25fb7dd04a5f5e6aa232f442",
-                            "checksum": "sha256:2ce77c9757550652a9a9fe4f3a650bc8d8d5def20ad321f41826a4378bf2e25c"
+                            "version": "aa732d99252ce29fa2b57afa88bd4f4c",
+                            "checksum": "sha256:ae5ddd4f651ad0456f6689d7113f025f5f0e7c29a9a12bddd2661da805f1cf38"
                         }
                     ]
                 },
@@ -271,8 +271,8 @@
                     "styles": [
                         {
                             "file": "profiles/production/css/features/tabs/themes/tailwind.css",
-                            "version": "144f95420814534395e4d4a35c9c2546",
-                            "checksum": "sha256:1fff315282e6fea22a76a3644d759422b9f7e6578fb78a5a546c1a0f6964ba96"
+                            "version": "f423c58988cf5d7be09f3451b064e468",
+                            "checksum": "sha256:b71a1f5486ba8d46824cef291150dfa8d924d11bff35ae35921947a36f965563"
                         }
                     ]
                 },
@@ -355,12 +355,18 @@
                     ]
                 },
                 "feature:tree:theme:tailwind": {
-                    "scripts": [],
+                    "scripts": [
+                        {
+                            "file": "profiles/production/js/features/tree/themes/tailwind.js",
+                            "version": "d929205a6ce6f0f583c3e7ad62b17133",
+                            "checksum": "sha256:59e88edc8f2eb11bcea3425c715982807294487381ad8f4a8803388c256cc6fa"
+                        }
+                    ],
                     "styles": [
                         {
                             "file": "profiles/production/css/features/tree/themes/tailwind.css",
-                            "version": "e70be6d822de6041423d30b3bc6219df",
-                            "checksum": "sha256:37a13dfd54846f411e9d493c0bd3631d71f548e32a8da284120d326f418c0451"
+                            "version": "80ec235cf4d9eb2f3d83d1e8203c7ce3",
+                            "checksum": "sha256:1805f5d07bbe00b61b132bf7c51bb69886764e0693655ac57e69d0fcab016904"
                         }
                     ]
                 },
@@ -441,8 +447,8 @@
                     "styles": [
                         {
                             "file": "profiles/production/css/themes/tailwind.css",
-                            "version": "465785eed46fa12eb69a5f823d67f437",
-                            "checksum": "sha256:c159f879a1c34cafafb9cac27dfb2f3162cdf33d69106580b0f285cb2c65f69e"
+                            "version": "cb26a84a414a342f7975d0ed8944575d",
+                            "checksum": "sha256:0c173dc61254634e517597066175d2b0bf25d71a3e91fd2b0138fa7376a4bb7a"
                         }
                     ]
                 }
@@ -579,8 +585,8 @@
                     "styles": [
                         {
                             "file": "profiles/development/css/features/lightbox/themes/tailwind.css",
-                            "version": "c952e8fc8fa0c61fa3de70d9bd7665f5",
-                            "checksum": "sha256:49bfaa81f51534104dc843c6b994c51c9ea06cf77454d59fd65d763c1bca06a6"
+                            "version": "e908bda08d166e763a009afa8878ce52",
+                            "checksum": "sha256:b47e8f1550dd8716ff16b171735139154438084fce6ab0b6d6fcfe0dc05b473c"
                         }
                     ]
                 },
@@ -717,8 +723,8 @@
                     "styles": [
                         {
                             "file": "profiles/development/css/features/tabs/themes/tailwind.css",
-                            "version": "fd93eace3ee1ba56632fec06bf963eae",
-                            "checksum": "sha256:5aa231b7724ed61f72d2bcaeab57af88d2c6e608e3c8a0f22633f6660c6167af"
+                            "version": "7b8673971ff1f850afa6a021f433c8ac",
+                            "checksum": "sha256:ea366edf06d6a66db3205d9d5a8bb89047422c8b67e91ba6b3709abcc4a6f73f"
                         }
                     ]
                 },
@@ -801,12 +807,18 @@
                     ]
                 },
                 "feature:tree:theme:tailwind": {
-                    "scripts": [],
+                    "scripts": [
+                        {
+                            "file": "profiles/development/js/features/tree/themes/tailwind.js",
+                            "version": "8d0470c1e403ee116ea5574bfd87eda3",
+                            "checksum": "sha256:ffeadb8cc3231c7f6e400b61cc5871eccf1312d10d650253ef0b8fd0183ea9a8"
+                        }
+                    ],
                     "styles": [
                         {
                             "file": "profiles/development/css/features/tree/themes/tailwind.css",
-                            "version": "ff074e46446da7341abec06251c8b9bb",
-                            "checksum": "sha256:cdb53a39dae1f4394f5846ed5baac2189296b94ffabe3bccd14d4bad0d185ce5"
+                            "version": "049fc685f510f78a544fe1f59ebf535c",
+                            "checksum": "sha256:d6a7ada89f28821b5f86e586e587b1e465cc1cd59d3092e43fa9379fa955f0f6"
                         }
                     ]
                 },
@@ -887,13 +899,13 @@
                     "styles": [
                         {
                             "file": "profiles/development/css/themes/tailwind.css",
-                            "version": "9ef2aeef9af955dedbb4b3772a86b540",
-                            "checksum": "sha256:3d2d6293216b1dcabbc270ca2a3b40d288fd01a8382e4351cea33b7923c3586e"
+                            "version": "1398799418bdb96fa88dd7daa71150cc",
+                            "checksum": "sha256:85a422c4382123a24c04af062cff3a858beda665107cd17ba0bd732ec497060e"
                         }
                     ]
                 }
             }
         }
     },
-    "build_id": "sha256:3f1eb669a31a4362c6b16d9e30808d36ee5c1c13ee92c3dddd46a67d06123a4f"
+    "build_id": "sha256:52ed31e900b2165abe61a6b21027be5a9a315a72e42a8cff6e63656e1e06042a"
 }

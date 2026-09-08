@@ -83,6 +83,26 @@
             var(--soa-tree-shadow);
     }
 
+    .soa-tree-handle:focus-visible,
+    .soa-tree-toggle:focus-visible {
+        outline: var(--soa-focus-ring-width) solid var(--soa-focus-color);
+        outline-offset: var(--soa-focus-ring-width);
+    }
+
+    .soa-tree-notification {
+        --soa-status-rail-color: var(--soa-success-color);
+
+        border-inline-start: var(--soa-status-rail-width) solid
+            var(--soa-status-rail-color);
+        color: var(--soa-text-color);
+        margin: var(--soa-space-3);
+        padding: var(--soa-space-2) var(--soa-space-3);
+    }
+
+    .soa-tree-notification[data-state='error'] {
+        --soa-status-rail-color: var(--soa-danger-color);
+    }
+
     .soa-tree[aria-busy='true'] .soa-tree-handle {
         cursor: wait;
     }

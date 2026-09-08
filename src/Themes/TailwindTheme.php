@@ -9,9 +9,12 @@ final class TailwindTheme implements ThemeInterface
     private const FEATURE_ADAPTERS = [
         'dropdown',
         'forms',
+        'lightbox',
         'sidebar',
         'table',
+        'tabs',
         'tooltip',
+        'tree',
     ];
 
     public function id(): string
@@ -55,6 +58,7 @@ final class TailwindTheme implements ThemeInterface
                 ThemeCapability::Icons,
                 ThemeCapability::Sidebar,
                 ThemeCapability::TablePresentation,
+                ThemeCapability::Tabs,
             ]
         );
     }
