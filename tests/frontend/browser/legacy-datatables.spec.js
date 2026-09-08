@@ -73,10 +73,24 @@ function filterPanel(page, id) {
     return page.locator(`[data-datatables-id="${id}"].display-filters`)
 }
 
-async function saveTextFilter(panel, selector, value) {
+async function expectFilterControlsInTop2End(page) {
+    const topControls = page
+        .locator('#legacy-table_wrapper .dt-layout-end')
+        .filter({ has: page.locator('#filters-exec') })
+
+    await expect(topControls.locator('#filters-exec')).toBeVisible()
+    await expect(topControls.locator('.dt-length')).toBeVisible()
+    await expect(filterPanel(page, 'legacy-table-fixture').locator('#filters-exec')).toHaveCount(0)
+}
+
+function filterActions(page, tableId) {
+    return page.locator(`#${tableId}_wrapper`)
+}
+
+async function saveTextFilter(panel, actions, selector, value) {
     await panel.locator(selector).fill(value)
     await panel.locator(selector).dispatchEvent('change')
-    await panel.locator('#filters-exec').click()
+    await actions.locator('#filters-exec').click()
 }
 
 async function readScopedFilterState(page) {
@@ -180,6 +194,61 @@ test('legacy DataTables mounts through the engine-neutral Admin.Tables registry'
     })
 })
 
+test('custom placement blocks mount in numbered DataTables layout slots', async ({ page }) => {
+    await openFixture(page)
+
+    const alignments = {
+        bottom3: 'full',
+        bottom3End: 'end',
+        bottom3Start: 'start',
+        bottom4: 'full',
+        bottom4End: 'end',
+        bottom4Start: 'start',
+        top3: 'full',
+        top3End: 'end',
+        top3Start: 'start',
+        top4: 'full',
+        top4End: 'end',
+        top4Start: 'start',
+    }
+
+    for (const [position, alignment] of Object.entries(alignments)) {
+        const slot = page.locator(
+            `#legacy-table_wrapper [data-admin-datatables-layout-slot="${position}"]`,
+        )
+        await expect(slot).toHaveCount(1)
+        await expect(
+            slot.locator(`xpath=ancestor::*[contains(@class, "dt-layout-${alignment}")]`),
+        ).toHaveCount(1)
+    }
+
+    await expect(page.locator('#primary-layout-slots > div')).toHaveCount(0)
+    await expect(page.locator('[data-slot-order]')).toHaveText(['First block', 'Second block'])
+    await page.locator('#primary-slot-action').click()
+    expect(await page.evaluate(() => globalThis.__layoutSlotClicks)).toBe(1)
+})
+
+test('custom layout slots stay table-scoped and return to their host on destroy', async ({
+    page,
+}) => {
+    await openFixture(page, '?multiple=1')
+
+    await expect(page.locator('#legacy-table_wrapper #primary-slot-action')).toBeVisible()
+    await expect(page.locator('#secondary-table_wrapper #secondary-slot-action')).toBeVisible()
+    await expect(page.locator('#legacy-table_wrapper #secondary-slot-action')).toHaveCount(0)
+    await expect(page.locator('#secondary-table_wrapper #primary-slot-action')).toHaveCount(0)
+
+    await page.evaluate(() => {
+        const table = globalThis.document.querySelector('#legacy-table')
+        globalThis.Admin.Tables.get(table).destroy()
+    })
+
+    await expect(
+        page.locator('#primary-layout-slots > [data-admin-datatables-layout-slot]'),
+    ).toHaveCount(12)
+    await expect(page.locator('#secondary-table_wrapper #secondary-slot-action')).toBeVisible()
+})
+
 test('published legacy bundle initializes DataTables and runs draw hooks', async ({
     page,
     request,
@@ -188,8 +257,8 @@ test('published legacy bundle initializes DataTables and runs draw hooks', async
     await openFixture(page)
 
     await expect(page.locator('#legacy-table tbody tr').first()).toHaveClass(/fixture-row/)
-    await expect(page.locator('#legacy-table_wrapper .dt-layout-end .dt-length')).toBeVisible()
     await expect(page.locator('#legacy-table_wrapper .dt-layout-start .dt-search')).toBeVisible()
+    await expectFilterControlsInTop2End(page)
     await expect(page.locator('#legacy-table_wrapper .dt-info')).toBeVisible()
     await expect(page.locator('#legacy-table_wrapper .dt-paging')).toBeVisible()
     await expect(page.locator('#lazy-image-1')).toHaveAttribute('src', /\/fixtures\/pixel\.svg$/)
@@ -281,8 +350,18 @@ test('filter state and clear controls stay scoped to their table', async ({ page
     const primaryFilters = filterPanel(page, 'legacy-table-fixture')
     const secondaryFilters = filterPanel(page, 'secondary-table-fixture')
 
-    await saveTextFilter(primaryFilters, '#text-filter', 'Alice')
-    await saveTextFilter(secondaryFilters, '#secondary-text-filter', 'Bob')
+    await saveTextFilter(
+        primaryFilters,
+        filterActions(page, 'legacy-table'),
+        '#text-filter',
+        'Alice',
+    )
+    await saveTextFilter(
+        secondaryFilters,
+        filterActions(page, 'secondary-table'),
+        '#secondary-text-filter',
+        'Bob',
+    )
 
     const stored = await readScopedFilterState(page)
     expect(JSON.parse(stored.primary)).toEqual({
@@ -292,7 +371,7 @@ test('filter state and clear controls stay scoped to their table', async ({ page
         0: { 1: { type: 'text', val: 'Bob' } },
     })
 
-    await primaryFilters.locator('#filters-cancel').click()
+    await filterActions(page, 'legacy-table').locator('#filters-cancel').click()
     await expect(secondaryFilters.locator('#secondary-text-filter')).toHaveValue('Bob')
     const afterClear = await readScopedFilterState(page)
     expect(afterClear.primary).toBeNull()

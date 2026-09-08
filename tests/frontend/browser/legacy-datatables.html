@@ -113,6 +113,44 @@
                 </div>
             </div>
 
+            <div
+                id="primary-layout-slots"
+                data-admin-datatables-layout-slots
+                data-datatables-id="legacy-table-fixture"
+                hidden
+            >
+                <div data-admin-datatables-layout-slot="top3Start">
+                    <button id="primary-slot-action" type="button">Primary slot action</button>
+                    <span data-slot-order="first">First block</span>
+                    <span data-slot-order="second">Second block</span>
+                </div>
+                <div data-admin-datatables-layout-slot="top3">
+                    <span>Top 3 full</span>
+                </div>
+                <div data-admin-datatables-layout-slot="top3End"><span>Top 3 end</span></div>
+                <div data-admin-datatables-layout-slot="top4Start"><span>Top 4 start</span></div>
+                <div data-admin-datatables-layout-slot="top4"><span>Top 4 full</span></div>
+                <div data-admin-datatables-layout-slot="top4End"><span>Top 4 end</span></div>
+                <div data-admin-datatables-layout-slot="bottom3Start">
+                    <span>Bottom 3 start</span>
+                </div>
+                <div data-admin-datatables-layout-slot="bottom3">
+                    <span>Bottom 3 full</span>
+                </div>
+                <div data-admin-datatables-layout-slot="bottom3End">
+                    <span>Bottom 3 end</span>
+                </div>
+                <div data-admin-datatables-layout-slot="bottom4Start">
+                    <span>Bottom 4 start</span>
+                </div>
+                <div data-admin-datatables-layout-slot="bottom4">
+                    <span>Bottom 4 full</span>
+                </div>
+                <div data-admin-datatables-layout-slot="bottom4End">
+                    <span>Bottom 4 end</span>
+                </div>
+            </div>
+
             <table
                 id="legacy-table"
                 class="datatables autorefresh lightcolumn"
@@ -153,6 +191,17 @@
                 </div>
                 <div data-index="1">
                     <input id="secondary-text-filter" class="column-filter" data-type="text" />
+                </div>
+            </div>
+
+            <div
+                id="secondary-layout-slots"
+                data-admin-datatables-layout-slots
+                data-datatables-id="secondary-table-fixture"
+                hidden
+            >
+                <div data-admin-datatables-layout-slot="top3Start">
+                    <button id="secondary-slot-action" type="button">Secondary slot action</button>
                 </div>
             </div>
 
@@ -248,6 +297,11 @@
 
         <script>
             const fixtureFeatures = new URLSearchParams(window.location.search)
+
+            window.__layoutSlotClicks = 0
+            document.querySelector('#primary-slot-action').addEventListener('click', () => {
+                window.__layoutSlotClicks += 1
+            })
 
             if (!fixtureFeatures.has('multiple')) {
                 document.querySelector('#secondary-fixture').remove()

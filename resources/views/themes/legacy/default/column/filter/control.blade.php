@@ -1,4 +1,4 @@
-<div class="btn-group">
+<div class="btn-group button-filter-control">
     @yield('filter.button')
 
     <button {!! (new \SleepingOwl\Admin\Support\HtmlAttributeBag($attributesArray))->class(['btn', 'btn-sm', 'btn-primary']) !!}>

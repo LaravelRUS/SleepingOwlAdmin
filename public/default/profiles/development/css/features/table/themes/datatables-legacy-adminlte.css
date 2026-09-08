@@ -1302,6 +1302,9 @@
       height: 1.5rem;
     }
   }
+  .button-filter-control {
+    margin-right: 1.25rem;
+  }
 }
 
 /*# sourceMappingURL=datatables-legacy-adminlte.css.map*/

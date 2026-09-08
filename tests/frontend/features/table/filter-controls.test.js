@@ -40,6 +40,25 @@ it('binds execute, clear and enter reload through native events', () => {
     expect(callbacks.reload).toHaveBeenCalledOnce()
 })
 
+it('keeps actions bound when DataTables moves their root into its layout', () => {
+    const executeButton = interactiveControl()
+    const clearButton = interactiveControl()
+    const callbacks = { clear: vi.fn(), execute: vi.fn(), reload: vi.fn() }
+    const container = { querySelectorAll: vi.fn(() => []) }
+    const actionRoot = {
+        querySelectorAll: (selector) =>
+            ({ '#filters-cancel': [clearButton], '#filters-exec': [executeButton] })[selector] ??
+            [],
+    }
+
+    bindFilterControls(container, { ...callbacks, actionRoot })
+    executeButton.emit('click')
+    clearButton.emit('click')
+
+    expect(callbacks.execute).toHaveBeenCalledOnce()
+    expect(callbacks.clear).toHaveBeenCalledOnce()
+})
+
 it('clears inputs and selects and emits a bubbling native change', () => {
     const ownerDocument = { defaultView: { Event: globalThis.Event } }
     const input = {

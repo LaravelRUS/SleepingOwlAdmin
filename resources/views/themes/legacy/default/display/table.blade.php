@@ -34,6 +34,8 @@
     	@yield('panel.heading')
 	</div>
 
+	@include('sleeping_owl::features.datatables.layout-slots')
+
 	@foreach($extensions as $ext)
 		{!! $ext->render() !!}
 	@endforeach

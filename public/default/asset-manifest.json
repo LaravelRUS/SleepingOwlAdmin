@@ -178,8 +178,8 @@
                     "scripts": [
                         {
                             "file": "profiles/production/js/features/table.js",
-                            "version": "c2284c3c09d0d7f47081666ae3532f3d",
-                            "checksum": "sha256:7e3711de5e791f6571ea94dbb50f9585292e14cca9e1f61ef1d1a88bff72be84"
+                            "version": "11013eb7f6e089db27e9b6a9785fa08e",
+                            "checksum": "sha256:1f7770bc959fbf37da439e45b926d9776723d12b7f25ace0409d8dd4aa8de47d"
                         }
                     ],
                     "styles": [
@@ -211,8 +211,8 @@
                     "styles": [
                         {
                             "file": "profiles/production/css/features/table/themes/datatables-legacy-adminlte.css",
-                            "version": "d406f3c10be4466e365c945c9dc194af",
-                            "checksum": "sha256:9fa9f839ee58870927948f0549fee76016e7567f76a58a0759f52cc6b0e1b6eb"
+                            "version": "4e0f701ce2dfef021f6aafd0d1bfba1e",
+                            "checksum": "sha256:335f124d4f1037c04883f640979718b2f9b9a0b2eada1478343b314a3c934452"
                         }
                     ]
                 },
@@ -614,8 +614,8 @@
                     "scripts": [
                         {
                             "file": "profiles/development/js/features/table.js",
-                            "version": "6e41a3abe88616c69776d0ebcda825cc",
-                            "checksum": "sha256:b9c56005cddd2d4ce787763fc76ef8042c05e5dd03f7aed22d71d1d661263af3"
+                            "version": "5f4a720d59d0d6bb71fe11eec51c3d5c",
+                            "checksum": "sha256:2cd5068c64857b2d5cf0d7677e0b4c134c2fcb45505172478ed30b43d907f695"
                         }
                     ],
                     "styles": [
@@ -647,8 +647,8 @@
                     "styles": [
                         {
                             "file": "profiles/development/css/features/table/themes/datatables-legacy-adminlte.css",
-                            "version": "6fcefa96b3af013ac02f964edfaf6100",
-                            "checksum": "sha256:055849527135b223428b70874205e06d2e974793465c275596e824b3c009a1e4"
+                            "version": "66b95ee35c065af72d35705ff9f47770",
+                            "checksum": "sha256:67d3125040ee49cde521fc36ecd6b4798f38a9a5772187cf4da93d92f79a1884"
                         }
                     ]
                 },
@@ -875,5 +875,5 @@
             }
         }
     },
-    "build_id": "sha256:8882bb3981d9468c217c82190ae4d54b26a767acb3d4c2b478731ff747668167"
+    "build_id": "sha256:0de25baee3ccc56609464dae3d32e763c2c10c6e5f4e2e187171c14377109b01"
 }

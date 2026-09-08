@@ -123,6 +123,123 @@ $display
   * `table.header` — перед строками `<thead>` таблицы.
   * `table.footer` — в самом низу таблицы перед закрывающим тегом.
 
+### Слоты layout DataTables
+
+Для `AdminDisplay::datatables()` и `AdminDisplay::datatablesAsync()` блок можно поместить
+в отдельную строку layout DataTables через placement `datatable.{position}`.
+
+Доступные слоты:
+
+| Placement | Положение |
+| :--- | :--- |
+| `datatable.top3` | Полноширинная третья строка над таблицей |
+| `datatable.top3Start` | Начало третьей строки над таблицей |
+| `datatable.top3End` | Конец третьей строки над таблицей |
+| `datatable.top4` | Полноширинная четвертая строка над таблицей |
+| `datatable.top4Start` | Начало четвертой строки над таблицей |
+| `datatable.top4End` | Конец четвертой строки над таблицей |
+| `datatable.bottom3` | Полноширинная третья строка под таблицей |
+| `datatable.bottom3Start` | Начало третьей строки под таблицей |
+| `datatable.bottom3End` | Конец третьей строки под таблицей |
+| `datatable.bottom4` | Полноширинная четвертая строка под таблицей |
+| `datatable.bottom4Start` | Начало четвертой строки под таблицей |
+| `datatable.bottom4End` | Конец четвертой строки под таблицей |
+
+Номер не ограничен значениями `3` и `4`: поддерживается любой положительный номер без
+ведущего нуля, например `datatable.top5Start` или `datatable.bottom10End`. `Start` и `End`
+являются логическими началом и концом строки (в LTR-интерфейсе — слева и справа). Без
+суффикса блок занимает всю ширину. На одном номере рекомендуется использовать либо
+полноширинный слот, либо пару `Start`/`End` — DataTables выводит полноширинный и разделенный
+варианты отдельными строками.
+
+Чем больше номер, тем дальше строка находится от таблицы: `top4` располагается выше
+`top3`, а `bottom4` — ниже `bottom3`. Строки `top3`, `top4`, `bottom3` и `bottom4`
+предназначены для пользовательских блоков и не конфликтуют со штатным layout:
+
+| Штатный position | Содержимое |
+| :--- | :--- |
+| `top` | Полоса автообновления, если она включена |
+| `top2Start` | Поиск DataTables |
+| `top2End` | `pageLength`, затем кнопки «Фильтр/Очистить» |
+| `bottomStart` | Информация о количестве записей |
+| `bottom1Start` | Пагинация |
+| `bottom1End` | Переход к номеру страницы, если он включен |
+
+#### Блок из Blade-шаблона
+
+Создайте обычный Blade-файл, например
+`resources/views/admin/orders/table-summary.blade.php`:
+
+```blade
+<div class="orders-summary">
+    Найдено заказов: {{ $ordersCount }}
+    <button type="button" data-refresh-orders>Обновить</button>
+</div>
+```
+
+В `onDisplay()` класса admin-секции подключите его через `addCustomView()`, передав имя
+слота вторым аргументом (`$placement`):
+
+```php
+public function onDisplay($payload = [])
+{
+    $display = AdminDisplay::datatablesAsync()
+        ->setColumns($this->columns());
+
+    $display->addCustomView(
+        'admin.orders.table-summary',
+        'datatable.top3Start',
+        ['ordersCount' => Order::query()->count()]
+    );
+
+    return $display;
+}
+```
+
+Можно передать и уже созданный объект `View`:
+
+```php
+$summary = view('admin.orders.table-summary')
+    ->with('ordersCount', $ordersCount);
+
+$display->addCustomView($summary, 'datatable.top4');
+```
+
+Несколько вызовов `addCustomView()` с одинаковым placement попадут в один слот в порядке
+добавления.
+
+#### Штатный блок из класса admin-секции
+
+Любой placable extension, у которого есть `setPlacement()`, переносится тем же способом.
+Например, действия можно поставить справа от пользовательского Blade-блока:
+
+```php
+public function onDisplay($payload = [])
+{
+    $display = AdminDisplay::datatables()
+        ->setColumns($this->columns());
+
+    $display->addCustomView(
+        'admin.orders.table-summary',
+        'datatable.top3Start'
+    );
+
+    $display->getActions()->setPlacement('datatable.top3End');
+    $display->getLinks()->setPlacement('datatable.top4Start');
+
+    return $display;
+}
+```
+
+Таким образом можно размещать `Actions`, `ActionsForm`, `ColumnFilters`, `ColumnsTotal`,
+`Links` и `CustomView`. В layout переносится исходный DOM-узел без клонирования, поэтому
+формы, обработчики событий и функции кнопок продолжают работать. Для нескольких таблиц
+блок привязывается к `data-id` своей таблицы и не попадет в соседнюю.
+
+`datatable.*` — namespace placement API, а не имя обычной Blade-секции. Конструкция
+`@section('datatable.top3Start')` сама по себе не подключит блок: Blade-разметку следует
+передавать через `addCustomView()`, а штатный блок секции — через `setPlacement()`.
+
 ## 6. Компоненты форм (Form)
 
 ### Типы форм

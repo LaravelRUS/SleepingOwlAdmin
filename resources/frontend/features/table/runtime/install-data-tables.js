@@ -8,6 +8,7 @@ import {
     isNumberInRange,
 } from '../filters/filter-drivers.js'
 import { createDateFilterSupport } from '../filters/date-filter-support.js'
+import { installFilterControlsFeature } from '../filters/filter-controls-feature.js'
 import { mountDataTable } from '../lifecycle/data-table-adapter.js'
 import { readTableDefinition } from '../options/table-options.js'
 import { installPageJumpFeature } from '../pagination/page-jump.js'
@@ -31,6 +32,7 @@ export function installDataTables(admin, options) {
     const scan = (root = settings.root) => scanTables(settings, filters, root)
 
     installDataTableExtensions(settings.engine, { onError: settings.onError })
+    installFilterControlsFeature(settings.engine)
     if (settings.pageJump.enabled) {
         installPageJumpFeature(settings.engine, { labels: settings.pageJump.labels })
     }

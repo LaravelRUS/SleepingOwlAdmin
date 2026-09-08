@@ -3,6 +3,7 @@ import {
     bindFilterControls,
     clearFilterControls,
 } from '../filters/filter-controls.js'
+import { findFilterControlRoot } from '../filters/filter-controls-feature.js'
 import { forEachColumnFilter } from '../filters/filter-elements.js'
 import {
     clearFilterState,
@@ -35,9 +36,11 @@ function prepareFilterState(settings) {
 
 function createFilterContext(settings, id) {
     const filterContainers = matchingContainers(settings.root, id)
+    const filterControlRoots = filterContainers.map(findFilterControlRoot)
     assignFilterControlIds(filterContainers, id)
 
     return {
+        filterControlRoots,
         filterContainers,
         stateFilters: settings.stateFilters,
         stateKey: filterStateKey(settings.path, id),
@@ -52,8 +55,9 @@ function restoreFilterState(settings, context) {
 
 function bindTableFilters(settings, definition, adapter, serverSide, context) {
     bindColumnFilters(settings, definition.id, adapter.engineInstance, serverSide)
-    context.filterContainers.forEach((container) => {
+    context.filterContainers.forEach((container, index) => {
         bindFilterControls(container, {
+            actionRoot: context.filterControlRoots[index] ?? container,
             clear: () => clearFilters(settings, adapter, context),
             execute: () => executeFilters(settings, adapter, context),
             reload: () => adapter.reload(),

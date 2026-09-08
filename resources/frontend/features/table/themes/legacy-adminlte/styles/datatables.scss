@@ -1,5 +1,6 @@
 @use 'sass:meta';
 @use 'auto-update';
+@use 'filter';
 @use 'colors';
 @use 'custom-properties';
 @use 'inline-editor';
@@ -21,4 +22,5 @@
   @include inline-editor.styles;
   @include table.styles;
   @include auto-update.styles;
+  @include filter.styles;
 }

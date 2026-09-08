@@ -19,6 +19,14 @@ export { bindBulkActions } from './actions/bulk-actions.js'
 export { bindFormActions } from './actions/form-actions.js'
 export { bindConfirmedControls } from './controls/confirm-submit.js'
 export { bindFilterControls, clearFilterControls } from './filters/filter-controls.js'
+export {
+    configureFilterControls,
+    createFilterControlsFeature,
+    FILTER_CONTROLS_FEATURE,
+    findFilterControlRoot,
+    findTableFilterControlRoots,
+    installFilterControlsFeature,
+} from './filters/filter-controls-feature.js'
 export { createDateFilterSupport } from './filters/date-filter-support.js'
 export {
     createTableFilterDrivers,
@@ -47,6 +55,12 @@ export {
     submitInlineEdit,
 } from './editing/inline-editor-request.js'
 export { DataTableAdapter, mountDataTable } from './lifecycle/data-table-adapter.js'
+export {
+    configureTableLayoutSlots,
+    createTableLayoutSlotFeature,
+    findTableLayoutSlots,
+    isTableLayoutPosition,
+} from './layout/table-layout-slots.js'
 export {
     createDataTableDefinition,
     DATA_TABLE_COMPONENT,

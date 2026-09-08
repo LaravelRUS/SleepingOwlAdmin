@@ -252,14 +252,16 @@ abstract class Display implements DisplayInterface
      */
     public function render()
     {
-        $view = app('sleeping_owl.template')->view($this->getView(), $this->toArray());
-
-        $blocks = $this->getExtensions()->placableBlocks();
+        $blocks = DataTablesLayoutSlots::split($this->getExtensions()->placableBlocks());
+        $view = app('sleeping_owl.template')->view($this->getView(), array_merge(
+            $this->toArray(),
+            ['datatableLayoutSlots' => $blocks['slots']]
+        ));
 
         // Flush all view yields before render new Section
         $view->getFactory()->flushSections();
 
-        foreach ($blocks as $block => $data) {
+        foreach ($blocks['sections'] as $block => $data) {
             $content = implode('', array_filter($data));
             if (! empty($content)) {
                 $view->getFactory()->startSection($block);

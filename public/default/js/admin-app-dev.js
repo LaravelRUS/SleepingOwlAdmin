@@ -9429,6 +9429,119 @@ function createDateFilterSupport() {
 
 /***/ },
 
+/***/ "./resources/frontend/features/table/filters/filter-controls-feature.js"
+/*!******************************************************************************!*\
+  !*** ./resources/frontend/features/table/filters/filter-controls-feature.js ***!
+  \******************************************************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   FILTER_CONTROLS_FEATURE: () => (/* binding */ FILTER_CONTROLS_FEATURE),
+/* harmony export */   configureFilterControls: () => (/* binding */ configureFilterControls),
+/* harmony export */   createFilterControlsFeature: () => (/* binding */ createFilterControlsFeature),
+/* harmony export */   findFilterControlRoot: () => (/* binding */ findFilterControlRoot),
+/* harmony export */   findTableFilterControlRoots: () => (/* binding */ findTableFilterControlRoots),
+/* harmony export */   installFilterControlsFeature: () => (/* binding */ installFilterControlsFeature)
+/* harmony export */ });
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+var FILTER_CONTROLS_FEATURE = 'filterControls';
+var FILTER_CONTAINER_SELECTOR = '.display-filters[data-display="DisplayDatatablesAsync"][data-datatables-id]';
+function installFilterControlsFeature(engine) {
+  var _engine$feature;
+  if (typeof (engine === null || engine === void 0 || (_engine$feature = engine.feature) === null || _engine$feature === void 0 ? void 0 : _engine$feature.register) !== 'function') {
+    throw new TypeError('Table filter controls require the DataTables feature registry.');
+  }
+  engine.feature.register(FILTER_CONTROLS_FEATURE, createFilterControlsFeature);
+}
+function configureFilterControls(table, options) {
+  var _options$layout;
+  if (findTableFilterControlRoots(table).length === 0) return false;
+  var current = (_options$layout = options.layout) === null || _options$layout === void 0 ? void 0 : _options$layout.top2End;
+  var features = Array.isArray(current) ? current : [current];
+  options.layout = _objectSpread(_objectSpread({}, options.layout), {}, {
+    top2End: [].concat(_toConsumableArray(features.filter(function (feature) {
+      return feature != null;
+    })), [FILTER_CONTROLS_FEATURE])
+  });
+  return true;
+}
+function createFilterControlsFeature(settings) {
+  var controls = findTableFilterControlRoots(settings.table);
+  if (controls.length === 0) return null;
+  var document = settings.table.ownerDocument;
+  var placements = controls.map(function (control) {
+    return preservePlacement(document, control);
+  });
+  var feature = controls.length === 1 ? controls[0] : wrapControls(document, controls);
+  settings.api.one('destroy.soaFilterControls', function () {
+    return restorePlacements(placements);
+  });
+  return feature;
+}
+function findTableFilterControlRoots(table) {
+  var _table$ownerDocument$, _table$ownerDocument, _table$ownerDocument$2;
+  var id = String(table.dataset.id);
+  var containers = (_table$ownerDocument$ = (_table$ownerDocument = table.ownerDocument) === null || _table$ownerDocument === void 0 || (_table$ownerDocument$2 = _table$ownerDocument.querySelectorAll) === null || _table$ownerDocument$2 === void 0 ? void 0 : _table$ownerDocument$2.call(_table$ownerDocument, FILTER_CONTAINER_SELECTOR)) !== null && _table$ownerDocument$ !== void 0 ? _table$ownerDocument$ : [];
+  var controls = _toConsumableArray(containers).filter(function (container) {
+    return container.dataset.datatablesId === id;
+  }).map(findFilterControlRoot).filter(Boolean);
+  return _toConsumableArray(new Set(controls));
+}
+function findFilterControlRoot(container) {
+  var _container$querySelec, _ref, _ref2, _execute$closest, _execute$closest2, _execute$closest3;
+  var execute = (_container$querySelec = container.querySelector) === null || _container$querySelec === void 0 ? void 0 : _container$querySelec.call(container, '#filters-exec');
+  if (!execute) return null;
+  return (_ref = (_ref2 = (_execute$closest = (_execute$closest2 = execute.closest) === null || _execute$closest2 === void 0 ? void 0 : _execute$closest2.call(execute, '.btn-group')) !== null && _execute$closest !== void 0 ? _execute$closest : (_execute$closest3 = execute.closest) === null || _execute$closest3 === void 0 ? void 0 : _execute$closest3.call(execute, '[data-type="control"]')) !== null && _ref2 !== void 0 ? _ref2 : execute.parentElement) !== null && _ref !== void 0 ? _ref : execute;
+}
+function preservePlacement(document, control) {
+  var placeholder = document.createComment('SleepingOwl DataTables filter controls');
+  var parent = control.parentNode;
+  parent.insertBefore(placeholder, control);
+  return {
+    control: control,
+    placeholder: placeholder
+  };
+}
+function wrapControls(document, controls) {
+  var wrapper = document.createElement('div');
+  wrapper.className = 'soa-dt-filter-controls';
+  wrapper.append.apply(wrapper, _toConsumableArray(controls));
+  return wrapper;
+}
+function restorePlacements(placements) {
+  var _iterator = _createForOfIteratorHelper(placements),
+    _step;
+  try {
+    for (_iterator.s(); !(_step = _iterator.n()).done;) {
+      var _placeholder$parentNo;
+      var _step$value = _step.value,
+        control = _step$value.control,
+        placeholder = _step$value.placeholder;
+      (_placeholder$parentNo = placeholder.parentNode) === null || _placeholder$parentNo === void 0 || _placeholder$parentNo.replaceChild(control, placeholder);
+    }
+  } catch (err) {
+    _iterator.e(err);
+  } finally {
+    _iterator.f();
+  }
+}
+
+/***/ },
+
 /***/ "./resources/frontend/features/table/filters/filter-controls.js"
 /*!**********************************************************************!*\
   !*** ./resources/frontend/features/table/filters/filter-controls.js ***!
@@ -9446,12 +9559,14 @@ function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function bindFilterControls(container, _ref) {
-  var clear = _ref.clear,
+  var _ref$actionRoot = _ref.actionRoot,
+    actionRoot = _ref$actionRoot === void 0 ? container : _ref$actionRoot,
+    clear = _ref.clear,
     execute = _ref.execute,
     reload = _ref.reload;
   assertCallbacks(clear, execute, reload);
-  bindClick(container, '#filters-exec', execute);
-  bindClick(container, '#filters-cancel', clear);
+  bindClick(actionRoot, '#filters-exec', execute);
+  bindClick(actionRoot, '#filters-cancel', clear);
   var _iterator = _createForOfIteratorHelper(container.querySelectorAll('[data-index] input')),
     _step;
   try {
@@ -10054,6 +10169,128 @@ function assertHookDependencies(events) {
 
 /***/ },
 
+/***/ "./resources/frontend/features/table/layout/table-layout-slots.js"
+/*!************************************************************************!*\
+  !*** ./resources/frontend/features/table/layout/table-layout-slots.js ***!
+  \************************************************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   configureTableLayoutSlots: () => (/* binding */ configureTableLayoutSlots),
+/* harmony export */   createTableLayoutSlotFeature: () => (/* binding */ createTableLayoutSlotFeature),
+/* harmony export */   findTableLayoutSlots: () => (/* binding */ findTableLayoutSlots),
+/* harmony export */   isTableLayoutPosition: () => (/* binding */ isTableLayoutPosition)
+/* harmony export */ });
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+var LAYOUT_HOST_SELECTOR = '[data-admin-datatables-layout-slots][data-datatables-id]';
+var LAYOUT_SLOT_ATTRIBUTE = 'data-admin-datatables-layout-slot';
+var LAYOUT_POSITION_PATTERN = /^(?:top|bottom)[1-9][0-9]*(?:Start|End)?$/;
+function configureTableLayoutSlots(table, options) {
+  var slots = findTableLayoutSlots(table);
+  if (slots.length === 0) return false;
+  var placements = slots.map(function (slot) {
+    return preservePlacement(table.ownerDocument, slot);
+  });
+  var restore = once(function () {
+    return restorePlacements(placements);
+  });
+  options.layout = _objectSpread({}, options.layout);
+  var _iterator = _createForOfIteratorHelper(placements),
+    _step;
+  try {
+    for (_iterator.s(); !(_step = _iterator.n()).done;) {
+      var placement = _step.value;
+      var feature = createTableLayoutSlotFeature(placement.slot, restore);
+      var current = options.layout[placement.position];
+      var features = Array.isArray(current) ? current : [current];
+      options.layout[placement.position] = [].concat(_toConsumableArray(features.filter(function (item) {
+        return item != null;
+      })), [feature]);
+    }
+  } catch (err) {
+    _iterator.e(err);
+  } finally {
+    _iterator.f();
+  }
+  return true;
+}
+function createTableLayoutSlotFeature(slot, restore) {
+  return function (settings) {
+    settings.api.one('destroy.soaLayoutSlots', restore);
+    return slot;
+  };
+}
+function findTableLayoutSlots(table) {
+  var _table$dataset, _table$ownerDocument$, _table$ownerDocument, _table$ownerDocument$2;
+  var id = table === null || table === void 0 || (_table$dataset = table.dataset) === null || _table$dataset === void 0 ? void 0 : _table$dataset.id;
+  if (!id) return [];
+  var hosts = (_table$ownerDocument$ = (_table$ownerDocument = table.ownerDocument) === null || _table$ownerDocument === void 0 || (_table$ownerDocument$2 = _table$ownerDocument.querySelectorAll) === null || _table$ownerDocument$2 === void 0 ? void 0 : _table$ownerDocument$2.call(_table$ownerDocument, LAYOUT_HOST_SELECTOR)) !== null && _table$ownerDocument$ !== void 0 ? _table$ownerDocument$ : [];
+  return _toConsumableArray(hosts).filter(function (host) {
+    return host.dataset.datatablesId === String(id);
+  }).flatMap(function (host) {
+    var _host$children;
+    return _toConsumableArray((_host$children = host.children) !== null && _host$children !== void 0 ? _host$children : []);
+  }).filter(function (slot) {
+    var _slot$getAttribute;
+    var position = (_slot$getAttribute = slot.getAttribute) === null || _slot$getAttribute === void 0 ? void 0 : _slot$getAttribute.call(slot, LAYOUT_SLOT_ATTRIBUTE);
+    return position !== null && LAYOUT_POSITION_PATTERN.test(position);
+  });
+}
+function isTableLayoutPosition(position) {
+  return typeof position === 'string' && LAYOUT_POSITION_PATTERN.test(position);
+}
+function preservePlacement(document, slot) {
+  var placeholder = document.createComment("SleepingOwl DataTables layout slot: ".concat(slot.getAttribute(LAYOUT_SLOT_ATTRIBUTE)));
+  var parent = slot.parentNode;
+  parent.insertBefore(placeholder, slot);
+  return {
+    placeholder: placeholder,
+    position: slot.getAttribute(LAYOUT_SLOT_ATTRIBUTE),
+    slot: slot
+  };
+}
+function restorePlacements(placements) {
+  var _iterator2 = _createForOfIteratorHelper(placements),
+    _step2;
+  try {
+    for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+      var _placeholder$parentNo;
+      var _step2$value = _step2.value,
+        placeholder = _step2$value.placeholder,
+        slot = _step2$value.slot;
+      (_placeholder$parentNo = placeholder.parentNode) === null || _placeholder$parentNo === void 0 || _placeholder$parentNo.replaceChild(slot, placeholder);
+    }
+  } catch (err) {
+    _iterator2.e(err);
+  } finally {
+    _iterator2.f();
+  }
+}
+function once(callback) {
+  var called = false;
+  return function () {
+    if (called) return;
+    called = true;
+    callback();
+  };
+}
+
+/***/ },
+
 /***/ "./resources/frontend/features/table/lifecycle/data-table-adapter.js"
 /*!***************************************************************************!*\
   !*** ./resources/frontend/features/table/lifecycle/data-table-adapter.js ***!
@@ -10485,11 +10722,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _engine_extensions_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../engine/extensions.js */ "./resources/frontend/features/table/engine/extensions.js");
 /* harmony import */ var _filters_filter_drivers_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../filters/filter-drivers.js */ "./resources/frontend/features/table/filters/filter-drivers.js");
 /* harmony import */ var _filters_date_filter_support_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../filters/date-filter-support.js */ "./resources/frontend/features/table/filters/date-filter-support.js");
-/* harmony import */ var _lifecycle_data_table_adapter_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../lifecycle/data-table-adapter.js */ "./resources/frontend/features/table/lifecycle/data-table-adapter.js");
-/* harmony import */ var _options_table_options_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../options/table-options.js */ "./resources/frontend/features/table/options/table-options.js");
-/* harmony import */ var _pagination_page_jump_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../pagination/page-jump.js */ "./resources/frontend/features/table/pagination/page-jump.js");
-/* harmony import */ var _table_filters_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./table-filters.js */ "./resources/frontend/features/table/runtime/table-filters.js");
-/* harmony import */ var _table_runtime_options_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./table-runtime-options.js */ "./resources/frontend/features/table/runtime/table-runtime-options.js");
+/* harmony import */ var _filters_filter_controls_feature_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../filters/filter-controls-feature.js */ "./resources/frontend/features/table/filters/filter-controls-feature.js");
+/* harmony import */ var _lifecycle_data_table_adapter_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../lifecycle/data-table-adapter.js */ "./resources/frontend/features/table/lifecycle/data-table-adapter.js");
+/* harmony import */ var _options_table_options_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../options/table-options.js */ "./resources/frontend/features/table/options/table-options.js");
+/* harmony import */ var _pagination_page_jump_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../pagination/page-jump.js */ "./resources/frontend/features/table/pagination/page-jump.js");
+/* harmony import */ var _table_filters_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./table-filters.js */ "./resources/frontend/features/table/runtime/table-filters.js");
+/* harmony import */ var _table_runtime_options_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./table-runtime-options.js */ "./resources/frontend/features/table/runtime/table-runtime-options.js");
+
 
 
 
@@ -10506,7 +10745,7 @@ var DATA_TABLE_SELECTOR = '.datatables';
 function installDataTables(admin, options) {
   var settings = normalizeOptions(admin, options);
   var drivers = createFilterDrivers(settings);
-  var filters = (0,_table_filters_js__WEBPACK_IMPORTED_MODULE_9__.createTableFilters)({
+  var filters = (0,_table_filters_js__WEBPACK_IMPORTED_MODULE_10__.createTableFilters)({
     drivers: drivers,
     path: admin.Url.url_path,
     root: settings.root,
@@ -10521,8 +10760,9 @@ function installDataTables(admin, options) {
   (0,_engine_extensions_js__WEBPACK_IMPORTED_MODULE_3__.installDataTableExtensions)(settings.engine, {
     onError: settings.onError
   });
+  (0,_filters_filter_controls_feature_js__WEBPACK_IMPORTED_MODULE_6__.installFilterControlsFeature)(settings.engine);
   if (settings.pageJump.enabled) {
-    (0,_pagination_page_jump_js__WEBPACK_IMPORTED_MODULE_8__.installPageJumpFeature)(settings.engine, {
+    (0,_pagination_page_jump_js__WEBPACK_IMPORTED_MODULE_9__.installPageJumpFeature)(settings.engine, {
       labels: settings.pageJump.labels
     });
   }
@@ -10554,11 +10794,11 @@ function scanTables(settings, filters, root) {
 }
 function mountTableElement(element, settings, filters) {
   if (settings.admin.Tables.has(element)) return _core_lifecycle_component_lifecycle_js__WEBPACK_IMPORTED_MODULE_0__.componentMountSkipped;
-  var definition = (0,_options_table_options_js__WEBPACK_IMPORTED_MODULE_7__.readTableDefinition)(element);
+  var definition = (0,_options_table_options_js__WEBPACK_IMPORTED_MODULE_8__.readTableDefinition)(element);
   var filterContext = filters.context(definition.id);
   filters.restore(filterContext);
-  var options = (0,_table_runtime_options_js__WEBPACK_IMPORTED_MODULE_10__.createRuntimeTableOptions)(element, definition, settings);
-  var adapter = (0,_lifecycle_data_table_adapter_js__WEBPACK_IMPORTED_MODULE_6__.mountDataTable)({
+  var options = (0,_table_runtime_options_js__WEBPACK_IMPORTED_MODULE_11__.createRuntimeTableOptions)(element, definition, settings);
+  var adapter = (0,_lifecycle_data_table_adapter_js__WEBPACK_IMPORTED_MODULE_7__.mountDataTable)({
     createEngine: settings.createEngine,
     element: element,
     options: options,
@@ -10680,14 +10920,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   createTableFilters: () => (/* binding */ createTableFilters)
 /* harmony export */ });
 /* harmony import */ var _filters_filter_controls_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../filters/filter-controls.js */ "./resources/frontend/features/table/filters/filter-controls.js");
-/* harmony import */ var _filters_filter_elements_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../filters/filter-elements.js */ "./resources/frontend/features/table/filters/filter-elements.js");
-/* harmony import */ var _state_filter_state_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../state/filter-state.js */ "./resources/frontend/features/table/state/filter-state.js");
+/* harmony import */ var _filters_filter_controls_feature_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../filters/filter-controls-feature.js */ "./resources/frontend/features/table/filters/filter-controls-feature.js");
+/* harmony import */ var _filters_filter_elements_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../filters/filter-elements.js */ "./resources/frontend/features/table/filters/filter-elements.js");
+/* harmony import */ var _state_filter_state_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../state/filter-state.js */ "./resources/frontend/features/table/state/filter-state.js");
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
 function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
 function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+
 
 
 
@@ -10711,25 +10953,29 @@ function createTableFilters(options) {
 }
 function prepareFilterState(settings) {
   if (!settings.stateFilters) return;
-  (0,_state_filter_state_js__WEBPACK_IMPORTED_MODULE_2__.migrateLegacyFilterState)(settings.storage, settings.path, allFilterContainers(settings.root));
+  (0,_state_filter_state_js__WEBPACK_IMPORTED_MODULE_3__.migrateLegacyFilterState)(settings.storage, settings.path, allFilterContainers(settings.root));
 }
 function createFilterContext(settings, id) {
   var filterContainers = matchingContainers(settings.root, id);
+  var filterControlRoots = filterContainers.map(_filters_filter_controls_feature_js__WEBPACK_IMPORTED_MODULE_1__.findFilterControlRoot);
   (0,_filters_filter_controls_js__WEBPACK_IMPORTED_MODULE_0__.assignFilterControlIds)(filterContainers, id);
   return {
+    filterControlRoots: filterControlRoots,
     filterContainers: filterContainers,
     stateFilters: settings.stateFilters,
-    stateKey: (0,_state_filter_state_js__WEBPACK_IMPORTED_MODULE_2__.filterStateKey)(settings.path, id)
+    stateKey: (0,_state_filter_state_js__WEBPACK_IMPORTED_MODULE_3__.filterStateKey)(settings.path, id)
   };
 }
 function restoreFilterState(settings, context) {
   if (!context.stateFilters) return;
-  (0,_state_filter_state_js__WEBPACK_IMPORTED_MODULE_2__.loadFilterState)(settings.storage, context.stateKey, context.filterContainers);
+  (0,_state_filter_state_js__WEBPACK_IMPORTED_MODULE_3__.loadFilterState)(settings.storage, context.stateKey, context.filterContainers);
 }
 function bindTableFilters(settings, definition, adapter, serverSide, context) {
   bindColumnFilters(settings, definition.id, adapter.engineInstance, serverSide);
-  context.filterContainers.forEach(function (container) {
+  context.filterContainers.forEach(function (container, index) {
+    var _context$filterContro;
     (0,_filters_filter_controls_js__WEBPACK_IMPORTED_MODULE_0__.bindFilterControls)(container, {
+      actionRoot: (_context$filterContro = context.filterControlRoots[index]) !== null && _context$filterContro !== void 0 ? _context$filterContro : container,
       clear: function clear() {
         return clearFilters(settings, adapter, context);
       },
@@ -10743,7 +10989,7 @@ function bindTableFilters(settings, definition, adapter, serverSide, context) {
   });
 }
 function bindColumnFilters(settings, id, table, serverSide) {
-  (0,_filters_filter_elements_js__WEBPACK_IMPORTED_MODULE_1__.forEachColumnFilter)(settings.root, id, function (filter, index, type) {
+  (0,_filters_filter_elements_js__WEBPACK_IMPORTED_MODULE_2__.forEachColumnFilter)(settings.root, id, function (filter, index, type) {
     var driver = settings.drivers[type];
     if (typeof driver === 'function') {
       driver(filter, table, table.column(index), index, serverSide);
@@ -10752,14 +10998,14 @@ function bindColumnFilters(settings, id, table, serverSide) {
 }
 function executeFilters(settings, adapter, context) {
   if (context.stateFilters) {
-    (0,_state_filter_state_js__WEBPACK_IMPORTED_MODULE_2__.saveFilterState)(settings.storage, context.stateKey, context.filterContainers);
+    (0,_state_filter_state_js__WEBPACK_IMPORTED_MODULE_3__.saveFilterState)(settings.storage, context.stateKey, context.filterContainers);
   }
   adapter.reload();
 }
 function clearFilters(settings, adapter, context) {
   (0,_filters_filter_controls_js__WEBPACK_IMPORTED_MODULE_0__.clearFilterControls)(context.filterContainers);
   adapter.clearState();
-  (0,_state_filter_state_js__WEBPACK_IMPORTED_MODULE_2__.clearFilterState)(settings.storage, context.stateKey);
+  (0,_state_filter_state_js__WEBPACK_IMPORTED_MODULE_3__.clearFilterState)(settings.storage, context.stateKey);
   adapter.reload();
 }
 function matchingContainers(root, id) {
@@ -10798,11 +11044,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _transport_table_ajax_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../transport/table-ajax.js */ "./resources/frontend/features/table/transport/table-ajax.js");
 /* harmony import */ var _autoupdate_table_auto_update_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../autoupdate/table-auto-update.js */ "./resources/frontend/features/table/autoupdate/table-auto-update.js");
-/* harmony import */ var _hooks_column_highlight_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../hooks/column-highlight.js */ "./resources/frontend/features/table/hooks/column-highlight.js");
-/* harmony import */ var _hooks_lazy_images_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../hooks/lazy-images.js */ "./resources/frontend/features/table/hooks/lazy-images.js");
-/* harmony import */ var _hooks_table_hooks_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../hooks/table-hooks.js */ "./resources/frontend/features/table/hooks/table-hooks.js");
-/* harmony import */ var _options_table_options_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../options/table-options.js */ "./resources/frontend/features/table/options/table-options.js");
-/* harmony import */ var _options_state_options_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../options/state-options.js */ "./resources/frontend/features/table/options/state-options.js");
+/* harmony import */ var _filters_filter_controls_feature_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../filters/filter-controls-feature.js */ "./resources/frontend/features/table/filters/filter-controls-feature.js");
+/* harmony import */ var _hooks_column_highlight_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../hooks/column-highlight.js */ "./resources/frontend/features/table/hooks/column-highlight.js");
+/* harmony import */ var _hooks_lazy_images_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../hooks/lazy-images.js */ "./resources/frontend/features/table/hooks/lazy-images.js");
+/* harmony import */ var _hooks_table_hooks_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../hooks/table-hooks.js */ "./resources/frontend/features/table/hooks/table-hooks.js");
+/* harmony import */ var _layout_table_layout_slots_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../layout/table-layout-slots.js */ "./resources/frontend/features/table/layout/table-layout-slots.js");
+/* harmony import */ var _options_table_options_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../options/table-options.js */ "./resources/frontend/features/table/options/table-options.js");
+/* harmony import */ var _options_state_options_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../options/state-options.js */ "./resources/frontend/features/table/options/state-options.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
@@ -10816,18 +11064,22 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
 
 
 
+
+
 function createRuntimeTableOptions(element, definition, settings) {
-  var options = (0,_options_table_options_js__WEBPACK_IMPORTED_MODULE_5__.applyServerOptions)(definition.options, _objectSpread(_objectSpread({}, definition), {}, {
+  var options = (0,_options_table_options_js__WEBPACK_IMPORTED_MODULE_7__.applyServerOptions)(definition.options, _objectSpread(_objectSpread({}, definition), {}, {
     pageJump: settings.pageJump.enabled
   }));
   (0,_autoupdate_table_auto_update_js__WEBPACK_IMPORTED_MODULE_1__.configureTableAutoUpdate)(element, options);
+  (0,_filters_filter_controls_feature_js__WEBPACK_IMPORTED_MODULE_2__.configureFilterControls)(element, options);
+  (0,_layout_table_layout_slots_js__WEBPACK_IMPORTED_MODULE_6__.configureTableLayoutSlots)(element, options);
   if (definition.url) configureServerTable(options, definition, settings);
-  (0,_options_state_options_js__WEBPACK_IMPORTED_MODULE_6__.applyTableStateOptions)(options, {
+  (0,_options_state_options_js__WEBPACK_IMPORTED_MODULE_8__.applyTableStateOptions)(options, {
     stateDatatables: Boolean(definition.url && settings.admin.Config.get('datatables_settings.state_datatables')),
     stateFilters: !definition.url || settings.stateFilters
   });
   options.drawCallback = createRuntimeDrawHook(element, settings);
-  options.createdRow = _hooks_table_hooks_js__WEBPACK_IMPORTED_MODULE_4__.applyCreatedRowClass;
+  options.createdRow = _hooks_table_hooks_js__WEBPACK_IMPORTED_MODULE_5__.applyCreatedRowClass;
   return options;
 }
 function configureServerTable(options, definition, settings) {
@@ -10841,16 +11093,16 @@ function configureServerTable(options, definition, settings) {
   });
 }
 function createRuntimeDrawHook(element, settings) {
-  return (0,_hooks_table_hooks_js__WEBPACK_IMPORTED_MODULE_4__.createDrawHook)({
+  return (0,_hooks_table_hooks_js__WEBPACK_IMPORTED_MODULE_5__.createDrawHook)({
     events: settings.admin.Events,
     highlight: function highlight(engineContext) {
-      return (0,_hooks_column_highlight_js__WEBPACK_IMPORTED_MODULE_2__.syncColumnHighlight)(element, engineContext.api(), Boolean(settings.admin.Config.get('datatables_settings.datatables_highlight')));
+      return (0,_hooks_column_highlight_js__WEBPACK_IMPORTED_MODULE_3__.syncColumnHighlight)(element, engineContext.api(), Boolean(settings.admin.Config.get('datatables_settings.datatables_highlight')));
     },
     inlineEditor: function inlineEditor() {
       return settings.inlineEditor.scan(element);
     },
     lazyload: function lazyload() {
-      return (0,_hooks_lazy_images_js__WEBPACK_IMPORTED_MODULE_3__.loadLazyImages)(element);
+      return (0,_hooks_lazy_images_js__WEBPACK_IMPORTED_MODULE_4__.loadLazyImages)(element);
     },
     tooltips: function tooltips() {
       return settings.tooltips(element);

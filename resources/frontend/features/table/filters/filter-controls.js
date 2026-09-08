@@ -1,8 +1,8 @@
-export function bindFilterControls(container, { clear, execute, reload }) {
+export function bindFilterControls(container, { actionRoot = container, clear, execute, reload }) {
     assertCallbacks(clear, execute, reload)
 
-    bindClick(container, '#filters-exec', execute)
-    bindClick(container, '#filters-cancel', clear)
+    bindClick(actionRoot, '#filters-exec', execute)
+    bindClick(actionRoot, '#filters-cancel', clear)
 
     for (const input of container.querySelectorAll('[data-index] input')) {
         input.addEventListener('keyup', (event) => {

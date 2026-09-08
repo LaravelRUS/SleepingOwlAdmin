@@ -1,8 +1,10 @@
 import { createTableAjax } from '../transport/table-ajax.js'
 import { configureTableAutoUpdate } from '../autoupdate/table-auto-update.js'
+import { configureFilterControls } from '../filters/filter-controls-feature.js'
 import { syncColumnHighlight } from '../hooks/column-highlight.js'
 import { loadLazyImages } from '../hooks/lazy-images.js'
 import { applyCreatedRowClass, createDrawHook } from '../hooks/table-hooks.js'
+import { configureTableLayoutSlots } from '../layout/table-layout-slots.js'
 import { applyServerOptions } from '../options/table-options.js'
 import { applyTableStateOptions } from '../options/state-options.js'
 
@@ -13,6 +15,8 @@ export function createRuntimeTableOptions(element, definition, settings) {
     })
 
     configureTableAutoUpdate(element, options)
+    configureFilterControls(element, options)
+    configureTableLayoutSlots(element, options)
 
     if (definition.url) configureServerTable(options, definition, settings)
 
