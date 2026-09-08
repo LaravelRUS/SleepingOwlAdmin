@@ -864,7 +864,7 @@ function mountDateControl(input, Datepicker, locale) {
 }
 function findAddon(input) {
   var _input$closest;
-  return (_input$closest = input.closest('.input-date')) === null || _input$closest === void 0 ? void 0 : _input$closest.querySelector('.input-group-addon, .input-group-prepend');
+  return (_input$closest = input.closest('.input-date')) === null || _input$closest === void 0 ? void 0 : _input$closest.querySelector('.input-group-text, .input-group-addon, .input-group-prepend');
 }
 
 /***/ }),

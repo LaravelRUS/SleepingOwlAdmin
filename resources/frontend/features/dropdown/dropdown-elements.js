@@ -1,4 +1,4 @@
-export const DROPDOWN_TOGGLE_SELECTOR = '[data-toggle="dropdown"]'
+export const DROPDOWN_TOGGLE_SELECTOR = '[data-bs-toggle="dropdown"], [data-toggle="dropdown"]'
 export const DROPDOWN_CONTAINER_SELECTOR = '.dropdown, .btn-group, .nav-item'
 export const DROPDOWN_MENU_SELECTOR = '.dropdown-menu'
 export const DROPDOWN_ITEM_SELECTOR = '.dropdown-item, [role="menuitem"], a[href], button'

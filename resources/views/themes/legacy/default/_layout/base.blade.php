@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 @php($colorScheme = ($_COOKIE['theme-mode'] ?? 'light') === 'dark' ? 'dark' : 'light')
-<html lang="{{ app()->getLocale() }}" data-color-scheme="{{ $colorScheme }}">
+<html lang="{{ app()->getLocale() }}" data-bs-theme="{{ $colorScheme }}" data-color-scheme="{{ $colorScheme }}">
 <head>
 	{!! $template->renderMeta($title) !!}
 	@include('sleeping_owl::shared.theme.runtime_properties')
@@ -8,15 +8,9 @@
 		<link rel="icon" href="{{ $favicon }}">
 	@endif
 
-	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-		<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
 	@stack('scripts')
 </head>
-<body class="{{ config('sleeping_owl.body_default_class', 'sidebar-mini sidebar-open') . (@$_COOKIE['sidebar-state'] == 'sidebar-collapse' ? ' sidebar-collapse' : '') . ($colorScheme === 'dark' ? ' dark-mode' : '') }}">
+<body class="{{ config('sleeping_owl.body_default_class', 'sidebar-mini sidebar-open') . (@$_COOKIE['sidebar-state'] == 'sidebar-collapse' ? ' sidebar-collapse' : '') }}">
 	@yield('content')
 	@include(AdminTemplate::getViewPath('_partials.tooltip'))
 	@include(AdminTemplate::getViewPath('helper.scrolltotop'))

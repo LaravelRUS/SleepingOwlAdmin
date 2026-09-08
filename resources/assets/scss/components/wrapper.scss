@@ -1,12 +1,12 @@
-.wrapper {
+.app-wrapper {
     min-height: 100vh;
 
-    .content-wrapper {
+    .app-main {
         min-height: calc(100vh - 57px);
         /* Fix for horizontal scroll */
         max-width: 99.9%;
 
-        .content.body {
+        .app-content.body {
             padding-bottom: 1em;
         }
     }

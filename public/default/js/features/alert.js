@@ -92,7 +92,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "isAlertDismissDisabled": () => (/* binding */ isAlertDismissDisabled)
 /* harmony export */ });
 var ALERT_SELECTOR = '.alert';
-var ALERT_DISMISS_SELECTOR = '[data-dismiss="alert"]';
+var ALERT_DISMISS_SELECTOR = '[data-bs-dismiss="alert"], [data-dismiss="alert"]';
 function findAlert(root, element) {
   var _ref, _directAlert;
   var target = (_ref = (_directAlert = directAlert(element)) !== null && _directAlert !== void 0 ? _directAlert : targetedAlert(element)) !== null && _ref !== void 0 ? _ref : closestAlert(element);
@@ -249,7 +249,7 @@ __webpack_require__.r(__webpack_exports__);
 function mountAlerts(root) {
   assertRoot(root);
   var pending = new Map();
-  var unbind = (0,_core_dom_listeners_js__WEBPACK_IMPORTED_MODULE_0__.delegate)(root, 'click', '[data-dismiss="alert"]', function (event, trigger) {
+  var unbind = (0,_core_dom_listeners_js__WEBPACK_IMPORTED_MODULE_0__.delegate)(root, 'click', _alert_elements_js__WEBPACK_IMPORTED_MODULE_1__.ALERT_DISMISS_SELECTOR, function (event, trigger) {
     if ((0,_alert_elements_js__WEBPACK_IMPORTED_MODULE_1__.isAlertDismissDisabled)(trigger)) return;
     event.preventDefault();
     closeAlert(root, pending, trigger);

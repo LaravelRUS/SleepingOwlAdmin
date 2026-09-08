@@ -51,16 +51,16 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Sidebar default condition class "sidebar-collapse", "sidebar-open"
+    | AdminLTE 4 body layout classes. The key remains customizable.
     |--------------------------------------------------------------------------
     | Sidebar mini show  'sidebar-mini' - 1024px , "sidebar-mini-md" - 768px,
     | "sidebar-mini-xs" - always
     |--------------------------------------------------------------------------
     | Font sizes "text-sm"
     |--------------------------------------------------------------------------
-    | See https://adminlte.io/themes/v3/# - right top corner "Customize AdminLTE"
+    | See https://adminlte.io/themes/v4/docs/layout.html
     */
-    'body_default_class' => 'hold-transition sidebar-mini sidebar-open',
+    'body_default_class' => 'layout-fixed sidebar-expand-lg sidebar-mini sidebar-open bg-body-tertiary',
 
     /*
     |--------------------------------------------------------------------------

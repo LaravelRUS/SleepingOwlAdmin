@@ -19,7 +19,7 @@
     $relatedProps = array_replace([
         'classes' => [
             'actions' => 'd-block clearfix',
-            'add' => 'grouped-elements__action pull-right related-action_add btn btn-success btn-sm',
+            'add' => 'grouped-elements__action float-end related-action_add btn btn-success btn-sm',
             'addIcon' => 'fas fa-plus',
             'groups' => 'related-elements__draggable',
             'root' => 'grouped-elements clearfix',

@@ -1,4 +1,4 @@
-.dark-mode {
+[data-bs-theme='dark'] {
     .form-control:focus {
         background-color: inherit;
         box-shadow: none;
@@ -369,6 +369,8 @@ a.form-element-files__image {
     }
 }
 
+.input-group-text .fa-calendar,
+.input-group-text .fa-clock,
 .input-group-addon .fa-calendar,
 .input-group-addon .fa-clock-o {
     cursor: pointer;

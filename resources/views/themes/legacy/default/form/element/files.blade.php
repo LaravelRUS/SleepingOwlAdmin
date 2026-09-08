@@ -37,6 +37,7 @@
                                 <input type="text" class="form-control form-control-sm mb-2 tit{{ $show_title ? '' : ' hidden' }}"
                                        data-id="title"
                                        data-toggle="tooltip"
+                                       data-bs-toggle="tooltip"
                                        data-original-title="{{ trans('sleeping_owl::lang.seo.title') }}"
                                        placeholder="{{ trans('sleeping_owl::lang.seo.title') }}"{{ $title_required ? ' required' : '' }}
                                 />
@@ -45,6 +46,7 @@
                                           data-id="description"
                                           rows="3"
                                           data-toggle="tooltip"
+                                          data-bs-toggle="tooltip"
                                           data-original-title="{{ trans('sleeping_owl::lang.seo.description') }}"
                                           placeholder="{{ trans('sleeping_owl::lang.seo.description') }}"{{ $description_required ? ' required' : '' }}
                             ></textarea>
@@ -55,17 +57,17 @@
                                        data-id="original_name"
                                        value="[%=orig%]" />
 
-                                <div class="file-buttons mt-1 text-left">
+                                <div class="file-buttons mt-1 text-start">
                                     <button class="btn btn-danger btn-delete btn-xs fileRemove" title="{{ trans('sleeping_owl::lang.button.remove') }}">
                                         <i class="fas fa-fw fa-times"></i>
                                     </button>
 
                                     @if (isset($draggable) && $draggable)
-                                        <a class="btn btn-clear btn-sm pull-right drag-cursor drag-handle">
+                                        <a class="btn btn-clear btn-sm float-end drag-cursor drag-handle">
                                             <i class="fas fa-fw fa-arrows-alt"></i>
                                         </a>
                                     @endif
-                                    <a href="[%=url%]" download class="btn btn-default btn-sm pull-right mr-1" title="{{ trans('sleeping_owl::lang.button.download') }}">
+                                    <a href="[%=url%]" download class="btn btn-light btn-sm float-end me-1" title="{{ trans('sleeping_owl::lang.button.download') }}">
                                         <i class="fas fa-fw fa-cloud-download-alt"></i>
                                     </a>
                                 </div>
@@ -110,6 +112,7 @@
                                        class="form-control form-control-sm mb-2 tit{{ $show_title ? '' : ' hidden' }}"
                                        data-id="title"
                                        data-toggle="tooltip"
+                                       data-bs-toggle="tooltip"
                                        data-original-title="{{ trans('sleeping_owl::lang.seo.title') }}"
                                        placeholder="{{ trans('sleeping_owl::lang.seo.title') }}{{ $title_required ? ' *' : '' }}"
                                        value="{{ @$item['title'] }}"{{ $title_required ? ' required' : '' }} />
@@ -120,6 +123,7 @@
                                         rows="3"
                                         {{ $readonly ? 'disabled' : '' }}
                                         data-toggle="tooltip"
+                                        data-bs-toggle="tooltip"
                                         data-original-title="{{ trans('sleeping_owl::lang.seo.description') }}"
                                         placeholder="{{ trans('sleeping_owl::lang.seo.description') }}{{ $description_required ? ' *' : '' }}"
                                     {{ $description_required ? ' required' : '' }}>{{ @$item['desc'] }}</textarea>
@@ -130,19 +134,19 @@
                                        data-id="original_name"
                                        value="{{ @$item['orig'] }}" />
 
-                                <div class="file-buttons mt-1{{ $readonly ? ' text-right' : ' text-left' }}">
+                                <div class="file-buttons mt-1{{ $readonly ? ' text-end' : ' text-start' }}">
                                     @if (!$readonly)
                                         <button class="btn btn-danger btn-delete btn-xs fileRemove" title="{{ trans('sleeping_owl::lang.button.remove') }}">
                                             <i class="fas fa-fw fa-times"></i>
                                         </button>
 
                                         @if (isset($draggable) && $draggable)
-                                            <a class="btn btn-clear btn-sm pull-right drag-cursor drag-handle">
+                                            <a class="btn btn-clear btn-sm float-end drag-cursor drag-handle">
                                                 <i class="fas fa-fw fa-arrows-alt"></i>
                                             </a>
                                         @endif
                                     @endif
-                                    <a href="{{ @asset($item['url']) }}" download class="btn btn-default btn-sm mr-1{{ $readonly ? '' : ' pull-right' }}" title="{{ trans('sleeping_owl::lang.button.download') }}">
+                                    <a href="{{ @asset($item['url']) }}" download class="btn btn-light btn-sm me-1{{ $readonly ? '' : ' float-end' }}" title="{{ trans('sleeping_owl::lang.button.download') }}">
                                         <i class="fas fa-fw fa-cloud-download-alt"></i>
                                     </a>
                                 </div>

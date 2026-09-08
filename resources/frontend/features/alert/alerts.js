@@ -1,12 +1,12 @@
 import { delegate } from '../../core/dom/listeners.js'
-import { findAlert, isAlertDismissDisabled } from './alert-elements.js'
+import { ALERT_DISMISS_SELECTOR, findAlert, isAlertDismissDisabled } from './alert-elements.js'
 import { notifyAlertClosed, permitAlertClose } from './alert-events.js'
 import { waitForAlertTransition } from './alert-transition.js'
 
 export function mountAlerts(root) {
     assertRoot(root)
     const pending = new Map()
-    const unbind = delegate(root, 'click', '[data-dismiss="alert"]', (event, trigger) => {
+    const unbind = delegate(root, 'click', ALERT_DISMISS_SELECTOR, (event, trigger) => {
         if (isAlertDismissDisabled(trigger)) return
         event.preventDefault()
         closeAlert(root, pending, trigger)

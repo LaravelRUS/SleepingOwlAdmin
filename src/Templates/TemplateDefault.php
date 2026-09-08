@@ -13,7 +13,7 @@ class TemplateDefault extends Template
      */
     public function name()
     {
-        return 'AdminLTE 3 (BS4)';
+        return 'AdminLTE 4 (BS5)';
     }
 
     /**
@@ -23,7 +23,7 @@ class TemplateDefault extends Template
      */
     public function version()
     {
-        return '3.0.1';
+        return '4.9.1';
     }
 
     /**

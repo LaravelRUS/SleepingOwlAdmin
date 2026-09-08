@@ -46,6 +46,7 @@
         inset-block: auto calc(100% + var(--soa-dropdown-offset));
     }
 
+    .dropdown-menu-start,
     .dropdown-menu-left {
         inset-inline: 0 auto;
     }

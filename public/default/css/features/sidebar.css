@@ -9,10 +9,10 @@
   .nav-treeview[hidden] {
     display: none !important;
   }
-  .main-sidebar,
-  .content-wrapper,
-  .main-header,
-  .main-footer {
+  .app-sidebar,
+  .app-main,
+  .app-header,
+  .app-footer {
     transition-duration: var(--soa-sidebar-transition-duration);
     transition-property: margin, transform, width;
   }

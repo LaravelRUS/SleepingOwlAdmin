@@ -43,5 +43,7 @@ export function mountDateControl(input, Datepicker, locale) {
 }
 
 function findAddon(input) {
-    return input.closest('.input-date')?.querySelector('.input-group-addon, .input-group-prepend')
+    return input
+        .closest('.input-date')
+        ?.querySelector('.input-group-text, .input-group-addon, .input-group-prepend')
 }

@@ -1,5 +1,5 @@
 export const ALERT_SELECTOR = '.alert'
-export const ALERT_DISMISS_SELECTOR = '[data-dismiss="alert"]'
+export const ALERT_DISMISS_SELECTOR = '[data-bs-dismiss="alert"], [data-dismiss="alert"]'
 
 export function findAlert(root, element) {
     const target = directAlert(element) ?? targetedAlert(element) ?? closestAlert(element)

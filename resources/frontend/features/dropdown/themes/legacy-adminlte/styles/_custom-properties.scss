@@ -24,7 +24,7 @@
     }
 
     :root[data-color-scheme='dark'],
-    .dark-mode {
+    [data-bs-theme='dark'] {
         --soa-dropdown-surface: #{colors.$dark-surface};
         --soa-dropdown-text: #{colors.$dark-text};
         --soa-dropdown-border: #{colors.$dark-border};

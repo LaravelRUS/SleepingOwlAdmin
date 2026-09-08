@@ -1,35 +1,35 @@
 @use 'variables';
 
 @mixin styles {
-  .main-sidebar {
+  .app-sidebar {
     background: var(--soa-sidebar-bg);
     color: var(--soa-sidebar-text-color);
     width: var(--soa-sidebar-width);
     z-index: var(--soa-sidebar-z-index);
   }
 
-  .nav-sidebar .nav-link {
+  .sidebar-menu .nav-link {
     color: var(--soa-sidebar-text-color);
   }
 
-  .nav-sidebar .nav-link:hover {
+  .sidebar-menu .nav-link:hover {
     background: var(--soa-sidebar-link-hover-bg);
   }
 
-  .nav-sidebar .nav-link.active {
+  .sidebar-menu .nav-link.active {
     background: var(--soa-sidebar-link-active-bg);
     color: var(--soa-sidebar-link-active-text);
   }
 
-  .nav-sidebar > .nav-item > .nav-treeview {
+  .sidebar-menu > .nav-item > .nav-treeview {
     background: var(--soa-sidebar-submenu-bg);
   }
 
-  .menu-open > .nav-link .right {
+  .menu-open > .nav-link .nav-arrow {
     transform: rotate(var(--soa-sidebar-indicator-angle));
   }
 
-  .sidebar-collapse .main-sidebar {
+  .sidebar-collapse .app-sidebar {
     width: var(--soa-sidebar-collapsed-width);
   }
 
@@ -42,8 +42,8 @@
   }
 
   @media (max-width: variables.$mobile-breakpoint) {
-    .sidebar-closed .main-sidebar,
-    .sidebar-collapse:not(.sidebar-open) .main-sidebar {
+    .sidebar-closed .app-sidebar,
+    .sidebar-collapse:not(.sidebar-open) .app-sidebar {
       transform: translateX(-100%);
     }
 

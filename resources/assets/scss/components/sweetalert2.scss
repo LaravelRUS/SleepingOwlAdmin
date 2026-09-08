@@ -1,4 +1,4 @@
-.dark-mode {
+[data-bs-theme='dark'] {
     .swal2-popup {
         background: $dark-bg-color;
         color: inherit;

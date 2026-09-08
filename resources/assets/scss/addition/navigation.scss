@@ -1,9 +1,9 @@
-[class*='sidebar-dark-'] .nav-sidebar > .nav-item > .nav-treeview {
+.app-sidebar .sidebar-menu > .nav-item > .nav-treeview {
   background-color: rgba($white, 0.03);
   padding-left: 1rem;
 }
 
-.nav-sidebar {
+.sidebar-menu {
   &:hover {
     overflow: hidden;
   }

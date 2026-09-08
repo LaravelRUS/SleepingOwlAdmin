@@ -1,4 +1,4 @@
-export const TAB_SELECTOR = '[data-tab], [data-toggle="tab"]'
+export const TAB_SELECTOR = '[data-tab], [data-bs-toggle="tab"], [data-toggle="tab"]'
 export const TAB_LIST_SELECTOR = '[data-tablist], [role="tablist"]'
 
 export function findTab(root, target) {

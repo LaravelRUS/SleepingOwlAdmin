@@ -18,7 +18,7 @@
             >
 
             @if($canGenerate && !$readonly)
-                <div class="control-button {{ isset($datalistOptions) && $datalistOptions ? 'pr-4' : '' }}">
+                <div class="control-button {{ isset($datalistOptions) && $datalistOptions ? 'pe-4' : '' }}">
                     <span class="btn btn-sm text-muted generate">
                         <i class="fa-solid fa-plus"></i>
                     </span>

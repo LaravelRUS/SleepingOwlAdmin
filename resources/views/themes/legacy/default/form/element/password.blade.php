@@ -8,7 +8,7 @@
             @endif
         </label>
         <div class="password-field">
-            <input v-pre {!! (new \SleepingOwl\Admin\Support\HtmlAttributeBag($attributesArray))->class(['form-control', 'pr-5']) !!}
+            <input v-pre {!! (new \SleepingOwl\Admin\Support\HtmlAttributeBag($attributesArray))->class(['form-control', 'pe-5']) !!}
             value="{{$value}}"
                    @if($readonly) readonly @endif
                    autocomplete="off"

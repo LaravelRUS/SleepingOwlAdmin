@@ -20,7 +20,7 @@
                                     {!! $errors->first('password', '<label for="password" class="control-label">:message</label>') !!}
                                     <input type="password" name="password" id="password" class="form-control" placeholder="{{ trans('sleeping_owl::lang.auth.password') }}" />
                                 </div>
-                                <input type="submit" value="{{ trans('sleeping_owl::lang.auth.login') }}" class="btn btn-lg btn-success btn-block" />
+                                <input type="submit" value="{{ trans('sleeping_owl::lang.auth.login') }}" class="btn btn-lg btn-success w-100" />
                             </fieldset>
                         </form>
                     </div>

@@ -18,7 +18,7 @@
         @if (!$readonly)
           <div class="grouped-element__footer form-group clearfix">
             @if (isset($draggable) && $draggable)
-              <a class="btn btn-clear btn-sm pull-left mr-1 drag-cursor drag-handle">
+              <a class="btn btn-clear btn-sm float-start me-1 drag-cursor drag-handle">
                 <i class="fas fa-fw fa-arrows-alt" aria-hidden="true"></i>
               </a>
             @endif
@@ -29,7 +29,8 @@
                 data-related-remove
                 data-original-text="{{ trans('sleeping_owl::lang.button.remove') }}"
                 data-toggle="tooltip"
-                class="btn btn-warning pull-right btn-sm grouped-element__delete"
+                data-bs-toggle="tooltip"
+                class="btn btn-warning float-end btn-sm grouped-element__delete"
               >
                 <i class="fas fa-trash" aria-hidden="true"></i>
                 {{ trans('sleeping_owl::lang.button.remove') }}

@@ -1,4 +1,4 @@
-<div class="panel-table card-body pt-0 pl-0 pr-0">
+<div class="panel-table card-body pt-0 ps-0 pe-0">
 
     @php
         $tableAttributes = new \SleepingOwl\Admin\Support\HtmlAttributeBag($attributesArray ?? []);

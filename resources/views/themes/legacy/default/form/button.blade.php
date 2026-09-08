@@ -20,7 +20,7 @@
 @endif
 @if($groupElements)
     <div class="btn-group">
-        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false">
         </button>
         <div class="dropdown-menu btn-actions">

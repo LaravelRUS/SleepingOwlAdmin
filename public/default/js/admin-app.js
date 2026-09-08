@@ -2888,11 +2888,11 @@ Admin.Modules.register('display.theme', function () {
   var setColorMode = function setColorMode(mode) {
     mode = mode === 'dark' ? 'dark' : 'light';
     if (mode === 'dark') {
-      document.body.classList.add('dark-mode');
+      document.documentElement.dataset.bsTheme = 'dark';
       document.documentElement.dataset.colorScheme = 'dark';
       theme_icon.className = 'fa-regular fa-lightbulb';
     } else {
-      document.body.classList.remove('dark-mode');
+      document.documentElement.dataset.bsTheme = 'light';
       document.documentElement.dataset.colorScheme = 'light';
       theme_icon.className = 'fa-solid fa-moon';
     }
@@ -5598,7 +5598,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "isAlertDismissDisabled": () => (/* binding */ isAlertDismissDisabled)
 /* harmony export */ });
 var ALERT_SELECTOR = '.alert';
-var ALERT_DISMISS_SELECTOR = '[data-dismiss="alert"]';
+var ALERT_DISMISS_SELECTOR = '[data-bs-dismiss="alert"], [data-dismiss="alert"]';
 function findAlert(root, element) {
   var _ref, _directAlert;
   var target = (_ref = (_directAlert = directAlert(element)) !== null && _directAlert !== void 0 ? _directAlert : targetedAlert(element)) !== null && _ref !== void 0 ? _ref : closestAlert(element);
@@ -5758,7 +5758,7 @@ __webpack_require__.r(__webpack_exports__);
 function mountAlerts(root) {
   assertRoot(root);
   var pending = new Map();
-  var unbind = (0,_core_dom_listeners_js__WEBPACK_IMPORTED_MODULE_0__.delegate)(root, 'click', '[data-dismiss="alert"]', function (event, trigger) {
+  var unbind = (0,_core_dom_listeners_js__WEBPACK_IMPORTED_MODULE_0__.delegate)(root, 'click', _alert_elements_js__WEBPACK_IMPORTED_MODULE_1__.ALERT_DISMISS_SELECTOR, function (event, trigger) {
     if ((0,_alert_elements_js__WEBPACK_IMPORTED_MODULE_1__.isAlertDismissDisabled)(trigger)) return;
     event.preventDefault();
     closeAlert(root, pending, trigger);
@@ -5891,7 +5891,7 @@ function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) 
 function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
 function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
-var DROPDOWN_TOGGLE_SELECTOR = '[data-toggle="dropdown"]';
+var DROPDOWN_TOGGLE_SELECTOR = '[data-bs-toggle="dropdown"], [data-toggle="dropdown"]';
 var DROPDOWN_CONTAINER_SELECTOR = '.dropdown, .btn-group, .nav-item';
 var DROPDOWN_MENU_SELECTOR = '.dropdown-menu';
 var DROPDOWN_ITEM_SELECTOR = '.dropdown-item, [role="menuitem"], a[href], button';
@@ -6546,7 +6546,7 @@ function mountDateControl(input, Datepicker, locale) {
 }
 function findAddon(input) {
   var _input$closest;
-  return (_input$closest = input.closest('.input-date')) === null || _input$closest === void 0 ? void 0 : _input$closest.querySelector('.input-group-addon, .input-group-prepend');
+  return (_input$closest = input.closest('.input-date')) === null || _input$closest === void 0 ? void 0 : _input$closest.querySelector('.input-group-text, .input-group-addon, .input-group-prepend');
 }
 
 /***/ }),
@@ -8894,8 +8894,8 @@ function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) 
 function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
 function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
-var PUSH_MENU_SELECTOR = '[data-widget="pushmenu"]';
-var TREE_ROOT_SELECTOR = '[data-widget="treeview"]';
+var PUSH_MENU_SELECTOR = '[data-lte-toggle="sidebar"], [data-widget="pushmenu"]';
+var TREE_ROOT_SELECTOR = '[data-lte-toggle="treeview"], [data-widget="treeview"]';
 var TREE_ITEM_SELECTOR = '.nav-item';
 var TREE_LINK_SELECTOR = '.nav-link';
 var TREE_MENU_SELECTOR = '.nav-treeview';
@@ -13723,7 +13723,7 @@ function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) 
 function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
 function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
-var TAB_SELECTOR = '[data-tab], [data-toggle="tab"]';
+var TAB_SELECTOR = '[data-tab], [data-bs-toggle="tab"], [data-toggle="tab"]';
 var TAB_LIST_SELECTOR = '[data-tablist], [role="tablist"]';
 function findTab(root, target) {
   var _target$closest;
@@ -14098,7 +14098,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "tooltipPlacement": () => (/* binding */ tooltipPlacement),
 /* harmony export */   "tooltipText": () => (/* binding */ tooltipText)
 /* harmony export */ });
-var TOOLTIP_TRIGGER_SELECTOR = '[data-toggle="tooltip"]';
+var TOOLTIP_TRIGGER_SELECTOR = '[data-bs-toggle="tooltip"], [data-toggle="tooltip"]';
 var PLACEMENTS = new Set(['top', 'right', 'bottom', 'left']);
 function findTooltipTrigger(root, target) {
   var _target$closest;

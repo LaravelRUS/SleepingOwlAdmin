@@ -20,7 +20,7 @@
 }
 
 :root[data-color-scheme=dark],
-.dark-mode {
+[data-bs-theme=dark] {
   --soa-dropdown-surface: #343a40;
   --soa-dropdown-text: #f8f9fa;
   --soa-dropdown-border: #4b545c;
@@ -69,6 +69,7 @@
   .dropup > .dropdown-menu {
     inset-block: auto calc(100% + var(--soa-dropdown-offset));
   }
+  .dropdown-menu-start,
   .dropdown-menu-left {
     inset-inline: 0 auto;
   }

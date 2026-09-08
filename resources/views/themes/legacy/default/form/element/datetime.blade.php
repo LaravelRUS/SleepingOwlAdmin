@@ -14,11 +14,9 @@
                     value="{{ $value }}"
                     @if($readonly) readonly @endif
             >
-            <span class="input-group-prepend input-group-addon">
-				<div class="input-group-text">
-					<span class="far fa-calendar-alt"></span>
-				</div>
-			</span>
+            <span class="input-group-text">
+                <span class="far fa-calendar-alt"></span>
+            </span>
         </div>
 
         @include(AdminTemplate::getViewPath('form.element.partials.helptext'))

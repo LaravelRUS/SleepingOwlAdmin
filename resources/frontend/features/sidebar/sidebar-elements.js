@@ -1,5 +1,5 @@
-export const PUSH_MENU_SELECTOR = '[data-widget="pushmenu"]'
-export const TREE_ROOT_SELECTOR = '[data-widget="treeview"]'
+export const PUSH_MENU_SELECTOR = '[data-lte-toggle="sidebar"], [data-widget="pushmenu"]'
+export const TREE_ROOT_SELECTOR = '[data-lte-toggle="treeview"], [data-widget="treeview"]'
 export const TREE_ITEM_SELECTOR = '.nav-item'
 export const TREE_LINK_SELECTOR = '.nav-link'
 export const TREE_MENU_SELECTOR = '.nav-treeview'

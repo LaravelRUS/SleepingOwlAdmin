@@ -1,19 +1,19 @@
 @extends(AdminTemplate::getViewPath('_layout.base'))
 
 @section('content')
-    <div class="wrapper" id="vueApp">
+    <div class="app-wrapper" id="vueApp">
 
-        <nav class="main-header navbar navbar-expand border-bottom">
+        <nav class="app-header navbar navbar-expand bg-body">
             @include(AdminTemplate::getViewPath('_partials.header'))
         </nav>
 
-        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <aside class="app-sidebar shadow" data-bs-theme="dark">
             @include(AdminTemplate::getViewPath('_partials.navigation'))
         </aside>
 
-        <div class="content-wrapper">
+        <main class="app-main">
 
-            <div class="content-header">
+            <div class="app-content-header">
                 <div class="container-fluid">
                     <div class="row mb-2 align-items-center">
                       <div class="col-sm-12">
@@ -29,24 +29,24 @@
                 </div>
             </div>
 
-            <div class="content body">
+            <div class="app-content body">
                 @stack('content.top')
 
                 {!! $content !!}
 
                 @stack('content.bottom')
             </div>
-        </div>
+        </main>
 
         @php($assetHealthStatus = $assetHealthStatus ?? null)
 
         @if(config('sleeping_owl.show_footer') || $assetHealthStatus)
-            <footer class="main-footer small">
+            <footer class="app-footer main-footer small">
                 @if(config('sleeping_owl.show_footer'))
                     {!! config('sleeping_owl.footer_text') !!}
 
                     @if(config('sleeping_owl.show_version'))
-                        <div class="float-right d-none d-sm-inline-block">
+                        <div class="float-end d-none d-sm-inline-block">
                             {!! $template->getVersion() !!}
                         </div>
                     @endif

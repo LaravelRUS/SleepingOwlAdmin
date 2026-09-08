@@ -3,8 +3,8 @@
 ## Статус и границы
 
 - Статус: **активен; обязательный release gate основного major-релиза**.
-- Текущая реализация: `AdminLTETheme` использует versioned logical runtime и Blade-first contract; dependency tree обновлён до exact `admin-lte@4.9.1`, `bootstrap@5.3.8` и `@popperjs/core@2.11.8` без jQuery. Перенос presentation/source/assets на AdminLTE 4 продолжается отдельными checkpoint.
-- Точка возобновления: dependency/lock checkpoint раздела 1 закрыт; в новой чистой задаче перевести DataTables presentation на Bootstrap 5 packages и удалить оставшиеся BS4 adapter artifacts, не начиная общий Blade migration.
+- Текущая реализация: dependency tree, Sass framework boundary и package-owned Blade/JS presentation переведены на exact AdminLTE 4.9.1/Bootstrap 5.3.8/Popper 2.11.8 без jQuery и AdminLTE 3 Sass. Визуальная стилистическая доводка не входит в этот checkpoint.
+- Точка возобновления: production build и полные suites явно отложены; следующим отдельным пунктом оформить migration guide и затем провести финальную сборку/acceptance после стилистической доводки.
 - Общий platform/core scope находится в [`ADMIN_UI_MODERNIZATION_PLAN.md`](ADMIN_UI_MODERNIZATION_PLAN.md). Tailwind не входит в этот файл и ведётся в [`ADMIN_TAILWIND_THEME_PLAN.md`](ADMIN_TAILWIND_THEME_PLAN.md).
 - Каждый самостоятельный пункт: реализация, узкие tests затронутого contract, lint/format только изменённых sources, обновление этого файла, отдельный checkpoint-коммит и чистое рабочее дерево. Build выполняется только при изменении публикуемых assets; полный PHPUnit/Vitest/Playwright gate — один раз перед финальным release gate, не на каждом промежуточном checkpoint.
 
@@ -18,9 +18,9 @@
 
 - [x] Зафиксировать целевые стабильные версии AdminLTE 4 и Bootstrap 5.3, их peer dependencies и license inventory.
 - [x] Обновить `package.json`/lock, удалить runtime Bootstrap 4/AdminLTE 3 dependencies и не добавлять jQuery.
-- [ ] Перевести DataTables presentation на Bootstrap 5 packages и удалить оставшиеся BS4 adapter artifacts.
-- [ ] Выделить vendor framework imports только внутри `resources/frontend/themes/legacy-adminlte` либо переименованного theme source boundary.
-- [ ] Решить migration имени logical id `legacy-adminlte`: сохранить стабильный id либо добавить документированный version-neutral alias без двойной загрузки assets.
+- [x] Перевести DataTables presentation на Bootstrap 5 packages и удалить оставшиеся BS4 adapter artifacts.
+- [x] Выделить vendor framework imports только внутри `resources/frontend/themes/legacy-adminlte` либо переименованного theme source boundary.
+- [x] Сохранить стабильный logical id `legacy-adminlte` без двойной загрузки assets; id является compatibility handle, а не версией framework dependency.
 - [ ] Пересобрать production/development profiles и доказать отсутствие jQuery в JS, maps и license sidecars.
 
 ### Зафиксированный framework target (2026-09-08)
@@ -55,11 +55,11 @@ Lock checkpoint заменил root `popper@1` на `@popperjs/core@2.11.8`; exa
 
 ## 2. Перевести Blade presentation на AdminLTE 4
 
-- [ ] Обновить layout, header, sidebar, navigation, footer и login markup под AdminLTE 4/Bootstrap 5.
-- [ ] Обновить display/table/filter/action views и responsive grid без переноса classes в PHP/core.
-- [ ] Обновить form/card/button/validation/upload/gallery/related/WYSIWYG views; Vue islands получают конечные classes/options из Blade props.
-- [ ] Сохранить публичные field names, HTML attributes, ARIA и реальные compatibility markers `data-dismiss`, `data-toggle`, `data-widget` через native adapters либо документированную migration boundary.
-- [ ] Сохранить логические пути `sleeping_owl::default.*`, application/vendor override priority и custom views без consumer rebuild.
+- [x] Обновить layout, header, sidebar, navigation, footer и login markup под AdminLTE 4/Bootstrap 5.
+- [x] Обновить display/table/filter/action views и responsive grid без переноса classes в PHP/core.
+- [x] Обновить form/card/button/validation/upload/gallery/related/WYSIWYG views; Vue islands получают конечные classes/options из Blade props.
+- [x] Сохранить публичные field names, HTML attributes, ARIA и реальные compatibility markers `data-dismiss`, `data-toggle`, `data-widget` через native adapters либо документированную migration boundary.
+- [x] Сохранить логические пути `sleeping_owl::default.*`, application/vendor override priority и custom views без consumer rebuild.
 - [ ] Добавить migration table для реально изменённых Bootstrap/AdminLTE classes/selectors/markup, не требуя полной перепубликации views.
 
 ## 3. Завершить theme tokens и assets
@@ -121,3 +121,4 @@ Lock checkpoint заменил root `popper@1` на `@popperjs/core@2.11.8`; exa
 | 2026-09-08 | No-build customization и provider hook | `theme-customization.md` закрепляет существующий `sleeping_owl.template`, 15 theme-owned settings, точный source-verified AdminLTE/core/feature `--soa-*` surface, `MetaInterface::addCss()`/`addJs()` и Blade overrides. Новый `ThemeRegistry` регистрирует готовый внешний production/development fragment, scoped выбранной темой, и может явно заменить configured primary class; `TemplateDefault` добавляет отсутствующий MD5 version query к готовым legacy files. По сокращённой testing policy build не запускался: публикуемые assets не менялись; theme/manifest gate — 31 test, 253 assertions, финальный legacy template/config gate — 8 tests, 62 assertions. Framework upgrade не начат. | текущий commit |
 | 2026-09-08 | AdminLTE 4 framework metadata | По npm `latest` и package metadata выбраны exact pins `admin-lte@4.9.1`, `bootstrap@5.3.8`, `@popperjs/core@2.11.8`. Runtime graph состоит только из peer chain AdminLTE → Bootstrap → Popper, без обычных/optional/bundled dependencies и без jQuery; upstream devDependencies отделены от consumer tree. Все три пакета MIT и публикуют LICENSE notice. Зафиксированы Node ≥20, ESM/CJS/CSS/Sass exports и эффективный ES2022/browser target AdminLTE; локальный Node 24/npm 11/lockfile v3 совместимы. Package/lock, PHP, Blade, JS, Sass, DataTables и assets не менялись; по ускоренной политике tests/build не запускались. Следующая точка — отдельный dependency-only exact lock checkpoint. | текущий commit |
 | 2026-09-08 | AdminLTE 4 dependency/lock | `package.json` и lock переведены с `admin-lte@3.2.0`, Bootstrap 4 и `popper@1` на exact `admin-lte@4.9.1`, `bootstrap@5.3.8`, `@popperjs/core@2.11.8`. Установка удалила 582 legacy transitive packages; `npm ls` подтвердил exact root versions и пустое дерево jQuery. Sources и публикуемые assets не менялись, поэтому build и полные suites отложены. Следующая точка — DataTables Bootstrap 5 presentation/BS4 artifacts. | текущий commit |
+| 2026-09-08 | AdminLTE 4 structural migration | По официальной v3→v4 migration guide package Blade переведён на `app-*` layout/sidebar/footer, Bootstrap 5 utilities/forms/input groups и `data-bs-theme`; AdminLTE 3 Sass удалён, theme boundary импортирует только AdminLTE 4. Native adapters понимают официальные v4 markers и сохраняют прежние публичные `data-toggle`/`data-dismiss`/`data-widget`; `main-footer` сохранён как пользовательский compatibility class без v3 CSS. DataTables уже использует BS5 packages, BS4 adapters отсутствуют. Пользовательский development watcher собрал assets; вручную просмотрены dashboard, DataTables screen, edit form и footer. По указанию production build и tests не запускались; визуальный polish оставлен отдельным слоем. | текущий commit |

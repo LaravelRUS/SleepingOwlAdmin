@@ -22,7 +22,7 @@
 			</a>
 		@endif
 
-		<div class="pull-right block-actions">
+		<div class="float-end block-actions">
 			@yield('card.heading.actions')
 			@yield('panel.heading.actions')
 

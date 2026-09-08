@@ -79,7 +79,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "tooltipPlacement": () => (/* binding */ tooltipPlacement),
 /* harmony export */   "tooltipText": () => (/* binding */ tooltipText)
 /* harmony export */ });
-var TOOLTIP_TRIGGER_SELECTOR = '[data-toggle="tooltip"]';
+var TOOLTIP_TRIGGER_SELECTOR = '[data-bs-toggle="tooltip"], [data-toggle="tooltip"]';
 var PLACEMENTS = new Set(['top', 'right', 'bottom', 'left']);
 function findTooltipTrigger(root, target) {
   var _target$closest;

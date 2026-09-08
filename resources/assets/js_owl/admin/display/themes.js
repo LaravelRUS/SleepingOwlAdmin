@@ -9,11 +9,11 @@ Admin.Modules.register('display.theme', () => {
         mode = mode === 'dark' ? 'dark' : 'light'
 
         if (mode === 'dark') {
-            document.body.classList.add('dark-mode')
+            document.documentElement.dataset.bsTheme = 'dark'
             document.documentElement.dataset.colorScheme = 'dark'
             theme_icon.className = 'fa-regular fa-lightbulb'
         } else {
-            document.body.classList.remove('dark-mode')
+            document.documentElement.dataset.bsTheme = 'light'
             document.documentElement.dataset.colorScheme = 'light'
             theme_icon.className = 'fa-solid fa-moon'
         }

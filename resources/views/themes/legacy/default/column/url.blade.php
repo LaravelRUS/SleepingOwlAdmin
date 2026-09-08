@@ -2,7 +2,7 @@
 	@if ($visibled)
 		@if (!empty($value))
             @if($icon)
-                <i class="{{ $icon }}" data-toggle="tooltip" title="{{ trans('sleeping_owl::lang.table.filter-goto') }}"></i>
+                <i class="{{ $icon }}" data-toggle="tooltip" data-bs-toggle="tooltip" title="{{ trans('sleeping_owl::lang.table.filter-goto') }}"></i>
             @endif
             {{
               app('A')

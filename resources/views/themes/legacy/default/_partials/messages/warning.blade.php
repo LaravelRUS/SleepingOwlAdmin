@@ -1,8 +1,6 @@
 @if($messages)
     <div class="alert alert-warning alert-message">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
+        <button type="button" class="btn-close float-end" data-dismiss="alert" data-bs-dismiss="alert" aria-label="Close"></button>
 
         <i class="fas fa-exclamation-triangle fa-lg"></i> {!! $messages !!}
     </div>

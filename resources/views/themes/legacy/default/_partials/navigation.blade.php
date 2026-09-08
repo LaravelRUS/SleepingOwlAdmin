@@ -1,7 +1,4 @@
-<div class="sidebar">
-    @stack('sidebar.top')
-
-    <div class="brand">
+<div class="sidebar-brand">
       <a href="{{ url(config('sleeping_owl.url_prefix')) }}" class="brand-link">
         <span class="logo">
           {!! AdminTemplate::getLogo() !!}
@@ -12,15 +9,18 @@
         </span>
 
         @if (AdminTemplate::getMenuTop())
-          <span class="brand-text font-weight-light">
+          <span class="brand-text fw-light">
             {!! AdminTemplate::getMenuTop() !!}
           </span>
         @endif
       </a>
-    </div>
+</div>
+
+<div class="sidebar-wrapper">
+    @stack('sidebar.top')
 
     <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <ul class="nav sidebar-menu flex-column" data-widget="treeview" data-lte-toggle="treeview" role="menu" data-accordion="false">
             @stack('sidebar.ul.top')
 
             {!! $template->renderNavigation() !!}

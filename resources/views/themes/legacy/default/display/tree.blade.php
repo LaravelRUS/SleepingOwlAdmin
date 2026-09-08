@@ -9,7 +9,7 @@
             </a>
         @endif
 
-        <div class="pull-right">
+        <div class="float-end">
             @yield('card.heading.actions')
             @yield('panel.heading.actions')
 
@@ -36,7 +36,7 @@
              data-url="{{ $url }}/reorder"
              data-reorderable="{{ $reorderable ? 'true' : 'false' }}">
             @if($max_depth > 1)
-                <menu class="soa-tree-menu no-gutters p-3">
+                <menu class="soa-tree-menu g-0 p-3">
                     <button type="button" data-tree-action="expand-all"
                             class="btn btn-primary btn-sm">@lang('sleeping_owl::lang.tree.expand')</button>
                     <button type="button" data-tree-action="collapse-all"

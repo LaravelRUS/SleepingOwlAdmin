@@ -1,4 +1,4 @@
-export const TOOLTIP_TRIGGER_SELECTOR = '[data-toggle="tooltip"]'
+export const TOOLTIP_TRIGGER_SELECTOR = '[data-bs-toggle="tooltip"], [data-toggle="tooltip"]'
 
 const PLACEMENTS = new Set(['top', 'right', 'bottom', 'left'])
 

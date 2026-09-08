@@ -22,12 +22,12 @@
 @endphp
 
 @if($hasChild)
-  <li class="nav-item has-treeview {!! ($isActive) ? 'menu-open' : '' !!}">
+  <li class="nav-item {!! ($isActive) ? 'menu-open' : '' !!}">
     <a href="#" {!! $linkAttributes !!}>
       {!! $icon !!}
-      <p class="{{ $icon ? 'ml-2':'' }}">
+      <p>
         {!! $title !!}
-        <span class="pull-right-container">
+        <span class="nav-badge sidebar-page-badges">
           @if($badges->count() > 0)
             <span class="sidebar-page-badges">
               @foreach($badges as $badge)
@@ -36,7 +36,7 @@
             </span>
           @endif
         </span>
-        <i class="fas fa-angle-left right"></i>
+        <i class="nav-arrow fas fa-angle-right"></i>
       </p>
     </a>
 
@@ -50,15 +50,13 @@
   <li class="nav-item">
     <a href="{{ $url }}" {!! $linkAttributes !!}>
       {!! $icon !!}
-      <p class="{{ $icon ? 'ml-2':'' }}">
+      <p>
         {!! $title !!}
         @if($badges->count() > 0)
-          <span class="pull-right-container">
-            <span class="sidebar-page-badges">
+          <span class="nav-badge sidebar-page-badges">
               @foreach($badges as $badge)
                 {!! $badge->render() !!}
               @endforeach
-            </span>
           </span>
         @endif
       </p>

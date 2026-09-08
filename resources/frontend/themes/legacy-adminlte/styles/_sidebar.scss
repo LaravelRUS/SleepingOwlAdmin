@@ -1,7 +1,7 @@
 @use 'colors';
 
 @mixin styles {
-  .main-sidebar {
+  .app-sidebar {
     background-color: var(--soa-sidebar-bg, #{colors.$sidebar-background});
   }
 }

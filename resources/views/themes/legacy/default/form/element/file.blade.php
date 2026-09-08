@@ -14,9 +14,9 @@
             $fileProps = array_replace([
                 'classes' => [
                     'alert' => 'alert alert-warning',
-                    'alertClose' => 'close',
+                    'alertClose' => 'btn-close float-end',
                     'current' => 'form-element-files clearfix',
-                    'downloadButton' => 'btn btn-default btn-xs pull-right',
+                    'downloadButton' => 'btn btn-light btn-xs float-end',
                     'downloadIcon' => 'fas fa-cloud-upload-alt',
                     'errorIcon' => 'fas fa-file-alt',
                     'file' => 'form-element-files__file',

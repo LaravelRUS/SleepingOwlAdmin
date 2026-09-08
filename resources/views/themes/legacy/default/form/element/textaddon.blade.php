@@ -9,15 +9,11 @@
         </label>
         <div class="input-group">
             @if ($placement == 'before')
-                <div class="input-group-prepend">
-                    <span class="input-group-text">{!! $addon !!}</span>
-                </div>
+                <span class="input-group-text">{!! $addon !!}</span>
             @endif
             <input v-pre {!! (new \SleepingOwl\Admin\Support\HtmlAttributeBag($attributesArray))->class(['form-control']) !!} value="{{ $value }}">
             @if ($placement == 'after')
-                <div class="input-group-append">
-                    <span class="input-group-text">{!! $addon !!}</span>
-                </div>
+                <span class="input-group-text">{!! $addon !!}</span>
             @endif
         </div>
 

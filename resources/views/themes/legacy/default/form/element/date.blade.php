@@ -12,11 +12,9 @@
             <input {!! (new \SleepingOwl\Admin\Support\HtmlAttributeBag($attributesArray))->class(['form-control']) !!} value="{{$value}}"
                    @if($readonly) readonly @endif />
 
-            <div class="input-group-prepend input-group-addon">
-                <div class="input-group-text">
-                    <span class="far fa-calendar-alt"></span>
-                </div>
-            </div>
+            <span class="input-group-text">
+                <span class="far fa-calendar-alt"></span>
+            </span>
         </div>
 
         @include(AdminTemplate::getViewPath('form.element.partials.helptext'))

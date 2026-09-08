@@ -1,17 +1,17 @@
-.sidebar {
+.sidebar-wrapper {
 
   .nav-link p {
     max-width: 190px;
   }
 
-  .pull-right-container {
+  .nav-badge {
     position: absolute;
     right: 1.2rem;
     margin-top: -0.15rem;
   }
 }
 
-.brand {
+.sidebar-brand {
   .brand-link {
     svg, img {
       max-height: 32px;

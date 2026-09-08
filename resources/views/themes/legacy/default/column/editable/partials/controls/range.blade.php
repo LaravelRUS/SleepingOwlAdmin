@@ -1,6 +1,6 @@
 <div class="soa-inline-editor-range" data-inline-editor-control>
     <input {!! new \SleepingOwl\Admin\Support\HtmlAttributeBag([
-        'class' => 'custom-range soa-inline-editor-control',
+        'class' => 'form-range soa-inline-editor-control',
         'data-inline-editor-range-input' => true,
         'id' => $editorControlId,
         'max' => $max ?? null,
