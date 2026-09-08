@@ -93,10 +93,27 @@ class AdminServiceProvider extends ServiceProvider
             $this->registerSupportRoutes();
             $this->registerNavigationFile();
 
-            $this->app['sleeping_owl']->initialize();
+            $this->initializeAdmin();
         });
 
         ModelConfigurationManager::setEventDispatcher($this->app['events']);
+    }
+
+    private function initializeAdmin(): void
+    {
+        if ($this->awaitingInitialAssetPublish()) {
+            return;
+        }
+
+        $this->app['sleeping_owl']->initialize();
+    }
+
+    private function awaitingInitialAssetPublish(): bool
+    {
+        return $this->app->runningInConsole()
+            && ! $this->app['files']->exists(
+                $this->app->publicPath('packages/sleepingowl/default/asset-manifest.json')
+            );
     }
 
     protected function registerTemplate(): void

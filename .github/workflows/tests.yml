@@ -8,6 +8,24 @@ permissions:
     contents: read
 
 jobs:
+    no-build-consumer:
+        name: No-build consumer
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Set up PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: '8.3'
+                  extensions: pdo_sqlite, sqlite3
+                  coverage: none
+                  tools: composer:v2
+
+            - name: Install release artifact without Node.js
+              run: bash scripts/ci/no-build-consumer-smoke.sh
+
     php:
         name: PHP
         runs-on: ubuntu-latest

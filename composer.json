@@ -73,6 +73,16 @@
             ]
         }
     },
+    "archive": {
+        "exclude": [
+            "/.idea",
+            "/.phpunit.cache",
+            "/.phpunit.result.cache",
+            "/node_modules",
+            "/test-results",
+            "/vendor"
+        ]
+    },
     "config": {
         "sort-packages": true,
         "allow-plugins": {

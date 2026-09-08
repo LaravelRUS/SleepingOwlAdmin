@@ -4,7 +4,7 @@
 
 - Статус: **активен; обязательный release gate основного major-релиза**.
 - Текущая реализация: dependency tree, Sass framework boundary и package-owned Blade/JS presentation переведены на exact AdminLTE 4.9.1/Bootstrap 5.3.8/Popper 2.11.8 без jQuery и AdminLTE 3 Sass. Production/development profiles пересобраны, функциональный gate пройден, а размеры runtime фиксируются автоматическим отчётом.
-- Точка возобновления: отдельно установить готовый Composer artifact в чистое Laravel-приложение без Node.js и проверить publish/runtime AdminLTE.
+- Точка возобновления: clean Laravel 12 no-build gate закрыт. Следующий отдельный пункт — итоговый clean lock/full-suite/manual release gate вместе с основным планом.
 - Общий platform/core scope находится в [`ADMIN_UI_MODERNIZATION_PLAN.md`](ADMIN_UI_MODERNIZATION_PLAN.md). Tailwind не входит в этот файл и ведётся в [`ADMIN_TAILWIND_THEME_PLAN.md`](ADMIN_TAILWIND_THEME_PLAN.md).
 - Каждый самостоятельный пункт: реализация, узкие tests затронутого contract, lint/format только изменённых sources, обновление этого файла, отдельный checkpoint-коммит и чистое рабочее дерево. Build выполняется только при изменении публикуемых assets; полный PHPUnit/Vitest/Playwright gate — один раз перед финальным release gate, не на каждом промежуточном checkpoint.
 
@@ -92,7 +92,7 @@ Lock checkpoint заменил root `popper@1` на `@popperjs/core@2.11.8`; exa
 - [x] Document service-provider hook for selecting/overriding the primary theme without package source changes.
 - [x] Route/auth/env/upload/date-time/WYSIWYG/search/alias/table settings preserve keys and behavior.
 - [x] `sleepingowl:update` publishes both ready profiles and never overwrites config/application files.
-- [ ] Clean Laravel application without Node.js installs the release artifact and runs AdminLTE through Composer/PHP/Artisan only.
+- [x] Clean Laravel application without Node.js installs the release artifact and runs AdminLTE through Composer/PHP/Artisan only.
 - [x] Missing/corrupt assets fail with the update command; version mismatch renders the localized footer warning; matching versions add no warning markup.
 
 ## 6. Release documentation
@@ -130,3 +130,4 @@ Lock checkpoint заменил root `popper@1` на `@popperjs/core@2.11.8`; exa
 | 2026-09-08 | Release documentation | README и основная документация описывают AdminLTE 4, готовые production/development profiles и no-build workflow. Единый upgrade guide связывает jQuery/DataTables/Vue/Blade/config/theme migration; CHANGELOG фиксирует breaking changes. Устаревшая граница legacy globals обновлена, а first-party assets содержит точную таблицу замен `KodiCMS\Assets`. Код и assets не менялись; следующий пункт — PHPDoc/public interfaces и generator stubs. | текущий commit |
 | 2026-09-08 | Public PHPDoc и legacy stubs | `ThemeInterface`, `AssetsInterface`, `MetaInterface` и first-party facades получили актуальные типы и IDE-visible public methods. Installation bootstrap использует first-party facades и стабильный `admin-default` handle; section/provider stubs используют Bootstrap 5 grid, Font Awesome 7 и PHP 8 signatures. Все девять PHP/stub files проходят `php -l`; следующий пункт — отдельные extension generator stubs. | текущий commit |
 | 2026-09-08 | Extension generator stubs | `sleepingowl:extension:make` генерирует form element+Blade, widget+Blade, policy, module provider, Vue island+Blade+asset provider и custom theme contract. Общий scaffold atomically проверяет collisions и требует `--force` для overwrite. PHP templates реально загружаются в test application; Vue stub использует только `Admin.Vue.runtime/register`, а provider — `MetaInterface`/`admin-vue-init`. Узкий gate: 5 tests, 51 assertion. Следующая точка — clean Composer application без Node.js. | текущий commit |
+| 2026-09-08 | Clean no-build consumer | Release ZIP очищен от локальных `vendor`/`node_modules` и уменьшен с 258 MB до 11.45 MB. Console bootstrap допускает первую публикацию manifest, не ослабляя web-runtime diagnostics. Архив установлен копированием без symlink в чистый Laravel 12.69.1; Composer discovery, `sleepingowl:install`, production/development `sleepingowl:update`, AdminLTE resolution и 26 admin routes проходят без frontend toolchain. Все MD5/SHA-256 обоих готовых профилей и framework-free isolation проверяет отдельный CI verifier; Node/npm и аналоги перекрыты аварийными shims. Узкий PHP gate: 3 tests, 18 assertions; полный suite/build не повторялись, assets не менялись. Следующая точка — общий итоговый clean lock/full-suite/manual release gate. | текущий commit |

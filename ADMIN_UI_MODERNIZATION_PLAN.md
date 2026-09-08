@@ -3,8 +3,8 @@
 ## Статус и границы
 
 - Статус: активен; основной release scope отделён от будущих встроенных тем.
-- Текущий этап: **этап 7 — завершение публичного theme extension contract**; реализация основной темы ведётся отдельным планом, этап 8 закрыт.
-- Точка возобновления: extension generator stubs и test-application contract закрыты. Следующий отдельный пункт — установка готового Composer artifact в чистое Laravel-приложение без Node.js.
+- Текущий этап: **этап 10 — release readiness**; готовый Composer artifact и no-build consumer workflow проверены в чистом Laravel 12, этап 8 закрыт.
+- Точка возобновления: clean Composer application gate закрыт. Следующий отдельный пункт — migration checkpoint pilot-проекта по уже готовому reference catalog, без повторного сканирования `D:\domains\laluna.kit`.
 - Рабочая ветка: `codex/remove-jquery-datatables2`.
 - Read-only reference project: `D:\domains\laluna.kit`; считать ранее собранный inventory достаточным, не сканировать проект/`Modules` повторно и обращаться только к конкретному файлу при точечной необходимости; не изменять и не запускать команды с побочными эффектами без отдельного разрешения.
 - База ветки: `ia11`, commit `17752e62`.
@@ -776,10 +776,10 @@ No-build consumer contract является release-blocking:
 - [x] Добавить CHANGELOG с перечнем breaking changes.
 - [ ] Обновить опубликованные assets через `npm run production`.
 - [ ] Собрать и опубликовать development profile через `npm run development`, включая development Vue runtime и source maps.
-- [ ] Проверить, что versioned asset manifest содержит согласованные production/development entries, файлы и checksums.
+- [x] Проверить, что versioned asset manifest содержит согласованные production/development entries, файлы и checksums.
 - [ ] Выполнить полный PHP/frontend/browser test suite.
 - [ ] Выполнить установку зависимостей и production build в чистой среде по lock-файлу.
-- [ ] Отдельно установить release artifact в чистое Laravel-приложение без Node.js/npm и проверить AdminLTE и framework-free test theme на готовых assets.
+- [x] Отдельно установить release artifact в чистое Laravel-приложение без Node.js/npm и проверить AdminLTE и framework-free test theme на готовых assets.
 - [ ] Провести ручной smoke test эталонных экранов.
 
 Критерий завершения: ветка готова к major release и содержит инструкции обновления для поддерживаемых проектов.
@@ -896,16 +896,16 @@ Tailwind acceptance matrix находится только в [`ADMIN_TAILWIND_T
 
 ### No-build consumer experience
 
-- [ ] чистое Laravel-приложение без Node.js устанавливает админку через Composer;
-- [ ] готовые assets публикуются/обновляются существующей `php artisan sleepingowl:update` без компиляции;
+- [x] чистое Laravel-приложение без Node.js устанавливает админку через Composer;
+- [x] готовые assets публикуются/обновляются существующей `php artisan sleepingowl:update` без компиляции;
 - [x] выбор AdminLTE или установленной custom theme выполняется конфигурацией и не требует изменения package sources;
 - [ ] создание новой модели, section, form и DataTable через PHP DSL не требует frontend build;
 - [x] дополнительный CSS подключается без пересборки core;
 - [x] пользовательский CSS или JS подключается отдельным asset, не пересобирая core/theme bundles;
 - [ ] отсутствующие/повреждённые published assets дают понятную диагностическую ошибку с командой обновления;
 - [ ] валидные, но несовпадающие версии PHP package/assets показывают локализованное footer-уведомление в AdminLTE без frontend rebuild; совпадающие версии не добавляют разметку;
-- [ ] версии PHP package, asset manifest и published bundles согласованы;
-- [ ] оба готовых asset profiles публикуются одной `sleepingowl:update`, а `ADMIN_DEV_ASSETS` только выбирает уже опубликованный профиль;
+- [x] версии PHP package, asset manifest и published bundles согласованы;
+- [x] оба готовых asset profiles публикуются одной `sleepingowl:update`, а `ADMIN_DEV_ASSETS` только выбирает уже опубликованный профиль;
 - [x] production deployment документирован только через Composer/PHP/Artisan для обычного пользователя.
 
 ### First-party asset registry
@@ -1156,3 +1156,4 @@ Tailwind acceptance matrix находится только в [`ADMIN_TAILWIND_T
 | 2026-09-08 | Этап 10 / release documentation | README и `DOCUMENTATION.md` больше не описывают AdminLTE 3/Bootstrap 4 как текущую границу и явно разделяют no-build consumer workflow от maintainer build. Новый единый upgrade guide покрывает сохранённые PHP/config/view contracts, jQuery/Vue 2/DataTables migration, AdminLTE 4 Blade overrides, asset health и выбор готовой темы. CHANGELOG содержит breaking changes; first-party asset guide — точные замены трёх `KodiCMS\Assets` facades; legacy globals guide приведён к фактическому runtime. Code/assets не менялись. Следующая точка — PHPDoc/public interfaces и generator stubs. | текущий commit |
 | 2026-09-08 | Этап 10 / public PHPDoc и legacy stubs | Публичные theme/asset interfaces и first-party facades документируют фактические logical theme ids, asset dependencies, placements и return types. Existing bootstrap stub больше не предлагает package-owned custom files и использует стабильный AdminLTE handle; section/provider stubs переведены на Bootstrap 5 grid, Font Awesome 7 и PHP 8 signatures. `php -l` проходит для всех девяти изменённых PHP/stub files. Следующая точка — новые extension generator stubs и test-application contract. | текущий commit |
 | 2026-09-08 | Этап 10 / extension generator | Новая декомпозированная команда `sleepingowl:extension:make` поверх одного scaffold-сервиса создаёт шесть типов расширений и связанные Blade/provider files: form element, widget, policy, module provider, Vue island и custom theme. Генерация проверяет все targets до записи и не перезаписывает файлы без `--force`. Сгенерированные PHP classes загружаются без Node.js; Vue island не создаёт global Vue/jQuery и регистрируется через `Admin.Vue`, его asset provider зависит от `admin-vue-init`. Узкий gate: 5 tests, 51 assertion. Следующая точка — clean Composer application без Node.js. | текущий commit |
+| 2026-09-08 | Этап 10 / clean no-build consumer | Реальный `composer archive` выявил и устранил две release-блокировки: ZIP больше не включает локальные `vendor`/`node_modules`/IDE/cache artifacts (11.45 MB, 1983 entries вместо 258 MB/55614), а console bootstrap до первой публикации больше не разрешает отсутствующий manifest, поэтому Composer `package:discover` завершается до `sleepingowl:install`. Готовый ZIP распакован и установлен копированием path repository без symlink в чистый Laravel 12.69.1; `sleepingowl:install`, production/development `sleepingowl:update`, 26 admin routes и default `AdminLTETheme` проходят только через Composer/PHP/Artisan. Отдельный verifier проверяет MD5/SHA-256 всех файлов обоих профилей и framework-free test theme без AdminLTE assets. CI job ставит shims, аварийно завершающие любой вызов Node/npm/npx/pnpm/yarn/bun, и запрещает `node_modules`. Узкий PHP gate: 3 tests, 18 assertions; Composer manifest, PHP verifier, diff и shell syntax проверены; полный suite/build не повторялись, публикуемые assets не менялись. Следующая точка — отдельный pilot migration checkpoint по существующему reference catalog. | текущий commit |
