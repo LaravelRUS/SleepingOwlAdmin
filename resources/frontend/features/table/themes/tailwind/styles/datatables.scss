@@ -1,7 +1,7 @@
 @use 'auto-update';
-@use 'colors';
 @use 'controls';
 @use 'custom-properties';
+@use 'display';
 @use 'inline-editor';
 @use 'layout';
 @use 'page-jump';
@@ -13,6 +13,7 @@
   @include layout.styles;
   @include page-jump.styles;
   @include controls.styles;
+  @include display.styles;
   @include inline-editor.styles;
   @include table.styles;
   @include auto-update.styles;

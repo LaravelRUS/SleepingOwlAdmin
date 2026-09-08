@@ -9,6 +9,7 @@ final class TailwindTheme implements ThemeInterface
     private const FEATURE_ADAPTERS = [
         'dropdown',
         'sidebar',
+        'table',
         'tooltip',
     ];
 
@@ -52,6 +53,7 @@ final class TailwindTheme implements ThemeInterface
                 ThemeCapability::Notification,
                 ThemeCapability::Icons,
                 ThemeCapability::Sidebar,
+                ThemeCapability::TablePresentation,
             ]
         );
     }

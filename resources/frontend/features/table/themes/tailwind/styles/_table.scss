@@ -1,5 +1,5 @@
 @mixin styles {
-  table[class~='dataTable'] {
+  table:is([class~='dataTable'], .soa-table) {
     width: 100%;
     border-spacing: 0;
     border-collapse: separate;
@@ -73,7 +73,7 @@
     }
   }
 
-  .lightcolumn[class~='dataTable'] td.highlight {
+  .lightcolumn:is([class~='dataTable'], .soa-table) td.highlight {
     background-color: var(--soa-table-row-hover-color) !important;
   }
 }
