@@ -1,0 +1,13 @@
+@if ($visibled)
+    <div class="form-group mb-3 {{ $errors->has($name) ? 'has-error' : '' }}">
+        <label class="form-label control-label {{ $required ? 'required' : '' }}" for="{{ $id }}">
+            {!! $label !!}
+        </label>
+        <input
+            v-pre
+            {!! (new \SleepingOwl\Admin\Support\HtmlAttributeBag($attributesArray))->class(['form-control']) !!}
+            value="{{ $value }}"
+            @readonly($readonly)
+        >
+    </div>
+@endif

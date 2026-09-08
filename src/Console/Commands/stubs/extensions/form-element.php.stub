@@ -1,0 +1,10 @@
+<?php
+
+namespace DummyNamespace;
+
+use SleepingOwl\Admin\Form\Element\NamedFormElement;
+
+final class DummyClass extends NamedFormElement
+{
+    protected $view = 'admin.form-elements.dummy-kebab';
+}

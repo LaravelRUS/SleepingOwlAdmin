@@ -85,6 +85,7 @@ class SleepingOwlServiceProvider extends AdminSectionsServiceProvider
                 \SleepingOwl\Admin\Console\Commands\SectionGenerate::class,
                 \SleepingOwl\Admin\Console\Commands\SectionMake::class,
                 \SleepingOwl\Admin\Console\Commands\SectionProvider::class,
+                \SleepingOwl\Admin\Console\Commands\ExtensionMake::class,
             ]);
 
             $localViewFactory = $this->createLocalViewFactory();

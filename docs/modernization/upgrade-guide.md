@@ -88,3 +88,23 @@ and server-side tables, filters/actions, forms and validation, uploads, editors,
 tree operations and any overridden Blade views. Use the development asset
 profile while adapting custom modules, then return production deployments to
 `ADMIN_DEV_ASSETS=false`.
+
+## Extension scaffolds
+
+The package can generate maintained starting points without copying internal
+classes or old jQuery/Vue globals:
+
+```bash
+php artisan sleepingowl:extension:make form-element PriceInput
+php artisan sleepingowl:extension:make widget PendingOrders
+php artisan sleepingowl:extension:make policy OrderSectionPolicy
+php artisan sleepingowl:extension:make module-provider OrdersAdminServiceProvider
+php artisan sleepingowl:extension:make vue-island order-status
+php artisan sleepingowl:extension:make theme AcmeTheme
+```
+
+PHP-only extensions need no frontend build. The Vue island scaffold uses
+`Admin.Vue.runtime` and `Admin.Vue.register()` rather than bundling or publishing
+a global Vue copy. A generated theme is an explicit contract skeleton: add its
+Blade namespace and ready production/development manifest before selecting it.
+Existing files are never overwritten unless `--force` is supplied.

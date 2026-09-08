@@ -1,0 +1,40 @@
+<?php
+
+namespace DummyNamespace;
+
+use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Database\Eloquent\Model;
+use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+
+final class DummyClass
+{
+    public function display(Authenticatable $user, ModelConfigurationInterface $section, Model $model): bool
+    {
+        return false;
+    }
+
+    public function create(Authenticatable $user, ModelConfigurationInterface $section, Model $model): bool
+    {
+        return false;
+    }
+
+    public function edit(Authenticatable $user, ModelConfigurationInterface $section, Model $model): bool
+    {
+        return false;
+    }
+
+    public function delete(Authenticatable $user, ModelConfigurationInterface $section, Model $model): bool
+    {
+        return false;
+    }
+
+    public function destroy(Authenticatable $user, ModelConfigurationInterface $section, Model $model): bool
+    {
+        return false;
+    }
+
+    public function restore(Authenticatable $user, ModelConfigurationInterface $section, Model $model): bool
+    {
+        return false;
+    }
+}

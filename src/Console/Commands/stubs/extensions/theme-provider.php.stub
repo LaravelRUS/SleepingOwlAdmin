@@ -1,0 +1,26 @@
+<?php
+
+namespace DummyNamespace;
+
+use Illuminate\Support\ServiceProvider;
+use SleepingOwl\Admin\Themes\ThemeRegistry;
+use DummyThemeNamespace\DummyClass;
+
+final class DummyThemeProviderClass extends ServiceProvider
+{
+    public function register(): void
+    {
+        $this->app->afterResolving(ThemeRegistry::class, function (ThemeRegistry $themes): void {
+            $themes->register(
+                DummyClass::class,
+                resource_path('admin/themes/dummy-kebab/asset-manifest.json'),
+                'vendor/dummy-kebab'
+            );
+        });
+    }
+
+    public function boot(): void
+    {
+        $this->loadViewsFrom(resource_path('views/themes/dummy-kebab'), 'dummy-kebab');
+    }
+}

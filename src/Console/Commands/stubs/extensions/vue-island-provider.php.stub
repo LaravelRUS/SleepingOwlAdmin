@@ -1,0 +1,18 @@
+<?php
+
+namespace DummyNamespace;
+
+use Illuminate\Support\ServiceProvider;
+use SleepingOwl\Admin\Contracts\Template\MetaInterface;
+
+final class DummyVueProviderClass extends ServiceProvider
+{
+    public function boot(MetaInterface $meta): void
+    {
+        $meta->addJs(
+            'dummy-kebab-island',
+            asset('js/admin/islands/dummy-kebab.js'),
+            'admin-vue-init'
+        );
+    }
+}

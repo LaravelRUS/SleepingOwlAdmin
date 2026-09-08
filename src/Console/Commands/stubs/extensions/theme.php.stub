@@ -1,0 +1,33 @@
+<?php
+
+namespace DummyNamespace;
+
+use SleepingOwl\Admin\Contracts\Theme\ThemeInterface;
+
+final class DummyClass implements ThemeInterface
+{
+    public function id(): string
+    {
+        return 'dummy-kebab';
+    }
+
+    public function viewNamespace(): string
+    {
+        return 'dummy-kebab';
+    }
+
+    public function assets(): array
+    {
+        return ['theme:dummy-kebab'];
+    }
+
+    public function icons(): array
+    {
+        return [];
+    }
+
+    public function capabilities(): array
+    {
+        return [];
+    }
+}

@@ -1,0 +1,24 @@
+<?php
+
+namespace DummyNamespace;
+
+use SleepingOwl\Admin\Facades\Template as AdminTemplate;
+use SleepingOwl\Admin\Widgets\Widget;
+
+final class DummyClass extends Widget
+{
+    public function toHtml(): string
+    {
+        return view('admin.widgets.dummy-kebab')->render();
+    }
+
+    public function template(): string
+    {
+        return AdminTemplate::getViewPath('_partials.header');
+    }
+
+    public function block(): string
+    {
+        return 'navbar.right';
+    }
+}

@@ -1,0 +1,16 @@
+const { defineComponent, h } = globalThis.Admin.Vue.runtime
+
+const component = defineComponent({
+    name: 'DummyClass',
+    props: {
+        value: {
+            type: String,
+            default: '',
+        },
+    },
+    setup(props) {
+        return () => h('span', { 'data-dummy-kebab-value': '' }, props.value)
+    },
+})
+
+globalThis.Admin.Vue.register('dummy-kebab', component)

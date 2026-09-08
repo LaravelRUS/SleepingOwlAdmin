@@ -1,0 +1,11 @@
+@php($propsId = 'dummy-kebab-'.\Illuminate\Support\Str::uuid())
+
+<script id="{{ $propsId }}" type="application/json">
+    {!! \Illuminate\Support\Js::encode($props ?? []) !!}
+</script>
+<section
+    v-pre
+    data-vue-app
+    data-vue-component="dummy-kebab"
+    data-vue-props-id="{{ $propsId }}"
+></section>

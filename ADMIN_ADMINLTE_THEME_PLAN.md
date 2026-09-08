@@ -4,7 +4,7 @@
 
 - Статус: **активен; обязательный release gate основного major-релиза**.
 - Текущая реализация: dependency tree, Sass framework boundary и package-owned Blade/JS presentation переведены на exact AdminLTE 4.9.1/Bootstrap 5.3.8/Popper 2.11.8 без jQuery и AdminLTE 3 Sass. Production/development profiles пересобраны, функциональный gate пройден, а размеры runtime фиксируются автоматическим отчётом.
-- Точка возобновления: добавить отдельные generator stubs для form element, widget, policy, module provider, Vue island и custom theme, затем проверить их в test application.
+- Точка возобновления: отдельно установить готовый Composer artifact в чистое Laravel-приложение без Node.js и проверить publish/runtime AdminLTE.
 - Общий platform/core scope находится в [`ADMIN_UI_MODERNIZATION_PLAN.md`](ADMIN_UI_MODERNIZATION_PLAN.md). Tailwind не входит в этот файл и ведётся в [`ADMIN_TAILWIND_THEME_PLAN.md`](ADMIN_TAILWIND_THEME_PLAN.md).
 - Каждый самостоятельный пункт: реализация, узкие tests затронутого contract, lint/format только изменённых sources, обновление этого файла, отдельный checkpoint-коммит и чистое рабочее дерево. Build выполняется только при изменении публикуемых assets; полный PHPUnit/Vitest/Playwright gate — один раз перед финальным release gate, не на каждом промежуточном checkpoint.
 
@@ -99,10 +99,10 @@ Lock checkpoint заменил root `popper@1` на `@popperjs/core@2.11.8`; exa
 
 - [x] Update README/theme guide with AdminLTE setup, custom properties, extra assets and application view overrides.
 - [x] Update migration guide for AdminLTE 3→4, Bootstrap 4→5 and removed jQuery hooks/plugins.
-- [ ] Update config matrix, PHPDoc/facades/interfaces, generated stubs and CHANGELOG.
+- [x] Update config matrix, PHPDoc/facades/interfaces, generated stubs and CHANGELOG.
   - [x] Public release docs, config matrix и CHANGELOG обновлены.
   - [x] PHPDoc публичных theme/asset contracts и facades обновлён; существующие install/section/provider stubs приведены к текущим assets, Font Awesome и Bootstrap 5.
-  - [ ] Добавить и проверить новые extension generator stubs.
+  - [x] Добавить и проверить новые extension generator stubs.
 - [x] Commit final production/development assets, manifest paths/checksums and bundle measurements.
 - [ ] Run clean lock-file build, complete PHP/frontend/browser suite and manual reference-screen smoke test.
 
@@ -129,3 +129,4 @@ Lock checkpoint заменил root `popper@1` на `@popperjs/core@2.11.8`; exa
 | 2026-09-08 | AdminLTE 4 final asset acceptance | Production/development profiles пересобраны из lock dependency tree; static gates подтверждают отсутствие jQuery package/runtime в JavaScript, maps и license sidecars. Полный PHP gate: 591 test, 2461 assertion, 11 skipped; frontend gate: Prettier/ESLint/Stylelint, 698 Vitest + 140 Playwright. Browser acceptance покрывает functional matrix, ARIA/keyboard/responsive и явный reduced-motion contract; исправлен cascade layer core motion tokens. Автоматический отчёт фиксирует 33 runtime-файла: production 1 890 962 bytes / 502 187 gzip, development 5 044 837 / 1 010 443; production относительно legacy baseline: −26.9% raw и −14.6% gzip. Config matrix: 113 keys (70 unchanged, 29 same key/new implementation, 14 theme-owned); legacy/minimal fixtures: 42/1. Следующая точка — release-документация и clean Composer application без Node.js. | текущий commit |
 | 2026-09-08 | Release documentation | README и основная документация описывают AdminLTE 4, готовые production/development profiles и no-build workflow. Единый upgrade guide связывает jQuery/DataTables/Vue/Blade/config/theme migration; CHANGELOG фиксирует breaking changes. Устаревшая граница legacy globals обновлена, а first-party assets содержит точную таблицу замен `KodiCMS\Assets`. Код и assets не менялись; следующий пункт — PHPDoc/public interfaces и generator stubs. | текущий commit |
 | 2026-09-08 | Public PHPDoc и legacy stubs | `ThemeInterface`, `AssetsInterface`, `MetaInterface` и first-party facades получили актуальные типы и IDE-visible public methods. Installation bootstrap использует first-party facades и стабильный `admin-default` handle; section/provider stubs используют Bootstrap 5 grid, Font Awesome 7 и PHP 8 signatures. Все девять PHP/stub files проходят `php -l`; следующий пункт — отдельные extension generator stubs. | текущий commit |
+| 2026-09-08 | Extension generator stubs | `sleepingowl:extension:make` генерирует form element+Blade, widget+Blade, policy, module provider, Vue island+Blade+asset provider и custom theme contract. Общий scaffold atomically проверяет collisions и требует `--force` для overwrite. PHP templates реально загружаются в test application; Vue stub использует только `Admin.Vue.runtime/register`, а provider — `MetaInterface`/`admin-vue-init`. Узкий gate: 5 tests, 51 assertion. Следующая точка — clean Composer application без Node.js. | текущий commit |

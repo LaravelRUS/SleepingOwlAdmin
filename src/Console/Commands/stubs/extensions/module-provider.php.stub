@@ -1,0 +1,22 @@
+<?php
+
+namespace DummyNamespace;
+
+use Illuminate\Contracts\Auth\Access\Gate;
+use Illuminate\Support\ServiceProvider;
+use SleepingOwl\Admin\Admin;
+
+final class DummyClass extends ServiceProvider
+{
+    public function register(): void
+    {
+        // Bind module services here. Do not resolve the selected theme in register().
+    }
+
+    public function boot(Admin $admin, Gate $gate): void
+    {
+        // $admin->registerSections([Model::class => Section::class]);
+        // $gate->policy(Section::class, SectionPolicy::class);
+        // $this->loadRoutesFrom(__DIR__.'/../../routes/admin.php');
+    }
+}
