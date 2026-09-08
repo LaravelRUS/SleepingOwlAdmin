@@ -4,7 +4,7 @@
 
 - Статус: основной package release gate закрыт; структуры TailwindTheme на shadcn/ui и третьей TablerTheme зафиксированы, pilot остаётся отложен.
 - Текущий этап: **этап 10 — package release readiness закрыт**; готовый Composer artifact, no-build workflow, оба asset profile и полный PHP/frontend/browser gate проверены.
-- Точка возобновления: следующий Tailwind checkpoint — design brief, token map и shadcn-to-`--soa-*` bridge по [`ADMIN_TAILWIND_THEME_PLAN.md`](ADMIN_TAILWIND_THEME_PLAN.md). Exact `shadcn@4.21.0` upstream и component inventory уже закреплены. Pilot требует отдельного разрешения на изменения `D:\domains\laluna.kit`; Vite остаётся отдельной post-release задачей.
+- Точка возобновления: следующий Tailwind checkpoint — прямой `TailwindTheme` skeleton, config selection и изолированный logical asset entry по [`ADMIN_TAILWIND_THEME_PLAN.md`](ADMIN_TAILWIND_THEME_PLAN.md). Upstream, inventory, design brief и token bridge уже закреплены. Pilot требует отдельного разрешения на изменения `D:\domains\laluna.kit`; Vite остаётся отдельной post-release задачей.
 - Рабочая ветка: `codex/remove-jquery-datatables2`.
 - Read-only reference project: `D:\domains\laluna.kit`; считать ранее собранный inventory достаточным, не сканировать проект/`Modules` повторно и обращаться только к конкретному файлу при точечной необходимости; не изменять и не запускать команды с побочными эффектами без отдельного разрешения.
 - База ветки: `ia11`, commit `17752e62`.

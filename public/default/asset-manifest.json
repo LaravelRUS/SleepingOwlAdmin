@@ -431,8 +431,8 @@
                     "styles": [
                         {
                             "file": "profiles/production/css/themes/tailwind.css",
-                            "version": "f5e8718a4d0371e1d28ea2371091f4cb",
-                            "checksum": "sha256:08db8b514f5602e5c7333d43cb9629a4ba9ee47064ffc1aa6bbdc95dce88178f"
+                            "version": "7cb515d7b34203d6970268060f464c72",
+                            "checksum": "sha256:1e57941ef4c8c8e6e7ea9d47965183a31ef53d5a69e77f4e9efa39762ca11118"
                         }
                     ]
                 }
@@ -867,13 +867,13 @@
                     "styles": [
                         {
                             "file": "profiles/development/css/themes/tailwind.css",
-                            "version": "2d2a4212bc17feccd85d04165c816b58",
-                            "checksum": "sha256:14684001c9aff6895929faef055db3da376fbd001bb193462f172f35b0478392"
+                            "version": "57d734c86760ae4264752aa702b32196",
+                            "checksum": "sha256:a6187efe57d2683a85caabc2817159e63727566cb66534d3b81d4fee959d3d0d"
                         }
                     ]
                 }
             }
         }
     },
-    "build_id": "sha256:88501ff7dfecd970d5f3433ab598a1000ad8a4693e9aab556c7b86b667272bfb"
+    "build_id": "sha256:d528aa6a08e8ce78725c339c2b2debec46da99313b17b6f9e46938c41f6c769b"
 }
