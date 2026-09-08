@@ -36,7 +36,7 @@ describe('Vue 3 runtime dependencies', () => {
         expect(packageJson.dependencies.vue).toBe('3.5.42')
         expect(packageJson.dependencies).not.toHaveProperty('@vue/compat')
         expect(packageJson.devDependencies['@vue/compiler-sfc']).toBe(packageJson.dependencies.vue)
-        expect(packageJson.devDependencies['vue-loader']).toMatch(/^\^16\./)
+        expect(packageJson.devDependencies['vue-loader']).toMatch(/^\^17\./)
         expect(packageLock.packages['node_modules/vue'].version).toBe(packageJson.dependencies.vue)
         expect(packageLock.packages).not.toHaveProperty('node_modules/@vue/compat')
     })
