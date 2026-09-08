@@ -10,11 +10,6 @@
         --soa-tooltip-radius: #{variables.$radius};
         --soa-tooltip-font-size: #{variables.$font-size};
         --soa-tooltip-line-height: #{variables.$line-height};
-        --soa-tooltip-shadow: #{variables.$shadow} #{colors.$shadow};
-    }
-
-    :root[data-color-scheme='dark'] {
-        --soa-tooltip-surface: #{colors.$dark-surface};
-        --soa-tooltip-text: #{colors.$dark-text};
+        --soa-tooltip-shadow: #{colors.$shadow};
     }
 }

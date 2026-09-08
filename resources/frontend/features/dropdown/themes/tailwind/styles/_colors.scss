@@ -1,10 +1,6 @@
-$surface: #fff !default;
-$text: #0f172a !default;
-$border: #cbd5e1 !default;
-$hover-surface: #f1f5f9 !default;
-$focus: #2563eb !default;
-$shadow: rgb(15 23 42 / 14%) !default;
-$dark-surface: #0f172a !default;
-$dark-text: #f8fafc !default;
-$dark-border: #334155 !default;
-$dark-hover-surface: #1e293b !default;
+$surface: var(--soa-elevated-surface-color) !default;
+$text: var(--soa-text-color) !default;
+$border: var(--soa-border-color) !default;
+$hover-surface: var(--soa-muted-surface-color) !default;
+$focus: var(--soa-focus-color) !default;
+$shadow: var(--soa-shadow-md) !default;

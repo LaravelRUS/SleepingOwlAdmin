@@ -8,7 +8,6 @@
         --soa-dropdown-border: #{colors.$border};
         --soa-dropdown-hover-surface: #{colors.$hover-surface};
         --soa-dropdown-focus: #{colors.$focus};
-        --soa-dropdown-shadow-color: #{colors.$shadow};
         --soa-dropdown-min-width: #{variables.$min-width};
         --soa-dropdown-offset: #{variables.$offset};
         --soa-dropdown-padding-block: #{variables.$padding-block};
@@ -20,13 +19,6 @@
         --soa-dropdown-font-size: #{variables.$font-size};
         --soa-dropdown-line-height: #{variables.$line-height};
         --soa-dropdown-focus-width: #{variables.$focus-width};
-        --soa-dropdown-shadow: #{variables.$shadow} #{colors.$shadow};
-    }
-
-    :root[data-color-scheme='dark'] {
-        --soa-dropdown-surface: #{colors.$dark-surface};
-        --soa-dropdown-text: #{colors.$dark-text};
-        --soa-dropdown-border: #{colors.$dark-border};
-        --soa-dropdown-hover-surface: #{colors.$dark-hover-surface};
+        --soa-dropdown-shadow: #{colors.$shadow};
     }
 }

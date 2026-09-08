@@ -55,4 +55,19 @@ final class ThemeTemplateAdapter extends Template
     {
         return '';
     }
+
+    public function getLogo(): mixed
+    {
+        return config('sleeping_owl.logo');
+    }
+
+    public function getLogoMini(): mixed
+    {
+        return config('sleeping_owl.logo_mini');
+    }
+
+    public function getMenuTop(): mixed
+    {
+        return config('sleeping_owl.menu_top');
+    }
 }

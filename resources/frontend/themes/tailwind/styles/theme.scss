@@ -1,7 +1,14 @@
+@use 'base';
 @use 'colors';
+@use 'components';
 @use 'custom-properties';
 @use 'shadcn-theme';
 @use 'variables';
 @layer sleepingowl-theme;
 @include custom-properties.define;
 @include shadcn-theme.define;
+
+@layer sleepingowl-theme {
+  @include base.styles;
+  @include components.styles;
+}

@@ -1,5 +1,3 @@
-$surface: #111827 !default;
-$text: #f9fafb !default;
-$dark-surface: #f9fafb !default;
-$dark-text: #111827 !default;
-$shadow: rgb(15 23 42 / 18%) !default;
+$surface: var(--soa-sidebar-bg) !default;
+$text: var(--soa-sidebar-text-color) !default;
+$shadow: var(--soa-shadow-md) !default;

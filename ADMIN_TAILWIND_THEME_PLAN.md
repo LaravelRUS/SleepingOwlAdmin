@@ -2,9 +2,9 @@
 
 ## Статус и границы
 
-- Статус: **прямой `TailwindTheme` skeleton готов; следующий checkpoint — Blade primitives и layout/navigation shell**.
+- Статус: **Blade primitives и layout/navigation shell готовы; следующий checkpoint — displays, DataTables 3 presentation и actions**.
 - Выбранная основа: **shadcn/ui** как registry component recipes и визуальный язык TailwindTheme. Это не подключение React-приложения и не новый browser runtime.
-- Следующий checkpoint: создать Blade primitives и полноценный layout/navigation shell с сохранением logical paths и hooks.
+- Следующий checkpoint: зеркалировать display/column logical views, собрать table/action primitives и подключить только после их render-contract gate `feature:table:theme:tailwind` с `table-presentation` capability.
 - Основа: завершённый публичный contract из [`ADMIN_UI_MODERNIZATION_PLAN.md`](ADMIN_UI_MODERNIZATION_PLAN.md) — headless core, `ThemeInterface`, logical asset manifest, Blade-first views, Vue 3 islands, DataTables 3 и no-build publication.
 - Эта тема не блокирует основной major-релиз и не меняет compatibility contract существующей `AdminLTETheme`.
 - Каждый самостоятельный пункт выполняется тем же циклом: реализация, релевантные проверки, обновление этого файла, отдельный checkpoint-коммит и чистое дерево.
@@ -111,6 +111,8 @@ docs/modernization/
 
 ## 2. Реализовать Blade-first presentation
 
+- [x] Создать первый theme-owned slice: `components/ui` primitives для button/alert/badge/breadcrumb/separator/tooltip, sidebar pattern и logical layout/header/navigation/messages/helper shell.
+- [x] Сохранить в shell прямую структуру `.nav-item > .nav-link + .nav-treeview`, config classes, пользовательские attributes и hooks `data-widget`, `data-lte-toggle`, `data-toggle`, `data-bs-toggle`, `data-dismiss`, `data-bs-dismiss`, tooltip template и sidebar state classes.
 - [ ] Создать полный theme-owned набор layout, navigation, display, table, filter, form, action, widget, auth и helper views.
 - [ ] Сохранить логические пути views и приоритет application overrides.
 - [ ] Передавать Tailwind classes/options Vue islands только из Blade props; не зашивать utilities в Vue/feature JavaScript.
@@ -122,18 +124,19 @@ docs/modernization/
 - [ ] Зафиксировать поддерживаемую Tailwind 4.x версию и build dependencies.
 - [ ] Добавить `tailwind.input.css`, preset/source/content configuration и отдельный theme build entry.
 - [ ] Определить theme-owned `_colors.scss`, `_variables.scss`, handwritten `theme.scss` и публичные `--soa-*` defaults; generated utility layer не редактировать вручную.
-- [ ] Реализовать dark mode через переопределение custom properties на theme root/container без копии component stylesheet.
-- [ ] Поддержать валидированный `sidebar_background_color` через `--soa-sidebar-bg`; `null` использует default темы.
+- [x] Реализовать dark mode через переопределение custom properties и небольшой theme-owned toggle runtime без Bootstrap/AdminLTE.
+- [x] Поддержать валидированный `sidebar_background_color` через canonical `--soa-sidebar-bg`; shell и sidebar adapter не вводят вторую палитру.
 - [ ] Собрать полный стандартный production CSS и development profile; consumer не устанавливает Tailwind CLI и не выполняет content scan.
 - [ ] Доказать, что `theme:tailwind` и её adapters не содержат Bootstrap/AdminLTE CSS, JavaScript, fonts или transitive runtime dependencies.
 
 ## 4. Закрыть feature presentation
 
+- [x] Закрыть shell subset alerts/messages/notifications, dropdowns, tooltips и sidebar: presentation использует canonical `--soa-*`, а behavior остаётся в общих feature drivers.
 - [ ] Реализовать alerts, dropdowns, tooltips, tabs, sidebar/tree, messages и notifications.
 - [ ] Реализовать DataTables 3 и Responsive presentation, filters, pagination, processing/error и inline editing.
 - [ ] Реализовать date/time/daterange, select/multiselect, uploads, gallery/lightbox, WYSIWYG wrappers и related elements.
 - [ ] Реализовать tree success/error notification adapter через публичные native events без копии tree driver logic.
-- [ ] Добавить asset health footer partial: `role="status"`, локализованный текст, Sass/custom-property presentation, без modal/toast.
+- [x] Добавить asset health footer partial: `role="status"`, локализованный текст, Sass/custom-property presentation, без modal/toast.
 
 ## 5. Customisation и no-build workflow
 
@@ -164,3 +167,4 @@ docs/modernization/
 | 2026-09-08 | Upstream и component inventory | Закреплены `shadcn@4.21.0`, tag object `5563a464…`, source commit `7c9eaba1…`, npm checksums, Node requirement, MIT license hash/notice и безопасный maintainer-only update workflow. Inventory выбирает 30 `new-york-v4` recipes, задаёт Blade owner, обязательные states, view mapping и существующего владельца behavior; React/Radix/lucide runtime и `.tsx` не включаются. MIT разрешает готовый CSS в Composer artifact при сохранении notice. Документационный checkpoint: build/tests не запускались; identifiers, source paths и license проверены по exact upstream checkout. Следующая точка — design brief, token map и shadcn-to-`--soa-*` bridge. | текущий commit |
 | 2026-09-08 | Design brief и token bridge | Зафиксирован data-heavy «operator's ledger»: системная multilingual typography без font download, cool work surfaces, compact geometry и один функциональный motif — 3px logical ledger rail для active/selected/error context. Light/dark colors, type/spacing/radius/motion и shadows разделены по `_colors.scss`/`_variables.scss`; runtime contract расширен canonical `--soa-*`, 27 shadcn/Tailwind aliases не имеют собственных values. Оба профиля пересобраны: theme CSS production 4 470 bytes, development 5 041 bytes; targeted Stylelint, forbidden framework/runtime scan и asset gate 9 tests / 20 assertions прошли. Следующая точка — прямой `TailwindTheme` skeleton/config/isolated logical entry. | текущий commit |
 | 2026-09-08 | Прямой TailwindTheme skeleton | `TailwindTheme` напрямую реализует публичный `ThemeInterface`, имеет id `tailwind`, отдельный `sleeping_owl_tailwind::default` namespace и объявляет только `shared:icons`/compatibility/Vue/modules плюс base `theme:tailwind`; до готовности presentation не заявляет feature adapters и capabilities кроме icons. Существующий `sleeping_owl.template` выбирает тему через `ThemeTemplateAdapter`/`ThemeRuntimeAssets`; общий service-provider hook сохранён, invalid config не падает обратно в AdminLTE. Узкий gate: PHP syntax и 13 tests / 63 assertions; assets не менялись, build не запускался. Следующая точка — Blade primitives и layout/navigation shell. | текущий commit |
+| 2026-09-08 | Blade primitives и layout/navigation shell | Созданы shadcn-derived button/alert/badge/breadcrumb/separator/tooltip primitives, sidebar pattern и theme-owned logical shell: base/inner layout, header, breadcrumbs, navigation tree, четыре message type, asset-health и helpers. Сохранены config classes, user attributes, direct sidebar selectors, public legacy/new `data-*` hooks, ARIA, mobile/collapsed state и 3px ledger rail. Dropdown/sidebar/tooltip adapters теперь ссылаются только на canonical `--soa-*`; Tailwind заявляет только готовые dropdown/sidebar/tooltip/notification/icons capabilities. Theme-owned runtime сохраняет light/dark mode в localStorage/cookie без Bootstrap/AdminLTE. Оба profiles пересобраны: production theme CSS/JS 12 952/1 287 bytes, development 15 596/6 751 bytes; production adapters dropdown/sidebar/tooltip 1 881/2 227/701 bytes. Gate: Stylelint, forbidden runtime/framework scan, PHP 21 tests / 87 assertions и frontend 70 tests прошли; manifest checksums/asset health согласованы. Следующая точка — displays, DataTables 3 presentation и actions. | текущий commit |

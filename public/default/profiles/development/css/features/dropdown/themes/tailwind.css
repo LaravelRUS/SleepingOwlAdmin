@@ -1,10 +1,9 @@
 :root {
-  --soa-dropdown-surface: #fff;
-  --soa-dropdown-text: #0f172a;
-  --soa-dropdown-border: #cbd5e1;
-  --soa-dropdown-hover-surface: #f1f5f9;
-  --soa-dropdown-focus: #2563eb;
-  --soa-dropdown-shadow-color: rgba(15, 23, 42, 0.14);
+  --soa-dropdown-surface: var(--soa-elevated-surface-color);
+  --soa-dropdown-text: var(--soa-text-color);
+  --soa-dropdown-border: var(--soa-border-color);
+  --soa-dropdown-hover-surface: var(--soa-muted-surface-color);
+  --soa-dropdown-focus: var(--soa-focus-color);
   --soa-dropdown-min-width: 12rem;
   --soa-dropdown-offset: 0.375rem;
   --soa-dropdown-padding-block: 0.375rem;
@@ -16,14 +15,7 @@
   --soa-dropdown-font-size: 0.875rem;
   --soa-dropdown-line-height: 1.25rem;
   --soa-dropdown-focus-width: 2px;
-  --soa-dropdown-shadow: 0 0.75rem 1.75rem rgba(15, 23, 42, 0.14);
-}
-
-:root[data-color-scheme=dark] {
-  --soa-dropdown-surface: #0f172a;
-  --soa-dropdown-text: #f8fafc;
-  --soa-dropdown-border: #334155;
-  --soa-dropdown-hover-surface: #1e293b;
+  --soa-dropdown-shadow: var(--soa-shadow-md);
 }
 
 @layer sleepingowl-theme.dropdown {

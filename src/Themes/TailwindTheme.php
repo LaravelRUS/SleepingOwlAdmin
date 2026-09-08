@@ -6,6 +6,12 @@ use SleepingOwl\Admin\Contracts\Theme\ThemeInterface;
 
 final class TailwindTheme implements ThemeInterface
 {
+    private const FEATURE_ADAPTERS = [
+        'dropdown',
+        'sidebar',
+        'tooltip',
+    ];
+
     public function id(): string
     {
         return 'tailwind';
@@ -24,6 +30,10 @@ final class TailwindTheme implements ThemeInterface
             'shared:modules',
             'shared:vue',
             'theme:tailwind',
+            ...array_map(
+                fn (string $feature): string => "feature:{$feature}:theme:{$this->id()}",
+                self::FEATURE_ADAPTERS
+            ),
         ];
     }
 
@@ -34,6 +44,15 @@ final class TailwindTheme implements ThemeInterface
 
     public function capabilities(): array
     {
-        return [ThemeCapability::Icons->value];
+        return array_map(
+            fn (ThemeCapability $capability): string => $capability->value,
+            [
+                ThemeCapability::Tooltip,
+                ThemeCapability::Dropdown,
+                ThemeCapability::Notification,
+                ThemeCapability::Icons,
+                ThemeCapability::Sidebar,
+            ]
+        );
     }
 }

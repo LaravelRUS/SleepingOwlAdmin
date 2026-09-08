@@ -78,6 +78,19 @@ describe('Sass custom property namespaces', () => {
             [],
         )
     })
+
+    it('limits shadcn aliases to the Tailwind bridge and canonical --soa-* values', () => {
+        const source = readSource('resources/frontend/themes/tailwind/styles/_shadcn-theme.scss')
+        const aliases = customPropertyDeclarations(source)
+        const bridgedAliases = [
+            ...source.matchAll(
+                /(--(?:color|font|radius|shadow)-[a-z0-9-]+)\s*:\s*var\((--soa-[a-z0-9-]+)\)/gi,
+            ),
+        ].map((match) => match[1])
+
+        expect(aliases.length).toBeGreaterThan(0)
+        expect(bridgedAliases).toEqual(aliases)
+    })
 })
 
 describe('Core Sass boundary', () => {
@@ -117,6 +130,10 @@ function customPropertyDeclarations(source) {
 
 function allowedCustomProperty({ name, path }) {
     if (name.startsWith('--soa-')) return true
+
+    if (path === 'themes/tailwind/styles/_shadcn-theme.scss') {
+        return /^--(?:color|font|radius|shadow)-/.test(name)
+    }
 
     return path.endsWith('/_date-picker.scss') && name.startsWith('--adp-')
 }

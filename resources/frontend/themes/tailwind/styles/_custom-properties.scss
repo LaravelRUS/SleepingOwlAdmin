@@ -63,6 +63,11 @@
     --soa-fast-transition-duration: #{variables.$fast-transition-duration};
     --soa-slow-transition-duration: #{variables.$slow-transition-duration};
     --soa-reduced-motion-duration: #{variables.$reduced-motion-duration};
+    --soa-header-height: #{variables.$header-height};
+    --soa-shell-max-width: #{variables.$shell-max-width};
+    --soa-header-z-index: #{variables.$header-z-index};
+    --soa-sidebar-z-index: #{variables.$sidebar-z-index};
+    --soa-overlay-z-index: #{variables.$overlay-z-index};
   }
 
   :root[data-color-scheme='dark'] {
