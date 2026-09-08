@@ -39,7 +39,7 @@ var __webpack_exports__ = {};
   \*****************************************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "THEME_ID": () => (/* binding */ THEME_ID)
+/* harmony export */   THEME_ID: () => (/* binding */ THEME_ID)
 /* harmony export */ });
 var THEME_ID = 'tailwind';
 /******/ })()

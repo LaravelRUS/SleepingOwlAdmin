@@ -1,25 +1,10 @@
 const {
-    mountTableAutoUpdates,
-} = require('../../../../frontend/features/table/autoupdate/table-auto-update')
+    installTableAutoUpdates,
+} = require('../../../../frontend/features/table/runtime/install-table-auto-updates')
+const dataTables = require('./datatables')
 
-let controller = null
-
-function mountAutoUpdate() {
-    const host = document.querySelector('[data-admin-table-autoupdate]')
-    if (!host) return
-
-    controller?.destroy()
-    controller = mountTableAutoUpdates(host, {
-        ProgressBar: globalThis.ProgressBar,
-        scheduler: window,
-        tables: Admin.Tables,
-    })
-}
-
-if (document.readyState === 'complete') {
-    globalThis.queueMicrotask(mountAutoUpdate)
-} else {
-    window.addEventListener('load', mountAutoUpdate, { once: true })
-}
-
-module.exports = { mountAutoUpdate }
+module.exports = installTableAutoUpdates(Admin, {
+    engine: dataTables.engine,
+    ProgressBar: globalThis.ProgressBar,
+    scheduler: window,
+})

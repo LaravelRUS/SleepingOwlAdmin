@@ -2,15 +2,15 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./resources/frontend/core/assets/runtime-assets.js":
+/***/ "./resources/frontend/core/assets/runtime-assets.js"
 /*!**********************************************************!*\
   !*** ./resources/frontend/core/assets/runtime-assets.js ***!
   \**********************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "createRuntimeAssetLoader": () => (/* binding */ createRuntimeAssetLoader)
+/* harmony export */   createRuntimeAssetLoader: () => (/* binding */ createRuntimeAssetLoader)
 /* harmony export */ });
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -162,20 +162,20 @@ function assertFunction(value, label) {
   }
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/core/data/island-props.js":
+/***/ "./resources/frontend/core/data/island-props.js"
 /*!******************************************************!*\
   !*** ./resources/frontend/core/data/island-props.js ***!
   \******************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "parseBoolean": () => (/* binding */ parseBoolean),
-/* harmony export */   "parseJsonProps": () => (/* binding */ parseJsonProps),
-/* harmony export */   "parseNumber": () => (/* binding */ parseNumber),
-/* harmony export */   "readDataset": () => (/* binding */ readDataset)
+/* harmony export */   parseBoolean: () => (/* binding */ parseBoolean),
+/* harmony export */   parseJsonProps: () => (/* binding */ parseJsonProps),
+/* harmony export */   parseNumber: () => (/* binding */ parseNumber),
+/* harmony export */   readDataset: () => (/* binding */ readDataset)
 /* harmony export */ });
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
@@ -237,19 +237,19 @@ function parseDatasetValue(value, type, name) {
   return parser(value, name);
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/core/dom/forms.js":
+/***/ "./resources/frontend/core/dom/forms.js"
 /*!**********************************************!*\
   !*** ./resources/frontend/core/dom/forms.js ***!
   \**********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "createPostForm": () => (/* binding */ createPostForm),
-/* harmony export */   "submitForm": () => (/* binding */ submitForm),
-/* harmony export */   "submitPostForm": () => (/* binding */ submitPostForm)
+/* harmony export */   createPostForm: () => (/* binding */ createPostForm),
+/* harmony export */   submitForm: () => (/* binding */ submitForm),
+/* harmony export */   submitPostForm: () => (/* binding */ submitPostForm)
 /* harmony export */ });
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
@@ -313,18 +313,18 @@ function assertParameters(parameters) {
   }
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/core/dom/listeners.js":
+/***/ "./resources/frontend/core/dom/listeners.js"
 /*!**************************************************!*\
   !*** ./resources/frontend/core/dom/listeners.js ***!
   \**************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "delegate": () => (/* binding */ delegate),
-/* harmony export */   "listen": () => (/* binding */ listen)
+/* harmony export */   delegate: () => (/* binding */ delegate),
+/* harmony export */   listen: () => (/* binding */ listen)
 /* harmony export */ });
 function listen(target, type, listener, options) {
   assertEventTarget(target);
@@ -388,18 +388,18 @@ function assertListener(listener) {
   }
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/core/events/event-bus.js":
+/***/ "./resources/frontend/core/events/event-bus.js"
 /*!*****************************************************!*\
   !*** ./resources/frontend/core/events/event-bus.js ***!
   \*****************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "AdminEventBus": () => (/* binding */ AdminEventBus),
-/* harmony export */   "createEventBus": () => (/* binding */ createEventBus)
+/* harmony export */   AdminEventBus: () => (/* binding */ AdminEventBus),
+/* harmony export */   createEventBus: () => (/* binding */ createEventBus)
 /* harmony export */ });
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
@@ -577,17 +577,17 @@ function assertCallback(callback) {
   }
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/core/http/csrf-token.js":
+/***/ "./resources/frontend/core/http/csrf-token.js"
 /*!****************************************************!*\
   !*** ./resources/frontend/core/http/csrf-token.js ***!
   \****************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "readCsrfToken": () => (/* binding */ readCsrfToken)
+/* harmony export */   readCsrfToken: () => (/* binding */ readCsrfToken)
 /* harmony export */ });
 function readCsrfToken() {
   var _document$querySelect;
@@ -596,19 +596,19 @@ function readCsrfToken() {
   return typeof content === 'string' && content.length > 0 ? content : null;
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/core/http/http-client.js":
+/***/ "./resources/frontend/core/http/http-client.js"
 /*!*****************************************************!*\
   !*** ./resources/frontend/core/http/http-client.js ***!
   \*****************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "HttpClient": () => (/* binding */ HttpClient),
-/* harmony export */   "HttpError": () => (/* binding */ HttpError),
-/* harmony export */   "createHttpClient": () => (/* binding */ createHttpClient)
+/* harmony export */   HttpClient: () => (/* binding */ HttpClient),
+/* harmony export */   HttpError: () => (/* binding */ HttpError),
+/* harmony export */   createHttpClient: () => (/* binding */ createHttpClient)
 /* harmony export */ });
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
@@ -783,19 +783,19 @@ function assertOptions(options) {
   }
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/core/lifecycle/component-lifecycle.js":
+/***/ "./resources/frontend/core/lifecycle/component-lifecycle.js"
 /*!******************************************************************!*\
   !*** ./resources/frontend/core/lifecycle/component-lifecycle.js ***!
   \******************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "ComponentLifecycle": () => (/* binding */ ComponentLifecycle),
-/* harmony export */   "componentMountSkipped": () => (/* binding */ componentMountSkipped),
-/* harmony export */   "createComponentLifecycle": () => (/* binding */ createComponentLifecycle)
+/* harmony export */   ComponentLifecycle: () => (/* binding */ ComponentLifecycle),
+/* harmony export */   componentMountSkipped: () => (/* binding */ componentMountSkipped),
+/* harmony export */   createComponentLifecycle: () => (/* binding */ createComponentLifecycle)
 /* harmony export */ });
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -1014,18 +1014,18 @@ function assertNonEmptyString(value, field) {
   }
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/core/runtime/admin-core.js":
+/***/ "./resources/frontend/core/runtime/admin-core.js"
 /*!*******************************************************!*\
   !*** ./resources/frontend/core/runtime/admin-core.js ***!
   \*******************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "createAdminCore": () => (/* binding */ createAdminCore),
-/* harmony export */   "installAdminCore": () => (/* binding */ installAdminCore)
+/* harmony export */   createAdminCore: () => (/* binding */ createAdminCore),
+/* harmony export */   installAdminCore: () => (/* binding */ installAdminCore)
 /* harmony export */ });
 /* harmony import */ var _assets_runtime_assets_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../assets/runtime-assets.js */ "./resources/frontend/core/assets/runtime-assets.js");
 /* harmony import */ var _data_island_props_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../data/island-props.js */ "./resources/frontend/core/data/island-props.js");
@@ -1142,18 +1142,18 @@ function assertTarget(target) {
   }
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/core/storage/storage-repository.js":
+/***/ "./resources/frontend/core/storage/storage-repository.js"
 /*!***************************************************************!*\
   !*** ./resources/frontend/core/storage/storage-repository.js ***!
   \***************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "StorageRepository": () => (/* binding */ StorageRepository),
-/* harmony export */   "createStorageRepository": () => (/* binding */ createStorageRepository)
+/* harmony export */   StorageRepository: () => (/* binding */ StorageRepository),
+/* harmony export */   createStorageRepository: () => (/* binding */ createStorageRepository)
 /* harmony export */ });
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
@@ -1282,19 +1282,19 @@ function assertKey(key) {
   }
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/core/tables/table-registry.js":
+/***/ "./resources/frontend/core/tables/table-registry.js"
 /*!**********************************************************!*\
   !*** ./resources/frontend/core/tables/table-registry.js ***!
   \**********************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "TableRegistry": () => (/* binding */ TableRegistry),
-/* harmony export */   "assertTableAdapter": () => (/* binding */ assertTableAdapter),
-/* harmony export */   "createTableRegistry": () => (/* binding */ createTableRegistry)
+/* harmony export */   TableRegistry: () => (/* binding */ TableRegistry),
+/* harmony export */   assertTableAdapter: () => (/* binding */ assertTableAdapter),
+/* harmony export */   createTableRegistry: () => (/* binding */ createTableRegistry)
 /* harmony export */ });
 function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
@@ -1455,7 +1455,7 @@ function invokeAdapters(registry, method, element) {
   });
 }
 
-/***/ })
+/***/ }
 
 /******/ 	});
 /************************************************************************/
@@ -1477,6 +1477,12 @@ function invokeAdapters(registry, method, element) {
 /******/ 		};
 /******/ 	
 /******/ 		// Execute the module function
+/******/ 		if (!(moduleId in __webpack_modules__)) {
+/******/ 			delete __webpack_module_cache__[moduleId];
+/******/ 			var e = new Error("Cannot find module '" + moduleId + "'");
+/******/ 			e.code = 'MODULE_NOT_FOUND';
+/******/ 			throw e;
+/******/ 		}
 /******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
 /******/ 	
 /******/ 		// Return the exports of the module
@@ -1514,7 +1520,7 @@ function invokeAdapters(registry, method, element) {
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+// This entry needs to be wrapped in an IIFE because it needs to be isolated against other modules in the chunk.
 (() => {
 /*!********************************************!*\
   !*** ./resources/frontend/core/browser.js ***!

@@ -81,13 +81,13 @@ function inspectRuntime(page) {
     return page.evaluate(() => {
         const table = globalThis.document.querySelector('#logical-table')
         const adapter = globalThis.Admin.Tables.get(table)
-        const autoUpdateControl = table.previousElementSibling
+        const autoUpdateControl = table.closest('.dt-container')?.querySelector('.autoupdater-bar')
 
         return {
             adapter: Boolean(adapter?.engineInstance),
             autoUpdate: table.classList.contains('autoupdater'),
             autoUpdateControl: {
-                beforeTable: autoUpdateControl?.nextElementSibling === table,
+                layout: autoUpdateControl?.parentElement?.classList.contains('dt-layout-full'),
                 label: autoUpdateControl?.querySelector('.project-auto-update-label')?.textContent,
                 state: autoUpdateControl?.dataset.state,
             },
@@ -123,7 +123,7 @@ function expectedRuntime() {
         adapter: true,
         autoUpdate: true,
         autoUpdateControl: {
-            beforeTable: true,
+            layout: true,
             label: 'Pause project updates',
             state: 'running',
         },
@@ -171,7 +171,7 @@ async function exerciseFilter(page, request) {
 function runDynamicLifecycle() {
     const inspectAutoUpdate = (table) => ({
         control: Boolean(
-            table.previousElementSibling?.classList.contains('project-auto-update-shell'),
+            table.closest('.dt-container')?.querySelector('.project-auto-update-shell'),
         ),
         enabled: table.classList.contains('autoupdater'),
     })

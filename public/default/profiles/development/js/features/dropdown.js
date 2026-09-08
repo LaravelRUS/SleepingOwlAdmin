@@ -2,25 +2,25 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./resources/frontend/features/dropdown/dropdown-elements.js":
+/***/ "./resources/frontend/features/dropdown/dropdown-elements.js"
 /*!*******************************************************************!*\
   !*** ./resources/frontend/features/dropdown/dropdown-elements.js ***!
   \*******************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "DROPDOWN_CONTAINER_SELECTOR": () => (/* binding */ DROPDOWN_CONTAINER_SELECTOR),
-/* harmony export */   "DROPDOWN_ITEM_SELECTOR": () => (/* binding */ DROPDOWN_ITEM_SELECTOR),
-/* harmony export */   "DROPDOWN_MENU_SELECTOR": () => (/* binding */ DROPDOWN_MENU_SELECTOR),
-/* harmony export */   "DROPDOWN_TOGGLE_SELECTOR": () => (/* binding */ DROPDOWN_TOGGLE_SELECTOR),
-/* harmony export */   "collectDropdownToggles": () => (/* binding */ collectDropdownToggles),
-/* harmony export */   "dropdownContext": () => (/* binding */ dropdownContext),
-/* harmony export */   "dropdownItems": () => (/* binding */ dropdownItems),
-/* harmony export */   "findDropdownItem": () => (/* binding */ findDropdownItem),
-/* harmony export */   "findDropdownToggle": () => (/* binding */ findDropdownToggle),
-/* harmony export */   "isDropdownDisabled": () => (/* binding */ isDropdownDisabled),
-/* harmony export */   "isDropdownFormControl": () => (/* binding */ isDropdownFormControl)
+/* harmony export */   DROPDOWN_CONTAINER_SELECTOR: () => (/* binding */ DROPDOWN_CONTAINER_SELECTOR),
+/* harmony export */   DROPDOWN_ITEM_SELECTOR: () => (/* binding */ DROPDOWN_ITEM_SELECTOR),
+/* harmony export */   DROPDOWN_MENU_SELECTOR: () => (/* binding */ DROPDOWN_MENU_SELECTOR),
+/* harmony export */   DROPDOWN_TOGGLE_SELECTOR: () => (/* binding */ DROPDOWN_TOGGLE_SELECTOR),
+/* harmony export */   collectDropdownToggles: () => (/* binding */ collectDropdownToggles),
+/* harmony export */   dropdownContext: () => (/* binding */ dropdownContext),
+/* harmony export */   dropdownItems: () => (/* binding */ dropdownItems),
+/* harmony export */   findDropdownItem: () => (/* binding */ findDropdownItem),
+/* harmony export */   findDropdownToggle: () => (/* binding */ findDropdownToggle),
+/* harmony export */   isDropdownDisabled: () => (/* binding */ isDropdownDisabled),
+/* harmony export */   isDropdownFormControl: () => (/* binding */ isDropdownFormControl)
 /* harmony export */ });
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -101,18 +101,18 @@ function dropdownTargetId(toggle) {
   return target.startsWith('#') ? target.slice(1) : '';
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/dropdown/dropdown-navigation.js":
+/***/ "./resources/frontend/features/dropdown/dropdown-navigation.js"
 /*!*********************************************************************!*\
   !*** ./resources/frontend/features/dropdown/dropdown-navigation.js ***!
   \*********************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "DROPDOWN_NAVIGATION_KEYS": () => (/* binding */ DROPDOWN_NAVIGATION_KEYS),
-/* harmony export */   "dropdownNavigationTarget": () => (/* binding */ dropdownNavigationTarget)
+/* harmony export */   DROPDOWN_NAVIGATION_KEYS: () => (/* binding */ DROPDOWN_NAVIGATION_KEYS),
+/* harmony export */   dropdownNavigationTarget: () => (/* binding */ dropdownNavigationTarget)
 /* harmony export */ });
 var DROPDOWN_NAVIGATION_KEYS = new Set(['ArrowDown', 'ArrowUp', 'End', 'Home']);
 function dropdownNavigationTarget(items, current, key) {
@@ -124,20 +124,20 @@ function dropdownNavigationTarget(items, current, key) {
   return items[index < 0 ? items.length - 1 : (index - 1 + items.length) % items.length];
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/dropdown/dropdown-state.js":
+/***/ "./resources/frontend/features/dropdown/dropdown-state.js"
 /*!****************************************************************!*\
   !*** ./resources/frontend/features/dropdown/dropdown-state.js ***!
   \****************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "closeDropdown": () => (/* binding */ closeDropdown),
-/* harmony export */   "normalizeDropdown": () => (/* binding */ normalizeDropdown),
-/* harmony export */   "openDropdown": () => (/* binding */ openDropdown),
-/* harmony export */   "resetDropdown": () => (/* binding */ resetDropdown)
+/* harmony export */   closeDropdown: () => (/* binding */ closeDropdown),
+/* harmony export */   normalizeDropdown: () => (/* binding */ normalizeDropdown),
+/* harmony export */   openDropdown: () => (/* binding */ openDropdown),
+/* harmony export */   resetDropdown: () => (/* binding */ resetDropdown)
 /* harmony export */ });
 function openDropdown(state, context) {
   var _state$current;
@@ -191,17 +191,17 @@ function dispatchDropdownEvent(context, name) {
   }));
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/dropdown/dropdowns.js":
+/***/ "./resources/frontend/features/dropdown/dropdowns.js"
 /*!***********************************************************!*\
   !*** ./resources/frontend/features/dropdown/dropdowns.js ***!
   \***********************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "mountDropdowns": () => (/* binding */ mountDropdowns)
+/* harmony export */   mountDropdowns: () => (/* binding */ mountDropdowns)
 /* harmony export */ });
 /* harmony import */ var _dropdown_elements_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./dropdown-elements.js */ "./resources/frontend/features/dropdown/dropdown-elements.js");
 /* harmony import */ var _dropdown_navigation_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./dropdown-navigation.js */ "./resources/frontend/features/dropdown/dropdown-navigation.js");
@@ -348,19 +348,19 @@ function assertRoot(root) {
   }
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/dropdown/install-dropdowns.js":
+/***/ "./resources/frontend/features/dropdown/install-dropdowns.js"
 /*!*******************************************************************!*\
   !*** ./resources/frontend/features/dropdown/install-dropdowns.js ***!
   \*******************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "DROPDOWN_COMPONENT": () => (/* binding */ DROPDOWN_COMPONENT),
-/* harmony export */   "DROPDOWN_ROOT_SELECTOR": () => (/* binding */ DROPDOWN_ROOT_SELECTOR),
-/* harmony export */   "installDropdowns": () => (/* binding */ installDropdowns)
+/* harmony export */   DROPDOWN_COMPONENT: () => (/* binding */ DROPDOWN_COMPONENT),
+/* harmony export */   DROPDOWN_ROOT_SELECTOR: () => (/* binding */ DROPDOWN_ROOT_SELECTOR),
+/* harmony export */   installDropdowns: () => (/* binding */ installDropdowns)
 /* harmony export */ });
 /* harmony import */ var _dropdowns_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./dropdowns.js */ "./resources/frontend/features/dropdown/dropdowns.js");
 
@@ -420,7 +420,7 @@ function assertAdmin(admin) {
   }
 }
 
-/***/ })
+/***/ }
 
 /******/ 	});
 /************************************************************************/
@@ -442,6 +442,12 @@ function assertAdmin(admin) {
 /******/ 		};
 /******/ 	
 /******/ 		// Execute the module function
+/******/ 		if (!(moduleId in __webpack_modules__)) {
+/******/ 			delete __webpack_module_cache__[moduleId];
+/******/ 			var e = new Error("Cannot find module '" + moduleId + "'");
+/******/ 			e.code = 'MODULE_NOT_FOUND';
+/******/ 			throw e;
+/******/ 		}
 /******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
 /******/ 	
 /******/ 		// Return the exports of the module
@@ -479,14 +485,14 @@ function assertAdmin(admin) {
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+// This entry needs to be wrapped in an IIFE because it needs to be isolated against other modules in the chunk.
 (() => {
 /*!*********************************************************!*\
   !*** ./resources/frontend/features/dropdown/browser.js ***!
   \*********************************************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "bootDropdowns": () => (/* binding */ bootDropdowns)
+/* harmony export */   bootDropdowns: () => (/* binding */ bootDropdowns)
 /* harmony export */ });
 /* harmony import */ var _install_dropdowns_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./install-dropdowns.js */ "./resources/frontend/features/dropdown/install-dropdowns.js");
 

@@ -10,7 +10,7 @@ return [
     | Displayed footer block.
     |
     */
-    'show_footer' => false,
+    'show_footer' => true,
     'footer_text' => 'All rights reserved',
 
     /*

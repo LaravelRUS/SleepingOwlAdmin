@@ -2,18 +2,18 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./resources/frontend/features/tabs/install-tabs.js":
+/***/ "./resources/frontend/features/tabs/install-tabs.js"
 /*!**********************************************************!*\
   !*** ./resources/frontend/features/tabs/install-tabs.js ***!
   \**********************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "TABS_COMPONENT": () => (/* binding */ TABS_COMPONENT),
-/* harmony export */   "TABS_ROOT_SELECTOR": () => (/* binding */ TABS_ROOT_SELECTOR),
-/* harmony export */   "createTabsDefinition": () => (/* binding */ createTabsDefinition),
-/* harmony export */   "installTabs": () => (/* binding */ installTabs)
+/* harmony export */   TABS_COMPONENT: () => (/* binding */ TABS_COMPONENT),
+/* harmony export */   TABS_ROOT_SELECTOR: () => (/* binding */ TABS_ROOT_SELECTOR),
+/* harmony export */   createTabsDefinition: () => (/* binding */ createTabsDefinition),
+/* harmony export */   installTabs: () => (/* binding */ installTabs)
 /* harmony export */ });
 /* harmony import */ var _tabs_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./tabs.js */ "./resources/frontend/features/tabs/tabs.js");
 
@@ -73,24 +73,24 @@ function assertFunction(object, method, message) {
   if (typeof (object === null || object === void 0 ? void 0 : object[method]) !== 'function') throw new TypeError(message);
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/tabs/tab-elements.js":
+/***/ "./resources/frontend/features/tabs/tab-elements.js"
 /*!**********************************************************!*\
   !*** ./resources/frontend/features/tabs/tab-elements.js ***!
   \**********************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "TAB_LIST_SELECTOR": () => (/* binding */ TAB_LIST_SELECTOR),
-/* harmony export */   "TAB_SELECTOR": () => (/* binding */ TAB_SELECTOR),
-/* harmony export */   "collectTabLists": () => (/* binding */ collectTabLists),
-/* harmony export */   "findTab": () => (/* binding */ findTab),
-/* harmony export */   "findTabList": () => (/* binding */ findTabList),
-/* harmony export */   "findTabPanel": () => (/* binding */ findTabPanel),
-/* harmony export */   "tabTargetId": () => (/* binding */ tabTargetId),
-/* harmony export */   "tabsInList": () => (/* binding */ tabsInList)
+/* harmony export */   TAB_LIST_SELECTOR: () => (/* binding */ TAB_LIST_SELECTOR),
+/* harmony export */   TAB_SELECTOR: () => (/* binding */ TAB_SELECTOR),
+/* harmony export */   collectTabLists: () => (/* binding */ collectTabLists),
+/* harmony export */   findTab: () => (/* binding */ findTab),
+/* harmony export */   findTabList: () => (/* binding */ findTabList),
+/* harmony export */   findTabPanel: () => (/* binding */ findTabPanel),
+/* harmony export */   tabTargetId: () => (/* binding */ tabTargetId),
+/* harmony export */   tabsInList: () => (/* binding */ tabsInList)
 /* harmony export */ });
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -146,19 +146,19 @@ function sameDocumentHash(document, href) {
   }
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/tabs/tab-state.js":
+/***/ "./resources/frontend/features/tabs/tab-state.js"
 /*!*******************************************************!*\
   !*** ./resources/frontend/features/tabs/tab-state.js ***!
   \*******************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "readTabState": () => (/* binding */ readTabState),
-/* harmony export */   "tabStateKey": () => (/* binding */ tabStateKey),
-/* harmony export */   "writeTabState": () => (/* binding */ writeTabState)
+/* harmony export */   readTabState: () => (/* binding */ readTabState),
+/* harmony export */   tabStateKey: () => (/* binding */ tabStateKey),
+/* harmony export */   writeTabState: () => (/* binding */ writeTabState)
 /* harmony export */ });
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function tabStateKey() {
@@ -193,18 +193,18 @@ function isRecord(value) {
   return value !== null && _typeof(value) === 'object' && !Array.isArray(value);
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/tabs/tabs.js":
+/***/ "./resources/frontend/features/tabs/tabs.js"
 /*!**************************************************!*\
   !*** ./resources/frontend/features/tabs/tabs.js ***!
   \**************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "activateTab": () => (/* binding */ activateTab),
-/* harmony export */   "mountTabs": () => (/* binding */ mountTabs)
+/* harmony export */   activateTab: () => (/* binding */ activateTab),
+/* harmony export */   mountTabs: () => (/* binding */ mountTabs)
 /* harmony export */ });
 /* harmony import */ var _tab_elements_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./tab-elements.js */ "./resources/frontend/features/tabs/tab-elements.js");
 /* harmony import */ var _tab_state_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./tab-state.js */ "./resources/frontend/features/tabs/tab-state.js");
@@ -390,7 +390,7 @@ function assertRoot(root) {
   }
 }
 
-/***/ })
+/***/ }
 
 /******/ 	});
 /************************************************************************/
@@ -412,6 +412,12 @@ function assertRoot(root) {
 /******/ 		};
 /******/ 	
 /******/ 		// Execute the module function
+/******/ 		if (!(moduleId in __webpack_modules__)) {
+/******/ 			delete __webpack_module_cache__[moduleId];
+/******/ 			var e = new Error("Cannot find module '" + moduleId + "'");
+/******/ 			e.code = 'MODULE_NOT_FOUND';
+/******/ 			throw e;
+/******/ 		}
 /******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
 /******/ 	
 /******/ 		// Return the exports of the module
@@ -449,14 +455,14 @@ function assertRoot(root) {
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+// This entry needs to be wrapped in an IIFE because it needs to be isolated against other modules in the chunk.
 (() => {
 /*!*****************************************************!*\
   !*** ./resources/frontend/features/tabs/browser.js ***!
   \*****************************************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "bootTabs": () => (/* binding */ bootTabs)
+/* harmony export */   bootTabs: () => (/* binding */ bootTabs)
 /* harmony export */ });
 /* harmony import */ var _install_tabs_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./install-tabs.js */ "./resources/frontend/features/tabs/install-tabs.js");
 

@@ -2,17 +2,17 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./resources/frontend/features/sidebar/install-sidebar.js":
+/***/ "./resources/frontend/features/sidebar/install-sidebar.js"
 /*!****************************************************************!*\
   !*** ./resources/frontend/features/sidebar/install-sidebar.js ***!
   \****************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "SIDEBAR_COMPONENT": () => (/* binding */ SIDEBAR_COMPONENT),
-/* harmony export */   "SIDEBAR_ROOT_SELECTOR": () => (/* binding */ SIDEBAR_ROOT_SELECTOR),
-/* harmony export */   "installSidebar": () => (/* binding */ installSidebar)
+/* harmony export */   SIDEBAR_COMPONENT: () => (/* binding */ SIDEBAR_COMPONENT),
+/* harmony export */   SIDEBAR_ROOT_SELECTOR: () => (/* binding */ SIDEBAR_ROOT_SELECTOR),
+/* harmony export */   installSidebar: () => (/* binding */ installSidebar)
 /* harmony export */ });
 /* harmony import */ var _sidebars_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./sidebars.js */ "./resources/frontend/features/sidebar/sidebars.js");
 
@@ -82,29 +82,29 @@ function assertAdmin(admin) {
   }
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/sidebar/sidebar-elements.js":
+/***/ "./resources/frontend/features/sidebar/sidebar-elements.js"
 /*!*****************************************************************!*\
   !*** ./resources/frontend/features/sidebar/sidebar-elements.js ***!
   \*****************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "PUSH_MENU_SELECTOR": () => (/* binding */ PUSH_MENU_SELECTOR),
-/* harmony export */   "TREE_ITEM_SELECTOR": () => (/* binding */ TREE_ITEM_SELECTOR),
-/* harmony export */   "TREE_LINK_SELECTOR": () => (/* binding */ TREE_LINK_SELECTOR),
-/* harmony export */   "TREE_MENU_SELECTOR": () => (/* binding */ TREE_MENU_SELECTOR),
-/* harmony export */   "TREE_ROOT_SELECTOR": () => (/* binding */ TREE_ROOT_SELECTOR),
-/* harmony export */   "collectPushMenuToggles": () => (/* binding */ collectPushMenuToggles),
-/* harmony export */   "collectTreeContexts": () => (/* binding */ collectTreeContexts),
-/* harmony export */   "collectTreeRoots": () => (/* binding */ collectTreeRoots),
-/* harmony export */   "findPushMenuToggle": () => (/* binding */ findPushMenuToggle),
-/* harmony export */   "findTreeContext": () => (/* binding */ findTreeContext),
-/* harmony export */   "isControlDisabled": () => (/* binding */ isControlDisabled),
-/* harmony export */   "parentTreeContext": () => (/* binding */ parentTreeContext),
-/* harmony export */   "siblingTreeContexts": () => (/* binding */ siblingTreeContexts)
+/* harmony export */   PUSH_MENU_SELECTOR: () => (/* binding */ PUSH_MENU_SELECTOR),
+/* harmony export */   TREE_ITEM_SELECTOR: () => (/* binding */ TREE_ITEM_SELECTOR),
+/* harmony export */   TREE_LINK_SELECTOR: () => (/* binding */ TREE_LINK_SELECTOR),
+/* harmony export */   TREE_MENU_SELECTOR: () => (/* binding */ TREE_MENU_SELECTOR),
+/* harmony export */   TREE_ROOT_SELECTOR: () => (/* binding */ TREE_ROOT_SELECTOR),
+/* harmony export */   collectPushMenuToggles: () => (/* binding */ collectPushMenuToggles),
+/* harmony export */   collectTreeContexts: () => (/* binding */ collectTreeContexts),
+/* harmony export */   collectTreeRoots: () => (/* binding */ collectTreeRoots),
+/* harmony export */   findPushMenuToggle: () => (/* binding */ findPushMenuToggle),
+/* harmony export */   findTreeContext: () => (/* binding */ findTreeContext),
+/* harmony export */   isControlDisabled: () => (/* binding */ isControlDisabled),
+/* harmony export */   parentTreeContext: () => (/* binding */ parentTreeContext),
+/* harmony export */   siblingTreeContexts: () => (/* binding */ siblingTreeContexts)
 /* harmony export */ });
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -195,18 +195,18 @@ function collectMatching(root, selector) {
   return elements;
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/sidebar/sidebar-navigation.js":
+/***/ "./resources/frontend/features/sidebar/sidebar-navigation.js"
 /*!*******************************************************************!*\
   !*** ./resources/frontend/features/sidebar/sidebar-navigation.js ***!
   \*******************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "TREE_NAVIGATION_KEYS": () => (/* binding */ TREE_NAVIGATION_KEYS),
-/* harmony export */   "navigateTree": () => (/* binding */ navigateTree)
+/* harmony export */   TREE_NAVIGATION_KEYS: () => (/* binding */ TREE_NAVIGATION_KEYS),
+/* harmony export */   navigateTree: () => (/* binding */ navigateTree)
 /* harmony export */ });
 /* harmony import */ var _sidebar_elements_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./sidebar-elements.js */ "./resources/frontend/features/sidebar/sidebar-elements.js");
 /* harmony import */ var _sidebar_tree_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./sidebar-tree.js */ "./resources/frontend/features/sidebar/sidebar-tree.js");
@@ -263,22 +263,22 @@ function isInsideHiddenMenu(link) {
   return false;
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/sidebar/sidebar-state.js":
+/***/ "./resources/frontend/features/sidebar/sidebar-state.js"
 /*!**************************************************************!*\
   !*** ./resources/frontend/features/sidebar/sidebar-state.js ***!
   \**************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "clearCollapsedDone": () => (/* binding */ clearCollapsedDone),
-/* harmony export */   "collapseSidebar": () => (/* binding */ collapseSidebar),
-/* harmony export */   "expandSidebar": () => (/* binding */ expandSidebar),
-/* harmony export */   "normalizeSidebar": () => (/* binding */ normalizeSidebar),
-/* harmony export */   "sidebarPreference": () => (/* binding */ sidebarPreference),
-/* harmony export */   "toggleSidebar": () => (/* binding */ toggleSidebar)
+/* harmony export */   clearCollapsedDone: () => (/* binding */ clearCollapsedDone),
+/* harmony export */   collapseSidebar: () => (/* binding */ collapseSidebar),
+/* harmony export */   expandSidebar: () => (/* binding */ expandSidebar),
+/* harmony export */   normalizeSidebar: () => (/* binding */ normalizeSidebar),
+/* harmony export */   sidebarPreference: () => (/* binding */ sidebarPreference),
+/* harmony export */   toggleSidebar: () => (/* binding */ toggleSidebar)
 /* harmony export */ });
 /* harmony import */ var _sidebar_storage_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./sidebar-storage.js */ "./resources/frontend/features/sidebar/sidebar-storage.js");
 
@@ -363,22 +363,22 @@ function dispatchSidebarEvent(target, name, state) {
   }));
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/sidebar/sidebar-storage.js":
+/***/ "./resources/frontend/features/sidebar/sidebar-storage.js"
 /*!****************************************************************!*\
   !*** ./resources/frontend/features/sidebar/sidebar-storage.js ***!
   \****************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "SIDEBAR_COLLAPSED": () => (/* binding */ SIDEBAR_COLLAPSED),
-/* harmony export */   "SIDEBAR_EXPANDED": () => (/* binding */ SIDEBAR_EXPANDED),
-/* harmony export */   "SIDEBAR_STORAGE_KEY": () => (/* binding */ SIDEBAR_STORAGE_KEY),
-/* harmony export */   "normalizeSidebarPreference": () => (/* binding */ normalizeSidebarPreference),
-/* harmony export */   "readSidebarPreference": () => (/* binding */ readSidebarPreference),
-/* harmony export */   "writeSidebarPreference": () => (/* binding */ writeSidebarPreference)
+/* harmony export */   SIDEBAR_COLLAPSED: () => (/* binding */ SIDEBAR_COLLAPSED),
+/* harmony export */   SIDEBAR_EXPANDED: () => (/* binding */ SIDEBAR_EXPANDED),
+/* harmony export */   SIDEBAR_STORAGE_KEY: () => (/* binding */ SIDEBAR_STORAGE_KEY),
+/* harmony export */   normalizeSidebarPreference: () => (/* binding */ normalizeSidebarPreference),
+/* harmony export */   readSidebarPreference: () => (/* binding */ readSidebarPreference),
+/* harmony export */   writeSidebarPreference: () => (/* binding */ writeSidebarPreference)
 /* harmony export */ });
 var SIDEBAR_COLLAPSED = 'sidebar-collapse';
 var SIDEBAR_EXPANDED = 'sidebar-open';
@@ -416,20 +416,20 @@ function writeCookie(document, value) {
   document.cookie = "".concat(SIDEBAR_STORAGE_KEY, "=").concat(encodeURIComponent(value), "; Path=/; SameSite=Lax").concat(secure);
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/sidebar/sidebar-tree.js":
+/***/ "./resources/frontend/features/sidebar/sidebar-tree.js"
 /*!*************************************************************!*\
   !*** ./resources/frontend/features/sidebar/sidebar-tree.js ***!
   \*************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "collapseTreeItem": () => (/* binding */ collapseTreeItem),
-/* harmony export */   "expandTreeItem": () => (/* binding */ expandTreeItem),
-/* harmony export */   "normalizeTree": () => (/* binding */ normalizeTree),
-/* harmony export */   "toggleTreeItem": () => (/* binding */ toggleTreeItem)
+/* harmony export */   collapseTreeItem: () => (/* binding */ collapseTreeItem),
+/* harmony export */   expandTreeItem: () => (/* binding */ expandTreeItem),
+/* harmony export */   normalizeTree: () => (/* binding */ normalizeTree),
+/* harmony export */   toggleTreeItem: () => (/* binding */ toggleTreeItem)
 /* harmony export */ });
 /* harmony import */ var _sidebar_elements_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./sidebar-elements.js */ "./resources/frontend/features/sidebar/sidebar-elements.js");
 
@@ -493,17 +493,17 @@ function dispatchTreeEvent(context, name) {
   }));
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/sidebar/sidebars.js":
+/***/ "./resources/frontend/features/sidebar/sidebars.js"
 /*!*********************************************************!*\
   !*** ./resources/frontend/features/sidebar/sidebars.js ***!
   \*********************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "mountSidebar": () => (/* binding */ mountSidebar)
+/* harmony export */   mountSidebar: () => (/* binding */ mountSidebar)
 /* harmony export */ });
 /* harmony import */ var _sidebar_elements_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./sidebar-elements.js */ "./resources/frontend/features/sidebar/sidebar-elements.js");
 /* harmony import */ var _sidebar_navigation_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./sidebar-navigation.js */ "./resources/frontend/features/sidebar/sidebar-navigation.js");
@@ -710,7 +710,7 @@ function assertRoot(root) {
   }
 }
 
-/***/ })
+/***/ }
 
 /******/ 	});
 /************************************************************************/
@@ -732,6 +732,12 @@ function assertRoot(root) {
 /******/ 		};
 /******/ 	
 /******/ 		// Execute the module function
+/******/ 		if (!(moduleId in __webpack_modules__)) {
+/******/ 			delete __webpack_module_cache__[moduleId];
+/******/ 			var e = new Error("Cannot find module '" + moduleId + "'");
+/******/ 			e.code = 'MODULE_NOT_FOUND';
+/******/ 			throw e;
+/******/ 		}
 /******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
 /******/ 	
 /******/ 		// Return the exports of the module
@@ -769,14 +775,14 @@ function assertRoot(root) {
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+// This entry needs to be wrapped in an IIFE because it needs to be isolated against other modules in the chunk.
 (() => {
 /*!********************************************************!*\
   !*** ./resources/frontend/features/sidebar/browser.js ***!
   \********************************************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "bootSidebar": () => (/* binding */ bootSidebar)
+/* harmony export */   bootSidebar: () => (/* binding */ bootSidebar)
 /* harmony export */ });
 /* harmony import */ var _install_sidebar_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./install-sidebar.js */ "./resources/frontend/features/sidebar/install-sidebar.js");
 

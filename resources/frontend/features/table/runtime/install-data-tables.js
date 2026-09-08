@@ -38,7 +38,7 @@ export function installDataTables(admin, options) {
     admin.Components.register(definition)
     admin.Modules.register('display.datatables', () => scan())
 
-    return { definition, drivers, filters, scan }
+    return { definition, drivers, engine: settings.engine, filters, scan }
 }
 
 export function createDataTableDefinition(settings, filters) {

@@ -949,7 +949,7 @@
     display: inline-flex;
     align-items: center;
     gap: 0.375rem;
-    margin-right: 6rem;
+    margin-right: 1.25rem;
     color: var(--soa-muted-text-color);
     font-size: 0.875rem;
     white-space: nowrap;
@@ -1241,11 +1241,11 @@
     background-color: var(--soa-table-row-hover-color) !important;
   }
   .autoupdater-bar {
-    position: absolute;
-    width: calc(100% - 2em);
-    top: -0.95em;
+    position: relative;
+    width: 100%;
+    top: 0.5em;
     z-index: 2;
-    height: 1.75rem;
+    height: 0;
   }
   .autoupdater-bar > svg {
     position: absolute;
@@ -1263,7 +1263,7 @@
   .autoupdater-toggle {
     position: absolute;
     top: 50%;
-    right: 0;
+    right: 0.5em;
     display: inline-grid;
     width: 1.75rem;
     height: 1.75rem;

@@ -34,6 +34,21 @@ async function recordedRequests(request, kind) {
     return state.requests.filter((item) => item.kind === kind)
 }
 
+async function assertProgressStartsBeforeRefresh(request, autoUpdateBar) {
+    const progressPath = autoUpdateBar.locator('path')
+    const requestsBeforeProgress = (await recordedRequests(request, 'datatable')).length
+
+    await expect
+        .poll(
+            () => progressPath.evaluate((path) => Number.parseFloat(path.style.strokeDashoffset)),
+            {
+                timeout: 500,
+            },
+        )
+        .toBeLessThan(100)
+    expect((await recordedRequests(request, 'datatable')).length).toBe(requestsBeforeProgress)
+}
+
 async function setFilters(page) {
     await page.locator('#text-filter').fill(filterValues.text)
     await page.locator('#text-filter').dispatchEvent('change')
@@ -173,8 +188,8 @@ test('published legacy bundle initializes DataTables and runs draw hooks', async
     await openFixture(page)
 
     await expect(page.locator('#legacy-table tbody tr').first()).toHaveClass(/fixture-row/)
-    await expect(page.locator('#legacy-table_wrapper .dt-length')).toBeVisible()
-    await expect(page.locator('#legacy-table_wrapper .dt-search')).toBeVisible()
+    await expect(page.locator('#legacy-table_wrapper .dt-layout-end .dt-length')).toBeVisible()
+    await expect(page.locator('#legacy-table_wrapper .dt-layout-start .dt-search')).toBeVisible()
     await expect(page.locator('#legacy-table_wrapper .dt-info')).toBeVisible()
     await expect(page.locator('#legacy-table_wrapper .dt-paging')).toBeVisible()
     await expect(page.locator('#lazy-image-1')).toHaveAttribute('src', /\/fixtures\/pixel\.svg$/)
@@ -550,6 +565,10 @@ test('auto-update redraws the selected table and can be paused and resumed', asy
     await openFixture(page, '?autoupdate=1')
     await expect(page.locator('#legacy-table')).toHaveClass(/autoupdater/)
     await expect(page.locator('.fixture-autoupdate-shell')).toHaveCount(1)
+    const autoUpdateBar = page.locator('#legacy-table_wrapper .autoupdater-bar')
+    await expect(autoUpdateBar).toBeVisible()
+    await expect(autoUpdateBar.locator('svg')).toBeVisible()
+    await assertProgressStartsBeforeRefresh(request, autoUpdateBar)
     await expect(page.locator('.fixture-autoupdate-close')).toHaveAttribute(
         'aria-label',
         'Pause auto-update',

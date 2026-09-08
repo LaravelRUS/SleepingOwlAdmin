@@ -264,33 +264,12 @@
             }
         </script>
 
-        <script src="/public/default/js/admin-app.js"></script>
-        <script>
-            window.__legacyEvents = []
-            window.__swalCalls = []
-
-            ;[
-                'datatables::draw',
-                'datatables::actions::submitting',
-                'datatables::actions::submitted',
-                'datatables::actions::cancel',
-            ].forEach((eventName) => {
-                Admin.Events.on(eventName, () => window.__legacyEvents.push(eventName))
-            })
-
-            Admin.Messages.confirm = () => Promise.resolve({ value: true })
-            Swal.fire = (settings) => {
-                window.__swalCalls.push(settings)
-                return Promise.resolve({ value: true })
-            }
-        </script>
-        <script src="/public/default/js/modules.js"></script>
         <span
             id="autoupdate-fixture"
             data-admin-table-autoupdate
             data-pause-label="Pause auto-update"
             data-resume-label="Resume auto-update"
-            data-interval="250"
+            data-interval="1000"
             data-table-classes='["autorefresh","scheduled-refresh"]'
             style="--soa-datatables-autoupdate-color: currentColor"
             hidden
@@ -322,5 +301,27 @@
                 document.querySelector('#autoupdate-fixture').remove()
             }
         </script>
+
+        <script src="/public/default/js/admin-app.js"></script>
+        <script>
+            window.__legacyEvents = []
+            window.__swalCalls = []
+
+            ;[
+                'datatables::draw',
+                'datatables::actions::submitting',
+                'datatables::actions::submitted',
+                'datatables::actions::cancel',
+            ].forEach((eventName) => {
+                Admin.Events.on(eventName, () => window.__legacyEvents.push(eventName))
+            })
+
+            Admin.Messages.confirm = () => Promise.resolve({ value: true })
+            Swal.fire = (settings) => {
+                window.__swalCalls.push(settings)
+                return Promise.resolve({ value: true })
+            }
+        </script>
+        <script src="/public/default/js/modules.js"></script>
     </body>
 </html>

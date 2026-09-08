@@ -2,15 +2,15 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./resources/frontend/features/tree/install-trees.js":
+/***/ "./resources/frontend/features/tree/install-trees.js"
 /*!***********************************************************!*\
   !*** ./resources/frontend/features/tree/install-trees.js ***!
   \***********************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "installTrees": () => (/* binding */ installTrees)
+/* harmony export */   installTrees: () => (/* binding */ installTrees)
 /* harmony export */ });
 /* harmony import */ var sortablejs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sortablejs */ "./node_modules/sortablejs/modular/sortable.esm.js");
 /* harmony import */ var _tree_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./tree.js */ "./resources/frontend/features/tree/tree.js");
@@ -50,17 +50,17 @@ function assertFunction(object, method, message) {
   if (typeof (object === null || object === void 0 ? void 0 : object[method]) !== 'function') throw new TypeError(message);
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/tree/tree-config.js":
+/***/ "./resources/frontend/features/tree/tree-config.js"
 /*!*********************************************************!*\
   !*** ./resources/frontend/features/tree/tree-config.js ***!
   \*********************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "readTreeConfig": () => (/* binding */ readTreeConfig)
+/* harmony export */   readTreeConfig: () => (/* binding */ readTreeConfig)
 /* harmony export */ });
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function readTreeConfig(element) {
@@ -107,18 +107,18 @@ function assertElement(element) {
   }
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/tree/tree-request.js":
+/***/ "./resources/frontend/features/tree/tree-request.js"
 /*!**********************************************************!*\
   !*** ./resources/frontend/features/tree/tree-request.js ***!
   \**********************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "submitTreeOrder": () => (/* binding */ submitTreeOrder),
-/* harmony export */   "treeRequestParameters": () => (/* binding */ treeRequestParameters)
+/* harmony export */   submitTreeOrder: () => (/* binding */ submitTreeOrder),
+/* harmony export */   treeRequestParameters: () => (/* binding */ treeRequestParameters)
 /* harmony export */ });
 function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
 function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
@@ -181,18 +181,18 @@ function assertHttp(http) {
   }
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/tree/tree-sortable.js":
+/***/ "./resources/frontend/features/tree/tree-sortable.js"
 /*!***********************************************************!*\
   !*** ./resources/frontend/features/tree/tree-sortable.js ***!
   \***********************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "mountTreeSortables": () => (/* binding */ mountTreeSortables),
-/* harmony export */   "sortableOptions": () => (/* binding */ sortableOptions)
+/* harmony export */   mountTreeSortables: () => (/* binding */ mountTreeSortables),
+/* harmony export */   sortableOptions: () => (/* binding */ sortableOptions)
 /* harmony export */ });
 /* harmony import */ var _tree_structure_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./tree-structure.js */ "./resources/frontend/features/tree/tree-structure.js");
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
@@ -262,26 +262,26 @@ function assertSortable(sortable) {
   }
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/tree/tree-structure.js":
+/***/ "./resources/frontend/features/tree/tree-structure.js"
 /*!************************************************************!*\
   !*** ./resources/frontend/features/tree/tree-structure.js ***!
   \************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "TREE_ITEM_SELECTOR": () => (/* binding */ TREE_ITEM_SELECTOR),
-/* harmony export */   "TREE_LIST_SELECTOR": () => (/* binding */ TREE_LIST_SELECTOR),
-/* harmony export */   "canMoveTreeItem": () => (/* binding */ canMoveTreeItem),
-/* harmony export */   "childTreeList": () => (/* binding */ childTreeList),
-/* harmony export */   "directTreeItems": () => (/* binding */ directTreeItems),
-/* harmony export */   "rootTreeList": () => (/* binding */ rootTreeList),
-/* harmony export */   "serializeTree": () => (/* binding */ serializeTree),
-/* harmony export */   "serializeTreeList": () => (/* binding */ serializeTreeList),
-/* harmony export */   "treeBranchDepth": () => (/* binding */ treeBranchDepth),
-/* harmony export */   "treeListDepth": () => (/* binding */ treeListDepth)
+/* harmony export */   TREE_ITEM_SELECTOR: () => (/* binding */ TREE_ITEM_SELECTOR),
+/* harmony export */   TREE_LIST_SELECTOR: () => (/* binding */ TREE_LIST_SELECTOR),
+/* harmony export */   canMoveTreeItem: () => (/* binding */ canMoveTreeItem),
+/* harmony export */   childTreeList: () => (/* binding */ childTreeList),
+/* harmony export */   directTreeItems: () => (/* binding */ directTreeItems),
+/* harmony export */   rootTreeList: () => (/* binding */ rootTreeList),
+/* harmony export */   serializeTree: () => (/* binding */ serializeTree),
+/* harmony export */   serializeTreeList: () => (/* binding */ serializeTreeList),
+/* harmony export */   treeBranchDepth: () => (/* binding */ treeBranchDepth),
+/* harmony export */   treeListDepth: () => (/* binding */ treeListDepth)
 /* harmony export */ });
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -348,20 +348,20 @@ function serializeTreeItem(item) {
   return value;
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/tree/tree-view.js":
+/***/ "./resources/frontend/features/tree/tree-view.js"
 /*!*******************************************************!*\
   !*** ./resources/frontend/features/tree/tree-view.js ***!
   \*******************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "bindTreeControls": () => (/* binding */ bindTreeControls),
-/* harmony export */   "setAllTreeItemsCollapsed": () => (/* binding */ setAllTreeItemsCollapsed),
-/* harmony export */   "setTreeBusy": () => (/* binding */ setTreeBusy),
-/* harmony export */   "syncTreeView": () => (/* binding */ syncTreeView)
+/* harmony export */   bindTreeControls: () => (/* binding */ bindTreeControls),
+/* harmony export */   setAllTreeItemsCollapsed: () => (/* binding */ setAllTreeItemsCollapsed),
+/* harmony export */   setTreeBusy: () => (/* binding */ setTreeBusy),
+/* harmony export */   syncTreeView: () => (/* binding */ syncTreeView)
 /* harmony export */ });
 /* harmony import */ var _tree_structure_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./tree-structure.js */ "./resources/frontend/features/tree/tree-structure.js");
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
@@ -468,20 +468,20 @@ function emptyList() {
   };
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/tree/tree.js":
+/***/ "./resources/frontend/features/tree/tree.js"
 /*!**************************************************!*\
   !*** ./resources/frontend/features/tree/tree.js ***!
   \**************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "TREE_COMPONENT": () => (/* binding */ TREE_COMPONENT),
-/* harmony export */   "TREE_SELECTOR": () => (/* binding */ TREE_SELECTOR),
-/* harmony export */   "createTreeDefinition": () => (/* binding */ createTreeDefinition),
-/* harmony export */   "mountTree": () => (/* binding */ mountTree)
+/* harmony export */   TREE_COMPONENT: () => (/* binding */ TREE_COMPONENT),
+/* harmony export */   TREE_SELECTOR: () => (/* binding */ TREE_SELECTOR),
+/* harmony export */   createTreeDefinition: () => (/* binding */ createTreeDefinition),
+/* harmony export */   mountTree: () => (/* binding */ mountTree)
 /* harmony export */ });
 /* harmony import */ var _tree_config_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./tree-config.js */ "./resources/frontend/features/tree/tree-config.js");
 /* harmony import */ var _tree_request_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./tree-request.js */ "./resources/frontend/features/tree/tree-request.js");
@@ -616,19 +616,19 @@ function normalizeNotifications() {
   return notifications;
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./node_modules/sortablejs/modular/sortable.esm.js":
+/***/ "./node_modules/sortablejs/modular/sortable.esm.js"
 /*!*********************************************************!*\
   !*** ./node_modules/sortablejs/modular/sortable.esm.js ***!
   \*********************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "MultiDrag": () => (/* binding */ MultiDragPlugin),
-/* harmony export */   "Sortable": () => (/* binding */ Sortable),
-/* harmony export */   "Swap": () => (/* binding */ SwapPlugin),
+/* harmony export */   MultiDrag: () => (/* binding */ MultiDragPlugin),
+/* harmony export */   Sortable: () => (/* binding */ Sortable),
+/* harmony export */   Swap: () => (/* binding */ SwapPlugin),
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /**!
@@ -3996,7 +3996,7 @@ Sortable.mount(Remove, Revert);
 
 
 
-/***/ })
+/***/ }
 
 /******/ 	});
 /************************************************************************/
@@ -4018,6 +4018,12 @@ Sortable.mount(Remove, Revert);
 /******/ 		};
 /******/ 	
 /******/ 		// Execute the module function
+/******/ 		if (!(moduleId in __webpack_modules__)) {
+/******/ 			delete __webpack_module_cache__[moduleId];
+/******/ 			var e = new Error("Cannot find module '" + moduleId + "'");
+/******/ 			e.code = 'MODULE_NOT_FOUND';
+/******/ 			throw e;
+/******/ 		}
 /******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
 /******/ 	
 /******/ 		// Return the exports of the module
@@ -4055,14 +4061,14 @@ Sortable.mount(Remove, Revert);
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+// This entry needs to be wrapped in an IIFE because it needs to be isolated against other modules in the chunk.
 (() => {
 /*!*****************************************************!*\
   !*** ./resources/frontend/features/tree/browser.js ***!
   \*****************************************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "bootTrees": () => (/* binding */ bootTrees)
+/* harmony export */   bootTrees: () => (/* binding */ bootTrees)
 /* harmony export */ });
 /* harmony import */ var _install_trees_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./install-trees.js */ "./resources/frontend/features/tree/install-trees.js");
 

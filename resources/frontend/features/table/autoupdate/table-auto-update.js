@@ -1,5 +1,7 @@
 export const AUTO_UPDATE_COLOR_PROPERTY = '--soa-datatables-autoupdate-color'
+export const AUTO_UPDATE_FEATURE = 'autoUpdate'
 
+const AUTO_UPDATE_HOST_SELECTOR = '[data-admin-table-autoupdate]'
 const CONTROL_TEMPLATE_SELECTOR = 'template[data-admin-table-autoupdate-control]'
 const TOGGLE_CONTROL_SELECTOR =
     '[data-admin-table-autoupdate-toggle], [data-admin-table-autoupdate-close]'
@@ -27,7 +29,51 @@ export function mountTableAutoUpdate(table, config, dependencies) {
         tables: dependencies.tables,
     })
 
-    return controller.start()
+    return dependencies.deferStart ? controller.startAfterLayout() : controller.start()
+}
+
+export function installTableAutoUpdateFeature(engine, dependencies) {
+    if (typeof engine?.feature?.register !== 'function') {
+        throw new TypeError('Table auto-update requires the DataTables feature registry.')
+    }
+    assertDependencies(dependencies)
+
+    engine.feature.register(AUTO_UPDATE_FEATURE, (settings) =>
+        createTableAutoUpdateFeature(settings, dependencies),
+    )
+}
+
+export function configureTableAutoUpdate(table, options) {
+    const host = findAutoUpdateHost(table)
+    if (!host) return false
+
+    const config = readAutoUpdateConfig(host)
+    if (!matchesAutoUpdateTable(table, config.tableClasses)) return false
+
+    options.layout = { ...options.layout, top: AUTO_UPDATE_FEATURE }
+
+    return true
+}
+
+export function createTableAutoUpdateFeature(settings, dependencies) {
+    const table = settings.table
+    const host = findAutoUpdateHost(table)
+    if (!host) return null
+
+    const config = readAutoUpdateConfig(host)
+    if (!matchesAutoUpdateTable(table, config.tableClasses)) return null
+
+    const controller = mountTableAutoUpdate(table, config, {
+        ...dependencies,
+        controlTemplate: readAutoUpdateControlTemplate(host),
+        deferStart: true,
+        insert: false,
+    })
+    const destroy = () => controller.destroy()
+
+    settings.api.one('destroy.soaAutoUpdate', destroy)
+
+    return controller.element
 }
 
 class TableAutoUpdateCollection {
@@ -100,18 +146,45 @@ class TableAutoUpdateController {
         this.view = view
         this.deadline = 0
         this.destroyed = false
+        this.pendingStart = null
         this._paused = false
         this.remaining = settings.interval
+        this.started = false
         this.timer = null
         this.refresh = this.refresh.bind(this)
+        this.start = this.start.bind(this)
         this.toggle = this.toggle.bind(this)
     }
 
     start() {
+        if (this.destroyed || this.started) return this
+
+        this.started = true
         this.view.toggle.addEventListener('click', this.toggle)
         this.bar.set(0)
         this.sync()
         this.schedule(this.settings.interval)
+
+        return this
+    }
+
+    startAfterLayout() {
+        if (this.destroyed || this.started || this.pendingStart) return this
+
+        const pending = {}
+        const start = () => {
+            if (this.pendingStart === pending) this.pendingStart = null
+            this.start()
+        }
+
+        this.pendingStart = pending
+        if (typeof this.scheduler.requestAnimationFrame === 'function') {
+            const frame = this.scheduler.requestAnimationFrame(start)
+            pending.cancel = () => this.scheduler.cancelAnimationFrame?.(frame)
+        } else {
+            const timer = this.scheduler.setTimeout(start, 0)
+            pending.cancel = () => this.scheduler.clearTimeout(timer)
+        }
 
         return this
     }
@@ -176,8 +249,10 @@ class TableAutoUpdateController {
         if (this.destroyed) return
 
         this.destroyed = true
+        this.pendingStart?.cancel?.()
+        this.pendingStart = null
         this.clearTimer()
-        this.view.toggle.removeEventListener('click', this.toggle)
+        if (this.started) this.view.toggle.removeEventListener('click', this.toggle)
         this.bar.set(0)
         this.bar.destroy?.()
         this.view.root.remove()
@@ -187,6 +262,10 @@ class TableAutoUpdateController {
 
     get paused() {
         return this._paused
+    }
+
+    get element() {
+        return this.view.root
     }
 }
 
@@ -269,7 +348,7 @@ function normalizeMountConfig(config) {
 function mountProgressView(table, settings, dependencies) {
     const view = cloneControl(dependencies.controlTemplate)
 
-    insertControlBeforeTable(table, view.root)
+    if (dependencies.insert !== false) insertControlBeforeTable(table, view.root)
     table.classList.add('autoupdater')
     table.style.setProperty(AUTO_UPDATE_COLOR_PROPERTY, settings.color)
     view.root.style?.setProperty(AUTO_UPDATE_COLOR_PROPERTY, settings.color)
@@ -284,6 +363,10 @@ function mountProgressView(table, settings, dependencies) {
         table.style.removeProperty(AUTO_UPDATE_COLOR_PROPERTY)
         throw error
     }
+}
+
+function findAutoUpdateHost(table) {
+    return table.ownerDocument?.querySelector?.(AUTO_UPDATE_HOST_SELECTOR) ?? null
 }
 
 function cloneControl(template) {

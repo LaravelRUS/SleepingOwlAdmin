@@ -2,17 +2,17 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./resources/frontend/features/tooltip/install-tooltips.js":
+/***/ "./resources/frontend/features/tooltip/install-tooltips.js"
 /*!*****************************************************************!*\
   !*** ./resources/frontend/features/tooltip/install-tooltips.js ***!
   \*****************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "TOOLTIP_COMPONENT": () => (/* binding */ TOOLTIP_COMPONENT),
-/* harmony export */   "TOOLTIP_ROOT_SELECTOR": () => (/* binding */ TOOLTIP_ROOT_SELECTOR),
-/* harmony export */   "installTooltips": () => (/* binding */ installTooltips)
+/* harmony export */   TOOLTIP_COMPONENT: () => (/* binding */ TOOLTIP_COMPONENT),
+/* harmony export */   TOOLTIP_ROOT_SELECTOR: () => (/* binding */ TOOLTIP_ROOT_SELECTOR),
+/* harmony export */   installTooltips: () => (/* binding */ installTooltips)
 /* harmony export */ });
 /* harmony import */ var _tooltips_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./tooltips.js */ "./resources/frontend/features/tooltip/tooltips.js");
 
@@ -64,20 +64,20 @@ function assertAdmin(admin) {
   }
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/tooltip/tooltip-elements.js":
+/***/ "./resources/frontend/features/tooltip/tooltip-elements.js"
 /*!*****************************************************************!*\
   !*** ./resources/frontend/features/tooltip/tooltip-elements.js ***!
   \*****************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "TOOLTIP_TRIGGER_SELECTOR": () => (/* binding */ TOOLTIP_TRIGGER_SELECTOR),
-/* harmony export */   "findTooltipTrigger": () => (/* binding */ findTooltipTrigger),
-/* harmony export */   "tooltipPlacement": () => (/* binding */ tooltipPlacement),
-/* harmony export */   "tooltipText": () => (/* binding */ tooltipText)
+/* harmony export */   TOOLTIP_TRIGGER_SELECTOR: () => (/* binding */ TOOLTIP_TRIGGER_SELECTOR),
+/* harmony export */   findTooltipTrigger: () => (/* binding */ findTooltipTrigger),
+/* harmony export */   tooltipPlacement: () => (/* binding */ tooltipPlacement),
+/* harmony export */   tooltipText: () => (/* binding */ tooltipText)
 /* harmony export */ });
 var TOOLTIP_TRIGGER_SELECTOR = '[data-bs-toggle="tooltip"], [data-toggle="tooltip"]';
 var PLACEMENTS = new Set(['top', 'right', 'bottom', 'left']);
@@ -99,17 +99,17 @@ function tooltipPlacement(trigger) {
   return PLACEMENTS.has(placement) ? placement : 'top';
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/tooltip/tooltip-position.js":
+/***/ "./resources/frontend/features/tooltip/tooltip-position.js"
 /*!*****************************************************************!*\
   !*** ./resources/frontend/features/tooltip/tooltip-position.js ***!
   \*****************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "tooltipPosition": () => (/* binding */ tooltipPosition)
+/* harmony export */   tooltipPosition: () => (/* binding */ tooltipPosition)
 /* harmony export */ });
 var VIEWPORT_MARGIN = 4;
 var TOOLTIP_GAP = 8;
@@ -170,17 +170,17 @@ function clamp(value, minimum, maximum) {
   return Math.min(Math.max(value, minimum), Math.max(minimum, maximum));
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/tooltip/tooltip-template.js":
+/***/ "./resources/frontend/features/tooltip/tooltip-template.js"
 /*!*****************************************************************!*\
   !*** ./resources/frontend/features/tooltip/tooltip-template.js ***!
   \*****************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "createTooltipElement": () => (/* binding */ createTooltipElement)
+/* harmony export */   createTooltipElement: () => (/* binding */ createTooltipElement)
 /* harmony export */ });
 var TOOLTIP_TEMPLATE_SELECTOR = 'template[data-tooltip-template]';
 var TOOLTIP_POPUP_SELECTOR = '[data-tooltip-popup]';
@@ -215,17 +215,17 @@ function findContentTarget(tooltip) {
   return (_tooltip$querySelecto = (_tooltip$querySelecto2 = tooltip.querySelector) === null || _tooltip$querySelecto2 === void 0 ? void 0 : _tooltip$querySelecto2.call(tooltip, TOOLTIP_CONTENT_SELECTOR)) !== null && _tooltip$querySelecto !== void 0 ? _tooltip$querySelecto : tooltip;
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/tooltip/tooltips.js":
+/***/ "./resources/frontend/features/tooltip/tooltips.js"
 /*!*********************************************************!*\
   !*** ./resources/frontend/features/tooltip/tooltips.js ***!
   \*********************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "mountTooltips": () => (/* binding */ mountTooltips)
+/* harmony export */   mountTooltips: () => (/* binding */ mountTooltips)
 /* harmony export */ });
 /* harmony import */ var _tooltip_elements_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./tooltip-elements.js */ "./resources/frontend/features/tooltip/tooltip-elements.js");
 /* harmony import */ var _tooltip_position_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./tooltip-position.js */ "./resources/frontend/features/tooltip/tooltip-position.js");
@@ -418,7 +418,7 @@ function assertRoot(root) {
   }
 }
 
-/***/ })
+/***/ }
 
 /******/ 	});
 /************************************************************************/
@@ -440,6 +440,12 @@ function assertRoot(root) {
 /******/ 		};
 /******/ 	
 /******/ 		// Execute the module function
+/******/ 		if (!(moduleId in __webpack_modules__)) {
+/******/ 			delete __webpack_module_cache__[moduleId];
+/******/ 			var e = new Error("Cannot find module '" + moduleId + "'");
+/******/ 			e.code = 'MODULE_NOT_FOUND';
+/******/ 			throw e;
+/******/ 		}
 /******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
 /******/ 	
 /******/ 		// Return the exports of the module
@@ -477,14 +483,14 @@ function assertRoot(root) {
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+// This entry needs to be wrapped in an IIFE because it needs to be isolated against other modules in the chunk.
 (() => {
 /*!********************************************************!*\
   !*** ./resources/frontend/features/tooltip/browser.js ***!
   \********************************************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "bootTooltips": () => (/* binding */ bootTooltips)
+/* harmony export */   bootTooltips: () => (/* binding */ bootTooltips)
 /* harmony export */ });
 /* harmony import */ var _install_tooltips_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./install-tooltips.js */ "./resources/frontend/features/tooltip/install-tooltips.js");
 

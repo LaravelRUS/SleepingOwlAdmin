@@ -14,10 +14,9 @@
 	@yield('content')
 	@include(AdminTemplate::getViewPath('_partials.tooltip'))
 	@include(AdminTemplate::getViewPath('helper.scrolltotop'))
+	@include(AdminTemplate::getViewPath('helper.autoupdate'))
 
 	{!! $template->meta()->renderScripts(true) !!}
 	@stack('footer-scripts')
-
-	@include(AdminTemplate::getViewPath('helper.autoupdate'))
 </body>
 </html>

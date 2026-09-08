@@ -1,4 +1,5 @@
 import { createTableAjax } from '../transport/table-ajax.js'
+import { configureTableAutoUpdate } from '../autoupdate/table-auto-update.js'
 import { syncColumnHighlight } from '../hooks/column-highlight.js'
 import { loadLazyImages } from '../hooks/lazy-images.js'
 import { applyCreatedRowClass, createDrawHook } from '../hooks/table-hooks.js'
@@ -10,6 +11,8 @@ export function createRuntimeTableOptions(element, definition, settings) {
         ...definition,
         pageJump: settings.pageJump.enabled,
     })
+
+    configureTableAutoUpdate(element, options)
 
     if (definition.url) configureServerTable(options, definition, settings)
 

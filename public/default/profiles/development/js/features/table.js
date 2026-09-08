@@ -1,11 +1,11 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./node_modules/air-datepicker/locale/de.js":
+/***/ "./node_modules/air-datepicker/locale/de.js"
 /*!**************************************************!*\
   !*** ./node_modules/air-datepicker/locale/de.js ***!
   \**************************************************/
-/***/ ((__unused_webpack_module, exports) => {
+(__unused_webpack_module, exports) {
 
 "use strict";
 
@@ -28,13 +28,13 @@ var _default = {
 };
 exports["default"] = _default;
 
-/***/ }),
+/***/ },
 
-/***/ "./node_modules/air-datepicker/locale/en.js":
+/***/ "./node_modules/air-datepicker/locale/en.js"
 /*!**************************************************!*\
   !*** ./node_modules/air-datepicker/locale/en.js ***!
   \**************************************************/
-/***/ ((__unused_webpack_module, exports) => {
+(__unused_webpack_module, exports) {
 
 "use strict";
 
@@ -57,13 +57,13 @@ var _default = {
 };
 exports["default"] = _default;
 
-/***/ }),
+/***/ },
 
-/***/ "./node_modules/air-datepicker/locale/ru.js":
+/***/ "./node_modules/air-datepicker/locale/ru.js"
 /*!**************************************************!*\
   !*** ./node_modules/air-datepicker/locale/ru.js ***!
   \**************************************************/
-/***/ ((__unused_webpack_module, exports) => {
+(__unused_webpack_module, exports) {
 
 "use strict";
 
@@ -86,13 +86,13 @@ var _default = {
 };
 exports["default"] = _default;
 
-/***/ }),
+/***/ },
 
-/***/ "./node_modules/air-datepicker/locale/uk.js":
+/***/ "./node_modules/air-datepicker/locale/uk.js"
 /*!**************************************************!*\
   !*** ./node_modules/air-datepicker/locale/uk.js ***!
   \**************************************************/
-/***/ ((__unused_webpack_module, exports) => {
+(__unused_webpack_module, exports) {
 
 "use strict";
 
@@ -115,13 +115,13 @@ var _default = {
 };
 exports["default"] = _default;
 
-/***/ }),
+/***/ },
 
-/***/ "./node_modules/air-datepicker/locale/zh.js":
+/***/ "./node_modules/air-datepicker/locale/zh.js"
 /*!**************************************************!*\
   !*** ./node_modules/air-datepicker/locale/zh.js ***!
   \**************************************************/
-/***/ ((__unused_webpack_module, exports) => {
+(__unused_webpack_module, exports) {
 
 "use strict";
 
@@ -144,20 +144,20 @@ var _default = {
 };
 exports["default"] = _default;
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/core/dom/forms.js":
+/***/ "./resources/frontend/core/dom/forms.js"
 /*!**********************************************!*\
   !*** ./resources/frontend/core/dom/forms.js ***!
   \**********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "createPostForm": () => (/* binding */ createPostForm),
-/* harmony export */   "submitForm": () => (/* binding */ submitForm),
-/* harmony export */   "submitPostForm": () => (/* binding */ submitPostForm)
+/* harmony export */   createPostForm: () => (/* binding */ createPostForm),
+/* harmony export */   submitForm: () => (/* binding */ submitForm),
+/* harmony export */   submitPostForm: () => (/* binding */ submitPostForm)
 /* harmony export */ });
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
@@ -221,19 +221,19 @@ function assertParameters(parameters) {
   }
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/core/dom/listeners.js":
+/***/ "./resources/frontend/core/dom/listeners.js"
 /*!**************************************************!*\
   !*** ./resources/frontend/core/dom/listeners.js ***!
   \**************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "delegate": () => (/* binding */ delegate),
-/* harmony export */   "listen": () => (/* binding */ listen)
+/* harmony export */   delegate: () => (/* binding */ delegate),
+/* harmony export */   listen: () => (/* binding */ listen)
 /* harmony export */ });
 function listen(target, type, listener, options) {
   assertEventTarget(target);
@@ -297,20 +297,20 @@ function assertListener(listener) {
   }
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/core/lifecycle/component-lifecycle.js":
+/***/ "./resources/frontend/core/lifecycle/component-lifecycle.js"
 /*!******************************************************************!*\
   !*** ./resources/frontend/core/lifecycle/component-lifecycle.js ***!
   \******************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "ComponentLifecycle": () => (/* binding */ ComponentLifecycle),
-/* harmony export */   "componentMountSkipped": () => (/* binding */ componentMountSkipped),
-/* harmony export */   "createComponentLifecycle": () => (/* binding */ createComponentLifecycle)
+/* harmony export */   ComponentLifecycle: () => (/* binding */ ComponentLifecycle),
+/* harmony export */   componentMountSkipped: () => (/* binding */ componentMountSkipped),
+/* harmony export */   createComponentLifecycle: () => (/* binding */ createComponentLifecycle)
 /* harmony export */ });
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -529,20 +529,20 @@ function assertNonEmptyString(value, field) {
   }
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/forms/date/date-format.js":
+/***/ "./resources/frontend/features/forms/date/date-format.js"
 /*!***************************************************************!*\
   !*** ./resources/frontend/features/forms/date/date-format.js ***!
   \***************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "formatDateValue": () => (/* binding */ formatDateValue),
-/* harmony export */   "parseDateValue": () => (/* binding */ parseDateValue),
-/* harmony export */   "toAirDateFormat": () => (/* binding */ toAirDateFormat)
+/* harmony export */   formatDateValue: () => (/* binding */ formatDateValue),
+/* harmony export */   parseDateValue: () => (/* binding */ parseDateValue),
+/* harmony export */   toAirDateFormat: () => (/* binding */ toAirDateFormat)
 /* harmony export */ });
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -736,18 +736,18 @@ function isValidDate(value) {
   return value instanceof Date && !Number.isNaN(value.getTime());
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/forms/date/date-locales.js":
+/***/ "./resources/frontend/features/forms/date/date-locales.js"
 /*!****************************************************************!*\
   !*** ./resources/frontend/features/forms/date/date-locales.js ***!
   \****************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "resolveDatePickerLocale": () => (/* binding */ resolveDatePickerLocale)
+/* harmony export */   resolveDatePickerLocale: () => (/* binding */ resolveDatePickerLocale)
 /* harmony export */ });
 /* harmony import */ var air_datepicker_locale_de__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! air-datepicker/locale/de */ "./node_modules/air-datepicker/locale/de.js");
 /* harmony import */ var air_datepicker_locale_en__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! air-datepicker/locale/en */ "./node_modules/air-datepicker/locale/en.js");
@@ -777,23 +777,23 @@ function normalizeLocale(locale) {
   return value.split(/[-_]/, 1)[0];
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/table/actions/action-context.js":
+/***/ "./resources/frontend/features/table/actions/action-context.js"
 /*!*********************************************************************!*\
   !*** ./resources/frontend/features/table/actions/action-context.js ***!
   \*********************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "actionCallbackContext": () => (/* binding */ actionCallbackContext),
-/* harmony export */   "appendSelectedRows": () => (/* binding */ appendSelectedRows),
-/* harmony export */   "findActionTable": () => (/* binding */ findActionTable),
-/* harmony export */   "formParameters": () => (/* binding */ formParameters),
-/* harmony export */   "selectedRowParameters": () => (/* binding */ selectedRowParameters),
-/* harmony export */   "selectedRows": () => (/* binding */ selectedRows)
+/* harmony export */   actionCallbackContext: () => (/* binding */ actionCallbackContext),
+/* harmony export */   appendSelectedRows: () => (/* binding */ appendSelectedRows),
+/* harmony export */   findActionTable: () => (/* binding */ findActionTable),
+/* harmony export */   formParameters: () => (/* binding */ formParameters),
+/* harmony export */   selectedRowParameters: () => (/* binding */ selectedRowParameters),
+/* harmony export */   selectedRows: () => (/* binding */ selectedRows)
 /* harmony export */ });
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -865,19 +865,19 @@ function actionCallbackContext(form, table) {
   };
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/table/actions/action-request.js":
+/***/ "./resources/frontend/features/table/actions/action-request.js"
 /*!*********************************************************************!*\
   !*** ./resources/frontend/features/table/actions/action-request.js ***!
   \*********************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "actionRequestSettings": () => (/* binding */ actionRequestSettings),
-/* harmony export */   "executeTableAction": () => (/* binding */ executeTableAction)
+/* harmony export */   actionRequestSettings: () => (/* binding */ actionRequestSettings),
+/* harmony export */   executeTableAction: () => (/* binding */ executeTableAction)
 /* harmony export */ });
 function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
 function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
@@ -961,18 +961,18 @@ function appendQuery(url, query) {
   return "".concat(url).concat(url.includes('?') ? '&' : '?').concat(query);
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/table/actions/bulk-actions.js":
+/***/ "./resources/frontend/features/table/actions/bulk-actions.js"
 /*!*******************************************************************!*\
   !*** ./resources/frontend/features/table/actions/bulk-actions.js ***!
   \*******************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "bindBulkActions": () => (/* binding */ bindBulkActions)
+/* harmony export */   bindBulkActions: () => (/* binding */ bindBulkActions)
 /* harmony export */ });
 /* harmony import */ var _core_dom_listeners_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../core/dom/listeners.js */ "./resources/frontend/core/dom/listeners.js");
 /* harmony import */ var _action_context_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./action-context.js */ "./resources/frontend/features/table/actions/action-context.js");
@@ -1086,18 +1086,18 @@ function assertDependencies(dependencies) {
   }
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/table/actions/form-actions.js":
+/***/ "./resources/frontend/features/table/actions/form-actions.js"
 /*!*******************************************************************!*\
   !*** ./resources/frontend/features/table/actions/form-actions.js ***!
   \*******************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "bindFormActions": () => (/* binding */ bindFormActions)
+/* harmony export */   bindFormActions: () => (/* binding */ bindFormActions)
 /* harmony export */ });
 /* harmony import */ var _core_dom_listeners_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../core/dom/listeners.js */ "./resources/frontend/core/dom/listeners.js");
 /* harmony import */ var _action_context_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./action-context.js */ "./resources/frontend/features/table/actions/action-context.js");
@@ -1195,18 +1195,18 @@ function assertDependencies(dependencies) {
   }
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/table/actions/named-action-callbacks.js":
+/***/ "./resources/frontend/features/table/actions/named-action-callbacks.js"
 /*!*****************************************************************************!*\
   !*** ./resources/frontend/features/table/actions/named-action-callbacks.js ***!
   \*****************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "createNamedActionCallbacks": () => (/* binding */ createNamedActionCallbacks)
+/* harmony export */   createNamedActionCallbacks: () => (/* binding */ createNamedActionCallbacks)
 /* harmony export */ });
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -1232,23 +1232,27 @@ function invokeNamedCallback(root, message, parameters) {
   }
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/table/autoupdate/table-auto-update.js":
+/***/ "./resources/frontend/features/table/autoupdate/table-auto-update.js"
 /*!***************************************************************************!*\
   !*** ./resources/frontend/features/table/autoupdate/table-auto-update.js ***!
   \***************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "AUTO_UPDATE_COLOR_PROPERTY": () => (/* binding */ AUTO_UPDATE_COLOR_PROPERTY),
-/* harmony export */   "matchesAutoUpdateTable": () => (/* binding */ matchesAutoUpdateTable),
-/* harmony export */   "mountTableAutoUpdate": () => (/* binding */ mountTableAutoUpdate),
-/* harmony export */   "mountTableAutoUpdates": () => (/* binding */ mountTableAutoUpdates),
-/* harmony export */   "readAutoUpdateConfig": () => (/* binding */ readAutoUpdateConfig),
-/* harmony export */   "readAutoUpdateControlTemplate": () => (/* binding */ readAutoUpdateControlTemplate)
+/* harmony export */   AUTO_UPDATE_COLOR_PROPERTY: () => (/* binding */ AUTO_UPDATE_COLOR_PROPERTY),
+/* harmony export */   AUTO_UPDATE_FEATURE: () => (/* binding */ AUTO_UPDATE_FEATURE),
+/* harmony export */   configureTableAutoUpdate: () => (/* binding */ configureTableAutoUpdate),
+/* harmony export */   createTableAutoUpdateFeature: () => (/* binding */ createTableAutoUpdateFeature),
+/* harmony export */   installTableAutoUpdateFeature: () => (/* binding */ installTableAutoUpdateFeature),
+/* harmony export */   matchesAutoUpdateTable: () => (/* binding */ matchesAutoUpdateTable),
+/* harmony export */   mountTableAutoUpdate: () => (/* binding */ mountTableAutoUpdate),
+/* harmony export */   mountTableAutoUpdates: () => (/* binding */ mountTableAutoUpdates),
+/* harmony export */   readAutoUpdateConfig: () => (/* binding */ readAutoUpdateConfig),
+/* harmony export */   readAutoUpdateControlTemplate: () => (/* binding */ readAutoUpdateControlTemplate)
 /* harmony export */ });
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
@@ -1266,6 +1270,8 @@ function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 var AUTO_UPDATE_COLOR_PROPERTY = '--soa-datatables-autoupdate-color';
+var AUTO_UPDATE_FEATURE = 'autoUpdate';
+var AUTO_UPDATE_HOST_SELECTOR = '[data-admin-table-autoupdate]';
 var CONTROL_TEMPLATE_SELECTOR = 'template[data-admin-table-autoupdate-control]';
 var TOGGLE_CONTROL_SELECTOR = '[data-admin-table-autoupdate-toggle], [data-admin-table-autoupdate-close]';
 var LABEL_SELECTOR = '[data-admin-table-autoupdate-label]';
@@ -1287,7 +1293,44 @@ function mountTableAutoUpdate(table, config, dependencies) {
     table: table,
     tables: dependencies.tables
   }));
-  return controller.start();
+  return dependencies.deferStart ? controller.startAfterLayout() : controller.start();
+}
+function installTableAutoUpdateFeature(engine, dependencies) {
+  var _engine$feature;
+  if (typeof (engine === null || engine === void 0 || (_engine$feature = engine.feature) === null || _engine$feature === void 0 ? void 0 : _engine$feature.register) !== 'function') {
+    throw new TypeError('Table auto-update requires the DataTables feature registry.');
+  }
+  assertDependencies(dependencies);
+  engine.feature.register(AUTO_UPDATE_FEATURE, function (settings) {
+    return createTableAutoUpdateFeature(settings, dependencies);
+  });
+}
+function configureTableAutoUpdate(table, options) {
+  var host = findAutoUpdateHost(table);
+  if (!host) return false;
+  var config = readAutoUpdateConfig(host);
+  if (!matchesAutoUpdateTable(table, config.tableClasses)) return false;
+  options.layout = _objectSpread(_objectSpread({}, options.layout), {}, {
+    top: AUTO_UPDATE_FEATURE
+  });
+  return true;
+}
+function createTableAutoUpdateFeature(settings, dependencies) {
+  var table = settings.table;
+  var host = findAutoUpdateHost(table);
+  if (!host) return null;
+  var config = readAutoUpdateConfig(host);
+  if (!matchesAutoUpdateTable(table, config.tableClasses)) return null;
+  var controller = mountTableAutoUpdate(table, config, _objectSpread(_objectSpread({}, dependencies), {}, {
+    controlTemplate: readAutoUpdateControlTemplate(host),
+    deferStart: true,
+    insert: false
+  }));
+  var destroy = function destroy() {
+    return controller.destroy();
+  };
+  settings.api.one('destroy.soaAutoUpdate', destroy);
+  return controller.element;
 }
 var TableAutoUpdateCollection = /*#__PURE__*/function () {
   function TableAutoUpdateCollection(host, dependencies) {
@@ -1382,19 +1425,49 @@ var TableAutoUpdateController = /*#__PURE__*/function () {
     this.view = view;
     this.deadline = 0;
     this.destroyed = false;
+    this.pendingStart = null;
     this._paused = false;
     this.remaining = settings.interval;
+    this.started = false;
     this.timer = null;
     this.refresh = this.refresh.bind(this);
+    this.start = this.start.bind(this);
     this.toggle = this.toggle.bind(this);
   }
   return _createClass(TableAutoUpdateController, [{
     key: "start",
     value: function start() {
+      if (this.destroyed || this.started) return this;
+      this.started = true;
       this.view.toggle.addEventListener('click', this.toggle);
       this.bar.set(0);
       this.sync();
       this.schedule(this.settings.interval);
+      return this;
+    }
+  }, {
+    key: "startAfterLayout",
+    value: function startAfterLayout() {
+      var _this2 = this;
+      if (this.destroyed || this.started || this.pendingStart) return this;
+      var pending = {};
+      var start = function start() {
+        if (_this2.pendingStart === pending) _this2.pendingStart = null;
+        _this2.start();
+      };
+      this.pendingStart = pending;
+      if (typeof this.scheduler.requestAnimationFrame === 'function') {
+        var frame = this.scheduler.requestAnimationFrame(start);
+        pending.cancel = function () {
+          var _this2$scheduler$canc, _this2$scheduler;
+          return (_this2$scheduler$canc = (_this2$scheduler = _this2.scheduler).cancelAnimationFrame) === null || _this2$scheduler$canc === void 0 ? void 0 : _this2$scheduler$canc.call(_this2$scheduler, frame);
+        };
+      } else {
+        var timer = this.scheduler.setTimeout(start, 0);
+        pending.cancel = function () {
+          return _this2.scheduler.clearTimeout(timer);
+        };
+      }
       return this;
     }
   }, {
@@ -1458,11 +1531,13 @@ var TableAutoUpdateController = /*#__PURE__*/function () {
   }, {
     key: "destroy",
     value: function destroy() {
-      var _this$bar$destroy, _this$bar2;
+      var _this$pendingStart, _this$pendingStart$ca, _this$bar$destroy, _this$bar2;
       if (this.destroyed) return;
       this.destroyed = true;
+      (_this$pendingStart = this.pendingStart) === null || _this$pendingStart === void 0 || (_this$pendingStart$ca = _this$pendingStart.cancel) === null || _this$pendingStart$ca === void 0 || _this$pendingStart$ca.call(_this$pendingStart);
+      this.pendingStart = null;
       this.clearTimer();
-      this.view.toggle.removeEventListener('click', this.toggle);
+      if (this.started) this.view.toggle.removeEventListener('click', this.toggle);
       this.bar.set(0);
       (_this$bar$destroy = (_this$bar2 = this.bar).destroy) === null || _this$bar$destroy === void 0 || _this$bar$destroy.call(_this$bar2);
       this.view.root.remove();
@@ -1473,6 +1548,11 @@ var TableAutoUpdateController = /*#__PURE__*/function () {
     key: "paused",
     get: function get() {
       return this._paused;
+    }
+  }, {
+    key: "element",
+    get: function get() {
+      return this.view.root;
     }
   }]);
 }();
@@ -1543,7 +1623,7 @@ function normalizeMountConfig(config) {
 function mountProgressView(table, settings, dependencies) {
   var _view$root$style;
   var view = cloneControl(dependencies.controlTemplate);
-  insertControlBeforeTable(table, view.root);
+  if (dependencies.insert !== false) insertControlBeforeTable(table, view.root);
   table.classList.add('autoupdater');
   table.style.setProperty(AUTO_UPDATE_COLOR_PROPERTY, settings.color);
   (_view$root$style = view.root.style) === null || _view$root$style === void 0 || _view$root$style.setProperty(AUTO_UPDATE_COLOR_PROPERTY, settings.color);
@@ -1559,6 +1639,10 @@ function mountProgressView(table, settings, dependencies) {
     table.style.removeProperty(AUTO_UPDATE_COLOR_PROPERTY);
     throw error;
   }
+}
+function findAutoUpdateHost(table) {
+  var _table$ownerDocument$, _table$ownerDocument, _table$ownerDocument$2;
+  return (_table$ownerDocument$ = (_table$ownerDocument = table.ownerDocument) === null || _table$ownerDocument === void 0 || (_table$ownerDocument$2 = _table$ownerDocument.querySelector) === null || _table$ownerDocument$2 === void 0 ? void 0 : _table$ownerDocument$2.call(_table$ownerDocument, AUTO_UPDATE_HOST_SELECTOR)) !== null && _table$ownerDocument$ !== void 0 ? _table$ownerDocument$ : null;
 }
 function cloneControl(template) {
   var _fragment$children;
@@ -1637,18 +1721,18 @@ function assertTableCollection(tables) {
   }
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/table/browser-options.js":
+/***/ "./resources/frontend/features/table/browser-options.js"
 /*!**************************************************************!*\
   !*** ./resources/frontend/features/table/browser-options.js ***!
   \**************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "tableBrowserOptions": () => (/* binding */ tableBrowserOptions)
+/* harmony export */   tableBrowserOptions: () => (/* binding */ tableBrowserOptions)
 /* harmony export */ });
 function tableBrowserOptions(target) {
   var translate = function translate(key) {
@@ -1692,18 +1776,18 @@ function translated(target, key, fallback) {
   return typeof value === 'string' && value !== key ? value : fallback;
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/table/controls/confirm-submit.js":
+/***/ "./resources/frontend/features/table/controls/confirm-submit.js"
 /*!**********************************************************************!*\
   !*** ./resources/frontend/features/table/controls/confirm-submit.js ***!
   \**********************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "bindConfirmedControls": () => (/* binding */ bindConfirmedControls)
+/* harmony export */   bindConfirmedControls: () => (/* binding */ bindConfirmedControls)
 /* harmony export */ });
 /* harmony import */ var _core_dom_forms_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../core/dom/forms.js */ "./resources/frontend/core/dom/forms.js");
 /* harmony import */ var _core_dom_listeners_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../core/dom/listeners.js */ "./resources/frontend/core/dom/listeners.js");
@@ -1809,19 +1893,19 @@ function assertQuestion(value, action) {
   }
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/table/editing/inline-editor-config.js":
+/***/ "./resources/frontend/features/table/editing/inline-editor-config.js"
 /*!***************************************************************************!*\
   !*** ./resources/frontend/features/table/editing/inline-editor-config.js ***!
   \***************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "INLINE_EDITOR_TYPES": () => (/* binding */ INLINE_EDITOR_TYPES),
-/* harmony export */   "readInlineEditorConfig": () => (/* binding */ readInlineEditorConfig)
+/* harmony export */   INLINE_EDITOR_TYPES: () => (/* binding */ INLINE_EDITOR_TYPES),
+/* harmony export */   readInlineEditorConfig: () => (/* binding */ readInlineEditorConfig)
 /* harmony export */ });
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 var INLINE_EDITOR_TYPES = Object.freeze(['boolean', 'checkbox', 'checklist', 'date', 'datetime', 'number', 'range', 'select', 'text', 'textarea']);
@@ -1901,18 +1985,18 @@ function assertType(type) {
   }
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/table/editing/inline-editor-control.js":
+/***/ "./resources/frontend/features/table/editing/inline-editor-control.js"
 /*!****************************************************************************!*\
   !*** ./resources/frontend/features/table/editing/inline-editor-control.js ***!
   \****************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "bindInlineEditorControl": () => (/* binding */ bindInlineEditorControl)
+/* harmony export */   bindInlineEditorControl: () => (/* binding */ bindInlineEditorControl)
 /* harmony export */ });
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -2062,22 +2146,22 @@ function requiredRangePart(element, selector, label) {
   return part;
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/table/editing/inline-editor-request.js":
+/***/ "./resources/frontend/features/table/editing/inline-editor-request.js"
 /*!****************************************************************************!*\
   !*** ./resources/frontend/features/table/editing/inline-editor-request.js ***!
   \****************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "InlineEditRejectedError": () => (/* binding */ InlineEditRejectedError),
-/* harmony export */   "inlineEditErrorMessage": () => (/* binding */ inlineEditErrorMessage),
-/* harmony export */   "inlineEditParameters": () => (/* binding */ inlineEditParameters),
-/* harmony export */   "normalizeInlineEditResponse": () => (/* binding */ normalizeInlineEditResponse),
-/* harmony export */   "submitInlineEdit": () => (/* binding */ submitInlineEdit)
+/* harmony export */   InlineEditRejectedError: () => (/* binding */ InlineEditRejectedError),
+/* harmony export */   inlineEditErrorMessage: () => (/* binding */ inlineEditErrorMessage),
+/* harmony export */   inlineEditParameters: () => (/* binding */ inlineEditParameters),
+/* harmony export */   normalizeInlineEditResponse: () => (/* binding */ normalizeInlineEditResponse),
+/* harmony export */   submitInlineEdit: () => (/* binding */ submitInlineEdit)
 /* harmony export */ });
 function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
 function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
@@ -2262,18 +2346,18 @@ function assertHttp(http) {
   }
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/table/editing/inline-editor-table-refresh.js":
+/***/ "./resources/frontend/features/table/editing/inline-editor-table-refresh.js"
 /*!**********************************************************************************!*\
   !*** ./resources/frontend/features/table/editing/inline-editor-table-refresh.js ***!
   \**********************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "bindInlineEditorTableRefresh": () => (/* binding */ bindInlineEditorTableRefresh)
+/* harmony export */   bindInlineEditorTableRefresh: () => (/* binding */ bindInlineEditorTableRefresh)
 /* harmony export */ });
 var INLINE_EDIT_SUBMITTED_EVENT = 'inline-edit:submitted';
 var REFRESH_MODES = new Set(['row', 'table']);
@@ -2320,18 +2404,18 @@ function assertMethod(object, method, message) {
   if (typeof (object === null || object === void 0 ? void 0 : object[method]) !== 'function') throw new TypeError(message);
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/table/editing/inline-editor-template.js":
+/***/ "./resources/frontend/features/table/editing/inline-editor-template.js"
 /*!*****************************************************************************!*\
   !*** ./resources/frontend/features/table/editing/inline-editor-template.js ***!
   \*****************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "cloneInlineEditorTemplate": () => (/* binding */ cloneInlineEditorTemplate)
+/* harmony export */   cloneInlineEditorTemplate: () => (/* binding */ cloneInlineEditorTemplate)
 /* harmony export */ });
 var TEMPLATE_ID_ATTRIBUTE = 'inlineEditorTemplateId';
 var TEMPLATE_SELECTOR = '[data-inline-editor-template]';
@@ -2380,21 +2464,21 @@ function requiredDescendant(root, selector, label) {
   return element;
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/table/editing/inline-editor-value.js":
+/***/ "./resources/frontend/features/table/editing/inline-editor-value.js"
 /*!**************************************************************************!*\
   !*** ./resources/frontend/features/table/editing/inline-editor-value.js ***!
   \**************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "applyInlineEditorValue": () => (/* binding */ applyInlineEditorValue),
-/* harmony export */   "inlineEditorDisplayValue": () => (/* binding */ inlineEditorDisplayValue),
-/* harmony export */   "normalizeInlineEditorValue": () => (/* binding */ normalizeInlineEditorValue),
-/* harmony export */   "serializeInlineEditorValue": () => (/* binding */ serializeInlineEditorValue)
+/* harmony export */   applyInlineEditorValue: () => (/* binding */ applyInlineEditorValue),
+/* harmony export */   inlineEditorDisplayValue: () => (/* binding */ inlineEditorDisplayValue),
+/* harmony export */   normalizeInlineEditorValue: () => (/* binding */ normalizeInlineEditorValue),
+/* harmony export */   serializeInlineEditorValue: () => (/* binding */ serializeInlineEditorValue)
 /* harmony export */ });
 var MULTIPLE_TYPES = new Set(['boolean', 'checkbox', 'checklist']);
 function applyInlineEditorValue(element, config, value) {
@@ -2450,18 +2534,18 @@ function optionText(options, value) {
   })) === null || _options$find === void 0 ? void 0 : _options$find.text) !== null && _options$find$text !== void 0 ? _options$find$text : '';
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/table/editing/inline-editor-view.js":
+/***/ "./resources/frontend/features/table/editing/inline-editor-view.js"
 /*!*************************************************************************!*\
   !*** ./resources/frontend/features/table/editing/inline-editor-view.js ***!
   \*************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "createInlineEditorView": () => (/* binding */ createInlineEditorView)
+/* harmony export */   createInlineEditorView: () => (/* binding */ createInlineEditorView)
 /* harmony export */ });
 /* harmony import */ var _inline_editor_control_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./inline-editor-control.js */ "./resources/frontend/features/table/editing/inline-editor-control.js");
 /* harmony import */ var _inline_editor_template_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./inline-editor-template.js */ "./resources/frontend/features/table/editing/inline-editor-template.js");
@@ -2586,21 +2670,21 @@ function focusControl(element) {
   focusElement === null || focusElement === void 0 || focusElement.focus();
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/table/editing/inline-editor.js":
+/***/ "./resources/frontend/features/table/editing/inline-editor.js"
 /*!********************************************************************!*\
   !*** ./resources/frontend/features/table/editing/inline-editor.js ***!
   \********************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "INLINE_EDITOR_COMPONENT": () => (/* binding */ INLINE_EDITOR_COMPONENT),
-/* harmony export */   "INLINE_EDITOR_SELECTOR": () => (/* binding */ INLINE_EDITOR_SELECTOR),
-/* harmony export */   "createInlineEditorDefinition": () => (/* binding */ createInlineEditorDefinition),
-/* harmony export */   "mountInlineEditor": () => (/* binding */ mountInlineEditor)
+/* harmony export */   INLINE_EDITOR_COMPONENT: () => (/* binding */ INLINE_EDITOR_COMPONENT),
+/* harmony export */   INLINE_EDITOR_SELECTOR: () => (/* binding */ INLINE_EDITOR_SELECTOR),
+/* harmony export */   createInlineEditorDefinition: () => (/* binding */ createInlineEditorDefinition),
+/* harmony export */   mountInlineEditor: () => (/* binding */ mountInlineEditor)
 /* harmony export */ });
 /* harmony import */ var _inline_editor_config_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./inline-editor-config.js */ "./resources/frontend/features/table/editing/inline-editor-config.js");
 /* harmony import */ var _inline_editor_request_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./inline-editor-request.js */ "./resources/frontend/features/table/editing/inline-editor-request.js");
@@ -2940,18 +3024,18 @@ function assertFunction(object, method, message) {
   if (typeof (object === null || object === void 0 ? void 0 : object[method]) !== 'function') throw new TypeError(message);
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/table/editing/install-inline-editors.js":
+/***/ "./resources/frontend/features/table/editing/install-inline-editors.js"
 /*!*****************************************************************************!*\
   !*** ./resources/frontend/features/table/editing/install-inline-editors.js ***!
   \*****************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "installInlineEditors": () => (/* binding */ installInlineEditors)
+/* harmony export */   installInlineEditors: () => (/* binding */ installInlineEditors)
 /* harmony export */ });
 /* harmony import */ var _inline_editor_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./inline-editor.js */ "./resources/frontend/features/table/editing/inline-editor.js");
 /* harmony import */ var _inline_editor_table_refresh_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./inline-editor-table-refresh.js */ "./resources/frontend/features/table/editing/inline-editor-table-refresh.js");
@@ -3001,20 +3085,20 @@ function assertFunction(object, method, message) {
   if (typeof (object === null || object === void 0 ? void 0 : object[method]) !== 'function') throw new TypeError(message);
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/table/engine/data-table-engine.js":
+/***/ "./resources/frontend/features/table/engine/data-table-engine.js"
 /*!***********************************************************************!*\
   !*** ./resources/frontend/features/table/engine/data-table-engine.js ***!
   \***********************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "createDataTableEngine": () => (/* binding */ createDataTableEngine),
-/* harmony export */   "dataTableEngineRuntime": () => (/* binding */ dataTableEngineRuntime),
-/* harmony export */   "dataTableEngineVersions": () => (/* binding */ dataTableEngineVersions)
+/* harmony export */   createDataTableEngine: () => (/* binding */ createDataTableEngine),
+/* harmony export */   dataTableEngineRuntime: () => (/* binding */ dataTableEngineRuntime),
+/* harmony export */   dataTableEngineVersions: () => (/* binding */ dataTableEngineVersions)
 /* harmony export */ });
 /* harmony import */ var datatables_net__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! datatables.net */ "./node_modules/datatables.net/js/dataTables.mjs");
 /* harmony import */ var datatables_net_responsive__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! datatables.net-responsive */ "./node_modules/datatables.net-responsive/js/dataTables.responsive.mjs");
@@ -3034,20 +3118,20 @@ function dataTableEngineVersions() {
   });
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/table/engine/extensions.js":
+/***/ "./resources/frontend/features/table/engine/extensions.js"
 /*!****************************************************************!*\
   !*** ./resources/frontend/features/table/engine/extensions.js ***!
   \****************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "DATE_TIME_ORDER": () => (/* binding */ DATE_TIME_ORDER),
-/* harmony export */   "dateTimeOrderValues": () => (/* binding */ dateTimeOrderValues),
-/* harmony export */   "installDataTableExtensions": () => (/* binding */ installDataTableExtensions)
+/* harmony export */   DATE_TIME_ORDER: () => (/* binding */ DATE_TIME_ORDER),
+/* harmony export */   dateTimeOrderValues: () => (/* binding */ dateTimeOrderValues),
+/* harmony export */   installDataTableExtensions: () => (/* binding */ installDataTableExtensions)
 /* harmony export */ });
 var DATE_TIME_ORDER = 'DateTime';
 function installDataTableExtensions(engine, _ref) {
@@ -3076,18 +3160,18 @@ function assertExtensionDependencies(engine, onError) {
   }
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/table/filters/date-filter-support.js":
+/***/ "./resources/frontend/features/table/filters/date-filter-support.js"
 /*!**************************************************************************!*\
   !*** ./resources/frontend/features/table/filters/date-filter-support.js ***!
   \**************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "createDateFilterSupport": () => (/* binding */ createDateFilterSupport)
+/* harmony export */   createDateFilterSupport: () => (/* binding */ createDateFilterSupport)
 /* harmony export */ });
 /* harmony import */ var _forms_date_date_format_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../forms/date/date-format.js */ "./resources/frontend/features/forms/date/date-format.js");
 
@@ -3102,20 +3186,20 @@ function createDateFilterSupport() {
   });
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/table/filters/filter-controls.js":
+/***/ "./resources/frontend/features/table/filters/filter-controls.js"
 /*!**********************************************************************!*\
   !*** ./resources/frontend/features/table/filters/filter-controls.js ***!
   \**********************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "assignFilterControlIds": () => (/* binding */ assignFilterControlIds),
-/* harmony export */   "bindFilterControls": () => (/* binding */ bindFilterControls),
-/* harmony export */   "clearFilterControls": () => (/* binding */ clearFilterControls)
+/* harmony export */   assignFilterControlIds: () => (/* binding */ assignFilterControlIds),
+/* harmony export */   bindFilterControls: () => (/* binding */ bindFilterControls),
+/* harmony export */   clearFilterControls: () => (/* binding */ clearFilterControls)
 /* harmony export */ });
 function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
@@ -3280,21 +3364,21 @@ function assertCallbacks(clear, execute, reload) {
   }
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/table/filters/filter-drivers.js":
+/***/ "./resources/frontend/features/table/filters/filter-drivers.js"
 /*!*********************************************************************!*\
   !*** ./resources/frontend/features/table/filters/filter-drivers.js ***!
   \*********************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "createTableFilterDrivers": () => (/* binding */ createTableFilterDrivers),
-/* harmony export */   "dataTableSearchExtensions": () => (/* binding */ dataTableSearchExtensions),
-/* harmony export */   "isDateInRange": () => (/* binding */ isDateInRange),
-/* harmony export */   "isNumberInRange": () => (/* binding */ isNumberInRange)
+/* harmony export */   createTableFilterDrivers: () => (/* binding */ createTableFilterDrivers),
+/* harmony export */   dataTableSearchExtensions: () => (/* binding */ dataTableSearchExtensions),
+/* harmony export */   isDateInRange: () => (/* binding */ isDateInRange),
+/* harmony export */   isNumberInRange: () => (/* binding */ isNumberInRange)
 /* harmony export */ });
 function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
@@ -3480,19 +3564,19 @@ function dateTimestamp(value) {
   return Number.isFinite(timestamp) ? timestamp : Number.NaN;
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/table/filters/filter-elements.js":
+/***/ "./resources/frontend/features/table/filters/filter-elements.js"
 /*!**********************************************************************!*\
   !*** ./resources/frontend/features/table/filters/filter-elements.js ***!
   \**********************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "forEachColumnFilter": () => (/* binding */ forEachColumnFilter),
-/* harmony export */   "readControlValue": () => (/* binding */ readControlValue)
+/* harmony export */   forEachColumnFilter: () => (/* binding */ forEachColumnFilter),
+/* harmony export */   readControlValue: () => (/* binding */ readControlValue)
 /* harmony export */ });
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -3548,19 +3632,19 @@ function assertRoot(root) {
   }
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/table/hooks/column-highlight.js":
+/***/ "./resources/frontend/features/table/hooks/column-highlight.js"
 /*!*********************************************************************!*\
   !*** ./resources/frontend/features/table/hooks/column-highlight.js ***!
   \*********************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "highlightColumn": () => (/* binding */ highlightColumn),
-/* harmony export */   "syncColumnHighlight": () => (/* binding */ syncColumnHighlight)
+/* harmony export */   highlightColumn: () => (/* binding */ highlightColumn),
+/* harmony export */   syncColumnHighlight: () => (/* binding */ syncColumnHighlight)
 /* harmony export */ });
 var bindings = new WeakMap();
 function syncColumnHighlight(element, table, enabled) {
@@ -3620,19 +3704,19 @@ function handleMouseOver(element, table, event) {
   highlightColumn(table, cell);
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/table/hooks/lazy-images.js":
+/***/ "./resources/frontend/features/table/hooks/lazy-images.js"
 /*!****************************************************************!*\
   !*** ./resources/frontend/features/table/hooks/lazy-images.js ***!
   \****************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "loadLazyImage": () => (/* binding */ loadLazyImage),
-/* harmony export */   "loadLazyImages": () => (/* binding */ loadLazyImages)
+/* harmony export */   loadLazyImage: () => (/* binding */ loadLazyImage),
+/* harmony export */   loadLazyImages: () => (/* binding */ loadLazyImages)
 /* harmony export */ });
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -3672,19 +3756,19 @@ function matchingElements(root, selector) {
   return elements;
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/table/hooks/table-hooks.js":
+/***/ "./resources/frontend/features/table/hooks/table-hooks.js"
 /*!****************************************************************!*\
   !*** ./resources/frontend/features/table/hooks/table-hooks.js ***!
   \****************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "applyCreatedRowClass": () => (/* binding */ applyCreatedRowClass),
-/* harmony export */   "createDrawHook": () => (/* binding */ createDrawHook)
+/* harmony export */   applyCreatedRowClass: () => (/* binding */ applyCreatedRowClass),
+/* harmony export */   createDrawHook: () => (/* binding */ createDrawHook)
 /* harmony export */ });
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -3727,19 +3811,19 @@ function assertHookDependencies(events) {
   }
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/table/lifecycle/data-table-adapter.js":
+/***/ "./resources/frontend/features/table/lifecycle/data-table-adapter.js"
 /*!***************************************************************************!*\
   !*** ./resources/frontend/features/table/lifecycle/data-table-adapter.js ***!
   \***************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "DataTableAdapter": () => (/* binding */ DataTableAdapter),
-/* harmony export */   "mountDataTable": () => (/* binding */ mountDataTable)
+/* harmony export */   DataTableAdapter: () => (/* binding */ DataTableAdapter),
+/* harmony export */   mountDataTable: () => (/* binding */ mountDataTable)
 /* harmony export */ });
 /* harmony import */ var _selection_selected_rows_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../selection/selected-rows.js */ "./resources/frontend/features/table/selection/selected-rows.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
@@ -3821,18 +3905,18 @@ function assertMountDependencies(createEngine, registry) {
   }
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/table/options/option-aliases.js":
+/***/ "./resources/frontend/features/table/options/option-aliases.js"
 /*!*********************************************************************!*\
   !*** ./resources/frontend/features/table/options/option-aliases.js ***!
   \*********************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "normalizeDataTableOptions": () => (/* binding */ normalizeDataTableOptions)
+/* harmony export */   normalizeDataTableOptions: () => (/* binding */ normalizeDataTableOptions)
 /* harmony export */ });
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
@@ -3888,18 +3972,18 @@ function warnRemovedOption(message) {
   (_globalThis$console = globalThis.console) === null || _globalThis$console === void 0 || _globalThis$console.warn(message);
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/table/options/state-options.js":
+/***/ "./resources/frontend/features/table/options/state-options.js"
 /*!********************************************************************!*\
   !*** ./resources/frontend/features/table/options/state-options.js ***!
   \********************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "applyTableStateOptions": () => (/* binding */ applyTableStateOptions)
+/* harmony export */   applyTableStateOptions: () => (/* binding */ applyTableStateOptions)
 /* harmony export */ });
 /* harmony import */ var _state_filter_state_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../state/filter-state.js */ "./resources/frontend/features/table/state/filter-state.js");
 
@@ -3925,20 +4009,20 @@ function applyTableStateOptions(options, config) {
   return options;
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/table/options/table-options.js":
+/***/ "./resources/frontend/features/table/options/table-options.js"
 /*!********************************************************************!*\
   !*** ./resources/frontend/features/table/options/table-options.js ***!
   \********************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "applyServerOptions": () => (/* binding */ applyServerOptions),
-/* harmony export */   "readTableDefinition": () => (/* binding */ readTableDefinition),
-/* harmony export */   "tableLayout": () => (/* binding */ tableLayout)
+/* harmony export */   applyServerOptions: () => (/* binding */ applyServerOptions),
+/* harmony export */   readTableDefinition: () => (/* binding */ readTableDefinition),
+/* harmony export */   tableLayout: () => (/* binding */ tableLayout)
 /* harmony export */ });
 /* harmony import */ var _option_aliases_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./option-aliases.js */ "./resources/frontend/features/table/options/option-aliases.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
@@ -3989,8 +4073,11 @@ function tableLayout(_ref) {
     },
     bottomEnd: null,
     bottomStart: showInfo ? 'info' : null,
-    topEnd: showSearch ? 'search' : null,
-    topStart: showLength ? 'pageLength' : null
+    topEnd: null,
+    topStart: null,
+    top: null,
+    top2End: showLength ? 'pageLength' : null,
+    top2Start: showSearch ? 'search' : null
   };
 }
 function parseOptions(source) {
@@ -4033,20 +4120,20 @@ function assertElement(element) {
   }
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/table/pagination/page-jump.js":
+/***/ "./resources/frontend/features/table/pagination/page-jump.js"
 /*!*******************************************************************!*\
   !*** ./resources/frontend/features/table/pagination/page-jump.js ***!
   \*******************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "PAGE_JUMP_FEATURE": () => (/* binding */ PAGE_JUMP_FEATURE),
-/* harmony export */   "createPageJumpControl": () => (/* binding */ createPageJumpControl),
-/* harmony export */   "installPageJumpFeature": () => (/* binding */ installPageJumpFeature)
+/* harmony export */   PAGE_JUMP_FEATURE: () => (/* binding */ PAGE_JUMP_FEATURE),
+/* harmony export */   createPageJumpControl: () => (/* binding */ createPageJumpControl),
+/* harmony export */   installPageJumpFeature: () => (/* binding */ installPageJumpFeature)
 /* harmony export */ });
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
@@ -4135,21 +4222,21 @@ function bindPageJumpInput(input, jump) {
   });
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/table/runtime/install-data-tables.js":
+/***/ "./resources/frontend/features/table/runtime/install-data-tables.js"
 /*!**************************************************************************!*\
   !*** ./resources/frontend/features/table/runtime/install-data-tables.js ***!
   \**************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "DATA_TABLE_COMPONENT": () => (/* binding */ DATA_TABLE_COMPONENT),
-/* harmony export */   "DATA_TABLE_SELECTOR": () => (/* binding */ DATA_TABLE_SELECTOR),
-/* harmony export */   "createDataTableDefinition": () => (/* binding */ createDataTableDefinition),
-/* harmony export */   "installDataTables": () => (/* binding */ installDataTables)
+/* harmony export */   DATA_TABLE_COMPONENT: () => (/* binding */ DATA_TABLE_COMPONENT),
+/* harmony export */   DATA_TABLE_SELECTOR: () => (/* binding */ DATA_TABLE_SELECTOR),
+/* harmony export */   createDataTableDefinition: () => (/* binding */ createDataTableDefinition),
+/* harmony export */   installDataTables: () => (/* binding */ installDataTables)
 /* harmony export */ });
 /* harmony import */ var _core_lifecycle_component_lifecycle_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../core/lifecycle/component-lifecycle.js */ "./resources/frontend/core/lifecycle/component-lifecycle.js");
 /* harmony import */ var _forms_date_date_locales_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../forms/date/date-locales.js */ "./resources/frontend/features/forms/date/date-locales.js");
@@ -4206,6 +4293,7 @@ function installDataTables(admin, options) {
   return {
     definition: definition,
     drivers: drivers,
+    engine: settings.engine,
     filters: filters,
     scan: scan
   };
@@ -4294,20 +4382,20 @@ function assertOptions(options) {
   }
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/table/runtime/install-table-auto-updates.js":
+/***/ "./resources/frontend/features/table/runtime/install-table-auto-updates.js"
 /*!*********************************************************************************!*\
   !*** ./resources/frontend/features/table/runtime/install-table-auto-updates.js ***!
   \*********************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "TABLE_AUTO_UPDATES_COMPONENT": () => (/* binding */ TABLE_AUTO_UPDATES_COMPONENT),
-/* harmony export */   "TABLE_AUTO_UPDATES_SELECTOR": () => (/* binding */ TABLE_AUTO_UPDATES_SELECTOR),
-/* harmony export */   "installTableAutoUpdates": () => (/* binding */ installTableAutoUpdates)
+/* harmony export */   TABLE_AUTO_UPDATES_COMPONENT: () => (/* binding */ TABLE_AUTO_UPDATES_COMPONENT),
+/* harmony export */   TABLE_AUTO_UPDATES_SELECTOR: () => (/* binding */ TABLE_AUTO_UPDATES_SELECTOR),
+/* harmony export */   installTableAutoUpdates: () => (/* binding */ installTableAutoUpdates)
 /* harmony export */ });
 /* harmony import */ var _autoupdate_table_auto_update_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../autoupdate/table-auto-update.js */ "./resources/frontend/features/table/autoupdate/table-auto-update.js");
 
@@ -4315,39 +4403,21 @@ var TABLE_AUTO_UPDATES_COMPONENT = 'table-auto-updates';
 var TABLE_AUTO_UPDATES_SELECTOR = '[data-admin-table-autoupdate]';
 function installTableAutoUpdates(admin, options) {
   assertOptions(admin, options);
-  var definition = {
-    mount: function mount(host) {
-      return (0,_autoupdate_table_auto_update_js__WEBPACK_IMPORTED_MODULE_0__.mountTableAutoUpdates)(host, {
-        now: options.now,
-        ProgressBar: options.ProgressBar,
-        scheduler: options.scheduler,
-        tables: admin.Tables
-      });
-    },
-    name: TABLE_AUTO_UPDATES_COMPONENT,
-    selector: TABLE_AUTO_UPDATES_SELECTOR
-  };
-  var scan = function scan() {
-    var root = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : options.root;
-    return admin.Components.scan(root, TABLE_AUTO_UPDATES_COMPONENT);
-  };
-  admin.Components.register(definition);
-  scanAfterDocumentReady(options.root, scan);
-  return {
-    definition: definition,
-    scan: scan
-  };
-}
-function scanAfterDocumentReady(root, scan) {
-  if (root.readyState !== 'loading' || typeof root.addEventListener !== 'function') return;
-  root.addEventListener('DOMContentLoaded', function () {
-    return scan(root);
-  }, {
-    once: true
+  (0,_autoupdate_table_auto_update_js__WEBPACK_IMPORTED_MODULE_0__.installTableAutoUpdateFeature)(options.engine, {
+    now: options.now,
+    ProgressBar: options.ProgressBar,
+    scheduler: options.scheduler,
+    tables: admin.Tables
   });
+  return {
+    feature: _autoupdate_table_auto_update_js__WEBPACK_IMPORTED_MODULE_0__.AUTO_UPDATE_FEATURE,
+    scan: function scan() {
+      return 0;
+    }
+  };
 }
 function assertOptions(admin, options) {
-  var dependencies = [admin === null || admin === void 0 ? void 0 : admin.Components, admin === null || admin === void 0 ? void 0 : admin.Tables, options === null || options === void 0 ? void 0 : options.ProgressBar, options === null || options === void 0 ? void 0 : options.root, options === null || options === void 0 ? void 0 : options.scheduler];
+  var dependencies = [admin === null || admin === void 0 ? void 0 : admin.Tables, options === null || options === void 0 ? void 0 : options.engine, options === null || options === void 0 ? void 0 : options.ProgressBar, options === null || options === void 0 ? void 0 : options.scheduler];
   if (dependencies.some(function (dependency) {
     return !dependency;
   })) {
@@ -4355,21 +4425,21 @@ function assertOptions(admin, options) {
   }
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/table/runtime/install-table-controls.js":
+/***/ "./resources/frontend/features/table/runtime/install-table-controls.js"
 /*!*****************************************************************************!*\
   !*** ./resources/frontend/features/table/runtime/install-table-controls.js ***!
   \*****************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "TABLE_CONTROLS_COMPONENT": () => (/* binding */ TABLE_CONTROLS_COMPONENT),
-/* harmony export */   "TABLE_CONTROLS_SELECTOR": () => (/* binding */ TABLE_CONTROLS_SELECTOR),
-/* harmony export */   "createTableControlsDefinition": () => (/* binding */ createTableControlsDefinition),
-/* harmony export */   "installTableControls": () => (/* binding */ installTableControls)
+/* harmony export */   TABLE_CONTROLS_COMPONENT: () => (/* binding */ TABLE_CONTROLS_COMPONENT),
+/* harmony export */   TABLE_CONTROLS_SELECTOR: () => (/* binding */ TABLE_CONTROLS_SELECTOR),
+/* harmony export */   createTableControlsDefinition: () => (/* binding */ createTableControlsDefinition),
+/* harmony export */   installTableControls: () => (/* binding */ installTableControls)
 /* harmony export */ });
 /* harmony import */ var _actions_bulk_actions_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/bulk-actions.js */ "./resources/frontend/features/table/actions/bulk-actions.js");
 /* harmony import */ var _actions_form_actions_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/form-actions.js */ "./resources/frontend/features/table/actions/form-actions.js");
@@ -4475,18 +4545,18 @@ function hasBrowserDependencies(options) {
   });
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/table/runtime/table-filters.js":
+/***/ "./resources/frontend/features/table/runtime/table-filters.js"
 /*!********************************************************************!*\
   !*** ./resources/frontend/features/table/runtime/table-filters.js ***!
   \********************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "createTableFilters": () => (/* binding */ createTableFilters)
+/* harmony export */   createTableFilters: () => (/* binding */ createTableFilters)
 /* harmony export */ });
 /* harmony import */ var _filters_filter_controls_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../filters/filter-controls.js */ "./resources/frontend/features/table/filters/filter-controls.js");
 /* harmony import */ var _filters_filter_elements_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../filters/filter-elements.js */ "./resources/frontend/features/table/filters/filter-elements.js");
@@ -4592,25 +4662,26 @@ function normalizeOptions(options) {
   };
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/table/runtime/table-runtime-options.js":
+/***/ "./resources/frontend/features/table/runtime/table-runtime-options.js"
 /*!****************************************************************************!*\
   !*** ./resources/frontend/features/table/runtime/table-runtime-options.js ***!
   \****************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "createRuntimeTableOptions": () => (/* binding */ createRuntimeTableOptions)
+/* harmony export */   createRuntimeTableOptions: () => (/* binding */ createRuntimeTableOptions)
 /* harmony export */ });
 /* harmony import */ var _transport_table_ajax_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../transport/table-ajax.js */ "./resources/frontend/features/table/transport/table-ajax.js");
-/* harmony import */ var _hooks_column_highlight_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../hooks/column-highlight.js */ "./resources/frontend/features/table/hooks/column-highlight.js");
-/* harmony import */ var _hooks_lazy_images_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../hooks/lazy-images.js */ "./resources/frontend/features/table/hooks/lazy-images.js");
-/* harmony import */ var _hooks_table_hooks_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../hooks/table-hooks.js */ "./resources/frontend/features/table/hooks/table-hooks.js");
-/* harmony import */ var _options_table_options_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../options/table-options.js */ "./resources/frontend/features/table/options/table-options.js");
-/* harmony import */ var _options_state_options_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../options/state-options.js */ "./resources/frontend/features/table/options/state-options.js");
+/* harmony import */ var _autoupdate_table_auto_update_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../autoupdate/table-auto-update.js */ "./resources/frontend/features/table/autoupdate/table-auto-update.js");
+/* harmony import */ var _hooks_column_highlight_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../hooks/column-highlight.js */ "./resources/frontend/features/table/hooks/column-highlight.js");
+/* harmony import */ var _hooks_lazy_images_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../hooks/lazy-images.js */ "./resources/frontend/features/table/hooks/lazy-images.js");
+/* harmony import */ var _hooks_table_hooks_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../hooks/table-hooks.js */ "./resources/frontend/features/table/hooks/table-hooks.js");
+/* harmony import */ var _options_table_options_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../options/table-options.js */ "./resources/frontend/features/table/options/table-options.js");
+/* harmony import */ var _options_state_options_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../options/state-options.js */ "./resources/frontend/features/table/options/state-options.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
@@ -4623,17 +4694,19 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
 
 
 
+
 function createRuntimeTableOptions(element, definition, settings) {
-  var options = (0,_options_table_options_js__WEBPACK_IMPORTED_MODULE_4__.applyServerOptions)(definition.options, _objectSpread(_objectSpread({}, definition), {}, {
+  var options = (0,_options_table_options_js__WEBPACK_IMPORTED_MODULE_5__.applyServerOptions)(definition.options, _objectSpread(_objectSpread({}, definition), {}, {
     pageJump: settings.pageJump.enabled
   }));
+  (0,_autoupdate_table_auto_update_js__WEBPACK_IMPORTED_MODULE_1__.configureTableAutoUpdate)(element, options);
   if (definition.url) configureServerTable(options, definition, settings);
-  (0,_options_state_options_js__WEBPACK_IMPORTED_MODULE_5__.applyTableStateOptions)(options, {
+  (0,_options_state_options_js__WEBPACK_IMPORTED_MODULE_6__.applyTableStateOptions)(options, {
     stateDatatables: Boolean(definition.url && settings.admin.Config.get('datatables_settings.state_datatables')),
     stateFilters: !definition.url || settings.stateFilters
   });
   options.drawCallback = createRuntimeDrawHook(element, settings);
-  options.createdRow = _hooks_table_hooks_js__WEBPACK_IMPORTED_MODULE_3__.applyCreatedRowClass;
+  options.createdRow = _hooks_table_hooks_js__WEBPACK_IMPORTED_MODULE_4__.applyCreatedRowClass;
   return options;
 }
 function configureServerTable(options, definition, settings) {
@@ -4647,16 +4720,16 @@ function configureServerTable(options, definition, settings) {
   });
 }
 function createRuntimeDrawHook(element, settings) {
-  return (0,_hooks_table_hooks_js__WEBPACK_IMPORTED_MODULE_3__.createDrawHook)({
+  return (0,_hooks_table_hooks_js__WEBPACK_IMPORTED_MODULE_4__.createDrawHook)({
     events: settings.admin.Events,
     highlight: function highlight(engineContext) {
-      return (0,_hooks_column_highlight_js__WEBPACK_IMPORTED_MODULE_1__.syncColumnHighlight)(element, engineContext.api(), Boolean(settings.admin.Config.get('datatables_settings.datatables_highlight')));
+      return (0,_hooks_column_highlight_js__WEBPACK_IMPORTED_MODULE_2__.syncColumnHighlight)(element, engineContext.api(), Boolean(settings.admin.Config.get('datatables_settings.datatables_highlight')));
     },
     inlineEditor: function inlineEditor() {
       return settings.inlineEditor.scan(element);
     },
     lazyload: function lazyload() {
-      return (0,_hooks_lazy_images_js__WEBPACK_IMPORTED_MODULE_2__.loadLazyImages)(element);
+      return (0,_hooks_lazy_images_js__WEBPACK_IMPORTED_MODULE_3__.loadLazyImages)(element);
     },
     tooltips: function tooltips() {
       return settings.tooltips(element);
@@ -4664,19 +4737,19 @@ function createRuntimeDrawHook(element, settings) {
   });
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/table/selection/checkbox-controls.js":
+/***/ "./resources/frontend/features/table/selection/checkbox-controls.js"
 /*!**************************************************************************!*\
   !*** ./resources/frontend/features/table/selection/checkbox-controls.js ***!
   \**************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "bindTableCheckboxes": () => (/* binding */ bindTableCheckboxes),
-/* harmony export */   "updateRowSelection": () => (/* binding */ updateRowSelection)
+/* harmony export */   bindTableCheckboxes: () => (/* binding */ bindTableCheckboxes),
+/* harmony export */   updateRowSelection: () => (/* binding */ updateRowSelection)
 /* harmony export */ });
 /* harmony import */ var _core_dom_listeners_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../core/dom/listeners.js */ "./resources/frontend/core/dom/listeners.js");
 
@@ -4727,18 +4800,18 @@ function dispatchChange(element) {
   }));
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/table/selection/selected-rows.js":
+/***/ "./resources/frontend/features/table/selection/selected-rows.js"
 /*!**********************************************************************!*\
   !*** ./resources/frontend/features/table/selection/selected-rows.js ***!
   \**********************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "selectedRowValues": () => (/* binding */ selectedRowValues)
+/* harmony export */   selectedRowValues: () => (/* binding */ selectedRowValues)
 /* harmony export */ });
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -4755,23 +4828,23 @@ function selectedRowValues(element) {
   });
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/table/state/filter-state.js":
+/***/ "./resources/frontend/features/table/state/filter-state.js"
 /*!*****************************************************************!*\
   !*** ./resources/frontend/features/table/state/filter-state.js ***!
   \*****************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "clearFilterState": () => (/* binding */ clearFilterState),
-/* harmony export */   "clearSavedTableSearch": () => (/* binding */ clearSavedTableSearch),
-/* harmony export */   "filterStateKey": () => (/* binding */ filterStateKey),
-/* harmony export */   "loadFilterState": () => (/* binding */ loadFilterState),
-/* harmony export */   "migrateLegacyFilterState": () => (/* binding */ migrateLegacyFilterState),
-/* harmony export */   "saveFilterState": () => (/* binding */ saveFilterState)
+/* harmony export */   clearFilterState: () => (/* binding */ clearFilterState),
+/* harmony export */   clearSavedTableSearch: () => (/* binding */ clearSavedTableSearch),
+/* harmony export */   filterStateKey: () => (/* binding */ filterStateKey),
+/* harmony export */   loadFilterState: () => (/* binding */ loadFilterState),
+/* harmony export */   migrateLegacyFilterState: () => (/* binding */ migrateLegacyFilterState),
+/* harmony export */   saveFilterState: () => (/* binding */ saveFilterState)
 /* harmony export */ });
 /* harmony import */ var _filters_filter_elements_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../filters/filter-elements.js */ "./resources/frontend/features/table/filters/filter-elements.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
@@ -4996,19 +5069,19 @@ function parseState(serialized) {
   }
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/features/table/transport/table-ajax.js":
+/***/ "./resources/frontend/features/table/transport/table-ajax.js"
 /*!*******************************************************************!*\
   !*** ./resources/frontend/features/table/transport/table-ajax.js ***!
   \*******************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "appendNamedFilterData": () => (/* binding */ appendNamedFilterData),
-/* harmony export */   "createTableAjax": () => (/* binding */ createTableAjax)
+/* harmony export */   appendNamedFilterData: () => (/* binding */ appendNamedFilterData),
+/* harmony export */   createTableAjax: () => (/* binding */ createTableAjax)
 /* harmony export */ });
 /* harmony import */ var _filters_filter_elements_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../filters/filter-elements.js */ "./resources/frontend/features/table/filters/filter-elements.js");
 
@@ -5050,19 +5123,20 @@ function assertEvents(events) {
   }
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./node_modules/progressbar.js/dist/progressbar.js":
+/***/ "./node_modules/progressbar.js/dist/progressbar.js"
 /*!*********************************************************!*\
   !*** ./node_modules/progressbar.js/dist/progressbar.js ***!
   \*********************************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+(module, __unused_webpack_exports, __webpack_require__) {
 
 // ProgressBar.js 1.1.1
 // https://kimmobrunfeldt.github.io/progressbar.js
 // License: MIT
 
-(function(f){if(true){module.exports=f()}else { var g; }})(function(){var define,module,exports;return (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c=undefined;if(!f&&c)return require(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u=undefined,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
+(function(f){if(true){module.exports=f()}else // removed by dead control flow
+{ var g; }})(function(){var define,module,exports;return (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c=undefined;if(!f&&c)return require(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u=undefined,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 (function (global){(function (){
 /**
  * Lodash (Custom Build) <https://lodash.com/>
@@ -7045,7 +7119,9 @@ module.exports = merge;
 }).call(this)}).call(this,typeof __webpack_require__.g !== "undefined" ? __webpack_require__.g : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],2:[function(require,module,exports){
 /*! For license information please see shifty.js.LICENSE.txt */
-!function(t,n){"object"==typeof exports&&"object"==typeof module?module.exports=n():"function"==typeof define&&define.amd?define("shifty",[],n):"object"==typeof exports?exports.shifty=n():t.shifty=n()}(self,(function(){return function(){"use strict";var t={720:function(t,n,e){e.r(n),e.d(n,{Scene:function(){return sn},Tweenable:function(){return kt},interpolate:function(){return nn},processTweens:function(){return dt},setBezierFunction:function(){return $},shouldScheduleUpdate:function(){return bt},tween:function(){return Pt},unsetBezierFunction:function(){return L}});var r={};e.r(r),e.d(r,{bounce:function(){return D},bouncePast:function(){return q},easeFrom:function(){return B},easeFromTo:function(){return Q},easeInBack:function(){return E},easeInCirc:function(){return j},easeInCubic:function(){return c},easeInExpo:function(){return w},easeInOutBack:function(){return T},easeInOutCirc:function(){return P},easeInOutCubic:function(){return l},easeInOutExpo:function(){return S},easeInOutQuad:function(){return s},easeInOutQuart:function(){return v},easeInOutQuint:function(){return d},easeInOutSine:function(){return b},easeInQuad:function(){return u},easeInQuart:function(){return h},easeInQuint:function(){return y},easeInSine:function(){return g},easeOutBack:function(){return A},easeOutBounce:function(){return M},easeOutCirc:function(){return k},easeOutCubic:function(){return f},easeOutExpo:function(){return O},easeOutQuad:function(){return a},easeOutQuart:function(){return p},easeOutQuint:function(){return _},easeOutSine:function(){return m},easeTo:function(){return N},elastic:function(){return I},linear:function(){return o},swingFrom:function(){return x},swingFromTo:function(){return F},swingTo:function(){return C}});var i={};e.r(i),e.d(i,{afterTween:function(){return Jt},beforeTween:function(){return Ht},doesApply:function(){return Wt},tweenCreated:function(){return Gt}});var o=function(t){return t},u=function(t){return Math.pow(t,2)},a=function(t){return-(Math.pow(t-1,2)-1)},s=function(t){return(t/=.5)<1?.5*Math.pow(t,2):-.5*((t-=2)*t-2)},c=function(t){return Math.pow(t,3)},f=function(t){return Math.pow(t-1,3)+1},l=function(t){return(t/=.5)<1?.5*Math.pow(t,3):.5*(Math.pow(t-2,3)+2)},h=function(t){return Math.pow(t,4)},p=function(t){return-(Math.pow(t-1,4)-1)},v=function(t){return(t/=.5)<1?.5*Math.pow(t,4):-.5*((t-=2)*Math.pow(t,3)-2)},y=function(t){return Math.pow(t,5)},_=function(t){return Math.pow(t-1,5)+1},d=function(t){return(t/=.5)<1?.5*Math.pow(t,5):.5*(Math.pow(t-2,5)+2)},g=function(t){return 1-Math.cos(t*(Math.PI/2))},m=function(t){return Math.sin(t*(Math.PI/2))},b=function(t){return-.5*(Math.cos(Math.PI*t)-1)},w=function(t){return 0===t?0:Math.pow(2,10*(t-1))},O=function(t){return 1===t?1:1-Math.pow(2,-10*t)},S=function(t){return 0===t?0:1===t?1:(t/=.5)<1?.5*Math.pow(2,10*(t-1)):.5*(2-Math.pow(2,-10*--t))},j=function(t){return-(Math.sqrt(1-t*t)-1)},k=function(t){return Math.sqrt(1-Math.pow(t-1,2))},P=function(t){return(t/=.5)<1?-.5*(Math.sqrt(1-t*t)-1):.5*(Math.sqrt(1-(t-=2)*t)+1)},M=function(t){return t<1/2.75?7.5625*t*t:t<2/2.75?7.5625*(t-=1.5/2.75)*t+.75:t<2.5/2.75?7.5625*(t-=2.25/2.75)*t+.9375:7.5625*(t-=2.625/2.75)*t+.984375},E=function(t){var n=1.70158;return t*t*((n+1)*t-n)},A=function(t){var n=1.70158;return(t-=1)*t*((n+1)*t+n)+1},T=function(t){var n=1.70158;return(t/=.5)<1?t*t*((1+(n*=1.525))*t-n)*.5:.5*((t-=2)*t*((1+(n*=1.525))*t+n)+2)},I=function(t){return-1*Math.pow(4,-8*t)*Math.sin((6*t-1)*(2*Math.PI)/2)+1},F=function(t){var n=1.70158;return(t/=.5)<1?t*t*((1+(n*=1.525))*t-n)*.5:.5*((t-=2)*t*((1+(n*=1.525))*t+n)+2)},x=function(t){var n=1.70158;return t*t*((n+1)*t-n)},C=function(t){var n=1.70158;return(t-=1)*t*((n+1)*t+n)+1},D=function(t){return t<1/2.75?7.5625*t*t:t<2/2.75?7.5625*(t-=1.5/2.75)*t+.75:t<2.5/2.75?7.5625*(t-=2.25/2.75)*t+.9375:7.5625*(t-=2.625/2.75)*t+.984375},q=function(t){return t<1/2.75?7.5625*t*t:t<2/2.75?2-(7.5625*(t-=1.5/2.75)*t+.75):t<2.5/2.75?2-(7.5625*(t-=2.25/2.75)*t+.9375):2-(7.5625*(t-=2.625/2.75)*t+.984375)},Q=function(t){return(t/=.5)<1?.5*Math.pow(t,4):-.5*((t-=2)*Math.pow(t,3)-2)},B=function(t){return Math.pow(t,4)},N=function(t){return Math.pow(t,.25)};function R(t,n,e,r,i,o){var u,a,s,c,f,l=0,h=0,p=0,v=function(t){return((l*t+h)*t+p)*t},y=function(t){return(3*l*t+2*h)*t+p},_=function(t){return t>=0?t:0-t};return l=1-(p=3*n)-(h=3*(r-n)-p),s=1-(f=3*e)-(c=3*(i-e)-f),u=t,a=function(t){return 1/(200*t)}(o),function(t){return((s*t+c)*t+f)*t}(function(t,n){var e,r,i,o,u,a;for(i=t,a=0;a<8;a++){if(o=v(i)-t,_(o)<n)return i;if(u=y(i),_(u)<1e-6)break;i-=o/u}if((i=t)<(e=0))return e;if(i>(r=1))return r;for(;e<r;){if(o=v(i),_(o-t)<n)return i;t>o?e=i:r=i,i=.5*(r-e)+e}return i}(u,a))}var z,U=function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:.25,n=arguments.length>1&&void 0!==arguments[1]?arguments[1]:.25,e=arguments.length>2&&void 0!==arguments[2]?arguments[2]:.75,r=arguments.length>3&&void 0!==arguments[3]?arguments[3]:.75;return function(i){return R(i,t,n,e,r,1)}},$=function(t,n,e,r,i){var o=U(n,e,r,i);return o.displayName=t,o.x1=n,o.y1=e,o.x2=r,o.y2=i,kt.formulas[t]=o},L=function(t){return delete kt.formulas[t]};function V(t,n){if(!(t instanceof n))throw new TypeError("Cannot call a class as a function")}function W(t,n){for(var e=0;e<n.length;e++){var r=n[e];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}function G(t){return G="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t},G(t)}function H(t){return function(t){if(Array.isArray(t))return J(t)}(t)||function(t){if("undefined"!=typeof Symbol&&Symbol.iterator in Object(t))return Array.from(t)}(t)||function(t,n){if(t){if("string"==typeof t)return J(t,n);var e=Object.prototype.toString.call(t).slice(8,-1);return"Object"===e&&t.constructor&&(e=t.constructor.name),"Map"===e||"Set"===e?Array.from(t):"Arguments"===e||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(e)?J(t,n):void 0}}(t)||function(){throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}()}function J(t,n){(null==n||n>t.length)&&(n=t.length);for(var e=0,r=new Array(n);e<n;e++)r[e]=t[e];return r}function K(t,n){var e=Object.keys(t);if(Object.getOwnPropertySymbols){var r=Object.getOwnPropertySymbols(t);n&&(r=r.filter((function(n){return Object.getOwnPropertyDescriptor(t,n).enumerable}))),e.push.apply(e,r)}return e}function X(t){for(var n=1;n<arguments.length;n++){var e=null!=arguments[n]?arguments[n]:{};n%2?K(Object(e),!0).forEach((function(n){Y(t,n,e[n])})):Object.getOwnPropertyDescriptors?Object.defineProperties(t,Object.getOwnPropertyDescriptors(e)):K(Object(e)).forEach((function(n){Object.defineProperty(t,n,Object.getOwnPropertyDescriptor(e,n))}))}return t}function Y(t,n,e){return n in t?Object.defineProperty(t,n,{value:e,enumerable:!0,configurable:!0,writable:!0}):t[n]=e,t}var Z,tt,nt,et="linear",rt="undefined"!=typeof window?window:e.g,it="afterTween",ot="afterTweenEnd",ut="beforeTween",at="tweenCreated",st="function",ct="string",ft=rt.requestAnimationFrame||rt.webkitRequestAnimationFrame||rt.oRequestAnimationFrame||rt.msRequestAnimationFrame||rt.mozCancelRequestAnimationFrame&&rt.mozRequestAnimationFrame||setTimeout,lt=function(){},ht=null,pt=null,vt=X({},r),yt=function(t,n,e,r,i,o,u){var a,s,c,f=t<o?0:(t-o)/i,l=!1;for(var h in u&&u.call&&(l=!0,a=u(f)),n)l||(a=((s=u[h]).call?s:vt[s])(f)),c=e[h],n[h]=c+(r[h]-c)*a;return n},_t=function(t,n){var e=t._timestamp,r=t._currentState,i=t._delay;if(!(n<e+i)){var o=t._duration,u=t._targetState,a=e+i+o,s=n>a?a:n;t._hasEnded=s>=a;var c=o-(a-s),f=t._filters.length>0;if(t._hasEnded)return t._render(u,t._data,c),t.stop(!0);f&&t._applyFilter(ut),s<e+i?e=o=s=1:e+=i,yt(s,r,t._originalState,u,o,e,t._easing),f&&t._applyFilter(it),t._render(r,t._data,c)}},dt=function(){for(var t,n=kt.now(),e=ht;e;)t=e._next,_t(e,n),e=t},gt=Date.now||function(){return+new Date},mt=!1,bt=function(t){t&&mt||(mt=t,t&&wt())},wt=function t(){Z=gt(),mt&&ft.call(rt,t,16.666666666666668),dt()},Ot=function(t){var n=arguments.length>1&&void 0!==arguments[1]?arguments[1]:et,e=arguments.length>2&&void 0!==arguments[2]?arguments[2]:{};if(Array.isArray(n)){var r=U.apply(void 0,H(n));return r}var i=G(n);if(vt[n])return vt[n];if(i===ct||i===st)for(var o in t)e[o]=n;else for(var u in t)e[u]=n[u]||et;return e},St=function(t){t===ht?(ht=t._next)?ht._previous=null:pt=null:t===pt?(pt=t._previous)?pt._next=null:ht=null:(tt=t._previous,nt=t._next,tt._next=nt,nt._previous=tt),t._previous=t._next=null},jt="function"==typeof Promise?Promise:null;z=Symbol.toStringTag;var kt=function(){function t(){var n=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{},e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:void 0;V(this,t),Y(this,z,"Promise"),this._config={},this._data={},this._delay=0,this._filters=[],this._next=null,this._previous=null,this._timestamp=null,this._hasEnded=!1,this._resolve=null,this._reject=null,this._currentState=n||{},this._originalState={},this._targetState={},this._start=lt,this._render=lt,this._promiseCtor=jt,e&&this.setConfig(e)}var n,e;return n=t,e=[{key:"_applyFilter",value:function(t){for(var n=this._filters.length;n>0;n--){var e=this._filters[n-n][t];e&&e(this)}}},{key:"tween",value:function(){var n=arguments.length>0&&void 0!==arguments[0]?arguments[0]:void 0;return this._isPlaying&&this.stop(),!n&&this._config||this.setConfig(n),this._pausedAtTime=null,this._timestamp=t.now(),this._start(this.get(),this._data),this._delay&&this._render(this._currentState,this._data,0),this._resume(this._timestamp)}},{key:"setConfig",value:function(){var n=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{},e=this._config;for(var r in n)e[r]=n[r];var i=e.promise,o=void 0===i?this._promiseCtor:i,u=e.start,a=void 0===u?lt:u,s=e.finish,c=e.render,f=void 0===c?this._config.step||lt:c,l=e.step,h=void 0===l?lt:l;this._data=e.data||e.attachment||this._data,this._isPlaying=!1,this._pausedAtTime=null,this._scheduleId=null,this._delay=n.delay||0,this._start=a,this._render=f||h,this._duration=e.duration||500,this._promiseCtor=o,s&&(this._resolve=s);var p=n.from,v=n.to,y=void 0===v?{}:v,_=this._currentState,d=this._originalState,g=this._targetState;for(var m in p)_[m]=p[m];var b=!1;for(var w in _){var O=_[w];b||G(O)!==ct||(b=!0),d[w]=O,g[w]=y.hasOwnProperty(w)?y[w]:O}if(this._easing=Ot(this._currentState,e.easing,this._easing),this._filters.length=0,b){for(var S in t.filters)t.filters[S].doesApply(this)&&this._filters.push(t.filters[S]);this._applyFilter(at)}return this}},{key:"then",value:function(t,n){var e=this;return this._promise=new this._promiseCtor((function(t,n){e._resolve=t,e._reject=n})),this._promise.then(t,n)}},{key:"catch",value:function(t){return this.then().catch(t)}},{key:"finally",value:function(t){return this.then().finally(t)}},{key:"get",value:function(){return X({},this._currentState)}},{key:"set",value:function(t){this._currentState=t}},{key:"pause",value:function(){if(this._isPlaying)return this._pausedAtTime=t.now(),this._isPlaying=!1,St(this),this}},{key:"resume",value:function(){return this._resume()}},{key:"_resume",value:function(){var n=arguments.length>0&&void 0!==arguments[0]?arguments[0]:t.now();return null===this._timestamp?this.tween():this._isPlaying?this._promise:(this._pausedAtTime&&(this._timestamp+=n-this._pausedAtTime,this._pausedAtTime=null),this._isPlaying=!0,null===ht?(ht=this,pt=this):(this._previous=pt,pt._next=this,pt=this),this)}},{key:"seek",value:function(n){n=Math.max(n,0);var e=t.now();return this._timestamp+n===0||(this._timestamp=e-n,_t(this,e)),this}},{key:"stop",value:function(){var t=arguments.length>0&&void 0!==arguments[0]&&arguments[0];if(!this._isPlaying)return this;this._isPlaying=!1,St(this);var n=this._filters.length>0;return t&&(n&&this._applyFilter(ut),yt(1,this._currentState,this._originalState,this._targetState,1,0,this._easing),n&&(this._applyFilter(it),this._applyFilter(ot))),this._resolve&&this._resolve({data:this._data,state:this._currentState,tweenable:this}),this._resolve=null,this._reject=null,this}},{key:"cancel",value:function(){var t=arguments.length>0&&void 0!==arguments[0]&&arguments[0],n=this._currentState,e=this._data,r=this._isPlaying;return r?(this._reject&&this._reject({data:e,state:n,tweenable:this}),this._resolve=null,this._reject=null,this.stop(t)):this}},{key:"isPlaying",value:function(){return this._isPlaying}},{key:"hasEnded",value:function(){return this._hasEnded}},{key:"setScheduleFunction",value:function(n){t.setScheduleFunction(n)}},{key:"data",value:function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:null;return t&&(this._data=X({},t)),this._data}},{key:"dispose",value:function(){for(var t in this)delete this[t]}}],e&&W(n.prototype,e),t}();function Pt(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{},n=new kt;return n.tween(t),n.tweenable=n,n}Y(kt,"now",(function(){return Z})),Y(kt,"setScheduleFunction",(function(t){return ft=t})),Y(kt,"filters",{}),Y(kt,"formulas",vt),bt(!0);var Mt,Et,At=/(\d|-|\.)/,Tt=/([^\-0-9.]+)/g,It=/[0-9.-]+/g,Ft=(Mt=It.source,Et=/,\s*/.source,new RegExp("rgba?\\(".concat(Mt).concat(Et).concat(Mt).concat(Et).concat(Mt,"(").concat(Et).concat(Mt,")?\\)"),"g")),xt=/^.*\(/,Ct=/#([0-9]|[a-f]){3,6}/gi,Dt="VAL",qt=function(t,n){return t.map((function(t,e){return"_".concat(n,"_").concat(e)}))};function Qt(t){return parseInt(t,16)}var Bt=function(t){return"rgb(".concat((n=t,3===(n=n.replace(/#/,"")).length&&(n=(n=n.split(""))[0]+n[0]+n[1]+n[1]+n[2]+n[2]),[Qt(n.substr(0,2)),Qt(n.substr(2,2)),Qt(n.substr(4,2))]).join(","),")");var n},Nt=function(t,n,e){var r=n.match(t),i=n.replace(t,Dt);return r&&r.forEach((function(t){return i=i.replace(Dt,e(t))})),i},Rt=function(t){for(var n in t){var e=t[n];"string"==typeof e&&e.match(Ct)&&(t[n]=Nt(Ct,e,Bt))}},zt=function(t){var n=t.match(It),e=n.slice(0,3).map(Math.floor),r=t.match(xt)[0];if(3===n.length)return"".concat(r).concat(e.join(","),")");if(4===n.length)return"".concat(r).concat(e.join(","),",").concat(n[3],")");throw new Error("Invalid rgbChunk: ".concat(t))},Ut=function(t){return t.match(It)},$t=function(t,n){var e={};return n.forEach((function(n){e[n]=t[n],delete t[n]})),e},Lt=function(t,n){return n.map((function(n){return t[n]}))},Vt=function(t,n){return n.forEach((function(n){return t=t.replace(Dt,+n.toFixed(4))})),t},Wt=function(t){for(var n in t._currentState)if("string"==typeof t._currentState[n])return!0;return!1};function Gt(t){var n=t._currentState;[n,t._originalState,t._targetState].forEach(Rt),t._tokenData=function(t){var n,e,r={};for(var i in t){var o=t[i];"string"==typeof o&&(r[i]={formatString:(n=o,e=void 0,e=n.match(Tt),e?(1===e.length||n.charAt(0).match(At))&&e.unshift(""):e=["",""],e.join(Dt)),chunkNames:qt(Ut(o),i)})}return r}(n)}function Ht(t){var n=t._currentState,e=t._originalState,r=t._targetState,i=t._easing,o=t._tokenData;!function(t,n){var e=function(e){var r=n[e].chunkNames,i=t[e];if("string"==typeof i){var o=i.split(" "),u=o[o.length-1];r.forEach((function(n,e){return t[n]=o[e]||u}))}else r.forEach((function(n){return t[n]=i}));delete t[e]};for(var r in n)e(r)}(i,o),[n,e,r].forEach((function(t){return function(t,n){var e=function(e){Ut(t[e]).forEach((function(r,i){return t[n[e].chunkNames[i]]=+r})),delete t[e]};for(var r in n)e(r)}(t,o)}))}function Jt(t){var n=t._currentState,e=t._originalState,r=t._targetState,i=t._easing,o=t._tokenData;[n,e,r].forEach((function(t){return function(t,n){for(var e in n){var r=n[e],i=r.chunkNames,o=r.formatString,u=Vt(o,Lt($t(t,i),i));t[e]=Nt(Ft,u,zt)}}(t,o)})),function(t,n){for(var e in n){var r=n[e].chunkNames,i=t[r[0]];t[e]="string"==typeof i?r.map((function(n){var e=t[n];return delete t[n],e})).join(" "):i}}(i,o)}function Kt(t,n){var e=Object.keys(t);if(Object.getOwnPropertySymbols){var r=Object.getOwnPropertySymbols(t);n&&(r=r.filter((function(n){return Object.getOwnPropertyDescriptor(t,n).enumerable}))),e.push.apply(e,r)}return e}function Xt(t){for(var n=1;n<arguments.length;n++){var e=null!=arguments[n]?arguments[n]:{};n%2?Kt(Object(e),!0).forEach((function(n){Yt(t,n,e[n])})):Object.getOwnPropertyDescriptors?Object.defineProperties(t,Object.getOwnPropertyDescriptors(e)):Kt(Object(e)).forEach((function(n){Object.defineProperty(t,n,Object.getOwnPropertyDescriptor(e,n))}))}return t}function Yt(t,n,e){return n in t?Object.defineProperty(t,n,{value:e,enumerable:!0,configurable:!0,writable:!0}):t[n]=e,t}var Zt=new kt,tn=kt.filters,nn=function(t,n,e,r){var i=arguments.length>4&&void 0!==arguments[4]?arguments[4]:0,o=Xt({},t),u=Ot(t,r);for(var a in Zt._filters.length=0,Zt.set({}),Zt._currentState=o,Zt._originalState=t,Zt._targetState=n,Zt._easing=u,tn)tn[a].doesApply(Zt)&&Zt._filters.push(tn[a]);Zt._applyFilter("tweenCreated"),Zt._applyFilter("beforeTween");var s=yt(e,o,t,n,1,i,u);return Zt._applyFilter("afterTween"),s};function en(t,n){(null==n||n>t.length)&&(n=t.length);for(var e=0,r=new Array(n);e<n;e++)r[e]=t[e];return r}function rn(t,n){if(!(t instanceof n))throw new TypeError("Cannot call a class as a function")}function on(t,n){for(var e=0;e<n.length;e++){var r=n[e];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}function un(t,n){var e=n.get(t);if(!e)throw new TypeError("attempted to get private field on non-instance");return e.get?e.get.call(t):e.value}var an=new WeakMap,sn=function(){function t(){rn(this,t),an.set(this,{writable:!0,value:[]});for(var n=arguments.length,e=new Array(n),r=0;r<n;r++)e[r]=arguments[r];e.forEach(this.add.bind(this))}var n,e;return n=t,(e=[{key:"add",value:function(t){return un(this,an).push(t),t}},{key:"remove",value:function(t){var n=un(this,an).indexOf(t);return~n&&un(this,an).splice(n,1),t}},{key:"empty",value:function(){return this.tweenables.map(this.remove.bind(this))}},{key:"isPlaying",value:function(){return un(this,an).some((function(t){return t.isPlaying()}))}},{key:"play",value:function(){return un(this,an).forEach((function(t){return t.tween()})),this}},{key:"pause",value:function(){return un(this,an).forEach((function(t){return t.pause()})),this}},{key:"resume",value:function(){return this.playingTweenables.forEach((function(t){return t.resume()})),this}},{key:"stop",value:function(t){return un(this,an).forEach((function(n){return n.stop(t)})),this}},{key:"tweenables",get:function(){return function(t){if(Array.isArray(t))return en(t)}(t=un(this,an))||function(t){if("undefined"!=typeof Symbol&&Symbol.iterator in Object(t))return Array.from(t)}(t)||function(t,n){if(t){if("string"==typeof t)return en(t,n);var e=Object.prototype.toString.call(t).slice(8,-1);return"Object"===e&&t.constructor&&(e=t.constructor.name),"Map"===e||"Set"===e?Array.from(t):"Arguments"===e||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(e)?en(t,n):void 0}}(t)||function(){throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}();var t}},{key:"playingTweenables",get:function(){return un(this,an).filter((function(t){return!t.hasEnded()}))}},{key:"promises",get:function(){return un(this,an).map((function(t){return t.then()}))}}])&&on(n.prototype,e),t}();kt.filters.token=i}},n={};function e(r){if(n[r])return n[r].exports;var i=n[r]={exports:{}};return t[r](i,i.exports,e),i.exports}return e.d=function(t,n){for(var r in n)e.o(n,r)&&!e.o(t,r)&&Object.defineProperty(t,r,{enumerable:!0,get:n[r]})},e.g=function(){if("object"==typeof globalThis)return globalThis;try{return this||new Function("return this")()}catch(t){if("object"==typeof window)return window}}(),e.o=function(t,n){return Object.prototype.hasOwnProperty.call(t,n)},e.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},e(720)}()}));
+!function(t,n){"object"==typeof exports&&"object"==typeof module?module.exports=n():"function"==typeof define&&define.amd?define("shifty",[],n):"object"==typeof exports?exports.shifty=n():t.shifty=n()}(self,(function(){return function(){"use strict";var t={720:function(t,n,e){e.r(n),e.d(n,{Scene:function(){return sn},Tweenable:function(){return kt},interpolate:function(){return nn},processTweens:function(){return dt},setBezierFunction:function(){return $},shouldScheduleUpdate:function(){return bt},tween:function(){return Pt},unsetBezierFunction:function(){return L}});var r={};e.r(r),e.d(r,{bounce:function(){return D},bouncePast:function(){return q},easeFrom:function(){return B},easeFromTo:function(){return Q},easeInBack:function(){return E},easeInCirc:function(){return j},easeInCubic:function(){return c},easeInExpo:function(){return w},easeInOutBack:function(){return T},easeInOutCirc:function(){return P},easeInOutCubic:function(){return l},easeInOutExpo:function(){return S},easeInOutQuad:function(){return s},easeInOutQuart:function(){return v},easeInOutQuint:function(){return d},easeInOutSine:function(){return b},easeInQuad:function(){return u},easeInQuart:function(){return h},easeInQuint:function(){return y},easeInSine:function(){return g},easeOutBack:function(){return A},easeOutBounce:function(){return M},easeOutCirc:function(){return k},easeOutCubic:function(){return f},easeOutExpo:function(){return O},easeOutQuad:function(){return a},easeOutQuart:function(){return p},easeOutQuint:function(){return _},easeOutSine:function(){return m},easeTo:function(){return N},elastic:function(){return I},linear:function(){return o},swingFrom:function(){return x},swingFromTo:function(){return F},swingTo:function(){return C}});var i={};e.r(i),e.d(i,{afterTween:function(){return Jt},beforeTween:function(){return Ht},doesApply:function(){return Wt},tweenCreated:function(){return Gt}});var o=function(t){return t},u=function(t){return Math.pow(t,2)},a=function(t){return-(Math.pow(t-1,2)-1)},s=function(t){return(t/=.5)<1?.5*Math.pow(t,2):-.5*((t-=2)*t-2)},c=function(t){return Math.pow(t,3)},f=function(t){return Math.pow(t-1,3)+1},l=function(t){return(t/=.5)<1?.5*Math.pow(t,3):.5*(Math.pow(t-2,3)+2)},h=function(t){return Math.pow(t,4)},p=function(t){return-(Math.pow(t-1,4)-1)},v=function(t){return(t/=.5)<1?.5*Math.pow(t,4):-.5*((t-=2)*Math.pow(t,3)-2)},y=function(t){return Math.pow(t,5)},_=function(t){return Math.pow(t-1,5)+1},d=function(t){return(t/=.5)<1?.5*Math.pow(t,5):.5*(Math.pow(t-2,5)+2)},g=function(t){return 1-Math.cos(t*(Math.PI/2))},m=function(t){return Math.sin(t*(Math.PI/2))},b=function(t){return-.5*(Math.cos(Math.PI*t)-1)},w=function(t){return 0===t?0:Math.pow(2,10*(t-1))},O=function(t){return 1===t?1:1-Math.pow(2,-10*t)},S=function(t){return 0===t?0:1===t?1:(t/=.5)<1?.5*Math.pow(2,10*(t-1)):.5*(2-Math.pow(2,-10*--t))},j=function(t){return-(Math.sqrt(1-t*t)-1)},k=function(t){return Math.sqrt(1-Math.pow(t-1,2))},P=function(t){return(t/=.5)<1?-.5*(Math.sqrt(1-t*t)-1):.5*(Math.sqrt(1-(t-=2)*t)+1)},M=function(t){return t<1/2.75?7.5625*t*t:t<2/2.75?7.5625*(t-=1.5/2.75)*t+.75:t<2.5/2.75?7.5625*(t-=2.25/2.75)*t+.9375:7.5625*(t-=2.625/2.75)*t+.984375},E=function(t){var n=1.70158;return t*t*((n+1)*t-n)},A=function(t){var n=1.70158;return(t-=1)*t*((n+1)*t+n)+1},T=function(t){var n=1.70158;return(t/=.5)<1?t*t*((1+(n*=1.525))*t-n)*.5:.5*((t-=2)*t*((1+(n*=1.525))*t+n)+2)},I=function(t){return-1*Math.pow(4,-8*t)*Math.sin((6*t-1)*(2*Math.PI)/2)+1},F=function(t){var n=1.70158;return(t/=.5)<1?t*t*((1+(n*=1.525))*t-n)*.5:.5*((t-=2)*t*((1+(n*=1.525))*t+n)+2)},x=function(t){var n=1.70158;return t*t*((n+1)*t-n)},C=function(t){var n=1.70158;return(t-=1)*t*((n+1)*t+n)+1},D=function(t){return t<1/2.75?7.5625*t*t:t<2/2.75?7.5625*(t-=1.5/2.75)*t+.75:t<2.5/2.75?7.5625*(t-=2.25/2.75)*t+.9375:7.5625*(t-=2.625/2.75)*t+.984375},q=function(t){return t<1/2.75?7.5625*t*t:t<2/2.75?2-(7.5625*(t-=1.5/2.75)*t+.75):t<2.5/2.75?2-(7.5625*(t-=2.25/2.75)*t+.9375):2-(7.5625*(t-=2.625/2.75)*t+.984375)},Q=function(t){return(t/=.5)<1?.5*Math.pow(t,4):-.5*((t-=2)*Math.pow(t,3)-2)},B=function(t){return Math.pow(t,4)},N=function(t){return Math.pow(t,.25)};function R(t,n,e,r,i,o){var u,a,s,c,f,l=0,h=0,p=0,v=function(t){return((l*t+h)*t+p)*t},y=function(t){return(3*l*t+2*h)*t+p},_=function(t){return t>=0?t:0-t};return l=1-(p=3*n)-(h=3*(r-n)-p),s=1-(f=3*e)-(c=3*(i-e)-f),u=t,a=function(t){return 1/(200*t)}(o),function(t){return((s*t+c)*t+f)*t}(function(t,n){var e,r,i,o,u,a;for(i=t,a=0;a<8;a++){if(o=v(i)-t,_(o)<n)return i;if(u=y(i),_(u)<1e-6)break;i-=o/u}if((i=t)<(e=0))return e;if(i>(r=1))return r;for(;e<r;){if(o=v(i),_(o-t)<n)return i;t>o?e=i:r=i,i=.5*(r-e)+e}return i}(u,a))}var z,U=function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:.25,n=arguments.length>1&&void 0!==arguments[1]?arguments[1]:.25,e=arguments.length>2&&void 0!==arguments[2]?arguments[2]:.75,r=arguments.length>3&&void 0!==arguments[3]?arguments[3]:.75;return function(i){return R(i,t,n,e,r,1)}},$=function(t,n,e,r,i){var o=U(n,e,r,i);return o.displayName=t,o.x1=n,o.y1=e,o.x2=r,o.y2=i,kt.formulas[t]=o},L=function(t){return delete kt.formulas[t]};function V(t,n){if(!(t instanceof n))throw new TypeError("Cannot call a class as a function")}function W(t,n){for(var e=0;e<n.length;e++){var r=n[e];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}function G(t){return G="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t},G(t)}function H(t){return function(t){if(Array.isArray(t))return J(t)}(t)||function(t){if("undefined"!=typeof Symbol&&Symbol.iterator in Object(t))return Array.from(t)}(t)||function(t,n){if(t){if("string"==typeof t)return J(t,n);var e=Object.prototype.toString.call(t).slice(8,-1);return"Object"===e&&t.constructor&&(e=t.constructor.name),"Map"===e||"Set"===e?Array.from(t):"Arguments"===e||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(e)?J(t,n):void 0}}(t)||function(){throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}()}function J(t,n){(null==n||n>t.length)&&(n=t.length);for(var e=0,r=new Array(n);e<n;e++)r[e]=t[e];return r}function K(t,n){var e=Object.keys(t);if(Object.getOwnPropertySymbols){var r=Object.getOwnPropertySymbols(t);n&&(r=r.filter((function(n){return Object.getOwnPropertyDescriptor(t,n).enumerable}))),e.push.apply(e,r)}return e}function X(t){for(var n=1;n<arguments.length;n++){var e=null!=arguments[n]?arguments[n]:{};n%2?K(Object(e),!0).forEach((function(n){Y(t,n,e[n])})):Object.getOwnPropertyDescriptors?Object.defineProperties(t,Object.getOwnPropertyDescriptors(e)):K(Object(e)).forEach((function(n){Object.defineProperty(t,n,Object.getOwnPropertyDescriptor(e,n))}))}return t}function Y(t,n,e){return n in t?Object.defineProperty(t,n,{value:e,enumerable:!0,configurable:!0,writable:!0}):t[n]=e,t}var Z,tt,nt,et="linear",rt="undefined"!=typeof window?window:e.g,it="afterTween",ot="afterTweenEnd",ut="beforeTween",at="tweenCreated",st="function",ct="string",ft=rt.requestAnimationFrame||rt.webkitRequestAnimationFrame||rt.oRequestAnimationFrame||rt.msRequestAnimationFrame||rt.mozCancelRequestAnimationFrame&&rt.mozRequestAnimationFrame||setTimeout,lt=function(){},ht=null,pt=null,vt=X({},r),yt=function(t,n,e,r,i,o,u){var a,s,c,f=t<o?0:(t-o)/i,l=!1;for(var h in u&&u.call&&(l=!0,a=u(f)),n)l||(a=((s=u[h]).call?s:vt[s])(f)),c=e[h],n[h]=c+(r[h]-c)*a;return n},_t=function(t,n){var e=t._timestamp,r=t._currentState,i=t._delay;if(!(n<e+i)){var o=t._duration,u=t._targetState,a=e+i+o,s=n>a?a:n;t._hasEnded=s>=a;var c=o-(a-s),f=t._filters.length>0;if(t._hasEnded)return t._render(u,t._data,c),t.stop(!0);f&&t._applyFilter(ut),s<e+i?e=o=s=1:e+=i,yt(s,r,t._originalState,u,o,e,t._easing),f&&t._applyFilter(it),t._render(r,t._data,c)}},dt=function(){for(var t,n=kt.now(),e=ht;e;)t=e._next,_t(e,n),e=t},gt=Date.now||function(){return+new Date},mt=!1,bt=function(t){t&&mt||(mt=t,t&&wt())},wt=function t(){Z=gt(),mt&&ft.call(rt,t,16.666666666666668),dt()},Ot=function(t){var n=arguments.length>1&&void 0!==arguments[1]?arguments[1]:et,e=arguments.length>2&&void 0!==arguments[2]?arguments[2]:{};if(Array.isArray(n)){var r=U.apply(void 0,H(n));return r}var i=G(n);if(vt[n])return vt[n];if(i===ct||i===st)for(var o in t)e[o]=n;else for(var u in t)e[u]=n[u]||et;return e},St=function(t){t===ht?(ht=t._next)?ht._previous=null:pt=null:t===pt?(pt=t._previous)?pt._next=null:ht=null:(tt=t._previous,nt=t._next,tt._next=nt,nt._previous=tt),t._previous=t._next=null},jt="function"==typeof Promise?Promise:null;z=Symbol.toStringTag;var kt=function(){function t(){var n=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{},e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:void 0;V(this,t),Y(this,z,"Promise"),this._config={},this._data={},this._delay=0,this._filters=[],this._next=null,this._previous=null,this._timestamp=null,this._hasEnded=!1,this._resolve=null,this._reject=null,this._currentState=n||{},this._originalState={},this._targetState={},this._start=lt,this._render=lt,this._promiseCtor=jt,e&&this.setConfig(e)}var n,e;return n=t,e=[{key:"_applyFilter",value:function(t){for(var n=this._filters.length;n>0;n--){var e=this._filters[n-n][t];e&&e(this)}}},{key:"tween",value:function(){var n=arguments.length>0&&void 0!==arguments[0]?arguments[0]:void 0;return this._isPlaying&&this.stop(),!n&&this._config||this.setConfig(n),this._pausedAtTime=null,this._timestamp=t.now(),this._start(this.get(),this._data),this._delay&&this._render(this._currentState,this._data,0),this._resume(this._timestamp)}},{key:"setConfig",value:function(){var n=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{},e=this._config;for(var r in n)e[r]=n[r];var i=e.promise,o=void 0===i?this._promiseCtor:i,u=e.start,a=void 0===u?lt:u,s=e.finish,c=e.render,f=void 0===c?this._config.step||lt:c,l=e.step,h=void 0===l?lt:l;this._data=e.data||e.attachment||this._data,this._isPlaying=!1,this._pausedAtTime=null,this._scheduleId=null,this._delay=n.delay||0,this._start=a,this._render=f||h,this._duration=e.duration||500,this._promiseCtor=o,s&&(this._resolve=s);var p=n.from,v=n.to,y=void 0===v?{}:v,_=this._currentState,d=this._originalState,g=this._targetState;for(var m in p)_[m]=p[m];var b=!1;for(var w in _){var O=_[w];b||G(O)!==ct||(b=!0),d[w]=O,g[w]=y.hasOwnProperty(w)?y[w]:O}if(this._easing=Ot(this._currentState,e.easing,this._easing),this._filters.length=0,b){for(var S in t.filters)t.filters[S].doesApply(this)&&this._filters.push(t.filters[S]);this._applyFilter(at)}return this}},{key:"then",value:function(t,n){var e=this;return this._promise=new this._promiseCtor((function(t,n){e._resolve=t,e._reject=n})),this._promise.then(t,n)}},{key:"catch",value:function(t){return this.then().catch(t)}},{key:"finally",value:function(t){return this.then().finally(t)}},{key:"get",value:function(){return X({},this._currentState)}},{key:"set",value:function(t){this._currentState=t}},{key:"pause",value:function(){if(this._isPlaying)return this._pausedAtTime=t.now(),this._isPlaying=!1,St(this),this}},{key:"resume",value:function(){return this._resume()}},{key:"_resume",value:function(){var n=arguments.length>0&&void 0!==arguments[0]?arguments[0]:t.now();return null===this._timestamp?this.tween():this._isPlaying?this._promise:(this._pausedAtTime&&(this._timestamp+=n-this._pausedAtTime,this._pausedAtTime=null),this._isPlaying=!0,null===ht?(ht=this,pt=this):(this._previous=pt,pt._next=this,pt=this),this)}},{key:"seek",value:function(n){n=Math.max(n,0);var e=t.now();return this._timestamp+n===0||(this._timestamp=e-n,_t(this,e)),this}},{key:"stop",value:function(){var t=arguments.length>0&&void 0!==arguments[0]&&arguments[0];if(!this._isPlaying)return this;this._isPlaying=!1,St(this);var n=this._filters.length>0;return t&&(n&&this._applyFilter(ut),yt(1,this._currentState,this._originalState,this._targetState,1,0,this._easing),n&&(this._applyFilter(it),this._applyFilter(ot))),this._resolve&&this._resolve({data:this._data,state:this._currentState,tweenable:this}),this._resolve=null,this._reject=null,this}},{key:"cancel",value:function(){var t=arguments.length>0&&void 0!==arguments[0]&&arguments[0],n=this._currentState,e=this._data,r=this._isPlaying;return r?(this._reject&&this._reject({data:e,state:n,tweenable:this}),this._resolve=null,this._reject=null,this.stop(t)):this}},{key:"isPlaying",value:function(){return this._isPlaying}},{key:"hasEnded",value:function(){return this._hasEnded}},{key:"setScheduleFunction",value:function(n){t.setScheduleFunction(n)}},{key:"data",value:function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:null;return t&&(this._data=X({},t)),this._data}},{key:"dispose",value:function(){for(var t in this)delete this[t]}}],e&&W(n.prototype,e),t}();function Pt(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{},n=new kt;return n.tween(t),n.tweenable=n,n}Y(kt,"now",(function(){return Z})),Y(kt,"setScheduleFunction",(function(t){return ft=t})),Y(kt,"filters",{}),Y(kt,"formulas",vt),bt(!0);var Mt,Et,At=/(\d|-|\.)/,Tt=/([^\-0-9.]+)/g,It=/[0-9.-]+/g,Ft=(Mt=It.source,Et=/,\s*/.source,new RegExp("rgba?\\(".concat(Mt).concat(Et).concat(Mt).concat(Et).concat(Mt,"(").concat(Et).concat(Mt,")?\\)"),"g")),xt=/^.*\(/,Ct=/#([0-9]|[a-f]){3,6}/gi,Dt="VAL",qt=function(t,n){return t.map((function(t,e){return"_".concat(n,"_").concat(e)}))};function Qt(t){return parseInt(t,16)}var Bt=function(t){return"rgb(".concat((n=t,3===(n=n.replace(/#/,"")).length&&(n=(n=n.split(""))[0]+n[0]+n[1]+n[1]+n[2]+n[2]),[Qt(n.substr(0,2)),Qt(n.substr(2,2)),Qt(n.substr(4,2))]).join(","),")");// removed by dead control flow
+ var n; },Nt=function(t,n,e){var r=n.match(t),i=n.replace(t,Dt);return r&&r.forEach((function(t){return i=i.replace(Dt,e(t))})),i},Rt=function(t){for(var n in t){var e=t[n];"string"==typeof e&&e.match(Ct)&&(t[n]=Nt(Ct,e,Bt))}},zt=function(t){var n=t.match(It),e=n.slice(0,3).map(Math.floor),r=t.match(xt)[0];if(3===n.length)return"".concat(r).concat(e.join(","),")");if(4===n.length)return"".concat(r).concat(e.join(","),",").concat(n[3],")");throw new Error("Invalid rgbChunk: ".concat(t))},Ut=function(t){return t.match(It)},$t=function(t,n){var e={};return n.forEach((function(n){e[n]=t[n],delete t[n]})),e},Lt=function(t,n){return n.map((function(n){return t[n]}))},Vt=function(t,n){return n.forEach((function(n){return t=t.replace(Dt,+n.toFixed(4))})),t},Wt=function(t){for(var n in t._currentState)if("string"==typeof t._currentState[n])return!0;return!1};function Gt(t){var n=t._currentState;[n,t._originalState,t._targetState].forEach(Rt),t._tokenData=function(t){var n,e,r={};for(var i in t){var o=t[i];"string"==typeof o&&(r[i]={formatString:(n=o,e=void 0,e=n.match(Tt),e?(1===e.length||n.charAt(0).match(At))&&e.unshift(""):e=["",""],e.join(Dt)),chunkNames:qt(Ut(o),i)})}return r}(n)}function Ht(t){var n=t._currentState,e=t._originalState,r=t._targetState,i=t._easing,o=t._tokenData;!function(t,n){var e=function(e){var r=n[e].chunkNames,i=t[e];if("string"==typeof i){var o=i.split(" "),u=o[o.length-1];r.forEach((function(n,e){return t[n]=o[e]||u}))}else r.forEach((function(n){return t[n]=i}));delete t[e]};for(var r in n)e(r)}(i,o),[n,e,r].forEach((function(t){return function(t,n){var e=function(e){Ut(t[e]).forEach((function(r,i){return t[n[e].chunkNames[i]]=+r})),delete t[e]};for(var r in n)e(r)}(t,o)}))}function Jt(t){var n=t._currentState,e=t._originalState,r=t._targetState,i=t._easing,o=t._tokenData;[n,e,r].forEach((function(t){return function(t,n){for(var e in n){var r=n[e],i=r.chunkNames,o=r.formatString,u=Vt(o,Lt($t(t,i),i));t[e]=Nt(Ft,u,zt)}}(t,o)})),function(t,n){for(var e in n){var r=n[e].chunkNames,i=t[r[0]];t[e]="string"==typeof i?r.map((function(n){var e=t[n];return delete t[n],e})).join(" "):i}}(i,o)}function Kt(t,n){var e=Object.keys(t);if(Object.getOwnPropertySymbols){var r=Object.getOwnPropertySymbols(t);n&&(r=r.filter((function(n){return Object.getOwnPropertyDescriptor(t,n).enumerable}))),e.push.apply(e,r)}return e}function Xt(t){for(var n=1;n<arguments.length;n++){var e=null!=arguments[n]?arguments[n]:{};n%2?Kt(Object(e),!0).forEach((function(n){Yt(t,n,e[n])})):Object.getOwnPropertyDescriptors?Object.defineProperties(t,Object.getOwnPropertyDescriptors(e)):Kt(Object(e)).forEach((function(n){Object.defineProperty(t,n,Object.getOwnPropertyDescriptor(e,n))}))}return t}function Yt(t,n,e){return n in t?Object.defineProperty(t,n,{value:e,enumerable:!0,configurable:!0,writable:!0}):t[n]=e,t}var Zt=new kt,tn=kt.filters,nn=function(t,n,e,r){var i=arguments.length>4&&void 0!==arguments[4]?arguments[4]:0,o=Xt({},t),u=Ot(t,r);for(var a in Zt._filters.length=0,Zt.set({}),Zt._currentState=o,Zt._originalState=t,Zt._targetState=n,Zt._easing=u,tn)tn[a].doesApply(Zt)&&Zt._filters.push(tn[a]);Zt._applyFilter("tweenCreated"),Zt._applyFilter("beforeTween");var s=yt(e,o,t,n,1,i,u);return Zt._applyFilter("afterTween"),s};function en(t,n){(null==n||n>t.length)&&(n=t.length);for(var e=0,r=new Array(n);e<n;e++)r[e]=t[e];return r}function rn(t,n){if(!(t instanceof n))throw new TypeError("Cannot call a class as a function")}function on(t,n){for(var e=0;e<n.length;e++){var r=n[e];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}function un(t,n){var e=n.get(t);if(!e)throw new TypeError("attempted to get private field on non-instance");return e.get?e.get.call(t):e.value}var an=new WeakMap,sn=function(){function t(){rn(this,t),an.set(this,{writable:!0,value:[]});for(var n=arguments.length,e=new Array(n),r=0;r<n;r++)e[r]=arguments[r];e.forEach(this.add.bind(this))}var n,e;return n=t,(e=[{key:"add",value:function(t){return un(this,an).push(t),t}},{key:"remove",value:function(t){var n=un(this,an).indexOf(t);return~n&&un(this,an).splice(n,1),t}},{key:"empty",value:function(){return this.tweenables.map(this.remove.bind(this))}},{key:"isPlaying",value:function(){return un(this,an).some((function(t){return t.isPlaying()}))}},{key:"play",value:function(){return un(this,an).forEach((function(t){return t.tween()})),this}},{key:"pause",value:function(){return un(this,an).forEach((function(t){return t.pause()})),this}},{key:"resume",value:function(){return this.playingTweenables.forEach((function(t){return t.resume()})),this}},{key:"stop",value:function(t){return un(this,an).forEach((function(n){return n.stop(t)})),this}},{key:"tweenables",get:function(){return function(t){if(Array.isArray(t))return en(t)}(t=un(this,an))||function(t){if("undefined"!=typeof Symbol&&Symbol.iterator in Object(t))return Array.from(t)}(t)||function(t,n){if(t){if("string"==typeof t)return en(t,n);var e=Object.prototype.toString.call(t).slice(8,-1);return"Object"===e&&t.constructor&&(e=t.constructor.name),"Map"===e||"Set"===e?Array.from(t):"Arguments"===e||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(e)?en(t,n):void 0}}(t)||function(){throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}();// removed by dead control flow
+ var t; }},{key:"playingTweenables",get:function(){return un(this,an).filter((function(t){return!t.hasEnded()}))}},{key:"promises",get:function(){return un(this,an).map((function(t){return t.then()}))}}])&&on(n.prototype,e),t}();kt.filters.token=i}},n={};function e(r){if(n[r])return n[r].exports;var i=n[r]={exports:{}};return t[r](i,i.exports,e),i.exports}return e.d=function(t,n){for(var r in n)e.o(n,r)&&!e.o(t,r)&&Object.defineProperty(t,r,{enumerable:!0,get:n[r]})},e.g=function(){if("object"==typeof globalThis)return globalThis;try{return this||new Function("return this")()}catch(t){if("object"==typeof window)return window}}(),e.o=function(t,n){return Object.prototype.hasOwnProperty.call(t,n)},e.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},e(720)}()}));
 
 },{}],3:[function(require,module,exports){
 // Circle shaped progress bar
@@ -7905,13 +7981,13 @@ module.exports = {
 });
 
 
-/***/ }),
+/***/ },
 
-/***/ "./node_modules/datatables.net-responsive/js/dataTables.responsive.mjs":
+/***/ "./node_modules/datatables.net-responsive/js/dataTables.responsive.mjs"
 /*!*****************************************************************************!*\
   !*** ./node_modules/datatables.net-responsive/js/dataTables.responsive.mjs ***!
   \*****************************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
@@ -7985,21 +8061,26 @@ function modal(options) {
                 datatables_net__WEBPACK_IMPORTED_MODULE_0__.Dom.s(row.node()).classRemove('dtr-expanded');
                 closeCallback();
             };
-            modal = datatables_net__WEBPACK_IMPORTED_MODULE_0__.Dom.c('div')
+            modal = datatables_net__WEBPACK_IMPORTED_MODULE_0__.Dom
+                .c('div')
                 .classAdd('dtr-modal')
-                .append(datatables_net__WEBPACK_IMPORTED_MODULE_0__.Dom.c('div')
+                .append(datatables_net__WEBPACK_IMPORTED_MODULE_0__.Dom
+                .c('div')
                 .classAdd('dtr-modal-display')
-                .append(datatables_net__WEBPACK_IMPORTED_MODULE_0__.Dom.c('div')
+                .append(datatables_net__WEBPACK_IMPORTED_MODULE_0__.Dom
+                .c('div')
                 .classAdd('dtr-modal-content')
                 .data('dtrRowIdx', row.index())
                 .append(rendered))
-                .append(datatables_net__WEBPACK_IMPORTED_MODULE_0__.Dom.c('div')
+                .append(datatables_net__WEBPACK_IMPORTED_MODULE_0__.Dom
+                .c('div')
                 .classAdd('dtr-modal-close')
                 .html('&times;')
                 .on('click', function () {
                 close();
             })))
-                .append(datatables_net__WEBPACK_IMPORTED_MODULE_0__.Dom.c('div')
+                .append(datatables_net__WEBPACK_IMPORTED_MODULE_0__.Dom
+                .c('div')
                 .classAdd('dtr-modal-background')
                 .on('click', function () {
                 close();
@@ -8033,7 +8114,8 @@ function modal(options) {
 function listHiddenNodes() {
     let fn = function (api, rowIdx, columns) {
         let that = this;
-        let ul = datatables_net__WEBPACK_IMPORTED_MODULE_0__.Dom.c('ul')
+        let ul = datatables_net__WEBPACK_IMPORTED_MODULE_0__.Dom
+            .c('ul')
             .attr('data-dtr-index', rowIdx)
             .classAdd('dtr-details');
         let found = false;
@@ -8048,7 +8130,8 @@ function listHiddenNodes() {
                     .attr('data-dt-row', col.rowIndex)
                     .attr('data-dt-column', col.columnIndex)
                     .append(datatables_net__WEBPACK_IMPORTED_MODULE_0__.Dom.c('span').classAdd('dtr-title').html(col.title))
-                    .append(datatables_net__WEBPACK_IMPORTED_MODULE_0__.Dom.c('span')
+                    .append(datatables_net__WEBPACK_IMPORTED_MODULE_0__.Dom
+                    .c('span')
                     .classAdd('dtr-data')
                     .append(that.childNodes(api, col.rowIndex, col.columnIndex))) // api.cell( col.rowIndex, col.columnIndex ).node().childNodes ) )
                     .appendTo(ul);
@@ -8062,7 +8145,8 @@ function listHiddenNodes() {
 }
 function listHidden() {
     return function (api, rowIdx, columns) {
-        let ul = datatables_net__WEBPACK_IMPORTED_MODULE_0__.Dom.c('ul')
+        let ul = datatables_net__WEBPACK_IMPORTED_MODULE_0__.Dom
+            .c('ul')
             .attr('data-dtr-index', rowIdx)
             .classAdd('dtr-details');
         columns.forEach(function (col) {
@@ -8086,7 +8170,8 @@ function tableAll(options = {}) {
         tableClass: ''
     }, options);
     return function (api, rowIdx, columns) {
-        let table = datatables_net__WEBPACK_IMPORTED_MODULE_0__.Dom.c('table')
+        let table = datatables_net__WEBPACK_IMPORTED_MODULE_0__.Dom
+            .c('table')
             .classAdd(options.tableClass)
             .classAdd('dtr-details');
         columns.forEach(function (col) {
@@ -8932,11 +9017,14 @@ class Responsive {
         }
         // Clone the table with the current data in it
         var clonedTable = dt.table().node().cloneNode(false);
-        var clonedHeader = datatables_net__WEBPACK_IMPORTED_MODULE_0__.Dom.s(dt.table().header().cloneNode(false))
+        var clonedHeader = datatables_net__WEBPACK_IMPORTED_MODULE_0__.Dom
+            .s(dt.table().header().cloneNode(false))
             .appendTo(clonedTable);
-        var clonedFooter = datatables_net__WEBPACK_IMPORTED_MODULE_0__.Dom.s(dt.table().footer().cloneNode(false))
+        var clonedFooter = datatables_net__WEBPACK_IMPORTED_MODULE_0__.Dom
+            .s(dt.table().footer().cloneNode(false))
             .appendTo(clonedTable);
-        var clonedBody = datatables_net__WEBPACK_IMPORTED_MODULE_0__.Dom.s(dt.table().body())
+        var clonedBody = datatables_net__WEBPACK_IMPORTED_MODULE_0__.Dom
+            .s(dt.table().body())
             .clone(true)
             .empty()
             .appendTo(clonedTable);
@@ -8950,7 +9038,8 @@ class Responsive {
                 return el ? true : false;
             })
                 .map(function (el) {
-                return datatables_net__WEBPACK_IMPORTED_MODULE_0__.Dom.s(el.cell)
+                return datatables_net__WEBPACK_IMPORTED_MODULE_0__.Dom
+                    .s(el.cell)
                     .clone(true)
                     .css('display', 'table-cell')
                     .css('width', 'auto')
@@ -9012,7 +9101,8 @@ class Responsive {
                 return el ? true : false;
             })
                 .map(function (el) {
-                return datatables_net__WEBPACK_IMPORTED_MODULE_0__.Dom.s(el.cell)
+                return datatables_net__WEBPACK_IMPORTED_MODULE_0__.Dom
+                    .s(el.cell)
                     .clone(false)
                     .css('display', 'table-cell')
                     .css('width', 'auto')
@@ -9034,7 +9124,8 @@ class Responsive {
         // A position absolute table would take the table out of the flow of
         // our container element, bypassing the height and width (Scroller)
         datatables_net__WEBPACK_IMPORTED_MODULE_0__.Dom.s(clonedTable).css('position', 'relative');
-        var inserted = datatables_net__WEBPACK_IMPORTED_MODULE_0__.Dom.c('div')
+        var inserted = datatables_net__WEBPACK_IMPORTED_MODULE_0__.Dom
+            .c('div')
             .css({
             width: '1px',
             height: '1px',
@@ -9292,22 +9383,22 @@ datatables_net__WEBPACK_IMPORTED_MODULE_0__.Dom.s(document).on('preInit.dt.dtr',
 
 
 
-/***/ }),
+/***/ },
 
-/***/ "./node_modules/datatables.net/js/dataTables.mjs":
+/***/ "./node_modules/datatables.net/js/dataTables.mjs"
 /*!*******************************************************!*\
   !*** ./node_modules/datatables.net/js/dataTables.mjs ***!
   \*******************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Api": () => (/* binding */ Api),
-/* harmony export */   "DataTable": () => (/* binding */ DataTable),
-/* harmony export */   "Dom": () => (/* binding */ Dom),
+/* harmony export */   Api: () => (/* binding */ Api),
+/* harmony export */   DataTable: () => (/* binding */ DataTable),
+/* harmony export */   Dom: () => (/* binding */ Dom),
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
-/* harmony export */   "util": () => (/* binding */ util)
+/* harmony export */   util: () => (/* binding */ util)
 /* harmony export */ });
 /*! DataTables 3.0.3
  * Copyright (c) SpryMedia Ltd - datatables.net/license
@@ -22058,7 +22149,7 @@ if (window.jQuery) {
 
 
 
-/***/ })
+/***/ }
 
 /******/ 	});
 /************************************************************************/
@@ -22080,6 +22171,12 @@ if (window.jQuery) {
 /******/ 		};
 /******/ 	
 /******/ 		// Execute the module function
+/******/ 		if (!(moduleId in __webpack_modules__)) {
+/******/ 			delete __webpack_module_cache__[moduleId];
+/******/ 			var e = new Error("Cannot find module '" + moduleId + "'");
+/******/ 			e.code = 'MODULE_NOT_FOUND';
+/******/ 			throw e;
+/******/ 		}
 /******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
 /******/ 	
 /******/ 		// Return the exports of the module
@@ -22141,7 +22238,7 @@ if (window.jQuery) {
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be in strict mode.
+// This entry needs to be wrapped in an IIFE because it needs to be in strict mode.
 (() => {
 "use strict";
 /*!******************************************************!*\
@@ -22149,7 +22246,7 @@ var __webpack_exports__ = {};
   \******************************************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "bootTables": () => (/* binding */ bootTables)
+/* harmony export */   bootTables: () => (/* binding */ bootTables)
 /* harmony export */ });
 /* harmony import */ var progressbar_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! progressbar.js */ "./node_modules/progressbar.js/dist/progressbar.js");
 /* harmony import */ var progressbar_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(progressbar_js__WEBPACK_IMPORTED_MODULE_0__);
@@ -22201,6 +22298,7 @@ function installFeatures(target, admin, options) {
   });
   return {
     autoUpdates: (0,_runtime_install_table_auto_updates_js__WEBPACK_IMPORTED_MODULE_5__.installTableAutoUpdates)(admin, {
+      engine: tables.engine,
       now: function now() {
         return target.performance.now();
       },

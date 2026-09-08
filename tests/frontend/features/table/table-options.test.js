@@ -10,6 +10,21 @@ function element(dataset) {
     return { dataset, nodeType: 1 }
 }
 
+function expectedLayout(overrides = {}) {
+    return {
+        bottom1End: 'pageJump',
+        bottom1Start: { paging: { type: 'simple_numbers' } },
+        bottomEnd: null,
+        bottomStart: 'info',
+        top: null,
+        top2End: null,
+        top2Start: 'search',
+        topEnd: null,
+        topStart: null,
+        ...overrides,
+    }
+}
+
 it('reads typed values from the table dataset without jQuery coercion', () => {
     const definition = readTableDefinition(
         element({
@@ -59,35 +74,16 @@ it('applies server flags and the current engine layout only to async tables', ()
     })
 
     expect(configured).toEqual({
-        layout: {
-            bottom1End: 'pageJump',
-            bottom1Start: { paging: { type: 'simple_numbers' } },
-            bottomEnd: null,
-            bottomStart: 'info',
-            topEnd: 'search',
-            topStart: 'pageLength',
-        },
+        layout: expectedLayout({ top2End: 'pageLength' }),
         pageLength: 10,
         processing: true,
         serverSide: true,
     })
     expect(applyServerOptions(options, { url: null })).toEqual(options)
-    expect(tableLayout({ showLength: false, showSearch: true })).toEqual({
-        bottom1End: 'pageJump',
-        bottom1Start: { paging: { type: 'simple_numbers' } },
-        bottomEnd: null,
-        bottomStart: 'info',
-        topEnd: 'search',
-        topStart: null,
-    })
-    expect(tableLayout({ showInfo: false, showLength: false, showSearch: true })).toEqual({
-        bottom1End: 'pageJump',
-        bottom1Start: { paging: { type: 'simple_numbers' } },
-        bottomEnd: null,
-        bottomStart: null,
-        topEnd: 'search',
-        topStart: null,
-    })
+    expect(tableLayout({ showLength: false, showSearch: true })).toEqual(expectedLayout())
+    expect(tableLayout({ showInfo: false, showLength: false, showSearch: true })).toEqual(
+        expectedLayout({ bottomStart: null }),
+    )
 })
 
 it('rejects invalid table option JSON', () => {

@@ -2,15 +2,15 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./resources/frontend/features/tree/themes/legacy-adminlte/notifications.js":
+/***/ "./resources/frontend/features/tree/themes/legacy-adminlte/notifications.js"
 /*!**********************************************************************************!*\
   !*** ./resources/frontend/features/tree/themes/legacy-adminlte/notifications.js ***!
   \**********************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "createLegacyTreeNotifications": () => (/* binding */ createLegacyTreeNotifications)
+/* harmony export */   createLegacyTreeNotifications: () => (/* binding */ createLegacyTreeNotifications)
 /* harmony export */ });
 function createLegacyTreeNotifications(swal, messages, labels) {
   assertDependencies(swal, messages);
@@ -46,7 +46,7 @@ function assertDependencies(swal, messages) {
   }
 }
 
-/***/ })
+/***/ }
 
 /******/ 	});
 /************************************************************************/
@@ -68,6 +68,12 @@ function assertDependencies(swal, messages) {
 /******/ 		};
 /******/ 	
 /******/ 		// Execute the module function
+/******/ 		if (!(moduleId in __webpack_modules__)) {
+/******/ 			delete __webpack_module_cache__[moduleId];
+/******/ 			var e = new Error("Cannot find module '" + moduleId + "'");
+/******/ 			e.code = 'MODULE_NOT_FOUND';
+/******/ 			throw e;
+/******/ 		}
 /******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
 /******/ 	
 /******/ 		// Return the exports of the module
@@ -105,14 +111,14 @@ function assertDependencies(swal, messages) {
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+// This entry needs to be wrapped in an IIFE because it needs to be isolated against other modules in the chunk.
 (() => {
 /*!****************************************************************************!*\
   !*** ./resources/frontend/features/tree/themes/legacy-adminlte/browser.js ***!
   \****************************************************************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "installLegacyTreeNotifications": () => (/* binding */ installLegacyTreeNotifications)
+/* harmony export */   installLegacyTreeNotifications: () => (/* binding */ installLegacyTreeNotifications)
 /* harmony export */ });
 /* harmony import */ var _notifications_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./notifications.js */ "./resources/frontend/features/tree/themes/legacy-adminlte/notifications.js");
 

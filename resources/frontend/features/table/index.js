@@ -3,6 +3,10 @@ export const TABLE_FEATURE_ID = 'table'
 export { tableBrowserOptions } from './browser-options.js'
 export {
     AUTO_UPDATE_COLOR_PROPERTY,
+    AUTO_UPDATE_FEATURE,
+    configureTableAutoUpdate,
+    createTableAutoUpdateFeature,
+    installTableAutoUpdateFeature,
     matchesAutoUpdateTable,
     mountTableAutoUpdate,
     mountTableAutoUpdates,

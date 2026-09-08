@@ -2,6 +2,10 @@ import { expect, it, vi } from 'vitest'
 
 import {
     AUTO_UPDATE_COLOR_PROPERTY,
+    AUTO_UPDATE_FEATURE,
+    configureTableAutoUpdate,
+    createTableAutoUpdateFeature,
+    installTableAutoUpdateFeature,
     matchesAutoUpdateTable,
     mountTableAutoUpdate,
     mountTableAutoUpdates,
@@ -117,6 +121,83 @@ function config(overrides = {}) {
     }
 }
 
+function attachHost(item, overrides = {}) {
+    const host = {
+        dataset: {
+            interval: '250',
+            pauseLabel: 'Pause updates',
+            resumeLabel: 'Resume updates',
+            tableClasses: '["orders"]',
+            ...overrides,
+        },
+        querySelector: vi.fn(() => item.controlTemplate),
+        style: { getPropertyValue: () => '#123456' },
+    }
+
+    item.table.ownerDocument = { querySelector: vi.fn(() => host) }
+
+    return host
+}
+
+it('registers auto-update as a DataTables layout feature', () => {
+    const item = fixture()
+    const register = vi.fn()
+
+    installTableAutoUpdateFeature(
+        { feature: { register } },
+        {
+            now: item.now,
+            ProgressBar: { Line: item.Line },
+            scheduler: item.scheduler,
+            tables: item.tables,
+        },
+    )
+
+    expect(register).toHaveBeenCalledWith(AUTO_UPDATE_FEATURE, expect.any(Function))
+})
+
+it('places matching auto-update controls in the DataTables top layout position', () => {
+    const item = fixture()
+    attachHost(item)
+    const options = { layout: { topStart: 'search' } }
+    let startAfterLayout
+    let destroy
+    const scheduler = {
+        ...item.scheduler,
+        cancelAnimationFrame: vi.fn(),
+        requestAnimationFrame: vi.fn((callback) => {
+            startAfterLayout = callback
+
+            return 23
+        }),
+    }
+    const settings = {
+        api: { one: vi.fn((_event, listener) => (destroy = listener)) },
+        table: item.table,
+    }
+
+    expect(configureTableAutoUpdate(item.table, options)).toBe(true)
+    expect(options.layout).toEqual({ top: AUTO_UPDATE_FEATURE, topStart: 'search' })
+    expect(
+        createTableAutoUpdateFeature(settings, {
+            now: item.now,
+            ProgressBar: { Line: item.Line },
+            scheduler,
+            tables: item.tables,
+        }),
+    ).toBe(item.root)
+    expect(item.parentNode.insertBefore).not.toHaveBeenCalled()
+    expect(scheduler.requestAnimationFrame).toHaveBeenCalledOnce()
+    expect(item.bar.animate).not.toHaveBeenCalled()
+    expect(settings.api.one).toHaveBeenCalledWith('destroy.soaAutoUpdate', expect.any(Function))
+
+    startAfterLayout()
+    expect(item.bar.animate).toHaveBeenCalledWith(1, { duration: 250 })
+
+    destroy()
+    expect(item.root.remove).toHaveBeenCalledOnce()
+})
+
 it('reads typed config and multiple matching classes from the Blade host', () => {
     const host = {
         dataset: {
@@ -184,6 +265,8 @@ it('renders a progress line before the table and reloads it after one period', (
             duration: 250,
         }),
     )
+    expect(item.bar.set).toHaveBeenNthCalledWith(1, 0)
+    expect(item.bar.animate).toHaveBeenCalledWith(1, { duration: 250 })
     expect(item.scheduler.setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 250)
 
     controller.destroy()

@@ -39,7 +39,7 @@ var __webpack_exports__ = {};
   \******************************************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "bootCompatibilityModules": () => (/* binding */ bootCompatibilityModules)
+/* harmony export */   bootCompatibilityModules: () => (/* binding */ bootCompatibilityModules)
 /* harmony export */ });
 if (globalThis.document) bootCompatibilityModules(globalThis);
 function bootCompatibilityModules(target) {

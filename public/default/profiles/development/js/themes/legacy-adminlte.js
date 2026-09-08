@@ -1,11 +1,11 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./resources/assets/js_owl/admin/display/themes.js":
+/***/ "./resources/assets/js_owl/admin/display/themes.js"
 /*!*********************************************************!*\
   !*** ./resources/assets/js_owl/admin/display/themes.js ***!
   \*********************************************************/
-/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
 
 Admin.Modules.register('display.theme', function () {
   window.Cookies = __webpack_require__(/*! js-cookie */ "./node_modules/js-cookie/dist/js.cookie.js");
@@ -36,19 +36,19 @@ Admin.Modules.register('display.theme', function () {
   setColorMode(window.localStorage.getItem('theme-mode'));
 });
 
-/***/ }),
+/***/ },
 
-/***/ "./resources/frontend/themes/legacy-adminlte/scroll-controls.js":
+/***/ "./resources/frontend/themes/legacy-adminlte/scroll-controls.js"
 /*!**********************************************************************!*\
   !*** ./resources/frontend/themes/legacy-adminlte/scroll-controls.js ***!
   \**********************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "installScrollControls": () => (/* binding */ installScrollControls),
-/* harmony export */   "pageMetrics": () => (/* binding */ pageMetrics)
+/* harmony export */   installScrollControls: () => (/* binding */ installScrollControls),
+/* harmony export */   pageMetrics: () => (/* binding */ pageMetrics)
 /* harmony export */ });
 var INSTALLATION = Symbol["for"]('sleepingowl.theme.legacy-adminlte.scroll-controls');
 var SCROLL_END_TOLERANCE = 10;
@@ -142,15 +142,15 @@ function unlisten(element, type, listener) {
   if (element) element.removeEventListener(type, listener);
 }
 
-/***/ }),
+/***/ },
 
-/***/ "./node_modules/js-cookie/dist/js.cookie.js":
+/***/ "./node_modules/js-cookie/dist/js.cookie.js"
 /*!**************************************************!*\
   !*** ./node_modules/js-cookie/dist/js.cookie.js ***!
   \**************************************************/
-/***/ (function(module) {
+(module) {
 
-/*! js-cookie v3.0.7 | MIT */
+/*! js-cookie v3.0.8 | MIT */
 ;
 (function (global, factory) {
    true ? module.exports = factory() :
@@ -247,7 +247,7 @@ function unlisten(element, type, listener) {
           if (name === found) {
             break
           }
-        } catch {
+        } catch (_e) {
           // Do nothing...
         }
       }
@@ -257,8 +257,8 @@ function unlisten(element, type, listener) {
 
     return Object.create(
       {
-        set,
-        get,
+        set: set,
+        get: get,
         remove: function (name, attributes) {
           set(
             name,
@@ -289,7 +289,7 @@ function unlisten(element, type, listener) {
 }));
 
 
-/***/ })
+/***/ }
 
 /******/ 	});
 /************************************************************************/
@@ -311,6 +311,12 @@ function unlisten(element, type, listener) {
 /******/ 		};
 /******/ 	
 /******/ 		// Execute the module function
+/******/ 		if (!(moduleId in __webpack_modules__)) {
+/******/ 			delete __webpack_module_cache__[moduleId];
+/******/ 			var e = new Error("Cannot find module '" + moduleId + "'");
+/******/ 			e.code = 'MODULE_NOT_FOUND';
+/******/ 			throw e;
+/******/ 		}
 /******/ 		__webpack_modules__[moduleId].call(module.exports, module, module.exports, __webpack_require__);
 /******/ 	
 /******/ 		// Return the exports of the module
@@ -360,7 +366,7 @@ function unlisten(element, type, listener) {
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be in strict mode.
+// This entry needs to be wrapped in an IIFE because it needs to be in strict mode.
 (() => {
 "use strict";
 /*!************************************************************!*\
@@ -368,7 +374,7 @@ var __webpack_exports__ = {};
   \************************************************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "THEME_ID": () => (/* binding */ THEME_ID)
+/* harmony export */   THEME_ID: () => (/* binding */ THEME_ID)
 /* harmony export */ });
 /* harmony import */ var _assets_js_owl_admin_display_themes__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../assets/js_owl/admin/display/themes */ "./resources/assets/js_owl/admin/display/themes.js");
 /* harmony import */ var _assets_js_owl_admin_display_themes__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_assets_js_owl_admin_display_themes__WEBPACK_IMPORTED_MODULE_0__);

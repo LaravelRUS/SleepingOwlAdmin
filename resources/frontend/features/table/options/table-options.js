@@ -38,8 +38,11 @@ export function tableLayout({ pageJump = true, showInfo = true, showLength, show
         bottom1Start: { paging: { type: 'simple_numbers' } },
         bottomEnd: null,
         bottomStart: showInfo ? 'info' : null,
-        topEnd: showSearch ? 'search' : null,
-        topStart: showLength ? 'pageLength' : null,
+        topEnd: null,
+        topStart: null,
+        top: null,
+        top2End: showLength ? 'pageLength' : null,
+        top2Start: showSearch ? 'search' : null,
     }
 }
 
