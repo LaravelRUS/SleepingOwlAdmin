@@ -3,7 +3,7 @@
 ## Статус и правила
 
 - Статус: **inventory готов; реализация не начата**.
-- Следующий checkpoint: собрать self-contained каталоги тем, отдельный override layer и общий asset layer.
+- Следующий checkpoint: перейти к Laravel resource layout, создать отдельный override layer и общий asset layer.
 - Общие декларации поставляются отдельным logical entry `shared:ui`, автоматически подключаемым для любой `ThemeInterface`; headless `core` не получает presentation.
 - Общий CSS может использовать только semantic `soa-*` classes, behavior hooks и canonical `--soa-*` variables. Тема задаёт значения tokens и действительно отличающиеся overrides.
 - В общем слое запрещены Bootstrap/AdminLTE/Tailwind imports, vendor selectors и literal palette. Одинаковые structural rules удаляются из theme adapters.
@@ -14,27 +14,24 @@
 
 ```text
 resources/
-├── core/
-│   ├── scripts/                  # headless API/runtime
-│   └── styles/                   # только behavior/accessibility contracts
-├── shared/                       # используется всеми темами
-│   ├── scripts/
-│   ├── styles/                   # shared:ui
-│   └── features/<feature>/
-│       ├── scripts/              # общий feature driver
-│       └── styles/               # общая feature geometry
-├── themes/<theme-id>/            # переносимая папка конкретной темы
-│   ├── views/                    # полный Blade namespace темы
-│   ├── scripts/                  # runtime выбранной темы
-│   ├── styles/                   # tokens и собственная presentation
-│   ├── features/<feature>/
-│   │   ├── scripts/              # adapter только этой темы
-│   │   └── styles/
-│   └── README.md                 # contract, capabilities и build/publication
-└── theme-overrides/<theme-id>/   # изменения и исправления конкретной темы
-    ├── scripts/
-    ├── styles/
-    └── README.md                 # причина, target version и условие удаления
+├── css/
+│   ├── core/                     # только behavior/accessibility contracts
+│   ├── shared/
+│   │   ├── shared-ui.scss        # shared:ui для всех тем
+│   │   └── features/<feature>/   # общая feature geometry
+│   ├── themes/<theme-name>/
+│   │   ├── theme.scss            # tokens и presentation темы
+│   │   └── features/<feature>/   # adapter только этой темы
+│   └── theme-overrides/<theme-name>/
+├── js/
+│   ├── core/                     # headless API/runtime
+│   ├── shared/
+│   │   └── features/<feature>/   # общие feature drivers
+│   ├── themes/<theme-name>/
+│   │   └── features/<feature>/   # adapter только этой темы
+│   └── theme-overrides/<theme-name>/
+└── views/
+    └── themes/<theme-name>/      # полный Blade namespace темы
 ```
 
 Сторонняя Composer-тема повторяет тот же переносимый unit в своём package:
@@ -43,17 +40,21 @@ resources/
 vendor-theme/
 ├── src/<ThemeClass>.php
 ├── resources/
-│   ├── views/
-│   ├── scripts/
-│   ├── styles/
-│   └── features/
+│   ├── css/
+│   │   └── themes/<theme-name>/
+│   ├── js/
+│   │   └── themes/<theme-name>/
+│   └── views/
+│       └── themes/<theme-name>/
 ├── public/                       # готовые no-build assets
 └── asset-manifest.json           # logical manifest fragment
 ```
 
-Application регистрирует class и manifest fragment через публичный theme contract, не копируя sources внутрь SleepingOwlAdmin.
+Application регистрирует class и manifest fragment под canonical названием темы, не копируя sources внутрь SleepingOwlAdmin.
 
-`theme-overrides/<theme-id>` находится вне переносимой папки темы: он содержит локальные изменения/исправления, применяется только к выбранной теме и всегда идёт последним среди package styles/scripts. Обычные компоненты и исправления, являющиеся частью самой темы, остаются внутри `themes/<theme-id>`.
+Тема является логическим unit: одинаковое `<theme-name>` связывает её CSS, JavaScript и Blade namespace в стандартных Laravel resource folders. Переносимой единицей является Composer package целиком.
+
+`resources/{css,js}/theme-overrides/<theme-name>` содержит локальные изменения/исправления, применяется только к выбранной теме и всегда идёт последним. Application Blade overrides используют стандартный Laravel path `resources/views/vendor/<theme-namespace>`.
 
 Публичные output paths, logical ids и Blade logical view names при перемещении sources не меняются.
 
@@ -65,20 +66,48 @@ JavaScript: `core -> shared runtime -> selected theme runtime -> shared feature 
 
 Manifest dependencies являются единственным источником порядка; Blade не сортирует и не подключает эти файлы вручную.
 
+## Регистрация и выбор темы
+
+Canonical название хранится один раз — ключом `template.themes`. Отдельного `theme id`, database record или глобального browser state нет.
+
+```php
+'template' => [
+    'default' => env('SLEEPINGOWL_TEMPLATE', 'adminlte'),
+    'themes' => [
+        'adminlte' => SleepingOwl\Admin\Themes\AdminLTETheme::class,
+        'shadcn' => SleepingOwl\Admin\Themes\TailwindTheme::class,
+        // 'tabler' => SleepingOwl\Admin\Themes\TablerTheme::class,
+    ],
+],
+```
+
+- Название — стабильная machine-safe строка `lower-kebab`; оно одновременно является config key, именем resource folders, manifest scope, override folder и значением `data-theme`.
+- `template.default` содержит только название выбранной темы; оно должно существовать в `template.themes` или быть зарегистрировано внешним provider.
+- `ThemeInterface` не хранит название и не содержит `id()`: выбранное имя передаёт resolver/registry вместе с экземпляром темы.
+- Старый `'template' => SomeTheme::class` продолжает работать как legacy shape без повторной публикации config.
+- Внешний service provider регистрирует пару `name => ThemeClass` и manifest fragment; конфликт имён завершается явной ошибкой.
+- Наличие нескольких тем в config не загружает их assets. `core` и `shared` неизменны, затем регистрируются только выбранные theme/features/overrides.
+- Manifest builder добавляет выбранное название к theme-scoped logical entries; Theme-класс не повторяет его в `assets()`.
+
 ## 0. Общая инфраструктура
 
 - [x] Провести source inventory постоянных блоков и их дубликатов в AdminLTE/Tailwind.
-- [x] Зафиксировать тему как self-contained unit: `views`, `scripts`, `styles`, `features` и документация лежат в одном `themes/<theme-id>`.
-- [x] Отделить локальные изменения/исправления от переносимой темы в `theme-overrides/<theme-id>`.
-- [ ] Создать каталоги `resources/core`, `resources/shared`, `resources/themes/<theme-id>` и `resources/theme-overrides/<theme-id>` по целевой структуре.
+- [x] Зафиксировать Laravel resource layout: CSS, JavaScript и Blade лежат в `resources/css`, `resources/js` и `resources/views`.
+- [x] Зафиксировать тему как logical unit: одинаковое `<theme-name>` связывает `css/themes`, `js/themes` и `views/themes`.
+- [x] Отделить локальные CSS/JS исправления в `resources/{css,js}/theme-overrides/<theme-name>`; Blade overrides используют Laravel `views/vendor`.
+- [x] Отказаться от отдельного theme id: canonical название хранится только ключом `template.themes`, выбор — в `template.default`.
+- [ ] Создать каталоги `resources/{css,js}/{core,shared,themes,theme-overrides}` по целевой структуре.
 - [ ] Переместить общий core/runtime и feature sources без изменения public output paths и logical ids.
-- [ ] Переместить Blade namespace, scripts, styles и все adapters конкретной темы в один `themes/<theme-id>`; удалить прежние разбросанные paths после проверки imports/resolution.
-- [ ] Ввести отдельный logical entry `theme:<id>:overrides`, подключаемый только для выбранной темы и после всех её base/feature entries.
+- [ ] Разложить CSS/JS темы и её feature adapters по `resources/{css,js}/themes/<theme-name>`; сохранить Blade в `resources/views/themes/<theme-name>`.
+- [ ] Заменить `ThemeInterface::id()` и внутренний `themeId` на имя, передаваемое config/registry; Theme-класс не дублирует название.
+- [ ] Добавить новый shape `template.default` + `template.themes`, сохранив fallback для прежнего `'template' => ThemeClass::class`.
+- [ ] Ввести logical entry `theme:<name>:overrides`, подключаемый только для выбранной темы и после всех её base/feature entries.
+- [ ] Генерировать theme-scoped logical entries из выбранного имени, не перечислять имя повторно в `ThemeInterface::assets()`.
 - [ ] Расширить custom-theme scaffold и `ThemeRegistry`: внешний package регистрирует self-contained theme root и готовый manifest fragment без копирования в package.
 - [ ] Добавить no-build contract: сторонняя Composer-тема устанавливается с готовыми assets без Node.js и package source edits.
 - [ ] Зафиксировать для каждого файла один owner: `core`, `shared`, `theme` или `theme override`; перекрёстные копии запрещены.
 - [ ] Проверить одинаковый детерминированный порядок CSS и JavaScript в production/development manifests.
-- [ ] Создать `resources/shared/styles/shared-ui.scss` и logical entry `shared:ui` в обоих asset profiles.
+- [ ] Создать `resources/css/shared/shared-ui.scss` и logical entry `shared:ui` в обоих asset profiles.
 - [ ] Зафиксировать cascade order `core -> shared -> feature -> theme`; theme override должен быть явным и минимальным.
 - [ ] Автоматически регистрировать `shared:ui` ровно один раз для AdminLTE, Tailwind и любой custom theme.
 - [ ] Добавить одинаковые semantic classes в AdminLTE/Tailwind Blade; legacy classes оставить compatibility aliases.
@@ -142,7 +171,9 @@ Manifest dependencies являются единственным источник
 
 | Дата | Checkpoint | Результат | Commit |
 | --- | --- | --- | --- |
-| 2026-09-09 | Inventory и source layout | Выделены четыре приоритетных группы: application shell, common controls, все inline editable поля и fixed scroll controls. Зафиксировано разделение `core`, общего `shared`, отдельной папки каждого `themes/<id>` и последнего `themes/<id>/overrides` для изменений/исправлений конкретного шаблона. CSS/JS получают детерминированный manifest order; public paths/logical ids сохраняются. Код/assets не менялись, tests не запускались. | текущий commit |
+| 2026-09-09 | Inventory и source layout | Выделены четыре приоритетных группы: application shell, common controls, все inline editable поля и fixed scroll controls. Зафиксировано разделение `core`, общего `shared`, отдельной папки каждого `themes/<name>` и последнего `themes/<name>/overrides` для изменений/исправлений конкретного шаблона. CSS/JS получают детерминированный manifest order; public paths/logical entries сохраняются. Код/assets не менялись, tests не запускались. | текущий commit |
 | 2026-09-09 | Дополнение component inventory | В общий design checklist отдельными пунктами добавлены `checkbox`, `image`, `images`, `file` и `files` со всеми interactive/loading/empty/error/readonly states. Список остаётся открытым для следующих дополнений. Код/assets не менялись, tests не запускались. | текущий commit |
-| 2026-09-09 | Self-contained theme structure | Структура скорректирована для сторонних авторов: каждая тема является переносимым unit с собственными views/scripts/styles/features, а локальный `theme-overrides/<id>` вынесен наружу и загружается последним. Добавлены external Composer theme, manifest fragment, scaffold и no-build contracts; public paths/logical ids/view names сохраняются. Код/assets не менялись, tests не запускались. | текущий commit |
+| 2026-09-09 | Self-contained theme structure | Структура скорректирована для сторонних авторов: каждая тема является переносимым unit с собственными views/scripts/styles/features, а локальный `theme-overrides/<name>` вынесен наружу и загружается последним. Добавлены external Composer theme, manifest fragment, scaffold и no-build contracts; public paths/logical entries/view names сохраняются. Код/assets не менялись, tests не запускались. | текущий commit |
 | 2026-09-09 | Упрощение resource tree | Лишний уровень `resources/frontend` удалён из целевой структуры: headless runtime находится в `resources/core`, общий UI — в `resources/shared`, темы и overrides — рядом. Во внешнем theme-package также используется прямой `resources/{views,scripts,styles,features}` без дублирующего `resources/theme`. Код/assets не менялись, tests не запускались. | текущий commit |
+| 2026-09-09 | Laravel resource layout | Целевая структура приведена к Laravel convention: `resources/css`, `resources/js`, `resources/views`. Тема остаётся логическим unit через общее `<theme-name>` в type folders; Composer package является физически переносимой единицей. CSS/JS overrides отделены в `theme-overrides/<name>`, application Blade overrides используют стандартный `views/vendor/<namespace>`. Код/assets не менялись, tests не запускались. | текущий commit |
+| 2026-09-09 | Выбор темы по названию | Отдельный theme id исключён из целевого контракта. `template` становится блоком с `default` и картой `themes`; canonical name хранится только ключом этой карты. Старый class-string остаётся совместимым. Resolver передаёт имя manifest scope, Theme-класс его не дублирует; `core/shared` не зависят от выбора, загружаются только assets выбранной темы и её overrides. Код/assets не менялись, tests не запускались. | текущий commit |
