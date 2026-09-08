@@ -2,27 +2,21 @@
 
 namespace __NAMESPACE__\Providers;
 
+use SleepingOwl\Admin\Admin;
 use SleepingOwl\Admin\Providers\AdminSectionsServiceProvider as ServiceProvider;
 
 class AdminSectionsServiceProvider extends ServiceProvider
 {
-
     /**
-     * @var array
+     * @var array<class-string, class-string>
      */
     protected $sections = [
-        //\__NAMESPACE__\User::class => '__NAMESPACE__\Http\Sections\Users',
+        // \__NAMESPACE__\User::class => \__NAMESPACE__\Http\Sections\Users::class,
     ];
 
-    /**
-     * Register sections.
-     *
-     * @param \SleepingOwl\Admin\Admin $admin
-     * @return void
-     */
-    public function boot(\SleepingOwl\Admin\Admin $admin)
+    public function boot(Admin $admin): void
     {
-    	//
+        // Register project-specific admin services before the sections boot.
 
         parent::boot($admin);
     }

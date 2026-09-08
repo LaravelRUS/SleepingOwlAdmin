@@ -4,8 +4,14 @@ namespace SleepingOwl\Admin\Contracts\Theme;
 
 interface ThemeInterface
 {
+    /**
+     * Stable theme id used by logical asset and adapter ids.
+     */
     public function id(): string;
 
+    /**
+     * Blade namespace owned by this theme.
+     */
     public function viewNamespace(): string;
 
     /**
