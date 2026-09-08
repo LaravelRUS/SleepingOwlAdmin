@@ -111,6 +111,30 @@ The bridge does not make shadcn variable names a second public customization
 API. Application settings and inline runtime validation continue to write only
 documented `--soa-*`, including `--soa-sidebar-bg`.
 
+## Selection contract
+
+The existing public config key selects the built-in theme without a new key or
+a consumer asset build:
+
+```php
+'template' => SleepingOwl\Admin\Themes\TailwindTheme::class,
+```
+
+`TailwindTheme` directly implements `ThemeInterface`. The transitional
+`ThemeTemplateAdapter` composes its runtime through `ThemeRuntimeAssets`, so
+the class declares only shared dependencies and `theme:tailwind`; package
+feature drivers are not repeated in theme metadata. Until their presentation
+checkpoints close, no Tailwind feature adapter or capability is declared.
+
+The theme owns the `sleeping_owl_tailwind::default` Blade namespace rooted at
+`resources/views/themes/tailwind/default`. Relative logical view names remain
+unchanged. An application can override this namespace through Laravel's usual
+view namespace mechanism, and an external package can use the existing
+`ThemeRegistry` service-provider hook documented in `theme-customization.md`.
+
+Invalid classes, malformed metadata and missing logical assets raise the
+existing diagnostic exceptions. There is no fallback to `AdminLTETheme`.
+
 ## Design check
 
 The first pass risked becoming a generic blue Tailwind admin. The retained

@@ -2,9 +2,9 @@
 
 ## Статус и границы
 
-- Статус: **design brief и token bridge зафиксированы; следующий checkpoint — прямой `TailwindTheme` skeleton**.
+- Статус: **прямой `TailwindTheme` skeleton готов; следующий checkpoint — Blade primitives и layout/navigation shell**.
 - Выбранная основа: **shadcn/ui** как registry component recipes и визуальный язык TailwindTheme. Это не подключение React-приложения и не новый browser runtime.
-- Следующий checkpoint: создать прямой `TailwindTheme` skeleton, config selection и изолированный logical asset entry.
+- Следующий checkpoint: создать Blade primitives и полноценный layout/navigation shell с сохранением logical paths и hooks.
 - Основа: завершённый публичный contract из [`ADMIN_UI_MODERNIZATION_PLAN.md`](ADMIN_UI_MODERNIZATION_PLAN.md) — headless core, `ThemeInterface`, logical asset manifest, Blade-first views, Vue 3 islands, DataTables 3 и no-build publication.
 - Эта тема не блокирует основной major-релиз и не меняет compatibility contract существующей `AdminLTETheme`.
 - Каждый самостоятельный пункт выполняется тем же циклом: реализация, релевантные проверки, обновление этого файла, отдельный checkpoint-коммит и чистое дерево.
@@ -103,11 +103,11 @@ docs/modernization/
 
 ## 1. Создать прямую TailwindTheme
 
-- [ ] Добавить `TailwindTheme`, напрямую реализующую `ThemeInterface`, с id `tailwind`, отдельным view namespace/capabilities и существующим отдельным `shared:icons` bundle.
-- [ ] Объявить `shared:icons`, `theme:tailwind` и только реально поддерживаемые `feature:<id>:theme:tailwind` logical entries.
-- [ ] Реализовать initialize/runtime composition через публичный logical asset registrar без imports внутренних файлов AdminLTE.
-- [ ] Добавить выбор TailwindTheme существующим config key `sleeping_owl.template` и документированный service-provider hook.
-- [ ] Запретить silent fallback к AdminLTE при ошибке конфигурации TailwindTheme.
+- [x] Добавить `TailwindTheme`, напрямую реализующую `ThemeInterface`, с id `tailwind`, отдельным view namespace/capabilities и существующим отдельным `shared:icons` bundle.
+- [x] Объявить `shared:icons`, `theme:tailwind` и только реально поддерживаемые `feature:<id>:theme:tailwind` logical entries.
+- [x] Реализовать initialize/runtime composition через публичный logical asset registrar без imports внутренних файлов AdminLTE.
+- [x] Добавить выбор TailwindTheme существующим config key `sleeping_owl.template` и документированный service-provider hook.
+- [x] Запретить silent fallback к AdminLTE при ошибке конфигурации TailwindTheme.
 
 ## 2. Реализовать Blade-first presentation
 
@@ -163,3 +163,4 @@ docs/modernization/
 | 2026-09-08 | Выбор shadcn/ui и структура | По решению владельца shadcn/ui выбран как источник проверяемых recipes и визуального языка, без React/Next/Radix runtime. Зафиксированы владельцы слоёв, Blade-first mapping, единый `--soa-*` token source, общий Font Awesome entry, дерево файлов и восемь последовательных checkpoint-ов. Код темы и зависимости ещё не добавлялись; следующий пункт — upstream snapshot/license/component inventory. | текущий commit |
 | 2026-09-08 | Upstream и component inventory | Закреплены `shadcn@4.21.0`, tag object `5563a464…`, source commit `7c9eaba1…`, npm checksums, Node requirement, MIT license hash/notice и безопасный maintainer-only update workflow. Inventory выбирает 30 `new-york-v4` recipes, задаёт Blade owner, обязательные states, view mapping и существующего владельца behavior; React/Radix/lucide runtime и `.tsx` не включаются. MIT разрешает готовый CSS в Composer artifact при сохранении notice. Документационный checkpoint: build/tests не запускались; identifiers, source paths и license проверены по exact upstream checkout. Следующая точка — design brief, token map и shadcn-to-`--soa-*` bridge. | текущий commit |
 | 2026-09-08 | Design brief и token bridge | Зафиксирован data-heavy «operator's ledger»: системная multilingual typography без font download, cool work surfaces, compact geometry и один функциональный motif — 3px logical ledger rail для active/selected/error context. Light/dark colors, type/spacing/radius/motion и shadows разделены по `_colors.scss`/`_variables.scss`; runtime contract расширен canonical `--soa-*`, 27 shadcn/Tailwind aliases не имеют собственных values. Оба профиля пересобраны: theme CSS production 4 470 bytes, development 5 041 bytes; targeted Stylelint, forbidden framework/runtime scan и asset gate 9 tests / 20 assertions прошли. Следующая точка — прямой `TailwindTheme` skeleton/config/isolated logical entry. | текущий commit |
+| 2026-09-08 | Прямой TailwindTheme skeleton | `TailwindTheme` напрямую реализует публичный `ThemeInterface`, имеет id `tailwind`, отдельный `sleeping_owl_tailwind::default` namespace и объявляет только `shared:icons`/compatibility/Vue/modules плюс base `theme:tailwind`; до готовности presentation не заявляет feature adapters и capabilities кроме icons. Существующий `sleeping_owl.template` выбирает тему через `ThemeTemplateAdapter`/`ThemeRuntimeAssets`; общий service-provider hook сохранён, invalid config не падает обратно в AdminLTE. Узкий gate: PHP syntax и 13 tests / 63 assertions; assets не менялись, build не запускался. Следующая точка — Blade primitives и layout/navigation shell. | текущий commit |

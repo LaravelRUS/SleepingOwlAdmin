@@ -258,7 +258,8 @@ return [
     |--------------------------------------------------------------------------
     |
     | The configured class may implement the new ThemeInterface or the legacy
-    | TemplateInterface. The existing key remains the public theme selector.
+    | TemplateInterface. The existing key remains the public theme selector;
+    | TailwindTheme::class selects the built-in framework-independent theme.
     */
 
     'template' => SleepingOwl\Admin\Themes\AdminLTETheme::class,
