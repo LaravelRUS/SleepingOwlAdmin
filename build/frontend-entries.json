@@ -139,6 +139,11 @@
                 "output": "css/features/forms.css"
             },
             {
+                "logicalId": "feature:forms:theme:tailwind",
+                "source": "resources/frontend/features/forms/themes/tailwind/styles/forms-tailwind.scss",
+                "output": "css/features/forms/themes/tailwind.css"
+            },
+            {
                 "logicalId": "feature:sidebar",
                 "source": "resources/frontend/features/sidebar/styles/sidebar-base.scss",
                 "output": "css/features/sidebar.css"

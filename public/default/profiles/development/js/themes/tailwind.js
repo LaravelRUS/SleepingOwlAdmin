@@ -11,34 +11,83 @@
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   applyColorMode: () => (/* binding */ applyColorMode),
+/* harmony export */   installTailwindCardControls: () => (/* binding */ installTailwindCardControls),
 /* harmony export */   installTailwindTheme: () => (/* binding */ installTailwindTheme)
 /* harmony export */ });
 var INSTALLATION = Symbol["for"]('sleepingowl.theme.tailwind');
 function installTailwindTheme() {
-  var _readStoredMode;
   var target = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : globalThis;
   if (target[INSTALLATION]) return target[INSTALLATION];
   var document = target.document;
   if (!document) return null;
   var toggle = document.getElementById('theme-mode');
-  if (!toggle) return null;
+  var cards = installTailwindCardControls(document);
   var apply = function apply(mode) {
-    return applyColorMode(target, toggle, mode);
+    return toggle ? applyColorMode(target, toggle, mode) : null;
   };
-  var onClick = function onClick() {
+  var onClick = toggle ? function () {
     return apply(toggle.getAttribute('data-mode') === 'dark' ? 'light' : 'dark');
-  };
-  toggle.addEventListener('click', onClick);
-  apply((_readStoredMode = readStoredMode(target)) !== null && _readStoredMode !== void 0 ? _readStoredMode : toggle.getAttribute('data-mode'));
+  } : null;
+  if (toggle) {
+    var _readStoredMode;
+    toggle.addEventListener('click', onClick);
+    apply((_readStoredMode = readStoredMode(target)) !== null && _readStoredMode !== void 0 ? _readStoredMode : toggle.getAttribute('data-mode'));
+  }
   var controller = {
     apply: apply,
+    cards: cards,
     destroy: function destroy() {
-      toggle.removeEventListener('click', onClick);
+      if (toggle) toggle.removeEventListener('click', onClick);
+      cards === null || cards === void 0 || cards.destroy();
       delete target[INSTALLATION];
     }
   };
   target[INSTALLATION] = controller;
   return controller;
+}
+function installTailwindCardControls(document) {
+  if (typeof (document === null || document === void 0 ? void 0 : document.addEventListener) !== 'function') return null;
+  var onClick = function onClick(event) {
+    var _event$target, _event$target$closest, _button$closest;
+    var button = (_event$target = event.target) === null || _event$target === void 0 || (_event$target$closest = _event$target.closest) === null || _event$target$closest === void 0 ? void 0 : _event$target$closest.call(_event$target, '[data-card-widget]');
+    var card = button === null || button === void 0 || (_button$closest = button.closest) === null || _button$closest === void 0 ? void 0 : _button$closest.call(button, '.soa-card, .card');
+    if (!button || !card) return;
+    var action = button.getAttribute('data-card-widget');
+    if (action === 'collapse') {
+      var collapsed = card.classList.toggle('collapsed-card');
+      button.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+      updateCollapseIcon(button, collapsed);
+      event.preventDefault();
+    }
+    if (action === 'maximize') {
+      var maximized = card.classList.toggle('soa-card-maximized');
+      button.setAttribute('aria-pressed', maximized ? 'true' : 'false');
+      event.preventDefault();
+    }
+  };
+  var onKeydown = function onKeydown(event) {
+    var _document$querySelect, _card$querySelector;
+    if (event.key !== 'Escape') return;
+    var card = (_document$querySelect = document.querySelector) === null || _document$querySelect === void 0 ? void 0 : _document$querySelect.call(document, '.soa-card-maximized');
+    if (!card) return;
+    card.classList.remove('soa-card-maximized');
+    (_card$querySelector = card.querySelector) === null || _card$querySelector === void 0 || (_card$querySelector = _card$querySelector.call(card, '[data-card-widget="maximize"]')) === null || _card$querySelector === void 0 || _card$querySelector.setAttribute('aria-pressed', 'false');
+  };
+  document.addEventListener('click', onClick);
+  document.addEventListener('keydown', onKeydown);
+  return {
+    destroy: function destroy() {
+      document.removeEventListener('click', onClick);
+      document.removeEventListener('keydown', onKeydown);
+    }
+  };
+}
+function updateCollapseIcon(button, collapsed) {
+  var _button$querySelector;
+  var icon = (_button$querySelector = button.querySelector) === null || _button$querySelector === void 0 ? void 0 : _button$querySelector.call(button, 'i');
+  if (!(icon !== null && icon !== void 0 && icon.classList)) return;
+  icon.classList.toggle('fa-plus', collapsed);
+  icon.classList.toggle('fa-minus', !collapsed);
 }
 function applyColorMode(target, toggle, requestedMode) {
   var mode = requestedMode === 'dark' ? 'dark' : 'light';

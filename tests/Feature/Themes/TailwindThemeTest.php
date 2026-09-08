@@ -54,6 +54,7 @@ class TailwindThemeTest extends TestCase
             'shared:vue',
             'theme:tailwind',
             'feature:dropdown:theme:tailwind',
+            'feature:forms:theme:tailwind',
             'feature:sidebar:theme:tailwind',
             'feature:table:theme:tailwind',
             'feature:tooltip:theme:tailwind',
@@ -76,6 +77,7 @@ class TailwindThemeTest extends TestCase
             'feature:table',
             'feature:tabs',
             'feature:forms',
+            'feature:forms:theme:tailwind',
             'feature:tree',
             'shared:modules',
         ], app(ThemeRuntimeAssets::class)->logicalEntries(app(TailwindTheme::class)));
@@ -101,6 +103,7 @@ class TailwindThemeTest extends TestCase
             $this->assertStringContainsString("profiles/{$profile}/css/icons.css", $joined);
             $this->assertStringNotContainsString('legacy-adminlte', $joined);
             $this->assertStringContainsString('features/dropdown/themes/tailwind.css', $joined);
+            $this->assertStringContainsString('features/forms/themes/tailwind.css', $joined);
             $this->assertStringContainsString('features/sidebar/themes/tailwind.css', $joined);
             $this->assertStringContainsString('features/table/themes/tailwind.css', $joined);
             $this->assertStringContainsString('features/tooltip/themes/tailwind.css', $joined);

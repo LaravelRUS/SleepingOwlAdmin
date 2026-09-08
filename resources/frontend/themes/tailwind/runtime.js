@@ -7,23 +7,79 @@ export function installTailwindTheme(target = globalThis) {
     if (!document) return null
 
     const toggle = document.getElementById('theme-mode')
-    if (!toggle) return null
+    const cards = installTailwindCardControls(document)
+    const apply = (mode) => (toggle ? applyColorMode(target, toggle, mode) : null)
+    const onClick = toggle
+        ? () => apply(toggle.getAttribute('data-mode') === 'dark' ? 'light' : 'dark')
+        : null
 
-    const apply = (mode) => applyColorMode(target, toggle, mode)
-    const onClick = () => apply(toggle.getAttribute('data-mode') === 'dark' ? 'light' : 'dark')
-    toggle.addEventListener('click', onClick)
-    apply(readStoredMode(target) ?? toggle.getAttribute('data-mode'))
+    if (toggle) {
+        toggle.addEventListener('click', onClick)
+        apply(readStoredMode(target) ?? toggle.getAttribute('data-mode'))
+    }
 
     const controller = {
         apply,
+        cards,
         destroy() {
-            toggle.removeEventListener('click', onClick)
+            if (toggle) toggle.removeEventListener('click', onClick)
+            cards?.destroy()
             delete target[INSTALLATION]
         },
     }
     target[INSTALLATION] = controller
 
     return controller
+}
+
+export function installTailwindCardControls(document) {
+    if (typeof document?.addEventListener !== 'function') return null
+
+    const onClick = (event) => {
+        const button = event.target?.closest?.('[data-card-widget]')
+        const card = button?.closest?.('.soa-card, .card')
+        if (!button || !card) return
+
+        const action = button.getAttribute('data-card-widget')
+        if (action === 'collapse') {
+            const collapsed = card.classList.toggle('collapsed-card')
+            button.setAttribute('aria-expanded', collapsed ? 'false' : 'true')
+            updateCollapseIcon(button, collapsed)
+            event.preventDefault()
+        }
+        if (action === 'maximize') {
+            const maximized = card.classList.toggle('soa-card-maximized')
+            button.setAttribute('aria-pressed', maximized ? 'true' : 'false')
+            event.preventDefault()
+        }
+    }
+    const onKeydown = (event) => {
+        if (event.key !== 'Escape') return
+        const card = document.querySelector?.('.soa-card-maximized')
+        if (!card) return
+        card.classList.remove('soa-card-maximized')
+        card.querySelector?.('[data-card-widget="maximize"]')?.setAttribute(
+            'aria-pressed',
+            'false',
+        )
+    }
+
+    document.addEventListener('click', onClick)
+    document.addEventListener('keydown', onKeydown)
+
+    return {
+        destroy() {
+            document.removeEventListener('click', onClick)
+            document.removeEventListener('keydown', onKeydown)
+        },
+    }
+}
+
+function updateCollapseIcon(button, collapsed) {
+    const icon = button.querySelector?.('i')
+    if (!icon?.classList) return
+    icon.classList.toggle('fa-plus', collapsed)
+    icon.classList.toggle('fa-minus', !collapsed)
 }
 
 export function applyColorMode(target, toggle, requestedMode) {

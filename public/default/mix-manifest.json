@@ -20,7 +20,7 @@
     "/js/features/tree/themes/legacy-adminlte.js": "/js/features/tree/themes/legacy-adminlte.js?id=ed971bcdec78a7c806fe1b29bc497023",
     "/js/features/table/themes/legacy-adminlte.js": "/js/features/table/themes/legacy-adminlte.js?id=98490b77ef86872caf2a6d468e6b639d",
     "/js/themes/legacy-adminlte.js": "/js/themes/legacy-adminlte.js?id=80b8635dba3259fbf9b9eea57297abf7",
-    "/js/themes/tailwind.js": "/js/themes/tailwind.js?id=e4cde321041d28bfeec905887bd23997",
+    "/js/themes/tailwind.js": "/js/themes/tailwind.js?id=bf5e332a7b3f78cfafb82fef5b5fde62",
     "/css/admin-app.css": "/css/admin-app.css?id=7b5cc4da0d474b2796887105de0192ef",
     "/fonts/OpenSans-Italic.ttf?9585580230392fee3fdc7d8e632e404e": "/fonts/OpenSans-Italic.ttf?9585580230392fee3fdc7d8e632e404e?id=5a14979a33729a172ccdd6a78f713780",
     "/fonts/OpenSans-Bold.ttf?043771c999cd4d47d9f33c9c7e42c392": "/fonts/OpenSans-Bold.ttf?043771c999cd4d47d9f33c9c7e42c392?id=de3f7aa819da7a27732b20f81235b6e3",
@@ -58,5 +58,6 @@
     "/css/features/table.css": "/css/features/table.css?id=0486f14bd03357524d6cb5a97dc6e459",
     "/css/features/lightbox.css": "/css/features/lightbox.css?id=f7cebd6cd32f0abbdd668b46fb324f1f",
     "/css/features/sidebar.css": "/css/features/sidebar.css?id=adf22fa4bd52f592f9ea502adde514a7",
+    "/css/features/forms/themes/tailwind.css": "/css/features/forms/themes/tailwind.css?id=042bc38d04fe807e9da509a6ec42bcc9",
     "/css/features/forms.css": "/css/features/forms.css?id=c8f9ca6d852ed02410e54faf05218f73"
 }

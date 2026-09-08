@@ -161,6 +161,15 @@ describe('table presentation entries', () => {
     )
 })
 
+describe('forms presentation entries', () => {
+    it('publishes the Tailwind adapter as an independent stylesheet', () => {
+        const logicalId = 'feature:forms:theme:tailwind'
+
+        expect(modernEntry(logicalId, 'styles')).toBeDefined()
+        expect(modernEntry(logicalId, 'scripts')).toBeUndefined()
+    })
+})
+
 describe('tree presentation entries', () => {
     it('publishes the AdminLTE presentation and notification adapter together', () => {
         const logicalId = 'feature:tree:theme:legacy-adminlte'

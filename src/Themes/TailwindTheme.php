@@ -8,6 +8,7 @@ final class TailwindTheme implements ThemeInterface
 {
     private const FEATURE_ADAPTERS = [
         'dropdown',
+        'forms',
         'sidebar',
         'table',
         'tooltip',

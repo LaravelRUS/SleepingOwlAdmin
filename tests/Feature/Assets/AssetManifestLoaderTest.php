@@ -21,6 +21,7 @@ class AssetManifestLoaderTest extends TestCase
             'feature:dropdown:theme:legacy-adminlte',
             'feature:dropdown:theme:tailwind',
             'feature:forms',
+            'feature:forms:theme:tailwind',
             'feature:lightbox',
             'feature:lightbox:theme:legacy-adminlte',
             'feature:lightbox:theme:tailwind',

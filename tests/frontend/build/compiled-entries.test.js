@@ -78,6 +78,25 @@ describe('compiled frontend entries', () => {
             expect(css).toContain('var(--soa-form-date-picker-selected-color)')
         }
     })
+
+    it('publishes the Tailwind forms adapter from canonical theme tokens only', () => {
+        for (const profile of ['production', 'development']) {
+            const forms = readFileSync(
+                resolve(
+                    root,
+                    `public/default/profiles/${profile}/css/features/forms/themes/tailwind.css`,
+                ),
+                'utf8',
+            )
+
+            expect(forms).toContain('@layer sleepingowl-theme.forms')
+            expect(forms).toContain('var(--soa-primary-color)')
+            expect(forms).toContain('.multiselect__tags')
+            expect(forms).toContain('.soa-attachment-list')
+            expect(forms).not.toMatch(/bootstrap|admin-lte|adminlte|jquery|react|radix|lucide/i)
+            expect(forms).not.toMatch(/#[\da-f]{3,8}\b/i)
+        }
+    })
 })
 
 describe('compiled core boundaries', () => {
