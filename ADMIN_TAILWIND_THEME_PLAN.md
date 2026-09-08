@@ -2,9 +2,9 @@
 
 ## Статус и границы
 
-- Статус: **основа выбрана, структура создания зафиксирована; реализация ещё не начата**.
+- Статус: **upstream и component inventory зафиксированы; следующий checkpoint — design brief и token bridge**.
 - Выбранная основа: **shadcn/ui** как registry component recipes и визуальный язык TailwindTheme. Это не подключение React-приложения и не новый browser runtime.
-- Следующий checkpoint до начала полноценной реализации: зафиксировать точный upstream snapshot/CLI version, license/provenance, список используемых registry components и допустимый способ обновления vendored recipes.
+- Следующий checkpoint: зафиксировать design brief, token map и shadcn-to-`--soa-*` bridge до создания theme skeleton.
 - Основа: завершённый публичный contract из [`ADMIN_UI_MODERNIZATION_PLAN.md`](ADMIN_UI_MODERNIZATION_PLAN.md) — headless core, `ThemeInterface`, logical asset manifest, Blade-first views, Vue 3 islands, DataTables 3 и no-build publication.
 - Эта тема не блокирует основной major-релиз и не меняет compatibility contract существующей `AdminLTETheme`.
 - Каждый самостоятельный пункт выполняется тем же циклом: реализация, релевантные проверки, обновление этого файла, отдельный checkpoint-коммит и чистое дерево.
@@ -94,12 +94,12 @@ docs/modernization/
 ## 0. Выбрать основу темы
 
 - [x] Зафиксировать shadcn/ui как основу темы по решению владельца проекта; сравнение других admin templates больше не требуется.
-- [ ] Зафиксировать точный shadcn/ui snapshot/CLI version, лицензию, provenance и допустимый способ vendor updates.
-- [ ] Создать `shadcn-component-inventory.md`: registry name, upstream snapshot, local Blade owner, required states и причина включения каждого recipe.
-- [ ] Подтвердить, что выбранные recipes не требуют React/Radix runtime и сопоставлены существующим native/Vue feature behavior.
-- [ ] Составить mapping существующих SleepingOwlAdmin views/components на template primitives без копирования feature behavior.
+- [x] Зафиксировать точный shadcn/ui snapshot/CLI version, лицензию, provenance и допустимый способ vendor updates.
+- [x] Создать `shadcn-component-inventory.md`: registry name, upstream snapshot, local Blade owner, required states и причина включения каждого recipe.
+- [x] Подтвердить, что выбранные recipes не требуют React/Radix runtime и сопоставлены существующим native/Vue feature behavior.
+- [x] Составить mapping существующих SleepingOwlAdmin views/components на template primitives без копирования feature behavior.
 - [ ] Зафиксировать визуальное направление, typography, palette и один отличительный design motif до написания theme CSS.
-- [ ] Подтвердить, что лицензия допускает поставку готового production CSS внутри Composer artifact.
+- [x] Подтвердить, что лицензия допускает поставку готового production CSS внутри Composer artifact.
 
 ## 1. Создать прямую TailwindTheme
 
@@ -161,3 +161,4 @@ docs/modernization/
 | --- | --- | --- | --- |
 | 2026-09-07 | Разделение планов | TailwindTheme вынесена из release-blocking checklist основного плана; реализация остаётся отложенной до выбора готового шаблона. | текущий commit |
 | 2026-09-08 | Выбор shadcn/ui и структура | По решению владельца shadcn/ui выбран как источник проверяемых recipes и визуального языка, без React/Next/Radix runtime. Зафиксированы владельцы слоёв, Blade-first mapping, единый `--soa-*` token source, общий Font Awesome entry, дерево файлов и восемь последовательных checkpoint-ов. Код темы и зависимости ещё не добавлялись; следующий пункт — upstream snapshot/license/component inventory. | текущий commit |
+| 2026-09-08 | Upstream и component inventory | Закреплены `shadcn@4.21.0`, tag object `5563a464…`, source commit `7c9eaba1…`, npm checksums, Node requirement, MIT license hash/notice и безопасный maintainer-only update workflow. Inventory выбирает 30 `new-york-v4` recipes, задаёт Blade owner, обязательные states, view mapping и существующего владельца behavior; React/Radix/lucide runtime и `.tsx` не включаются. MIT разрешает готовый CSS в Composer artifact при сохранении notice. Документационный checkpoint: build/tests не запускались; identifiers, source paths и license проверены по exact upstream checkout. Следующая точка — design brief, token map и shadcn-to-`--soa-*` bridge. | текущий commit |
