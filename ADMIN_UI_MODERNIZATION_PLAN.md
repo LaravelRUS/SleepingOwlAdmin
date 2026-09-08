@@ -741,7 +741,7 @@ No-build consumer contract является release-blocking:
 - [x] Удалить устаревшие картинки/assets X-editable, неиспользуемый CKEditor jQuery adapter и прочие найденные orphaned resources; отсутствие файлов закреплено regression test.
 - [x] Сравнить размер production bundle с baseline: полный production runtime `AdminLTETheme` занимает 2 269 790 bytes / 498 820 gzip против 2 585 357 / 587 787 baseline (`−12.2%` / `−15.1%`), без учёта шрифтов в обоих измерениях.
 - [x] Удалить `kodicms/laravel-assets` из `composer.json`, локального lock и установленного dependency tree после перевода runtime/contracts/tests; строки `KodiCMS\Assets` остаются только в узком alias normalizer, его compatibility tests/fixtures и migration docs/data.
-- [ ] Удалить общий `i18next`: Laravel остаётся источником готовых строк, а маленький package-owned translator сохраняет `trans(key, parameters)` для non-Vue compatibility consumers без отдельного i18n runtime.
+- [x] Удалить общий `i18next`: Laravel остаётся источником готовых строк, а маленький package-owned translator сохраняет `trans(key, parameters)` для non-Vue compatibility consumers без отдельного i18n runtime.
 
 Критерий завершения: выбранный критерий удаления jQuery выполнен и закреплён автоматической проверкой.
 
