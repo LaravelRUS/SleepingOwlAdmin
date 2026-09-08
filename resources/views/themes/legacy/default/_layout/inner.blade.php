@@ -40,23 +40,21 @@
 
         @php($assetHealthStatus = $assetHealthStatus ?? null)
 
-        @if(config('sleeping_owl.show_footer') || $assetHealthStatus)
-            <footer class="app-footer main-footer small">
-                @if(config('sleeping_owl.show_footer'))
-                    {!! config('sleeping_owl.footer_text') !!}
+        <footer class="app-footer main-footer small">
+            @if(config('sleeping_owl.show_footer'))
+                {!! config('sleeping_owl.footer_text') !!}
 
-                    @if(config('sleeping_owl.show_version'))
-                        <div class="float-end d-none d-sm-inline-block">
-                            {!! $template->getVersion() !!}
-                        </div>
-                    @endif
+                @if(config('sleeping_owl.show_version'))
+                    <div class="float-end d-none d-sm-inline-block">
+                        {!! $template->getVersion() !!}
+                    </div>
                 @endif
+            @endif
 
-                @include(AdminTemplate::getViewPath('_partials.asset_health'), [
-                    'status' => $assetHealthStatus,
-                ])
-            </footer>
-        @endif
+            @include(AdminTemplate::getViewPath('_partials.asset_health'), [
+                'status' => $assetHealthStatus,
+            ])
+        </footer>
 
         <div id="sidebar-overlay"></div>
     </div>
