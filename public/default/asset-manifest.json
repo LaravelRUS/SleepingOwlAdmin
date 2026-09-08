@@ -358,8 +358,8 @@
                     "scripts": [
                         {
                             "file": "profiles/production/js/shared/compatibility.js",
-                            "version": "d33836ae10980895779b907f578d84b0",
-                            "checksum": "sha256:650e63802d0934efcc6b511c1aee46730c2325f5b84cb463fe6101438ee19639"
+                            "version": "8bc57d6cfcebfb8a4c673a225c838bc9",
+                            "checksum": "sha256:7985bde17e20b9c371db2c609b9b4cbc8afdf75e4495aca71be6654f34ed3e2e"
                         }
                     ],
                     "styles": []
@@ -794,8 +794,8 @@
                     "scripts": [
                         {
                             "file": "profiles/development/js/shared/compatibility.js",
-                            "version": "52fdbbb2a99675264d9e09d83fc63cf5",
-                            "checksum": "sha256:13d3a74374a622b2acb5570c5290a901f84623bb3bb5f529d8c2e9fd1186c915"
+                            "version": "0d7a9bdae5e8edcb57983f0bd9a3e50d",
+                            "checksum": "sha256:737fe56fff43a90eca3b4c877afef5ed302d3ca085a7e1b1135ac500da600aeb"
                         }
                     ],
                     "styles": []
@@ -875,5 +875,5 @@
             }
         }
     },
-    "build_id": "sha256:cae3f35e4fd52ad120037433f88c91719f0d2ec2677867cb7342dea676479508"
+    "build_id": "sha256:88501ff7dfecd970d5f3433ab598a1000ad8a4693e9aab556c7b86b667272bfb"
 }

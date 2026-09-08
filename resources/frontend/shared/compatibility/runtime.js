@@ -1,5 +1,4 @@
 import axios from 'axios'
-import i18next from 'i18next'
 import lodash from 'lodash'
 import Swal from 'sweetalert2'
 
@@ -7,6 +6,7 @@ import LegacyAdmin from '../../../assets/js_owl/components/admin'
 import legacyMessages from '../../../assets/js_owl/components/messages'
 import legacyModules from '../../../assets/js_owl/components/modules'
 import { createWysiwygRegistry } from '../../features/forms/wysiwyg/wysiwyg-registry'
+import { createTranslator } from './translator'
 
 const INSTALLATION = Symbol.for('sleepingowl.shared.compatibility')
 
@@ -18,7 +18,7 @@ export function installCompatibilityRuntime(target) {
     target.axios = configuredAxios()
     target.Swal = Swal
     target.Admin = createLegacyAdmin(target, core)
-    target.trans = createTranslator(target.Admin)
+    target.trans = createTranslator({ lang: target.Admin.Config.get('lang') })
     installLegacyServices(target.Admin)
     target[INSTALLATION] = true
 
@@ -32,24 +32,6 @@ function createLegacyAdmin(target, core) {
     Object.assign(admin, core)
 
     return admin
-}
-
-function createTranslator(admin) {
-    i18next.init({
-        lng: admin.locale,
-        resources: {
-            [admin.locale]: { translation: { lang: admin.Config.get('lang') } },
-        },
-    })
-
-    return (key, parameters) => {
-        let value = i18next.t(key)
-        lodash.eachRight(parameters, (parameter, name) => {
-            value = lodash.replace(value, `:${name}`, parameter)
-        })
-
-        return value
-    }
 }
 
 function installLegacyServices(admin) {

@@ -65,6 +65,10 @@ Only the deprecated `TemplateDefault` loads these files. The direct `AdminLTEThe
 
 The logical registrar preserves the public handles used by existing projects. `admin-vue-init` follows `shared:vue`; `admin-default` follows the complete AdminLTE theme/feature runtime; `admin-modules-load` is the final `shared:modules` entry. A project asset depending on `admin-default` therefore executes after all standard drivers but before `Admin.Modules.boot()`, so existing custom module registration keeps working without a consumer rebuild.
 
+Laravel remains the source of translated UI strings. `shared:compatibility` exposes the historical
+`trans(key, parameters)` function through a small package-owned dot-notation resolver; neither
+`i18next` nor a Vue-specific i18n runtime is shipped for this server-provided translation map.
+
 ## Dependency rules
 
 - Core may import only core modules and third-party packages explicitly approved for core.
