@@ -14,16 +14,15 @@
 
 ```text
 resources/
-├── frontend/
-│   ├── core/
-│   │   ├── scripts/              # headless API/runtime
-│   │   └── styles/               # только behavior/accessibility contracts
-│   └── shared/                   # используется всеми темами
-│       ├── scripts/
-│       ├── styles/               # shared:ui
-│       └── features/<feature>/
-│           ├── scripts/          # общий feature driver
-│           └── styles/           # общая feature geometry
+├── core/
+│   ├── scripts/                  # headless API/runtime
+│   └── styles/                   # только behavior/accessibility contracts
+├── shared/                       # используется всеми темами
+│   ├── scripts/
+│   ├── styles/                   # shared:ui
+│   └── features/<feature>/
+│       ├── scripts/              # общий feature driver
+│       └── styles/               # общая feature geometry
 ├── themes/<theme-id>/            # переносимая папка конкретной темы
 │   ├── views/                    # полный Blade namespace темы
 │   ├── scripts/                  # runtime выбранной темы
@@ -43,7 +42,7 @@ resources/
 ```text
 vendor-theme/
 ├── src/<ThemeClass>.php
-├── resources/theme/
+├── resources/
 │   ├── views/
 │   ├── scripts/
 │   ├── styles/
@@ -71,7 +70,7 @@ Manifest dependencies являются единственным источник
 - [x] Провести source inventory постоянных блоков и их дубликатов в AdminLTE/Tailwind.
 - [x] Зафиксировать тему как self-contained unit: `views`, `scripts`, `styles`, `features` и документация лежат в одном `themes/<theme-id>`.
 - [x] Отделить локальные изменения/исправления от переносимой темы в `theme-overrides/<theme-id>`.
-- [ ] Создать каталоги `frontend/core`, `frontend/shared`, `themes/<theme-id>` и `theme-overrides/<theme-id>` по целевой структуре.
+- [ ] Создать каталоги `resources/core`, `resources/shared`, `resources/themes/<theme-id>` и `resources/theme-overrides/<theme-id>` по целевой структуре.
 - [ ] Переместить общий core/runtime и feature sources без изменения public output paths и logical ids.
 - [ ] Переместить Blade namespace, scripts, styles и все adapters конкретной темы в один `themes/<theme-id>`; удалить прежние разбросанные paths после проверки imports/resolution.
 - [ ] Ввести отдельный logical entry `theme:<id>:overrides`, подключаемый только для выбранной темы и после всех её base/feature entries.
@@ -79,7 +78,7 @@ Manifest dependencies являются единственным источник
 - [ ] Добавить no-build contract: сторонняя Composer-тема устанавливается с готовыми assets без Node.js и package source edits.
 - [ ] Зафиксировать для каждого файла один owner: `core`, `shared`, `theme` или `theme override`; перекрёстные копии запрещены.
 - [ ] Проверить одинаковый детерминированный порядок CSS и JavaScript в production/development manifests.
-- [ ] Создать `resources/frontend/shared/ui/styles/shared-ui.scss` и logical entry `shared:ui` в обоих asset profiles.
+- [ ] Создать `resources/shared/styles/shared-ui.scss` и logical entry `shared:ui` в обоих asset profiles.
 - [ ] Зафиксировать cascade order `core -> shared -> feature -> theme`; theme override должен быть явным и минимальным.
 - [ ] Автоматически регистрировать `shared:ui` ровно один раз для AdminLTE, Tailwind и любой custom theme.
 - [ ] Добавить одинаковые semantic classes в AdminLTE/Tailwind Blade; legacy classes оставить compatibility aliases.
@@ -146,3 +145,4 @@ Manifest dependencies являются единственным источник
 | 2026-09-09 | Inventory и source layout | Выделены четыре приоритетных группы: application shell, common controls, все inline editable поля и fixed scroll controls. Зафиксировано разделение `core`, общего `shared`, отдельной папки каждого `themes/<id>` и последнего `themes/<id>/overrides` для изменений/исправлений конкретного шаблона. CSS/JS получают детерминированный manifest order; public paths/logical ids сохраняются. Код/assets не менялись, tests не запускались. | текущий commit |
 | 2026-09-09 | Дополнение component inventory | В общий design checklist отдельными пунктами добавлены `checkbox`, `image`, `images`, `file` и `files` со всеми interactive/loading/empty/error/readonly states. Список остаётся открытым для следующих дополнений. Код/assets не менялись, tests не запускались. | текущий commit |
 | 2026-09-09 | Self-contained theme structure | Структура скорректирована для сторонних авторов: каждая тема является переносимым unit с собственными views/scripts/styles/features, а локальный `theme-overrides/<id>` вынесен наружу и загружается последним. Добавлены external Composer theme, manifest fragment, scaffold и no-build contracts; public paths/logical ids/view names сохраняются. Код/assets не менялись, tests не запускались. | текущий commit |
+| 2026-09-09 | Упрощение resource tree | Лишний уровень `resources/frontend` удалён из целевой структуры: headless runtime находится в `resources/core`, общий UI — в `resources/shared`, темы и overrides — рядом. Во внешнем theme-package также используется прямой `resources/{views,scripts,styles,features}` без дублирующего `resources/theme`. Код/assets не менялись, tests не запускались. | текущий commit |
