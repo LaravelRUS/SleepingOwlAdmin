@@ -2,7 +2,7 @@
     <div class="card card-outline card-info {{ $collapsed ? 'collapsed-card':'' }} {{ $errors->has($name) ? 'has-error' : '' }}">
         <div class="card-header">
             <h3 class="card-title form-group">
-                <label for="{{ $name }}" class="control-label {{ $required ? 'required' : '' }}">
+                <label for="{{ $name }}" class="form-label control-label {{ $required ? 'required' : '' }}">
                     {!! $label !!}
 
                     @if($required)

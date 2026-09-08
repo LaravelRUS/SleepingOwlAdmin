@@ -18,7 +18,7 @@ class EnvEditorViewTest extends TestCase
 
         $this->assertSame('QUOTED"KEY', array_key_first($props['data']));
         $this->assertSame('<script>alert("unsafe")</script>', $props['data']['QUOTED"KEY']['value']);
-        $this->assertSame('card card-default', $props['classes']['card']);
+        $this->assertSame('card', $props['classes']['card']);
         $this->assertSame('row-link align-middle', $props['classes']['removeCell']);
         $this->assertSame('fas fa-check', $props['classes']['saveIcon']);
         $this->assertStringNotContainsString('<script>alert("unsafe")</script>', $html);

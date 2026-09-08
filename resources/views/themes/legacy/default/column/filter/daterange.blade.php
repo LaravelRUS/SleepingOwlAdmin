@@ -9,11 +9,9 @@
 
 	{{-- Trying to save table filter column width space --}}
 	{{--
-	<div class="input-group-prepend input-group-addon">
-		<div class="input-group-text">
-			<span class="far fa-calendar-alt"></span>
-		</div>
-	</div>
+	<span class="input-group-text">
+		<i class="far fa-calendar-alt"></i>
+	</span>
 	--}}
 </div>
 @if(!empty($helpText))

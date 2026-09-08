@@ -1,6 +1,6 @@
 @if ($visibled)
-    <div class="form-group form-element-wysiwyg {{ $errors->has($name) ? 'has-error' : '' }}">
-        <label for="{{ $name }}" class="control-label {{ $required ? 'required' : '' }}">
+    <div class="form-group form-element-wysiwyg mb-3 {{ $errors->has($name) ? 'has-error' : '' }}">
+        <label for="{{ $name }}" class="form-label control-label {{ $required ? 'required' : '' }}">
             {!! $label !!}
 
             @if($required)

@@ -4,7 +4,7 @@
 
 - Статус: активен; основной release scope отделён от будущих встроенных тем.
 - Текущий этап: **этап 7 — завершение публичного theme extension contract**; реализация основной темы ведётся отдельным планом, этап 8 закрыт.
-- Точка возобновления: structural AdminLTE 4/Bootstrap 5 migration закрыта в [`ADMIN_ADMINLTE_THEME_PLAN.md`](ADMIN_ADMINLTE_THEME_PLAN.md); production build/tests отложены до завершения стилистической доводки. Следующий отдельный пункт — migration guide, затем финальная сборка и acceptance.
+- Точка возобновления: structural AdminLTE 4/Bootstrap 5 migration и application migration guide закрыты в [`ADMIN_ADMINLTE_THEME_PLAN.md`](ADMIN_ADMINLTE_THEME_PLAN.md); production build/tests отложены до завершения стилистической доводки. Следующий отдельный пункт — финальная сборка и functional acceptance.
 - Рабочая ветка: `codex/remove-jquery-datatables2`.
 - Read-only reference project: `D:\domains\laluna.kit`; считать ранее собранный inventory достаточным, не сканировать проект/`Modules` повторно и обращаться только к конкретному файлу при точечной необходимости; не изменять и не запускать команды с побочными эффектами без отдельного разрешения.
 - База ветки: `ia11`, commit `17752e62`.

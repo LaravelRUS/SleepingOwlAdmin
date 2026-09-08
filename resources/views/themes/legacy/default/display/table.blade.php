@@ -10,8 +10,8 @@
 @yield('before.card')
 @yield('before.panel')
 
-<div class="card card-default {!! $card_class !!}">
-	<div class="card-heading card-header">
+<div class="card {!! $card_class !!}">
+	<div class="card-header">
 		@if ($creatable)
 			{{--
 			Please do not add any additional classes to this button like mb-3 or other.

@@ -1,6 +1,6 @@
 @if ($visibled)
     <div class="form-element-files-wrapper">
-        <label for="{{ $id }}" class="control-label form-element-files-control-label">
+        <label for="{{ $id }}" class="form-label control-label form-element-files-control-label">
             {!! $label !!}
 
             @if($required)
@@ -10,7 +10,7 @@
 
         @include(AdminTemplate::getViewPath('form.element.partials.helptext'))
 
-        <div class="form-group form-element-file fileUploadMultiple{{ $class ? ' ' . $class : '' }} {{ $errors->has($name) ? 'has-error' : '' }}" {!! $style ? ' style="' . $style . '"' : '' !!}
+        <div class="form-group form-element-file fileUploadMultiple mb-3{{ $class ? ' ' . $class : '' }} {{ $errors->has($name) ? 'has-error' : '' }}" {!! $style ? ' style="' . $style . '"' : '' !!}
         data-target="{{ route('admin.form.element.file', [
 				'adminModel' => AdminSection::getModel($model)->getAlias(),
 				'field' => $path,
@@ -58,7 +58,7 @@
                                        value="[%=orig%]" />
 
                                 <div class="file-buttons mt-1 text-start">
-                                    <button class="btn btn-danger btn-delete btn-xs fileRemove" title="{{ trans('sleeping_owl::lang.button.remove') }}">
+                                    <button class="btn btn-danger btn-delete btn-sm fileRemove" title="{{ trans('sleeping_owl::lang.button.remove') }}">
                                         <i class="fas fa-fw fa-times"></i>
                                     </button>
 
@@ -136,7 +136,7 @@
 
                                 <div class="file-buttons mt-1{{ $readonly ? ' text-end' : ' text-start' }}">
                                     @if (!$readonly)
-                                        <button class="btn btn-danger btn-delete btn-xs fileRemove" title="{{ trans('sleeping_owl::lang.button.remove') }}">
+                                        <button class="btn btn-danger btn-delete btn-sm fileRemove" title="{{ trans('sleeping_owl::lang.button.remove') }}">
                                             <i class="fas fa-fw fa-times"></i>
                                         </button>
 

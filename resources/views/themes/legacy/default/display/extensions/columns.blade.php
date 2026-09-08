@@ -48,7 +48,7 @@
 
 </div>
 @if(!is_null($pagination))
-    <div class="panel-footer">
+    <div class="card-footer">
         {!! $pagination !!}
     </div>
 @endif

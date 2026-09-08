@@ -16,7 +16,7 @@
         </div>
 
         @if (!$readonly)
-          <div class="grouped-element__footer form-group clearfix">
+          <div class="grouped-element__footer form-group mb-3 clearfix">
             @if (isset($draggable) && $draggable)
               <a class="btn btn-clear btn-sm float-start me-1 drag-cursor drag-handle">
                 <i class="fas fa-fw fa-arrows-alt" aria-hidden="true"></i>

@@ -6,7 +6,7 @@
 | --- | --- | --- |
 | `resources/views/shared` | UI core | Theme-independent composition and minimal semantic HTML with no feature lifecycle or CSS-framework classes |
 | `resources/views/features` | Named feature | Feature behavior, protocol responses and theme-neutral feature markup |
-| `resources/views/themes/legacy/default` | Legacy default theme | AdminLTE 3/Bootstrap 4 layout, presentation markup and feature presentation adapters |
+| `resources/views/themes/legacy/default` | Default AdminLTE theme | AdminLTE 4/Bootstrap 5 layout, presentation markup and feature presentation adapters |
 
 `sleeping_owl::default.*` remains the compatibility namespace used by `TemplateDefault` and existing custom templates. Laravel receives both the package view root and `resources/views/themes/legacy` as hints for the same `sleeping_owl` namespace. Application overrides keep the highest priority, while `default.*` resolves from the extracted legacy theme without changing its logical name.
 
@@ -76,9 +76,9 @@ The current compatibility implementation is explicitly identified as `legacy-adm
 - Blade implementation: `resources/views/themes/legacy/default`;
 - stable logical namespace: `sleeping_owl::default`;
 - current precompiled distribution: `public/default`;
-- transitional source tree: `resources/assets`, to be split into core/features/themes during the asset-bundle stage.
+- compatibility source tree: `resources/assets`, retained only for deprecated aggregate entrypoints while direct theme assets live under `resources/frontend`.
 
-The physical view move does not change logical view names, template config, published override priority or public asset URLs. Moving or rebuilding the legacy asset tree is deliberately deferred until versioned manifests and independent bundles exist, so this extraction does not create a half-migrated runtime.
+The physical view move and AdminLTE 4 markup migration do not change logical view names, template config, published override priority or public asset URLs. The stable `legacy-adminlte` id names a compatibility handle, not the installed AdminLTE major version.
 
 ## Executable dependency guards
 

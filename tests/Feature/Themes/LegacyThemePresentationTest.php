@@ -121,7 +121,7 @@ class LegacyThemePresentationTest extends TestCase
         ])->render();
 
         $this->assertContainsAll($html, [
-            '<a href="/edit/1" class="btn btn-xs btn-primary user-control"',
+            '<a href="/edit/1" class="btn btn-sm btn-primary user-control"',
             'data-contract="edit"',
             'Edit',
         ]);

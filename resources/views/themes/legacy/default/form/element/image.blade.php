@@ -1,6 +1,6 @@
 @if ($visibled)
-    <div class="form-group form-element-image{{ $class ? ' ' . $class : '' }} {{ $errors->has($name) ? 'has-error' : '' }}">
-        <label for="{{ $name }}" class="control-label{{ $required ? ' required' : '' }}">
+    <div class="form-group form-element-image mb-3{{ $class ? ' ' . $class : '' }} {{ $errors->has($name) ? 'has-error' : '' }}">
+        <label for="{{ $name }}" class="form-label control-label{{ $required ? ' required' : '' }}">
             {!! $label !!}
 
             @if($required)
@@ -26,7 +26,7 @@
                     'insertNewButton' => 'btn btn-light btn-sm',
                     'item' => 'form-element-files__item',
                     'previewLink' => 'form-element-files__image',
-                    'removeButton' => 'btn btn-danger btn-xs',
+                    'removeButton' => 'btn btn-danger btn-sm',
                     'removeIcon' => 'fa-fw fas fa-times',
                     'uploadButton' => 'btn btn-primary upload-button btn-sm',
                     'uploadIcon' => 'fas fa-image',

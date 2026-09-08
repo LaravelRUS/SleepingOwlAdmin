@@ -3,8 +3,8 @@
 ## Статус и границы
 
 - Статус: **активен; обязательный release gate основного major-релиза**.
-- Текущая реализация: dependency tree, Sass framework boundary и package-owned Blade/JS presentation переведены на exact AdminLTE 4.9.1/Bootstrap 5.3.8/Popper 2.11.8 без jQuery и AdminLTE 3 Sass. Визуальная стилистическая доводка не входит в этот checkpoint.
-- Точка возобновления: production build и полные suites явно отложены; следующим отдельным пунктом оформить migration guide и затем провести финальную сборку/acceptance после стилистической доводки.
+- Текущая реализация: dependency tree, Sass framework boundary и package-owned Blade/JS presentation переведены на exact AdminLTE 4.9.1/Bootstrap 5.3.8/Popper 2.11.8 без jQuery и AdminLTE 3 Sass. Повторный проход по официальному migration guide закрыл оставшиеся package-owned panel/login/tab/form classes и задокументировал application overrides.
+- Точка возобновления: production build и полные suites явно отложены; следующий пункт — финальная функциональная acceptance и сборка профилей после стилистической доводки.
 - Общий platform/core scope находится в [`ADMIN_UI_MODERNIZATION_PLAN.md`](ADMIN_UI_MODERNIZATION_PLAN.md). Tailwind не входит в этот файл и ведётся в [`ADMIN_TAILWIND_THEME_PLAN.md`](ADMIN_TAILWIND_THEME_PLAN.md).
 - Каждый самостоятельный пункт: реализация, узкие tests затронутого contract, lint/format только изменённых sources, обновление этого файла, отдельный checkpoint-коммит и чистое рабочее дерево. Build выполняется только при изменении публикуемых assets; полный PHPUnit/Vitest/Playwright gate — один раз перед финальным release gate, не на каждом промежуточном checkpoint.
 
@@ -60,7 +60,7 @@ Lock checkpoint заменил root `popper@1` на `@popperjs/core@2.11.8`; exa
 - [x] Обновить form/card/button/validation/upload/gallery/related/WYSIWYG views; Vue islands получают конечные classes/options из Blade props.
 - [x] Сохранить публичные field names, HTML attributes, ARIA и реальные compatibility markers `data-dismiss`, `data-toggle`, `data-widget` через native adapters либо документированную migration boundary.
 - [x] Сохранить логические пути `sleeping_owl::default.*`, application/vendor override priority и custom views без consumer rebuild.
-- [ ] Добавить migration table для реально изменённых Bootstrap/AdminLTE classes/selectors/markup, не требуя полной перепубликации views.
+- [x] Добавить migration table для реально изменённых Bootstrap/AdminLTE classes/selectors/markup, не требуя полной перепубликации views.
 
 ## 3. Завершить theme tokens и assets
 
@@ -98,7 +98,7 @@ Lock checkpoint заменил root `popper@1` на `@popperjs/core@2.11.8`; exa
 ## 6. Release documentation
 
 - [ ] Update README/theme guide with AdminLTE setup, custom properties, extra assets and application view overrides.
-- [ ] Update migration guide for AdminLTE 3→4, Bootstrap 4→5 and removed jQuery hooks/plugins.
+- [x] Update migration guide for AdminLTE 3→4, Bootstrap 4→5 and removed jQuery hooks/plugins.
 - [ ] Update config matrix, PHPDoc/facades/interfaces, generated stubs and CHANGELOG.
 - [ ] Commit final production/development assets, manifest paths/checksums and bundle measurements.
 - [ ] Run clean lock-file build, complete PHP/frontend/browser suite and manual reference-screen smoke test.
@@ -122,3 +122,4 @@ Lock checkpoint заменил root `popper@1` на `@popperjs/core@2.11.8`; exa
 | 2026-09-08 | AdminLTE 4 framework metadata | По npm `latest` и package metadata выбраны exact pins `admin-lte@4.9.1`, `bootstrap@5.3.8`, `@popperjs/core@2.11.8`. Runtime graph состоит только из peer chain AdminLTE → Bootstrap → Popper, без обычных/optional/bundled dependencies и без jQuery; upstream devDependencies отделены от consumer tree. Все три пакета MIT и публикуют LICENSE notice. Зафиксированы Node ≥20, ESM/CJS/CSS/Sass exports и эффективный ES2022/browser target AdminLTE; локальный Node 24/npm 11/lockfile v3 совместимы. Package/lock, PHP, Blade, JS, Sass, DataTables и assets не менялись; по ускоренной политике tests/build не запускались. Следующая точка — отдельный dependency-only exact lock checkpoint. | текущий commit |
 | 2026-09-08 | AdminLTE 4 dependency/lock | `package.json` и lock переведены с `admin-lte@3.2.0`, Bootstrap 4 и `popper@1` на exact `admin-lte@4.9.1`, `bootstrap@5.3.8`, `@popperjs/core@2.11.8`. Установка удалила 582 legacy transitive packages; `npm ls` подтвердил exact root versions и пустое дерево jQuery. Sources и публикуемые assets не менялись, поэтому build и полные suites отложены. Следующая точка — DataTables Bootstrap 5 presentation/BS4 artifacts. | текущий commit |
 | 2026-09-08 | AdminLTE 4 structural migration | По официальной v3→v4 migration guide package Blade переведён на `app-*` layout/sidebar/footer, Bootstrap 5 utilities/forms/input groups и `data-bs-theme`; AdminLTE 3 Sass удалён, theme boundary импортирует только AdminLTE 4. Native adapters понимают официальные v4 markers и сохраняют прежние публичные `data-toggle`/`data-dismiss`/`data-widget`; `main-footer` сохранён как пользовательский compatibility class без v3 CSS. DataTables уже использует BS5 packages, BS4 adapters отсутствуют. Пользовательский development watcher собрал assets; вручную просмотрены dashboard, DataTables screen, edit form и footer. По указанию production build и tests не запускались; визуальный polish оставлен отдельным слоем. | текущий commit |
+| 2026-09-08 | AdminLTE 4 migration-guide follow-up | Повторный проход по официальной migration table убрал оставшиеся package-owned `panel`, `card-default`, `card-heading`, `well`, `btn-xs`, offset и устаревшие tab/form classes: login, displays, tabbed forms, controls и Vue props используют AdminLTE 4/Bootstrap 5 markup. Старые `form-group`/`control-label`, panel placements и `main-footer` сохранены только как project compatibility hooks; официальные `data-bs-*`/`data-lte-*` стоят рядом с требуемыми legacy markers. Добавлен application migration guide, исправлены устаревшие bundle/view/table docs и render expectations. В `so13.kit` вручную подтверждены `app-*` layout, footer text/version, table card без legacy panels и create form с Bootstrap 5 labels/controls. Production build и suites по указанию не запускались. | текущий commit |

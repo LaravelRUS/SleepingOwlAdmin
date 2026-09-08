@@ -57,12 +57,10 @@ provided current option wins over its legacy alias. Raw option migrations are
 documented in [`data-table-options.md`](data-table-options.md).
 
 The engine module imports only DataTables core and the dependency-free
-Responsive core. The legacy AdminLTE presentation adapter imports the official
-Bootstrap 4 DataTables core adapter. It owns both Bootstrap 4 stylesheets, but
-uses `datatables.net-responsive-bs4` as CSS-only: that package's JavaScript modal
-renderer still asks DataTables for jQuery and is not included. Responsive
-behavior comes from `datatables.net-responsive` and the project does not use the
-optional Bootstrap modal renderer.
+Responsive core. The AdminLTE presentation adapter imports the official
+Bootstrap 5 DataTables and Responsive adapters. Their JavaScript packages are
+native DataTables 3 modules and do not introduce jQuery. No legacy Bootstrap 4
+adapter remains.
 
 Error handling, custom `DateTime` ordering and range-search registration use
 the extension registries exposed by the active engine. Date ordering creates a

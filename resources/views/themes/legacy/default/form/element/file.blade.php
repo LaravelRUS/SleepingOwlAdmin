@@ -1,6 +1,6 @@
 @if ($visibled)
-    <div class="form-group form-element-file{{ $class ? ' ' . $class : '' }} {{ $errors->has($name) ? 'has-error' : '' }}"{!! $style ? ' style="' . $style . '"' : '' !!}>
-        <label for="{{ $name }}" class="control-label {{ $required ? 'required' : '' }}">
+    <div class="form-group form-element-file mb-3{{ $class ? ' ' . $class : '' }} {{ $errors->has($name) ? 'has-error' : '' }}"{!! $style ? ' style="' . $style . '"' : '' !!}>
+        <label for="{{ $name }}" class="form-label control-label {{ $required ? 'required' : '' }}">
             {!! $label !!}
 
             @if($required)
@@ -16,14 +16,14 @@
                     'alert' => 'alert alert-warning',
                     'alertClose' => 'btn-close float-end',
                     'current' => 'form-element-files clearfix',
-                    'downloadButton' => 'btn btn-light btn-xs float-end',
+                    'downloadButton' => 'btn btn-light btn-sm float-end',
                     'downloadIcon' => 'fas fa-cloud-upload-alt',
                     'errorIcon' => 'fas fa-file-alt',
                     'file' => 'form-element-files__file',
                     'fileIcon' => 'fa-fw fas fa-file-alt',
                     'info' => 'form-element-files__info',
                     'item' => 'form-element-files__item',
-                    'removeButton' => 'btn btn-danger btn-xs',
+                    'removeButton' => 'btn btn-danger btn-sm',
                     'removeIcon' => 'fas fa-times',
                     'uploadButton' => 'btn btn-primary upload-button btn-sm',
                     'uploadIcon' => 'fas fa-file-upload',

@@ -1,8 +1,8 @@
 @yield('before.card')
 @yield('before.panel')
 
-<div class="card card-default {!! $card_class !!}">
-    <div class="card-heading card-header">
+<div class="card {!! $card_class !!}">
+    <div class="card-header">
         @if ($creatable)
             <a class="btn btn-primary mt-2" href="{{ $createUrl }}">
                 <i class="fas fa-plus"></i> {{ $newEntryButtonText }}
@@ -18,7 +18,7 @@
         </div>
     </div>
 
-    <div class="card-heading card-header">
+    <div class="card-header">
         @yield('card.heading')
         @yield('panel.heading')
     </div>

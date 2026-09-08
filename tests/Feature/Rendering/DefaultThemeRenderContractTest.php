@@ -26,15 +26,15 @@ class DefaultThemeRenderContractTest extends TestCase
         $this->assertContainsAll($html, [
             '<meta data-contract="meta">',
             '<body class="contract-body">',
-            '<div class="wrapper" id="vueApp">',
-            '<nav class="main-header navbar navbar-expand border-bottom">',
-            '<aside class="main-sidebar sidebar-dark-primary elevation-4">',
+            '<div class="app-wrapper" id="vueApp">',
+            '<nav class="app-header navbar navbar-expand bg-body">',
+            '<aside class="app-sidebar shadow" data-bs-theme="dark">',
             '<li data-contract="navigation">Navigation</li>',
-            '<div class="content-wrapper">',
+            '<main class="app-main">',
             '<ol data-contract="breadcrumbs">Breadcrumbs</ol>',
             '<strong>Layout success</strong>',
             '<section data-contract="content">Body</section>',
-            '<footer class="main-footer small">',
+            '<footer class="app-footer main-footer small">',
             '<div id="sidebar-overlay"></div>',
             '<template data-tooltip-template>',
             '<div data-tooltip-popup role="tooltip">',
@@ -231,7 +231,7 @@ class DefaultThemeRenderContractTest extends TestCase
             '<span>ID</span>',
             '<td v-pre>',
             '<a data-contract="cell">1001</a>',
-            '<div class="panel-footer">',
+            '<div class="card-footer">',
             '<nav data-contract="pagination">Next</nav>',
         ]);
     }
@@ -347,8 +347,8 @@ class DefaultThemeRenderContractTest extends TestCase
     private function textElementContract(): array
     {
         return [
-            'form-group form-element-text has-error',
-            'class="control-label required"',
+            'form-group form-element-text mb-3 has-error',
+            'class="form-label control-label required"',
             '<span class="form-element-required">*</span>',
             'name="name"',
             'id="profile_name"',

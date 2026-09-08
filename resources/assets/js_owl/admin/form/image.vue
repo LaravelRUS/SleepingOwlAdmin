@@ -33,6 +33,7 @@
                         data-image-download
                         :class="classes.downloadButton"
                         data-toggle="tooltip"
+                        data-bs-toggle="tooltip"
                         download
                         :title="labels.download"
                         :aria-label="labels.download"
@@ -46,6 +47,7 @@
                         data-image-insert-current
                         :class="classes.insertCurrentButton"
                         data-toggle="tooltip"
+                        data-bs-toggle="tooltip"
                         :title="labels.insertLink"
                         :aria-label="labels.insertLink"
                         @click="insert(true)"
@@ -58,6 +60,7 @@
                         data-image-remove
                         :class="classes.removeButton"
                         data-toggle="tooltip"
+                        data-bs-toggle="tooltip"
                         :title="labels.remove"
                         :aria-label="labels.remove"
                         @click="remove"
@@ -84,6 +87,7 @@
                 data-image-insert-new
                 :class="classes.insertNewButton"
                 data-toggle="tooltip"
+                data-bs-toggle="tooltip"
                 :title="labels.insertLink"
                 :aria-label="labels.insertLink"
                 @click="insert(false)"

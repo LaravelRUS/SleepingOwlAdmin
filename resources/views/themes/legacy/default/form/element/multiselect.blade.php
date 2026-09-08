@@ -1,6 +1,6 @@
 @if ($visibled)
-    <div class="form-group form-element-multiselect {{ $errors->has($name) ? 'has-error' : '' }}">
-        <label for="{{ $id }}" class="control-label {{ $required ? 'required' : '' }}">
+    <div class="form-group form-element-multiselect mb-3 {{ $errors->has($name) ? 'has-error' : '' }}">
+        <label for="{{ $id }}" class="form-label control-label {{ $required ? 'required' : '' }}">
             {!! $label !!}
 
             @if($required)

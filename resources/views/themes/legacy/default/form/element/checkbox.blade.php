@@ -11,7 +11,7 @@
             $checkboxAttributes = $checkboxAttributes->except('checked')->merge(['checked' => true]);
         }
     @endphp
-    <div class="form-group form-element-checkbox {{ $class ? ' ' . $class : '' }} {{ $errors->has($name) ? 'has-error' : '' }}"{!! $style ? ' style="' . $style . '"' : '' !!}>
+    <div class="form-group form-element-checkbox mb-3 {{ $class ? ' ' . $class : '' }} {{ $errors->has($name) ? 'has-error' : '' }}"{!! $style ? ' style="' . $style . '"' : '' !!}>
         <div class="form-check">
             <input {!! $checkboxAttributes !!} />
             <label class="form-check-label {{ $required ? 'required' : '' }}" for="{{ $checkboxAttributes->get('id') }}">

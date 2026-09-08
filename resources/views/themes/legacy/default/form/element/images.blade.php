@@ -1,6 +1,6 @@
 @if ($visibled)
-    <div class="form-group form-element-images{{ $class ? ' ' . $class : '' }} {{ $errors->has($name) ? 'has-error' : '' }}"{!! $style ? ' style="' . $style . '"' : '' !!}>
-        <label for="{{ $name }}" class="control-label {{ $required ? 'required' : '' }}">
+    <div class="form-group form-element-images mb-3{{ $class ? ' ' . $class : '' }} {{ $errors->has($name) ? 'has-error' : '' }}"{!! $style ? ' style="' . $style . '"' : '' !!}>
+        <label for="{{ $name }}" class="form-label control-label {{ $required ? 'required' : '' }}">
             {!! $label !!}
 
             @if($required)
@@ -41,7 +41,7 @@
                     'item' => 'form-element-files__item soa-images__item',
                     'order' => 'soa-images__order',
                     'previewButton' => 'form-element-files__image soa-images__preview',
-                    'removeButton' => 'btn btn-danger btn-xs gallery-remove',
+                    'removeButton' => 'btn btn-danger btn-sm gallery-remove',
                     'removeIcon' => 'fa-fw fas fa-times',
                     'root' => 'soa-images',
                     'sortableGhost' => 'soa-images__item--moving',
