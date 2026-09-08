@@ -2,7 +2,7 @@
 
 ## Статус и границы
 
-- Статус: основной package release gate закрыт; для TailwindTheme выбрана shadcn/ui и возобновлено структурное планирование, pilot остаётся отложен.
+- Статус: основной package release gate закрыт; структуры TailwindTheme на shadcn/ui и третьей TablerTheme зафиксированы, pilot остаётся отложен.
 - Текущий этап: **этап 10 — package release readiness закрыт**; готовый Composer artifact, no-build workflow, оба asset profile и полный PHP/frontend/browser gate проверены.
 - Точка возобновления: следующий Tailwind checkpoint — точный upstream shadcn/ui snapshot, license/provenance и component inventory по [`ADMIN_TAILWIND_THEME_PLAN.md`](ADMIN_TAILWIND_THEME_PLAN.md). Pilot требует отдельного разрешения на изменения `D:\domains\laluna.kit`; Vite остаётся отдельной post-release задачей.
 - Рабочая ветка: `codex/remove-jquery-datatables2`.
@@ -22,6 +22,7 @@
 - Этот файл является единственным checklist основного major-релиза: headless core, `AdminLTETheme`, публичный `ThemeInterface`, Vue 3 islands, DataTables 3, удаление jQuery, config compatibility и no-build consumer workflow.
 - Основная встроенная тема и её upgrade с AdminLTE 3/Bootstrap 4 ведутся в [`ADMIN_ADMINLTE_THEME_PLAN.md`](ADMIN_ADMINLTE_THEME_PLAN.md). Этот plan обязателен для основного release gate, но theme-specific задачи не дублируются здесь.
 - Полноценная встроенная Tailwind-тема не блокирует основной релиз и ведётся отдельно в [`ADMIN_TAILWIND_THEME_PLAN.md`](ADMIN_TAILWIND_THEME_PLAN.md). В качестве основы выбран shadcn/ui; перед реализацией фиксируются точный upstream snapshot, license/provenance и используемый component inventory.
+- Третья встроенная тема на официальном Tabler Admin Template ведётся отдельно в [`ADMIN_TABLER_THEME_PLAN.md`](ADMIN_TABLER_THEME_PLAN.md); её vendor/Bootstrap boundary, Blade-first structure и собственный acceptance gate не смешиваются с AdminLTE или Tailwind.
 - Каждая следующая официальная или внешняя тема получает собственный implementation plan; общий повторяемый contract и критерии находятся в [`ADMIN_ADDITIONAL_THEMES_PLAN.md`](ADMIN_ADDITIONAL_THEMES_PLAN.md).
 - В этом файле Tailwind может упоминаться только как уже проверенная архитектурная граница, исторический checkpoint или ссылка на отдельный план. Незавершённые Tailwind deliverables здесь не учитываются.
 
