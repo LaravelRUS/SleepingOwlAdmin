@@ -172,7 +172,7 @@ Shadcn:   resources/views/vendor/sleeping_owl_shadcn/default/<logical path>
 AdminLTE resolves the application file and then the complete package base in
 `resources/views/default`. Shadcn resolves application, then a real override in
 `resources/views/themes/shadcn/default`, then that same base. Do not copy the
-whole 136-view base into an application or theme: override only the files whose
+whole package view base into an application or theme: override only the files whose
 markup differs. An absent Shadcn override is normal inheritance.
 
 External themes use their own namespace and may document a matching

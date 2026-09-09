@@ -138,6 +138,30 @@ class TailwindThemeRemainingViewsTest extends TestCase
         $this->assertNotEmpty($components);
     }
 
+    public function test_archived_default_views_are_not_runtime_views(): void
+    {
+        $root = realpath(
+            __DIR__.'/../../../resources/archive/unused-sources/resources/views/default'
+        );
+        $directory = new RecursiveDirectoryIterator($root, FilesystemIterator::SKIP_DOTS);
+        $archived = [];
+
+        foreach (new RecursiveIteratorIterator($directory) as $file) {
+            if (! str_ends_with($file->getFilename(), '.blade.php')) {
+                continue;
+            }
+
+            $relative = substr($file->getPathname(), strlen($root) + 1);
+            $logical = str_replace([DIRECTORY_SEPARATOR, '.blade.php'], ['.', ''], $relative);
+
+            $this->assertFalse(view()->exists("sleeping_owl::default.{$logical}"));
+            $this->assertFalse(view()->exists("sleeping_owl_shadcn::default.{$logical}"));
+            $archived[] = $logical;
+        }
+
+        $this->assertCount(35, $archived);
+    }
+
     public function test_login_receives_theme_classes_without_changing_contracts(): void
     {
         $errors = (new ViewErrorBag())->put('default', new MessageBag([

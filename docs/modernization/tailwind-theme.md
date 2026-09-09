@@ -133,8 +133,8 @@ checkpoints close, no Tailwind feature adapter or capability is declared.
 
 The theme owns the `sleeping_owl_shadcn::default` Blade namespace with ordered
 package roots: `resources/views/themes/shadcn`, then `resources/views`. The
-theme directory contains only one structural shell override; the other 135
-logical views inherit the complete 136-view package base in
+theme directory contains only one structural shell override; the other 102
+logical views inherit the consolidated 103-view package base in
 `resources/views/default`. That base carries both legacy compatibility classes
 and stable `soa-*` semantic hooks. The former 27 component prototypes are
 archived and are not runtime views. Relative logical view names remain

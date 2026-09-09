@@ -33,8 +33,8 @@ class ThemeCustomizationDocumentationTest extends TestCase
         $patterns = [
             '/resources/css/core/_custom-properties.scss',
             '/resources/css/themes/adminlte/_custom-properties.scss',
-            '/resources/css/shared/features/*/_custom-properties.scss',
-            '/resources/css/themes/adminlte/features/*/_custom-properties.scss',
+            '/resources/css/shared/features/*/*.scss',
+            '/resources/css/themes/adminlte/features/*/*.scss',
         ];
         $sources = [];
 

@@ -72,6 +72,31 @@ class ViewBoundaryTest extends TestCase
         $this->assertSame([], $this->findViolations('features', $patterns));
     }
 
+    public function test_default_views_have_content_and_no_duplicate_or_cross_owner_bridges(): void
+    {
+        $owners = [];
+
+        foreach ($this->bladeFiles('default') as $path) {
+            $source = $this->normalizeBlade(file_get_contents($path));
+            $relative = $this->relativePath($path);
+
+            $this->assertNotSame('', $source, $relative);
+            $this->assertDoesNotMatchRegularExpression(
+                "~^@include\\('sleeping_owl::(?:shared|features)\\.~",
+                $source,
+                $relative
+            );
+
+            $hash = hash('sha256', $source);
+            $this->assertArrayNotHasKey(
+                $hash,
+                $owners,
+                $relative.' duplicates '.($owners[$hash] ?? 'another view')
+            );
+            $owners[$hash] = $relative;
+        }
+    }
+
     public function test_shared_header_renders_rich_titles(): void
     {
         $data = ['title' => '<strong>Orders</strong>'];
@@ -114,5 +139,13 @@ class ViewBoundaryTest extends TestCase
     private function relativePath(string $path): string
     {
         return str_replace(realpath(__DIR__.'/../../..').DIRECTORY_SEPARATOR, '', $path);
+    }
+
+    private function normalizeBlade(string $source): string
+    {
+        $lines = preg_split('/\R/u', $source);
+        $lines = array_map('rtrim', $lines ?: []);
+
+        return trim(implode("\n", $lines));
     }
 }

@@ -19,9 +19,10 @@
   page heading и footer. Navigation, table и login сведены в общий markup;
 - 27 Shadcn component prototypes без runtime ownership перенесены в
   `resources/archive/unused-sources`; активный namespace их не разрешает;
-- tests проверяют все 136 logical paths для обеих тем, три уровня приоритета,
-  nested theme context, отсутствие одинаковых overrides и отсутствие
-  неявного fallback у внешней темы;
+- после первого переноса tests проверяли все 136 logical paths для обеих тем;
+  follow-up consolidation оставил 103 канонических theme-owned paths, три
+  уровня приоритета, nested theme context, отсутствие одинаковых/пустых views
+  и отсутствие неявного fallback у внешней темы;
 - оба asset profiles пересобраны. Tailwind utilities больше не зависят от
   случайных class names в theme Blade и содержат только явно закреплённые
   `flex`/`grid`; production/development utility CSS занимает 122/202 bytes;
@@ -32,6 +33,14 @@
 - после финального объединения Blade оба asset profiles повторно пересобраны.
   Итоговые gates: PHPUnit 632 tests / 2997 assertions (11 skipped), Vitest
   115 files / 494 tests, Playwright 141/141, ESLint и Stylelint без ошибок.
+
+Follow-up после разрешения breaking paths укрупнил не только theme mirrors, но
+и сам base: 35 файлов без самостоятельного markup ownership перенесены в
+`resources/archive/unused-sources`. Восемь bridge views заменены прямыми
+`shared.*`/`features.*` ссылками; control/card/message/scalar/editor variants
+теперь передают classes и configuration из PHP в один реальный owner template.
+Пустой daterange placeholder также архивирован. В активном runtime осталось
+103 base views + один Shadcn override + 10 shared/feature views = 114 Blade.
 
 Optional публичный fallback registrar для внешних theme packages не добавлен:
 assessment определяет его как отдельный opt-in scope, а текущий внешний
@@ -107,7 +116,7 @@ resources/views/themes/shadcn/default    136 Blade, 2713 строк
 механическим копированием, а единым контрактом `legacy classes + soa-*`.
 Единственный файл с реальной разницей композиции shell остался override.
 
-Итоговый runtime inventory:
+Итоговый runtime inventory первого theme-deduplication этапа:
 
 | Группа | Base paths | Наследуются Shadcn | Shadcn overrides |
 | --- | ---: | ---: | ---: |
@@ -120,6 +129,17 @@ resources/views/themes/shadcn/default    136 Blade, 2713 строк
 | `helper` | 3 | 3 | 0 |
 | `pages` | 1 | 1 | 0 |
 | **Итого** | **136** | **135** | **1** |
+
+После follow-up consolidation канонический theme inventory стал таким:
+
+| Группа | Base paths | Наследуются Shadcn | Shadcn overrides |
+| --- | ---: | ---: | ---: |
+| `_layout` | 2 | 1 | 1 |
+| `_partials` | 12 | 12 | 0 |
+| `column` + `display` | 46 | 46 | 0 |
+| `form` | 40 | 40 | 0 |
+| dashboard/helper/pages | 3 | 3 | 0 |
+| **Итого** | **103** | **102** | **1** |
 
 ## Целевая физическая структура
 
@@ -344,7 +364,7 @@ override существует только при реальной DOM/behavior 
 | Риск | Последствие | Мера |
 | --- | --- | --- |
 | Неверный порядок namespace hints | Theme перекрывает project override либо base перекрывает theme | Тестировать реальные resolved paths для всех трёх уровней |
-| Скрытая зависимость от полного mirror | Direct view lookup падает после удаления файла | Итерировать все 136 base logical paths под обеими встроенными темами |
+| Скрытая зависимость от полного mirror | Direct view lookup падает после удаления файла | Итерировать все 103 canonical base logical paths под обеими встроенными темами |
 | Изменение nested include theme context | Base partial включает AdminLTE view вместо активной темы | Сохранять `AdminTemplate::getViewPath()` и добавить nested fallback test |
 | Tailwind purge/content scan | Пропадает utility из готового CSS | Сравнить manifests/bundles и прогнать compiled/browser tests |
 | Случайное наследование внешней темой | В DOM попадают AdminLTE classes/assets | External fallback только explicit opt-in |
@@ -370,7 +390,7 @@ override существует только при реальной DOM/behavior 
 - `sleeping_owl_shadcn::default.*` сохраняет текущий namespace и application
   overrides Shadcn;
 - для Shadcn finder выбирает application, затем theme, затем base;
-- все 136 base logical paths доступны обеим встроенным темам;
+- все 103 канонических base logical paths доступны обеим встроенным темам;
 - в Shadcn `default` остаются только реально отличающиеся overrides;
 - одинаковый с base новый override останавливает architecture test;
 - архивные Shadcn component prototypes не являются runtime views;
