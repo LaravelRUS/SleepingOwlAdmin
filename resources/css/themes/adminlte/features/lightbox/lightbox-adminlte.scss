@@ -1,55 +1,6 @@
-@use 'colors';
-
-$control-size: 2.75rem !default;
-$control-radius: 0.25rem !default;
-$caption-radius: 0.25rem !default;
-$transition-duration: 150ms !default;
-
-@mixin properties {
-    :root {
-        --soa-lightbox-control-surface: #{colors.$control-surface};
-        --soa-lightbox-control-surface-hover: #{colors.$control-surface-hover};
-        --soa-lightbox-control-text: #{colors.$control-text};
-        --soa-lightbox-caption-surface: #{colors.$caption-surface};
-        --soa-lightbox-caption-text: #{colors.$caption-text};
-        --soa-lightbox-control-size: #{$control-size};
-        --soa-lightbox-control-radius: #{$control-radius};
-        --soa-lightbox-caption-radius: #{$caption-radius};
-        --soa-lightbox-transition-duration: #{$transition-duration};
-    }
-
-    :root[data-color-scheme='dark'] {
-        --soa-lightbox-caption-surface: #{colors.$dark-caption-surface};
-        --soa-lightbox-caption-text: #{colors.$dark-caption-text};
-    }
-}
-
-@mixin styles {
-    .glightbox-container .gbtn {
-        inline-size: var(--soa-lightbox-control-size);
-        block-size: var(--soa-lightbox-control-size);
-        border-radius: var(--soa-lightbox-control-radius);
-        background: var(--soa-lightbox-control-surface);
-        transition: background var(--soa-lightbox-transition-duration);
-    }
-
-    .glightbox-container .gbtn:hover {
-        background: var(--soa-lightbox-control-surface-hover);
-    }
-
-    .glightbox-container .gbtn path {
-        fill: var(--soa-lightbox-control-text);
-    }
-
-    .glightbox-container .gslide-description {
-        border-radius: var(--soa-lightbox-caption-radius);
-        background: var(--soa-lightbox-caption-surface);
-        color: var(--soa-lightbox-caption-text);
-    }
-}
-
-@include properties;
+@use 'lightbox';
+@include lightbox.properties;
 
 @layer sleepingowl-theme.lightbox {
-    @include styles;
+    @include lightbox.styles;
 }
