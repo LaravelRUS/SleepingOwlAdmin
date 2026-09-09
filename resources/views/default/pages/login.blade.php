@@ -1,30 +1,30 @@
 @extends(AdminTemplate::getViewPath('_layout.base'))
 
 @section('content')
-    <div class="login-page bg-body-secondary">
+    <main class="login-page bg-body-secondary soa-login-page">
         <div class="login-box">
-            <div class="card card-outline card-primary">
-                <div class="card-header text-center">
-                    <h1 class="h3 mb-0">{{ trans('sleeping_owl::lang.auth.title') }}</h1>
-                </div>
-                <div class="card-body login-card-body">
-                    <form action="{{ $loginPostUrl }}" method="post">
+            <section class="card card-outline card-primary soa-card soa-login-card" aria-labelledby="soa-login-title">
+                <header class="card-header text-center soa-card-header soa-login-header">
+                    <h1 class="h3 mb-0 soa-card-title soa-login-title" id="soa-login-title">{{ trans('sleeping_owl::lang.auth.title') }}</h1>
+                </header>
+                <div class="card-body login-card-body soa-card-body">
+                    <form class="soa-auth-form" action="{{ $loginPostUrl }}" method="post">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}" />
 
-                        <div class="mb-3">
-                            {!! $errors->first('username', '<label for="username" class="form-label text-danger">:message</label>') !!}
-                            <input type="text" name="username" id="username" class="form-control {{ $errors->has('username') ? 'is-invalid' : '' }}" placeholder="{{ trans('sleeping_owl::lang.auth.username') }}" autofocus />
+                        <div class="mb-3 soa-field">
+                            {!! $errors->first('username', '<label for="username" class="form-label text-danger soa-field-error" role="alert">:message</label>') !!}
+                            <input type="text" name="username" id="username" class="form-control soa-input {{ $errors->has('username') ? 'is-invalid' : '' }}" placeholder="{{ trans('sleeping_owl::lang.auth.username') }}" autocomplete="username" @if($errors->has('username')) aria-invalid="true" @endif autofocus />
                         </div>
 
-                        <div class="mb-3">
-                            {!! $errors->first('password', '<label for="password" class="form-label text-danger">:message</label>') !!}
-                            <input type="password" name="password" id="password" class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}" placeholder="{{ trans('sleeping_owl::lang.auth.password') }}" />
+                        <div class="mb-3 soa-field">
+                            {!! $errors->first('password', '<label for="password" class="form-label text-danger soa-field-error" role="alert">:message</label>') !!}
+                            <input type="password" name="password" id="password" class="form-control soa-input {{ $errors->has('password') ? 'is-invalid' : '' }}" placeholder="{{ trans('sleeping_owl::lang.auth.password') }}" autocomplete="current-password" @if($errors->has('password')) aria-invalid="true" @endif />
                         </div>
 
-                        <input type="submit" value="{{ trans('sleeping_owl::lang.auth.login') }}" class="btn btn-lg btn-success w-100" />
+                        <input type="submit" value="{{ trans('sleeping_owl::lang.auth.login') }}" class="btn btn-lg btn-success w-100 soa-button soa-button-success soa-login-submit" />
                     </form>
                 </div>
-            </div>
+            </section>
         </div>
-    </div>
+    </main>
 @stop

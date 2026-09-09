@@ -150,8 +150,8 @@ class TailwindThemeRemainingViewsTest extends TestCase
         ])->render();
 
         $this->assertContainsAll($login, [
-            'class="login-page soa-login-page"',
-            'class="login-box card soa-card soa-login-card"',
+            'class="login-page bg-body-secondary soa-login-page"',
+            'class="card card-outline card-primary soa-card soa-login-card"',
             'action="/admin/login"',
             'name="_token"',
             'name="username"',
