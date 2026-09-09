@@ -26,6 +26,7 @@ class LegacyFullConfigCompatibilityTest extends TestCase
         $this->assertFalse($config['domain']);
         $this->assertSame(['web', 'admin'], $config['middleware']);
         $this->assertSame('app/Admin', $config['bootstrapDirectory']);
+        $this->assertSame('\\App\\Policies\\', $config['policies_namespace']);
         $this->assertSame('images/uploads', $config['imagesUploadDirectory']);
         $this->assertSame('files/uploads', $config['filesUploadDirectory']);
         $this->assertSame('POST', $config['datatables_settings']['default_datatables_method']);

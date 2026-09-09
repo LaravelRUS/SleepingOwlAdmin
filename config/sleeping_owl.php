@@ -70,6 +70,9 @@ return [
     // Directory containing the application's admin bootstrap files.
     'bootstrapDirectory' => app_path('Admin'),
 
+    // Namespace used to infer section policy classes when none is supplied explicitly.
+    'policies_namespace' => '\\App\\Policies\\',
+
     /*
     |--------------------------------------------------------------------------
     | Images

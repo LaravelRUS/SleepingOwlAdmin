@@ -102,6 +102,19 @@ function validateSupplementalRows(array $matrix): array
     return $errors;
 }
 
+function validateConsumerMapping(array $inventory): array
+{
+    return array_map(
+        static fn (array $consumer): string => sprintf(
+            'Config consumer [%s:%d] references unmapped key [%s].',
+            $consumer['file'],
+            $consumer['line'],
+            $consumer['key'],
+        ),
+        $inventory['unmappedConsumers'] ?? [],
+    );
+}
+
 function validateMigrationDetails(array $row, string $group, int $index, array &$errors): void
 {
     if (! in_array($row['status'] ?? null, ['deprecated', 'removed'], true)) {
@@ -128,11 +141,13 @@ function statusSummary(array $inventory, array $rules): array
 
 function validateMatrix(): void
 {
-    $inventory = inventoryKeys(readJson('docs/modernization/baseline/config-inventory.json'));
+    $inventoryData = readJson('docs/modernization/baseline/config-inventory.json');
+    $inventory = inventoryKeys($inventoryData);
     $matrix = readJson('docs/modernization/config-migration-matrix.json');
     $errors = [
         ...validateCoverage($inventory, $matrix['rules'] ?? []),
         ...validateSupplementalRows($matrix),
+        ...validateConsumerMapping($inventoryData),
     ];
 
     if ($errors !== []) {

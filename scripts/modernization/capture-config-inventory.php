@@ -99,7 +99,7 @@ function makeConfigItem(string $path, mixed $value): array
 
 function sourceFiles(): array
 {
-    $roots = ['src', 'resources/views', 'resources/assets/js_owl'];
+    $roots = ['src', 'resources/views', 'resources/assets/js_owl', 'resources/frontend'];
     $files = [];
 
     foreach ($roots as $root) {
@@ -183,6 +183,13 @@ function lineConsumers(string $path, string $line, int $number): array
         }
     }
 
+    if (str_ends_with(str_replace('\\', '/', $path), '/src/Themes/ThemeConfiguration.php')) {
+        $consumers = array_values(array_filter(
+            $consumers,
+            static fn (array $consumer): bool => $consumer['key'] !== 'ui.{$key}',
+        ));
+    }
+
     return [...$consumers, ...scopedLineConsumers($path, $line, $number)];
 }
 
@@ -238,12 +245,13 @@ function phpConsumers(): array
 
 function scriptConsumers(): array
 {
-    $root = projectRoot().'/resources/assets/js_owl';
     $consumers = [];
 
-    foreach (filesUnder($root) as $path) {
-        foreach (file($path) as $index => $line) {
-            $consumers = [...$consumers, ...scriptLineConsumers($path, $line, $index + 1)];
+    foreach (['resources/assets/js_owl', 'resources/frontend'] as $root) {
+        foreach (filesUnder(projectRoot().'/'.$root) as $path) {
+            foreach (file($path) as $index => $line) {
+                $consumers = [...$consumers, ...scriptLineConsumers($path, $line, $index + 1)];
+            }
         }
     }
 
@@ -262,8 +270,11 @@ function scriptLineConsumers(string $path, string $line, int $number): array
 
 function makeScriptConsumer(string $path, int $line, string $export): array
 {
+    $key = SCRIPT_CONFIG_EXPORTS[$export]
+        ?? (isset(SCRIPT_DERIVED_EXPORTS[$export]) ? '' : $export);
+
     $consumer = [
-        ...makeConsumer($path, $line, 'admin-config', SCRIPT_CONFIG_EXPORTS[$export] ?? ''),
+        ...makeConsumer($path, $line, 'admin-config', $key),
         'exportedAs' => $export,
     ];
 
@@ -272,6 +283,22 @@ function makeScriptConsumer(string $path, int $line, string $export): array
     }
 
     return $consumer;
+}
+
+function themeConfigurationConsumers(): array
+{
+    $config = new Repository(['sleeping_owl' => loadPackageConfig()]);
+    $keys = (new \SleepingOwl\Admin\Themes\ThemeConfiguration($config))->keys();
+
+    return array_map(
+        fn (string $key): array => makeConsumer(
+            projectRoot().'/src/Themes/ThemeConfiguration.php',
+            39,
+            'theme-configuration',
+            'ui.'.$key,
+        ),
+        $keys,
+    );
 }
 
 function consumerIndex(array $consumers): array
@@ -367,7 +394,7 @@ function buildInventory(): array
     $config = loadPackageConfig();
     $items = flattenConfig($config);
     ksort($items);
-    $consumers = [...phpConsumers(), ...scriptConsumers()];
+    $consumers = [...phpConsumers(), ...themeConfigurationConsumers(), ...scriptConsumers()];
     $attached = attachConsumers($items, $consumers);
 
     return [

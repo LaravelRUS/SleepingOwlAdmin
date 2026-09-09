@@ -6,7 +6,7 @@
         {
             "selector": {
                 "prefix": "aliases",
-                "exclude": ["aliases.A", "aliases.Assets", "aliases.Form", "aliases.HTML", "aliases.Meta", "aliases.PackageManager"]
+                "exclude": ["aliases.Assets", "aliases.Meta", "aliases.PackageManager"]
             },
             "status": "unchanged",
             "owner": "core:aliases",
@@ -22,26 +22,13 @@
         },
         {
             "selector": {
-                "keys": ["aliases.A", "aliases.Form", "aliases.HTML"]
-            },
-            "status": "removed",
-            "owner": "presentation:blade",
-            "reason": "The aliases exposed a third-party HTML builder for markup now owned by package Blade views.",
-            "replacement": "Use native Blade elements and SleepingOwl\\Admin\\Support\\HtmlAttributeBag.",
-            "fallback": "No runtime fallback; update direct application usages during the major-version upgrade.",
-            "timeline": "Removed in the current major refactor together with spatie/laravel-html.",
-            "contract": "Render links, mailto anchors, selects, textareas, files and checkboxes with native Blade markup."
-        },
-        {
-            "selector": {
                 "keys": [
-                    "auth_provider",
                     "bootstrapDirectory",
                     "domain",
                     "middleware",
+                    "policies_namespace",
                     "postgres_search_operator",
                     "timezone",
-                    "title",
                     "url_prefix"
                 ]
             },
@@ -51,43 +38,19 @@
         },
         {
             "selector": {
-                "keys": [
-                    "enable_editor",
-                    "env_can_add",
-                    "env_can_delete",
-                    "env_editor_excluded_keys",
-                    "env_editor_middlewares",
-                    "env_editor_policy",
-                    "env_editor_url",
-                    "env_keys_readonly"
-                ]
-            },
-            "status": "removed",
-            "owner": "core:env-editor",
-            "reason": "The package-owned ENV editor wrote application .env files and is removed in favor of maintained application-level packages.",
-            "replacement": "Install and configure geosot/laravel-env-editor directly in the application when an ENV editor is required.",
-            "fallback": "No runtime fallback; remove the obsolete settings from the published SleepingOwl configuration.",
-            "timeline": "Removed in the current major refactor.",
-            "contract": "SleepingOwl no longer registers ENV-editor routes, widgets, views, assets, or configuration."
-        },
-        {
-            "selector": {
-                "keys": [
-                    "datatables",
-                    "datatables_highlight",
-                    "default_datatables_method",
-                    "dt_autoupdate",
-                    "dt_autoupdate_class",
-                    "dt_autoupdate_color",
-                    "dt_autoupdate_interval",
-                    "state_datatables",
-                    "state_filters",
-                    "state_tabs"
-                ]
+                "keys": ["datatables"]
             },
             "status": "same key/new implementation",
             "owner": "feature:tables",
-            "contract": "Keep the PHP/config surface while native modules and the DataTables 3 engine replace the legacy implementation. dt_autoupdate_interval is now expressed in seconds. Incompatible raw DataTables 1 options are listed in docs/modernization/data-table-options.md."
+            "contract": "Keep raw DataTables options while the native modules and DataTables 3 engine replace the legacy implementation. Incompatible DataTables 1 options are listed in docs/modernization/data-table-options.md."
+        },
+        {
+            "selector": {
+                "prefix": "datatables_settings"
+            },
+            "status": "same key/new implementation",
+            "owner": "feature:tables",
+            "contract": "Keep the PHP/config surface for table state, auto-update and inline editing. Auto-update intervals are expressed in seconds."
         },
         {
             "selector": {
@@ -107,15 +70,7 @@
         },
         {
             "selector": {
-                "keys": [
-                    "filesAllowedExtensions",
-                    "filesUploadDirectory",
-                    "filesUploadFilenameBehavior",
-                    "imagesAllowSvg",
-                    "imagesAllowedExtensions",
-                    "imagesUploadDirectory",
-                    "imagesUploadFilenameBehavior"
-                ]
+                "prefix": "files"
             },
             "status": "same key/new implementation",
             "owner": "feature:uploads",
@@ -123,7 +78,16 @@
         },
         {
             "selector": {
-                "keys": ["imageLazyLoad", "imageLazyLoadFile", "scroll_to_bottom", "scroll_to_top"]
+                "prefix": "images",
+                "exclude": ["images.lazy_load", "images.lazy_load_file"]
+            },
+            "status": "same key/new implementation",
+            "owner": "feature:uploads",
+            "contract": "Keep image upload validation and storage behavior while Vue 3 islands and native transport replace jQuery/Dropzone integration."
+        },
+        {
+            "selector": {
+                "keys": ["images.lazy_load", "images.lazy_load_file", "ui.scroll_to_bottom", "ui.scroll_to_top"]
             },
             "status": "same key/new implementation",
             "owner": "feature:dom-helpers",
@@ -131,7 +95,7 @@
         },
         {
             "selector": {
-                "keys": ["template"]
+                "prefix": "template"
             },
             "status": "same key/new implementation",
             "owner": "core:themes",
@@ -139,22 +103,8 @@
         },
         {
             "selector": {
-                "keys": [
-                    "body_default_class",
-                    "breadcrumbs",
-                    "favicon",
-                    "footer_text",
-                    "logo",
-                    "logo_mini",
-                    "menu_top",
-                    "show_footer",
-                    "show_color_mode_toggle",
-                    "show_version",
-                    "useHasManyLocalCard",
-                    "useRelationCard",
-                    "useWysiwygCard",
-                    "version_text"
-                ]
+                "prefix": "ui",
+                "exclude": ["ui.scroll_to_bottom", "ui.scroll_to_top"]
             },
             "status": "theme-owned",
             "owner": "theme",
@@ -167,14 +117,6 @@
             "status": "unchanged",
             "owner": "feature:wysiwyg",
             "contract": "Keep editor selection and nested vendor configuration. Keys without current consumers remain preserved until a separate editor audit proves they can be deprecated."
-        },
-        {
-            "selector": {
-                "prefix": "wysiwyg_cdn"
-            },
-            "status": "unchanged",
-            "owner": "feature:wysiwyg",
-            "contract": "Preserve currently unused CDN settings until a separate editor audit proves they can be deprecated or removed."
         }
     ],
     "legacyKeys": [
@@ -190,6 +132,39 @@
             "contract": "SleepingOwl ignores show_editor and does not expose an ENV editor."
         },
         {
+            "key": "aliases.A",
+            "source": "config/sleeping_owl.php",
+            "status": "removed",
+            "owner": "presentation:blade",
+            "reason": "The alias exposed a third-party HTML builder for markup now owned by package Blade views.",
+            "replacement": "Use native Blade elements and SleepingOwl\\Admin\\Support\\HtmlAttributeBag.",
+            "fallback": "No runtime fallback; update direct application usages during the major-version upgrade.",
+            "timeline": "Removed in the current major refactor together with spatie/laravel-html.",
+            "contract": "Render anchors with native Blade markup."
+        },
+        {
+            "key": "aliases.Form",
+            "source": "config/sleeping_owl.php",
+            "status": "removed",
+            "owner": "presentation:blade",
+            "reason": "The alias exposed a third-party HTML builder for markup now owned by package Blade views.",
+            "replacement": "Use native Blade elements and SleepingOwl\\Admin\\Support\\HtmlAttributeBag.",
+            "fallback": "No runtime fallback; update direct application usages during the major-version upgrade.",
+            "timeline": "Removed in the current major refactor together with spatie/laravel-html.",
+            "contract": "Render form controls with native Blade markup."
+        },
+        {
+            "key": "aliases.HTML",
+            "source": "config/sleeping_owl.php",
+            "status": "removed",
+            "owner": "presentation:blade",
+            "reason": "The alias exposed a third-party HTML builder for markup now owned by package Blade views.",
+            "replacement": "Use native Blade elements and SleepingOwl\\Admin\\Support\\HtmlAttributeBag.",
+            "fallback": "No runtime fallback; update direct application usages during the major-version upgrade.",
+            "timeline": "Removed in the current major refactor together with spatie/laravel-html.",
+            "contract": "Render attributes and simple elements with native Blade markup."
+        },
+        {
             "key": "search_operator",
             "source": "config/sleeping_owl.php",
             "status": "removed",
@@ -199,13 +174,6 @@
             "fallback": "No runtime fallback; rename search_operator in the published SleepingOwl configuration.",
             "timeline": "Renamed in the current major refactor.",
             "contract": "SleepingOwl ignores search_operator and reads postgres_search_operator only for PostgreSQL queries."
-        },
-        {
-            "key": "policies_namespace",
-            "source": "src/Providers/AdminSectionsServiceProvider.php",
-            "status": "unchanged",
-            "owner": "core:policies",
-            "contract": "Add the existing implicit default to package defaults; old configs may omit it and continue using the runtime fallback."
         }
     ],
     "plannedKeys": [

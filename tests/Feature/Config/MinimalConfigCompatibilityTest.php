@@ -22,6 +22,7 @@ class MinimalConfigCompatibilityTest extends TestCase
         $this->assertSame('Minimal Admin', $config['title']);
         $this->assertSame('SO', $config['ui']['logo_mini']);
         $this->assertSame('admin', $config['url_prefix']);
+        $this->assertSame('\\App\\Policies\\', $config['policies_namespace']);
         $this->assertFalse($config['dev_assets']);
         $this->assertArrayNotHasKey('env', $config);
         $this->assertTrue($config['ui']['show_color_mode_toggle']);
