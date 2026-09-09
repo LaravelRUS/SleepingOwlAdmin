@@ -1,6 +1,165 @@
-@use 'tree';
-@include tree.properties;
+$indent: 1.5rem !default;
+$item-gap: 0.375rem !default;
+$content-padding-block: 0.5rem !default;
+$content-padding-inline: 0.75rem !default;
+$control-size: 1.75rem !default;
+$control-gap: 0.25rem !default;
+$menu-gap: 0.5rem !default;
+$border-width: 0.0625rem !default;
+$radius: 0.375rem !default;
+$transition-duration: 150ms !default;
+$ghost-opacity: 0.65 !default;
+$shadow-offset: 0.5rem !default;
+$shadow-blur: 1rem !default;
+$surface: var(--soa-elevated-surface-color) !default;
+$text: var(--soa-text-color) !default;
+$border: var(--soa-border-color) !default;
+$handle: var(--soa-muted-text-color) !default;
+$handle-hover: var(--soa-primary-color) !default;
+$hover: var(--soa-muted-surface-color) !default;
+$ghost: var(--soa-accent-surface-color) !default;
+$on-handle: var(--soa-surface-color) !default;
+$shadow: var(--soa-shadow-md) !default;
+
+@mixin properties {
+    :root {
+        --soa-tree-surface: #{$surface};
+        --soa-tree-text: #{$text};
+        --soa-tree-border: #{$border};
+        --soa-tree-handle: #{$handle};
+        --soa-tree-handle-hover: #{$handle-hover};
+        --soa-tree-hover: #{$hover};
+        --soa-tree-ghost: #{$ghost};
+        --soa-tree-on-handle: #{$on-handle};
+        --soa-tree-shadow: #{$shadow};
+        --soa-tree-indent: #{$indent};
+        --soa-tree-item-gap: #{$item-gap};
+        --soa-tree-content-padding-block: #{$content-padding-block};
+        --soa-tree-content-padding-inline: #{$content-padding-inline};
+        --soa-tree-control-size: #{$control-size};
+        --soa-tree-control-gap: #{$control-gap};
+        --soa-tree-menu-gap: #{$menu-gap};
+        --soa-tree-border-width: #{$border-width};
+        --soa-tree-radius: #{$radius};
+        --soa-tree-transition-duration: #{$transition-duration};
+        --soa-tree-ghost-opacity: #{$ghost-opacity};
+        --soa-tree-shadow-offset: #{$shadow-offset};
+        --soa-tree-shadow-blur: #{$shadow-blur};
+    }
+}
+
+@mixin styles {
+    .soa-tree,
+    .soa-tree-list {
+        display: block;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .soa-tree-menu {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--soa-tree-menu-gap);
+        margin: 0;
+    }
+
+    .soa-tree-list .soa-tree-list {
+        padding-inline-start: var(--soa-tree-indent);
+    }
+
+    .soa-tree-item {
+        position: relative;
+        margin-block: var(--soa-tree-item-gap);
+        color: var(--soa-tree-text);
+    }
+
+    .soa-tree-content {
+        display: flex;
+        min-block-size: var(--soa-tree-control-size);
+        align-items: center;
+        justify-content: space-between;
+        padding: var(--soa-tree-content-padding-block) var(--soa-tree-content-padding-inline);
+        padding-inline-start: calc(var(--soa-tree-control-size) * 2 + var(--soa-tree-menu-gap));
+        border: var(--soa-tree-border-width) solid var(--soa-tree-border);
+        border-radius: var(--soa-tree-radius);
+        background: var(--soa-tree-surface);
+        transition: background var(--soa-tree-transition-duration);
+    }
+
+    .soa-tree-item:hover > .soa-tree-content {
+        background: var(--soa-tree-hover);
+    }
+
+    .soa-tree-handle,
+    .soa-tree-toggle {
+        position: absolute;
+        z-index: 1;
+        inset-block-start: 0;
+        inline-size: var(--soa-tree-control-size);
+        block-size: var(--soa-tree-control-size);
+        border: 0;
+        border-radius: var(--soa-tree-radius);
+    }
+
+    .soa-tree-handle {
+        inset-inline-start: 0;
+        cursor: grab;
+        background: var(--soa-tree-handle);
+        color: var(--soa-tree-on-handle);
+    }
+
+    .soa-tree-handle:hover {
+        background: var(--soa-tree-handle-hover);
+    }
+
+    .soa-tree-toggle {
+        inset-inline-start: calc(var(--soa-tree-control-size) + var(--soa-tree-control-gap));
+        background: transparent;
+        color: inherit;
+    }
+
+    .soa-tree-item-static > .soa-tree-content {
+        padding-inline-start: var(--soa-tree-content-padding-inline);
+    }
+
+    .soa-tree-ghost {
+        background: var(--soa-tree-ghost);
+        opacity: var(--soa-tree-ghost-opacity);
+    }
+
+    .soa-tree-chosen {
+        box-shadow: 0 var(--soa-tree-shadow-offset) var(--soa-tree-shadow-blur)
+            var(--soa-tree-shadow);
+    }
+
+    .soa-tree-handle:focus-visible,
+    .soa-tree-toggle:focus-visible {
+        outline: var(--soa-focus-ring-width) solid var(--soa-focus-color);
+        outline-offset: var(--soa-focus-ring-width);
+    }
+
+    .soa-tree-notification {
+        --soa-status-rail-color: var(--soa-success-color);
+
+        border-inline-start: var(--soa-status-rail-width) solid
+            var(--soa-status-rail-color);
+        color: var(--soa-text-color);
+        margin: var(--soa-space-3);
+        padding: var(--soa-space-2) var(--soa-space-3);
+    }
+
+    .soa-tree-notification[data-state='error'] {
+        --soa-status-rail-color: var(--soa-danger-color);
+    }
+
+    .soa-tree[aria-busy='true'] .soa-tree-handle {
+        cursor: wait;
+    }
+}
+
+@include properties;
 
 @layer sleepingowl-theme.tree {
-  @include tree.styles;
+  @include styles;
 }
