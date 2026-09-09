@@ -5,14 +5,7 @@ import { describe, expect, it } from 'vitest'
 
 const root = resolve(import.meta.dirname, '../../..')
 const themeId = 'framework-free-test'
-const logicalIds = [
-    `feature:dropdown:theme:${themeId}`,
-    `feature:sidebar:theme:${themeId}`,
-    `feature:table:theme:${themeId}`,
-    `feature:tabs:theme:${themeId}`,
-    `feature:tooltip:theme:${themeId}`,
-    `theme:${themeId}`,
-]
+const logicalId = `theme:${themeId}`
 
 describe('framework-free ThemeInterface acceptance bundle', () => {
     it('publishes only Sass presentation entries and no theme JavaScript', () => {
@@ -20,16 +13,16 @@ describe('framework-free ThemeInterface acceptance bundle', () => {
         const styleIds = entries.styles.map((entry) => entry.logicalId)
         const scriptIds = entries.scripts.map((entry) => entry.logicalId)
 
-        expect(logicalIds.every((logicalId) => styleIds.includes(logicalId))).toBe(true)
+        expect(styleIds).toContain(logicalId)
         expect(scriptIds.some((logicalId) => logicalId?.includes(themeId))).toBe(false)
     })
 
     it.each(['production', 'development'])('%s assets contain no UI framework', (profile) => {
         const manifest = readJson('public/default/asset-manifest.json')
         const entries = manifest.profiles[profile].entries
-        const styles = logicalIds.flatMap((logicalId) => entries[logicalId].styles)
+        const styles = entries[logicalId].styles
 
-        expect(styles).toHaveLength(logicalIds.length)
+        expect(styles).toHaveLength(1)
         for (const asset of styles) {
             const css = read(`public/default/${asset.file}`)
 

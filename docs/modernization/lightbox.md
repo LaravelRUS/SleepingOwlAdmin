@@ -61,22 +61,22 @@ access GLightbox internals.
 
 ## Theme and asset ownership
 
-The theme-neutral `feature:lightbox` bundle owns GLightbox, delegated behavior,
+The theme-neutral lightbox module inside `shared:features` owns GLightbox, delegated behavior,
 gallery discovery, lifecycle, events, vendor base CSS, and the SVG sizing fix.
 AdminLTE and Tailwind each provide a separate Sass presentation adapter for
 controls and captions. Palette values come from `_colors.scss`; dimensions and
 motion come from `_variables.scss`; runtime overrides use public
 `--soa-lightbox-*` custom properties.
 
-A custom theme can load `feature:lightbox`, style the GLightbox DOM with the
-public custom properties, and omit both built-in theme adapters.
+A custom theme receives `shared:features`, can style the GLightbox DOM with the
+public custom properties, and omits both built-in theme bundles.
 
 Both no-build profiles expose these logical entries:
 
 ```text
-feature:lightbox
-feature:lightbox:theme:adminlte
-feature:lightbox:theme:shadcn
+shared:features
+theme:adminlte
+theme:shadcn
 ```
 
 They resolve to precompiled JavaScript and CSS under `public/default`. The

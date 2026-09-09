@@ -7,19 +7,9 @@ use SleepingOwl\Admin\Templates\TemplateDefault;
 
 final class AdminLTETheme extends TemplateDefault implements ThemeInterface
 {
-    private const FEATURE_ADAPTERS = [
-        'dropdown',
-        'lightbox',
-        'sidebar',
-        'table',
-        'tabs',
-        'tooltip',
-        'tree',
-    ];
-
     private const LEGACY_HANDLES = [
         'shared:vue' => 'admin-vue-init',
-        'feature:tree:theme:adminlte' => 'admin-default',
+        'shared:features' => 'admin-default',
         'shared:modules' => 'admin-modules-load',
     ];
 
@@ -49,10 +39,6 @@ final class AdminLTETheme extends TemplateDefault implements ThemeInterface
             'shared:modules',
             'shared:vue',
             'theme:'.$this->id(),
-            ...array_map(
-                fn (string $feature): string => "feature:{$feature}:theme:{$this->id()}",
-                self::FEATURE_ADAPTERS
-            ),
         ];
     }
 

@@ -27,9 +27,7 @@ function expectedSourceRoots(logicalId) {
     }
 
     if (type === 'shared') {
-        return id === 'icons'
-            ? ['resources/css/shared/features/icons/']
-            : [`resources/js/shared/${id}/`]
+        return sharedSourceRoots(id)
     }
 
     if (type === 'feature' && scope === 'theme') {
@@ -44,6 +42,15 @@ function expectedSourceRoots(logicalId) {
     }
 
     return [`resources/css/themes/${theme}/`, `resources/js/themes/${theme}/`]
+}
+
+function sharedSourceRoots(id) {
+    if (id === 'icons') return ['resources/css/shared/features/icons/']
+    if (id === 'features') {
+        return ['resources/css/shared/features.scss', 'resources/js/shared/features/']
+    }
+
+    return [`resources/js/shared/${id}/`]
 }
 
 function themeSourceName(logicalId) {
@@ -71,25 +78,33 @@ describe('frontend build entries', () => {
 })
 
 describe('modern frontend build entries', () => {
-    it.each([
-        'core',
-        'feature:dropdown',
-        'feature:forms',
-        'feature:lightbox',
-        'feature:sidebar',
-        'feature:table',
-        'feature:tooltip',
-        'feature:tree',
-        'theme:adminlte',
-        'theme:shadcn',
-    ])('defines independent script and style outputs for %s', (logicalId) => {
-        expect(modernEntry(logicalId, 'scripts')).toBeDefined()
-        expect(modernEntry(logicalId, 'styles')).toBeDefined()
+    it('publishes always-loaded features as one shared runtime boundary', () => {
+        expect(modernEntry('shared:features', 'scripts')).toEqual({
+            logicalId: 'shared:features',
+            source: 'resources/js/shared/features/browser.js',
+            output: 'js/shared/features.js',
+        })
+        expect(modernEntry('shared:features', 'styles')).toEqual({
+            logicalId: 'shared:features',
+            source: 'resources/css/shared/features.scss',
+            output: 'css/shared/features.css',
+        })
     })
 
-    it('keeps behavior-only tabs free of a generic presentation stylesheet', () => {
-        expect(modernEntry('feature:tabs', 'scripts')).toBeDefined()
-        expect(modernEntry('feature:tabs', 'styles')).toBeUndefined()
+    it.each(['adminlte', 'shadcn'])(
+        'publishes the %s runtime and adapters as one theme boundary',
+        (theme) => {
+            expect(modernEntry(`theme:${theme}`, 'scripts')).toBeDefined()
+            expect(modernEntry(`theme:${theme}`, 'styles')).toBeDefined()
+        },
+    )
+
+    it('does not create per-feature or feature-theme public entries', () => {
+        const logicalIds = Object.values(entries.modern)
+            .flat()
+            .map(({ logicalId }) => logicalId)
+
+        expect(logicalIds.some((logicalId) => logicalId.startsWith('feature:'))).toBe(false)
     })
 
     it('keeps modern source ownership aligned with logical ids', () => {
@@ -139,24 +154,6 @@ it('publishes the final compatibility module boot as an independent shared scrip
     expect(modernEntry('shared:modules', 'styles')).toBeUndefined()
 })
 
-it.each(['forms', 'lightbox', 'table', 'tree'])(
-    'publishes %s through an auto-boot browser entry',
-    (feature) => {
-        expect(modernEntry(`feature:${feature}`, 'scripts')).toEqual({
-            logicalId: `feature:${feature}`,
-            source: `resources/js/shared/features/${feature}/browser.js`,
-            output: `js/features/${feature}.js`,
-        })
-    },
-)
-
-describe('behavior-only entries', () => {
-    it('keeps alerts free of a generic presentation stylesheet', () => {
-        expect(modernEntry('feature:alert', 'scripts')).toBeDefined()
-        expect(modernEntry('feature:alert', 'styles')).toBeUndefined()
-    })
-})
-
 describe('frontend build entry files', () => {
     it('uses existing sources and unique output paths', () => {
         const configured = allEntries()
@@ -167,110 +164,6 @@ describe('frontend build entry files', () => {
             expect(() => readFileSync(resolve(root, source))).not.toThrow()
         })
     })
-})
-
-describe('table presentation entries', () => {
-    it('publishes the AdminLTE presentation and DataTables adapter together', () => {
-        const logicalId = 'feature:table:theme:adminlte'
-
-        expect(modernEntry(logicalId, 'styles')).toBeDefined()
-        expect(modernEntry(logicalId, 'scripts')).toBeDefined()
-    })
-
-    it.each(['framework-free-test', 'shadcn'])(
-        'publishes the %s adapter as an independent stylesheet',
-        (theme) => {
-            const logicalId = `feature:table:theme:${theme}`
-
-            expect(modernEntry(logicalId, 'styles')).toBeDefined()
-            expect(modernEntry(logicalId, 'scripts')).toBeUndefined()
-        },
-    )
-})
-
-describe('forms presentation entries', () => {
-    it('publishes the Tailwind adapter as an independent stylesheet', () => {
-        const logicalId = 'feature:forms:theme:shadcn'
-
-        expect(modernEntry(logicalId, 'styles')).toBeDefined()
-        expect(modernEntry(logicalId, 'scripts')).toBeUndefined()
-    })
-})
-
-describe('tree presentation entries', () => {
-    it('publishes the AdminLTE presentation and notification adapter together', () => {
-        const logicalId = 'feature:tree:theme:adminlte'
-
-        expect(modernEntry(logicalId, 'styles')).toBeDefined()
-        expect(modernEntry(logicalId, 'scripts')).toBeDefined()
-    })
-
-    it('publishes Tailwind presentation with its native-event notification adapter', () => {
-        const logicalId = 'feature:tree:theme:shadcn'
-
-        expect(modernEntry(logicalId, 'styles')).toBeDefined()
-        expect(modernEntry(logicalId, 'scripts')).toBeDefined()
-    })
-})
-
-describe('lightbox presentation entries', () => {
-    it.each(['adminlte', 'shadcn'])(
-        'publishes the %s adapter as an independent stylesheet',
-        (theme) => {
-            const logicalId = `feature:lightbox:theme:${theme}`
-
-            expect(modernEntry(logicalId, 'styles')).toBeDefined()
-            expect(modernEntry(logicalId, 'scripts')).toBeUndefined()
-        },
-    )
-})
-
-describe('tabs presentation entries', () => {
-    it.each(['adminlte', 'shadcn'])(
-        'publishes the %s adapter as an independent stylesheet',
-        (theme) => {
-            const logicalId = `feature:tabs:theme:${theme}`
-
-            expect(modernEntry(logicalId, 'styles')).toBeDefined()
-            expect(modernEntry(logicalId, 'scripts')).toBeUndefined()
-        },
-    )
-})
-
-describe('tooltip presentation entries', () => {
-    it.each(['adminlte', 'shadcn'])(
-        'publishes the %s adapter as an independent stylesheet',
-        (theme) => {
-            const logicalId = `feature:tooltip:theme:${theme}`
-
-            expect(modernEntry(logicalId, 'styles')).toBeDefined()
-            expect(modernEntry(logicalId, 'scripts')).toBeUndefined()
-        },
-    )
-})
-
-describe('dropdown presentation entries', () => {
-    it.each(['adminlte', 'shadcn'])(
-        'publishes the %s adapter as an independent stylesheet',
-        (theme) => {
-            const logicalId = `feature:dropdown:theme:${theme}`
-
-            expect(modernEntry(logicalId, 'styles')).toBeDefined()
-            expect(modernEntry(logicalId, 'scripts')).toBeUndefined()
-        },
-    )
-})
-
-describe('sidebar presentation entries', () => {
-    it.each(['adminlte', 'shadcn'])(
-        'publishes the %s adapter as an independent stylesheet',
-        (theme) => {
-            const logicalId = `feature:sidebar:theme:${theme}`
-
-            expect(modernEntry(logicalId, 'styles')).toBeDefined()
-            expect(modernEntry(logicalId, 'scripts')).toBeUndefined()
-        },
-    )
 })
 
 function sourceEntry(source, output) {

@@ -158,7 +158,7 @@ feature:table:theme:acme
 feature:tooltip:theme:acme
 ```
 
-Shared entries are allowed only when declared by the theme. Core resolves unchanged `core`, `feature:<id>` and existing shared entries from SleepingOwl's own manifest; the external fragment supplies only its ready theme/shared/adapter files. A mismatched profile, undeclared entry, foreign theme id, invalid path or checksum metadata fails registration. No assets from another theme are loaded as fallback.
+Shared entries are allowed only when declared by the theme. Core resolves unchanged `core`, `shared:features` and existing shared infrastructure from SleepingOwl's own manifest; the external fragment supplies only its ready theme/shared/optional adapter files. A mismatched profile, undeclared entry, foreign theme id, invalid path or checksum metadata fails registration. No assets from another theme are loaded as fallback.
 
 ## Blade overrides
 

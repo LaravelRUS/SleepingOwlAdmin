@@ -5,7 +5,8 @@ import { describe, expect, it } from 'vitest'
 
 const root = resolve(import.meta.dirname, '../../..')
 const entries = readJson('build/frontend-entries.json').modern.styles
-const tokenizedEntries = entries.filter((entry) => entry.logicalId !== 'shared:icons')
+const aggregateEntries = new Set(['shared:features', 'shared:icons'])
+const tokenizedEntries = entries.filter((entry) => !aggregateEntries.has(entry.logicalId))
 const sassTokenizedEntries = tokenizedEntries.filter((entry) => entry.source.endsWith('.scss'))
 
 function readJson(path) {
@@ -19,6 +20,25 @@ function readSource(path) {
 function siblingPath(entry, filename) {
     return resolve(root, dirname(entry.source), filename)
 }
+
+describe('Sass aggregate entries', () => {
+    it('keeps the shared feature entry as a thin aggregate of owned feature modules', () => {
+        const source = readSource('resources/css/shared/features.scss')
+
+        for (const feature of [
+            'dropdown',
+            'forms',
+            'lightbox',
+            'sidebar',
+            'table',
+            'tooltip',
+            'tree',
+        ]) {
+            expect(source).toContain(`@use 'features/${feature}/`)
+        }
+        expect(source).not.toContain('$')
+    })
+})
 
 describe('Sass entrypoint boundaries', () => {
     it.each(sassTokenizedEntries)('$logicalId loads its owner-local Sass modules', (entry) => {

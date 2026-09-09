@@ -96,7 +96,7 @@ a notification component; it does not load SweetAlert or the AdminLTE policy.
 
 ## Theme and asset ownership
 
-The theme-neutral `feature:tree` bundle owns lifecycle, serialization,
+The theme-neutral tree module inside `shared:features` owns lifecycle, serialization,
 transport, max-depth validation, and the minimal behavior stylesheet. AdminLTE
 and Tailwind each provide a separate Sass presentation adapter. Palette values
 come from `_colors.scss`; dimensions and motion come from `_variables.scss`;
@@ -112,9 +112,9 @@ to `installTrees()`.
 The no-build distribution exposes these logical entries in both profiles:
 
 ```text
-feature:tree
-feature:tree:theme:adminlte
-feature:tree:theme:shadcn
+shared:features
+theme:adminlte
+theme:shadcn
 ```
 
 They resolve to precompiled JavaScript and CSS under `public/default`. The

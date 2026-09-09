@@ -23,16 +23,16 @@ it('replaces Bootstrap alert execution while preserving the public marker', () =
     expect(runtime).not.toMatch(/jquery|jQuery|\$\(|bootstrap/i)
 })
 
-it('ships alert behavior as an independent no-build entry', () => {
+it('ships alert behavior through the consolidated feature runtime', () => {
     const entries = JSON.parse(read('build/frontend-entries.json'))
-    const entry = entries.modern.scripts.find(({ logicalId }) => logicalId === 'feature:alert')
+    const entry = entries.modern.scripts.find(({ logicalId }) => logicalId === 'shared:features')
 
     expect(entry).toEqual({
-        logicalId: 'feature:alert',
-        output: 'js/features/alert.js',
-        source: 'resources/js/shared/features/alert/browser.js',
+        logicalId: 'shared:features',
+        output: 'js/shared/features.js',
+        source: 'resources/js/shared/features/browser.js',
     })
-    expect(entries.modern.styles.some(({ logicalId }) => logicalId === 'feature:alert')).toBe(false)
+    expect(read(entry.source)).toContain("import './alert/browser.js'")
 })
 
 function read(path) {

@@ -61,7 +61,7 @@ describe('compiled frontend entries', () => {
 
 describe('compiled form entries', () => {
     it('publishes multiple-file styles in the forms feature and legacy aggregate', () => {
-        const forms = readFileSync(resolve(root, 'public/default/css/features/forms.css'), 'utf8')
+        const forms = readFileSync(resolve(root, 'public/default/css/shared/features.css'), 'utf8')
         const legacy = readFileSync(resolve(root, 'public/default/css/admin-app.css'), 'utf8')
         const selector = '.fileUploadMultiple .files-group .fileThumbnail'
 
@@ -71,7 +71,7 @@ describe('compiled form entries', () => {
     })
 
     it('publishes theme-token driven Air Datepicker styles in both form bundles', () => {
-        const forms = readFileSync(resolve(root, 'public/default/css/features/forms.css'), 'utf8')
+        const forms = readFileSync(resolve(root, 'public/default/css/shared/features.css'), 'utf8')
         const legacy = readFileSync(resolve(root, 'public/default/css/admin-app.css'), 'utf8')
 
         for (const css of [forms, legacy]) {
@@ -84,10 +84,7 @@ describe('compiled form entries', () => {
     it('publishes the Tailwind forms adapter from canonical theme tokens only', () => {
         for (const profile of ['production', 'development']) {
             const forms = readFileSync(
-                resolve(
-                    root,
-                    `public/default/profiles/${profile}/css/features/forms/themes/shadcn.css`,
-                ),
+                resolve(root, `public/default/profiles/${profile}/css/themes/shadcn.css`),
                 'utf8',
             )
 
@@ -95,9 +92,13 @@ describe('compiled form entries', () => {
             expect(forms).toContain('var(--soa-primary-color)')
             expect(forms).toContain('.multiselect__tags')
             expect(forms).toContain('.soa-attachment-list')
-            expect(forms).not.toMatch(/bootstrap|admin-lte|adminlte|jquery|react|radix|lucide/i)
-            expect(forms).not.toMatch(/#[\da-f]{3,8}\b/i)
         }
+
+        const sources = filesUnder('resources/css/themes/shadcn/features/forms')
+            .map((path) => readFileSync(resolve(root, path), 'utf8'))
+            .join('\n')
+        expect(sources).not.toMatch(/bootstrap|admin-lte|adminlte|jquery|react|radix|lucide/i)
+        expect(sources).not.toMatch(/#[\da-f]{3,8}\b/i)
     })
 })
 
@@ -106,17 +107,20 @@ describe('compiled Tailwind content adapters', () => {
         for (const profile of ['production', 'development']) {
             for (const feature of ['lightbox', 'tabs', 'tree']) {
                 const css = readFileSync(
-                    resolve(
-                        root,
-                        `public/default/profiles/${profile}/css/features/${feature}/themes/shadcn.css`,
-                    ),
+                    resolve(root, `public/default/profiles/${profile}/css/themes/shadcn.css`),
                     'utf8',
                 )
 
                 expect(css).toContain(`@layer sleepingowl-theme.${feature}`)
                 expect(css).toMatch(/var\(--soa-(?:primary|text|surface|border|muted)/)
-                expect(css).not.toMatch(/bootstrap|admin-lte|adminlte|jquery|react|radix|lucide/i)
-                expect(css).not.toMatch(/#[\da-f]{3,8}\b/i)
+
+                const sources = filesUnder(`resources/css/themes/shadcn/features/${feature}`)
+                    .map((path) => readFileSync(resolve(root, path), 'utf8'))
+                    .join('\n')
+                expect(sources).not.toMatch(
+                    /bootstrap|admin-lte|adminlte|jquery|react|radix|lucide/i,
+                )
+                expect(sources).not.toMatch(/#[\da-f]{3,8}\b/i)
             }
         }
     })
@@ -143,7 +147,7 @@ describe('compiled core boundaries', () => {
     it('keeps first-party legacy event bridges out of modern table profiles', () => {
         for (const profile of ['production', 'development']) {
             const table = readFileSync(
-                resolve(root, `public/default/profiles/${profile}/js/features/table.js`),
+                resolve(root, `public/default/profiles/${profile}/js/shared/features.js`),
                 'utf8',
             )
 
@@ -164,10 +168,10 @@ describe('compiled core boundaries', () => {
 describe('compiled table boundaries', () => {
     it('excludes jQuery and the Responsive Bootstrap JavaScript adapter', () => {
         const sources = readJson(
-            'public/default/profiles/development/js/features/table.js.map',
+            'public/default/profiles/development/js/shared/features.js.map',
         ).sources.map((source) => source.replaceAll('\\', '/'))
         const license = readFileSync(
-            resolve(root, 'public/default/profiles/production/js/features/table.js.LICENSE.txt'),
+            resolve(root, 'public/default/profiles/production/js/shared/features.js.LICENSE.txt'),
             'utf8',
         )
 
@@ -277,12 +281,13 @@ describe('compiled runtime properties', () => {
     it('publishes bundle-owned runtime custom properties', () => {
         const expectations = {
             'css/admin-core.css': ['--soa-focus-ring-width', '--soa-motion-duration-normal'],
-            'css/features/forms.css': [
+            'css/shared/features.css': [
                 '--soa-form-control-text-color',
                 '--soa-form-file-thumbnail-border-color',
                 '--soa-form-date-picker-surface-color',
+                '--soa-table-text-color',
+                '--soa-table-row-selected-color',
             ],
-            'css/features/table.css': ['--soa-table-text-color', '--soa-table-row-selected-color'],
             'css/themes/adminlte.css': [
                 '--soa-sidebar-bg',
                 '--soa-sidebar-width',

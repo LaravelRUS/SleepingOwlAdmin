@@ -23,11 +23,6 @@ final class FrameworkFreeTestTheme implements ThemeInterface
             'shared:modules',
             'shared:vue',
             'theme:framework-free-test',
-            'feature:dropdown:theme:framework-free-test',
-            'feature:sidebar:theme:framework-free-test',
-            'feature:table:theme:framework-free-test',
-            'feature:tabs:theme:framework-free-test',
-            'feature:tooltip:theme:framework-free-test',
         ];
     }
 

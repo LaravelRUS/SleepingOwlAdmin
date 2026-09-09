@@ -1,0 +1,9 @@
+// Shared feature presentation is always loaded as one runtime layer. Individual
+// feature folders remain source-level ownership boundaries, not public entries.
+@use 'features/dropdown/dropdown-base';
+@use 'features/forms/forms';
+@use 'features/lightbox/lightbox-base';
+@use 'features/sidebar/sidebar-base';
+@use 'features/table/table';
+@use 'features/tooltip/tooltip-base';
+@use 'features/tree/tree';

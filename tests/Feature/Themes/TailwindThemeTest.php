@@ -61,14 +61,6 @@ class TailwindThemeTest extends TestCase
             'shared:modules',
             'shared:vue',
             'theme:shadcn',
-            'feature:dropdown:theme:shadcn',
-            'feature:forms:theme:shadcn',
-            'feature:lightbox:theme:shadcn',
-            'feature:sidebar:theme:shadcn',
-            'feature:table:theme:shadcn',
-            'feature:tabs:theme:shadcn',
-            'feature:tooltip:theme:shadcn',
-            'feature:tree:theme:shadcn',
         ], $manifest->entries());
         $this->assertSame([
             'core',
@@ -76,23 +68,7 @@ class TailwindThemeTest extends TestCase
             'shared:compatibility',
             'shared:vue',
             'theme:shadcn',
-            'feature:alert',
-            'feature:tooltip',
-            'feature:tooltip:theme:shadcn',
-            'feature:dropdown',
-            'feature:dropdown:theme:shadcn',
-            'feature:sidebar',
-            'feature:sidebar:theme:shadcn',
-            'feature:lightbox',
-            'feature:lightbox:theme:shadcn',
-            'feature:table:theme:shadcn',
-            'feature:table',
-            'feature:tabs',
-            'feature:tabs:theme:shadcn',
-            'feature:forms',
-            'feature:forms:theme:shadcn',
-            'feature:tree',
-            'feature:tree:theme:shadcn',
+            'shared:features',
             'shared:modules',
         ], app(ThemeRuntimeAssets::class)->logicalEntries(app(TailwindTheme::class)));
     }
@@ -117,15 +93,8 @@ class TailwindThemeTest extends TestCase
             $this->assertStringContainsString("profiles/{$profile}/css/themes/shadcn-utilities.css", $joined);
             $this->assertStringContainsString("profiles/{$profile}/css/icons.css", $joined);
             $this->assertStringNotContainsString('adminlte', $joined);
-            $this->assertStringContainsString('features/dropdown/themes/shadcn.css', $joined);
-            $this->assertStringContainsString('features/forms/themes/shadcn.css', $joined);
-            $this->assertStringContainsString('features/lightbox/themes/shadcn.css', $joined);
-            $this->assertStringContainsString('features/sidebar/themes/shadcn.css', $joined);
-            $this->assertStringContainsString('features/table/themes/shadcn.css', $joined);
-            $this->assertStringContainsString('features/tabs/themes/shadcn.css', $joined);
-            $this->assertStringContainsString('features/tooltip/themes/shadcn.css', $joined);
-            $this->assertStringContainsString('features/tree/themes/shadcn.css', $joined);
-            $this->assertStringContainsString('features/tree/themes/shadcn.js', $joined);
+            $this->assertStringContainsString("profiles/{$profile}/js/shared/features.js", $joined);
+            $this->assertStringContainsString("profiles/{$profile}/css/shared/features.css", $joined);
         }
     }
 

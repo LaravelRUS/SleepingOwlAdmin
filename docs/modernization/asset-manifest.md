@@ -9,17 +9,15 @@ Manifest создаётся после Laravel Mix build из `build/frontend-en
 Текущие группы logical ids:
 
 - `core`;
-- общие `shared:icons`, `shared:compatibility`, profile-aware `shared:vue` и завершающий `shared:modules`;
-- behavior entries `feature:<feature-id>`;
-- presentation adapters `feature:<feature-id>:theme:<theme-id>`;
+- общие `shared:icons`, `shared:compatibility`, объединённый `shared:features`, profile-aware `shared:vue` и завершающий `shared:modules`;
 - встроенные `theme:adminlte` и `theme:shadcn`.
 
-Table driver не содержит presentation CSS. Встроенные table adapters публикуются отдельными
-feature/theme entries и загружаются только вместе с выбранной темой и активным table feature.
-Массив `ThemeInterface::assets()` для custom theme объявляет только logical ids
-`shared:<id>`, `theme:<id>` и `feature:<feature-id>:theme:<id>`. Он не содержит
-URL или filenames. Отдельный готовый manifest fragment внешнего Composer
-package связывает эти ids с его собственными versioned файлами.
+`shared:features` содержит все всегда загружаемые feature drivers и их нейтральный CSS. Встроенные
+presentation adapters входят в единый `theme:<id>` bundle. Это соответствует фактическому runtime:
+драйверы не выбирались по страницам, поэтому отдельные `feature × theme` файлы создавали запросы,
+но ничего не экономили. Массив `ThemeInterface::assets()` объявляет только logical ids и не содержит
+URL или filenames. Внешний Composer package при необходимости всё ещё может объявить отдельный
+`feature:<feature-id>:theme:<theme-id>` adapter в своём готовом manifest fragment.
 
 ## Schema 1
 
@@ -51,7 +49,7 @@ package связывает эти ids с его собственными version
 
 Tracked manifest одновременно содержит `production` и `development` profiles с одинаковыми logical ids. `npm run production` последовательно собирает оба набора: development сохраняется несжатым с внешними source maps, production — minified без source maps. `npm run development` обновляет только development profile для локальной работы и не требует пересборки production profile.
 
-Внешний theme package использует ту же schema через `AssetManifest::fromFragment()`, но не повторяет обязательный `core`. Его fragment обязан содержать оба профиля с одинаковыми entries; `ThemeRegistry` принимает только объявленные выбранной темой shared/theme/feature-adapter ids и запрещает подменять `core` либо package-owned `feature:<id>` drivers. Каждый file path остаётся относительным к public root, который регистрирует provider темы. Повторная явная регистрация того же logical id заменяет предыдущий источник; implicit fallback на другую тему отсутствует. Полный provider recipe находится в [`theme-customization.md`](theme-customization.md).
+Внешний theme package использует ту же schema через `AssetManifest::fromFragment()`, но не повторяет обязательные `core` и `shared:features`. Его fragment обязан содержать оба профиля с одинаковыми entries; `ThemeRegistry` принимает только объявленные выбранной темой shared/theme/feature-adapter ids и запрещает подменять package-owned runtime. Каждый file path остаётся относительным к public root, который регистрирует provider темы. Повторная явная регистрация того же logical id заменяет предыдущий источник; implicit fallback на другую тему отсутствует. Полный provider recipe находится в [`theme-customization.md`](theme-customization.md).
 
 Физические файлы находятся в `profiles/<profile>/...`; resolver никогда не объединяет их. Существующий `sleeping_owl.dev_assets`, заполняемый через `ADMIN_DEV_ASSETS`, выбирает один профиль целиком:
 
@@ -70,7 +68,7 @@ ADMIN_DEV_ASSETS=false
 - `ResolvedAssetBundle` возвращает отдельные списки scripts и styles;
 - `LogicalAssetRegistrar` передаёт эти URL в first-party meta/asset registry со стабильными handles и явной цепочкой зависимостей внутри CSS и JS, не читая manifest самостоятельно; точечные aliases logical entry сохраняют исторические public handles без привязки consumer-кода к filenames.
 
-Resolver и registrar зарегистрированы в container. Новый config default `AdminLTETheme` загружает только versioned logical runtime в порядке `core`, shared entries, выбранная тема, feature entries с её adapters и завершающий `shared:modules`. Последний entry выполняет один `Admin.Modules.boot()` и финальный идемпотентный component scan. Исторические handles сохранены: `admin-vue-init` обозначает готовый Vue public API, `admin-default` — полностью загруженный theme/feature runtime, `admin-modules-load` — завершённый module boot. Это оставляет существующим project assets рабочие dependency points.
+Resolver и registrar зарегистрированы в container. Новый config default `AdminLTETheme` загружает versioned logical runtime в порядке `core`, shared infrastructure, выбранная тема, объединённый `shared:features`, внешние adapters и завершающий `shared:modules`. Последний entry выполняет один `Admin.Modules.boot()` и финальный идемпотентный component scan. Исторические handles сохранены: `admin-vue-init` обозначает готовый Vue public API, `admin-default` — полностью загруженный theme/feature runtime, `admin-modules-load` — завершённый module boot. Это оставляет существующим project assets рабочие dependency points.
 
 `TemplateDefault` намеренно остаётся отдельным deprecated compatibility path и продолжает загружать `admin-app.js`, `vue.js` и `modules.js` для старых опубликованных config. Одна страница не смешивает этот aggregate с logical runtime.
 

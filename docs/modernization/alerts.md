@@ -1,7 +1,7 @@
 # Dismissible alerts
 
-SleepingOwlAdmin closes flash messages through the framework-neutral
-`feature:alert` entry. Bootstrap JavaScript and a global jQuery object are not
+SleepingOwlAdmin closes flash messages through the framework-neutral alert module
+inside `shared:features`. Bootstrap JavaScript and a global jQuery object are not
 required.
 
 ## Markup compatibility
@@ -62,5 +62,5 @@ Admin.Alerts.close(document.querySelector('#saved-message'))
 Admin.Alerts.scan()
 ```
 
-`feature:alert` is behavior-only. Visual presentation belongs to the selected
+The alert source module is behavior-only. Visual presentation belongs to the selected
 theme or to the user's custom classes and styles.

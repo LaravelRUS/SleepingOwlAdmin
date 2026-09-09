@@ -20,8 +20,8 @@ Sass variables remain the source-build defaults and fallbacks. A component consu
 | shared palette | `--soa-primary-color`, `--soa-text-color`, `--soa-surface-color`, `--soa-border-color`, `--soa-focus-color` | selected theme |
 | typography | `--soa-font-family-sans`, `--soa-font-size-base`, `--soa-line-height-base` | selected theme |
 | accessibility and motion | `--soa-focus-ring-width`, `--soa-motion-duration-*` | core |
-| form feature | `--soa-form-control-*`, `--soa-form-file-*` | `feature:forms` |
-| table feature | `--soa-table-*` | `feature:table` |
+| form feature | `--soa-form-control-*`, `--soa-form-file-*` | form source owner in `shared:features` |
+| table feature | `--soa-table-*` | table source owner in `shared:features` |
 | theme layout | `--soa-sidebar-bg`, `--soa-sidebar-*`, `--soa-content-padding`, `--soa-border-radius`, `--soa-layout-transition-duration` | selected theme |
 
 The complete executable list is emitted by the `_custom-properties.scss` module beside each Sass entrypoint. New public properties must use the same prefix and remain owned by exactly one core/feature/theme layer.

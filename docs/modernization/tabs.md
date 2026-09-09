@@ -1,8 +1,8 @@
 # Tabs migration
 
 Tabs now use a small native driver registered through `Admin.Components`. The
-driver does not call the Bootstrap jQuery tab API and is shipped as the
-precompiled `feature:tabs` entry in both asset profiles.
+driver does not call the Bootstrap jQuery tab API and is shipped inside the
+precompiled `shared:features` entry in both asset profiles.
 When loaded after `admin-core`, that browser entry registers and scans the
 driver directly; it does not depend on the transitional legacy module runner.
 
@@ -43,13 +43,13 @@ available during migration, so tree and inline-editor scans keep working.
 
 ## Theme ownership
 
-Behavior belongs to `feature:tabs`; it does not contain Bootstrap, AdminLTE,
-Tailwind, jQuery, or presentation classes. AdminLTE and Tailwind provide
-independent Sass adapters:
+Behavior belongs to the shared tabs source folder; it does not contain Bootstrap, AdminLTE,
+shadcn, jQuery, or presentation classes. AdminLTE and shadcn provide independent source
+adapters that compile into their theme bundles:
 
 ```text
-feature:tabs:theme:adminlte
-feature:tabs:theme:shadcn
+theme:adminlte
+theme:shadcn
 ```
 
 Colors are declared in each adapter's `_colors.scss`, dimensions in

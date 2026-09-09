@@ -20,356 +20,6 @@
                         }
                     ]
                 },
-                "feature:alert": {
-                    "scripts": [
-                        {
-                            "file": "profiles/production/js/features/alert.js",
-                            "version": "de1407085485c959513ac2ef7c5ee608",
-                            "checksum": "sha256:e7b10d2e9ee412796c33e7bb6c8dfc06d5594202577a96ce2dc6a57dd3cfc27d"
-                        }
-                    ],
-                    "styles": []
-                },
-                "feature:dropdown": {
-                    "scripts": [
-                        {
-                            "file": "profiles/production/js/features/dropdown.js",
-                            "version": "2d8349e70709ac17cb49107f9584f66c",
-                            "checksum": "sha256:6bd00b4b72386a9ef04e70b60190aeee10497143c9243909afd5ea2ca2dd95c6"
-                        }
-                    ],
-                    "styles": [
-                        {
-                            "file": "profiles/production/css/features/dropdown.css",
-                            "version": "6fa7730081ed22f74a507a9aa1b70b93",
-                            "checksum": "sha256:a31e693bf3b324d883343ac9bb6d111d8b93e9515852d4c4b23b78457c1eba5b"
-                        }
-                    ]
-                },
-                "feature:dropdown:theme:adminlte": {
-                    "scripts": [],
-                    "styles": [
-                        {
-                            "file": "profiles/production/css/features/dropdown/themes/adminlte.css",
-                            "version": "b25f56f0bf2a62b08a0bc796f7f90906",
-                            "checksum": "sha256:e43d9228f2ba5454444eaf41e2b060f05dd2d8b02cabdf7e55dacf443cdaa0d3"
-                        }
-                    ]
-                },
-                "feature:dropdown:theme:framework-free-test": {
-                    "scripts": [],
-                    "styles": [
-                        {
-                            "file": "profiles/production/css/features/dropdown/themes/framework-free-test.css",
-                            "version": "275d5060de2e2b78fb3312a711cdf0ef",
-                            "checksum": "sha256:26bf5d6d3030ccea7b36cab169447047793f479159320e0c6c2ae574f10600b1"
-                        }
-                    ]
-                },
-                "feature:dropdown:theme:shadcn": {
-                    "scripts": [],
-                    "styles": [
-                        {
-                            "file": "profiles/production/css/features/dropdown/themes/shadcn.css",
-                            "version": "be59aff9aa065dd18190937ef82e7eaa",
-                            "checksum": "sha256:565907b0db8d01693143b03466a0658f39663dcf00d5245258f0b3a6186553da"
-                        }
-                    ]
-                },
-                "feature:forms": {
-                    "scripts": [
-                        {
-                            "file": "profiles/production/js/features/forms.js",
-                            "version": "c448e5ef7e4db071f9ff3a12b4dbdc8c",
-                            "checksum": "sha256:8d0c0af318a2235acb4f856af5278e676c8f3157e2c663bdd32bc1dbc913c6e4"
-                        }
-                    ],
-                    "styles": [
-                        {
-                            "file": "profiles/production/css/features/forms.css",
-                            "version": "c8f9ca6d852ed02410e54faf05218f73",
-                            "checksum": "sha256:85e6b6e4af71c621b14c0b2273caa1156d6ab2788cd0a2724475f9c55d2eb66f"
-                        }
-                    ]
-                },
-                "feature:forms:theme:shadcn": {
-                    "scripts": [],
-                    "styles": [
-                        {
-                            "file": "profiles/production/css/features/forms/themes/shadcn.css",
-                            "version": "042bc38d04fe807e9da509a6ec42bcc9",
-                            "checksum": "sha256:b759f116b30b68048ef34eb8c3cae600bc214ef09fb0d40b98b066f80459ca12"
-                        }
-                    ]
-                },
-                "feature:lightbox": {
-                    "scripts": [
-                        {
-                            "file": "profiles/production/js/features/lightbox.js",
-                            "version": "5c143cd57dc46cf8e64fe891b56da8eb",
-                            "checksum": "sha256:8305fbdeac80d53af19984b2a7934183a9e67174846d8cb18f577b1e4a0b794e"
-                        }
-                    ],
-                    "styles": [
-                        {
-                            "file": "profiles/production/css/features/lightbox.css",
-                            "version": "f7cebd6cd32f0abbdd668b46fb324f1f",
-                            "checksum": "sha256:5bc296746fe997fceece3b024d0c64f510d12d8dfe2a81a998c501d1d4324d09"
-                        }
-                    ]
-                },
-                "feature:lightbox:theme:adminlte": {
-                    "scripts": [],
-                    "styles": [
-                        {
-                            "file": "profiles/production/css/features/lightbox/themes/adminlte.css",
-                            "version": "b2ad9d34ee0ab88d09a66e77cc0447ed",
-                            "checksum": "sha256:564008c427a13c7cce7a01610ac1c1cde0a77bd6546ea70794fc3ddd3d84df55"
-                        }
-                    ]
-                },
-                "feature:lightbox:theme:shadcn": {
-                    "scripts": [],
-                    "styles": [
-                        {
-                            "file": "profiles/production/css/features/lightbox/themes/shadcn.css",
-                            "version": "aa732d99252ce29fa2b57afa88bd4f4c",
-                            "checksum": "sha256:ae5ddd4f651ad0456f6689d7113f025f5f0e7c29a9a12bddd2661da805f1cf38"
-                        }
-                    ]
-                },
-                "feature:sidebar": {
-                    "scripts": [
-                        {
-                            "file": "profiles/production/js/features/sidebar.js",
-                            "version": "35dbe64960086142a8ec00d7c482abb6",
-                            "checksum": "sha256:ee6d8919f5583658a9c74334b248d3d15a33bec00b85de1da2747740a1f9cd96"
-                        }
-                    ],
-                    "styles": [
-                        {
-                            "file": "profiles/production/css/features/sidebar.css",
-                            "version": "adf22fa4bd52f592f9ea502adde514a7",
-                            "checksum": "sha256:9214f8d358997a8347fd83b7e4c51eebc370842b813fc2b9687d6e4c3114e209"
-                        }
-                    ]
-                },
-                "feature:sidebar:theme:adminlte": {
-                    "scripts": [],
-                    "styles": [
-                        {
-                            "file": "profiles/production/css/features/sidebar/themes/adminlte.css",
-                            "version": "476c3862b96e74f79b9158a0833f84fb",
-                            "checksum": "sha256:e9fa96553deae1fbedfade671ab1bc01df67be5f9914fdd36082b2982ed8a14b"
-                        }
-                    ]
-                },
-                "feature:sidebar:theme:framework-free-test": {
-                    "scripts": [],
-                    "styles": [
-                        {
-                            "file": "profiles/production/css/features/sidebar/themes/framework-free-test.css",
-                            "version": "8e648dda54ce00f19c19ae8835852186",
-                            "checksum": "sha256:36237430c64f01c5d6943ec8852c06978b50b36e74327e1c2e4a612bee5b00e0"
-                        }
-                    ]
-                },
-                "feature:sidebar:theme:shadcn": {
-                    "scripts": [],
-                    "styles": [
-                        {
-                            "file": "profiles/production/css/features/sidebar/themes/shadcn.css",
-                            "version": "195a295cdcb2d74067f9c60879c9b81e",
-                            "checksum": "sha256:ecbf13b6ade1a60bbd33606e66a84f87f37a9fd7029a86a68430ff4580b9733c"
-                        }
-                    ]
-                },
-                "feature:table": {
-                    "scripts": [
-                        {
-                            "file": "profiles/production/js/features/table.js",
-                            "version": "0450bcad0da6adb1d65fcb4a6c74a6b5",
-                            "checksum": "sha256:7b7c83be0b9f7b5dbfe7a2888789d72d44c8e83d1b00e163abebadf0121a8ffc"
-                        }
-                    ],
-                    "styles": [
-                        {
-                            "file": "profiles/production/css/features/table.css",
-                            "version": "0486f14bd03357524d6cb5a97dc6e459",
-                            "checksum": "sha256:44246d5b8bbcf14e3e1d43d5daa922051e682565176ec8228e879a403bee391b"
-                        }
-                    ]
-                },
-                "feature:table:theme:adminlte": {
-                    "scripts": [
-                        {
-                            "file": "profiles/production/js/features/table/themes/adminlte.js",
-                            "version": "5ada00084d6c3b8a71fbc5761395e36e",
-                            "checksum": "sha256:2546c33e34efbc5a682f4eb7b3d387ca09b5f3d57f965ced0df3883584ad75d0"
-                        }
-                    ],
-                    "styles": [
-                        {
-                            "file": "profiles/production/css/features/table/themes/adminlte.css",
-                            "version": "4e0f701ce2dfef021f6aafd0d1bfba1e",
-                            "checksum": "sha256:335f124d4f1037c04883f640979718b2f9b9a0b2eada1478343b314a3c934452"
-                        }
-                    ]
-                },
-                "feature:table:theme:framework-free-test": {
-                    "scripts": [],
-                    "styles": [
-                        {
-                            "file": "profiles/production/css/features/table/themes/framework-free-test.css",
-                            "version": "cfa2ba40befb8fa7d2eac1df2bd59a81",
-                            "checksum": "sha256:64d3c5bd85685299471939e82fd49631933bd7c2a434e9e58652e5e5b718abac"
-                        }
-                    ]
-                },
-                "feature:table:theme:shadcn": {
-                    "scripts": [],
-                    "styles": [
-                        {
-                            "file": "profiles/production/css/features/table/themes/shadcn.css",
-                            "version": "12eba00e95d0e29c271acb2a1ab0fe74",
-                            "checksum": "sha256:d20c1e5358e4bdf47da81100d88cc1e7f3899a969a6faf9bf8493464b21a8cf7"
-                        }
-                    ]
-                },
-                "feature:tabs": {
-                    "scripts": [
-                        {
-                            "file": "profiles/production/js/features/tabs.js",
-                            "version": "d327a1693420988b5e3fda6718e311d1",
-                            "checksum": "sha256:a0b5a1d5474971af936882fd14ebea77c714816eadcbd50eed55031fb276662d"
-                        }
-                    ],
-                    "styles": []
-                },
-                "feature:tabs:theme:adminlte": {
-                    "scripts": [],
-                    "styles": [
-                        {
-                            "file": "profiles/production/css/features/tabs/themes/adminlte.css",
-                            "version": "e16a5d6c5f142ce3c6a7b0bf0b1aa9c4",
-                            "checksum": "sha256:81de3290501f25f086ab2555aeb53507c9718b7448958db6cfe34a74dabd7345"
-                        }
-                    ]
-                },
-                "feature:tabs:theme:framework-free-test": {
-                    "scripts": [],
-                    "styles": [
-                        {
-                            "file": "profiles/production/css/features/tabs/themes/framework-free-test.css",
-                            "version": "68f77fe373413b2a73105d2461cff202",
-                            "checksum": "sha256:299a94053dd8623ad12db9f31f1a0b2f565e7985f301abe9266efac00f4ecbdc"
-                        }
-                    ]
-                },
-                "feature:tabs:theme:shadcn": {
-                    "scripts": [],
-                    "styles": [
-                        {
-                            "file": "profiles/production/css/features/tabs/themes/shadcn.css",
-                            "version": "f423c58988cf5d7be09f3451b064e468",
-                            "checksum": "sha256:b71a1f5486ba8d46824cef291150dfa8d924d11bff35ae35921947a36f965563"
-                        }
-                    ]
-                },
-                "feature:tooltip": {
-                    "scripts": [
-                        {
-                            "file": "profiles/production/js/features/tooltip.js",
-                            "version": "79b35d731be1e4aaccdfbc799184a171",
-                            "checksum": "sha256:1d75422068b23ff37848f079f0bc23de4e65c5195b9759b9891d9c708b1196d6"
-                        }
-                    ],
-                    "styles": [
-                        {
-                            "file": "profiles/production/css/features/tooltip.css",
-                            "version": "cebef987087c2e9b1fa14c6b7331f24d",
-                            "checksum": "sha256:fd034421d69dbda3748d5b996a4bb4e2b38e68a2b412736c05135549c2d4259a"
-                        }
-                    ]
-                },
-                "feature:tooltip:theme:adminlte": {
-                    "scripts": [],
-                    "styles": [
-                        {
-                            "file": "profiles/production/css/features/tooltip/themes/adminlte.css",
-                            "version": "d55c2962f4d968824f9ae3356b0d7852",
-                            "checksum": "sha256:203e316fa4f4cbee422e5adfa29df62c0402c294643ef6402c3c519b1a0f74b8"
-                        }
-                    ]
-                },
-                "feature:tooltip:theme:framework-free-test": {
-                    "scripts": [],
-                    "styles": [
-                        {
-                            "file": "profiles/production/css/features/tooltip/themes/framework-free-test.css",
-                            "version": "303f11e99832e136b8b2c2379d1f212f",
-                            "checksum": "sha256:f8c4c4593e22d71e4eac5dfbd34e04c33402e4dc6751b13902a300bafeb5c918"
-                        }
-                    ]
-                },
-                "feature:tooltip:theme:shadcn": {
-                    "scripts": [],
-                    "styles": [
-                        {
-                            "file": "profiles/production/css/features/tooltip/themes/shadcn.css",
-                            "version": "f7482d46714cfdac89b681637e66dda4",
-                            "checksum": "sha256:68ba3b6ace15157b90449e47ddf176357c3c2f5af660e14d6da7f594c9d5c83e"
-                        }
-                    ]
-                },
-                "feature:tree": {
-                    "scripts": [
-                        {
-                            "file": "profiles/production/js/features/tree.js",
-                            "version": "1ff65d73493f8c611da26dc01b07d86a",
-                            "checksum": "sha256:5233f88672b74352e4d24e3e7fefa0e9762c36f9a2c63bb387fad32a239b72f9"
-                        }
-                    ],
-                    "styles": [
-                        {
-                            "file": "profiles/production/css/features/tree.css",
-                            "version": "53474f288a3d0832d2a9f0a0d51942fc",
-                            "checksum": "sha256:e67235d3ca4fd6d03aa28da1f4dd95e57d006ca424917261671c61f9b3ea29f9"
-                        }
-                    ]
-                },
-                "feature:tree:theme:adminlte": {
-                    "scripts": [
-                        {
-                            "file": "profiles/production/js/features/tree/themes/adminlte.js",
-                            "version": "ed971bcdec78a7c806fe1b29bc497023",
-                            "checksum": "sha256:5debe240d97b7c92bcd16ebe7166272c054ecce3bdc4882a165dd1f9608c269a"
-                        }
-                    ],
-                    "styles": [
-                        {
-                            "file": "profiles/production/css/features/tree/themes/adminlte.css",
-                            "version": "7704a1b9702d53c8f9b8c1a1ab0ea77e",
-                            "checksum": "sha256:90bfb8e83a37a1b696e58770b62ea710d8d1df3b98f240db11e25f879581f9ae"
-                        }
-                    ]
-                },
-                "feature:tree:theme:shadcn": {
-                    "scripts": [
-                        {
-                            "file": "profiles/production/js/features/tree/themes/shadcn.js",
-                            "version": "d929205a6ce6f0f583c3e7ad62b17133",
-                            "checksum": "sha256:59e88edc8f2eb11bcea3425c715982807294487381ad8f4a8803388c256cc6fa"
-                        }
-                    ],
-                    "styles": [
-                        {
-                            "file": "profiles/production/css/features/tree/themes/shadcn.css",
-                            "version": "80ec235cf4d9eb2f3d83d1e8203c7ce3",
-                            "checksum": "sha256:1805f5d07bbe00b61b132bf7c51bb69886764e0693655ac57e69d0fcab016904"
-                        }
-                    ]
-                },
                 "shared:compatibility": {
                     "scripts": [
                         {
@@ -379,6 +29,22 @@
                         }
                     ],
                     "styles": []
+                },
+                "shared:features": {
+                    "scripts": [
+                        {
+                            "file": "profiles/production/js/shared/features.js",
+                            "version": "cd8cc86a5d47f9f0e0d9d466fd1b91d0",
+                            "checksum": "sha256:bf252574147438c754496459aebbf8107c356ff6b3f0e92f99ac8678d8250edc"
+                        }
+                    ],
+                    "styles": [
+                        {
+                            "file": "profiles/production/css/shared/features.css",
+                            "version": "2a36a0a1143a6e7a1e1dfa07074313c4",
+                            "checksum": "sha256:00da2fdc5d87a11a48ee98fe2ac5791e3e12d1f6793ff3f06d31468eba8f5f02"
+                        }
+                    ]
                 },
                 "shared:icons": {
                     "scripts": [],
@@ -414,15 +80,15 @@
                     "scripts": [
                         {
                             "file": "profiles/production/js/themes/adminlte.js",
-                            "version": "684757156c708ae3178731b56ff4268d",
-                            "checksum": "sha256:5587ea55211384ed4ba9edf8c81e1d0c49ef110f98b33a3d4ee89b1608b47cf9"
+                            "version": "c03d04d7753cf62673c405f5af66673b",
+                            "checksum": "sha256:e97fbb23dc1e682962bee100fbb93c654866eddcd4c0fe5f14efc24a13da5806"
                         }
                     ],
                     "styles": [
                         {
                             "file": "profiles/production/css/themes/adminlte.css",
-                            "version": "d5ce33b48170690b711c06afc6fb9862",
-                            "checksum": "sha256:a079ae51e7ea8512dc925734667c6b5487035114bd02f8d5f89b9b797ee137f2"
+                            "version": "409d54093755cf629375963629b9d1ea",
+                            "checksum": "sha256:0245bff88268c8c4d641d916d4ab3ed2c0872c74b262d7c9fe3d05810addcea7"
                         }
                     ]
                 },
@@ -431,8 +97,8 @@
                     "styles": [
                         {
                             "file": "profiles/production/css/themes/framework-free-test.css",
-                            "version": "5b41abcd2072723e70817257bb699009",
-                            "checksum": "sha256:16f671877d3cf6d38146d3d7dfb984820e7866b599ad313233cecdb098826491"
+                            "version": "5e7fbeec5aea290dd32b3895c99ea30d",
+                            "checksum": "sha256:b4894d8eb3c2ce2c5e7e676de60b98a0f316e6ad9e33987dd2bd0bbb6077057b"
                         }
                     ]
                 },
@@ -440,15 +106,15 @@
                     "scripts": [
                         {
                             "file": "profiles/production/js/themes/shadcn.js",
-                            "version": "5666eb0c1574c6bb56cc6d9bbc3e98b8",
-                            "checksum": "sha256:4fbbe4296db588294b23481f5fcab9e868686f605a27aa1a0f87d2dd182faa1b"
+                            "version": "ce576db38446e81f1cc96f32f0f91c1e",
+                            "checksum": "sha256:75f7f81bb57af6cbbb7805271cbb01a7d280a2ee2f91c4499c2b23f5906b19f6"
                         }
                     ],
                     "styles": [
                         {
                             "file": "profiles/production/css/themes/shadcn.css",
-                            "version": "cb26a84a414a342f7975d0ed8944575d",
-                            "checksum": "sha256:0c173dc61254634e517597066175d2b0bf25d71a3e91fd2b0138fa7376a4bb7a"
+                            "version": "9312b832ad0e346011f595f5b868c1d0",
+                            "checksum": "sha256:c6ae6e160d669552dc9da0018863dc06229f9634b08721cef207a7c794bcb733"
                         },
                         {
                             "file": "profiles/production/css/themes/shadcn-utilities.css",
@@ -477,356 +143,6 @@
                         }
                     ]
                 },
-                "feature:alert": {
-                    "scripts": [
-                        {
-                            "file": "profiles/development/js/features/alert.js",
-                            "version": "23d204e57830d5a33fe44a99d595815d",
-                            "checksum": "sha256:57557eb6b360d57b302066ed9195402bf05591620f5e1953a400be46695dce49"
-                        }
-                    ],
-                    "styles": []
-                },
-                "feature:dropdown": {
-                    "scripts": [
-                        {
-                            "file": "profiles/development/js/features/dropdown.js",
-                            "version": "544dd3fa0653547622239aa2ad47d50d",
-                            "checksum": "sha256:239fe5ae4bdc62789fea81767701af0a2d7a37b06eca1d83a15dab5655e12ce6"
-                        }
-                    ],
-                    "styles": [
-                        {
-                            "file": "profiles/development/css/features/dropdown.css",
-                            "version": "e4ec0f204b219671cddff36dbc96d00b",
-                            "checksum": "sha256:fbef547f50ec1e9cb73764d03f6f2c597b60ef255de25b91b09bc985394f0032"
-                        }
-                    ]
-                },
-                "feature:dropdown:theme:adminlte": {
-                    "scripts": [],
-                    "styles": [
-                        {
-                            "file": "profiles/development/css/features/dropdown/themes/adminlte.css",
-                            "version": "7888c8cd20968e94135ddb3db96dfbaf",
-                            "checksum": "sha256:94a4a5a697cce784683416a1af17bc183c7db2c76c9161dc313e64065ceb3779"
-                        }
-                    ]
-                },
-                "feature:dropdown:theme:framework-free-test": {
-                    "scripts": [],
-                    "styles": [
-                        {
-                            "file": "profiles/development/css/features/dropdown/themes/framework-free-test.css",
-                            "version": "dbc586d52e6439407d06665dcc41d8f0",
-                            "checksum": "sha256:d4b9513a4013945fa7fb49717025dbd57750f238a21bd585de63b157cf5204f5"
-                        }
-                    ]
-                },
-                "feature:dropdown:theme:shadcn": {
-                    "scripts": [],
-                    "styles": [
-                        {
-                            "file": "profiles/development/css/features/dropdown/themes/shadcn.css",
-                            "version": "a42e9f9fb1ac341b600db2e83e0df82d",
-                            "checksum": "sha256:3ddbe80490028ab30e245b9be2e7efd0a12f681cd4d6f708bafce71a9ad2bd85"
-                        }
-                    ]
-                },
-                "feature:forms": {
-                    "scripts": [
-                        {
-                            "file": "profiles/development/js/features/forms.js",
-                            "version": "48c0bc61d424071bafbb1edb59ee35e0",
-                            "checksum": "sha256:03daad413aab2cb7080411866de8b861ff5a187e2f329dc187a355f67799565d"
-                        }
-                    ],
-                    "styles": [
-                        {
-                            "file": "profiles/development/css/features/forms.css",
-                            "version": "c7edf11218ce18dc01e310fc3a9a1ed8",
-                            "checksum": "sha256:ce84588fa258ff8271ae83d02d07a14d701691f072646d191b38a265cb06aec1"
-                        }
-                    ]
-                },
-                "feature:forms:theme:shadcn": {
-                    "scripts": [],
-                    "styles": [
-                        {
-                            "file": "profiles/development/css/features/forms/themes/shadcn.css",
-                            "version": "7fe490c734e7e94931f4105ac281e88a",
-                            "checksum": "sha256:0bc87bd3a85e8ff8703d4a014bf62ddf9947c57752298fba9ad8cadf7144cf60"
-                        }
-                    ]
-                },
-                "feature:lightbox": {
-                    "scripts": [
-                        {
-                            "file": "profiles/development/js/features/lightbox.js",
-                            "version": "533bf44bebf744ee072de5b34c97134d",
-                            "checksum": "sha256:0596a842b9dcce251ee497d11ffaf377addd9b02c51ed2c270a80a571b478f02"
-                        }
-                    ],
-                    "styles": [
-                        {
-                            "file": "profiles/development/css/features/lightbox.css",
-                            "version": "028775bc3fe605ed4f187c368f73579b",
-                            "checksum": "sha256:9d306ea141b4d183b24d1eda6d54195c21b2366ff001c3a82f1a1ae31ad50de3"
-                        }
-                    ]
-                },
-                "feature:lightbox:theme:adminlte": {
-                    "scripts": [],
-                    "styles": [
-                        {
-                            "file": "profiles/development/css/features/lightbox/themes/adminlte.css",
-                            "version": "492499a2bc594efe0eb20fdc267c9a00",
-                            "checksum": "sha256:fd96374fdd414645343e282d3e679216c7bc193e7334b62ad421dfe552a50cf5"
-                        }
-                    ]
-                },
-                "feature:lightbox:theme:shadcn": {
-                    "scripts": [],
-                    "styles": [
-                        {
-                            "file": "profiles/development/css/features/lightbox/themes/shadcn.css",
-                            "version": "71f8ec2c27c0cc4f5fcbfd4c334a999e",
-                            "checksum": "sha256:61f6b7683c14eda9a5967e69eb6e1af7436925f0f0a8e4e702eb2322862b8014"
-                        }
-                    ]
-                },
-                "feature:sidebar": {
-                    "scripts": [
-                        {
-                            "file": "profiles/development/js/features/sidebar.js",
-                            "version": "dd1172399ca49ac151c288a2e270c4ae",
-                            "checksum": "sha256:7438eb3eff58b99b9750ec41f12ba57c0eb52e48a1de7742d68f5a8b733c5675"
-                        }
-                    ],
-                    "styles": [
-                        {
-                            "file": "profiles/development/css/features/sidebar.css",
-                            "version": "5e0f8185ba5300ce8b400339953d4d52",
-                            "checksum": "sha256:7249a2f21a23f2c43bf3549bb59c8cb5b1b92720f28a610185ed94416b9e67cb"
-                        }
-                    ]
-                },
-                "feature:sidebar:theme:adminlte": {
-                    "scripts": [],
-                    "styles": [
-                        {
-                            "file": "profiles/development/css/features/sidebar/themes/adminlte.css",
-                            "version": "cbe8c777d9beb08909522bf11cf1d491",
-                            "checksum": "sha256:1d006f0997b570726769725335246346990adf1c1a7765acee2df5fb978fde90"
-                        }
-                    ]
-                },
-                "feature:sidebar:theme:framework-free-test": {
-                    "scripts": [],
-                    "styles": [
-                        {
-                            "file": "profiles/development/css/features/sidebar/themes/framework-free-test.css",
-                            "version": "48d99289dfc69c55c9e9a17ebcb1622d",
-                            "checksum": "sha256:18417c7dceef0ae769f0a3610be371c5feb8ca2fd0fb2f05d55f7078e3f86a0d"
-                        }
-                    ]
-                },
-                "feature:sidebar:theme:shadcn": {
-                    "scripts": [],
-                    "styles": [
-                        {
-                            "file": "profiles/development/css/features/sidebar/themes/shadcn.css",
-                            "version": "e2ba673d3e4c3ceb1e399c0ce4942f36",
-                            "checksum": "sha256:5348634050f73e77973c5b0c89cf26a973b92c7e22345e2e9f6432c12421bccd"
-                        }
-                    ]
-                },
-                "feature:table": {
-                    "scripts": [
-                        {
-                            "file": "profiles/development/js/features/table.js",
-                            "version": "85f0787acc3f395982f66d70d4526a64",
-                            "checksum": "sha256:ba2644ace1ec992231a4b73fa5e9a7091caf7c2f24e6b8765d7a83dafd1f1ef1"
-                        }
-                    ],
-                    "styles": [
-                        {
-                            "file": "profiles/development/css/features/table.css",
-                            "version": "9c40a4455c2418169a0958df564a3215",
-                            "checksum": "sha256:d8226a02d088e43a09063c80f118b4ca6042c9008cad9c5c7b8ec7109410a7b4"
-                        }
-                    ]
-                },
-                "feature:table:theme:adminlte": {
-                    "scripts": [
-                        {
-                            "file": "profiles/development/js/features/table/themes/adminlte.js",
-                            "version": "57ac356f2f7d0c4657a6767912530b6d",
-                            "checksum": "sha256:50716aeb86c04bff8bf9114412ddbbfa9d26efe00d1ccc826c6fbf8f010f1cd8"
-                        }
-                    ],
-                    "styles": [
-                        {
-                            "file": "profiles/development/css/features/table/themes/adminlte.css",
-                            "version": "43a4e2123da7b04d48c204b26ffb4201",
-                            "checksum": "sha256:03d3f8edc5c13e49dd28c812cc68f11b9798febc461e95c97f0414a97ed34b52"
-                        }
-                    ]
-                },
-                "feature:table:theme:framework-free-test": {
-                    "scripts": [],
-                    "styles": [
-                        {
-                            "file": "profiles/development/css/features/table/themes/framework-free-test.css",
-                            "version": "ac86a95a97ff4472ac603af77c73e8e5",
-                            "checksum": "sha256:6e9bad0594443f21bdccb3754f8ba8641a9fcd5ff6d537379d828f126e4f925c"
-                        }
-                    ]
-                },
-                "feature:table:theme:shadcn": {
-                    "scripts": [],
-                    "styles": [
-                        {
-                            "file": "profiles/development/css/features/table/themes/shadcn.css",
-                            "version": "ac02271c6863ac99d87bd6b9491a92e2",
-                            "checksum": "sha256:5b8ae694994a6e96bd7c8ba9d10d20546832b657268196c27cbbe980de8948ca"
-                        }
-                    ]
-                },
-                "feature:tabs": {
-                    "scripts": [
-                        {
-                            "file": "profiles/development/js/features/tabs.js",
-                            "version": "21419eecd3c5a51408d063d44fe5db97",
-                            "checksum": "sha256:a160e1dcd4e69c88293f3e26b064e8cf1652f2aca519fba44fea7e638f011c57"
-                        }
-                    ],
-                    "styles": []
-                },
-                "feature:tabs:theme:adminlte": {
-                    "scripts": [],
-                    "styles": [
-                        {
-                            "file": "profiles/development/css/features/tabs/themes/adminlte.css",
-                            "version": "a7d86161892da245e8216164071ac2dd",
-                            "checksum": "sha256:ca6fae944fc0e2f01e0b4883c97f81c661276c00074b3f73851c04aaa7d6d9ca"
-                        }
-                    ]
-                },
-                "feature:tabs:theme:framework-free-test": {
-                    "scripts": [],
-                    "styles": [
-                        {
-                            "file": "profiles/development/css/features/tabs/themes/framework-free-test.css",
-                            "version": "f3e6ca46f05bf2ec025e098b5e8eb7e6",
-                            "checksum": "sha256:c619e084aef5d17f6c45bf2a8f355fbd7defa544a6a39c54951bb65875af2cbb"
-                        }
-                    ]
-                },
-                "feature:tabs:theme:shadcn": {
-                    "scripts": [],
-                    "styles": [
-                        {
-                            "file": "profiles/development/css/features/tabs/themes/shadcn.css",
-                            "version": "fc260d74ab444dea135710720a4c75ed",
-                            "checksum": "sha256:452d24d8c493b6ed45b45652ca428b3e86e1c340ec33dfaa6536feec1d7d406f"
-                        }
-                    ]
-                },
-                "feature:tooltip": {
-                    "scripts": [
-                        {
-                            "file": "profiles/development/js/features/tooltip.js",
-                            "version": "8ff85281461011b0a7d26bd8b2e8a803",
-                            "checksum": "sha256:0e2494a4793a9843cd9e2c3b9585ab7dbe7c9dbb276d5c562637000d651ef994"
-                        }
-                    ],
-                    "styles": [
-                        {
-                            "file": "profiles/development/css/features/tooltip.css",
-                            "version": "47c702bd00ad8ca7a6f4d92b8bc7d20c",
-                            "checksum": "sha256:746467087b4f4eb3f8fc5526404a5b4eddf9c347080151ea3161d13279ee0d1d"
-                        }
-                    ]
-                },
-                "feature:tooltip:theme:adminlte": {
-                    "scripts": [],
-                    "styles": [
-                        {
-                            "file": "profiles/development/css/features/tooltip/themes/adminlte.css",
-                            "version": "4981aab6bf222b61cbbc96deaed1ef90",
-                            "checksum": "sha256:07415d75500a8588112c31b91fe0c13eac69cd9c0397122d2d9857d9db617508"
-                        }
-                    ]
-                },
-                "feature:tooltip:theme:framework-free-test": {
-                    "scripts": [],
-                    "styles": [
-                        {
-                            "file": "profiles/development/css/features/tooltip/themes/framework-free-test.css",
-                            "version": "07e0bff84f3e8f82193fa179ea00de27",
-                            "checksum": "sha256:1ed08cff384161cda4684b2f0e375610d10388059285ae90f7a5dd3adce3339e"
-                        }
-                    ]
-                },
-                "feature:tooltip:theme:shadcn": {
-                    "scripts": [],
-                    "styles": [
-                        {
-                            "file": "profiles/development/css/features/tooltip/themes/shadcn.css",
-                            "version": "a86ba5d898b4c64c4dcb581ab010b370",
-                            "checksum": "sha256:28ba8372dd11f2a8cc01c8088e46bbc0c8ebc5111fbbf5e5b92bb29c04b0a364"
-                        }
-                    ]
-                },
-                "feature:tree": {
-                    "scripts": [
-                        {
-                            "file": "profiles/development/js/features/tree.js",
-                            "version": "9a962cdff724a91a088bb66d030f488b",
-                            "checksum": "sha256:a598c6bd0e6c54d85b1fe1e83406b5252d4de03d8f4b4b4a0809fbae7aab8705"
-                        }
-                    ],
-                    "styles": [
-                        {
-                            "file": "profiles/development/css/features/tree.css",
-                            "version": "0e67e2ef584d9309140b6c4b3db4522e",
-                            "checksum": "sha256:898a49dbf18cd3ca0cff02068c6e9acad7667095023529dac4ba48c9ca46c72b"
-                        }
-                    ]
-                },
-                "feature:tree:theme:adminlte": {
-                    "scripts": [
-                        {
-                            "file": "profiles/development/js/features/tree/themes/adminlte.js",
-                            "version": "22c553a1d419b29ef1ec35732ff189ac",
-                            "checksum": "sha256:4848ab25e2f78093a8974e58a560d216734892c493d50671daf93e7d6991bcb0"
-                        }
-                    ],
-                    "styles": [
-                        {
-                            "file": "profiles/development/css/features/tree/themes/adminlte.css",
-                            "version": "b46e3b97442141859a8a437917b1d215",
-                            "checksum": "sha256:659442ca62babc259d457ec293c2ed1d47ead32d5f284b79108782563f74433d"
-                        }
-                    ]
-                },
-                "feature:tree:theme:shadcn": {
-                    "scripts": [
-                        {
-                            "file": "profiles/development/js/features/tree/themes/shadcn.js",
-                            "version": "0409ba80d1ab911a1216427074d3b32a",
-                            "checksum": "sha256:dfa86dae2ee688782c0a4d741839096b75b3186c3b13eb8b7047854935eec5f8"
-                        }
-                    ],
-                    "styles": [
-                        {
-                            "file": "profiles/development/css/features/tree/themes/shadcn.css",
-                            "version": "dece9ec040a071fe59dfc80e510aaeb6",
-                            "checksum": "sha256:45617ebe036e06a78783018de5762430f546942468d221d05286ca60ab71d745"
-                        }
-                    ]
-                },
                 "shared:compatibility": {
                     "scripts": [
                         {
@@ -836,6 +152,22 @@
                         }
                     ],
                     "styles": []
+                },
+                "shared:features": {
+                    "scripts": [
+                        {
+                            "file": "profiles/development/js/shared/features.js",
+                            "version": "c3f400f93390e95fea7554a25741a10e",
+                            "checksum": "sha256:57565fc169c5769dbb904e697043d125bbc9a6469df0075331cec7429412ca20"
+                        }
+                    ],
+                    "styles": [
+                        {
+                            "file": "profiles/development/css/shared/features.css",
+                            "version": "7ecdbfb7eb4650d90effe3a5871583fb",
+                            "checksum": "sha256:f495b060ecf3f4249909a8a60b692176c8d782b22d199b89961bd2e9b8ca9cd3"
+                        }
+                    ]
                 },
                 "shared:icons": {
                     "scripts": [],
@@ -871,15 +203,15 @@
                     "scripts": [
                         {
                             "file": "profiles/development/js/themes/adminlte.js",
-                            "version": "cf74949fd53933799697b77752eeb75c",
-                            "checksum": "sha256:0c29c5c10fc6e06a50704304cbcaa33fb480f5b6737d5a411ced2178a3a660c5"
+                            "version": "0488424dc19ca517c8dd237525e59cee",
+                            "checksum": "sha256:71f880957afd53f44c644b92f4fc96ffb467331c60df2821e9adb6360b77a0d0"
                         }
                     ],
                     "styles": [
                         {
                             "file": "profiles/development/css/themes/adminlte.css",
-                            "version": "263b7b9c9fccf36cbeada36d6011d53c",
-                            "checksum": "sha256:70fca2e56193931a1ea1a46b935a29d8e7b4fd6fd9aaf9ce9c9b2d5d7f096558"
+                            "version": "79d78e3072b0d3b2f73deca92a30186a",
+                            "checksum": "sha256:072699e47e803e0dde40c22ae87051093f96378b76887c31cc3fa3cc7ea58370"
                         }
                     ]
                 },
@@ -888,8 +220,8 @@
                     "styles": [
                         {
                             "file": "profiles/development/css/themes/framework-free-test.css",
-                            "version": "123d46c009eb6ba71eb55f645e31786c",
-                            "checksum": "sha256:e0405ba88b8929912472c19453ce322aad9a94fce06fd75736a1a671e10919f2"
+                            "version": "e97c594c570d0d5a5d8add1c8e438d28",
+                            "checksum": "sha256:85fdb9bb86110203a8cf995c83299a2a9f19652fc3c2c4c8e76118847a4c8a4b"
                         }
                     ]
                 },
@@ -897,15 +229,15 @@
                     "scripts": [
                         {
                             "file": "profiles/development/js/themes/shadcn.js",
-                            "version": "2368e3820f59fb16370acd22afe20d9e",
-                            "checksum": "sha256:977a2facf5911a8aab1fc76934068604815d1baa39ceac6407b222ab202740e1"
+                            "version": "9bec6e22fe99053101b79518790326a3",
+                            "checksum": "sha256:0994d123d3b0e04f98315d910c6bd332c3782a7261e70aae91a79afff7ca2454"
                         }
                     ],
                     "styles": [
                         {
                             "file": "profiles/development/css/themes/shadcn.css",
-                            "version": "53e2042610eaa40d2f5a5fadbd2eb21d",
-                            "checksum": "sha256:9e87a1d9271e9665076caa76665c4716e130bc3a36ad99c4e5798ca033f04c72"
+                            "version": "519c2f849dd45868d1421a2fd90a202a",
+                            "checksum": "sha256:bbb3e9e3d1427a29672bb128bbaaedd09b606060bc432fa9d1a7ef1a851e0391"
                         },
                         {
                             "file": "profiles/development/css/themes/shadcn-utilities.css",
@@ -917,5 +249,5 @@
             }
         }
     },
-    "build_id": "sha256:177d47b9f73fb00a98743c90a2ec804082582b09e5bb5528d6879eabf4468789"
+    "build_id": "sha256:ad64246fc41c3f003ccfe10ca596c4aed2826932ffa85da2f7afcda178e7c485"
 }

@@ -1,8 +1,8 @@
 # Dropdown migration
 
 Dropdowns now use one delegated native controller registered through
-`Admin.Components`. It does not call Bootstrap or jQuery and is shipped as the
-precompiled `feature:dropdown` entry in both asset profiles. Dynamic menus,
+`Admin.Components`. It does not call Bootstrap or jQuery and is shipped inside
+the precompiled `shared:features` entry in both asset profiles. Dynamic menus,
 including markup inserted after a DataTables redraw or by a custom module, do
 not need per-element initialization.
 
@@ -56,12 +56,12 @@ on delegated markup and native events instead of calling these methods.
 
 ## Theme ownership
 
-Behavior and visibility belong to `feature:dropdown`. AdminLTE and Tailwind
-provide independent Sass presentation adapters:
+Behavior and visibility belong to the shared dropdown source folder. AdminLTE and shadcn
+provide independent Sass presentation adapters that compile into their theme bundles:
 
 ```text
-feature:dropdown:theme:adminlte
-feature:dropdown:theme:shadcn
+theme:adminlte
+theme:shadcn
 ```
 
 Colors live in each adapter's `_colors.scss`, dimensions in `_variables.scss`,

@@ -2,12 +2,14 @@
 
 ## Статус и правила
 
-- Статус: **inventory готов; именованный выбор темы реализован**.
-- Следующий checkpoint: перейти к Laravel resource layout, создать отдельный override layer и общий asset layer.
+- Статус: **inventory, Laravel resource layout и укрупнение asset boundaries готовы**.
+- Следующий checkpoint: создать отдельный override layer и общий semantic UI layer.
 - Общие декларации поставляются отдельным logical entry `shared:ui`, автоматически подключаемым для любой `ThemeInterface`; headless `core` не получает presentation.
 - Общий CSS может использовать только semantic `soa-*` classes, behavior hooks и canonical `--soa-*` variables. Тема задаёт значения tokens и действительно отличающиеся overrides.
 - В общем слое запрещены Bootstrap/AdminLTE/Tailwind imports, vendor selectors и literal palette. Одинаковые structural rules удаляются из theme adapters.
 - Список общих элементов открыт для дополнений; новый элемент сначала получает отдельный checklist с обязательными states, затем переносится в shared layer.
+- Каталог или source owner не обязан становиться отдельным public bundle. Новый entry допустим только при независимом runtime-подключении, отдельной поставке или существенной зависимости; всегда загружаемые мелкие модули агрегируются.
+- Внутри owner небольшие helpers остаются вместе. Отдельный файл оправдан самостоятельным public API, состоянием/lifecycle, повторным использованием или заметно более простой изолированной проверкой — не названием одной функции.
 - После каждого пункта: `[x]`, узкая проверка, запись в журнал и отдельный commit без чужих изменений.
 
 ## Целевая структура
@@ -64,6 +66,8 @@ CSS: `core -> shared:ui -> shared feature -> selected theme -> selected theme fe
 
 JavaScript: `core -> shared runtime -> selected theme runtime -> shared feature drivers -> selected theme adapters -> selected theme overrides -> modules/application scripts`.
 
+Текущий built-in runtime агрегирует все всегда загружаемые feature drivers в `shared:features`, а все adapters конкретной темы — в её `theme:<name>` bundle. Отдельные external adapter chunks остаются допустимы только при настоящей независимой поставке.
+
 Manifest dependencies являются единственным источником порядка; Blade не сортирует и не подключает эти файлы вручную.
 
 ## Регистрация и выбор темы
@@ -107,6 +111,7 @@ Canonical название хранится один раз — ключом `te
 - [ ] Добавить no-build contract: сторонняя Composer-тема устанавливается с готовыми assets без Node.js и package source edits.
 - [x] Зафиксировать для каждого файла один owner: `core`, `shared`, `theme` или `theme override`; перекрёстные копии запрещены.
 - [x] Проверить одинаковый детерминированный порядок CSS и JavaScript в production/development manifests.
+- [x] Объединить всегда загружаемые built-in feature entries в `shared:features`, а мелкие adapters — в единый bundle каждой темы.
 - [ ] Создать `resources/css/shared/shared-ui.scss` и logical entry `shared:ui` в обоих asset profiles.
 - [ ] Зафиксировать cascade order `core -> shared -> feature -> theme`; theme override должен быть явным и минимальным.
 - [ ] Автоматически регистрировать `shared:ui` ровно один раз для AdminLTE, Tailwind и любой custom theme.
@@ -181,3 +186,4 @@ Canonical название хранится один раз — ключом `te
 | 2026-09-09 | Laravel resource migration | Core, shared features, compatibility code и встроенные темы физически разложены по `resources/css`, `resources/js` и `resources/views/themes`; каталоги тем используют canonical config names `adminlte` и `shadcn`. Неиспользуемый tooltip bridge, семь неподключённых Open Sans variants и лишний `.gitkeep` перенесены в `resources/archive/unused-sources` с сохранением прежних относительных путей. Public output paths и logical ids сохранены, development/production profiles пересобраны. `npm test -- --run`: 115 файлов, 723 теста прошли. | `bda141a8` |
 | 2026-09-09 | Canonical asset names | После уточнения scope снято ограничение backward compatibility: runtime ids, `data-theme`, Blade namespace и generated paths приведены к `adminlte`/`shadcn`; 94 старых generated-файла `legacy-adminlte`/`tailwind` удалены и оба профиля пересобраны. Manifest содержит только canonical theme entries. Vitest: 115 файлов, 723 теста; PHPUnit Themes: 78 тестов / 633 assertions; Rendering: 79 тестов / 930 assertions. | `598516a1` |
 | 2026-09-09 | Финальный resource audit | Старые resource trees и активные ссылки на них отсутствуют. Reachability scan от всех build entries и поддерживаемых public source boundaries не нашёл orphan JS/Vue/SCSS; три оставшихся Open Sans файла используются, девять неиспользуемых файлов находятся в `resources/archive/unused-sources`. Production/development entry order совпадает. Prettier, ESLint, Stylelint и 723 Vitest прошли; полный PHPUnit: 626 тестов, 3013 assertions, 11 предусмотренных skip. | текущий commit |
+| 2026-09-09 | Осмысленное укрупнение bundles | Все девять всегда загружаемых feature drivers и neutral CSS объединены в `shared:features`; built-in feature adapters входят в единый bundle своей темы. Manifest сокращён с 37 до 9 logical entries и с 51 до 14 файлов на профиль. Выбранный AdminLTE runtime сокращён с 33 до 10 файлов; production size уменьшился с 1 843 637 до 1 797 249 bytes, development — с 4 942 211 до 4 758 642 bytes за счёт устранения повторной bundler-обвязки. External independently shipped adapters остаются поддержаны. | текущий commit |

@@ -1,6 +1,13 @@
 @use 'asset-health';
 @use 'colors';
 @use 'custom-properties';
+@use 'features/dropdown/dropdown-adminlte';
+@use 'features/lightbox/lightbox-adminlte';
+@use 'features/sidebar/sidebar-adminlte';
+@use 'features/table/datatables';
+@use 'features/tabs/tabs-adminlte';
+@use 'features/tooltip/tooltip-adminlte';
+@use 'features/tree/tree-adminlte';
 @use 'legacy-build';
 @use 'sidebar';
 @use 'variables';

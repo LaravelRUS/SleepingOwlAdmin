@@ -6,17 +6,6 @@ use SleepingOwl\Admin\Contracts\Theme\ThemeInterface;
 
 final class TailwindTheme implements ThemeInterface
 {
-    private const FEATURE_ADAPTERS = [
-        'dropdown',
-        'forms',
-        'lightbox',
-        'sidebar',
-        'table',
-        'tabs',
-        'tooltip',
-        'tree',
-    ];
-
     public function id(): string
     {
         return 'shadcn';
@@ -35,10 +24,6 @@ final class TailwindTheme implements ThemeInterface
             'shared:modules',
             'shared:vue',
             'theme:shadcn',
-            ...array_map(
-                fn (string $feature): string => "feature:{$feature}:theme:{$this->id()}",
-                self::FEATURE_ADAPTERS
-            ),
         ];
     }
 

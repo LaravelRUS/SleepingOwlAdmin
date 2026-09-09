@@ -11,19 +11,7 @@ final class ThemeRuntimeAssets
 {
     private const DEFERRED_ASSETS = ['shared:modules'];
 
-    private const FEATURES = [
-        'alert',
-        'tooltip',
-        'dropdown',
-        'sidebar',
-        'lightbox',
-        'table',
-        'tabs',
-        'forms',
-        'tree',
-    ];
-
-    private const PRELOADED_ADAPTERS = ['table'];
+    private const FEATURE_RUNTIME = 'shared:features';
 
     public function __construct(
         private LogicalAssetRegistrar $registrar,
@@ -47,32 +35,52 @@ final class ThemeRuntimeAssets
     public function logicalEntries(ThemeInterface $theme): array
     {
         $manifest = ThemeAssetManifest::fromTheme($theme);
-        $base = array_values(array_diff($manifest->entriesFor([]), self::DEFERRED_ASSETS));
-        $entries = ['core', ...$base];
+        $base = array_values(array_diff(
+            $manifest->entriesFor([]),
+            [...self::DEFERRED_ASSETS, self::FEATURE_RUNTIME]
+        ));
 
-        foreach (self::FEATURES as $feature) {
-            $this->appendFeature($entries, $manifest, $feature);
-        }
-
-        return [...$entries, ...$this->deferredEntries($manifest)];
+        return [
+            'core',
+            ...$base,
+            ...$this->preloadedAdapters($manifest),
+            self::FEATURE_RUNTIME,
+            ...$this->deferredAdapters($manifest),
+            ...$this->deferredEntries($manifest),
+        ];
     }
 
     /**
-     * @param  list<string>  $entries
+     * @return list<string>
      */
-    private function appendFeature(array &$entries, ThemeAssetManifest $manifest, string $feature): void
+    private function preloadedAdapters(ThemeAssetManifest $manifest): array
     {
-        $adapter = $manifest->featureEntry($feature);
+        return array_values(array_filter(
+            $this->themeAdapters($manifest),
+            static fn (string $entry): bool => str_starts_with($entry, 'feature:table:')
+        ));
+    }
 
-        if ($adapter !== null && in_array($feature, self::PRELOADED_ADAPTERS, true)) {
-            $entries[] = $adapter;
-        }
+    /**
+     * @return list<string>
+     */
+    private function deferredAdapters(ThemeAssetManifest $manifest): array
+    {
+        return array_values(array_filter(
+            $this->themeAdapters($manifest),
+            static fn (string $entry): bool => ! str_starts_with($entry, 'feature:table:')
+        ));
+    }
 
-        $entries[] = "feature:{$feature}";
-
-        if ($adapter !== null && ! in_array($feature, self::PRELOADED_ADAPTERS, true)) {
-            $entries[] = $adapter;
-        }
+    /**
+     * @return list<string>
+     */
+    private function themeAdapters(ThemeAssetManifest $manifest): array
+    {
+        return array_values(array_filter(
+            $manifest->entries(),
+            static fn (string $entry): bool => str_starts_with($entry, 'feature:')
+        ));
     }
 
     /**

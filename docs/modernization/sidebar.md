@@ -1,7 +1,7 @@
 # Sidebar and navigation migration
 
 The package sidebar now uses one native delegated controller registered through
-`Admin.Components`. The precompiled `feature:sidebar` entry owns PushMenu state,
+`Admin.Components`. The sidebar module inside `shared:features` owns PushMenu state,
 navigation-tree behavior, responsive handling and persistence without executing
 AdminLTE or jQuery plugins.
 
@@ -54,11 +54,11 @@ normalization.
 
 ## Theme ownership
 
-Behavior is shipped by `feature:sidebar`. Presentation is selected separately:
+Behavior is shipped by `shared:features`. Presentation is compiled into the selected theme:
 
 ```text
-feature:sidebar:theme:adminlte
-feature:sidebar:theme:shadcn
+theme:adminlte
+theme:shadcn
 ```
 
 Both Sass adapters keep colors in `_colors.scss`, dimensions in

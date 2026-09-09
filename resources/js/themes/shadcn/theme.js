@@ -1,4 +1,5 @@
 import { installTailwindTheme } from './runtime.js'
+import './features/tree/browser.js'
 
 if (globalThis.document) installTailwindTheme(globalThis)
 

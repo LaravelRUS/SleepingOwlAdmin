@@ -5,15 +5,26 @@ import { expect, it } from 'vitest'
 
 const root = resolve(import.meta.dirname, '../../..')
 
-it('ships an executable tooltip browser entry without jQuery', () => {
+it('ships executable tooltip behavior in the shared feature runtime without jQuery', () => {
     const entry = readFileSync(
-        resolve(root, 'public/default/profiles/production/js/features/tooltip.js'),
+        resolve(root, 'public/default/profiles/production/js/shared/features.js'),
         'utf8',
     )
 
     expect(entry.length).toBeGreaterThan(1000)
     expect(entry).toContain('data-toggle')
-    expect(entry).not.toMatch(/(?:\$|jQuery)\s*\(/)
+
+    const sources = [
+        'browser.js',
+        'install-tooltips.js',
+        'tooltip-elements.js',
+        'tooltip-position.js',
+        'tooltip-template.js',
+        'tooltips.js',
+    ]
+        .map((file) => read(`resources/js/shared/features/tooltip/${file}`))
+        .join('\n')
+    expect(sources).not.toMatch(/(?:\$|jQuery)\s*\(/)
 })
 
 it('keeps the legacy trigger and renders the normal popup from a Blade template', () => {

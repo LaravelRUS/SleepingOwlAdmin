@@ -42,13 +42,6 @@ class AdminLTEThemeTest extends TestCase
             'shared:modules',
             'shared:vue',
             'theme:adminlte',
-            'feature:dropdown:theme:adminlte',
-            'feature:lightbox:theme:adminlte',
-            'feature:sidebar:theme:adminlte',
-            'feature:table:theme:adminlte',
-            'feature:tabs:theme:adminlte',
-            'feature:tooltip:theme:adminlte',
-            'feature:tree:theme:adminlte',
         ], $manifest->entries());
         $this->assertSame([
             'shared:icons',
@@ -56,8 +49,6 @@ class AdminLTEThemeTest extends TestCase
             'shared:modules',
             'shared:vue',
             'theme:adminlte',
-            'feature:tabs:theme:adminlte',
-            'feature:table:theme:adminlte',
         ], $manifest->entriesFor(['tabs', 'table']));
     }
 
@@ -190,17 +181,7 @@ class AdminLTEThemeTest extends TestCase
             "{$root}/shared/compatibility.js",
             "{$root}/shared/vue.js",
             "{$root}/themes/adminlte.js",
-            "{$root}/features/alert.js",
-            "{$root}/features/tooltip.js",
-            "{$root}/features/dropdown.js",
-            "{$root}/features/sidebar.js",
-            "{$root}/features/lightbox.js",
-            "{$root}/features/table/themes/adminlte.js",
-            "{$root}/features/table.js",
-            "{$root}/features/tabs.js",
-            "{$root}/features/forms.js",
-            "{$root}/features/tree.js",
-            "{$root}/features/tree/themes/adminlte.js",
+            "{$root}/shared/features.js",
             "{$root}/shared/modules.js",
         ];
     }
@@ -213,20 +194,7 @@ class AdminLTEThemeTest extends TestCase
             "{$root}/admin-core.css",
             "{$root}/icons.css",
             "{$root}/themes/adminlte.css",
-            "{$root}/features/tooltip.css",
-            "{$root}/features/tooltip/themes/adminlte.css",
-            "{$root}/features/dropdown.css",
-            "{$root}/features/dropdown/themes/adminlte.css",
-            "{$root}/features/sidebar.css",
-            "{$root}/features/sidebar/themes/adminlte.css",
-            "{$root}/features/lightbox.css",
-            "{$root}/features/lightbox/themes/adminlte.css",
-            "{$root}/features/table/themes/adminlte.css",
-            "{$root}/features/table.css",
-            "{$root}/features/tabs/themes/adminlte.css",
-            "{$root}/features/forms.css",
-            "{$root}/features/tree.css",
-            "{$root}/features/tree/themes/adminlte.css",
+            "{$root}/shared/features.css",
         ];
     }
 }

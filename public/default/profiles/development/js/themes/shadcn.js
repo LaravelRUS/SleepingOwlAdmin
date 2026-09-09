@@ -2,6 +2,100 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./resources/js/themes/shadcn/features/tree/browser.js"
+/*!*************************************************************!*\
+  !*** ./resources/js/themes/shadcn/features/tree/browser.js ***!
+  \*************************************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   installTailwindTreeNotifications: () => (/* binding */ installTailwindTreeNotifications)
+/* harmony export */ });
+/* harmony import */ var _notifications_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./notifications.js */ "./resources/js/themes/shadcn/features/tree/notifications.js");
+
+var TREE_SELECTOR = '[data-tree]';
+var NOTIFICATION_SELECTOR = '[data-tree-notification]';
+if (globalThis.document) installTailwindTreeNotifications(globalThis);
+function installTailwindTreeNotifications(target) {
+  var root = requireEventTarget(target.document);
+  var notifications = (0,_notifications_js__WEBPACK_IMPORTED_MODULE_0__.createTailwindTreeNotifications)(notificationLabels(target.trans));
+  var onChanged = function onChanged(event) {
+    return notifications.success(notificationRegion(event));
+  };
+  var onFailed = function onFailed(event) {
+    return notifications.error(notificationRegion(event));
+  };
+  root.addEventListener('tree:changed', onChanged);
+  root.addEventListener('tree:failed', onFailed);
+  return {
+    destroy: function destroy() {
+      root.removeEventListener('tree:changed', onChanged);
+      root.removeEventListener('tree:failed', onFailed);
+    }
+  };
+}
+function notificationRegion(event) {
+  var _event$target$closest, _event$target, _event$target$closest2, _event$target$closest3;
+  return (_event$target$closest = (_event$target = event.target) === null || _event$target === void 0 || (_event$target$closest2 = _event$target.closest) === null || _event$target$closest2 === void 0 || (_event$target$closest2 = _event$target$closest2.call(_event$target, TREE_SELECTOR)) === null || _event$target$closest2 === void 0 || (_event$target$closest3 = _event$target$closest2.querySelector) === null || _event$target$closest3 === void 0 ? void 0 : _event$target$closest3.call(_event$target$closest2, NOTIFICATION_SELECTOR)) !== null && _event$target$closest !== void 0 ? _event$target$closest : null;
+}
+function notificationLabels(translate) {
+  return {
+    error: translated(translate, 'lang.table.error', 'Unable to save tree'),
+    success: translated(translate, 'lang.tree.reorderCompleted', 'Tree order saved')
+  };
+}
+function translated(translate, key, fallback) {
+  if (typeof translate !== 'function') return fallback;
+  var value = translate(key);
+  return typeof value === 'string' && value !== key ? value : fallback;
+}
+function requireEventTarget(root) {
+  if (typeof (root === null || root === void 0 ? void 0 : root.addEventListener) !== 'function' || typeof (root === null || root === void 0 ? void 0 : root.removeEventListener) !== 'function') {
+    throw new TypeError('Tailwind tree notifications require a document event target.');
+  }
+  return root;
+}
+
+/***/ },
+
+/***/ "./resources/js/themes/shadcn/features/tree/notifications.js"
+/*!*******************************************************************!*\
+  !*** ./resources/js/themes/shadcn/features/tree/notifications.js ***!
+  \*******************************************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   createTailwindTreeNotifications: () => (/* binding */ createTailwindTreeNotifications)
+/* harmony export */ });
+function createTailwindTreeNotifications() {
+  var _labels$error, _labels$success;
+  var labels = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var messages = {
+    error: (_labels$error = labels.error) !== null && _labels$error !== void 0 ? _labels$error : 'Unable to save tree',
+    success: (_labels$success = labels.success) !== null && _labels$success !== void 0 ? _labels$success : 'Tree order saved'
+  };
+  return {
+    error: function error(region) {
+      return updateRegion(region, 'error', messages.error);
+    },
+    success: function success(region) {
+      return updateRegion(region, 'success', messages.success);
+    }
+  };
+}
+function updateRegion(region, state, message) {
+  if (!region) return false;
+  region.dataset.state = state;
+  region.hidden = false;
+  region.setAttribute('role', state === 'error' ? 'alert' : 'status');
+  region.textContent = message;
+  return true;
+}
+
+/***/ },
+
 /***/ "./resources/js/themes/shadcn/runtime.js"
 /*!***********************************************!*\
   !*** ./resources/js/themes/shadcn/runtime.js ***!
@@ -214,6 +308,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   installTailwindTheme: () => (/* reexport safe */ _runtime_js__WEBPACK_IMPORTED_MODULE_0__.installTailwindTheme)
 /* harmony export */ });
 /* harmony import */ var _runtime_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./runtime.js */ "./resources/js/themes/shadcn/runtime.js");
+/* harmony import */ var _features_tree_browser_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./features/tree/browser.js */ "./resources/js/themes/shadcn/features/tree/browser.js");
+
 
 if (globalThis.document) (0,_runtime_js__WEBPACK_IMPORTED_MODULE_0__.installTailwindTheme)(globalThis);
 var THEME_ID = 'shadcn';

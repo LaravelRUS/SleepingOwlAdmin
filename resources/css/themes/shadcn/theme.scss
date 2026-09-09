@@ -2,6 +2,14 @@
 @use 'colors';
 @use 'components';
 @use 'custom-properties';
+@use 'features/dropdown/dropdown-tailwind';
+@use 'features/forms/forms-tailwind';
+@use 'features/lightbox/lightbox-tailwind';
+@use 'features/sidebar/sidebar-tailwind';
+@use 'features/table/datatables';
+@use 'features/tabs/tabs-tailwind';
+@use 'features/tooltip/tooltip-tailwind';
+@use 'features/tree/tree-tailwind';
 @use 'shadcn-theme';
 @use 'variables';
 @layer sleepingowl-theme;

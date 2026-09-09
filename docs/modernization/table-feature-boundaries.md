@@ -4,7 +4,7 @@ The published table runtime loads pinned DataTables `3.0.3` and Responsive
 `4.0.3` through an engine-neutral feature boundary. The concrete engine is
 created through `createDataTableEngine(element, options)`, which owns the
 `new DataTable(...)` constructor call. No jQuery object crosses into
-`Admin.Tables` or the core registry, and the compiled `feature:table` entry does
+`Admin.Tables` or the core registry, and the compiled `shared:features` entry does
 not contain the jQuery library.
 
 | Module                            | Responsibility                                                            |
