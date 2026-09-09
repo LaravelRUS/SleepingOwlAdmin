@@ -4,7 +4,7 @@
 @endif
 
 @foreach($filters as $filter)
-    <small class="badge text-bg-info p-2 filter-badge">
+    <small class="badge text-bg-info p-2 filter-badge soa-badge soa-filter-badge">
         {{ $filter->getTitle() }}
 
         <a href="{{ URL::current() }}?{!! http_build_query(request()->except($filter->getAlias())) !!}">

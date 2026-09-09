@@ -1,4 +1,4 @@
-<{{ $tag }} {!! (new \SleepingOwl\Admin\Support\HtmlAttributeBag($attributesArray))->class(['table-hover']) !!}>
+<{{ $tag }} {!! (new \SleepingOwl\Admin\Support\HtmlAttributeBag($attributesArray))->class(['table-hover', 'soa-table-totals']) !!}>
     <tr>
         @foreach ($elements as $element)
             <td {!! new \SleepingOwl\Admin\Support\HtmlAttributeBag($element->getHtmlAttributes()) !!}>

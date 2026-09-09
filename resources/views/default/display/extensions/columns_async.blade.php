@@ -1,6 +1,6 @@
-<div class="panel-table card-body pt-0 ps-0 pe-0">
+<div class="panel-table card-body pt-0 ps-0 pe-0 soa-table-region">
 
-    @php($tableAttributes = (new \SleepingOwl\Admin\Support\HtmlAttributeBag($attributesArray))->class(['table']))
+    @php($tableAttributes = (new \SleepingOwl\Admin\Support\HtmlAttributeBag($attributesArray))->class(['table', 'soa-table']))
     <table {!! $tableAttributes !!}>
         <colgroup>
             @foreach ($columns as $column)

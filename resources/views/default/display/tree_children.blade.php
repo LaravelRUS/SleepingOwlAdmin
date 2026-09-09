@@ -36,7 +36,7 @@
                 {{ $entry->{$value} }}
             @endif
 
-            <div class="control-button">
+            <div class="control-button soa-button-group">
                 @foreach ($controls as $control)
                     @php
                         if($control instanceof \SleepingOwl\Admin\Contracts\Display\ColumnInterface) {
