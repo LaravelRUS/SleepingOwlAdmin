@@ -5,7 +5,6 @@ namespace SleepingOwl\Admin\Http\Controllers;
 use Diglactic\Breadcrumbs\Exceptions\DuplicateBreadcrumbException;
 use Diglactic\Breadcrumbs\Generator as BreadcrumbsGenerator;
 use Diglactic\Breadcrumbs\Manager as BreadcrumbsManager;
-use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
@@ -13,7 +12,6 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
@@ -46,16 +44,6 @@ class AdminController extends Controller
      */
     private $parentBreadcrumb = 'home';
 
-    /**
-     * @var Application
-     */
-    public $app;
-
-    /**
-     * @var
-     */
-    protected $envPolicy;
-
     protected InlineEditHandler $inlineEdits;
 
     /**
@@ -63,24 +51,17 @@ class AdminController extends Controller
      *
      * @param  Request  $request
      * @param  AdminInterface  $admin
-     * @param  Application  $application
      *
      * @throws DuplicateBreadcrumbException
      */
     public function __construct(
         Request $request,
         AdminInterface $admin,
-        Application $application,
         InlineEditHandler $inlineEdits
     ) {
-        $this->app = $application;
         $this->admin = $admin;
         $this->breadcrumbs = $admin->template()->breadcrumbs();
         $this->inlineEdits = $inlineEdits;
-
-        if ($this->envPolicy = config('sleeping_owl.env.policy')) {
-            $this->envPolicy = new $this->envPolicy;
-        }
 
         $admin->navigation()->setCurrentUrl($request->getUri());
 
@@ -131,161 +112,6 @@ class AdminController extends Controller
             $this->admin->template()->view('dashboard'),
             trans('sleeping_owl::lang.dashboard')
         );
-    }
-
-    /**
-     * @return Factory|View
-     */
-    public function getEnvEditor()
-    {
-        $envFile = app()->environmentFilePath();
-        $envContent = collect(parse_ini_file($envFile, false, INI_SCANNER_RAW));
-
-        /**
-         * Use filter masks.
-         *
-         * @param  $key
-         * @return bool
-         */
-        $envContent = $envContent->filter(function ($value, $key) {
-            return ! in_array($key, config('sleeping_owl.env.excluded_keys')) && ! $this->filterKey($key);
-        });
-
-        $envContent = $envContent->filter(function ($value, $key) {
-            return $this->validatePolicy('display', $key);
-        });
-
-        $envContent = $envContent->map(function ($value, $key) {
-            return (object) [
-                'value' => $value,
-                'editable' => $this->validatePolicy('edit', $key),
-                'deletable' => $this->validatePolicy('delete', $key),
-            ];
-        });
-
-        return $this->renderContent(
-            $this->admin->template()->view('env_editor', ['data' => $envContent]),
-            trans('sleeping_owl::lang.env_editor.title')
-        );
-    }
-
-    /**
-     * @param  $permission
-     * @param  $key
-     * @return bool
-     */
-    protected function validatePolicy($permission, $key)
-    {
-        return ($this->envPolicy && (method_exists($this->envPolicy, $permission)
-                    && $this->envPolicy->$permission(Auth::user(), $key) !== false))
-            || ! method_exists($this->envPolicy, $permission) || ! $this->envPolicy || $this->validateBeforePolicy($key);
-    }
-
-    /**
-     * @param  $key
-     * @return bool
-     */
-    protected function validateBeforePolicy($key)
-    {
-        return ($this->envPolicy && method_exists($this->envPolicy, 'before')
-                && $this->envPolicy->before(Auth::user(), $key) == true)
-            || ! method_exists($this->envPolicy, 'before') || ! $this->envPolicy;
-    }
-
-    /**
-     * @param  Request  $request
-     * @return RedirectResponse
-     */
-    public function postEnvEditor(Request $request)
-    {
-        $envFile = app()->environmentFilePath();
-        $envContent = collect(parse_ini_file($envFile, false, INI_SCANNER_RAW));
-
-        $requestContent = collect($request->input('variables'));
-        $removeContent = collect();
-
-        foreach ($envContent as $key => $value) {
-            if (! in_array($key, config('sleeping_owl.env.excluded_keys')) && ! $this->filterKey($key)) {
-                if ($requestContent->has($key)) {
-                    if ($this->validatePolicy('edit', $key)) {
-                        $envContent[$key] = $requestContent[$key]['value'];
-                    }
-                    $requestContent->forget($key);
-                } else {
-                    $envContent->forget($key);
-                    $removeContent->put($key, null);
-                }
-            }
-        }
-
-        foreach ($requestContent as $key => $value) {
-            if (! in_array($key, config('sleeping_owl.env.excluded_keys')) && ! $this->filterKey($key)
-                && $this->validatePolicy('create', $key)) {
-                $this->writeEnvData($key, $value['value'], 1);
-            }
-            $requestContent->forget($key);
-        }
-
-        foreach ($removeContent as $key => $value) {
-            if ($this->validatePolicy('delete', $key)) {
-                $this->writeEnvData($key);
-            }
-        }
-
-        foreach ($envContent as $key => $value) {
-            $this->writeEnvData($key, $value);
-        }
-
-        return redirect()->back()->with('success_message', trans('sleeping_owl::lang.message.updated'));
-    }
-
-    /**
-     * @param  $key
-     * @return bool
-     */
-    public function filterKey($key)
-    {
-        foreach (config('sleeping_owl.env.excluded_keys') as $val) {
-            if (strpos($val, '*') !== false) {
-                $val = str_replace('*', '', $val);
-                if (strpos($key, $val) !== false) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * @param  $key
-     * @param  null  $data
-     * @param  bool  $new
-     * @return bool
-     */
-    public function writeEnvData($key, $data = null, $new = null)
-    {
-        $envFile = app()->environmentFilePath();
-        $str = file_get_contents($envFile);
-        //nit: daan issue#1188
-        if (is_null($data)) {
-            $str = preg_replace("/$key=.*/m", "$key=", $str);
-            file_put_contents($envFile, $str);
-
-            return false;
-        }
-
-        if (is_null($new)) {
-            $str = preg_replace("/$key=.*/m", "$key=$data", $str);
-            file_put_contents($envFile, $str);
-
-            return false;
-        }
-
-        $str = $str."\r\n$key=$data";
-        file_put_contents($envFile, $str);
-
-        return true;
     }
 
     /**

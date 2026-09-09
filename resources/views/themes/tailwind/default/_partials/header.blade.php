@@ -30,7 +30,7 @@
         </li>
     @endif
 
-    @if(config('sleeping_owl.ui.show_mode'))
+    @if(config('sleeping_owl.ui.show_color_mode_toggle'))
         @php($mode = ($_COOKIE['theme-mode'] ?? 'light') === 'dark' ? 'dark' : 'light')
         <li class="nav-item">
             @include('sleeping_owl_tailwind::components.ui.button', [

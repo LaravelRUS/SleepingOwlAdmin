@@ -1,4 +1,3 @@
-import EnvEditor from './display/env-editor.vue'
 import ElementFile from './form/file.vue'
 import ElementImage from './form/image.vue'
 import ElementImages from './form/images'
@@ -10,6 +9,5 @@ export const vueComponents = Object.freeze({
     'element-image': ElementImage,
     'element-images': ElementImages,
     'element-select': ElementSelect,
-    env_editor: EnvEditor,
     'related-elements': RelatedElements,
 })

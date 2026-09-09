@@ -1641,8 +1641,14 @@ function mountProgressView(table, settings, dependencies) {
   }
 }
 function findAutoUpdateHost(table) {
-  var _table$ownerDocument$, _table$ownerDocument, _table$ownerDocument$2;
-  return (_table$ownerDocument$ = (_table$ownerDocument = table.ownerDocument) === null || _table$ownerDocument === void 0 || (_table$ownerDocument$2 = _table$ownerDocument.querySelector) === null || _table$ownerDocument$2 === void 0 ? void 0 : _table$ownerDocument$2.call(_table$ownerDocument, AUTO_UPDATE_HOST_SELECTOR)) !== null && _table$ownerDocument$ !== void 0 ? _table$ownerDocument$ : null;
+  var _document$querySelect, _document$querySelect2, _candidates$find;
+  var document = table.ownerDocument;
+  var hosts = document === null || document === void 0 || (_document$querySelect = document.querySelectorAll) === null || _document$querySelect === void 0 ? void 0 : _document$querySelect.call(document, AUTO_UPDATE_HOST_SELECTOR);
+  var candidates = hosts ? Array.from(hosts) : [document === null || document === void 0 || (_document$querySelect2 = document.querySelector) === null || _document$querySelect2 === void 0 ? void 0 : _document$querySelect2.call(document, AUTO_UPDATE_HOST_SELECTOR)].filter(Boolean);
+  return (_candidates$find = candidates.find(function (host) {
+    var config = readAutoUpdateConfig(host);
+    return matchesAutoUpdateTable(table, config.tableClasses);
+  })) !== null && _candidates$find !== void 0 ? _candidates$find : null;
 }
 function cloneControl(template) {
   var _fragment$children;

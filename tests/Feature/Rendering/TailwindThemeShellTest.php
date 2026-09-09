@@ -32,7 +32,7 @@ class TailwindThemeShellTest extends TestCase
             'sleeping_owl.ui.scroll_to_bottom' => false,
             'sleeping_owl.ui.scroll_to_top' => false,
             'sleeping_owl.ui.show_footer' => true,
-            'sleeping_owl.ui.show_mode' => true,
+            'sleeping_owl.ui.show_color_mode_toggle' => true,
             'sleeping_owl.ui.show_version' => true,
             'sleeping_owl.datatables_settings.state_tabs' => false,
             'sleeping_owl.url_prefix' => 'admin',

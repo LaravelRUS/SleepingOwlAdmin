@@ -315,7 +315,7 @@ class DefaultThemeRenderContractTest extends TestCase
             'sleeping_owl.ui.scroll_to_bottom' => false,
             'sleeping_owl.ui.scroll_to_top' => false,
             'sleeping_owl.ui.show_footer' => true,
-            'sleeping_owl.ui.show_mode' => false,
+            'sleeping_owl.ui.show_color_mode_toggle' => false,
             'sleeping_owl.ui.show_version' => true,
             'sleeping_owl.datatables_settings.state_datatables' => false,
             'sleeping_owl.datatables_settings.state_filters' => false,

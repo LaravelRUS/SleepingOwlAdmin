@@ -38,16 +38,8 @@
                     "auth_provider",
                     "bootstrapDirectory",
                     "domain",
-                    "enable_editor",
-                    "env_can_add",
-                    "env_can_delete",
-                    "env_editor_excluded_keys",
-                    "env_editor_middlewares",
-                    "env_editor_policy",
-                    "env_editor_url",
-                    "env_keys_readonly",
                     "middleware",
-                    "search_operator",
+                    "postgres_search_operator",
                     "timezone",
                     "title",
                     "url_prefix"
@@ -56,6 +48,27 @@
             "status": "unchanged",
             "owner": "core",
             "contract": "Keep the key, default type and backend behavior. bootstrapDirectory remains an app/Admin path and is unrelated to CSS Bootstrap."
+        },
+        {
+            "selector": {
+                "keys": [
+                    "enable_editor",
+                    "env_can_add",
+                    "env_can_delete",
+                    "env_editor_excluded_keys",
+                    "env_editor_middlewares",
+                    "env_editor_policy",
+                    "env_editor_url",
+                    "env_keys_readonly"
+                ]
+            },
+            "status": "removed",
+            "owner": "core:env-editor",
+            "reason": "The package-owned ENV editor wrote application .env files and is removed in favor of maintained application-level packages.",
+            "replacement": "Install and configure geosot/laravel-env-editor directly in the application when an ENV editor is required.",
+            "fallback": "No runtime fallback; remove the obsolete settings from the published SleepingOwl configuration.",
+            "timeline": "Removed in the current major refactor.",
+            "contract": "SleepingOwl no longer registers ENV-editor routes, widgets, views, assets, or configuration."
         },
         {
             "selector": {
@@ -135,7 +148,7 @@
                     "logo_mini",
                     "menu_top",
                     "show_footer",
-                    "show_mode",
+                    "show_color_mode_toggle",
                     "show_version",
                     "useHasManyLocalCard",
                     "useRelationCard",
@@ -168,13 +181,24 @@
         {
             "key": "show_editor",
             "source": "D:/domains/laluna.kit/config/sleeping_owl.php",
-            "status": "deprecated",
+            "status": "removed",
             "owner": "core:env-editor",
-            "reason": "The replacement key was introduced before the frontend modernization, but long-lived published configs still use the old name.",
-            "replacement": "enable_editor",
-            "fallback": "When enable_editor is absent, copy the configured show_editor value at provider registration.",
-            "timeline": "Deprecated in 13.x, supported throughout 13.x, and removable no earlier than 14.0.",
-            "contract": "When enable_editor is absent, normalize show_editor to enable_editor and emit a deprecation notice for the major migration window."
+            "reason": "The package-owned ENV editor is removed, so the legacy activation switch has no remaining behavior.",
+            "replacement": "Install and configure geosot/laravel-env-editor directly in the application when an ENV editor is required.",
+            "fallback": "No runtime fallback; remove show_editor from the published SleepingOwl configuration.",
+            "timeline": "Removed in the current major refactor.",
+            "contract": "SleepingOwl ignores show_editor and does not expose an ENV editor."
+        },
+        {
+            "key": "search_operator",
+            "source": "config/sleeping_owl.php",
+            "status": "removed",
+            "owner": "core:postgres-search",
+            "reason": "The key only affected PostgreSQL queries, so its generic name was misleading.",
+            "replacement": "Use postgres_search_operator with ilike for case-insensitive PostgreSQL search or like for case-sensitive search.",
+            "fallback": "No runtime fallback; rename search_operator in the published SleepingOwl configuration.",
+            "timeline": "Renamed in the current major refactor.",
+            "contract": "SleepingOwl ignores search_operator and reads postgres_search_operator only for PostgreSQL queries."
         },
         {
             "key": "policies_namespace",

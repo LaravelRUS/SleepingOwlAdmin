@@ -32,7 +32,7 @@ The resolver still accepts the former `'template' => AcmeTheme::class` shape
 as a migration fallback. The current package config publishes only the named
 `default`/`themes` shape.
 
-`ThemeConfiguration` gives theme views the following existing values under their original names and types:
+`ThemeConfiguration` gives theme views the following configuration values under their canonical names and types:
 
 | Setting | Intended presentation use |
 | --- | --- |
@@ -41,7 +41,7 @@ as a migration fallback. The current package config publishes only the named
 | `favicon` | Favicon URL |
 | `footer_text`, `show_footer`, `show_version`, `version_text` | Footer content and visibility |
 | `logo`, `logo_mini`, `menu_top` | Header/sidebar branding and menu label |
-| `show_mode` | Show the light/dark mode control |
+| `show_color_mode_toggle` | Show the light/dark mode control |
 | `sidebar_background_color` | Validated runtime `--soa-sidebar-bg`; `null` keeps the theme default |
 | `useHasManyLocalCard`, `useRelationCard`, `useWysiwygCard` | Existing card presentation switches |
 

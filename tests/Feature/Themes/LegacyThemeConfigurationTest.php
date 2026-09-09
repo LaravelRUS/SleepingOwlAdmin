@@ -61,7 +61,7 @@ class LegacyThemeConfigurationTest extends TestCase
         config()->set([
             'sleeping_owl.ui.favicon' => null,
             'sleeping_owl.ui.show_footer' => false,
-            'sleeping_owl.ui.show_mode' => false,
+            'sleeping_owl.ui.show_color_mode_toggle' => false,
         ]);
 
         $html = $this->renderLayout($this->bindLayoutTemplate());
@@ -71,6 +71,16 @@ class LegacyThemeConfigurationTest extends TestCase
         $this->assertStringNotContainsString('<strong>Legacy footer</strong>', $html);
         $this->assertStringNotContainsString('<em>Legacy version</em>', $html);
         $this->assertStringNotContainsString('id="theme-mode"', $html);
+    }
+
+    public function test_legacy_show_mode_key_does_not_control_the_color_mode_toggle(): void
+    {
+        $this->configureLegacyLayout();
+        config()->set('sleeping_owl.ui.show_mode', false);
+
+        $html = $this->renderLayout($this->bindLayoutTemplate());
+
+        $this->assertStringContainsString('id="theme-mode"', $html);
     }
 
     public function test_asset_health_status_renders_when_the_optional_footer_is_hidden(): void
@@ -168,7 +178,7 @@ class LegacyThemeConfigurationTest extends TestCase
             'sleeping_owl.ui.scroll_to_bottom' => false,
             'sleeping_owl.ui.scroll_to_top' => false,
             'sleeping_owl.ui.show_footer' => true,
-            'sleeping_owl.ui.show_mode' => true,
+            'sleeping_owl.ui.show_color_mode_toggle' => true,
             'sleeping_owl.ui.show_version' => true,
             'sleeping_owl.ui.sidebar_background_color' => '#102030',
             'sleeping_owl.datatables_settings.state_datatables' => false,

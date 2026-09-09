@@ -310,7 +310,7 @@ class DisplayTable extends Display
                     if ($_model->getAttribute($column->getName())) {
                         continue;
                     }
-                    $operator = $query->getConnection()->getQueryGrammar() instanceof PostgresGrammar ? config('sleeping_owl.search_operator') : 'LIKE';
+                    $operator = $query->getConnection()->getQueryGrammar() instanceof PostgresGrammar ? config('sleeping_owl.postgres_search_operator') : 'LIKE';
                     $query->orWhere($column->getName(), $operator, '%'.$search.'%');
                 }
             }

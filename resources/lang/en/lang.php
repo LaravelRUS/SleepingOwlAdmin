@@ -29,12 +29,6 @@ return [
         'index_page' => 'To site',
     ],
 
-    'env_editor' => [
-        'title' => 'ENV-editor',
-        'key' => 'Key',
-        'var' => 'Value',
-    ],
-
     'ckeditor' => [
         'upload' => [
             'success' => 'File was uploaded: \\n- Size: :size kb \\n- width/height: :width x :height',

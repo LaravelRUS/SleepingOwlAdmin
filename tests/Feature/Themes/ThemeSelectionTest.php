@@ -17,7 +17,7 @@ class ThemeSelectionTest extends TestCase
         'body_default_class' => 'custom-layout compact',
         'sidebar_background_color' => '#102030',
         'breadcrumbs' => false,
-        'show_mode' => false,
+        'show_color_mode_toggle' => false,
         'scroll_to_top' => true,
         'scroll_to_bottom' => true,
         'show_footer' => true,

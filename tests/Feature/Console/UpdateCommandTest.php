@@ -44,7 +44,7 @@ class UpdateCommandTest extends TestCase
         $this->assertDirectoryDoesNotExist($assetRoot.'/profiles/production/css/fonts');
         $this->assertFileExists($license);
         $this->assertStringContainsString(basename($license), (new Filesystem())->get($asset));
-        $this->assertSame(48, app(PublishedAssetVerifier::class)->verify($assetRoot)->fileCount());
+        $this->assertSame(51, app(PublishedAssetVerifier::class)->verify($assetRoot)->fileCount());
         $this->assertSame(
             ['production', 'development'],
             array_map(
@@ -57,7 +57,7 @@ class UpdateCommandTest extends TestCase
         $this->artisan('sleepingowl:update')->assertSuccessful();
 
         $this->assertNotSame('corrupt', (new Filesystem())->get($asset));
-        $this->assertSame(48, app(PublishedAssetVerifier::class)->verify($assetRoot)->fileCount());
+        $this->assertSame(51, app(PublishedAssetVerifier::class)->verify($assetRoot)->fileCount());
     }
 
     public function test_check_is_read_only_and_validates_both_profiles(): void

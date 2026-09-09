@@ -26,11 +26,21 @@
   compatibility aliases.
 - Global Vue, global DataTable and the general `i18next` runtime are no longer
   published.
+- The package-owned ENV editor is removed: its `admin.env.editor` routes,
+  navigation widget, controller methods, Blade/Vue assets, translations, and
+  `sleeping_owl.env.*` configuration no longer exist. For applications that
+  need a web UI for `.env`, use and configure
+  [`geosot/laravel-env-editor`](https://github.com/GeoSot/Laravel-EnvEditor)
+  directly in the application.
 
 ### Upgrade
 
 - Run `php artisan sleepingowl:update` after the Composer update. Do not
   republish the complete configuration or views.
+- Remove the obsolete ENV-editor keys from published configuration:
+  `show_editor`, `enable_editor`, `env_editor_*`, `env_keys_readonly`,
+  `env_can_add`, and `env_can_delete`. Install and configure
+  `geosot/laravel-env-editor` separately if an ENV editor is required.
 - Review application Blade overrides and custom JavaScript against the
   [major upgrade guide](docs/modernization/upgrade-guide.md).
 - Bootstrap/AdminLTE markup changes are listed in the

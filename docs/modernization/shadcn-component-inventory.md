@@ -92,7 +92,7 @@ Blade primitive; the listed consumers remain the stable logical view paths.
 | `display`, columns, filters and actions | table, pagination, empty, checkbox, input, native-select, button-group, alert-dialog | DataTables 3/table drivers keep transport, state, selection, editing and draw lifecycle. |
 | `form/card`, tabs and buttons | card, tabs, field, button, button-group | Blade keeps layout; tabs/form action drivers keep behavior. |
 | scalar form elements | field, label, input, input-group, native-select, textarea, checkbox, radio-group, switch | Native submitted controls and existing validation/feature drivers remain authoritative. |
-| select, related, env-editor and upload Vue islands | field, native-select, attachment, progress, dialog, button, spinner | Precompiled Vue 3 islands receive final classes through Blade props; no recipe runtime crosses the island boundary. |
+| select, related and upload Vue islands | field, native-select, attachment, progress, dialog, button, spinner | Precompiled Vue 3 islands receive final classes through Blade props; no recipe runtime crosses the island boundary. |
 | tree, gallery/lightbox, WYSIWYG and vendor popups | collapsible, button-group, dialog, tooltip, progress | Existing feature/vendor adapters retain lifecycle; recipes style only package-owned presentation. |
 
 ## Explicit exclusions

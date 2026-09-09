@@ -461,7 +461,7 @@ No-build consumer contract является release-blocking:
 - Добавляется простой optional key `sidebar_background_color`; `null` означает default выбранной темы. Значение после валидации задаёт `--soa-sidebar-bg`, поэтому типичный brand color меняется в PHP config без Sass/Tailwind build.
 - `body_default_class` и другие class/HTML options остаются обычными строками классов выбранной темы; core не преобразует их.
 - `bootstrapDirectory` сохраняется без переименования: это историческое имя директории bootstrap-файлов админки (`app/Admin`), а не настройка CSS-фреймворка Bootstrap.
-- Core settings сохраняются без frontend-переосмысления: `url_prefix`, `domain`, `middleware`, `auth_provider`, env editor, upload directories/extensions/filename behavior, date/time formats/timezone, search operator и aliases.
+- Core settings сохраняются без frontend-переосмысления: `url_prefix`, `domain`, `middleware`, `auth_provider`, env editor, upload directories/extensions/filename behavior, date/time formats/timezone, PostgreSQL search operator и aliases.
 - WYSIWYG settings и вложенные массивы сохраняются; замена frontend wrappers не должна менять выбранный editor, toolbar/files/CDN config без отдельной причины.
 - Table settings сохраняются как compatibility contract: state flags, request method, filters state, `datatables`, highlight и autoupdate. DataTables 1-specific произвольные options внутри `datatables` проходят документированную нормализацию; неподдерживаемый ключ даёт понятное предупреждение, а не молча игнорируется.
 - UI layout flags (`useWysiwygCard`, `useRelationCard`, `useHasManyLocalCard`, scroll controls и подобные) передаются выбранной теме. Тема обязана либо поддержать capability, либо явно задокументировать fallback.
@@ -570,7 +570,7 @@ No-build consumer contract является release-blocking:
 - [x] Добавить contract tests, которые рендерят один и тот же PHP display/form через разные test themes.
 - [x] Определить theme asset manifest и capability API: tabs, tooltip, dropdown, modal, notification, icons и table presentation.
 - [x] Сохранить `sleeping_owl.template` как selector, добавить `default` + карту `themes`, разрешать только выбранный класс и передать theme-owned config values без преобразования.
-- [x] Проверить `body_default_class`, logo/favicon/menu/footer/version/show_mode и layout card flags в legacy и новых темах.
+- [x] Проверить `body_default_class`, logo/favicon/menu/footer/version/show_color_mode_toggle и layout card flags в legacy и новых темах.
 - [x] Запретить core imports из каталогов конкретной темы автоматической проверкой.
 
 Критерий завершения: PHP core не генерирует framework-specific classes, а текущий UI продолжает работать через изолированную legacy theme.

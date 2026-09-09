@@ -188,8 +188,8 @@
                     "scripts": [
                         {
                             "file": "profiles/production/js/features/table.js",
-                            "version": "11013eb7f6e089db27e9b6a9785fa08e",
-                            "checksum": "sha256:1f7770bc959fbf37da439e45b926d9776723d12b7f25ace0409d8dd4aa8de47d"
+                            "version": "0450bcad0da6adb1d65fcb4a6c74a6b5",
+                            "checksum": "sha256:7b7c83be0b9f7b5dbfe7a2888789d72d44c8e83d1b00e163abebadf0121a8ffc"
                         }
                     ],
                     "styles": [
@@ -240,8 +240,8 @@
                     "scripts": [
                         {
                             "file": "profiles/production/js/features/tabs.js",
-                            "version": "7c7eb667a5671678311a15d3f3f6361f",
-                            "checksum": "sha256:c990ec788997a8e1fc98281817adda8b311d05caac71e7cce5caba426497938d"
+                            "version": "d327a1693420988b5e3fda6718e311d1",
+                            "checksum": "sha256:a0b5a1d5474971af936882fd14ebea77c714816eadcbd50eed55031fb276662d"
                         }
                     ],
                     "styles": []
@@ -404,8 +404,8 @@
                     "scripts": [
                         {
                             "file": "profiles/production/js/shared/vue.js",
-                            "version": "fbcfbcaa7a8ec2fc21990904b899af55",
-                            "checksum": "sha256:25a7c71fb8756e4e7681aaf2d7a0cb52cd7eb912c610ff647ed5e7a7f1663baf"
+                            "version": "a070f14a52baca94c77896e92c7fe616",
+                            "checksum": "sha256:5c4e3d82927587e022aafa98dc750d01e444ae44909b2c088c960984c6cfa999"
                         }
                     ],
                     "styles": []
@@ -452,8 +452,8 @@
                         },
                         {
                             "file": "profiles/production/css/themes/tailwind-utilities.css",
-                            "version": "ad408e3f68f420fafeb772320c237955",
-                            "checksum": "sha256:5f6790ac85f1f19a14a84c40d167285af0f28c5b437a3c7b48c7fe717d8a0251"
+                            "version": "d7ee6c595850b5b0984e923907564245",
+                            "checksum": "sha256:a29340c3c2c354c7120e980d641e89460f9a176a35b04ada4c687ffb22a2d6a6"
                         }
                     ]
                 }
@@ -645,8 +645,8 @@
                     "scripts": [
                         {
                             "file": "profiles/development/js/features/table.js",
-                            "version": "5f4a720d59d0d6bb71fe11eec51c3d5c",
-                            "checksum": "sha256:2cd5068c64857b2d5cf0d7677e0b4c134c2fcb45505172478ed30b43d907f695"
+                            "version": "d27e9b3d8364271a3f494355b928a492",
+                            "checksum": "sha256:be2fba197cafcd6a5e362392825541c170ae3c6a623d82ca926d042ec815f3af"
                         }
                     ],
                     "styles": [
@@ -697,8 +697,8 @@
                     "scripts": [
                         {
                             "file": "profiles/development/js/features/tabs.js",
-                            "version": "1fbbcc6f3f35060b5820b74f1be85609",
-                            "checksum": "sha256:ad4ab3de6abbff198afc1f403b0fd99a1da94329aa3c38edf95a28f9dd978a3e"
+                            "version": "f49ee3606517e23cb8a99dd253347770",
+                            "checksum": "sha256:ac3df0dd032c704647ecfe1c99cf2eb2012fb0a0b56bffb375e0ae80b15de15a"
                         }
                     ],
                     "styles": []
@@ -861,8 +861,8 @@
                     "scripts": [
                         {
                             "file": "profiles/development/js/shared/vue.js",
-                            "version": "9b15c8cf3e6e95775bff5bf969a2dd20",
-                            "checksum": "sha256:cb0832962e5209e2643f09c94a81cd826b1dfd9a94a2e3a0add1b2608d8e0c23"
+                            "version": "28ce562e100178b8d494ee56df5f306d",
+                            "checksum": "sha256:b68c5c2e09cee00ceb48bb823e5ae68e12b4c65661794860df21ca98a9c2e884"
                         }
                     ],
                     "styles": []
@@ -909,13 +909,13 @@
                         },
                         {
                             "file": "profiles/development/css/themes/tailwind-utilities.css",
-                            "version": "ec103e0fbcdce3c6e7a459bd04c0fd48",
-                            "checksum": "sha256:27deba1546f83237150c1db6dbf3a8d71d79749345f33638cf3acc24ca5c6dd9"
+                            "version": "b7d2769990ba5c024ddbaadb5d3e9f71",
+                            "checksum": "sha256:fbe4649ca10eafd3e87a81003800f8594a7e7a7cde0f9ff469590f1510cbe4d2"
                         }
                     ]
                 }
             }
         }
     },
-    "build_id": "sha256:39c880c62631502a480f3c9add146587a2e77938739c4a3964c374b40a5d7893"
+    "build_id": "sha256:5b5f51feeabbd43e7d71a9e69939ccb840576be7781b348fcf6f8defd8d9e8be"
 }

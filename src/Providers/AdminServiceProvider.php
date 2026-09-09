@@ -43,7 +43,6 @@ use SleepingOwl\Admin\Themes\ThemeCssVariables;
 use SleepingOwl\Admin\Themes\ThemeRegistry;
 use SleepingOwl\Admin\Themes\ThemeResolver;
 use SleepingOwl\Admin\Themes\ThemeSelection;
-use SleepingOwl\Admin\Widgets\EnvEditor;
 use SleepingOwl\Admin\Widgets\Messages\ErrorMessages;
 use SleepingOwl\Admin\Widgets\Messages\InfoMessages;
 use SleepingOwl\Admin\Widgets\Messages\MessageStack;
@@ -66,9 +65,7 @@ class AdminServiceProvider extends ServiceProvider
      *
      * @var array
      */
-    protected $widgets = [
-        EnvEditor::class,
-    ];
+    protected $widgets = [];
 
     public function register(): void
     {

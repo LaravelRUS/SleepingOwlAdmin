@@ -71,7 +71,8 @@ Module views выводятся раньше footer assets legacy layout. Поэ
 - route domain/middleware/prefix и `bootstrapDirectory`;
 - upload, lazy image, date/time/timezone и WYSIWYG settings;
 - form card flags, breadcrumbs, scroll helpers и DataTables auto-update settings;
-- deprecated `show_editor` вместо нового `enable_editor`;
+- устаревшие настройки ENV editor (`show_editor`, `enable_editor` и `env_*`),
+  которые удаляются при обновлении пакета;
 - legacy aliases `KodiCMS\Assets\Facades\Assets`, `PackageManager` и `Meta`.
 
 Этот config становится обязательным типом fixture для migration matrix: отсутствующие новые keys получают package defaults, legacy keys проходят явную normalization/deprecation policy, а весь файл не требует повторной публикации.

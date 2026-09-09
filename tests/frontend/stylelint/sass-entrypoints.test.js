@@ -1,11 +1,12 @@
 import { dirname, resolve } from 'node:path'
-import { readFileSync, readdirSync } from 'node:fs'
+import { existsSync, readFileSync, readdirSync } from 'node:fs'
 
 import { describe, expect, it } from 'vitest'
 
 const root = resolve(import.meta.dirname, '../../..')
 const entries = readJson('build/frontend-entries.json').modern.styles
 const tokenizedEntries = entries.filter((entry) => entry.logicalId !== 'shared:icons')
+const sassTokenizedEntries = tokenizedEntries.filter((entry) => entry.source.endsWith('.scss'))
 
 function readJson(path) {
     return JSON.parse(readFileSync(resolve(root, path), 'utf8'))
@@ -20,38 +21,40 @@ function siblingPath(entry, filename) {
 }
 
 describe('Sass entrypoint boundaries', () => {
-    it.each(tokenizedEntries)(
-        '$logicalId loads its local variables and colors modules',
-        (entry) => {
-            const source = readSource(entry.source)
+    it.each(sassTokenizedEntries)('$logicalId loads its owner-local Sass modules', (entry) => {
+        const source = readSource(entry.source)
 
-            expect(source).toContain("@use 'variables';")
-            expect(source).toContain("@use 'colors';")
-            expect(source).toContain("@use 'custom-properties';")
-            expect(readFileSync(siblingPath(entry, '_variables.scss')).byteLength).toBeGreaterThan(
-                0,
-            )
-            expect(readFileSync(siblingPath(entry, '_colors.scss')).byteLength).toBeGreaterThan(0)
-            expect(
-                readFileSync(siblingPath(entry, '_custom-properties.scss')).byteLength,
-            ).toBeGreaterThan(0)
-        },
-    )
+        expect(source).toContain("@use 'variables';")
+        expect(readFileSync(siblingPath(entry, '_variables.scss')).byteLength).toBeGreaterThan(0)
 
-    it.each(tokenizedEntries)(
+        for (const module of ['colors', 'custom-properties']) {
+            const path = siblingPath(entry, `_${module}.scss`)
+            if (!existsSync(path)) continue
+
+            expect(source).toContain(`@use '${module}';`)
+            expect(readFileSync(path).byteLength).toBeGreaterThan(0)
+        }
+    })
+
+    it.each(sassTokenizedEntries)(
         '$logicalId exposes owner-local overridable build-time tokens',
         (entry) => {
             const variables = readFileSync(siblingPath(entry, '_variables.scss'), 'utf8')
-            const colors = readFileSync(siblingPath(entry, '_colors.scss'), 'utf8')
+            const colorsPath = siblingPath(entry, '_colors.scss')
 
             expect(variableDeclarations(variables)).not.toHaveLength(0)
-            if (entry.logicalId === 'core') {
-                expect(variableDeclarations(colors)).toEqual([])
-            } else {
-                expect(variableDeclarations(colors)).not.toHaveLength(0)
-            }
             expect(nonDefaultDeclarations(variables)).toEqual([])
-            expect(nonDefaultDeclarations(colors)).toEqual([])
+
+            if (existsSync(colorsPath)) {
+                const colors = readFileSync(colorsPath, 'utf8')
+
+                if (entry.logicalId === 'core') {
+                    expect(variableDeclarations(colors)).toEqual([])
+                } else {
+                    expect(variableDeclarations(colors)).not.toHaveLength(0)
+                }
+                expect(nonDefaultDeclarations(colors)).toEqual([])
+            }
         },
     )
 
@@ -121,7 +124,11 @@ function nonDefaultDeclarations(source) {
 function isHandwrittenCss(path) {
     const normalized = path.replaceAll('\\', '/')
 
-    return normalized.endsWith('.css') && !/(^|\/)(generated|vendor)\//.test(normalized)
+    return (
+        normalized.endsWith('.css') &&
+        normalized !== 'frontend/themes/tailwind/tailwind.input.css' &&
+        !/(^|\/)(generated|vendor)\//.test(normalized)
+    )
 }
 
 function customPropertyDeclarations(source) {

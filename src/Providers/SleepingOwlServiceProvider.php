@@ -7,13 +7,11 @@ use Illuminate\View\Engines\PhpEngine;
 use Illuminate\View\Factory;
 use Illuminate\View\FileViewFinder;
 use SleepingOwl\Admin\Admin;
-use SleepingOwl\Admin\Configuration\LegacyConfigNormalizer;
 
 class SleepingOwlServiceProvider extends AdminSectionsServiceProvider
 {
     public function register()
     {
-        $this->normalizeLegacyConfig();
         $this->replaceConfigRecursivelyFrom(__DIR__.'/../../config/sleeping_owl.php', 'sleeping_owl');
         $this->mergeConfigFrom(__DIR__.'/../../config/navigation.php', 'navigation');
         $this->loadViewsFrom($this->viewPaths(), 'sleeping_owl');
@@ -24,18 +22,6 @@ class SleepingOwlServiceProvider extends AdminSectionsServiceProvider
 
         $this->registerCore();
         $this->registerCommands();
-    }
-
-    private function normalizeLegacyConfig(): void
-    {
-        $config = $this->app['config']->get('sleeping_owl', []);
-
-        if (is_array($config)) {
-            $this->app['config']->set(
-                'sleeping_owl',
-                (new LegacyConfigNormalizer())->normalize($config)
-            );
-        }
     }
 
     /**

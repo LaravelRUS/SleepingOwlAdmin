@@ -11,7 +11,7 @@
 		</li>
 	@endif
 
-	@if(config('sleeping_owl.ui.show_mode'))
+	@if(config('sleeping_owl.ui.show_color_mode_toggle'))
         <li>
             <a class="nav-link" data-mode="{{ @$_COOKIE['theme-mode'] ?? 'light' }}" id="theme-mode" data-toggle="tooltip" data-bs-toggle="tooltip" title="{{ trans('sleeping_owl::lang.button.theme') }}">
                 @if((@$_COOKIE['theme-mode'] ?? 'light') == 'light')

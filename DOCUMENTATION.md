@@ -37,7 +37,6 @@ SleepingOwl Admin — это мощный конструктор админис�
 | `template.default` | Название выбранной темы | `adminlte` |
 | `template.themes` | Карта названий тем на классы | `adminlte`, `shadcn` |
 | `ui` | Branding, layout, footer, cards и scroll controls | См. файл |
-| `env` | Настройки env editor | См. файл |
 | `images`, `files` | Загрузка и отображение файлов | См. файл |
 | `wysiwyg` | CDN и настройки редакторов | `ckeditor` |
 | `datatables_settings` | Состояние, поведение и auto-update таблиц | См. файл |

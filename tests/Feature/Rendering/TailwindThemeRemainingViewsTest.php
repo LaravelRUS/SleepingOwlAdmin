@@ -1,16 +1,11 @@
 <?php
 
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\MessageBag;
 use Illuminate\Support\ViewErrorBag;
 use SleepingOwl\Admin\Themes\TailwindTheme;
-use SleepingOwl\Tests\Helpers\InteractsWithJsonProps;
 
 class TailwindThemeRemainingViewsTest extends TestCase
 {
-    use InteractsWithJsonProps;
-
     protected function resolveApplicationConfiguration($app)
     {
         parent::resolveApplicationConfiguration($app);
@@ -22,9 +17,6 @@ class TailwindThemeRemainingViewsTest extends TestCase
     {
         parent::setUp();
 
-        Route::get('/env-editor', fn () => null)->name('admin.env.editor');
-        Route::post('/env-editor', fn () => null)->name('admin.env.editor.post');
-        $this->app['router']->getRoutes()->refreshNameLookups();
         config()->set([
             'sleeping_owl.ui.favicon' => null,
             'sleeping_owl.ui.scroll_to_bottom' => false,
@@ -59,24 +51,11 @@ class TailwindThemeRemainingViewsTest extends TestCase
         }
 
         $this->assertContains('dashboard', $views);
-        $this->assertContains('env_editor', $views);
         $this->assertContains('pages.login', $views);
     }
 
-    public function test_env_editor_and_login_receive_theme_classes_without_changing_contracts(): void
+    public function test_login_receives_theme_classes_without_changing_contracts(): void
     {
-        $data = new Collection([
-            'APP_NAME' => (object) [
-                'value' => 'Sleeping Owl',
-                'editable' => true,
-                'deletable' => false,
-            ],
-        ]);
-        $envHtml = view(
-            app('sleeping_owl.template')->getViewPath('env_editor'),
-            compact('data')
-        )->render();
-        $envProps = $this->extractJsonProps($envHtml);
         $errors = (new ViewErrorBag())->put('default', new MessageBag([
             'username' => ['Unknown user'],
         ]));
@@ -86,10 +65,6 @@ class TailwindThemeRemainingViewsTest extends TestCase
             'title' => 'Sign in',
         ])->render();
 
-        $this->assertSame('card soa-card soa-env-card', $envProps['classes']['card']);
-        $this->assertSame('form-control env-key soa-input', $envProps['classes']['keyInput']);
-        $this->assertSame('table table-striped soa-table soa-env-table', $envProps['classes']['table']);
-        $this->assertStringContainsString('data-vue-component="env_editor"', $envHtml);
         $this->assertContainsAll($login, [
             'class="login-page soa-login-page"',
             'class="login-box card soa-card soa-login-card"',

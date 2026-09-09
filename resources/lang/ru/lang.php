@@ -29,12 +29,6 @@ return [
         'index_page' => 'На сайт',
     ],
 
-    'env_editor' => [
-        'title' => 'ENV-редактор',
-        'key' => 'Ключ',
-        'var' => 'Значение',
-    ],
-
     'ckeditor' => [
         'upload' => [
             'success' => 'Файл был успешно загружен: \\n- Размер: :size кб \\n- ширина/высота: :width x :height',

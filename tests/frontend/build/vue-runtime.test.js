@@ -11,7 +11,6 @@ const { resolveVueRuntime, runtimeFiles } = require('../../../build/vue-runtime'
 const packageJson = readJson('package.json')
 const packageLock = readJson('package-lock.json')
 const legacyVueViews = [
-    'resources/views/themes/legacy/default/env_editor.blade.php',
     'resources/views/themes/legacy/default/form/element/file.blade.php',
     'resources/views/themes/legacy/default/form/element/image.blade.php',
     'resources/views/themes/legacy/default/form/element/images.blade.php',
@@ -158,25 +157,6 @@ it('publishes a namespaced extension API and a shared runtime external stub', ()
 })
 
 describe('precompiled Vue islands', () => {
-    it('mounts the env editor directly from typed host props', () => {
-        const view = readSource('resources/views/themes/legacy/default/env_editor.blade.php')
-        const component = readSource('resources/assets/js_owl/admin/display/env-editor.vue')
-
-        expect(readSource('webpack.mix.js')).toContain('mix.vue({ version: 3 })')
-        expect(view).toContain('data-vue-component="env_editor"')
-        expect(view).toContain('data-vue-props=')
-        expect(view).toContain('v-pre')
-        expect(view).toContain("'removeCell' => 'row-link align-middle'")
-        expect(view).toContain("'saveIcon' => 'fas fa-check'")
-        expect(view).not.toContain('inline-template')
-        expect(component).toContain('<template>')
-        expect(component).toContain(':class="classes.card"')
-        expect(component).toContain('data-env-remove')
-        expect(component).not.toContain('style="vertical-align: inherit"')
-        expect(component).not.toMatch(/class="(?:card|table|row-|form-control|btn|pull-right|fas)/)
-        expect(component).not.toContain('withLegacyInlineTemplate')
-    })
-
     it('mounts the file element directly and uses the Dropzone constructor', () => {
         const view = readSource('resources/views/themes/legacy/default/form/element/file.blade.php')
         const component = readSource('resources/assets/js_owl/admin/form/file.vue')

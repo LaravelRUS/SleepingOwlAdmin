@@ -105,7 +105,7 @@ Resolver временно принимает прежний class-string как 
 
 Класс, не реализующий ни один contract, вызывает `TemplateException`; неявного fallback к AdminLTE нет. Реализация обоих interfaces может использоваться напрямую с обеих сторон selection boundary.
 
-`ThemeConfiguration` передаёт выбранной теме только зафиксированные theme-owned keys под исходными именами. Значения не приводятся к строкам, не переименовываются и не преобразуются в semantic classes. В каждый view, созданный через transitional template renderer, передаются зарезервированные переменные `$theme` и `$themeConfig` вместе с прежним `$template`.
+`ThemeConfiguration` передаёт выбранной теме только зафиксированные theme-owned keys под canonical именами. Значения не приводятся к строкам и не преобразуются в semantic classes. В каждый view, созданный через transitional template renderer, передаются зарезервированные переменные `$theme` и `$themeConfig` вместе с прежним `$template`.
 
 В набор входят 14 существующих keys из config migration matrix и `sidebar_background_color`. Старый опубликованный config может не содержать новый ключ: в этом случае package default `null` не выводит override, и theme default применяется без пересборки assets.
 

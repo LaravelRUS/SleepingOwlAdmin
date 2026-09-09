@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "sourceManifest": "public/default/asset-manifest.json",
   "packageVersion": "dev-master",
-  "buildId": "sha256:39c880c62631502a480f3c9add146587a2e77938739c4a3964c374b40a5d7893",
+  "buildId": "sha256:5b5f51feeabbd43e7d71a9e69939ccb840576be7781b348fcf6f8defd8d9e8be",
   "baseline": {
     "source": "docs/modernization/baseline/frontend.json",
     "bytes": 2585357,
@@ -209,10 +209,10 @@
             {
               "type": "scripts",
               "file": "profiles/production/js/features/table.js",
-              "version": "11013eb7f6e089db27e9b6a9785fa08e",
-              "checksum": "sha256:1f7770bc959fbf37da439e45b926d9776723d12b7f25ace0409d8dd4aa8de47d",
-              "bytes": 305027,
-              "gzipBytes": 84866
+              "version": "0450bcad0da6adb1d65fcb4a6c74a6b5",
+              "checksum": "sha256:7b7c83be0b9f7b5dbfe7a2888789d72d44c8e83d1b00e163abebadf0121a8ffc",
+              "bytes": 305188,
+              "gzipBytes": 84916
             },
             {
               "type": "styles",
@@ -225,8 +225,8 @@
           ],
           "totals": {
             "files": 2,
-            "bytes": 305394,
-            "gzipBytes": 85072
+            "bytes": 305555,
+            "gzipBytes": 85122
           }
         },
         "feature:table:theme:legacy-adminlte": {
@@ -259,16 +259,16 @@
             {
               "type": "scripts",
               "file": "profiles/production/js/features/tabs.js",
-              "version": "7c7eb667a5671678311a15d3f3f6361f",
-              "checksum": "sha256:c990ec788997a8e1fc98281817adda8b311d05caac71e7cce5caba426497938d",
-              "bytes": 8320,
-              "gzipBytes": 2898
+              "version": "d327a1693420988b5e3fda6718e311d1",
+              "checksum": "sha256:a0b5a1d5474971af936882fd14ebea77c714816eadcbd50eed55031fb276662d",
+              "bytes": 8386,
+              "gzipBytes": 2920
             }
           ],
           "totals": {
             "files": 1,
-            "bytes": 8320,
-            "gzipBytes": 2898
+            "bytes": 8386,
+            "gzipBytes": 2920
           }
         },
         "feature:tabs:theme:legacy-adminlte": {
@@ -436,16 +436,16 @@
             {
               "type": "scripts",
               "file": "profiles/production/js/shared/vue.js",
-              "version": "fbcfbcaa7a8ec2fc21990904b899af55",
-              "checksum": "sha256:25a7c71fb8756e4e7681aaf2d7a0cb52cd7eb912c610ff647ed5e7a7f1663baf",
-              "bytes": 327394,
-              "gzipBytes": 98492
+              "version": "a070f14a52baca94c77896e92c7fe616",
+              "checksum": "sha256:5c4e3d82927587e022aafa98dc750d01e444ae44909b2c088c960984c6cfa999",
+              "bytes": 322730,
+              "gzipBytes": 97452
             }
           ],
           "totals": {
             "files": 1,
-            "bytes": 327394,
-            "gzipBytes": 98492
+            "bytes": 322730,
+            "gzipBytes": 97452
           }
         },
         "theme:legacy-adminlte": {
@@ -476,8 +476,8 @@
       },
       "totals": {
         "files": 33,
-        "bytes": 1848095,
-        "gzipBytes": 489351
+        "bytes": 1843658,
+        "gzipBytes": 488383
       }
     },
     "development": {
@@ -680,10 +680,10 @@
             {
               "type": "scripts",
               "file": "profiles/development/js/features/table.js",
-              "version": "5f4a720d59d0d6bb71fe11eec51c3d5c",
-              "checksum": "sha256:2cd5068c64857b2d5cf0d7677e0b4c134c2fcb45505172478ed30b43d907f695",
-              "bytes": 894518,
-              "gzipBytes": 196187
+              "version": "d27e9b3d8364271a3f494355b928a492",
+              "checksum": "sha256:be2fba197cafcd6a5e362392825541c170ae3c6a623d82ca926d042ec815f3af",
+              "bytes": 894909,
+              "gzipBytes": 196260
             },
             {
               "type": "styles",
@@ -696,8 +696,8 @@
           ],
           "totals": {
             "files": 2,
-            "bytes": 894962,
-            "gzipBytes": 196432
+            "bytes": 895353,
+            "gzipBytes": 196505
           }
         },
         "feature:table:theme:legacy-adminlte": {
@@ -730,16 +730,16 @@
             {
               "type": "scripts",
               "file": "profiles/development/js/features/tabs.js",
-              "version": "1fbbcc6f3f35060b5820b74f1be85609",
-              "checksum": "sha256:ad4ab3de6abbff198afc1f403b0fd99a1da94329aa3c38edf95a28f9dd978a3e",
-              "bytes": 24330,
-              "gzipBytes": 5636
+              "version": "f49ee3606517e23cb8a99dd253347770",
+              "checksum": "sha256:ac3df0dd032c704647ecfe1c99cf2eb2012fb0a0b56bffb375e0ae80b15de15a",
+              "bytes": 24463,
+              "gzipBytes": 5661
             }
           ],
           "totals": {
             "files": 1,
-            "bytes": 24330,
-            "gzipBytes": 5636
+            "bytes": 24463,
+            "gzipBytes": 5661
           }
         },
         "feature:tabs:theme:legacy-adminlte": {
@@ -907,16 +907,16 @@
             {
               "type": "scripts",
               "file": "profiles/development/js/shared/vue.js",
-              "version": "9b15c8cf3e6e95775bff5bf969a2dd20",
-              "checksum": "sha256:cb0832962e5209e2643f09c94a81cd826b1dfd9a94a2e3a0add1b2608d8e0c23",
-              "bytes": 1062779,
-              "gzipBytes": 202349
+              "version": "28ce562e100178b8d494ee56df5f306d",
+              "checksum": "sha256:b68c5c2e09cee00ceb48bb823e5ae68e12b4c65661794860df21ca98a9c2e884",
+              "bytes": 1041861,
+              "gzipBytes": 200223
             }
           ],
           "totals": {
             "files": 1,
-            "bytes": 1062779,
-            "gzipBytes": 202349
+            "bytes": 1041861,
+            "gzipBytes": 200223
           }
         },
         "theme:legacy-adminlte": {
@@ -947,23 +947,23 @@
       },
       "totals": {
         "files": 33,
-        "bytes": 4962480,
-        "gzipBytes": 992206
+        "bytes": 4942086,
+        "gzipBytes": 990178
       }
     }
   },
   "productionVsLegacyAggregate": {
     "bytes": {
-      "current": 1848095,
+      "current": 1843658,
       "baseline": 2585357,
-      "delta": -737262,
-      "percent": -28.5
+      "delta": -741699,
+      "percent": -28.7
     },
     "gzipBytes": {
-      "current": 489351,
+      "current": 488383,
       "baseline": 587787,
-      "delta": -98436,
-      "percent": -16.7
+      "delta": -99404,
+      "percent": -16.9
     }
   }
 }

@@ -29,12 +29,6 @@ return [
         'index_page' => 'Zur Seite',
     ],
 
-    'env_editor' => [
-        'title' => 'ENV-Editor',
-        'key' => 'Schlüssel',
-        'var' => 'Wert',
-    ],
-
     'ckeditor' => [
         'upload' => [
             'success' => 'Datei wurde hochgeladen: \\n- Größe: :size kb \\n- Breite/Höhe: :width x :height',

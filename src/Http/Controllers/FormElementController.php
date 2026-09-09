@@ -211,7 +211,7 @@ class FormElementController extends Controller
 
             if (is_object($model)) {
                 $query = $model;
-                $operator = $query->getConnection()->getQueryGrammar() instanceof PostgresGrammar ? config('sleeping_owl.search_operator') : 'LIKE';
+                $operator = $query->getConnection()->getQueryGrammar() instanceof PostgresGrammar ? config('sleeping_owl.postgres_search_operator') : 'LIKE';
 
                 // search logic
                 $model_table = $model->getTable();

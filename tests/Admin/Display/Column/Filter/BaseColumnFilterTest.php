@@ -1,6 +1,9 @@
 <?php
 
 use Mockery as m;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Query\Builder as QueryBuilder;
+use Illuminate\Database\Query\Grammars\MySqlGrammar;
 use PHPUnit\Framework\Attributes\DataProvider;
 use SleepingOwl\Admin\Contracts\Display\ColumnInterface;
 use SleepingOwl\Admin\Display\Column\Filter\BaseColumnFilter;
@@ -49,7 +52,8 @@ class BaseColumnFilterTest extends TestCase
         $column->shouldReceive('getFilterCallback')->once()->andReturn(null);
         $column->shouldReceive('getName')->andReturn('columnName');
 
-        $builder = m::mock(\Illuminate\Database\Eloquent\Builder::class);
+        $builder = m::mock(Builder::class);
+        $this->mockNonPostgresGrammar($builder);
         $builder->shouldReceive($condition)->withArgs($args);
 
         $filter->apply($column, $builder, 'keyword', []);
@@ -70,8 +74,9 @@ class BaseColumnFilterTest extends TestCase
         $column->shouldReceive('getFilterCallback')->once()->andReturn(null);
         $column->shouldReceive('getName')->andReturn('column.test.columnName');
 
-        $builder = m::mock(\Illuminate\Database\Eloquent\Builder::class);
-        $subBuilder = m::mock(\Illuminate\Database\Eloquent\Builder::class);
+        $builder = m::mock(Builder::class);
+        $subBuilder = m::mock(Builder::class);
+        $this->mockNonPostgresGrammar($subBuilder);
         $subBuilder->shouldReceive($condition)->withArgs($args);
 
         $builder->shouldReceive('whereHas')->andReturnUsing(function ($relation, $callback) use ($subBuilder) {
@@ -92,7 +97,8 @@ class BaseColumnFilterTest extends TestCase
         $column->shouldReceive('getFilterCallback')->once()->andReturn(null);
         $column->shouldReceive('getName')->andReturn('columnName');
 
-        $builder = m::mock(\Illuminate\Database\Eloquent\Builder::class);
+        $builder = m::mock(Builder::class);
+        $this->mockNonPostgresGrammar($builder);
         $builder->shouldReceive('where')->once()->withArgs(['columnName', '=', '0']);
 
         $this->getPlainFilter()->apply($column, $builder, '0', []);
@@ -139,6 +145,16 @@ class BaseColumnFilterTest extends TestCase
             {
             }
         };
+    }
+
+    private function mockNonPostgresGrammar(Builder $builder): void
+    {
+        $baseQuery = m::mock(QueryBuilder::class);
+        $baseQuery->shouldReceive('getGrammar')
+            ->andReturn(m::mock(MySqlGrammar::class));
+
+        $builder->shouldReceive('getQuery')
+            ->andReturn($baseQuery);
     }
 
     public static function sqlOperatorsProvider()

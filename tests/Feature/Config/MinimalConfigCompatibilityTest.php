@@ -23,8 +23,8 @@ class MinimalConfigCompatibilityTest extends TestCase
         $this->assertSame('SO', $config['ui']['logo_mini']);
         $this->assertSame('admin', $config['url_prefix']);
         $this->assertFalse($config['dev_assets']);
-        $this->assertFalse($config['env']['enabled']);
-        $this->assertTrue($config['ui']['show_mode']);
+        $this->assertArrayNotHasKey('env', $config);
+        $this->assertTrue($config['ui']['show_color_mode_toggle']);
         $this->assertIsArray($config['datatables']);
         $this->assertIsArray($config['datatables_settings']);
         $this->assertArrayHasKey('AdminTemplate', $config['aliases']);

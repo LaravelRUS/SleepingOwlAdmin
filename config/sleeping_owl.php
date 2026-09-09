@@ -39,7 +39,7 @@ return [
         'sidebar_background_color' => null,
 
         'breadcrumbs' => true,
-        'show_mode' => true,
+        'show_color_mode_toggle' => true,
         'scroll_to_top' => true,
         'scroll_to_bottom' => true,
 
@@ -60,27 +60,15 @@ return [
 
     // URL prefix, optional domain and route middleware for the admin panel.
     'url_prefix' => 'admin',
+
+    // Restrict admin routes to this host or subdomain pattern; false allows any host.
     'domain' => false,
+
+    //Admin middleware: ['web', 'auth'] or etc.
     'middleware' => ['web'],
 
     // Directory containing the application's admin bootstrap files.
     'bootstrapDirectory' => app_path('Admin'),
-
-    /*
-    |--------------------------------------------------------------------------
-    | Env Editor
-    |--------------------------------------------------------------------------
-    */
-    'env' => [
-        'enabled' => false,
-        'url' => 'env/editor',
-        'middlewares' => [],
-        'policy' => '',
-        'excluded_keys' => ['APP_KEY', 'DB_*'],
-        'keys_readonly' => false,
-        'can_add' => true,
-        'can_delete' => true,
-    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -93,7 +81,11 @@ return [
             'jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg', 'webp', 'ico', 'jpe',
         ],
         'allow_svg' => false,
+
+        // UPLOAD_HASH hashes every upload; originals: ALERT, ADD_HASH, ADD_INCREMENT, or REWRITE on collision.
+        // Use UPLOAD_ORIGINAL_ALERT, UPLOAD_ORIGINAL_ADD_HASH, UPLOAD_ORIGINAL_ADD_INCREMENT, or UPLOAD_ORIGINAL_REWRITE.
         'filename_behavior' => 'UPLOAD_HASH',
+
         'lazy_load' => false,
         'lazy_load_file' => 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==',
     ],
@@ -106,6 +98,9 @@ return [
     'files' => [
         'upload_directory' => 'files/uploads',
         'allowed_extensions' => [],
+
+        // UPLOAD_HASH hashes every upload; originals: ALERT, ADD_HASH, ADD_INCREMENT, or REWRITE on collision.
+        // Use UPLOAD_ORIGINAL_ALERT, UPLOAD_ORIGINAL_ADD_HASH, UPLOAD_ORIGINAL_ADD_INCREMENT, or UPLOAD_ORIGINAL_REWRITE.
         'filename_behavior' => 'UPLOAD_HASH',
     ],
 
@@ -113,6 +108,7 @@ return [
     'datetimeFormat' => 'd-m-Y H:i',
     'dateFormat' => 'd-m-Y',
     'timeFormat' => 'H:i',
+
     // Null uses config('app.timezone'); set a timezone here to override it for the admin UI.
     'timezone' => null,
 
@@ -126,6 +122,9 @@ return [
     */
 
     'wysiwyg' => [
+        'default' => 'ckeditor',
+
+
         'cdn' => [
             // Перевод берется от настройки локального языка.
             'ckeditor5' => [
@@ -140,7 +139,7 @@ return [
             ],
         ],
 
-        'default' => 'ckeditor',
+
 
         // CKEditor 4 options: https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_config.html
         'ckeditor' => [
@@ -282,8 +281,8 @@ return [
         ],
     ],
 
-    // Use ILIKE for case-insensitive PostgreSQL search.
-    'search_operator' => 'ilike',
+    // PostgreSQL text-search operator: `ilike` is case-insensitive; `like` is case-sensitive.
+    'postgres_search_operator' => 'ilike',
 
     /*
     |--------------------------------------------------------------------------

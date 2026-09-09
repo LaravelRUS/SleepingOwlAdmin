@@ -1126,35 +1126,35 @@
             "ancestorConsumers": []
         },
         {
-            "key": "search_operator",
+            "key": "postgres_search_operator",
             "type": "string",
             "default": "ilike",
             "consumers": [
                 {
-                    "key": "search_operator",
+                    "key": "postgres_search_operator",
                     "file": "src/Display/DisplayDatatablesAsync.php",
-                    "line": 279,
+                    "line": 312,
                     "source": "php",
                     "accessor": "config-helper"
                 },
                 {
-                    "key": "search_operator",
+                    "key": "postgres_search_operator",
                     "file": "src/Display/DisplayTable.php",
-                    "line": 315,
+                    "line": 313,
                     "source": "php",
                     "accessor": "config-helper"
                 },
                 {
-                    "key": "search_operator",
+                    "key": "postgres_search_operator",
                     "file": "src/Http/Controllers/FormElementController.php",
-                    "line": 220,
+                    "line": 214,
                     "source": "php",
                     "accessor": "config-helper"
                 },
                 {
-                    "key": "search_operator",
+                    "key": "postgres_search_operator",
                     "file": "src/Traits/SqlQueryOperators.php",
-                    "line": 70,
+                    "line": 72,
                     "source": "php",
                     "accessor": "config-helper"
                 }
@@ -1177,12 +1177,12 @@
             "ancestorConsumers": []
         },
         {
-            "key": "show_mode",
+            "key": "show_color_mode_toggle",
             "type": "bool",
             "default": true,
             "consumers": [
                 {
-                    "key": "show_mode",
+                    "key": "show_color_mode_toggle",
                     "file": "resources/views/default/_partials/header.blade.php",
                     "line": 14,
                     "source": "blade",

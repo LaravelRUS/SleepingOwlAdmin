@@ -7,7 +7,7 @@
     data-has-many-card="{{ $themeConfig->get('useHasManyLocalCard') ? 'yes' : 'no' }}"
     data-logo-mini="{{ $themeConfig->get('logo_mini') }}"
     data-menu-top="{{ $themeConfig->get('menu_top') }}"
-    data-mode-visible="{{ $themeConfig->get('show_mode') ? 'yes' : 'no' }}"
+    data-mode-visible="{{ $themeConfig->get('show_color_mode_toggle') ? 'yes' : 'no' }}"
     data-relation-card="{{ $themeConfig->get('useRelationCard') ? 'yes' : 'no' }}"
     data-sidebar-color="{{ $themeConfig->get('sidebar_background_color') }}"
     data-version="{{ $themeConfig->get('version_text') }}"

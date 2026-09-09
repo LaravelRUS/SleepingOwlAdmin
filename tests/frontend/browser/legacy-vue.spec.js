@@ -22,14 +22,6 @@ test.afterEach(async ({ page }) => {
     expect(unexpectedVueWarnings(page)).toEqual([])
 })
 
-const legacyVueComponentNames = [
-    'element-file',
-    'element-image',
-    'element-images',
-    'element-select',
-    'env_editor',
-    'related-elements',
-]
 const relatedLifecycleComponents = [
     'existing-related-group',
     'new-related-group-2',
@@ -135,8 +127,7 @@ function expectNoUnexpectedPageErrors(errors) {
 async function openFixture(page) {
     await page.goto('/legacy-vue')
     await expect(page.locator('html')).toHaveAttribute('data-ready', 'true')
-    await expect(page.locator('#env-fixture [data-env-row]')).toHaveCount(2)
-    await expect.poll(() => page.evaluate(() => globalThis.Admin.VueApps.size)).toBe(8)
+    await expect.poll(() => page.evaluate(() => globalThis.Admin.VueApps.size)).toBe(7)
 }
 
 async function useProductionBundle(page) {
@@ -533,49 +524,6 @@ async function expectReadonlyRequiredSelect(page) {
     })
 }
 
-async function readBoundedVueOwnership(page) {
-    return page.evaluate((componentNames) => {
-        const hosts = [...globalThis.document.querySelectorAll('[data-vue-app]')]
-        const mountedHosts = hosts.filter((element) => element.__vue_app__)
-        const firstApp = globalThis.Admin.VueApps.get(mountedHosts[0])
-
-        return {
-            componentsAreLocal: mountedHosts.every((element) =>
-                componentNames.every((name) =>
-                    globalThis.Admin.VueApps.get(element).component(name),
-                ),
-            ),
-            layoutMounted: Boolean(globalThis.document.querySelector('#vueApp').__vue_app__),
-            mountedIds: mountedHosts.map((element) => element.id),
-            nestedMounted: Boolean(
-                globalThis.document.querySelector('#nested-image-wrapper').__vue_app__,
-            ),
-            globalVue: typeof globalThis.Vue,
-            runtimeVersion: firstApp.version,
-        }
-    }, legacyVueComponentNames)
-}
-
-async function expectBoundedVueApps(page) {
-    expect(await readBoundedVueOwnership(page)).toEqual({
-        componentsAreLocal: true,
-        layoutMounted: false,
-        mountedIds: [
-            'env-fixture',
-            'file-wrapper',
-            'image-wrapper',
-            'images-wrapper',
-            'single-select-fixture',
-            'multi-select-fixture',
-            'related-fixture',
-            'nested-image-wrapper',
-        ],
-        nestedMounted: true,
-        globalVue: 'undefined',
-        runtimeVersion: expect.stringMatching(/^3\.5\./),
-    })
-}
-
 async function expectInitialRelatedGroup(page) {
     await expect(page.locator('#related-fixture [data-related-root]')).toHaveClass(
         'project-related-root',
@@ -630,7 +578,7 @@ async function expectFirstAddedRelatedGroup(page) {
         'data-vue-props-id',
         'dynamic-image-props--new-2-0',
     )
-    await expect.poll(() => page.evaluate(() => globalThis.Admin.VueApps.size)).toBe(9)
+    await expect.poll(() => page.evaluate(() => globalThis.Admin.VueApps.size)).toBe(8)
     await expect(page.locator('#related-title_2')).toHaveAttribute('name', 'items[new_2][title]')
     await expect(page.locator('#related-status_2')).toHaveAttribute('name', 'items[new_2][status]')
     await expect(page.locator('#related-status_2')).toHaveClass('input-select')
@@ -656,7 +604,7 @@ async function expectSecondAddedRelatedGroup(page) {
         'dynamic-image-props--new-3-0',
     )
     await expect(page.locator('[data-related-add]')).toHaveCount(0)
-    await expect.poll(() => page.evaluate(() => globalThis.Admin.VueApps.size)).toBe(10)
+    await expect.poll(() => page.evaluate(() => globalThis.Admin.VueApps.size)).toBe(9)
 }
 
 async function expectRelatedLifecycleCalls(page) {
@@ -674,54 +622,17 @@ async function expectRelatedLifecycleCalls(page) {
 async function removeAndExpectRelatedGroups(page) {
     await page.locator('#remove-existing-group').click()
     await expect(page.locator('.existing-related-group')).toHaveCount(0)
-    await expect.poll(() => page.evaluate(() => globalThis.Admin.VueApps.size)).toBe(9)
+    await expect.poll(() => page.evaluate(() => globalThis.Admin.VueApps.size)).toBe(8)
     await expect(page.locator('[data-related-removed]')).toHaveValue('42')
     await expect(page.locator('[data-related-removed]')).toHaveAttribute('name', 'items[remove][]')
     await page.locator('.remove-new-group').first().click()
     await page.locator('.remove-new-group').click()
     await expect(page.locator('.new-related-group')).toHaveCount(0)
-    await expect.poll(() => page.evaluate(() => globalThis.Admin.VueApps.size)).toBe(7)
+    await expect.poll(() => page.evaluate(() => globalThis.Admin.VueApps.size)).toBe(6)
     expect(await page.evaluate(() => globalThis.__componentDestroys)).toEqual(
         relatedLifecycleComponents,
     )
 }
-
-test('bounded runtime-only Vue 3 apps preserve env editor behavior', async ({ page }) => {
-    const pageErrors = capturePageErrors(page)
-    await openFixture(page)
-    expect(await page.evaluate(() => typeof globalThis.Vue)).toBe('undefined')
-    await expectBoundedVueApps(page)
-    await expect(page.locator('#env-fixture [data-env-card]')).toHaveClass('project-env-card')
-    await expect(page.locator('#env-fixture [data-env-table]')).toHaveClass('project-env-table')
-    await expect(page.locator('#env-fixture [data-env-key]').first()).toHaveClass('project-env-key')
-    await expect(page.locator('#env-fixture [data-env-value]').first()).toHaveClass(
-        'project-env-value',
-    )
-    await expect(page.locator('#env-fixture [data-env-remove]').first()).toHaveClass(
-        'project-env-remove',
-    )
-    await expect(page.locator('#env-fixture [data-env-remove]').first()).toHaveAttribute(
-        'title',
-        'Remove',
-    )
-    await expect(page.locator('#env-fixture [data-env-add]')).toHaveClass('project-env-add')
-    await expect(page.locator('#env-fixture [data-env-save]')).toHaveClass('project-env-save')
-
-    await page.locator('#env-fixture [data-env-remove]').nth(1).click()
-    await expect(page.locator('#env-fixture [data-env-row]')).toHaveCount(2)
-    expect(await page.evaluate(() => globalThis.__toasts)).toEqual(['Access denied'])
-
-    await page.locator('#env-fixture [data-env-remove]').first().click()
-    await expect(page.locator('#env-fixture [data-env-row]')).toHaveCount(1)
-    await page.locator('#env_add_entry').click()
-    await expect(page.locator('#env-fixture [data-env-row]')).toHaveCount(2)
-    await page.locator('#env-fixture [data-env-key]').last().fill('NEW_KEY')
-    await expect(page.locator('#env-fixture [data-env-key]').last()).toHaveAttribute(
-        'name',
-        'variables[NEW_KEY][key]',
-    )
-    expectNoUnexpectedPageErrors(pageErrors)
-})
 
 test('production runtime-only Vue 3 bundle mounts bounded apps', async ({ page }) => {
     await useProductionBundle(page)
@@ -730,7 +641,7 @@ test('production runtime-only Vue 3 bundle mounts bounded apps', async ({ page }
     expect(await page.evaluate(() => typeof globalThis.Vue)).toBe('undefined')
     expect(
         await page.evaluate(() => {
-            const host = globalThis.document.querySelector('#env-fixture')
+            const host = globalThis.document.querySelector('#file-wrapper')
 
             return globalThis.Admin.VueApps.get(host).version
         }),
@@ -946,7 +857,7 @@ test('images island applies sortable order and destroys both drivers', async ({ 
         destroyed: true,
         existed: true,
         lifecycleDestroyed: 1,
-        remainingApps: 7,
+        remainingApps: 6,
     })
     expectNoUnexpectedPageErrors(pageErrors)
 })
@@ -1039,7 +950,7 @@ test('file island destroys its upload driver before unmount', async ({ page }) =
         existed: true,
         lifecycleDestroyed: 1,
         destroyed: true,
-        remainingApps: 7,
+        remainingApps: 6,
     })
     expectNoUnexpectedPageErrors(pageErrors)
 })
@@ -1080,7 +991,7 @@ test('image island destroys its upload driver before unmount', async ({ page }) 
         destroyed: true,
         existed: true,
         lifecycleDestroyed: 1,
-        remainingApps: 7,
+        remainingApps: 6,
     })
     expectNoUnexpectedPageErrors(pageErrors)
 })

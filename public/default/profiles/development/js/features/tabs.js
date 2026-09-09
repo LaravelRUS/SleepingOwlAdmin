@@ -60,7 +60,7 @@ function mountConfiguredTabs(admin, body, options) {
 }
 function configuredTabState(admin) {
   var _admin$Config;
-  return typeof ((_admin$Config = admin.Config) === null || _admin$Config === void 0 ? void 0 : _admin$Config.get) === 'function' ? admin.Config.get('state_tabs', false) : false;
+  return typeof ((_admin$Config = admin.Config) === null || _admin$Config === void 0 ? void 0 : _admin$Config.get) === 'function' ? admin.Config.get('datatables_settings.state_tabs', false) : false;
 }
 function preferred(value, fallback) {
   return value === undefined ? fallback : value;
@@ -472,7 +472,7 @@ function bootTabs(target) {
   var _installTabs = (0,_install_tabs_js__WEBPACK_IMPORTED_MODULE_0__.installTabs)(target.Admin, {
       path: (_target$location = target.location) === null || _target$location === void 0 ? void 0 : _target$location.pathname,
       root: target.document,
-      stateEnabled: ((_target$GlobalConfig = target.GlobalConfig) === null || _target$GlobalConfig === void 0 ? void 0 : _target$GlobalConfig.state_tabs) === true,
+      stateEnabled: ((_target$GlobalConfig = target.GlobalConfig) === null || _target$GlobalConfig === void 0 || (_target$GlobalConfig = _target$GlobalConfig.datatables_settings) === null || _target$GlobalConfig === void 0 ? void 0 : _target$GlobalConfig.state_tabs) === true,
       storage: target.localStorage
     }),
     scan = _installTabs.scan;

@@ -38,7 +38,7 @@ class ThemeCssVariablesTest extends TestCase
     private function variables(array $values): ThemeCssVariables
     {
         $configuration = new ThemeConfiguration(new Repository([
-            'sleeping_owl' => $values,
+            'sleeping_owl' => ['ui' => $values],
         ]));
 
         return new ThemeCssVariables($configuration);

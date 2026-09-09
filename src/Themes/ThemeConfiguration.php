@@ -16,7 +16,7 @@ final class ThemeConfiguration implements Arrayable
         'body_default_class',
         'sidebar_background_color',
         'breadcrumbs',
-        'show_mode',
+        'show_color_mode_toggle',
         'scroll_to_top',
         'scroll_to_bottom',
         'show_footer',

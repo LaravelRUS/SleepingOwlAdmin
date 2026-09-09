@@ -29,12 +29,6 @@ return [
         'index_page' => '网站首页',
     ],
 
-    'env_editor' => [
-        'title' => 'ENV 编辑',
-        'key' => '键',
-        'var' => '值',
-    ],
-
     'ckeditor' => [
         'upload' => [
             'success' => '文件上传成功: \\n- 大小: :size kb \\n- 宽度/高度: :width x :height',

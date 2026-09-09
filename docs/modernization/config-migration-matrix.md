@@ -19,13 +19,17 @@ Machine-readable source: `docs/modernization/config-migration-matrix.json`.
 | `removed`                      | aliases `Form`, `HTML`, `A`                     | `spatie/laravel-html` удалён; views используют native Blade markup и first-party `HtmlAttributeBag`. Прямые application usages обновляются вместе с major-версией.                       |
 | `theme-owned`                 | layout/logo/footer/card/mode keys               | Ключи сохраняются и без преобразования передаются выбранной теме. Пользователь задаёт classes выбранной темы напрямую.                                                                  |
 
-В baseline находятся 113 ранее существовавших именованных paths без ключей со статусом `removed`; это сознательное следствие compatibility-first policy. `sidebar_background_color` добавляется отдельным новым optional key с default `null`.
+В baseline находятся 113 ранее существовавших именованных paths. Ключи ENV editor и
+`show_editor` имеют статус `removed`: пакет больше не читает их и не предоставляет
+fallback. `sidebar_background_color` добавляется отдельным новым optional key с default
+`null`.
 
 ## Legacy и неявные keys
 
 | Ключ                 | Статус       | Причина / replacement / fallback / timeline                                                                                                                                                                                                                                                                         |
 | -------------------- | ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `show_editor`        | `deprecated` | Старое имя остаётся в долгоживущих опубликованных configs. Replacement: `enable_editor`. Fallback: если новый ключ отсутствует, его runtime-значение берётся из `show_editor` с deprecation notice. Deprecated в 13.x, поддерживается во всей ветке 13.x, удаление возможно не раньше 14.0.                               |
+| `show_editor` и ENV editor keys | `removed` | Самописный ENV editor удалён вместе с маршрутами, виджетом и записью `.env`. Удалите `show_editor`, `enable_editor`, `env_editor_*`, `env_keys_readonly`, `env_can_add` и `env_can_delete` из опубликованного config. Если нужен UI, подключите [`geosot/laravel-env-editor`](https://github.com/GeoSot/Laravel-EnvEditor) непосредственно в приложении. |
+| `search_operator` | `removed` | Переименован в `postgres_search_operator`, поскольку настройка применяется только к PostgreSQL. Runtime fallback отсутствует: обновите опубликованный config. |
 | `policies_namespace` | `unchanged`  | Существующий runtime default добавлен в package config; старые configs продолжают работать без ключа.                                                                                                                                                                                                                |
 
 ## Новый ключ

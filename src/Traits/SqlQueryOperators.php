@@ -2,7 +2,6 @@
 
 namespace SleepingOwl\Admin\Traits;
 
-use DB;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\Grammars\PostgresGrammar;
 use Illuminate\Support\Arr;
@@ -62,16 +61,20 @@ trait SqlQueryOperators
         return $this->operator;
     }
 
-    public function getSqlOperators()
+    public function getSqlOperators(?Builder $query = null)
     {
         if ($this->sqlOperators) {
             return $this->sqlOperators;
         }
-        if (DB::query()->getGrammar() instanceof PostgresGrammar && mb_strtolower(config('sleeping_owl.search_operator')) === 'ilike') {
-            return $this->sqlOperators = array_merge($this->preSqlOperators, $this->ilikeSqlOperators);
+
+        if (
+            $query?->getQuery()->getGrammar() instanceof PostgresGrammar
+            && mb_strtolower(config('sleeping_owl.postgres_search_operator')) === 'ilike'
+        ) {
+            return array_merge($this->preSqlOperators, $this->ilikeSqlOperators);
         }
 
-        return $this->sqlOperators = $this->preSqlOperators;
+        return $this->preSqlOperators;
     }
 
     /**
@@ -98,7 +101,7 @@ trait SqlQueryOperators
      */
     protected function buildQuery(Builder $query, $column, $value)
     {
-        $params = $this->getOperatorParams();
+        $params = $this->getOperatorParams($query);
         $method = $params['method'];
         $value = Arr::get($params, 'value', $value);
 
@@ -131,9 +134,9 @@ trait SqlQueryOperators
     /**
      * @return array
      */
-    protected function getOperatorParams()
+    protected function getOperatorParams(?Builder $query = null)
     {
-        return Arr::get($this->getSqlOperators(), $this->getOperator(), ['method' => 'where', 'op' => '=']);
+        return Arr::get($this->getSqlOperators($query), $this->getOperator(), ['method' => 'where', 'op' => '=']);
     }
 
     /**
