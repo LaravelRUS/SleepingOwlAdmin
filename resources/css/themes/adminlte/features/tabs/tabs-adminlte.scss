@@ -1,6 +1,71 @@
-@use 'tabs';
-@include tabs.properties;
+@use 'colors';
+
+$tab-gap: 0.125rem !default;
+$tab-padding-block: 0.5rem !default;
+$tab-padding-inline: 1rem !default;
+$tab-border-width: 1px !default;
+$tab-radius: 0.25rem !default;
+$tab-focus-width: 0.2rem !default;
+
+@mixin properties {
+    :root {
+        --soa-tabs-text: #{colors.$tab-text};
+        --soa-tabs-active-text: #{colors.$tab-active-text};
+        --soa-tabs-active-surface: #{colors.$tab-active-surface};
+        --soa-tabs-border: #{colors.$tab-border};
+        --soa-tabs-focus: #{colors.$tab-focus};
+        --soa-tabs-gap: #{$tab-gap};
+        --soa-tabs-padding-block: #{$tab-padding-block};
+        --soa-tabs-padding-inline: #{$tab-padding-inline};
+        --soa-tabs-border-width: #{$tab-border-width};
+        --soa-tabs-radius: #{$tab-radius};
+        --soa-tabs-focus-width: #{$tab-focus-width};
+    }
+
+    :root[data-color-scheme='dark'] {
+        --soa-tabs-text: #{colors.$dark-tab-text};
+        --soa-tabs-active-text: #{colors.$dark-tab-active-text};
+        --soa-tabs-active-surface: #{colors.$dark-tab-active-surface};
+        --soa-tabs-border: #{colors.$dark-tab-border};
+    }
+}
+
+@mixin styles {
+    [data-tablist],
+    [role='tablist'] {
+        display: flex;
+        gap: var(--soa-tabs-gap);
+        border-block-end: var(--soa-tabs-border-width) solid var(--soa-tabs-border);
+    }
+
+    [data-tab],
+    [data-toggle='tab'] {
+        margin-block-end: calc(-1 * var(--soa-tabs-border-width));
+        padding: var(--soa-tabs-padding-block) var(--soa-tabs-padding-inline);
+        border: var(--soa-tabs-border-width) solid transparent;
+        border-start-start-radius: var(--soa-tabs-radius);
+        border-start-end-radius: var(--soa-tabs-radius);
+        color: var(--soa-tabs-text);
+        text-decoration: none;
+    }
+
+    [data-tab].active,
+    [data-toggle='tab'].active {
+        border-color: var(--soa-tabs-border) var(--soa-tabs-border)
+            var(--soa-tabs-active-surface);
+        background: var(--soa-tabs-active-surface);
+        color: var(--soa-tabs-active-text);
+    }
+
+    [data-tab]:focus-visible,
+    [data-toggle='tab']:focus-visible {
+        outline: var(--soa-tabs-focus-width) solid var(--soa-tabs-focus);
+        outline-offset: calc(-1 * var(--soa-tabs-focus-width));
+    }
+}
+
+@include properties;
 
 @layer sleepingowl-theme.tabs {
-    @include tabs.styles;
+    @include styles;
 }
