@@ -11,8 +11,8 @@ use SleepingOwl\Admin\Themes\TailwindTheme;
 use SleepingOwl\Admin\Themes\ThemeAssetManifest;
 use SleepingOwl\Admin\Themes\ThemeResolver;
 use SleepingOwl\Admin\Themes\ThemeRuntimeAssets;
-use SleepingOwl\Admin\Themes\ThemeTemplateAdapter;
 use SleepingOwl\Admin\Themes\ThemeSelection;
+use SleepingOwl\Admin\Themes\ThemeTemplateAdapter;
 
 class TailwindThemeTest extends TestCase
 {

@@ -29,8 +29,7 @@ final class ThemeRegistry
         string $themeClass,
         string $manifestPath,
         string $publicRoot
-    ): self
-    {
+    ): self {
         $this->assertName($name);
         if (isset($this->registered[$name])) {
             throw new InvalidArgumentException("Theme name [{$name}] is already registered.");

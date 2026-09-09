@@ -13,8 +13,8 @@ use SleepingOwl\Admin\Themes\AdminLTETheme;
 use SleepingOwl\Admin\Themes\ThemeCapabilities;
 use SleepingOwl\Admin\Themes\ThemeResolver;
 use SleepingOwl\Admin\Themes\ThemeRuntimeAssets;
-use SleepingOwl\Admin\Themes\ThemeTemplateAdapter;
 use SleepingOwl\Admin\Themes\ThemeSelection;
+use SleepingOwl\Admin\Themes\ThemeTemplateAdapter;
 use SleepingOwl\Tests\Fixtures\Themes\FrameworkFreeTestTheme;
 
 class FrameworkFreeThemeTest extends TestCase
