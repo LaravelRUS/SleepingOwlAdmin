@@ -473,7 +473,7 @@
     color: var(--soa-sidebar-text-color);
     width: var(--soa-sidebar-width);
     z-index: var(--soa-sidebar-z-index);
-    transition: transform var(--soa-layout-transition-duration) ease, width var(--soa-layout-transition-duration) ease;
+    transition: transform var(--soa-layout-transition-duration) var(--soa-layout-transition-timing-function), width var(--soa-layout-transition-duration) var(--soa-layout-transition-timing-function);
   }
   .nav-sidebar .nav-link {
     align-items: center;
@@ -1160,7 +1160,7 @@
   --soa-space-3: 0.75rem;
   --soa-space-4: 1rem;
   --soa-space-6: 1.5rem;
-  --soa-layout-transition-duration: 160ms;
+  --soa-layout-transition-duration: 360ms;
   --soa-fast-transition-duration: 100ms;
   --soa-slow-transition-duration: 220ms;
   --soa-reduced-motion-duration: 0.01ms;

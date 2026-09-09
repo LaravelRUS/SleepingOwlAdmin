@@ -13,10 +13,6 @@
     text-align: inherit;
   }
 
-  .soa-inline-editable:hover:not(:disabled) {
-    background: var(--soa-table-row-hover-color);
-  }
-
   .soa-inline-editable:focus-visible {
     outline: var(--soa-focus-ring-width) solid var(--soa-focus-color);
     outline-offset: var(--soa-focus-ring-width);

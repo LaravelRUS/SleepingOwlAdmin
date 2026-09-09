@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "sourceManifest": "public/default/asset-manifest.json",
   "packageVersion": "dev-master",
-  "buildId": "sha256:ec81ae8e7dd7481164510ce0197534074d78d836414c4fbd174d1b169d2e8d37",
+  "buildId": "sha256:0789e7051edc777caffc41eff943034c21199005a7e56947a2a57ca5e3f3ecab",
   "baseline": {
     "source": "docs/modernization/baseline/frontend.json",
     "bytes": 2585357,
@@ -24,16 +24,16 @@
             {
               "type": "styles",
               "file": "profiles/production/css/admin-core.css",
-              "version": "575ed80e90e1dd3bbf2fd47777c210c1",
-              "checksum": "sha256:59391df22f37fc862fdd5f78d9006b22e94a040461ba1876ba11e9e83f926524",
-              "bytes": 594,
-              "gzipBytes": 313
+              "version": "388ef793f516a44608f3c86db9bf7a60",
+              "checksum": "sha256:72c1f0aadbeb940403a1682999de9968d3bb3e61b37bb9115df2a22b6f4a4a60",
+              "bytes": 683,
+              "gzipBytes": 362
             }
           ],
           "totals": {
             "files": 2,
-            "bytes": 41304,
-            "gzipBytes": 9103
+            "bytes": 41393,
+            "gzipBytes": 9152
           }
         },
         "shared:compatibility": {
@@ -58,24 +58,24 @@
             {
               "type": "scripts",
               "file": "profiles/production/js/shared/features.js",
-              "version": "a187d0621866a06eb4620b5d62e9d60e",
-              "checksum": "sha256:bda79bae6f1ca32e6b506d4057eb779c496ad6b2963adf7c8288b6defca855a0",
-              "bytes": 553620,
-              "gzipBytes": 147086
+              "version": "ecc690c3f23f6cbfe7839fa560b0ead8",
+              "checksum": "sha256:7b2e2e44f4746b61a5819f2fe394e1a210e2876a9b8f55edfdd6093c36aed190",
+              "bytes": 553853,
+              "gzipBytes": 147151
             },
             {
               "type": "styles",
               "file": "profiles/production/css/shared/features.css",
-              "version": "8994ff83cb13ecf6ab942377c19ad516",
-              "checksum": "sha256:239cc957874255b184f7ed6b2eb40c88cdb258111cda61ee760f984cdc61d776",
-              "bytes": 46110,
-              "gzipBytes": 8314
+              "version": "45ec652c6dede6dbe85f69db28967f54",
+              "checksum": "sha256:915f90481fb2e20345ac1ec2bbe1a57cdf97c992e8aa485982b5ccfbb50e97a8",
+              "bytes": 46024,
+              "gzipBytes": 8303
             }
           ],
           "totals": {
             "files": 2,
-            "bytes": 599730,
-            "gzipBytes": 155400
+            "bytes": 599877,
+            "gzipBytes": 155454
           }
         },
         "shared:icons": {
@@ -117,16 +117,16 @@
             {
               "type": "styles",
               "file": "profiles/production/css/shared/ui.css",
-              "version": "2e8c6d440b340f79f155f2d5cbefa231",
-              "checksum": "sha256:ca06586b453f5967ce07dee6b9742981259fa53fb59b809a98473b1a3ee350cf",
-              "bytes": 24546,
-              "gzipBytes": 4394
+              "version": "e35aa6ea9f6728cd8257a22148b9f3cd",
+              "checksum": "sha256:276643e9e6f0ac09afdfde114f6d4dd48cdd1d9c81e042232334b294e43ce4fa",
+              "bytes": 27056,
+              "gzipBytes": 4683
             }
           ],
           "totals": {
             "files": 1,
-            "bytes": 24546,
-            "gzipBytes": 4394
+            "bytes": 27056,
+            "gzipBytes": 4683
           }
         },
         "shared:vue": {
@@ -159,23 +159,23 @@
             {
               "type": "styles",
               "file": "profiles/production/css/themes/adminlte.css",
-              "version": "368cce6c93c427969d30cb6a025b3c6e",
-              "checksum": "sha256:7422d50e131720d9b83e8f5ddd17a5b51d9d841f128b6d1ba7c539cc5d890af0",
-              "bytes": 375290,
-              "gzipBytes": 55662
+              "version": "969469de880d1daa8a4556633a429d3f",
+              "checksum": "sha256:c521670941077e146c4aa966466dcc9a5b812a7252feb657e55631c7750f95d0",
+              "bytes": 376197,
+              "gzipBytes": 55856
             }
           ],
           "totals": {
             "files": 2,
-            "bytes": 524542,
-            "gzipBytes": 104621
+            "bytes": 525449,
+            "gzipBytes": 104815
           }
         }
       },
       "totals": {
         "files": 11,
-        "bytes": 1822661,
-        "gzipBytes": 464309
+        "bytes": 1826314,
+        "gzipBytes": 464895
       }
     },
     "development": {
@@ -193,16 +193,16 @@
             {
               "type": "styles",
               "file": "profiles/development/css/admin-core.css",
-              "version": "f161a0adf58787718d42b5ff888778b3",
-              "checksum": "sha256:c7461970d231085d522dda766d28efa11023b22b536d5c706006b1e1e3f10e61",
-              "bytes": 795,
-              "gzipBytes": 378
+              "version": "48b72db6814b1577a93418dcbe53acbf",
+              "checksum": "sha256:e6574915511330f79416b96b221b8c3bbeaa19633f3200d4bfac1d02ea7816b9",
+              "bytes": 893,
+              "gzipBytes": 428
             }
           ],
           "totals": {
             "files": 2,
-            "bytes": 83900,
-            "gzipBytes": 15093
+            "bytes": 83998,
+            "gzipBytes": 15143
           }
         },
         "shared:compatibility": {
@@ -227,24 +227,24 @@
             {
               "type": "scripts",
               "file": "profiles/development/js/shared/features.js",
-              "version": "d4dd91bd3a40142061e528ab7756a08c",
-              "checksum": "sha256:624a65ee35c8d7658caecab39071422ea4cc7add8ac5df62f603a050aa2851ef",
-              "bytes": 1389443,
-              "gzipBytes": 298260
+              "version": "7f65e03dd9b839b517f5850de823753a",
+              "checksum": "sha256:8e8b6d6faf2d99bba453c25f6c4acc2efe46f20e9604087bdf164a09fc8c6faa",
+              "bytes": 1389811,
+              "gzipBytes": 298368
             },
             {
               "type": "styles",
               "file": "profiles/development/css/shared/features.css",
-              "version": "ac933ed904e1bcb90b097f7a47aab615",
-              "checksum": "sha256:c22b5963e7268390bb1eebf04bd68c090e9cfe3983bd31ffda9ef5ce0ea6efdc",
-              "bytes": 57407,
-              "gzipBytes": 9073
+              "version": "d832143e393b926e7813199959ab9279",
+              "checksum": "sha256:ba71d049d06323b412c30ad124993a9201a8704510f3716705cc82ceaf82ede4",
+              "bytes": 57307,
+              "gzipBytes": 9064
             }
           ],
           "totals": {
             "files": 2,
-            "bytes": 1446850,
-            "gzipBytes": 307333
+            "bytes": 1447118,
+            "gzipBytes": 307432
           }
         },
         "shared:icons": {
@@ -286,16 +286,16 @@
             {
               "type": "styles",
               "file": "profiles/development/css/shared/ui.css",
-              "version": "6d9502fcfaa37b97f84faff63c9202cf",
-              "checksum": "sha256:b9b7e4cadf6487d443f942e2654398c5f50dcd121e4d223d27b5211f28d1e54c",
-              "bytes": 30137,
-              "gzipBytes": 4683
+              "version": "75bf9cc846c7c16c810ca4a25f226945",
+              "checksum": "sha256:5ae8693479e133c2a8f04903db64e0f0db05ceb3a5cc643b0470051243231072",
+              "bytes": 33063,
+              "gzipBytes": 5003
             }
           ],
           "totals": {
             "files": 1,
-            "bytes": 30137,
-            "gzipBytes": 4683
+            "bytes": 33063,
+            "gzipBytes": 5003
           }
         },
         "shared:vue": {
@@ -328,38 +328,38 @@
             {
               "type": "styles",
               "file": "profiles/development/css/themes/adminlte.css",
-              "version": "63aaff171ff9ed63a8ca5725a804687e",
-              "checksum": "sha256:aec9db9011fc7e76f3f26b49fdf5d79acb7f41bb34dcb75c10b07d1e4766d832",
-              "bytes": 493826,
-              "gzipBytes": 63095
+              "version": "fd51b06791944284cfeaa271b3be66b4",
+              "checksum": "sha256:76c9bf205ba7c6a79272031e6a8ecf7123f3d2948ec4c648ca5789a0eacfd781",
+              "bytes": 494849,
+              "gzipBytes": 63294
             }
           ],
           "totals": {
             "files": 2,
-            "bytes": 1016890,
-            "gzipBytes": 190238
+            "bytes": 1017913,
+            "gzipBytes": 190437
           }
         }
       },
       "totals": {
         "files": 11,
-        "bytes": 4773250,
-        "gzipBytes": 937521
+        "bytes": 4777565,
+        "gzipBytes": 938189
       }
     }
   },
   "productionVsLegacyAggregate": {
     "bytes": {
-      "current": 1822661,
+      "current": 1826314,
       "baseline": 2585357,
-      "delta": -762696,
-      "percent": -29.5
+      "delta": -759043,
+      "percent": -29.4
     },
     "gzipBytes": {
-      "current": 464309,
+      "current": 464895,
       "baseline": 587787,
-      "delta": -123478,
-      "percent": -21
+      "delta": -122892,
+      "percent": -20.9
     }
   }
 }

@@ -38,8 +38,10 @@ $overlay-background: var(--soa-overlay-color) !default;
     width: var(--soa-sidebar-width);
     z-index: var(--soa-sidebar-z-index);
     transition:
-      transform var(--soa-layout-transition-duration) ease,
-      width var(--soa-layout-transition-duration) ease;
+      transform var(--soa-layout-transition-duration)
+        var(--soa-layout-transition-timing-function),
+      width var(--soa-layout-transition-duration)
+        var(--soa-layout-transition-timing-function);
   }
 
   .nav-sidebar .nav-link {

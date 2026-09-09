@@ -16,3 +16,5 @@
   @include shell.styles;
   @include fixed-controls.styles;
 }
+
+@include shell.managed-interactions;

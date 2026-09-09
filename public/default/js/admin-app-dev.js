@@ -5286,14 +5286,15 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
 
 
 
-var DEFAULT_BREAKPOINT = 1200;
-var DEFAULT_ANIMATION_DURATION = 300;
+var DEFAULT_BREAKPOINT = 1024;
+var DEFAULT_ANIMATION_DURATION = 360;
 function mountSidebar(root) {
   var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
   var state = createSidebarState(root, options);
   var listeners = bindSidebarListeners(state);
   scanSidebar(state, root);
   restoreSidebar(state);
+  markSidebarLoaded(state);
   return sidebarController(state, listeners);
 }
 function sidebarController(state, listeners) {
@@ -5332,6 +5333,7 @@ function createSidebarState(root, options) {
     collapseTimer: null,
     document: document,
     expanded: !root.classList.contains('sidebar-collapse'),
+    loadedFrame: null,
     preference: (0,_sidebar_storage_js__WEBPACK_IMPORTED_MODULE_3__.readSidebarPreference)(window.localStorage),
     root: root,
     toggles: [],
@@ -5435,6 +5437,12 @@ function restoreSidebar(state) {
   var expanded = state.compact ? false : state.preference !== _sidebar_storage_js__WEBPACK_IMPORTED_MODULE_3__.SIDEBAR_COLLAPSED;
   (0,_sidebar_state_js__WEBPACK_IMPORTED_MODULE_2__.normalizeSidebar)(state, expanded);
 }
+function markSidebarLoaded(state) {
+  state.loadedFrame = state.window.requestAnimationFrame(function () {
+    state.body.classList.add('app-loaded');
+    state.loadedFrame = null;
+  });
+}
 function toggleAndPersist(state) {
   var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
   var expanded = !state.expanded;
@@ -5459,6 +5467,10 @@ function scanSidebar(state, root) {
 }
 function destroySidebar(state, listeners) {
   (0,_sidebar_state_js__WEBPACK_IMPORTED_MODULE_2__.clearCollapsedDone)(state);
+  if (state.loadedFrame !== null) {
+    state.window.cancelAnimationFrame(state.loadedFrame);
+    state.loadedFrame = null;
+  }
   state.root.removeEventListener('click', listeners.click);
   state.root.removeEventListener('keydown', listeners.keydown);
   state.window.removeEventListener('resize', listeners.resize);

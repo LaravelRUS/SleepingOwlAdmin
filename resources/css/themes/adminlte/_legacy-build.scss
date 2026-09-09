@@ -4,7 +4,7 @@
 @import './legacy/variables';
 @import './legacy/colors';
 
-@layer sleepingowl-theme.framework {
+@layer sleepingowl-framework {
   @include meta.load-css('./vendor');
   @include meta.load-css('./framework');
 }

@@ -33,7 +33,7 @@ it('keeps framework imports behind the legacy AdminLTE theme boundary', () => {
     ]) {
         expect(framework).toContain(owner)
     }
-    expect(legacyBuild).toContain('@layer sleepingowl-theme.framework')
+    expect(legacyBuild).toContain('@layer sleepingowl-framework')
     expect(legacyBuild).toContain("meta.load-css('./vendor')")
     expect(legacyBuild).toContain("meta.load-css('./framework')")
     expect(vendor).toContain('node_modules/dropzone/dist/dropzone.css')

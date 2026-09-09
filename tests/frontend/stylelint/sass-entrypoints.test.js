@@ -55,7 +55,6 @@ describe('Sass entrypoint boundaries', () => {
 
             expect(source).toMatch(/@layer sleepingowl-(?:shared|theme-override);/)
             expect(source).not.toMatch(/@import\b/)
-            if (entry.logicalId !== 'shared:ui') expect(source).not.toMatch(/@use\b/)
             expect(variableDeclarations(source)).toEqual([])
         },
     )

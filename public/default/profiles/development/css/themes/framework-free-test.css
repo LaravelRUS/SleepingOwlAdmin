@@ -201,7 +201,7 @@
   --soa-border-radius-lg: 0.5rem;
   --soa-border-radius-full: 9999px;
   --soa-border-width: 0.0625rem;
-  --soa-layout-transition-duration: var(--soa-motion-duration-normal);
+  --soa-layout-transition-duration: 360ms;
   --soa-disabled-opacity: 0.55;
   --soa-space-1: 0.375rem;
   --soa-space-2: 0.75rem;

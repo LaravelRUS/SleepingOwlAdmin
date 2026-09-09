@@ -14,6 +14,7 @@ for (const profile of ['development', 'production']) {
             await expect(page.locator('.soa-app')).toHaveCSS('display', 'grid')
             await expect(page.locator('#header-action')).toHaveCSS('min-width', '40px')
             await expect(page.locator('#header-action')).toHaveCSS('min-height', '40px')
+            await expect(page.locator('#scrolltobottom')).toHaveCSS('text-decoration-line', 'none')
 
             const geometry = await shellGeometry(page)
             expect(geometry.header).toMatchObject({ height: 56, left: 256, width: 1024 })
@@ -26,6 +27,7 @@ for (const profile of ['development', 'production']) {
             await expectFixedControlsAvoidContent(page, 16)
 
             await page.locator('body').evaluate((body) => body.classList.add('sidebar-collapse'))
+            await page.locator('.soa-main').hover()
             await expect(page.locator('#shell-sidebar')).toHaveCSS('width', '64px')
             await expect(page.locator('.soa-brand-mini')).toHaveCSS('display', 'flex')
             await expect(page.locator('.soa-brand-text')).toBeHidden()
@@ -60,6 +62,28 @@ for (const profile of ['development', 'production']) {
             expect(controls.top).toMatchObject({ bottom: 60, right: 12, width: 44 })
 
             await expectFixedControlsAvoidContent(page, 12)
+        })
+    }
+
+    for (const theme of themes) {
+        test(`${profile} ${theme} expands its managed collapsed rail without moving content`, async ({
+            page,
+        }) => {
+            await page.setViewportSize({ width: 1100, height: 800 })
+            await page.goto(`/shared-shell?profile=${profile}&theme=${theme}`)
+            await page.locator('body').evaluate((body) => body.classList.add('sidebar-collapse'))
+            await page.locator('.soa-main').hover()
+
+            const collapsed = await expectManagedCollapsedSidebar(page)
+
+            await page.locator('#shell-sidebar').hover()
+            const flyout = await expectManagedSidebarFlyout(page)
+
+            expect(flyout.geometry.main).toEqual(collapsed.geometry.main)
+            expect(flyout.geometry.footer).toEqual(collapsed.geometry.footer)
+            expect(flyout.geometry.header).toEqual(collapsed.geometry.header)
+            expect(flyout.arrowLeft).toBeCloseTo(collapsed.arrowLeft, 0)
+            expect(flyout.brandCenter).toBeCloseTo(collapsed.brandCenter, 0)
         })
     }
 }
@@ -151,4 +175,65 @@ async function expectFixedControlsAvoidContent(page, minimumGap) {
 
     await page.locator('[data-inline-editor-root]').evaluate((editor) => editor.remove())
     await expect(page.locator('#scrolltobottom')).toHaveCSS('visibility', 'visible')
+}
+
+async function expectSidebarTransition(page) {
+    const transition = await page.locator('#shell-sidebar').evaluate((element) => {
+        const style = getComputedStyle(element)
+
+        return {
+            duration: Number.parseFloat(style.transitionDuration),
+            property: style.transitionProperty,
+        }
+    })
+    const contentDuration = await page
+        .locator('.soa-nav-link-content')
+        .evaluate((element) => Number.parseFloat(getComputedStyle(element).transitionDuration))
+
+    expect(transition.duration).toBeGreaterThan(0)
+    expect(transition.property).toContain('inline-size')
+    expect(contentDuration).toBe(transition.duration)
+}
+
+async function expectManagedCollapsedSidebar(page) {
+    await expect(page.locator('#shell-sidebar')).toHaveCSS('transform', 'none')
+    await expect(page.locator('#shell-sidebar')).toHaveCSS('width', '64px')
+    await expect(page.locator('#sidebar-overlay')).toHaveCSS('display', 'none')
+    await expect(page.locator('.soa-nav-link-content')).toHaveCSS('opacity', '0')
+    await expectSidebarTransition(page)
+    const geometry = await shellGeometry(page)
+    const arrowLeft = await elementLeft(page, '.soa-nav-arrow')
+    const sidebarCenter = await elementCenter(page, '#shell-sidebar')
+    const brandCenter = await elementCenter(page, '.soa-brand-mini')
+    expect(geometry.sidebar.left).toBe(0)
+    expect(brandCenter).toBeCloseTo(sidebarCenter, 0)
+
+    return { arrowLeft, brandCenter, geometry }
+}
+
+async function expectManagedSidebarFlyout(page) {
+    await expect(page.locator('#shell-sidebar')).toHaveCSS('width', '256px')
+    await expect(page.locator('.soa-brand-logo')).toBeHidden()
+    await expect(page.locator('.soa-brand-mini')).toBeVisible()
+    await expect(page.locator('.soa-brand-text')).toBeVisible()
+    await expect(page.locator('.soa-nav-link-content')).toHaveCSS('display', 'flex')
+    await expect(page.locator('.soa-nav-link-content')).toHaveCSS('opacity', '1')
+
+    return {
+        arrowLeft: await elementLeft(page, '.soa-nav-arrow'),
+        brandCenter: await elementCenter(page, '.soa-brand-mini'),
+        geometry: await shellGeometry(page),
+    }
+}
+
+async function elementLeft(page, selector) {
+    return page.locator(selector).evaluate((element) => element.getBoundingClientRect().left)
+}
+
+async function elementCenter(page, selector) {
+    return page.locator(selector).evaluate((element) => {
+        const rectangle = element.getBoundingClientRect()
+
+        return rectangle.left + rectangle.width / 2
+    })
 }

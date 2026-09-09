@@ -72,6 +72,16 @@ test('compact navigation uses the overlay and Escape without replacing markers',
     await expect(page.locator('#pushmenu')).toBeFocused()
 })
 
+test('viewport above the shared mobile breakpoint keeps desktop navigation expanded', async ({
+    page,
+}) => {
+    await page.setViewportSize({ width: 1100, height: 700 })
+    await page.reload()
+
+    await expect(page.locator('body')).toHaveClass(/\bsidebar-open\b/)
+    await expect(page.locator('body')).not.toHaveClass(/\bsidebar-collapse\b/)
+})
+
 test('delegated navigation normalizes and opens a dynamically inserted legacy tree', async ({
     page,
 }) => {

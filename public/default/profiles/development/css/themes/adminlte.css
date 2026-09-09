@@ -1,5 +1,5 @@
 @charset "UTF-8";
-@layer sleepingowl-theme.framework {
+@layer sleepingowl-framework {
   @keyframes passing-through {
     0% {
       opacity: 0;
@@ -16115,6 +16115,40 @@
   --soa-sidebar-indicator-angle: -90deg;
 }
 
+.soa-body .app-sidebar {
+  transition-duration: var(--soa-layout-transition-duration);
+  transition-property: inline-size, transform;
+  transition-timing-function: var(--soa-layout-transition-timing-function);
+}
+
+.soa-body.sidebar-collapse .app-sidebar {
+  margin-inline-start: 0;
+}
+
+.soa-body.sidebar-mini.sidebar-collapse .app-sidebar :is(.soa-nav-link-content, .soa-nav-arrow) {
+  animation-name: none;
+  display: flex;
+  visibility: visible;
+}
+
+.soa-body.sidebar-mini.sidebar-collapse .app-sidebar .soa-nav-link-content {
+  width: auto;
+}
+
+@media (width <= 64rem) {
+  .soa-body.sidebar-collapse.sidebar-open .app-sidebar {
+    inline-size: min(var(--soa-sidebar-width), 100vw - var(--soa-space-6));
+    max-inline-size: min(var(--soa-sidebar-width), 100vw - var(--soa-space-6));
+    min-inline-size: 0;
+  }
+}
+@media (width > 64rem) {
+  .soa-body.sidebar-collapse .app-sidebar {
+    inline-size: var(--soa-sidebar-collapsed-width);
+    max-inline-size: var(--soa-sidebar-width);
+    min-inline-size: 0;
+  }
+}
 @layer sleepingowl-theme.sidebar {
   .app-sidebar {
     background: var(--soa-sidebar-bg);
@@ -16136,7 +16170,7 @@
     background: var(--soa-sidebar-submenu-bg);
   }
   .menu-open > .nav-link .nav-arrow {
-    transform: rotate(var(--soa-sidebar-indicator-angle));
+    transform: translateY(-50%) rotate(var(--soa-sidebar-indicator-angle));
   }
   .sidebar-collapse .app-sidebar {
     width: var(--soa-sidebar-collapsed-width);
@@ -16148,7 +16182,7 @@
     position: fixed;
     z-index: var(--soa-sidebar-overlay-z-index);
   }
-  @media (max-width: 75rem) {
+  @media (max-width: 64rem) {
     .sidebar-closed .app-sidebar,
     .sidebar-collapse:not(.sidebar-open) .app-sidebar {
       transform: translateX(-100%);
@@ -17446,7 +17480,7 @@
   --soa-border-radius-lg: 0.5rem;
   --soa-border-radius-full: 9999px;
   --soa-border-width: 0.0625rem;
-  --soa-layout-transition-duration: 300ms;
+  --soa-layout-transition-duration: 360ms;
   --soa-disabled-opacity: 0.65;
   --soa-font-size-caption: 0.875rem;
   --soa-font-size-section: 1.125rem;

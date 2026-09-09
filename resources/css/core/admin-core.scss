@@ -1,14 +1,16 @@
-@layer sleepingowl-core, sleepingowl-shared, sleepingowl-feature, sleepingowl-theme, sleepingowl-theme-override;
+@layer sleepingowl-core, sleepingowl-framework, sleepingowl-shared, sleepingowl-feature, sleepingowl-theme, sleepingowl-theme-override;
 
 $focus-ring-width: 0.1875rem !default;
 $motion-duration-fast: 150ms !default;
 $motion-duration-normal: 250ms !default;
+$layout-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !default;
 
 @layer sleepingowl-core {
   :root {
     --soa-focus-ring-width: #{$focus-ring-width};
     --soa-motion-duration-fast: #{$motion-duration-fast};
     --soa-motion-duration-normal: #{$motion-duration-normal};
+    --soa-layout-transition-timing-function: #{$layout-transition-timing-function};
   }
 }
 

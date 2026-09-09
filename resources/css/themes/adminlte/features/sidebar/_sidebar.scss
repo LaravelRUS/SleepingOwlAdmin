@@ -2,7 +2,7 @@
 
 $width: 15.625rem !default;
 $collapsed-width: 4.6rem !default;
-$mobile-breakpoint: 75rem !default;
+$mobile-breakpoint: 64rem !default;
 $z-index: 1038 !default;
 $overlay-z-index: 1037 !default;
 $indicator-angle: -90deg !default;
@@ -21,6 +21,47 @@ $indicator-angle: -90deg !default;
     --soa-sidebar-z-index: #{$z-index};
     --soa-sidebar-overlay-z-index: #{$overlay-z-index};
     --soa-sidebar-indicator-angle: #{$indicator-angle};
+  }
+}
+
+@mixin framework-compatibility {
+  .soa-body .app-sidebar {
+    transition-duration: var(--soa-layout-transition-duration);
+    transition-property: inline-size, transform;
+    transition-timing-function: var(--soa-layout-transition-timing-function);
+  }
+
+  .soa-body.sidebar-collapse .app-sidebar {
+    margin-inline-start: 0;
+  }
+
+  .soa-body.sidebar-mini.sidebar-collapse
+    .app-sidebar
+    :is(.soa-nav-link-content, .soa-nav-arrow) {
+    animation-name: none;
+    display: flex;
+    visibility: visible;
+  }
+
+  .soa-body.sidebar-mini.sidebar-collapse .app-sidebar .soa-nav-link-content {
+    width: auto;
+  }
+
+  @media (width <= $mobile-breakpoint) {
+    .soa-body.sidebar-collapse.sidebar-open .app-sidebar {
+      inline-size: min(var(--soa-sidebar-width), calc(100vw - var(--soa-space-6)));
+      max-inline-size: min(var(--soa-sidebar-width), calc(100vw - var(--soa-space-6)));
+      min-inline-size: 0;
+    }
+  }
+
+  @media (width > $mobile-breakpoint) {
+    .soa-body.sidebar-collapse .app-sidebar {
+      inline-size: var(--soa-sidebar-collapsed-width);
+      max-inline-size: var(--soa-sidebar-width);
+      min-inline-size: 0;
+    }
+
   }
 }
 
@@ -50,7 +91,7 @@ $indicator-angle: -90deg !default;
   }
 
   .menu-open > .nav-link .nav-arrow {
-    transform: rotate(var(--soa-sidebar-indicator-angle));
+    transform: translateY(-50%) rotate(var(--soa-sidebar-indicator-angle));
   }
 
   .sidebar-collapse .app-sidebar {

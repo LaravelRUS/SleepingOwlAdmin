@@ -1,0 +1,12 @@
+@mixin styles {
+    .dt-container {
+        // AdminLTE-specific corrections
+    }
+
+    .table.datatables {
+        th:active,
+        th:hover {
+            outline: none;
+        }
+    }
+}

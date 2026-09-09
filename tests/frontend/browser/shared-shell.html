@@ -31,6 +31,7 @@
             :root {
                 --soa-sidebar-width: 16rem;
                 --soa-sidebar-collapsed-width: 4rem;
+                --lte-sidebar-width: 16rem;
                 --soa-header-height: 3.5rem;
                 --soa-header-action-size: 2.5rem;
                 --soa-shell-max-width: 80rem;
@@ -46,7 +47,7 @@
             }
         </style>
     </head>
-    <body class="soa-body sidebar-mini">
+    <body class="soa-body app-loaded">
         <div class="soa-app" id="vueApp">
             <header class="soa-header">
                 <ul class="soa-header-list">
@@ -59,7 +60,7 @@
                 </ul>
             </header>
 
-            <aside class="soa-sidebar" id="shell-sidebar">
+            <aside class="app-sidebar main-sidebar soa-sidebar" id="shell-sidebar">
                 <div class="soa-brand">
                     <a class="soa-brand-link" href="#vueApp">
                         <span class="soa-brand-logo">SO</span>

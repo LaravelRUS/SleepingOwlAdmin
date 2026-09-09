@@ -19,7 +19,12 @@
       minmax(calc(100dvh - var(--soa-header-height)), auto)
       auto;
     min-block-size: 100dvh;
-    transition: grid-template-columns var(--soa-layout-transition-duration) ease;
+    transition: grid-template-columns var(--soa-layout-transition-duration)
+      var(--soa-layout-transition-timing-function);
+
+      a {
+          text-decoration: none;
+      }
   }
 
   .soa-app :where(button, input, select, textarea) {

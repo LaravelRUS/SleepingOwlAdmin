@@ -166,7 +166,7 @@ describe('compiled core boundaries', () => {
         const core = readFileSync(resolve(root, 'public/default/css/admin-core.css'), 'utf8')
 
         expect(core).toContain(
-            '@layer sleepingowl-core, sleepingowl-shared, sleepingowl-feature, sleepingowl-theme, sleepingowl-theme-override',
+            '@layer sleepingowl-core, sleepingowl-framework, sleepingowl-shared, sleepingowl-feature, sleepingowl-theme, sleepingowl-theme-override',
         )
         expect(core).toContain('[data-cloak]')
         expect(core).toContain('[data-visually-hidden]')

@@ -3,6 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="/public/default/css/shared/ui.css" />
         <link rel="stylesheet" href="/public/default/css/shared/features.css" />
         <script>
             const theme = new URLSearchParams(location.search).get('theme') || 'shadcn'
@@ -16,12 +17,22 @@
             }
         </script>
     </head>
-    <body class="sidebar-mini sidebar-open">
-        <aside id="presented-sidebar" class="app-sidebar main-sidebar">
-            <ul class="sidebar-menu nav-sidebar">
-                <li class="nav-item menu-open">
-                    <a id="presented-link" class="nav-link active" href="#active">Active</a>
-                    <ul class="nav-treeview">
+    <body class="soa-body sidebar-mini sidebar-open">
+        <aside id="presented-sidebar" class="soa-sidebar app-sidebar main-sidebar">
+            <ul class="sidebar-menu nav-sidebar soa-nav-tree">
+                <li id="presented-item" class="nav-item soa-nav-item">
+                    <a id="presented-link" class="nav-link soa-nav-link active" href="#active">
+                        <span aria-hidden="true">&bull;</span>
+                        <p class="soa-nav-link-content">
+                            <span class="soa-nav-title">Active</span>
+                            <i
+                                id="presented-arrow"
+                                class="nav-arrow soa-nav-arrow fas fa-angle-right"
+                                aria-hidden="true"
+                            ></i>
+                        </p>
+                    </a>
+                    <ul class="nav-treeview soa-nav-children">
                         <li>Child</li>
                     </ul>
                 </li>

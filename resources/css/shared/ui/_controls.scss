@@ -42,6 +42,16 @@
     min-inline-size: var(--soa-header-action-size);
   }
 
+    .soa-header-action {
+        border: 0;
+        opacity: 0.5;
+        transition: opacity var(--soa-motion-duration-normal) ease;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+
   .soa-button:hover:not(:disabled, [aria-disabled='true']),
   .soa-icon-button:hover:not(:disabled, [aria-disabled='true']) {
     background: var(--soa-muted-surface-color);

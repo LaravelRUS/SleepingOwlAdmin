@@ -20,14 +20,15 @@ import {
 } from './sidebar-storage.js'
 import { collapseTreeItem, expandTreeItem, normalizeTree, toggleTreeItem } from './sidebar-tree.js'
 
-const DEFAULT_BREAKPOINT = 1200
-const DEFAULT_ANIMATION_DURATION = 300
+const DEFAULT_BREAKPOINT = 1024
+const DEFAULT_ANIMATION_DURATION = 360
 
 export function mountSidebar(root, options = {}) {
     const state = createSidebarState(root, options)
     const listeners = bindSidebarListeners(state)
     scanSidebar(state, root)
     restoreSidebar(state)
+    markSidebarLoaded(state)
 
     return sidebarController(state, listeners)
 }
@@ -58,6 +59,7 @@ function createSidebarState(root, options) {
         collapseTimer: null,
         document,
         expanded: !root.classList.contains('sidebar-collapse'),
+        loadedFrame: null,
         preference: readSidebarPreference(window.localStorage),
         root,
         toggles: [],
@@ -171,6 +173,13 @@ function restoreSidebar(state) {
     normalizeSidebar(state, expanded)
 }
 
+function markSidebarLoaded(state) {
+    state.loadedFrame = state.window.requestAnimationFrame(() => {
+        state.body.classList.add('app-loaded')
+        state.loadedFrame = null
+    })
+}
+
 function toggleAndPersist(state, options = {}) {
     const expanded = !state.expanded
 
@@ -197,6 +206,10 @@ function scanSidebar(state, root) {
 
 function destroySidebar(state, listeners) {
     clearCollapsedDone(state)
+    if (state.loadedFrame !== null) {
+        state.window.cancelAnimationFrame(state.loadedFrame)
+        state.loadedFrame = null
+    }
     state.root.removeEventListener('click', listeners.click)
     state.root.removeEventListener('keydown', listeners.keydown)
     state.window.removeEventListener('resize', listeners.resize)
