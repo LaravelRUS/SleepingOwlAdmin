@@ -93,6 +93,21 @@ class ThemeMetadataContractTest extends TestCase
         new ThemeAssetManifest('custom-admin', ['shared:icons', 'shared:icons']);
     }
 
+    public function test_manifest_scopes_the_optional_override_entry_last(): void
+    {
+        $manifest = new ThemeAssetManifest('custom-admin', [
+            'theme:overrides',
+            'feature:table',
+        ]);
+
+        $this->assertSame([
+            'theme:custom-admin',
+            'feature:table:theme:custom-admin',
+            'theme:custom-admin:overrides',
+        ], $manifest->entries());
+        $this->assertSame('theme:custom-admin:overrides', $manifest->overrideEntry());
+    }
+
     public function test_capabilities_reject_unknown_values(): void
     {
         $this->expectException(InvalidArgumentException::class);

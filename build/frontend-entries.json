@@ -79,6 +79,11 @@
                 "output": "css/icons.css"
             },
             {
+                "logicalId": "shared:ui",
+                "source": "resources/css/shared/shared-ui.scss",
+                "output": "css/shared/ui.css"
+            },
+            {
                 "logicalId": "shared:features",
                 "source": "resources/css/shared/features.scss",
                 "output": "css/shared/features.css"
@@ -103,6 +108,16 @@
                 "source": "resources/css/themes/shadcn/tailwind.input.css",
                 "output": "css/themes/shadcn-utilities.css",
                 "processor": "postcss"
+            },
+            {
+                "logicalId": "theme:adminlte:overrides",
+                "source": "resources/css/theme-overrides/adminlte.scss",
+                "output": "css/theme-overrides/adminlte.css"
+            },
+            {
+                "logicalId": "theme:shadcn:overrides",
+                "source": "resources/css/theme-overrides/shadcn.scss",
+                "output": "css/theme-overrides/shadcn.css"
             }
         ]
     }

@@ -13,6 +13,8 @@ final class ThemeRuntimeAssets
 
     private const FEATURE_RUNTIME = 'shared:features';
 
+    private const SHARED_UI = 'shared:ui';
+
     public function __construct(
         private LogicalAssetRegistrar $registrar,
         private AssetManifestRegistry $manifests
@@ -26,7 +28,11 @@ final class ThemeRuntimeAssets
     {
         $this->manifests->select($themeName);
 
-        return $this->registrar->register($this->logicalEntries($themeName, $theme), $aliases);
+        return $this->registrar->registerOrdered(
+            $this->styleEntries($themeName, $theme),
+            $this->scriptEntries($themeName, $theme),
+            $aliases
+        );
     }
 
     /**
@@ -34,52 +40,57 @@ final class ThemeRuntimeAssets
      */
     public function logicalEntries(string $themeName, ThemeInterface $theme): array
     {
+        return array_values(array_unique([
+            ...$this->styleEntries($themeName, $theme),
+            ...$this->scriptEntries($themeName, $theme),
+        ]));
+    }
+
+    /**
+     * @return list<string>
+     */
+    public function styleEntries(string $themeName, ThemeInterface $theme): array
+    {
         $manifest = ThemeAssetManifest::fromTheme($themeName, $theme);
-        $base = array_values(array_diff(
-            $manifest->entriesFor([]),
-            [...self::DEFERRED_ASSETS, self::FEATURE_RUNTIME]
-        ));
 
-        return [
+        return $this->unique([
             'core',
-            ...$base,
-            ...$this->preloadedAdapters($manifest),
+            ...$this->sharedRuntimeEntries($manifest),
+            self::SHARED_UI,
             self::FEATURE_RUNTIME,
-            ...$this->deferredAdapters($manifest),
+            $manifest->themeEntry(),
+            ...$manifest->featureEntries(),
+            $manifest->overrideEntry(),
             ...$this->deferredEntries($manifest),
-        ];
+        ]);
     }
 
     /**
      * @return list<string>
      */
-    private function preloadedAdapters(ThemeAssetManifest $manifest): array
+    public function scriptEntries(string $themeName, ThemeInterface $theme): array
     {
-        return array_values(array_filter(
-            $this->themeAdapters($manifest),
-            static fn (string $entry): bool => str_starts_with($entry, 'feature:table:')
-        ));
+        $manifest = ThemeAssetManifest::fromTheme($themeName, $theme);
+
+        return $this->unique([
+            'core',
+            ...$this->sharedRuntimeEntries($manifest),
+            $manifest->themeEntry(),
+            self::FEATURE_RUNTIME,
+            ...$manifest->featureEntries(),
+            $manifest->overrideEntry(),
+            ...$this->deferredEntries($manifest),
+        ]);
     }
 
     /**
      * @return list<string>
      */
-    private function deferredAdapters(ThemeAssetManifest $manifest): array
+    private function sharedRuntimeEntries(ThemeAssetManifest $manifest): array
     {
-        return array_values(array_filter(
-            $this->themeAdapters($manifest),
-            static fn (string $entry): bool => ! str_starts_with($entry, 'feature:table:')
-        ));
-    }
-
-    /**
-     * @return list<string>
-     */
-    private function themeAdapters(ThemeAssetManifest $manifest): array
-    {
-        return array_values(array_filter(
-            $manifest->entries(),
-            static fn (string $entry): bool => str_starts_with($entry, 'feature:')
+        return array_values(array_diff(
+            $manifest->sharedEntries(),
+            [...self::DEFERRED_ASSETS, self::FEATURE_RUNTIME, self::SHARED_UI]
         ));
     }
 
@@ -89,5 +100,17 @@ final class ThemeRuntimeAssets
     private function deferredEntries(ThemeAssetManifest $manifest): array
     {
         return array_values(array_intersect(self::DEFERRED_ASSETS, $manifest->entriesFor([])));
+    }
+
+    /**
+     * @param  list<?string>  $entries
+     * @return list<string>
+     */
+    private function unique(array $entries): array
+    {
+        return array_values(array_unique(array_filter(
+            $entries,
+            static fn (?string $entry): bool => $entry !== null
+        )));
     }
 }

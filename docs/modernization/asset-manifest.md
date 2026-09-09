@@ -9,8 +9,8 @@ Manifest создаётся после Laravel Mix build из `build/frontend-en
 Текущие группы logical ids:
 
 - `core`;
-- общие `shared:icons`, `shared:compatibility`, объединённый `shared:features`, profile-aware `shared:vue` и завершающий `shared:modules`;
-- встроенные `theme:adminlte` и `theme:shadcn`.
+- общие `shared:icons`, `shared:compatibility`, semantic `shared:ui`, объединённый `shared:features`, profile-aware `shared:vue` и завершающий `shared:modules`;
+- встроенные `theme:adminlte`/`theme:shadcn` и их последние `theme:<name>:overrides`.
 
 `shared:features` содержит все всегда загружаемые feature drivers и их нейтральный CSS. Встроенные
 presentation adapters входят в единый `theme:<id>` bundle. Это соответствует фактическому runtime:
@@ -68,7 +68,7 @@ ADMIN_DEV_ASSETS=false
 - `ResolvedAssetBundle` возвращает отдельные списки scripts и styles;
 - `LogicalAssetRegistrar` передаёт эти URL в first-party meta/asset registry со стабильными handles и явной цепочкой зависимостей внутри CSS и JS, не читая manifest самостоятельно; точечные aliases logical entry сохраняют исторические public handles без привязки consumer-кода к filenames.
 
-Resolver и registrar зарегистрированы в container. Новый config default `AdminLTETheme` загружает versioned logical runtime в порядке `core`, shared infrastructure, выбранная тема, объединённый `shared:features`, внешние adapters и завершающий `shared:modules`. Последний entry выполняет один `Admin.Modules.boot()` и финальный идемпотентный component scan. Исторические handles сохранены: `admin-vue-init` обозначает готовый Vue public API, `admin-default` — полностью загруженный theme/feature runtime, `admin-modules-load` — завершённый module boot. Это оставляет существующим project assets рабочие dependency points.
+Resolver и registrar зарегистрированы в container. CSS и JavaScript разрешаются из независимых последовательностей logical entries: CSS идёт `core → shared:ui → shared:features → theme → feature adapters → theme overrides`, JavaScript — `core → shared runtime → theme runtime → shared:features → feature adapters → theme overrides → shared:modules`. Последний entry выполняет один `Admin.Modules.boot()` и финальный идемпотентный component scan. Исторические handles сохранены: `admin-vue-init` обозначает готовый Vue public API, `admin-default` — полностью загруженный theme/feature runtime, `admin-modules-load` — завершённый module boot. Это оставляет существующим project assets рабочие dependency points.
 
 `TemplateDefault` намеренно остаётся отдельным deprecated compatibility path и продолжает загружать `admin-app.js`, `vue.js` и `modules.js` для старых опубликованных config. Одна страница не смешивает этот aggregate с logical runtime.
 

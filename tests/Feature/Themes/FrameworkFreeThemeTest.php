@@ -99,8 +99,9 @@ class FrameworkFreeThemeTest extends TestCase
             'core',
             'shared:compatibility',
             'shared:vue',
-            'theme:framework-free-test',
+            'shared:ui',
             'shared:features',
+            'theme:framework-free-test',
             'shared:modules',
         ], $runtime->logicalEntries('framework-free-test', app(ThemeInterface::class)));
     }
@@ -114,6 +115,7 @@ class FrameworkFreeThemeTest extends TestCase
             $this->assertSelectedThemeSources($customSources, $profile, 'framework-free-test');
             $this->assertSelectedThemeSources($adminlteSources, $profile, 'adminlte');
             $this->assertStringNotContainsString('icons.css', implode('|', $customSources));
+            $this->assertStringContainsString('/css/shared/ui.css', implode('|', $customSources));
         }
     }
 

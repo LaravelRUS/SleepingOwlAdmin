@@ -68,7 +68,8 @@ final class AssetProfile
     private static function assertLogicalId(mixed $logicalId): void
     {
         $pattern = '/\A(?:core|(?:feature|shared|theme):'.self::IDENTIFIER_PATTERN
-            .'|feature:'.self::IDENTIFIER_PATTERN.':theme:'.self::IDENTIFIER_PATTERN.')\z/';
+            .'|feature:'.self::IDENTIFIER_PATTERN.':theme:'.self::IDENTIFIER_PATTERN
+            .'|theme:'.self::IDENTIFIER_PATTERN.':overrides)\z/';
 
         if (! is_string($logicalId) || preg_match($pattern, $logicalId) !== 1) {
             $value = is_scalar($logicalId) ? (string) $logicalId : get_debug_type($logicalId);

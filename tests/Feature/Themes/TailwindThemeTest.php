@@ -62,7 +62,32 @@ class TailwindThemeTest extends TestCase
             'shared:modules',
             'shared:vue',
             'theme:shadcn',
+            'theme:shadcn:overrides',
         ], $manifest->entries());
+        $this->assertSame([
+            'core',
+            'shared:icons',
+            'shared:compatibility',
+            'shared:vue',
+            'shared:ui',
+            'shared:features',
+            'theme:shadcn',
+            'theme:shadcn:overrides',
+            'shared:modules',
+        ], app(ThemeRuntimeAssets::class)->logicalEntries('shadcn', app(TailwindTheme::class)));
+
+        $this->assertSame([
+            'core',
+            'shared:icons',
+            'shared:compatibility',
+            'shared:vue',
+            'shared:ui',
+            'shared:features',
+            'theme:shadcn',
+            'theme:shadcn:overrides',
+            'shared:modules',
+        ], app(ThemeRuntimeAssets::class)->styleEntries('shadcn', app(TailwindTheme::class)));
+
         $this->assertSame([
             'core',
             'shared:icons',
@@ -70,8 +95,9 @@ class TailwindThemeTest extends TestCase
             'shared:vue',
             'theme:shadcn',
             'shared:features',
+            'theme:shadcn:overrides',
             'shared:modules',
-        ], app(ThemeRuntimeAssets::class)->logicalEntries('shadcn', app(TailwindTheme::class)));
+        ], app(ThemeRuntimeAssets::class)->scriptEntries('shadcn', app(TailwindTheme::class)));
     }
 
     public function test_each_profile_registers_implemented_tailwind_adapters(): void
@@ -93,6 +119,11 @@ class TailwindThemeTest extends TestCase
             $this->assertStringContainsString("profiles/{$profile}/css/themes/shadcn.css", $joined);
             $this->assertStringContainsString("profiles/{$profile}/css/themes/shadcn-utilities.css", $joined);
             $this->assertStringContainsString("profiles/{$profile}/css/icons.css", $joined);
+            $this->assertStringContainsString("profiles/{$profile}/css/shared/ui.css", $joined);
+            $this->assertStringContainsString(
+                "profiles/{$profile}/css/theme-overrides/shadcn.css",
+                $joined
+            );
             $this->assertStringNotContainsString('adminlte', $joined);
             $this->assertStringContainsString("profiles/{$profile}/js/shared/features.js", $joined);
             $this->assertStringContainsString("profiles/{$profile}/css/shared/features.css", $joined);

@@ -9,7 +9,9 @@ final class ThemeAssetManifest
 {
     private const IDENTIFIER_PATTERN = '/\A[a-z0-9](?:[a-z0-9._-]*[a-z0-9])?\z/';
 
-    private ?string $themeEntry = null;
+    private string $themeEntry;
+
+    private ?string $overrideEntry = null;
 
     /** @var array<string, string> */
     private array $sharedEntries = [];
@@ -49,6 +51,7 @@ final class ThemeAssetManifest
             ...array_values($this->sharedEntries),
             $this->themeEntry,
             ...array_values($this->featureEntries),
+            $this->overrideEntry,
         ]));
     }
 
@@ -70,7 +73,37 @@ final class ThemeAssetManifest
             }
         }
 
+        if ($this->overrideEntry !== null) {
+            $entries[] = $this->overrideEntry;
+        }
+
         return $entries;
+    }
+
+    /**
+     * @return list<string>
+     */
+    public function sharedEntries(): array
+    {
+        return array_values($this->sharedEntries);
+    }
+
+    public function themeEntry(): string
+    {
+        return $this->themeEntry;
+    }
+
+    /**
+     * @return list<string>
+     */
+    public function featureEntries(): array
+    {
+        return array_values($this->featureEntries);
+    }
+
+    public function overrideEntry(): ?string
+    {
+        return $this->overrideEntry;
     }
 
     public function hasFeatureAdapter(string $feature): bool
@@ -95,6 +128,16 @@ final class ThemeAssetManifest
 
         if (str_starts_with($entry, 'shared:')) {
             $this->addSharedEntry($entry);
+
+            return;
+        }
+
+        if ($entry === 'theme:overrides') {
+            if ($this->overrideEntry !== null) {
+                throw new InvalidArgumentException('Duplicate theme override declaration.');
+            }
+
+            $this->overrideEntry = "theme:{$this->themeName}:overrides";
 
             return;
         }

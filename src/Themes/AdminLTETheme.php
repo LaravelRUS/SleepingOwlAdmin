@@ -35,6 +35,7 @@ final class AdminLTETheme extends TemplateDefault implements ThemeInterface
             'shared:compatibility',
             'shared:modules',
             'shared:vue',
+            'theme:overrides',
         ];
     }
 

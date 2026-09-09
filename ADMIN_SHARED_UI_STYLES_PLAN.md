@@ -112,7 +112,7 @@ Canonical название хранится один раз — ключом `te
 - [x] Разложить CSS/JS темы и её feature adapters по `resources/{css,js}/themes/<theme-name>`; выделить полный Blade base и реальные theme overrides.
 - [x] Заменить `ThemeInterface::id()` и внутренний `themeId` на имя, передаваемое config/registry; Theme-класс не дублирует название.
 - [x] Добавить новый shape `template.default` + `template.themes`, сохранив fallback для прежнего `'template' => ThemeClass::class`.
-- [ ] Ввести logical entry `theme:<name>:overrides`, подключаемый только для выбранной темы и после всех её base/feature entries.
+- [x] Ввести logical entry `theme:<name>:overrides`, подключаемый только для выбранной темы и после всех её base/feature entries.
 - [x] Генерировать theme-scoped logical entries из выбранного имени, не перечислять имя повторно в `ThemeInterface::assets()`.
 - [ ] Расширить custom-theme scaffold и `ThemeRegistry`: внешний package регистрирует self-contained theme root и готовый manifest fragment без копирования в package.
 - [ ] Добавить no-build contract: сторонняя Composer-тема устанавливается с готовыми assets без Node.js и package source edits.
@@ -120,9 +120,9 @@ Canonical название хранится один раз — ключом `te
 - [x] Проверить одинаковый детерминированный порядок CSS и JavaScript в production/development manifests.
 - [x] Объединить всегда загружаемые built-in feature entries в `shared:features`, а мелкие adapters — в единый bundle каждой темы.
 - [x] Перенести полный AdminLTE-compatible Blade contract в `resources/views/default`; Shadcn хранит только отличающиеся overrides и наследует base через Laravel namespace hints.
-- [ ] Создать `resources/css/shared/shared-ui.scss` и logical entry `shared:ui` в обоих asset profiles.
-- [ ] Зафиксировать cascade order `core -> shared -> feature -> theme`; theme override должен быть явным и минимальным.
-- [ ] Автоматически регистрировать `shared:ui` ровно один раз для AdminLTE, Tailwind и любой custom theme.
+- [x] Создать `resources/css/shared/shared-ui.scss` и logical entry `shared:ui` в обоих asset profiles.
+- [x] Зафиксировать cascade order `core -> shared -> feature -> theme`; theme override должен быть явным и минимальным.
+- [x] Автоматически регистрировать `shared:ui` ровно один раз для AdminLTE, Tailwind и любой custom theme.
 - [x] Добавить одинаковые semantic classes в AdminLTE/Tailwind Blade; legacy classes оставить compatibility aliases.
 - [ ] Добавить static gate: в theme SCSS нет копий перенесённых structural selectors.
 
@@ -202,3 +202,4 @@ Canonical название хранится один раз — ключом `te
 | 2026-09-09 | Исполняемый reachability gate | Добавлен `npm run check:reachability`: граф строится от всех modern/legacy build entries и поддерживаемых `index.js` source boundaries через JS/Vue imports, Sass dependencies и Tailwind config. Единственный настоящий orphan `shared/vue/legacy/use-translation.js` и пустой core palette placeholder перенесены в `resources/archive/unused-sources`; активный граф содержит 356/356 достижимых файлов с учётом двух Tailwind CJS config sources. Gate включён в `npm run check`. | `02680605` |
 | 2026-09-09 | Финальная проверка укрупнения | Production-профили пересобраны из укрупнённых sources, а не перенесены: полный профиль содержит 14 файлов, выбранный AdminLTE runtime — 10 файлов и 1 794 385 bytes / 459 186 gzip bytes. От legacy aggregate это −30,6% raw и −21,9% gzip. Финальные gates: Vitest 115 файлов / 496 тестов, PHPUnit 635 тестов / 3286 assertions / 11 skipped, Playwright 141/141; Prettier, ESLint, Stylelint, reachability 356/356 и `git diff --check` прошли. | `0d262f12`, `daed229a`, `6bbe3070` |
 | 2026-09-09 | Canonical theme name и scoped assets | `ThemeInterface::id()` удалён: выбранное lower-kebab имя хранит `ThemeSelection`, передаёт config/registry и получает Blade как `themeName`. Theme-классы объявляют только shared/unscoped feature dependencies; `ThemeAssetManifest` автоматически формирует `theme:<name>` и `feature:<feature>:theme:<name>`. External registry валидирует имя отдельно и отклоняет конфликты. Узкий PHP gate: 90 tests / 877 assertions. | текущий commit |
+| 2026-09-09 | Shared UI и override asset layers | Добавлены отдельный `shared:ui` и минимальные `theme:<name>:overrides` entries. Registrar разрешает независимый manifest order: CSS `core → shared UI → shared features → theme → overrides`, JavaScript `core → shared runtime → theme → feature drivers → overrides → modules`. `shared:ui` регистрируется runtime-assembler ровно один раз для встроенных и external themes. Оба профиля пересобраны; узкие gates: PHPUnit 97/892, Vitest 118/118, Stylelint и reachability 359/359. | текущий commit |

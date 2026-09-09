@@ -6,7 +6,14 @@ import { describe, expect, it } from 'vitest'
 const root = resolve(import.meta.dirname, '../../..')
 const entries = readJson('build/frontend-entries.json').modern.styles
 const aggregateEntries = new Set(['shared:features', 'shared:icons'])
-const tokenizedEntries = entries.filter((entry) => !aggregateEntries.has(entry.logicalId))
+const layerOnlyEntries = new Set([
+    'shared:ui',
+    'theme:adminlte:overrides',
+    'theme:shadcn:overrides',
+])
+const tokenizedEntries = entries.filter(
+    (entry) => !aggregateEntries.has(entry.logicalId) && !layerOnlyEntries.has(entry.logicalId),
+)
 const sassTokenizedEntries = tokenizedEntries.filter((entry) => entry.source.endsWith('.scss'))
 
 function readJson(path) {
@@ -41,6 +48,17 @@ describe('Sass aggregate entries', () => {
 })
 
 describe('Sass entrypoint boundaries', () => {
+    it.each(entries.filter((entry) => layerOnlyEntries.has(entry.logicalId)))(
+        '$logicalId is an explicit framework-free cascade boundary',
+        (entry) => {
+            const source = readSource(entry.source)
+
+            expect(source).toMatch(/@layer sleepingowl-(?:shared|theme-override);/)
+            expect(source).not.toMatch(/@(?:use|import)\b/)
+            expect(variableDeclarations(source)).toEqual([])
+        },
+    )
+
     it.each(sassTokenizedEntries)('$logicalId loads its canonical token owner', (entry) => {
         const source = readSource(entry.source)
         const isCore = entry.logicalId === 'core'

@@ -29,6 +29,29 @@ final class LogicalAssetRegistrar
     }
 
     /**
+     * Register CSS and JavaScript from independent manifest-defined sequences.
+     *
+     * @param  list<string>  $styleLogicalIds
+     * @param  list<string>  $scriptLogicalIds
+     * @param  array<string, string>  $aliases
+     */
+    public function registerOrdered(
+        array $styleLogicalIds,
+        array $scriptLogicalIds,
+        array $aliases = []
+    ): ResolvedAssetBundle {
+        $styleBundle = $this->resolver->resolveMany($styleLogicalIds);
+        $scriptBundle = $this->resolver->resolveMany($scriptLogicalIds);
+        $logicalIds = array_values(array_unique([...$styleLogicalIds, ...$scriptLogicalIds]));
+        $resolvedAliases = $this->resolveAliases($logicalIds, $aliases);
+
+        $this->registerStyles($styleBundle->styles(), $resolvedAliases['styles']);
+        $this->registerScripts($scriptBundle->scripts(), $resolvedAliases['scripts']);
+
+        return new ResolvedAssetBundle($scriptBundle->scripts(), $styleBundle->styles());
+    }
+
+    /**
      * @param  list<string>  $urls
      * @param  array<string, string>  $aliases
      */

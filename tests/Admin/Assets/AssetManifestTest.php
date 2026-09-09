@@ -55,6 +55,17 @@ class AssetManifestTest extends TestCase
         AssetManifest::fromFragment($fragment);
     }
 
+    public function test_theme_override_is_a_valid_manifest_entry(): void
+    {
+        $manifest = $this->manifest();
+        $manifest['profiles']['production']['entries']['theme:adminlte:overrides'] =
+            $this->bundle('theme-overrides/adminlte');
+
+        $profile = AssetManifest::fromArray($manifest)->profile('production');
+
+        $this->assertTrue($profile->has('theme:adminlte:overrides'));
+    }
+
     public function test_it_rejects_unsafe_or_mistyped_asset_paths(): void
     {
         foreach (['../admin-core.js', '/js/admin-core.js', 'https://example.test/app.js', 'js/app.css'] as $file) {

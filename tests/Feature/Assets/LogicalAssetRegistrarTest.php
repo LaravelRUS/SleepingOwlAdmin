@@ -41,6 +41,25 @@ class LogicalAssetRegistrarTest extends TestCase
         $this->assertNotSame($productionUrls, $this->urls());
     }
 
+    public function test_css_and_javascript_can_follow_independent_manifest_sequences(): void
+    {
+        $registrar = new LogicalAssetRegistrar($this->resolver(), $this->recordingMeta());
+
+        $bundle = $registrar->registerOrdered(
+            ['feature:forms', 'core'],
+            ['core', 'feature:forms']
+        );
+
+        $this->assertStringContainsString('/css/forms.css', $this->styles[0]['url']);
+        $this->assertStringContainsString('/css/admin-core.css', $this->styles[1]['url']);
+        $this->assertStringContainsString('/js/admin-core.js', $this->scripts[0]['url']);
+        $this->assertStringContainsString('/js/forms.js', $this->scripts[1]['url']);
+        $this->assertSame($bundle->styles(), array_column($this->styles, 'url'));
+        $this->assertSame($bundle->scripts(), array_column($this->scripts, 'url'));
+        $this->assertDependencyChain($this->scripts, 'script');
+        $this->assertDependencyChain($this->styles, 'style');
+    }
+
     public function test_logical_entries_can_preserve_public_legacy_handles(): void
     {
         $registrar = new LogicalAssetRegistrar($this->resolver(), $this->recordingMeta());

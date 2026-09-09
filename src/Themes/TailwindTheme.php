@@ -18,6 +18,7 @@ final class TailwindTheme implements ThemeInterface
             'shared:compatibility',
             'shared:modules',
             'shared:vue',
+            'theme:overrides',
         ];
     }
 

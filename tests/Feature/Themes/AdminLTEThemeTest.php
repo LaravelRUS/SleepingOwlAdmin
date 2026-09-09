@@ -46,6 +46,7 @@ class AdminLTEThemeTest extends TestCase
             'shared:modules',
             'shared:vue',
             'theme:adminlte',
+            'theme:adminlte:overrides',
         ], $manifest->entries());
         $this->assertSame([
             'shared:icons',
@@ -53,6 +54,7 @@ class AdminLTEThemeTest extends TestCase
             'shared:modules',
             'shared:vue',
             'theme:adminlte',
+            'theme:adminlte:overrides',
         ], $manifest->entriesFor(['tabs', 'table']));
     }
 
@@ -197,8 +199,10 @@ class AdminLTEThemeTest extends TestCase
         return [
             "{$root}/admin-core.css",
             "{$root}/icons.css",
-            "{$root}/themes/adminlte.css",
+            "{$root}/shared/ui.css",
             "{$root}/shared/features.css",
+            "{$root}/themes/adminlte.css",
+            "{$root}/theme-overrides/adminlte.css",
         ];
     }
 }

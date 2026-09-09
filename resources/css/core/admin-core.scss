@@ -1,4 +1,4 @@
-@layer sleepingowl-core, sleepingowl-feature, sleepingowl-theme;
+@layer sleepingowl-core, sleepingowl-shared, sleepingowl-feature, sleepingowl-theme, sleepingowl-theme-override;
 
 $focus-ring-width: 0.1875rem !default;
 $motion-duration-fast: 150ms !default;

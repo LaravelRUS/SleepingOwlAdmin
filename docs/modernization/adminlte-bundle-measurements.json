@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "sourceManifest": "public/default/asset-manifest.json",
   "packageVersion": "dev-master",
-  "buildId": "sha256:4a9d08caa3f36504ceb3d7ba03664bb3822c81de0eb3e508bc5231bc7288ebee",
+  "buildId": "sha256:4d181a8c1be1d9175c8c8e5be9cd6006d1a31f7091e573f9c72a9a0147315ceb",
   "baseline": {
     "source": "docs/modernization/baseline/frontend.json",
     "bytes": 2585357,
@@ -24,16 +24,16 @@
             {
               "type": "styles",
               "file": "profiles/production/css/admin-core.css",
-              "version": "e62a4a0c1b32afad6ab1f5ff2b1e9a06",
-              "checksum": "sha256:1c83eed8758c8fa2e04ae34f66858e98eec1bf47c42955b8b5a59aacd8520701",
-              "bytes": 546,
-              "gzipBytes": 303
+              "version": "575ed80e90e1dd3bbf2fd47777c210c1",
+              "checksum": "sha256:59391df22f37fc862fdd5f78d9006b22e94a040461ba1876ba11e9e83f926524",
+              "bytes": 594,
+              "gzipBytes": 313
             }
           ],
           "totals": {
             "files": 2,
-            "bytes": 41256,
-            "gzipBytes": 9093
+            "bytes": 41304,
+            "gzipBytes": 9103
           }
         },
         "shared:compatibility": {
@@ -112,6 +112,23 @@
             "gzipBytes": 321
           }
         },
+        "shared:ui": {
+          "assets": [
+            {
+              "type": "styles",
+              "file": "profiles/production/css/shared/ui.css",
+              "version": "29e04e0c7f4fe6f5ca4c4b6866456f85",
+              "checksum": "sha256:4ea77774bbb9b38118442990a82d5de47a8940d3f933b1856e1df3c4dd34ef4d",
+              "bytes": 26,
+              "gzipBytes": 46
+            }
+          ],
+          "totals": {
+            "files": 1,
+            "bytes": 26,
+            "gzipBytes": 46
+          }
+        },
         "shared:vue": {
           "assets": [
             {
@@ -156,9 +173,9 @@
         }
       },
       "totals": {
-        "files": 10,
-        "bytes": 1794385,
-        "gzipBytes": 459186
+        "files": 11,
+        "bytes": 1794459,
+        "gzipBytes": 459242
       }
     },
     "development": {
@@ -176,16 +193,16 @@
             {
               "type": "styles",
               "file": "profiles/development/css/admin-core.css",
-              "version": "18607ca2d3c931582323cc30d4569688",
-              "checksum": "sha256:e34b8aabd598ffc10a6a9631b4a4df8f18a16badb24281e8e347d75b194c1e9d",
-              "bytes": 747,
-              "gzipBytes": 366
+              "version": "f161a0adf58787718d42b5ff888778b3",
+              "checksum": "sha256:c7461970d231085d522dda766d28efa11023b22b536d5c706006b1e1e3f10e61",
+              "bytes": 795,
+              "gzipBytes": 378
             }
           ],
           "totals": {
             "files": 2,
-            "bytes": 83852,
-            "gzipBytes": 15081
+            "bytes": 83900,
+            "gzipBytes": 15093
           }
         },
         "shared:compatibility": {
@@ -264,6 +281,23 @@
             "gzipBytes": 795
           }
         },
+        "shared:ui": {
+          "assets": [
+            {
+              "type": "styles",
+              "file": "profiles/development/css/shared/ui.css",
+              "version": "8979418a9af607d1404956865b1fa4f5",
+              "checksum": "sha256:5883055b4c6f16a8bd96ec4af69d2fa67646dd6673977ee550158ae6b6dbf3ba",
+              "bytes": 61,
+              "gzipBytes": 79
+            }
+          ],
+          "totals": {
+            "files": 1,
+            "bytes": 61,
+            "gzipBytes": 79
+          }
+        },
         "shared:vue": {
           "assets": [
             {
@@ -308,23 +342,23 @@
         }
       },
       "totals": {
-        "files": 10,
-        "bytes": 4738267,
-        "gzipBytes": 932068
+        "files": 11,
+        "bytes": 4738376,
+        "gzipBytes": 932159
       }
     }
   },
   "productionVsLegacyAggregate": {
     "bytes": {
-      "current": 1794385,
+      "current": 1794459,
       "baseline": 2585357,
-      "delta": -790972,
+      "delta": -790898,
       "percent": -30.6
     },
     "gzipBytes": {
-      "current": 459186,
+      "current": 459242,
       "baseline": 587787,
-      "delta": -128601,
+      "delta": -128545,
       "percent": -21.9
     }
   }

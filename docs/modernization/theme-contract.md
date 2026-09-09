@@ -19,6 +19,7 @@
 ```text
 shared:<shared-id>
 feature:<feature-id>
+theme:overrides
 ```
 
 Например:
@@ -35,7 +36,7 @@ public function assets(): array
 }
 ```
 
-`ThemeAssetManifest::fromTheme($name, $theme)` проверяет declarations, запрещает физические пути, уже scoped имена и дубликаты, затем генерирует `theme:<name>` и `feature:<feature>:theme:<name>`. Он возвращает shared entries перед base theme entry. `entriesFor($activeFeatures)` добавляет только объявленные adapters фактически активных features, сохраняя порядок запрошенных features и не загружая остальные chunks.
+`ThemeAssetManifest::fromTheme($name, $theme)` проверяет declarations, запрещает физические пути, уже scoped имена и дубликаты, затем генерирует `theme:<name>`, `feature:<feature>:theme:<name>` и optional `theme:<name>:overrides`. Он возвращает shared entries перед base theme entry и override строго последним. `entriesFor($activeFeatures)` добавляет только объявленные adapters фактически активных features, сохраняя порядок запрошенных features и не загружая остальные chunks.
 
 Пустой список допустим и всё равно создаёт обязательный `theme:<name>` entry. Runtime `AssetManifestResolver` сопоставляет ids с versioned filenames и checksums выбранного профиля; theme contract сам файловую систему не читает. Полная schema описана в `asset-manifest.md`.
 

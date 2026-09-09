@@ -158,7 +158,9 @@ describe('compiled core boundaries', () => {
     it('keeps framework and theme CSS out of the compiled core stylesheet', () => {
         const core = readFileSync(resolve(root, 'public/default/css/admin-core.css'), 'utf8')
 
-        expect(core).toContain('@layer sleepingowl-core, sleepingowl-feature, sleepingowl-theme')
+        expect(core).toContain(
+            '@layer sleepingowl-core, sleepingowl-shared, sleepingowl-feature, sleepingowl-theme, sleepingowl-theme-override',
+        )
         expect(core).toContain('[data-cloak]')
         expect(core).toContain('[data-visually-hidden]')
         expect(core).not.toMatch(/bootstrap|adminlte|tailwind|dataTables/i)

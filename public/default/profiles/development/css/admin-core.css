@@ -1,4 +1,4 @@
-@layer sleepingowl-core, sleepingowl-feature, sleepingowl-theme;
+@layer sleepingowl-core, sleepingowl-shared, sleepingowl-feature, sleepingowl-theme, sleepingowl-theme-override;
 @layer sleepingowl-core {
   :root {
     --soa-focus-ring-width: 0.1875rem;

@@ -30,6 +30,10 @@ function expectedSourceRoots(logicalId) {
         return sharedSourceRoots(id)
     }
 
+    if (type === 'theme' && scope === 'overrides') {
+        return [`resources/css/theme-overrides/${theme}.scss`]
+    }
+
     if (type === 'feature' && scope === 'theme') {
         return [
             `resources/css/themes/${theme}/features/${id}/`,
@@ -46,6 +50,7 @@ function expectedSourceRoots(logicalId) {
 
 function sharedSourceRoots(id) {
     if (id === 'icons') return ['resources/css/shared/features/icons/']
+    if (id === 'ui') return ['resources/css/shared/shared-ui.scss']
     if (id === 'features') {
         return ['resources/css/shared/features.scss', 'resources/js/shared/features/']
     }
@@ -78,6 +83,15 @@ describe('frontend build entries', () => {
 })
 
 describe('modern frontend build entries', () => {
+    it('publishes the semantic UI layer independently from shared features', () => {
+        expect(modernEntry('shared:ui', 'styles')).toEqual({
+            logicalId: 'shared:ui',
+            source: 'resources/css/shared/shared-ui.scss',
+            output: 'css/shared/ui.css',
+        })
+        expect(modernEntry('shared:ui', 'scripts')).toBeUndefined()
+    })
+
     it('publishes always-loaded features as one shared runtime boundary', () => {
         expect(modernEntry('shared:features', 'scripts')).toEqual({
             logicalId: 'shared:features',
@@ -98,6 +112,14 @@ describe('modern frontend build entries', () => {
             expect(modernEntry(`theme:${theme}`, 'styles')).toBeDefined()
         },
     )
+
+    it.each(['adminlte', 'shadcn'])('publishes the %s override layer last', (theme) => {
+        expect(modernEntry(`theme:${theme}:overrides`, 'styles')).toEqual({
+            logicalId: `theme:${theme}:overrides`,
+            source: `resources/css/theme-overrides/${theme}.scss`,
+            output: `css/theme-overrides/${theme}.css`,
+        })
+    })
 
     it('does not create per-feature or feature-theme public entries', () => {
         const logicalIds = Object.values(entries.modern)

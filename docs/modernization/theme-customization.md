@@ -126,6 +126,8 @@ Only `sidebar_background_color` is currently accepted as a PHP config-to-CSS map
 
 An external package supplies a `ThemeInterface`, namespaced Blade views, already-built production/development files and a manifest fragment. Its provider registers the fragment during the Laravel registration phase:
 
+Every selected theme receives SleepingOwl's `shared:ui` exactly once. The external theme provides token values and genuine presentation differences; it does not copy or compile the shared semantic layer.
+
 ```php
 use SleepingOwl\Admin\Themes\ThemeRegistry;
 use Vendor\AdminTheme\AcmeTheme;
@@ -153,7 +155,10 @@ The fragment uses the core manifest schema but does not contain `core` or packag
 theme:acme
 feature:table:theme:acme
 feature:tooltip:theme:acme
+theme:acme:overrides
 ```
+
+Declare the last entry as `theme:overrides` only when the package actually ships a minimal correction layer.
 
 Shared entries are allowed only when declared by the theme. Core resolves unchanged `core`, `shared:features` and existing shared infrastructure from SleepingOwl's own manifest; the external fragment supplies only its ready theme/shared/optional adapter files. A mismatched profile, undeclared entry, foreign theme name, invalid path or checksum metadata fails registration. No assets from another theme are loaded as fallback.
 

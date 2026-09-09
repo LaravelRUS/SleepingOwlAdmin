@@ -1,0 +1,1 @@
+{"version":3,"file":"css/shared/ui.css","mappings":"AAEA,0B","sources":["webpack:///./resources/css/shared/shared-ui.scss"],"sourcesContent":["// Theme-neutral geometry for persistent SleepingOwl UI. Component rules are\n// added here under semantic `soa-*` selectors as their checkpoints land.\n@layer sleepingowl-shared;\n"],"names":[],"sourceRoot":""}
