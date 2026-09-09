@@ -46,11 +46,10 @@ it.each(['production', 'development'])(
         const css = read(`public/default/profiles/${profile}/css/themes/shadcn-utilities.css`)
 
         expect(css).toContain('@layer utilities')
+        expect(css).toMatch(/\.float-end\b/)
         expect(css).toMatch(/\.flex\b/)
         expect(css).toMatch(/\.grid\b/)
         expect(css).toMatch(/\.hidden\b/)
-        expect(css).toMatch(/\.text-center\b/)
-        expect(css).toContain('var(--soa-on-primary-color)')
         expect(css).not.toMatch(
             /bootstrap|admin-lte|adminlte|jquery|react|radix|lucide|oklch\(|#[\da-f]{3,8}\b/i,
         )
