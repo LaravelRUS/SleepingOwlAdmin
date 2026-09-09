@@ -19,7 +19,7 @@
             <div class="soa-inline-editor-input">
                 @include(AdminTemplate::getViewPath('column.editable.partials.controls.'.$editorType))
                 @if($editorCanClear && !in_array($editorType, ['checklist', 'range', 'select'], true))
-                    <button class="soa-inline-editor-clear"
+                    <button class="soa-inline-editor-clear soa-icon-button"
                             data-inline-editor-clear
                             type="button"
                             aria-label="@lang('sleeping_owl::lang.button.clear')"
@@ -30,14 +30,14 @@
             </div>
             <div class="soa-inline-editor-actions">
                 @if($editorCanClear && $editorType === 'checklist')
-                    <button class="soa-inline-editor-clear-all"
+                    <button class="soa-inline-editor-clear-all soa-button soa-button-ghost"
                             data-inline-editor-clear
                             type="button">@lang('sleeping_owl::lang.button.clear_all')</button>
                 @endif
-                <button class="soa-inline-editor-submit"
+                <button class="soa-inline-editor-submit soa-button soa-button-primary"
                         data-inline-editor-submit
                         type="submit">@lang('sleeping_owl::lang.button.save')</button>
-                <button class="soa-inline-editor-cancel"
+                <button class="soa-inline-editor-cancel soa-button soa-button-secondary"
                         data-inline-editor-cancel
                         type="button">@lang('sleeping_owl::lang.button.cancel')</button>
             </div>

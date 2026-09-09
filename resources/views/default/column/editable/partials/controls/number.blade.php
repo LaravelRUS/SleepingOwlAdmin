@@ -1,5 +1,5 @@
 <input {!! new \SleepingOwl\Admin\Support\HtmlAttributeBag([
-    'class' => 'soa-inline-editor-control',
+    'class' => 'soa-inline-editor-control soa-input',
     'data-inline-editor-control' => true,
     'id' => $editorControlId,
     'max' => $max ?? null,

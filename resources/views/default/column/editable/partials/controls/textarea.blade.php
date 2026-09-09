@@ -1,4 +1,4 @@
-<textarea class="soa-inline-editor-control"
+<textarea class="soa-inline-editor-control soa-input"
           id="{{ $editorControlId }}"
           name="{{ $name }}"
           rows="{{ $rows ?? 10 }}"

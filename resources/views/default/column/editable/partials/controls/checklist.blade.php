@@ -8,7 +8,7 @@
     @foreach($editorOptions as $option)
         @php($editorOptionId = $editorControlId.'-'.$loop->index)
         <label class="soa-inline-editor-check-option" for="{{ $editorOptionId }}">
-            <input class="soa-inline-editor-check-input"
+            <input class="soa-inline-editor-check-input soa-checkbox"
                    data-inline-editor-check-input
                    id="{{ $editorOptionId }}"
                    name="{{ $name }}[]"

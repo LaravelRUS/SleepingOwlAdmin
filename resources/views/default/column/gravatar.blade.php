@@ -2,7 +2,7 @@
   @if ($visibled)
     @if (!empty($value))
       <a href="{{ $value }}" data-lightbox>
-        <img class="thumbnail" src="{{ $value }}">
+        <img class="thumbnail soa-thumbnail" src="{{ $value }}">
       </a>
     @endif
     {!! $append !!}

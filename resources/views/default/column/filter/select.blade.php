@@ -1,6 +1,6 @@
 @if ($visibled)
 <div {!! $width !!}>
-  @php($selectAttributes = (new \SleepingOwl\Admin\Support\HtmlAttributeBag($attributesArray))->class(['form-control'])->getAttributes())
+  @php($selectAttributes = (new \SleepingOwl\Admin\Support\HtmlAttributeBag($attributesArray))->class(['form-control', 'soa-select'])->getAttributes())
   @php($selectedValues = collect($default)->all())
   <select {!! new \SleepingOwl\Admin\Support\HtmlAttributeBag($selectAttributes) !!}>
     @foreach($options as $optionValue => $optionLabel)
@@ -16,7 +16,7 @@
     @endforeach
   </select>
   @if(!empty($helpText))
-    <small class="form-text text-muted">{!! $helpText !!}</small>
+    <small class="form-text text-muted soa-help-text">{!! $helpText !!}</small>
   @endif
 </div>
 @endif

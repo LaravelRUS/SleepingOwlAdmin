@@ -10,13 +10,13 @@
         @php
           if(++$count > $maxLists) break;
         @endphp
-        <span class="badge table-badge" v-pre>{!! $value !!}</span>
+        <span class="badge table-badge soa-badge" v-pre>{!! $value !!}</span>
       @endforeach
-        <span class="badge bg-white text-secondary">{{ trans('sleeping_owl::lang.select.more', ['count' => $more]) }}</span>
+        <span class="badge bg-white text-secondary soa-badge soa-badge-muted">{{ trans('sleeping_owl::lang.select.more', ['count' => $more]) }}</span>
 
     @else
       @foreach ($values as $value)
-        <span class="badge table-badge" v-pre>{!! $value !!}</span>
+        <span class="badge table-badge soa-badge" v-pre>{!! $value !!}</span>
       @endforeach
     @endif
 

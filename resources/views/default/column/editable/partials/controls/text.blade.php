@@ -1,4 +1,4 @@
-<input class="soa-inline-editor-control"
+<input class="soa-inline-editor-control soa-input"
        data-inline-editor-control
        id="{{ $editorControlId }}"
        name="{{ $name }}"

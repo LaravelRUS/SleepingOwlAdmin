@@ -3,7 +3,7 @@
 	{!! $from !!}
 	{!! $to !!}
 	@if(!empty($helpText))
-		<small class="form-text text-muted">{!! $helpText !!}</small>
+		<small class="form-text text-muted soa-help-text">{!! $helpText !!}</small>
 	@endif
 </div>
 @endif
