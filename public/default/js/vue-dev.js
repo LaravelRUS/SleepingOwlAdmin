@@ -14005,6 +14005,14 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
     },
     uploadIconClass: function uploadIconClass() {
       return this.uploading ? this.classes.uploadingIcon : this.classes.uploadIcon;
+    },
+    stateClasses: function stateClasses() {
+      return {
+        'soa-is-empty': !this.hasValue,
+        'soa-is-error': this.errors.length > 0,
+        'soa-is-readonly': this.readonly,
+        'soa-is-uploading': this.uploading
+      };
     }
   },
   mounted: function mounted() {
@@ -14195,6 +14203,14 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
     },
     uploadIconClass: function uploadIconClass() {
       return this.uploading ? this.classes.uploadingIcon : this.classes.uploadIcon;
+    },
+    stateClasses: function stateClasses() {
+      return {
+        'soa-is-empty': !this.hasValue,
+        'soa-is-error': this.errors.length > 0,
+        'soa-is-readonly': this.readonly,
+        'soa-is-uploading': this.uploading
+      };
     }
   },
   mounted: function mounted() {
@@ -14513,6 +14529,14 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
     },
     uploadIconClass: function uploadIconClass() {
       return this.uploading ? this.classes.uploadingIcon : this.classes.uploadIcon;
+    },
+    stateClasses: function stateClasses() {
+      return {
+        'soa-is-empty': !this.hasValues,
+        'soa-is-error': this.errors.length > 0,
+        'soa-is-readonly': this.readonly,
+        'soa-is-uploading': this.uploading
+      };
     }
   },
   mounted: function mounted() {
@@ -15287,14 +15311,19 @@ function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Sym
 function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 
-var _hoisted_1 = ["href", "title", "aria-label"];
-var _hoisted_2 = ["title", "aria-label"];
-var _hoisted_3 = {
+var _hoisted_1 = ["aria-busy", "aria-readonly"];
+var _hoisted_2 = ["href", "title", "aria-label"];
+var _hoisted_3 = ["title", "aria-label"];
+var _hoisted_4 = {
   key: 2
 };
-var _hoisted_4 = ["name", "value"];
+var _hoisted_5 = ["name", "value"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [_ctx.errors.length ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["soa-file", _ctx.stateClasses]),
+    "aria-busy": _ctx.uploading ? 'true' : 'false',
+    "aria-readonly": _ctx.readonly ? 'true' : undefined
+  }, [_ctx.errors.length ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
     key: 0,
     "data-file-alert": "",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(_ctx.classes.alert)
@@ -15343,7 +15372,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(_ctx.classes.downloadIcon),
     "aria-hidden": "true"
-  }, null, 2 /* CLASS */)], 10 /* CLASS, PROPS */, _hoisted_1), !_ctx.readonly ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
+  }, null, 2 /* CLASS */)], 10 /* CLASS, PROPS */, _hoisted_2), !_ctx.readonly ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
     key: 0,
     type: "button",
     "data-file-remove": "",
@@ -15356,7 +15385,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(_ctx.classes.removeIcon),
     "aria-hidden": "true"
-  }, null, 2 /* CLASS */)], 10 /* CLASS, PROPS */, _hoisted_2)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 2 /* CLASS */)], 2 /* CLASS */)], 2 /* CLASS */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), !_ctx.readonly ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  }, null, 2 /* CLASS */)], 10 /* CLASS, PROPS */, _hoisted_3)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 2 /* CLASS */)], 2 /* CLASS */)], 2 /* CLASS */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), !_ctx.readonly ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     ref: "uploadButton",
     type: "button",
     "data-file-upload": "",
@@ -15370,7 +15399,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     name: _ctx.name,
     type: "hidden",
     value: _ctx.val
-  }, null, 8 /* PROPS */, _hoisted_4)]);
+  }, null, 8 /* PROPS */, _hoisted_5)], 10 /* CLASS, PROPS */, _hoisted_1);
 }
 
 /***/ },
@@ -15394,18 +15423,23 @@ function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Sym
 function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 
-var _hoisted_1 = ["href"];
-var _hoisted_2 = ["src"];
-var _hoisted_3 = ["href", "title", "aria-label"];
-var _hoisted_4 = ["title", "aria-label"];
+var _hoisted_1 = ["aria-busy", "aria-readonly"];
+var _hoisted_2 = ["href"];
+var _hoisted_3 = ["src"];
+var _hoisted_4 = ["href", "title", "aria-label"];
 var _hoisted_5 = ["title", "aria-label"];
-var _hoisted_6 = {
+var _hoisted_6 = ["title", "aria-label"];
+var _hoisted_7 = {
   key: 2
 };
-var _hoisted_7 = ["title", "aria-label"];
-var _hoisted_8 = ["name", "value"];
+var _hoisted_8 = ["title", "aria-label"];
+var _hoisted_9 = ["name", "value"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [_ctx.errors.length ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["soa-image", _ctx.stateClasses]),
+    "aria-busy": _ctx.uploading ? 'true' : 'false',
+    "aria-readonly": _ctx.readonly ? 'true' : undefined
+  }, [_ctx.errors.length ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
     key: 0,
     "data-image-alert": "",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(_ctx.classes.alert)
@@ -15443,7 +15477,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     src: _ctx.previewUrl,
     alt: "",
     "data-image-preview": ""
-  }, null, 8 /* PROPS */, _hoisted_2)], 10 /* CLASS, PROPS */, _hoisted_1), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  }, null, 8 /* PROPS */, _hoisted_3)], 10 /* CLASS, PROPS */, _hoisted_2), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "data-image-info": "",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(_ctx.classes.info)
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
@@ -15461,7 +15495,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(_ctx.classes.downloadIcon),
     "aria-hidden": "true"
-  }, null, 2 /* CLASS */)], 10 /* CLASS, PROPS */, _hoisted_3), !_ctx.readonly ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
+  }, null, 2 /* CLASS */)], 10 /* CLASS, PROPS */, _hoisted_4), !_ctx.readonly ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
     key: 0,
     type: "button",
     "data-image-insert-current": "",
@@ -15476,7 +15510,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(_ctx.classes.insertIcon),
     "aria-hidden": "true"
-  }, null, 2 /* CLASS */)], 10 /* CLASS, PROPS */, _hoisted_4)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), !_ctx.readonly ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
+  }, null, 2 /* CLASS */)], 10 /* CLASS, PROPS */, _hoisted_5)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), !_ctx.readonly ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
     key: 1,
     type: "button",
     "data-image-remove": "",
@@ -15491,7 +15525,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(_ctx.classes.removeIcon),
     "aria-hidden": "true"
-  }, null, 2 /* CLASS */)], 10 /* CLASS, PROPS */, _hoisted_5)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 2 /* CLASS */)], 2 /* CLASS */)], 2 /* CLASS */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), !_ctx.readonly ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_6, [!_ctx.onlyLink ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
+  }, null, 2 /* CLASS */)], 10 /* CLASS, PROPS */, _hoisted_6)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 2 /* CLASS */)], 2 /* CLASS */)], 2 /* CLASS */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), !_ctx.readonly ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_7, [!_ctx.onlyLink ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
     key: 0,
     ref: "uploadButton",
     type: "button",
@@ -15515,12 +15549,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(_ctx.classes.insertIcon),
     "aria-hidden": "true"
-  }, null, 2 /* CLASS */)], 10 /* CLASS, PROPS */, _hoisted_7)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  }, null, 2 /* CLASS */)], 10 /* CLASS, PROPS */, _hoisted_8)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     "data-image-value": "",
     name: _ctx.name,
     type: "hidden",
     value: _ctx.val
-  }, null, 8 /* PROPS */, _hoisted_8)]);
+  }, null, 8 /* PROPS */, _hoisted_9)], 10 /* CLASS, PROPS */, _hoisted_1);
 }
 
 /***/ },
@@ -15544,24 +15578,27 @@ function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Sym
 function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 
-var _hoisted_1 = ["aria-label"];
-var _hoisted_2 = ["aria-label", "onClick"];
-var _hoisted_3 = ["src"];
-var _hoisted_4 = ["aria-label", "title"];
-var _hoisted_5 = ["href", "title", "aria-label", "onClick"];
-var _hoisted_6 = ["title", "aria-label", "onClick"];
+var _hoisted_1 = ["aria-busy", "aria-readonly"];
+var _hoisted_2 = ["aria-label"];
+var _hoisted_3 = ["aria-label", "onClick"];
+var _hoisted_4 = ["src"];
+var _hoisted_5 = ["aria-label", "title"];
+var _hoisted_6 = ["href", "title", "aria-label", "onClick"];
 var _hoisted_7 = ["title", "aria-label", "onClick"];
-var _hoisted_8 = ["title", "aria-label"];
-var _hoisted_9 = ["name", "value"];
-var _hoisted_10 = ["aria-label"];
-var _hoisted_11 = ["aria-label", "title"];
+var _hoisted_8 = ["title", "aria-label", "onClick"];
+var _hoisted_9 = ["title", "aria-label"];
+var _hoisted_10 = ["name", "value"];
+var _hoisted_11 = ["aria-label"];
 var _hoisted_12 = ["aria-label", "title"];
-var _hoisted_13 = ["src"];
-var _hoisted_14 = ["aria-label", "title"];
+var _hoisted_13 = ["aria-label", "title"];
+var _hoisted_14 = ["src"];
+var _hoisted_15 = ["aria-label", "title"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
     "data-images-root": "",
-    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(_ctx.classes.root)
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([_ctx.classes.root, _ctx.stateClasses]),
+    "aria-busy": _ctx.uploading ? 'true' : 'false',
+    "aria-readonly": _ctx.readonly ? 'true' : undefined
   }, [_ctx.errors.length ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
     key: 0,
     "data-images-alert": "",
@@ -15576,7 +15613,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   }, _toConsumableArray(_cache[9] || (_cache[9] = [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
     "aria-hidden": "true"
-  }, "×", -1 /* CACHED */)])), 10 /* CLASS, PROPS */, _hoisted_1), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.errors, function (error, index) {
+  }, "×", -1 /* CACHED */)])), 10 /* CLASS, PROPS */, _hoisted_2), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.errors, function (error, index) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", {
       key: "".concat(error, "-").concat(index)
     }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
@@ -15605,11 +15642,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       src: _ctx.imageUrl(uri),
       alt: "",
       "data-images-preview-image": ""
-    }, null, 8 /* PROPS */, _hoisted_3), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    }, null, 8 /* PROPS */, _hoisted_4), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
       "data-images-order": "",
       "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(_ctx.classes.order),
       "aria-hidden": "true"
-    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(index + 1), 3 /* TEXT, CLASS */)], 10 /* CLASS, PROPS */, _hoisted_2), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(index + 1), 3 /* TEXT, CLASS */)], 10 /* CLASS, PROPS */, _hoisted_3), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
       "data-images-info": "",
       "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(_ctx.classes.info)
     }, [!_ctx.readonly && _ctx.draggable ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
@@ -15623,7 +15660,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       "data-images-drag-icon": "",
       "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(_ctx.classes.dragIcon),
       "aria-hidden": "true"
-    }, null, 2 /* CLASS */)], 10 /* CLASS, PROPS */, _hoisted_4)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+    }, null, 2 /* CLASS */)], 10 /* CLASS, PROPS */, _hoisted_5)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
       href: _ctx.imageUrl(uri),
       "data-images-download": "",
       "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(_ctx.classes.downloadButton),
@@ -15637,7 +15674,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       "data-images-download-icon": "",
       "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(_ctx.classes.downloadIcon),
       "aria-hidden": "true"
-    }, null, 2 /* CLASS */)], 10 /* CLASS, PROPS */, _hoisted_5), !_ctx.readonly ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
+    }, null, 2 /* CLASS */)], 10 /* CLASS, PROPS */, _hoisted_6), !_ctx.readonly ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
       key: 1,
       type: "button",
       "data-images-insert": "",
@@ -15651,7 +15688,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       "data-images-insert-icon": "",
       "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(_ctx.classes.insertIcon),
       "aria-hidden": "true"
-    }, null, 2 /* CLASS */)], 10 /* CLASS, PROPS */, _hoisted_6)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), !_ctx.readonly ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
+    }, null, 2 /* CLASS */)], 10 /* CLASS, PROPS */, _hoisted_7)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), !_ctx.readonly ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
       key: 2,
       type: "button",
       "data-images-remove": "",
@@ -15665,7 +15702,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       "data-images-remove-icon": "",
       "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(_ctx.classes.removeIcon),
       "aria-hidden": "true"
-    }, null, 2 /* CLASS */)], 10 /* CLASS, PROPS */, _hoisted_7)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 2 /* CLASS */)], 2 /* CLASS */);
+    }, null, 2 /* CLASS */)], 10 /* CLASS, PROPS */, _hoisted_8)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 2 /* CLASS */)], 2 /* CLASS */);
   }), 128 /* KEYED_FRAGMENT */))], 2 /* CLASS */), !_ctx.readonly ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
     key: 1,
     "data-images-actions": "",
@@ -15693,12 +15730,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "data-images-insert-icon": "",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(_ctx.classes.insertIcon),
     "aria-hidden": "true"
-  }, null, 2 /* CLASS */)], 10 /* CLASS, PROPS */, _hoisted_8)], 2 /* CLASS */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  }, null, 2 /* CLASS */)], 10 /* CLASS, PROPS */, _hoisted_9)], 2 /* CLASS */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     "data-images-value": "",
     name: _ctx.name,
     type: "hidden",
     value: _ctx.serializedValues
-  }, null, 8 /* PROPS */, _hoisted_9), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Teleport, {
+  }, null, 8 /* PROPS */, _hoisted_10), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Teleport, {
     to: "body"
   }, [_ctx.hasValues ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("dialog", {
     key: 0,
@@ -15731,7 +15768,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "data-images-dialog-close-icon": "",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(_ctx.classes.dialogCloseIcon),
     "aria-hidden": "true"
-  }, null, 2 /* CLASS */)], 10 /* CLASS, PROPS */, _hoisted_11), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  }, null, 2 /* CLASS */)], 10 /* CLASS, PROPS */, _hoisted_12), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "data-images-dialog-frame": "",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(_ctx.classes.dialogFrame)
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
@@ -15747,12 +15784,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "data-images-dialog-previous-icon": "",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(_ctx.classes.dialogPreviousIcon),
     "aria-hidden": "true"
-  }, null, 2 /* CLASS */)], 10 /* CLASS, PROPS */, _hoisted_12), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+  }, null, 2 /* CLASS */)], 10 /* CLASS, PROPS */, _hoisted_13), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
     src: _ctx.lightboxUrl,
     alt: "",
     "data-images-dialog-image": "",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(_ctx.classes.dialogImage)
-  }, null, 10 /* CLASS, PROPS */, _hoisted_13), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  }, null, 10 /* CLASS, PROPS */, _hoisted_14), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     type: "button",
     "data-images-dialog-next": "",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(_ctx.classes.dialogNextButton),
@@ -15765,11 +15802,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "data-images-dialog-next-icon": "",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(_ctx.classes.dialogNextIcon),
     "aria-hidden": "true"
-  }, null, 2 /* CLASS */)], 10 /* CLASS, PROPS */, _hoisted_14)], 2 /* CLASS */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+  }, null, 2 /* CLASS */)], 10 /* CLASS, PROPS */, _hoisted_15)], 2 /* CLASS */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
     "data-images-dialog-position": "",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(_ctx.classes.dialogPosition),
     "aria-live": "polite"
-  }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.lightboxPosition), 3 /* TEXT, CLASS */)], 42 /* CLASS, PROPS, NEED_HYDRATION */, _hoisted_10)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]))], 2 /* CLASS */);
+  }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.lightboxPosition), 3 /* TEXT, CLASS */)], 42 /* CLASS, PROPS, NEED_HYDRATION */, _hoisted_11)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]))], 10 /* CLASS, PROPS */, _hoisted_1);
 }
 
 /***/ },

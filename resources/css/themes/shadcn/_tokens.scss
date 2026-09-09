@@ -50,6 +50,20 @@ $asset-health-gap: 0.5rem 1rem !default;
 $asset-health-margin-top: 0.5rem !default;
 $asset-health-padding-block: 0.5rem !default;
 $asset-health-padding-inline: 0.75rem !default;
+$control-size: 2.375rem !default;
+$control-size-small: 2rem !default;
+$icon-control-size: 2.25rem !default;
+$control-padding-block: 0.5rem !default;
+$control-padding-inline: 1rem !default;
+$control-padding-block-small: 0.25rem !default;
+$control-padding-inline-small: 0.5rem !default;
+$choice-size: 1rem !default;
+$switch-track-padding: 0.125rem !default;
+$attachment-empty-min-height: 5rem !default;
+$attachment-preview-ratio: 1.6 !default;
+$order-badge-size: 1.5rem !default;
+$dragging-opacity: 0.45 !default;
+$dialog-image-reserved-space: 8rem !default;
 
 @mixin define {
   :root {
@@ -76,6 +90,7 @@ $asset-health-padding-inline: 0.75rem !default;
     --soa-shadow-md: #{$shadow-medium} #{colors.$shadow};
     --soa-font-family-sans: #{$font-family-sans};
     --soa-font-family-mono: #{$font-family-mono};
+    --soa-font-family-monospace: #{$font-family-mono};
     --soa-font-size-base: #{$font-size-base};
     --soa-font-size-data: #{$font-size-data};
     --soa-font-size-caption: #{$font-size-caption};
@@ -128,6 +143,20 @@ $asset-health-padding-inline: 0.75rem !default;
     --soa-asset-health-margin-top: #{$asset-health-margin-top};
     --soa-asset-health-padding-block: #{$asset-health-padding-block};
     --soa-asset-health-padding-inline: #{$asset-health-padding-inline};
+    --soa-control-size: #{$control-size};
+    --soa-control-size-sm: #{$control-size-small};
+    --soa-icon-control-size: #{$icon-control-size};
+    --soa-control-padding-block: #{$control-padding-block};
+    --soa-control-padding-inline: #{$control-padding-inline};
+    --soa-control-padding-block-sm: #{$control-padding-block-small};
+    --soa-control-padding-inline-sm: #{$control-padding-inline-small};
+    --soa-choice-size: #{$choice-size};
+    --soa-switch-track-padding: #{$switch-track-padding};
+    --soa-attachment-empty-min-height: #{$attachment-empty-min-height};
+    --soa-attachment-preview-ratio: #{$attachment-preview-ratio};
+    --soa-order-badge-size: #{$order-badge-size};
+    --soa-dragging-opacity: #{$dragging-opacity};
+    --soa-dialog-image-reserved-space: #{$dialog-image-reserved-space};
   }
 
   :root[data-color-scheme='dark'] {

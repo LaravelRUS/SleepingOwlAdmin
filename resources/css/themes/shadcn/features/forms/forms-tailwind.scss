@@ -1,18 +1,5 @@
 @use 'forms';
 
 @layer sleepingowl-theme.forms {
-  :root {
-    --soa-form-field-gap: #{forms.$field-gap};
-    --soa-form-gap: #{forms.$form-gap};
-    --soa-form-grid-gap: #{forms.$grid-gap};
-    --soa-form-control-min-height: #{forms.$control-min-height};
-    --soa-form-textarea-min-height: #{forms.$textarea-min-height};
-    --soa-form-attachment-min-width: #{forms.$attachment-min-width};
-    --soa-form-dialog-max-width: #{forms.$dialog-max-width};
-    --soa-form-spinner-size: #{forms.$spinner-size};
-    --soa-form-switch-width: #{forms.$switch-width};
-    --soa-form-switch-height: #{forms.$switch-height};
-  }
-
   @include forms.styles;
 }

@@ -1,0 +1,165 @@
+@mixin styles {
+  .soa-file-input::file-selector-button {
+    background: var(--soa-muted-surface-color);
+    border: 0;
+    border-inline-end: var(--soa-border-width) solid var(--soa-border-color);
+    color: var(--soa-text-color);
+    cursor: pointer;
+    font: inherit;
+    font-weight: var(--soa-font-weight-semibold);
+    margin: calc(-1 * var(--soa-form-control-padding-block))
+      var(--soa-form-control-padding-inline) calc(-1 * var(--soa-form-control-padding-block))
+      calc(-1 * var(--soa-form-control-padding-inline));
+    min-block-size: var(--soa-form-control-min-height);
+    padding: var(--soa-form-control-padding-block) var(--soa-form-control-padding-inline);
+  }
+
+  .soa-image,
+  .soa-images,
+  .soa-file,
+  .soa-files {
+    display: grid;
+    gap: var(--soa-space-3);
+    min-inline-size: 0;
+  }
+
+  .soa-attachment-list,
+  .soa-images-grid {
+    border: var(--soa-border-width) dashed var(--soa-border-color);
+    border-radius: var(--soa-border-radius-lg);
+    display: grid;
+    gap: var(--soa-form-grid-gap);
+    grid-template-columns: repeat(
+      auto-fill,
+      minmax(min(100%, var(--soa-form-attachment-min-width)), 1fr)
+    );
+    min-block-size: var(--soa-attachment-empty-min-height);
+    padding: var(--soa-space-3);
+  }
+
+  .soa-attachment {
+    background: var(--soa-surface-color);
+    border: var(--soa-border-width) solid var(--soa-border-color);
+    border-radius: var(--soa-border-radius-lg);
+    display: grid;
+    gap: var(--soa-space-3);
+    min-inline-size: 0;
+    overflow: clip;
+    padding: var(--soa-space-3);
+    position: relative;
+  }
+
+  .soa-attachment-inner,
+  .soa-attachment-info {
+    min-inline-size: 0;
+  }
+
+  .soa-attachment-info {
+    display: grid;
+    gap: var(--soa-space-2);
+  }
+
+  .soa-attachment-preview,
+  .soa-images-preview {
+    align-items: center;
+    aspect-ratio: var(--soa-attachment-preview-ratio);
+    background-color: var(--soa-muted-surface-color);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: var(--soa-border-radius);
+    color: var(--soa-muted-text-color);
+    display: flex;
+    inline-size: 100%;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+  }
+
+  button.soa-images-preview {
+    border: 0;
+    color: inherit;
+    cursor: zoom-in;
+    padding: 0;
+  }
+
+  button.soa-images-preview:focus-visible {
+    outline: var(--soa-focus-ring-width) solid var(--soa-focus-color);
+    outline-offset: calc(-1 * var(--soa-focus-ring-width));
+  }
+
+  .soa-attachment-preview img,
+  .soa-images-preview img {
+    block-size: 100%;
+    inline-size: 100%;
+    object-fit: cover;
+  }
+
+  .soa-attachment-link {
+    inset: 0;
+    position: absolute;
+  }
+
+  .soa-attachment-actions {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--soa-space-2);
+    justify-content: flex-end;
+  }
+
+  .soa-attachment-name {
+    color: var(--soa-muted-text-color);
+    font-size: var(--soa-font-size-caption);
+    overflow-wrap: anywhere;
+  }
+
+  .soa-images-item {
+    position: relative;
+  }
+
+  .soa-images-order {
+    align-items: center;
+    background: var(--soa-text-color);
+    border-radius: var(--soa-border-radius-full);
+    color: var(--soa-surface-color);
+    display: inline-flex;
+    font-family: var(--soa-font-family-monospace);
+    font-size: var(--soa-font-size-caption);
+    inset-block-start: var(--soa-space-2);
+    inset-inline-start: var(--soa-space-2);
+    justify-content: center;
+    min-block-size: var(--soa-order-badge-size);
+    min-inline-size: var(--soa-order-badge-size);
+    position: absolute;
+  }
+
+  .soa-images-item-moving {
+    opacity: var(--soa-dragging-opacity);
+  }
+
+  .soa-is-empty:is(.soa-image, .soa-images, .soa-file, .soa-files) {
+    min-block-size: var(--soa-attachment-empty-min-height);
+  }
+
+  .soa-is-readonly .soa-attachment-list {
+    background: var(--soa-muted-surface-color);
+  }
+
+  .soa-is-readonly [data-images-drag-handle] {
+    cursor: default;
+  }
+
+  .soa-is-uploading [data-file-upload],
+  .soa-is-uploading [data-image-upload],
+  .soa-is-uploading [data-images-upload] {
+    cursor: progress;
+    opacity: var(--soa-disabled-opacity);
+    pointer-events: none;
+  }
+
+  .soa-is-error .soa-attachment-list,
+  .soa-is-error .soa-attachment {
+    border-color: var(--soa-danger-color);
+  }
+}

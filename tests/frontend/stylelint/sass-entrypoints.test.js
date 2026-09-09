@@ -54,11 +54,14 @@ describe('Sass entrypoint boundaries', () => {
             const source = readSource(entry.source)
 
             expect(source).toMatch(/@layer sleepingowl-(?:shared|theme-override);/)
-            expect(source).not.toMatch(/@(?:use|import)\b/)
+            expect(source).not.toMatch(/@import\b/)
+            if (entry.logicalId !== 'shared:ui') expect(source).not.toMatch(/@use\b/)
             expect(variableDeclarations(source)).toEqual([])
         },
     )
+})
 
+describe('Sass entrypoint token ownership', () => {
     it.each(sassTokenizedEntries)('$logicalId loads its canonical token owner', (entry) => {
         const source = readSource(entry.source)
         const isCore = entry.logicalId === 'core'

@@ -28,7 +28,13 @@ class ImagesViewTest extends TestCase
         $this->assertFalse($props['readonly']);
         $this->assertSame('/admin/products/image/gallery/7', $props['url']);
         $this->assertSame('soa-images', $props['classes']['root']);
-        $this->assertSame('soa-images__item--moving', $props['classes']['sortableGhost']);
+        $this->assertSame(
+            'soa-images__item--moving soa-images-item-moving',
+            $props['classes']['sortableGhost']
+        );
+        $this->assertStringContainsString('soa-images-grid', $props['classes']['gallery']);
+        $this->assertStringContainsString('soa-images-item', $props['classes']['item']);
+        $this->assertStringContainsString('soa-images-preview', $props['classes']['previewButton']);
         $this->assertSame('fas fa-images', $props['classes']['uploadIcon']);
         $this->assertSame('fas fa-spinner fa-spin', $props['classes']['uploadingIcon']);
         $this->assertStringContainsString('style="max-width: 50rem"', $html);

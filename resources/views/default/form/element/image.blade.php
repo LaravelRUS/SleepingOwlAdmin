@@ -20,7 +20,7 @@
                     'downloadButton' => 'btn btn-light btn-sm float-end soa-button soa-button-sm soa-button-secondary',
                     'downloadIcon' => 'fa-fw fas fa-cloud-upload-alt',
                     'errorIcon' => 'fa-fw fas fa-image',
-                    'info' => 'form-element-files__info soa-attachment-info',
+                    'info' => 'form-element-files__info soa-attachment-info soa-attachment-actions',
                     'insertCurrentButton' => 'btn btn-light btn-sm float-end me-1 soa-button soa-button-sm soa-button-secondary',
                     'insertIcon' => 'fa-fw fas fa-link',
                     'insertNewButton' => 'btn btn-light btn-sm soa-button soa-button-sm soa-button-secondary',

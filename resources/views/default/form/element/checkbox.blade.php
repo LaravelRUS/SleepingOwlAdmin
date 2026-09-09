@@ -5,7 +5,10 @@
             ->class(['form-check-input', 'soa-choice-control']);
 
         if ($readonly) {
-            $checkboxAttributes = $checkboxAttributes->except('disabled')->merge(['disabled' => true]);
+            $checkboxAttributes = $checkboxAttributes->except('disabled')->merge([
+                'aria-readonly' => 'true',
+                'disabled' => true,
+            ]);
         }
         if ($value) {
             $checkboxAttributes = $checkboxAttributes->except('checked')->merge(['checked' => true]);

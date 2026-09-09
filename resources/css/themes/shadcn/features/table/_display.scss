@@ -41,20 +41,11 @@
     flex: 1 1 14rem;
   }
 
-  .soa-action-select .soa-select {
-    inline-size: 100%;
-  }
-
   .soa-filter-grid {
     display: grid;
     gap: var(--soa-space-2);
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
     padding: var(--soa-space-3) var(--soa-space-4);
-  }
-
-  .soa-filter-grid .soa-input,
-  .soa-filter-grid .soa-select {
-    inline-size: 100%;
   }
 
   .soa-filter-badge {

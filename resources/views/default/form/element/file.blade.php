@@ -21,7 +21,7 @@
                     'errorIcon' => 'fas fa-file-alt',
                     'file' => 'form-element-files__file soa-attachment-preview',
                     'fileIcon' => 'fa-fw fas fa-file-alt',
-                    'info' => 'form-element-files__info soa-attachment-info',
+                    'info' => 'form-element-files__info soa-attachment-info soa-attachment-actions',
                     'item' => 'form-element-files__item soa-attachment',
                     'removeButton' => 'btn btn-danger btn-sm soa-button soa-button-sm soa-button-danger',
                     'removeIcon' => 'fas fa-times',

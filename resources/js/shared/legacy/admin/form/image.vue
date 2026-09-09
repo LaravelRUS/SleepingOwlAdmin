@@ -1,5 +1,10 @@
 <template>
-    <div>
+    <div
+        class="soa-image"
+        :class="stateClasses"
+        :aria-busy="uploading ? 'true' : 'false'"
+        :aria-readonly="readonly ? 'true' : undefined"
+    >
         <div v-if="errors.length" data-image-alert :class="classes.alert">
             <button
                 type="button"
@@ -153,6 +158,14 @@ export default defineComponent({
         },
         uploadIconClass() {
             return this.uploading ? this.classes.uploadingIcon : this.classes.uploadIcon
+        },
+        stateClasses() {
+            return {
+                'soa-is-empty': !this.hasValue,
+                'soa-is-error': this.errors.length > 0,
+                'soa-is-readonly': this.readonly,
+                'soa-is-uploading': this.uploading,
+            }
         },
     },
     mounted() {

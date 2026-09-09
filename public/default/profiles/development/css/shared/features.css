@@ -82,6 +82,21 @@
   --soa-form-control-border-width: 0.0625rem;
   --soa-form-control-border-radius: 0.25rem;
   --soa-form-control-transition-duration: 150ms;
+  --soa-form-field-gap: 0.5rem;
+  --soa-form-gap: 1rem;
+  --soa-form-grid-gap: 1rem;
+  --soa-form-textarea-min-height: 7rem;
+  --soa-form-attachment-min-width: 12rem;
+  --soa-form-dialog-max-width: 64rem;
+  --soa-form-spinner-size: 1rem;
+  --soa-form-switch-width: 2.5rem;
+  --soa-form-switch-height: 1.375rem;
+  --soa-progress-size: 0.5rem;
+  --soa-spinner-duration: 700ms;
+  --soa-spinner-border-width: 0.125rem;
+  --soa-skeleton-duration: 1.4s;
+  --soa-skeleton-min-size: 1rem;
+  --soa-skeleton-opacity: 0.5;
 }
 
 @layer sleepingowl-feature.forms {

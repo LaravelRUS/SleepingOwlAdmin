@@ -15798,89 +15798,6 @@
     -o-object-fit: cover;
        object-fit: cover;
   }
-  .soa-images__item {
-    position: relative;
-  }
-  .soa-images__preview {
-    position: relative;
-    width: 100%;
-    color: inherit;
-    cursor: zoom-in;
-    background: transparent;
-    border: 0;
-  }
-  .soa-images__preview:focus-visible {
-    outline: 2px solid #3c8dbc;
-    outline-offset: -2px;
-  }
-  .soa-images__order {
-    position: absolute;
-    right: 0.5rem;
-    bottom: 0.5rem;
-    min-width: 1.75rem;
-    padding: 0.2rem 0.45rem;
-    color: #fff;
-    font-variant-numeric: tabular-nums;
-    line-height: 1.2;
-    background: rgba(0, 0, 0, 0.72);
-    border-radius: 999px;
-  }
-  .soa-images__item--moving {
-    opacity: 0.45;
-  }
-  .soa-images-dialog {
-    width: min(92vw, 80rem);
-    max-width: 92vw;
-    max-height: 92vh;
-    padding: 1rem;
-    overflow: hidden;
-    color: #fff;
-    background: #212529;
-    border: 1px solid #6c757d;
-    border-radius: 0.35rem;
-  }
-  .soa-images-dialog::backdrop {
-    background: rgba(0, 0, 0, 0.84);
-  }
-  .soa-images-dialog__frame {
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr) auto;
-    gap: 1rem;
-    align-items: center;
-    min-height: 12rem;
-  }
-  .soa-images-dialog__image {
-    display: block;
-    max-width: 100%;
-    max-height: calc(92vh - 7rem);
-    margin: auto;
-    background: #000;
-    -o-object-fit: contain;
-       object-fit: contain;
-  }
-  .soa-images-dialog__close {
-    position: absolute;
-    top: 0.75rem;
-    right: 0.75rem;
-    z-index: 1;
-  }
-  .soa-images-dialog__position {
-    margin: 0.75rem 0 0;
-    font-variant-numeric: tabular-nums;
-    text-align: center;
-  }
-  @media (max-width: 576px) {
-    .soa-images-dialog__frame {
-      grid-template-columns: 1fr 1fr;
-    }
-    .soa-images-dialog__image {
-      grid-column: 1/-1;
-      grid-row: 1;
-    }
-    .soa-images-dialog__previous, .soa-images-dialog__next {
-      grid-row: 2;
-    }
-  }
   .form-element-date .input-group,
   .form-element-daterange .input-group,
   .form-element-time .input-group,
@@ -16058,12 +15975,6 @@
   .soa-scroll-control:hover {
     background-color: rgba(33, 37, 41, 0.8);
     color: #fff;
-  }
-  .soa-scroll-control-top {
-    border-radius: 0.5rem 0.5rem 0 0;
-  }
-  .soa-scroll-control-bottom {
-    border-radius: 0 0 0.5rem 0.5rem;
   }
   .form-element-password .password-field {
     position: relative;
@@ -17740,14 +17651,23 @@
 @layer sleepingowl-theme;
 :root {
   --soa-primary-color: #3c8dbc;
+  --soa-on-primary-color: #fff;
+  --soa-success-color: #28a745;
+  --soa-warning-color: #ffc107;
   --soa-danger-color: #dc3545;
+  --soa-info-color: #17a2b8;
   --soa-surface-color: #fff;
   --soa-elevated-surface-color: #fff;
+  --soa-muted-surface-color: #f8f9fa;
   --soa-page-background-color: #f4f6f9;
   --soa-text-color: #212529;
   --soa-muted-text-color: #6c757d;
   --soa-border-color: #dee2e6;
+  --soa-input-border-color: #ced4da;
   --soa-focus-color: #3c8dbc;
+  --soa-overlay-color: rgba(0, 0, 0, 0.55);
+  --soa-shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.18);
+  --soa-shadow-md: 0 0.5rem 1rem rgba(0, 0, 0, 0.18);
   --soa-font-family-sans: -apple-system, blinkmacsystemfont, Segoe UI, sans-serif;
   --soa-font-size-base: 1rem;
   --soa-line-height-base: 1.5;
@@ -17759,10 +17679,13 @@
   --soa-content-padding: 0.9375rem;
   --soa-content-padding-compact: 0.75rem;
   --soa-border-radius: 0.25rem;
+  --soa-border-radius-lg: 0.5rem;
+  --soa-border-radius-full: 9999px;
   --soa-border-width: 0.0625rem;
   --soa-layout-transition-duration: 300ms;
   --soa-disabled-opacity: 0.65;
   --soa-font-size-caption: 0.875rem;
+  --soa-font-size-section: 1.125rem;
   --soa-font-size-title: 2rem;
   --soa-font-weight-medium: 500;
   --soa-font-weight-semibold: 600;
@@ -17776,6 +17699,7 @@
   --soa-header-action-size: 2.5rem;
   --soa-shell-max-width: 100%;
   --soa-header-z-index: 1034;
+  --soa-overlay-z-index: 1035;
   --soa-scroll-control-size: 2.5rem;
   --soa-scroll-control-offset-inline: 2.5rem;
   --soa-scroll-control-offset-block: 1rem;
@@ -17789,15 +17713,34 @@
   --soa-asset-health-padding-inline: 0.75rem;
   --soa-asset-health-border-width: 0.1875rem;
   --soa-font-family-monospace: sfmono-regular, menlo, monaco, consolas, Liberation Mono, monospace;
+  --soa-control-size: 2.375rem;
+  --soa-control-size-sm: 2rem;
+  --soa-icon-control-size: 2.25rem;
+  --soa-control-padding-block: 0.5rem;
+  --soa-control-padding-inline: 1rem;
+  --soa-control-padding-block-sm: 0.25rem;
+  --soa-control-padding-inline-sm: 0.5rem;
+  --soa-choice-size: 1rem;
+  --soa-switch-track-padding: 0.125rem;
+  --soa-attachment-empty-min-height: 5rem;
+  --soa-attachment-preview-ratio: 1.6;
+  --soa-order-badge-size: 1.5rem;
+  --soa-dragging-opacity: 0.45;
+  --soa-dialog-image-reserved-space: 8rem;
 }
 
 :root[data-color-scheme=dark] {
   --soa-surface-color: #343a40;
   --soa-elevated-surface-color: #343a40;
+  --soa-muted-surface-color: #3f474e;
   --soa-page-background-color: #454d55;
   --soa-text-color: #fff;
   --soa-muted-text-color: #ced4da;
   --soa-border-color: #6c757d;
+  --soa-input-border-color: #7a8288;
+  --soa-overlay-color: rgba(0, 0, 0, 0.68);
+  --soa-shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.35);
+  --soa-shadow-md: 0 0.5rem 1rem rgba(0, 0, 0, 0.35);
   --soa-sidebar-bg: #343a40;
   --soa-sidebar-text-color: #fff;
   --soa-sidebar-border-color: #6c757d;

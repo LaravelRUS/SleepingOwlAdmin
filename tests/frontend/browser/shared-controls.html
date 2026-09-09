@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en" data-theme="shadcn">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Shared semantic controls</title>
+        <script>
+            const parameters = new URLSearchParams(location.search)
+            const profile = parameters.get('profile') || 'development'
+            const theme = parameters.get('theme') || 'shadcn'
+            const supportedProfiles = ['development', 'production']
+            const supportedThemes = ['adminlte', 'framework-free-test', 'shadcn']
+
+            if (!supportedProfiles.includes(profile) || !supportedThemes.includes(theme)) {
+                throw new Error(`Unsupported shared controls fixture: ${profile}/${theme}`)
+            }
+
+            document.documentElement.dataset.theme = theme
+            for (const href of [
+                `/public/default/profiles/${profile}/css/admin-core.css`,
+                `/public/default/profiles/${profile}/css/shared/ui.css`,
+                `/public/default/profiles/${profile}/css/shared/features.css`,
+                `/public/default/profiles/${profile}/css/themes/${theme}.css`,
+            ]) {
+                const link = document.createElement('link')
+                link.rel = 'stylesheet'
+                link.href = href
+                document.head.append(link)
+            }
+        </script>
+        <style>
+            :root[data-theme] {
+                --soa-space-1: 0.25rem;
+                --soa-space-2: 0.5rem;
+                --soa-space-3: 0.75rem;
+                --soa-space-4: 1rem;
+                --soa-control-size: 2.375rem;
+                --soa-control-size-sm: 2rem;
+                --soa-icon-control-size: 2.25rem;
+                --soa-control-padding-block: 0.5rem;
+                --soa-control-padding-inline: 1rem;
+                --soa-control-padding-block-sm: 0.25rem;
+                --soa-control-padding-inline-sm: 0.5rem;
+                --soa-choice-size: 1rem;
+                --soa-switch-track-padding: 0.125rem;
+                --soa-form-field-gap: 0.5rem;
+                --soa-form-gap: 1rem;
+                --soa-form-control-min-height: 2.375rem;
+                --soa-form-control-padding-block: 0.5rem;
+                --soa-form-control-padding-inline: 0.75rem;
+                --soa-form-textarea-min-height: 7rem;
+                --soa-form-attachment-min-width: 12rem;
+                --soa-form-grid-gap: 1rem;
+                --soa-form-dialog-max-width: 64rem;
+                --soa-form-switch-width: 2.5rem;
+                --soa-form-switch-height: 1.375rem;
+                --soa-attachment-empty-min-height: 5rem;
+                --soa-attachment-preview-ratio: 1.6;
+                --soa-order-badge-size: 1.5rem;
+                --soa-dragging-opacity: 0.45;
+                --soa-dialog-image-reserved-space: 8rem;
+            }
+
+            body {
+                padding: 1rem;
+            }
+
+            .fixture-grid {
+                display: grid;
+                gap: 1rem;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .fixture-span {
+                grid-column: 1 / -1;
+            }
+        </style>
+    </head>
+    <body class="soa-body">
+        <main class="fixture-grid">
+            <section class="soa-card" id="controls-card">
+                <header class="soa-card-header">
+                    <h1 class="soa-card-title">Controls</h1>
+                </header>
+                <div class="soa-card-body">
+                    <div class="soa-toolbar" id="button-toolbar">
+                        <button
+                            class="soa-button soa-button-primary"
+                            id="primary-button"
+                            type="button"
+                        >
+                            Primary
+                        </button>
+                        <button class="soa-button soa-button-sm" id="small-button" type="button">
+                            Small
+                        </button>
+                        <button
+                            class="soa-icon-button"
+                            id="icon-button"
+                            type="button"
+                            aria-label="Add"
+                        >
+                            +
+                        </button>
+                        <button class="soa-button" id="disabled-button" type="button" disabled>
+                            Disabled
+                        </button>
+                    </div>
+                </div>
+                <footer class="soa-card-footer">Footer</footer>
+            </section>
+
+            <section class="soa-card collapsed-card" id="collapsed-card">
+                <header class="soa-card-header"><h2 class="soa-card-title">Collapsed</h2></header>
+                <div class="soa-card-body">Hidden body</div>
+                <footer class="soa-card-footer">Hidden footer</footer>
+            </section>
+
+            <form class="soa-form" id="controls-form">
+                <div class="soa-field">
+                    <label class="soa-label" for="text-input">Text</label>
+                    <input class="soa-input" id="text-input" placeholder="Value" />
+                    <span class="soa-help">Help text</span>
+                </div>
+                <div class="soa-field has-error">
+                    <label class="soa-label" for="invalid-input">Invalid</label>
+                    <input class="soa-input" id="invalid-input" aria-invalid="true" value="Bad" />
+                    <span class="soa-field-error">Invalid value</span>
+                </div>
+                <div class="soa-field">
+                    <label class="soa-label" for="select-input">Select</label>
+                    <select class="soa-select" id="select-input">
+                        <option>One</option>
+                    </select>
+                </div>
+                <div class="soa-field">
+                    <label class="soa-label" for="textarea-input">Textarea</label>
+                    <textarea class="soa-textarea" id="textarea-input"></textarea>
+                </div>
+                <div class="soa-input-group" id="input-group">
+                    <span class="soa-input-addon">@</span>
+                    <input class="soa-input" id="grouped-input" readonly value="readonly" />
+                </div>
+            </form>
+
+            <section class="soa-radio-group" id="choice-group">
+                <label class="soa-choice-label">
+                    <input class="soa-choice-control" id="unchecked-choice" type="checkbox" />
+                    Unchecked
+                </label>
+                <label class="soa-choice-label">
+                    <input class="soa-choice-control" id="checked-choice" type="checkbox" checked />
+                    Checked
+                </label>
+                <label class="soa-choice-label">
+                    <input class="soa-choice-control" id="indeterminate-choice" type="checkbox" />
+                    Indeterminate
+                </label>
+                <label class="soa-choice-label">
+                    <input
+                        class="soa-choice-control"
+                        id="disabled-choice"
+                        type="checkbox"
+                        disabled
+                    />
+                    Disabled
+                </label>
+                <label class="soa-choice-label">
+                    <input
+                        class="soa-choice-control"
+                        id="readonly-choice"
+                        type="checkbox"
+                        aria-readonly="true"
+                        disabled
+                    />
+                    Readonly
+                </label>
+                <label class="soa-switch">
+                    <input class="soa-switch-control" id="switch-control" type="checkbox" checked />
+                    <span class="soa-switch-track"><span class="soa-switch-thumb"></span></span>
+                    Switch
+                </label>
+            </section>
+
+            <section class="soa-images soa-is-empty fixture-span" id="empty-upload">
+                <div class="soa-images-grid soa-attachment-list"></div>
+            </section>
+
+            <section class="soa-images soa-is-error fixture-span" id="error-upload">
+                <div class="soa-images-grid soa-attachment-list">
+                    <article class="soa-images-item soa-attachment">
+                        <button class="soa-images-preview" type="button">
+                            Preview
+                            <span class="soa-images-order">1</span>
+                        </button>
+                        <div class="soa-attachment-info">
+                            <span class="soa-attachment-name">document.png</span>
+                            <div class="soa-attachment-actions">
+                                <button class="soa-button soa-button-sm" type="button">
+                                    Download
+                                </button>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <section class="soa-file soa-is-uploading" id="uploading-file" aria-busy="true">
+                <button class="soa-button" data-file-upload type="button">Uploading</button>
+            </section>
+
+            <section class="soa-files soa-is-readonly" id="readonly-files" aria-readonly="true">
+                <div class="soa-attachment-list">
+                    <article class="soa-attachment">Readonly</article>
+                </div>
+            </section>
+
+            <dialog class="soa-dialog" id="fixture-dialog" open>
+                <form class="soa-dialog-form">
+                    <h2 class="soa-dialog-title">Dialog</h2>
+                    <p class="soa-dialog-description">Viewport constrained content.</p>
+                    <div class="soa-dialog-actions">
+                        <button class="soa-button" type="button">Cancel</button>
+                        <button class="soa-button soa-button-primary" type="submit">Save</button>
+                    </div>
+                </form>
+            </dialog>
+        </main>
+        <script>
+            document.querySelector('#indeterminate-choice').indeterminate = true
+        </script>
+    </body>
+</html>

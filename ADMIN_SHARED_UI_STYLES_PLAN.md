@@ -2,8 +2,8 @@
 
 ## Статус и правила
 
-- Статус: **инфраструктура, canonical application shell и fixed scroll controls готовы**.
-- Следующий checkpoint: общие controls, form fields и containers.
+- Статус: **инфраструктура, application shell, controls/containers и fixed scroll controls готовы**.
+- Следующий checkpoint: общий слой всех inline editable fields.
 - Общие декларации поставляются отдельным logical entry `shared:ui`, автоматически подключаемым для любой `ThemeInterface`; headless `core` не получает presentation.
 - Общий CSS может использовать только semantic `soa-*` classes, behavior hooks и canonical `--soa-*` variables. Тема задаёт значения tokens и действительно отличающиеся overrides.
 - В общем слое запрещены Bootstrap/AdminLTE/Tailwind imports, vendor selectors и literal palette. Одинаковые structural rules удаляются из theme adapters.
@@ -124,7 +124,7 @@ Canonical название хранится один раз — ключом `te
 - [x] Зафиксировать cascade order `core -> shared -> feature -> theme`; theme override должен быть явным и минимальным.
 - [x] Автоматически регистрировать `shared:ui` ровно один раз для AdminLTE, Tailwind и любой custom theme.
 - [x] Добавить одинаковые semantic classes в AdminLTE/Tailwind Blade; legacy classes оставить compatibility aliases.
-- [ ] Добавить static gate: в theme SCSS нет копий перенесённых structural selectors.
+- [x] Добавить static gate: в theme SCSS нет копий перенесённых structural selectors.
 
 ## 1. Постоянный application shell
 
@@ -139,18 +139,18 @@ Canonical название хранится один раз — ключом `te
 
 ## 2. Общие controls и containers
 
-- [ ] `.soa-button`: reset, inline-flex geometry, min-size, padding, focus, disabled и size variants.
-- [ ] `.soa-icon-button`: square hit area и icon alignment, включая header/editor/scroll controls.
-- [ ] Button groups/toolbars: horizontal/vertical layout, wrapping и gaps.
-- [ ] `.soa-input`, `.soa-select`, `.soa-textarea`, checkbox/radio/switch: sizing, font inheritance, focus и disabled geometry.
-- [ ] Input group, addon, label/help/error layout.
-- [ ] `checkbox`: control/label/group geometry и checked, unchecked, indeterminate, focus, disabled, readonly, help/error states.
-- [ ] `image`: preview, upload/replace/remove/download/insert actions, progress, empty, error и readonly states.
-- [ ] `images`: gallery grid, item preview/order/actions, upload queue/progress, empty, error и readonly states.
-- [ ] `file`: file icon/name/metadata, browse/upload/replace/remove/download actions, progress, empty, error и readonly states.
-- [ ] `files`: file list/grid, item actions, upload queue/progress, empty, error и readonly states.
-- [ ] Card shell: header/body/footer layout, collapsed/maximized geometry; palette/shadow остаются tokens темы.
-- [ ] Dialog shell: viewport sizing, form/actions layout и backdrop hook; palette/shadow остаются tokens темы.
+- [x] `.soa-button`: reset, inline-flex geometry, min-size, padding, focus, disabled и size variants.
+- [x] `.soa-icon-button`: square hit area и icon alignment, включая header/editor/scroll controls.
+- [x] Button groups/toolbars: horizontal/vertical layout, wrapping и gaps.
+- [x] `.soa-input`, `.soa-select`, `.soa-textarea`, checkbox/radio/switch: sizing, font inheritance, focus и disabled geometry.
+- [x] Input group, addon, label/help/error layout.
+- [x] `checkbox`: control/label/group geometry и checked, unchecked, indeterminate, focus, disabled, readonly, help/error states.
+- [x] `image`: preview, upload/replace/remove/download/insert actions, progress, empty, error и readonly states.
+- [x] `images`: gallery grid, item preview/order/actions, upload queue/progress, empty, error и readonly states.
+- [x] `file`: file icon/name/metadata, browse/upload/replace/remove/download actions, progress, empty, error и readonly states.
+- [x] `files`: file list/grid, item actions, upload queue/progress, empty, error и readonly states.
+- [x] Card shell: header/body/footer layout, collapsed/maximized geometry; palette/shadow остаются tokens темы.
+- [x] Dialog shell: viewport sizing, form/actions layout и backdrop hook; palette/shadow остаются tokens темы.
 
 ## 3. Все inline editable поля
 
@@ -205,3 +205,4 @@ Canonical название хранится один раз — ключом `te
 | 2026-09-09 | Shared UI и override asset layers | Добавлены отдельный `shared:ui` и минимальные `theme:<name>:overrides` entries. Registrar разрешает независимый manifest order: CSS `core → shared UI → shared features → theme → overrides`, JavaScript `core → shared runtime → theme → feature drivers → overrides → modules`. `shared:ui` регистрируется runtime-assembler ровно один раз для встроенных и external themes. Оба профиля пересобраны; узкие gates: PHPUnit 97/892, Vitest 118/118, Stylelint и reachability 359/359. | текущий commit |
 | 2026-09-09 | Self-contained no-build theme scaffold | `ThemeRegistry::registerPackage()` принимает canonical name, class, единый theme root и public URL root, сам загружает `<root>/asset-manifest.json` и отклоняет конфликт имён. Scaffold темы создаёт class/provider, Laravel-layout CSS/JS/views, оба готовых профиля и manifest с фактическими MD5/SHA-256; provider публикует только `public`, sources в SleepingOwl не копируются. Узкий PHP gate: 13 tests / 134 assertions. | текущий commit |
 | 2026-09-09 | Semantic application shell | Один base Blade теперь обслуживает AdminLTE и Shadcn: корень получает canonical `data-theme`, а app/header/sidebar/navigation/main/footer/asset-health — стабильные `soa-*` owners; лишний Shadcn layout override удалён. `shared:ui` владеет grid/flex, collapsed/mobile, focus/reduced-motion и footer geometry, themes задают tokens и skin. Fixed scroll controls получили единый markup, hit area, stack и show/hide states. Chromium matrix: 13/13 для трёх themes и двух profiles; PHP: 38/38; Vitest/style boundary и reachability gates добавлены. | текущий commit |
+| 2026-09-09 | Shared controls и containers | `shared:ui` декомпозирован на семь source owners при сохранении одного logical bundle. Общими стали button/input/choice/switch, field, card/dialog и attachment geometry со всеми disabled/focus/collapsed/maximized/empty/error/uploading/readonly states; Vue upload roots публикуют semantic state classes и ARIA. Theme SCSS оставляет tokens/skin, а новый static gate запрещает возврат structural declarations. Оба profiles пересобраны; Chromium: 19/19 shell+controls, PHP Rendering: 83 tests / 1005 assertions, узкие Vitest gates: 29/29. | текущий commit |

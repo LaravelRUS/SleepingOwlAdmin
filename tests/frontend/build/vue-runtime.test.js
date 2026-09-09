@@ -171,6 +171,12 @@ describe('precompiled Vue islands', () => {
         expect(component).toContain('<template>')
         expect(component).toContain('data-file-upload')
         expect(component).toContain(':class="uploadIconClass"')
+        expect(component).toContain('class="soa-file"')
+        expect(component).toContain(':aria-busy="uploading')
+        expect(component).toContain("'soa-is-empty': !this.hasValue")
+        expect(component).toContain("'soa-is-error': this.errors.length > 0")
+        expect(component).toContain("'soa-is-readonly': this.readonly")
+        expect(component).toContain("'soa-is-uploading': this.uploading")
         expect(component).not.toMatch(
             /class="(?:alert|close|form-element-files|btn|fa-fw|fas|upload-button)/,
         )
@@ -316,6 +322,10 @@ describe('precompiled image island', () => {
         expect(component).toContain('postPastedImage(Admin.Http')
         expect(component).toContain('data-image-upload')
         expect(component).toContain(':class="uploadIconClass"')
+        expect(component).toContain('class="soa-image"')
+        expect(component).toContain(':aria-readonly="readonly')
+        expect(component).toContain("'soa-is-empty': !this.hasValue")
+        expect(component).toContain("'soa-is-uploading': this.uploading")
         expect(component).not.toMatch(
             /class="(?:alert|close|form-element-files|btn|fa-fw|fas|upload-button)/,
         )
@@ -337,7 +347,9 @@ describe('precompiled images island', () => {
         expect(view).toContain('data-vue-props=')
         expect(view).toContain('v-pre')
         expect(view).toContain("'root' => 'soa-images'")
-        expect(view).toContain("'sortableGhost' => 'soa-images__item--moving'")
+        expect(view).toContain(
+            "'sortableGhost' => 'soa-images__item--moving soa-images-item-moving'",
+        )
         expect(view).toContain("'uploadingIcon' => 'fas fa-spinner fa-spin'")
         expect(view).toContain('$imagesExtraProps ?? []')
         expect(view).not.toContain('inline-template')
@@ -345,6 +357,10 @@ describe('precompiled images island', () => {
         expect(component).toContain('postPastedImage(')
         expect(component).toContain('data-images-upload-icon')
         expect(component).toContain(':class="uploadIconClass"')
+        expect(component).toContain(':class="[classes.root, stateClasses]"')
+        expect(component).toContain(':aria-busy="uploading')
+        expect(component).toContain("'soa-is-empty': !this.hasValues")
+        expect(component).toContain("'soa-is-error': this.errors.length > 0")
         expect(component).not.toMatch(
             /class="(?:soa-images|alert|close|form-element-files|dropzone|btn|fa-fw|fas|upload-button|gallery-remove)/,
         )

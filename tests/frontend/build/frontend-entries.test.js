@@ -30,8 +30,8 @@ function expectedSourceRoots(logicalId) {
         return sharedSourceRoots(id)
     }
 
-    if (type === 'theme' && scope === 'overrides') {
-        return [`resources/css/theme-overrides/${theme}.scss`]
+    if (type === 'theme') {
+        return themeSourceRoots(scope, theme)
     }
 
     if (type === 'feature' && scope === 'theme') {
@@ -44,6 +44,12 @@ function expectedSourceRoots(logicalId) {
     if (type === 'feature') {
         return [`resources/css/shared/features/${id}/`, `resources/js/shared/features/${id}/`]
     }
+
+    return [`resources/css/themes/${theme}/`, `resources/js/themes/${theme}/`]
+}
+
+function themeSourceRoots(scope, theme) {
+    if (scope === 'overrides') return [`resources/css/theme-overrides/${theme}.scss`]
 
     return [`resources/css/themes/${theme}/`, `resources/js/themes/${theme}/`]
 }
@@ -104,7 +110,9 @@ describe('modern frontend build entries', () => {
             output: 'css/shared/features.css',
         })
     })
+})
 
+describe('theme frontend build entries', () => {
     it.each(['adminlte', 'shadcn'])(
         'publishes the %s runtime and adapters as one theme boundary',
         (theme) => {
@@ -128,7 +136,9 @@ describe('modern frontend build entries', () => {
 
         expect(logicalIds.some((logicalId) => logicalId.startsWith('feature:'))).toBe(false)
     })
+})
 
+describe('modern frontend source ownership', () => {
     it('keeps modern source ownership aligned with logical ids', () => {
         Object.values(entries.modern)
             .flat()

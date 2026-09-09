@@ -162,14 +162,23 @@
 }
 :root[data-theme=framework-free-test] {
   --soa-primary-color: #2d718c;
+  --soa-on-primary-color: #fff;
+  --soa-success-color: #317a5f;
+  --soa-warning-color: #9a650f;
   --soa-danger-color: #a64055;
+  --soa-info-color: #2d718c;
   --soa-surface-color: #fff;
   --soa-elevated-surface-color: #fff;
+  --soa-muted-surface-color: #dbe9ef;
   --soa-page-background-color: #eaf2f6;
   --soa-text-color: #19324a;
   --soa-muted-text-color: #365268;
   --soa-border-color: #b7c9d3;
+  --soa-input-border-color: #8eacba;
   --soa-focus-color: #3d8a76;
+  --soa-overlay-color: rgba(15, 28, 39, 0.6);
+  --soa-shadow-sm: 0 0.125rem 0.25rem rgba(25, 50, 74, 0.18);
+  --soa-shadow-md: 0 0.75rem 2rem rgba(25, 50, 74, 0.18);
   --soa-sidebar-bg: #19324a;
   --soa-sidebar-text-color: #fff;
   --soa-sidebar-border-color: #b7c9d3;
@@ -179,6 +188,7 @@
   --soa-line-height-base: 1.5;
   --soa-line-height-tight: 1.25;
   --soa-font-size-caption: 0.875rem;
+  --soa-font-size-section: 1.125rem;
   --soa-font-size-title: 1.75rem;
   --soa-font-weight-medium: 500;
   --soa-font-weight-semibold: 600;
@@ -187,6 +197,9 @@
   --soa-content-padding: 1.5rem;
   --soa-content-padding-compact: 0.75rem;
   --soa-border-radius: 0.1875rem;
+  --soa-border-radius-sm: 0.1875rem;
+  --soa-border-radius-lg: 0.5rem;
+  --soa-border-radius-full: 9999px;
   --soa-border-width: 0.0625rem;
   --soa-layout-transition-duration: var(--soa-motion-duration-normal);
   --soa-disabled-opacity: 0.55;
@@ -199,6 +212,7 @@
   --soa-header-action-size: 2.5rem;
   --soa-shell-max-width: 72rem;
   --soa-header-z-index: 30;
+  --soa-overlay-z-index: 35;
   --soa-sidebar-z-index: 40;
   --soa-sidebar-overlay-z-index: 35;
   --soa-sidebar-indicator-angle: -90deg;
@@ -211,15 +225,34 @@
   --soa-asset-health-padding-block: 0.75rem;
   --soa-asset-health-padding-inline: 1rem;
   --soa-shadow-color: rgba(25, 50, 74, 0.18);
+  --soa-control-size: 2.375rem;
+  --soa-control-size-sm: 2rem;
+  --soa-icon-control-size: 2.25rem;
+  --soa-control-padding-block: 0.5rem;
+  --soa-control-padding-inline: 1rem;
+  --soa-control-padding-block-sm: 0.25rem;
+  --soa-control-padding-inline-sm: 0.5rem;
+  --soa-choice-size: 1rem;
+  --soa-switch-track-padding: 0.125rem;
+  --soa-attachment-empty-min-height: 5rem;
+  --soa-attachment-preview-ratio: 1.6;
+  --soa-order-badge-size: 1.5rem;
+  --soa-dragging-opacity: 0.45;
+  --soa-dialog-image-reserved-space: 8rem;
 }
 
 :root[data-theme=framework-free-test][data-color-scheme=dark] {
   --soa-surface-color: #172735;
   --soa-elevated-surface-color: #172735;
+  --soa-muted-surface-color: #213746;
   --soa-page-background-color: #0f1c27;
   --soa-text-color: #eaf2f6;
   --soa-muted-text-color: #afc2ce;
   --soa-border-color: #456174;
+  --soa-input-border-color: #557487;
+  --soa-overlay-color: rgba(0, 0, 0, 0.7);
+  --soa-shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.35);
+  --soa-shadow-md: 0 0.75rem 2rem rgba(0, 0, 0, 0.35);
   --soa-sidebar-border-color: #456174;
   --soa-shadow-color: rgba(0, 0, 0, 0.35);
 }

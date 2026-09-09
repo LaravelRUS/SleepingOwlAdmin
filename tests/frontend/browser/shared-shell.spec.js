@@ -1,3 +1,5 @@
+/* global document, getComputedStyle, innerHeight, innerWidth */
+
 import { expect, test } from '@playwright/test'
 
 const themes = ['adminlte', 'framework-free-test', 'shadcn']
@@ -20,20 +22,7 @@ for (const profile of ['development', 'production']) {
             expect(geometry.footer).toMatchObject({ left: 256, width: 1024 })
             expect(geometry.sidebar.height).toBeGreaterThanOrEqual(geometry.viewport.height)
 
-            const controls = await controlGeometry(page)
-            expect(controls.bottom.right).toBe(16)
-            expect(controls.bottom.bottom).toBe(16)
-            expect(controls.bottom.width).toBe(44)
-            expect(controls.top.bottom).toBe(60)
-            expect(controls.top.visibility).toBe('hidden')
-            expect(controls.bottom.visibility).toBe('visible')
-
-            await page.locator('#scrolltotop').evaluate((element) => element.classList.add('show'))
-            await page
-                .locator('#scrolltobottom')
-                .evaluate((element) => element.classList.add('hide'))
-            await expect(page.locator('#scrolltotop')).toHaveCSS('visibility', 'visible')
-            await expect(page.locator('#scrolltobottom')).toHaveCSS('visibility', 'hidden')
+            await expectDesktopScrollControls(page)
 
             await page.locator('body').evaluate((body) => body.classList.add('sidebar-collapse'))
             await expect(page.locator('#shell-sidebar')).toHaveCSS('width', '64px')
@@ -120,4 +109,17 @@ function controlGeometry(page) {
             top: control('.soa-scroll-control-top'),
         }
     })
+}
+
+async function expectDesktopScrollControls(page) {
+    const controls = await controlGeometry(page)
+
+    expect(controls.bottom).toMatchObject({ bottom: 16, right: 16, width: 44 })
+    expect(controls.top).toMatchObject({ bottom: 60, visibility: 'hidden' })
+    expect(controls.bottom.visibility).toBe('visible')
+
+    await page.locator('#scrolltotop').evaluate((element) => element.classList.add('show'))
+    await page.locator('#scrolltobottom').evaluate((element) => element.classList.add('hide'))
+    await expect(page.locator('#scrolltotop')).toHaveCSS('visibility', 'visible')
+    await expect(page.locator('#scrolltobottom')).toHaveCSS('visibility', 'hidden')
 }

@@ -1,0 +1,161 @@
+@mixin styles {
+  .soa-button,
+  .soa-icon-button {
+    align-items: center;
+    appearance: none;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: inline-flex;
+    font: inherit;
+    justify-content: center;
+    line-height: var(--soa-line-height-tight);
+    max-inline-size: 100%;
+    text-decoration: none;
+  }
+
+  .soa-button {
+    background: var(--soa-surface-color);
+    border: var(--soa-border-width) solid var(--soa-border-color);
+    border-radius: var(--soa-border-radius);
+    color: var(--soa-text-color);
+    font-size: var(--soa-font-size-caption);
+    font-weight: var(--soa-font-weight-semibold);
+    gap: var(--soa-space-2);
+    block-size: var(--soa-control-size);
+    min-block-size: var(--soa-control-size);
+    padding: var(--soa-control-padding-block) var(--soa-control-padding-inline);
+  }
+
+  .soa-icon-button {
+    block-size: var(--soa-icon-control-size);
+    border-radius: var(--soa-border-radius);
+    inline-size: var(--soa-icon-control-size);
+    min-block-size: var(--soa-icon-control-size);
+    min-inline-size: var(--soa-icon-control-size);
+    padding: 0;
+  }
+
+  .soa-header-action.soa-icon-button {
+    block-size: var(--soa-header-action-size);
+    inline-size: var(--soa-header-action-size);
+    min-block-size: var(--soa-header-action-size);
+    min-inline-size: var(--soa-header-action-size);
+  }
+
+  .soa-button:hover:not(:disabled, [aria-disabled='true']),
+  .soa-icon-button:hover:not(:disabled, [aria-disabled='true']) {
+    background: var(--soa-muted-surface-color);
+  }
+
+  .soa-button:focus-visible,
+  .soa-icon-button:focus-visible {
+    outline: var(--soa-focus-ring-width) solid var(--soa-focus-color);
+    outline-offset: var(--soa-focus-ring-width);
+  }
+
+  .soa-button:disabled,
+  .soa-button[aria-disabled='true'],
+  .soa-icon-button:disabled,
+  .soa-icon-button[aria-disabled='true'] {
+    cursor: not-allowed;
+    opacity: var(--soa-disabled-opacity);
+    pointer-events: none;
+  }
+
+  .soa-button-primary,
+  .soa-button-success,
+  .soa-button-info,
+  .soa-button-danger {
+    color: var(--soa-on-primary-color);
+  }
+
+  .soa-button-primary {
+    background: var(--soa-primary-color);
+    border-color: var(--soa-primary-color);
+  }
+
+  .soa-button-success {
+    background: var(--soa-success-color);
+    border-color: var(--soa-success-color);
+  }
+
+  .soa-button-info {
+    background: var(--soa-info-color);
+    border-color: var(--soa-info-color);
+  }
+
+  .soa-button-danger {
+    background: var(--soa-danger-color);
+    border-color: var(--soa-danger-color);
+  }
+
+  .soa-button-warning {
+    background: var(--soa-warning-color);
+    border-color: var(--soa-warning-color);
+    color: var(--soa-on-warning-color, var(--soa-text-color));
+  }
+
+  .soa-button-primary:hover:not(:disabled, [aria-disabled='true']) {
+    background: color-mix(in srgb, var(--soa-primary-color) 88%, var(--soa-text-color));
+  }
+
+  .soa-button-success:hover:not(:disabled, [aria-disabled='true']) {
+    background: color-mix(in srgb, var(--soa-success-color) 88%, var(--soa-text-color));
+  }
+
+  .soa-button-info:hover:not(:disabled, [aria-disabled='true']) {
+    background: color-mix(in srgb, var(--soa-info-color) 88%, var(--soa-text-color));
+  }
+
+  .soa-button-danger:hover:not(:disabled, [aria-disabled='true']) {
+    background: color-mix(in srgb, var(--soa-danger-color) 88%, var(--soa-text-color));
+  }
+
+  .soa-button-warning:hover:not(:disabled, [aria-disabled='true']) {
+    background: color-mix(in srgb, var(--soa-warning-color) 88%, var(--soa-text-color));
+  }
+
+  .soa-button-secondary {
+    background: var(--soa-surface-color);
+    border-color: var(--soa-border-color);
+    color: var(--soa-text-color);
+  }
+
+  .soa-button-ghost {
+    background: transparent;
+    border-color: transparent;
+    color: var(--soa-muted-text-color);
+  }
+
+  .soa-button-sm {
+    block-size: var(--soa-control-size-sm);
+    min-block-size: var(--soa-control-size-sm);
+    padding: var(--soa-control-padding-block-sm) var(--soa-control-padding-inline-sm);
+  }
+
+  .soa-button-sm.soa-icon-button {
+    block-size: var(--soa-control-size-sm);
+    inline-size: var(--soa-control-size-sm);
+    min-inline-size: var(--soa-control-size-sm);
+    padding: 0;
+  }
+
+  .soa-button-group,
+  .soa-toolbar,
+  .soa-form-actions,
+  .soa-input-actions {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--soa-space-2);
+  }
+
+  .soa-button-group-vertical {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .soa-form-actions {
+    justify-content: flex-end;
+  }
+}

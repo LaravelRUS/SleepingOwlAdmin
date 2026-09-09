@@ -1,5 +1,10 @@
 <template>
-    <div data-images-root :class="classes.root">
+    <div
+        data-images-root
+        :class="[classes.root, stateClasses]"
+        :aria-busy="uploading ? 'true' : 'false'"
+        :aria-readonly="readonly ? 'true' : undefined"
+    >
         <div v-if="errors.length" data-images-alert :class="classes.alert">
             <button
                 type="button"
@@ -266,6 +271,14 @@ export default defineComponent({
         },
         uploadIconClass() {
             return this.uploading ? this.classes.uploadingIcon : this.classes.uploadIcon
+        },
+        stateClasses() {
+            return {
+                'soa-is-empty': !this.hasValues,
+                'soa-is-error': this.errors.length > 0,
+                'soa-is-readonly': this.readonly,
+                'soa-is-uploading': this.uploading,
+            }
         },
     },
     mounted() {

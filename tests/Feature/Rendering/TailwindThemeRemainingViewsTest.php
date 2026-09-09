@@ -60,7 +60,7 @@ class TailwindThemeRemainingViewsTest extends TestCase
         $this->assertCount(103, $views);
         $this->assertSame(count($views), $inherited + $overridden);
         $this->assertGreaterThan(0, $inherited);
-        $this->assertGreaterThan(0, $overridden);
+        $this->assertSame(0, $overridden);
     }
 
     public function test_tailwind_overrides_contain_no_base_duplicates(): void
@@ -87,7 +87,7 @@ class TailwindThemeRemainingViewsTest extends TestCase
             $overrides[] = $relative;
         }
 
-        $this->assertNotEmpty($overrides);
+        $this->assertSame([], $overrides);
     }
 
     public function test_nested_logical_paths_keep_the_tailwind_fallback_chain(): void

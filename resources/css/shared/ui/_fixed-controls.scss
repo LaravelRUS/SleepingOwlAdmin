@@ -1,0 +1,48 @@
+@mixin styles {
+  .soa-scroll-control {
+    align-items: center;
+    border-radius: var(--soa-border-radius-full);
+    box-sizing: border-box;
+    display: inline-flex;
+    inline-size: var(--soa-scroll-control-size);
+    inset-inline-end: var(--soa-scroll-control-offset-inline);
+    justify-content: center;
+    min-block-size: var(--soa-scroll-control-size);
+    padding: 0;
+    position: fixed;
+    text-decoration: none;
+    transition: opacity var(--soa-motion-duration-fast) ease;
+    z-index: var(--soa-scroll-control-z-index);
+  }
+
+  .soa-scroll-control-top {
+    inset-block-end: calc(
+      var(--soa-scroll-control-offset-block) + var(--soa-scroll-control-size)
+    );
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+  }
+
+  .soa-scroll-control-top.show {
+    opacity: 1;
+    pointer-events: auto;
+    visibility: visible;
+  }
+
+  .soa-scroll-control-bottom {
+    inset-block-end: var(--soa-scroll-control-offset-block);
+  }
+
+  .soa-scroll-control-bottom.hide {
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+  }
+
+  @media (width <= 64rem) {
+    .soa-scroll-control {
+      inset-inline-end: var(--soa-content-padding-compact);
+    }
+  }
+}

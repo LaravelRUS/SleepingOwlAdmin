@@ -1,5 +1,5 @@
 @if ($visibled)
-    <div class="form-element-files-wrapper soa-field">
+    <div class="form-element-files-wrapper soa-field soa-files{{ $readonly ? ' soa-is-readonly' : '' }}" aria-readonly="{{ $readonly ? 'true' : 'false' }}">
         <label for="{{ $id }}" class="form-label control-label soa-label form-element-files-control-label">
             {!! $label !!}
 
@@ -23,13 +23,13 @@
                     <div class="fileThumbnail soa-attachment">
                         <div class="thumbnail soa-attachment-inner">
                             <div class="fileicon">
-                                <div class="fileicon-inner" style="background-image:url('[%=img%]')">
+                                <div class="fileicon-inner soa-attachment-preview" style="background-image:url('[%=img%]')">
                                     <span class="file-extension">[%=ext%]</span>
                                     <span class="file-mime">[%=mime%]</span>
-                                    <a href="[%=img%]" data-lightbox style="[%=lightbox_style%]" class="file-image"></a>
+                                    <a href="[%=img%]" data-lightbox style="[%=lightbox_style%]" class="file-image soa-attachment-link"></a>
                                 </div>
                             </div>
-                            <div class="file-actions">
+                            <div class="file-actions soa-attachment-info">
                                 <div class="fileinfo hidden" data-id="file" data-src="[%=src%]" data-url="[%=url%]">
                                     [%=basename%]
                                 </div>
@@ -57,7 +57,7 @@
                                        data-id="original_name"
                                        value="[%=orig%]" />
 
-                                <div class="file-buttons soa-button-group mt-1 text-start">
+                                <div class="file-buttons soa-attachment-actions soa-button-group mt-1 text-start">
                                     <button class="btn btn-danger btn-delete btn-sm fileRemove soa-button soa-button-sm soa-button-danger" title="{{ trans('sleeping_owl::lang.button.remove') }}">
                                         <i class="fas fa-fw fa-times"></i>
                                     </button>
@@ -73,7 +73,7 @@
                                 </div>
                             </div>
                             @if ($show_original_name)
-                                <div class="file-original_name">
+                                <div class="file-original_name soa-attachment-name">
                                     [%=orig%]
                                 </div>
                             @endif
@@ -89,7 +89,7 @@
                     <div class="fileThumbnail soa-attachment">
                         <div class="thumbnail soa-attachment-inner">
                             <div class="fileicon">
-                                <div class="fileicon-inner" {!! @$item['mime_base'] == 'image' || @$item['ext'] == 'svg' ? 'style="background-image:url(' . asset($item['url']) . ')"' : '' !!}>
+                                <div class="fileicon-inner soa-attachment-preview" {!! @$item['mime_base'] == 'image' || @$item['ext'] == 'svg' ? 'style="background-image:url(' . asset($item['url']) . ')"' : '' !!}>
                                     @if (@$item['mime_base'] != 'image' && @$item['ext'] != 'svg')
                                         @if (@$item['ext'])
                                             <span class="file-extension h1">{{ $item['ext'] }}</span>
@@ -98,11 +98,11 @@
                                             <span class="file-mime small text-secondary">{{ $item['mime'] }}</span>
                                         @endif
                                     @else
-                                        <a href="{{ asset($item['url']) }}" data-lightbox class="file-image"></a>
+                                        <a href="{{ asset($item['url']) }}" data-lightbox class="file-image soa-attachment-link"></a>
                                     @endif
                                 </div>
                             </div>
-                            <div class="file-actions">
+                            <div class="file-actions soa-attachment-info">
                                 <div class="fileinfo hidden"
                                      data-id="file"
                                      data-src="{{ @$item['url'] }}"
@@ -134,7 +134,7 @@
                                        data-id="original_name"
                                        value="{{ @$item['orig'] }}" />
 
-                                <div class="file-buttons soa-button-group mt-1{{ $readonly ? ' text-end' : ' text-start' }}">
+                                <div class="file-buttons soa-attachment-actions soa-button-group mt-1{{ $readonly ? ' text-end' : ' text-start' }}">
                                     @if (!$readonly)
                                         <button class="btn btn-danger btn-delete btn-sm fileRemove soa-button soa-button-sm soa-button-danger" title="{{ trans('sleeping_owl::lang.button.remove') }}">
                                             <i class="fas fa-fw fa-times"></i>
@@ -152,7 +152,7 @@
                                 </div>
                             </div>
                             @if ($show_original_name)
-                                <div class="file-original_name">
+                                <div class="file-original_name soa-attachment-name">
                                     {!! @$item['orig'] !!}
                                 </div>
                             @endif
