@@ -14,7 +14,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   installTailwindCardControls: () => (/* binding */ installTailwindCardControls),
 /* harmony export */   installTailwindTheme: () => (/* binding */ installTailwindTheme)
 /* harmony export */ });
-var INSTALLATION = Symbol["for"]('sleepingowl.theme.tailwind');
+var INSTALLATION = Symbol["for"]('sleepingowl.theme.shadcn');
 function installTailwindTheme() {
   var target = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : globalThis;
   if (target[INSTALLATION]) return target[INSTALLATION];
@@ -48,21 +48,16 @@ function installTailwindTheme() {
 function installTailwindCardControls(document) {
   if (typeof (document === null || document === void 0 ? void 0 : document.addEventListener) !== 'function') return null;
   var onClick = function onClick(event) {
-    var _event$target, _event$target$closest, _button$closest;
-    var button = (_event$target = event.target) === null || _event$target === void 0 || (_event$target$closest = _event$target.closest) === null || _event$target$closest === void 0 ? void 0 : _event$target$closest.call(_event$target, '[data-card-widget]');
-    var card = button === null || button === void 0 || (_button$closest = button.closest) === null || _button$closest === void 0 ? void 0 : _button$closest.call(button, '.soa-card, .card');
-    if (!button || !card) return;
+    var control = cardControl(event);
+    if (!control) return;
+    var button = control.button,
+      card = control.card;
     var action = button.getAttribute('data-card-widget');
     if (action === 'collapse') {
-      var collapsed = card.classList.toggle('collapsed-card');
-      button.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
-      updateCollapseIcon(button, collapsed);
-      event.preventDefault();
+      collapseCard(event, button, card);
     }
     if (action === 'maximize') {
-      var maximized = card.classList.toggle('soa-card-maximized');
-      button.setAttribute('aria-pressed', maximized ? 'true' : 'false');
-      event.preventDefault();
+      maximizeCard(event, button, card);
     }
   };
   var onKeydown = function onKeydown(event) {
@@ -81,6 +76,26 @@ function installTailwindCardControls(document) {
       document.removeEventListener('keydown', onKeydown);
     }
   };
+}
+function cardControl(event) {
+  var _event$target, _event$target$closest, _button$closest;
+  var button = (_event$target = event.target) === null || _event$target === void 0 || (_event$target$closest = _event$target.closest) === null || _event$target$closest === void 0 ? void 0 : _event$target$closest.call(_event$target, '[data-card-widget]');
+  var card = button === null || button === void 0 || (_button$closest = button.closest) === null || _button$closest === void 0 ? void 0 : _button$closest.call(button, '.soa-card, .card');
+  return button && card ? {
+    button: button,
+    card: card
+  } : null;
+}
+function collapseCard(event, button, card) {
+  var collapsed = card.classList.toggle('collapsed-card');
+  button.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+  updateCollapseIcon(button, collapsed);
+  event.preventDefault();
+}
+function maximizeCard(event, button, card) {
+  var maximized = card.classList.toggle('soa-card-maximized');
+  button.setAttribute('aria-pressed', maximized ? 'true' : 'false');
+  event.preventDefault();
 }
 function updateCollapseIcon(button, collapsed) {
   var _button$querySelector;

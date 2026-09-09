@@ -440,8 +440,8 @@
                     "scripts": [
                         {
                             "file": "profiles/production/js/themes/shadcn.js",
-                            "version": "bf5e332a7b3f78cfafb82fef5b5fde62",
-                            "checksum": "sha256:e70c57a0e1360f42a6be899d57df3ced81c002e6419da68834c1a1f8641c15fa"
+                            "version": "5666eb0c1574c6bb56cc6d9bbc3e98b8",
+                            "checksum": "sha256:4fbbe4296db588294b23481f5fcab9e868686f605a27aa1a0f87d2dd182faa1b"
                         }
                     ],
                     "styles": [
@@ -897,8 +897,8 @@
                     "scripts": [
                         {
                             "file": "profiles/development/js/themes/shadcn.js",
-                            "version": "4b97416b94323a252c5b9187cf4c70e8",
-                            "checksum": "sha256:c4fe504dcb2d1a533de0f125ee1ac6fcb0f95ec227887130563a059a43fe38b1"
+                            "version": "2368e3820f59fb16370acd22afe20d9e",
+                            "checksum": "sha256:977a2facf5911a8aab1fc76934068604815d1baa39ceac6407b222ab202740e1"
                         }
                     ],
                     "styles": [
@@ -917,5 +917,5 @@
             }
         }
     },
-    "build_id": "sha256:49c19837b517fa5a7fd3eae7b21c69cff470b34b0f64f8435270103ca8cd4b7b"
+    "build_id": "sha256:177d47b9f73fb00a98743c90a2ec804082582b09e5bb5528d6879eabf4468789"
 }
