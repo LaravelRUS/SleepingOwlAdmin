@@ -30,16 +30,16 @@ class DefaultThemeRenderContractTest extends TestCase
         $this->assertContainsAll($html, [
             '<meta data-contract="meta">',
             '<body class="soa-body contract-body">',
-            '<div class="app-wrapper" id="vueApp">',
-            '<nav class="app-header navbar navbar-expand bg-body">',
-            '<aside class="app-sidebar shadow" data-bs-theme="dark">',
+            '<div class="app-wrapper soa-app" id="vueApp">',
+            '<nav class="app-header navbar navbar-expand bg-body soa-header">',
+            '<aside class="app-sidebar main-sidebar shadow soa-sidebar" data-bs-theme="dark">',
             '<li data-contract="navigation">Navigation</li>',
-            '<main class="app-main">',
+            '<main class="app-main soa-main">',
             '<ol data-contract="breadcrumbs">Breadcrumbs</ol>',
             '<strong>Layout success</strong>',
             '<section data-contract="content">Body</section>',
-            '<footer class="app-footer main-footer small">',
-            '<div id="sidebar-overlay"></div>',
+            '<footer class="app-footer main-footer small soa-footer">',
+            '<div class="soa-sidebar-overlay" id="sidebar-overlay"></div>',
             '<template data-tooltip-template>',
             '<div class="soa-tooltip" data-tooltip-popup role="tooltip">',
             '<span data-tooltip-content></span>',
@@ -72,6 +72,24 @@ class DefaultThemeRenderContractTest extends TestCase
         $this->assertStringNotContainsString('<div data-tooltip-popup', $html);
     }
 
+    public function test_scroll_controls_share_semantic_links_and_page_end_anchor(): void
+    {
+        config()->set([
+            'sleeping_owl.ui.scroll_to_bottom' => true,
+            'sleeping_owl.ui.scroll_to_top' => true,
+        ]);
+
+        $html = view('sleeping_owl::default.helper.scrolltotop')->render();
+
+        $this->assertContainsAll($html, [
+            'class="soa-scroll-control soa-scroll-control-top"',
+            'id="scrolltotop" href="#vueApp" aria-label="Scroll to top"',
+            'class="soa-scroll-control soa-scroll-control-bottom"',
+            'id="scrolltobottom" href="#page-end" aria-label="Scroll to bottom"',
+            '<span id="page-end" tabindex="-1"></span>',
+        ]);
+    }
+
     public function test_navigation_parent_keeps_nested_active_state_and_attributes(): void
     {
         $badge = $this->renderable('<span class="badge">7</span>');
@@ -93,7 +111,7 @@ class DefaultThemeRenderContractTest extends TestCase
         ]);
 
         $this->assertContainsAll($html, [
-            '<li class="nav-item menu-open">',
+            '<li class="nav-item soa-nav-item menu-open">',
             'class="nav-link soa-nav-link active has-child user-parent"',
             'data-contract="parent"',
             'aria-label="Catalog"',
@@ -101,7 +119,7 @@ class DefaultThemeRenderContractTest extends TestCase
             'aria-haspopup="true"',
             'title="Catalog management screen"',
             '<span class="badge">7</span>',
-            '<ul class="nav nav-treeview">',
+            '<ul class="nav nav-treeview soa-nav-children">',
             '<li data-contract="child">Child</li>',
         ]);
     }
@@ -123,11 +141,11 @@ class DefaultThemeRenderContractTest extends TestCase
         ]);
 
         $this->assertContainsAll($html, [
-            '<li class="nav-item">',
+            '<li class="nav-item soa-nav-item">',
             'href="/admin/orders"',
             'class="nav-link soa-nav-link active user-attribute"',
             'data-contract="leaf"',
-            '<p>',
+            '<p class="soa-nav-link-content">',
             'Orders',
         ]);
     }

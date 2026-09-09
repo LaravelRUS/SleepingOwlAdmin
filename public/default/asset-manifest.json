@@ -71,8 +71,8 @@
                     "styles": [
                         {
                             "file": "profiles/production/css/shared/ui.css",
-                            "version": "29e04e0c7f4fe6f5ca4c4b6866456f85",
-                            "checksum": "sha256:4ea77774bbb9b38118442990a82d5de47a8940d3f933b1856e1df3c4dd34ef4d"
+                            "version": "fbf9870be7b48b3e267cd13849f46280",
+                            "checksum": "sha256:c219ab589a93fb356ce235f095ea010ac5f140cbc44dce0ba968403cea5fc426"
                         }
                     ]
                 },
@@ -97,8 +97,8 @@
                     "styles": [
                         {
                             "file": "profiles/production/css/themes/adminlte.css",
-                            "version": "7077dfa6c34226210a89fd3c3844cb27",
-                            "checksum": "sha256:17bb1b63f0f3623eb65b35abedc0bfcbd94ba135ab1b0328b20abc83c493eb37"
+                            "version": "a4154321e42fee77203bee7e68667062",
+                            "checksum": "sha256:a85b7413f29880a6e0b2e2f0f7f571831bf409b88a4d4c5604fcda8e4421d6eb"
                         }
                     ]
                 },
@@ -117,8 +117,8 @@
                     "styles": [
                         {
                             "file": "profiles/production/css/themes/framework-free-test.css",
-                            "version": "550040b54fe1d105506ad681685f367e",
-                            "checksum": "sha256:dda0f3e24cede518351415151f856366b3a5c6b8c16b7df75f759b0e4627d7dd"
+                            "version": "575660fcfa0ea02c4c34d15f9686899f",
+                            "checksum": "sha256:a14748b983286271f020d49ad42a69d24626becc45c36f512a01834481979a5f"
                         }
                     ]
                 },
@@ -133,8 +133,8 @@
                     "styles": [
                         {
                             "file": "profiles/production/css/themes/shadcn.css",
-                            "version": "9312b832ad0e346011f595f5b868c1d0",
-                            "checksum": "sha256:c6ae6e160d669552dc9da0018863dc06229f9634b08721cef207a7c794bcb733"
+                            "version": "42ae29537ed6ef182659d33fb67c63e9",
+                            "checksum": "sha256:d2168e8640cc01b7b64c11a25451cae7b538c709558523d2e7cf34291b4dcc82"
                         },
                         {
                             "file": "profiles/production/css/themes/shadcn-utilities.css",
@@ -224,8 +224,8 @@
                     "styles": [
                         {
                             "file": "profiles/development/css/shared/ui.css",
-                            "version": "8979418a9af607d1404956865b1fa4f5",
-                            "checksum": "sha256:5883055b4c6f16a8bd96ec4af69d2fa67646dd6673977ee550158ae6b6dbf3ba"
+                            "version": "f99e2dd9819b6755e104427328f065c6",
+                            "checksum": "sha256:76b74eacbadc452db5fc70e12c8fe4e25587e4bc5f05ce3a8384c02120919446"
                         }
                     ]
                 },
@@ -250,8 +250,8 @@
                     "styles": [
                         {
                             "file": "profiles/development/css/themes/adminlte.css",
-                            "version": "d61d94092d9b25d5a4a47c24b3c3856b",
-                            "checksum": "sha256:fa7508eeef2e91f02938bd5fe6ce5eccad7f85246fdc79e7de0d1b4e7f98e68c"
+                            "version": "97eedd1fcd7f6a038c4bd7cf83a753a5",
+                            "checksum": "sha256:0876c5edf43bb902a2a78c2e5dae01cd6a3fc546184d2a65ef77243ac28bb6a4"
                         }
                     ]
                 },
@@ -270,8 +270,8 @@
                     "styles": [
                         {
                             "file": "profiles/development/css/themes/framework-free-test.css",
-                            "version": "cabdca0d68feab7e7e12856c575b2975",
-                            "checksum": "sha256:3e34a87e2fef149a19d14209a6a546e77c91d9c3857436db70674dd12233cc75"
+                            "version": "e3e665d88460a94e0ddc53e3b8f9e9b3",
+                            "checksum": "sha256:ad0797e30a9dfaeb81b1c0a4f18b6778be94b6b58395e8d1c9d3743a81dafbf9"
                         }
                     ]
                 },
@@ -286,8 +286,8 @@
                     "styles": [
                         {
                             "file": "profiles/development/css/themes/shadcn.css",
-                            "version": "519c2f849dd45868d1421a2fd90a202a",
-                            "checksum": "sha256:bbb3e9e3d1427a29672bb128bbaaedd09b606060bc432fa9d1a7ef1a851e0391"
+                            "version": "11aceb7a31c64cb2ec4e20be731c9787",
+                            "checksum": "sha256:3ad0ff41982f14eae8d27a34b22f416e23b86991ec75ba2a43ef5c68e61e92ab"
                         },
                         {
                             "file": "profiles/development/css/themes/shadcn-utilities.css",
@@ -309,5 +309,5 @@
             }
         }
     },
-    "build_id": "sha256:4d181a8c1be1d9175c8c8e5be9cd6006d1a31f7091e573f9c72a9a0147315ceb"
+    "build_id": "sha256:58cb733893907ca85fd9f9f69a6426b94d44484e4f6644b2f012faeaffe6e08e"
 }

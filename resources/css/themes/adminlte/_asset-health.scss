@@ -1,12 +1,6 @@
 @mixin styles {
-  .asset-health-status {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--soa-asset-health-gap);
-    margin-top: var(--soa-asset-health-margin-top);
-    padding: var(--soa-asset-health-padding-block) var(--soa-asset-health-padding-inline);
+  .asset-health-status,
+  .soa-asset-health {
     color: var(--soa-asset-health-text-color);
     background-color: var(--soa-asset-health-surface-color);
     border-inline-start: var(--soa-asset-health-border-width) solid
@@ -14,7 +8,8 @@
     border-radius: var(--soa-border-radius);
   }
 
-  .asset-health-command {
+  .asset-health-command,
+  .soa-asset-health-command {
     color: inherit;
     font-family: var(--soa-font-family-monospace);
   }

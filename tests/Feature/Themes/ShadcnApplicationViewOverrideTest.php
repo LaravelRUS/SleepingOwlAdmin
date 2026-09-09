@@ -14,7 +14,7 @@ class ShadcnApplicationViewOverrideTest extends TestCase
         $app['config']->set('sleeping_owl.template', TailwindTheme::class);
     }
 
-    public function test_finder_prefers_application_then_theme_then_base(): void
+    public function test_finder_prefers_application_then_base_when_theme_has_no_structural_override(): void
     {
         $finder = view()->getFinder();
         $fixtureRoot = realpath(__DIR__.'/../../Fixtures/application-views');
@@ -30,7 +30,7 @@ class ShadcnApplicationViewOverrideTest extends TestCase
             realpath($finder->find('sleeping_owl_shadcn::default._layout.inner'))
         );
         $this->assertSame(
-            $themeRoot.DIRECTORY_SEPARATOR.'default'.DIRECTORY_SEPARATOR.
+            $baseRoot.DIRECTORY_SEPARATOR.'default'.DIRECTORY_SEPARATOR.
                 '_layout'.DIRECTORY_SEPARATOR.'inner.blade.php',
             realpath($packageFinder->find('sleeping_owl_shadcn::default._layout.inner'))
         );

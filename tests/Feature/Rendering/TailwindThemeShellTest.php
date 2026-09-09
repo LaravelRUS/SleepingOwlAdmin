@@ -56,21 +56,22 @@ class TailwindThemeShellTest extends TestCase
         $this->assertContainsAll($html, [
             '<body class="soa-body sidebar-mini sidebar-open project-body">',
             '<div class="app-wrapper soa-app" id="vueApp">',
-            '<header class="app-header soa-header">',
+            '<nav class="app-header navbar navbar-expand bg-body soa-header">',
             'data-widget="pushmenu"',
             'data-lte-toggle="sidebar"',
             'id="theme-mode"',
             'data-toggle="tooltip"',
-            '<aside class="app-sidebar main-sidebar soa-sidebar">',
+            '<aside class="app-sidebar main-sidebar shadow soa-sidebar" data-bs-theme="dark">',
             'data-widget="treeview"',
             'data-lte-toggle="treeview"',
             '<main class="app-main soa-main">',
-            '<h1 class="soa-page-title">Operations ledger</h1>',
+            '<h1 class="soa-page-title">',
+            'Operations ledger',
             '<section data-contract="content">Body</section>',
-            '<footer class="app-footer main-footer soa-footer">',
+            '<footer class="app-footer main-footer small soa-footer">',
             '<template data-tooltip-template>',
             '<div class="soa-tooltip" data-tooltip-popup role="tooltip">',
-            '<div id="sidebar-overlay"></div>',
+            '<div class="soa-sidebar-overlay" id="sidebar-overlay"></div>',
         ]);
         $this->assertStringNotContainsString('asset-health-status', $html);
     }
@@ -85,9 +86,9 @@ class TailwindThemeShellTest extends TestCase
         ])->render();
 
         $this->assertContainsAll($html, [
-            'class="asset-health-status" role="status"',
+            'class="asset-health-status soa-asset-health" role="status"',
             'Published admin assets (12.0.0) do not match the installed package (12.1.0).',
-            '<code class="asset-health-command">php artisan sleepingowl:update</code>',
+            '<code class="asset-health-command soa-asset-health-command">php artisan sleepingowl:update</code>',
         ]);
     }
 
@@ -112,17 +113,17 @@ class TailwindThemeShellTest extends TestCase
         ])->render();
 
         $this->assertContainsAll($html, [
-            '<li class="nav-item menu-open">',
+            '<li class="nav-item soa-nav-item menu-open">',
             'class="nav-link soa-nav-link active has-child project-link"',
             'aria-label="Orders"',
             'aria-expanded="true"',
             'aria-haspopup="true"',
             'data-contract="parent"',
             'title="Order management queue"',
-            '<ul class="nav nav-treeview">',
+            '<ul class="nav nav-treeview soa-nav-children">',
             '<li data-contract="child">Child</li>',
         ]);
-        $this->assertStringNotContainsString('<ul class="nav nav-treeview" hidden>', $html);
+        $this->assertStringNotContainsString('<ul class="nav nav-treeview soa-nav-children" hidden>', $html);
     }
 
     public function test_message_uses_the_ledger_rail_and_keeps_alert_dismiss_hooks(): void

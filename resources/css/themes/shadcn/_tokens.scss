@@ -36,11 +36,20 @@ $fast-transition-duration: 100ms !default;
 $slow-transition-duration: 220ms !default;
 $reduced-motion-duration: 0.01ms !default;
 $header-height: 3.5rem !default;
+$header-action-size: 2.5rem !default;
 $shell-max-width: 100rem !default;
 $mobile-breakpoint: 64rem !default;
 $header-z-index: 30 !default;
 $sidebar-z-index: 40 !default;
 $overlay-z-index: 35 !default;
+$disabled-opacity: 0.55 !default;
+$scroll-control-size: 2.75rem !default;
+$scroll-control-offset-inline: 1rem !default;
+$scroll-control-offset-block: 1rem !default;
+$asset-health-gap: 0.5rem 1rem !default;
+$asset-health-margin-top: 0.5rem !default;
+$asset-health-padding-block: 0.5rem !default;
+$asset-health-padding-inline: 0.75rem !default;
 
 @mixin define {
   :root {
@@ -105,10 +114,20 @@ $overlay-z-index: 35 !default;
     --soa-slow-transition-duration: #{$slow-transition-duration};
     --soa-reduced-motion-duration: #{$reduced-motion-duration};
     --soa-header-height: #{$header-height};
+    --soa-header-action-size: #{$header-action-size};
     --soa-shell-max-width: #{$shell-max-width};
     --soa-header-z-index: #{$header-z-index};
     --soa-sidebar-z-index: #{$sidebar-z-index};
     --soa-overlay-z-index: #{$overlay-z-index};
+    --soa-disabled-opacity: #{$disabled-opacity};
+    --soa-scroll-control-size: #{$scroll-control-size};
+    --soa-scroll-control-offset-inline: #{$scroll-control-offset-inline};
+    --soa-scroll-control-offset-block: #{$scroll-control-offset-block};
+    --soa-scroll-control-z-index: #{$header-z-index};
+    --soa-asset-health-gap: #{$asset-health-gap};
+    --soa-asset-health-margin-top: #{$asset-health-margin-top};
+    --soa-asset-health-padding-block: #{$asset-health-padding-block};
+    --soa-asset-health-padding-inline: #{$asset-health-padding-inline};
   }
 
   :root[data-color-scheme='dark'] {

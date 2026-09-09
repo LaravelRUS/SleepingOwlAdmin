@@ -33,7 +33,7 @@ class LegacyThemeConfigurationTest extends TestCase
         $html = $this->renderLayout($template);
 
         $this->assertContainsAll($html, [
-            '<html lang="en" data-bs-theme="light" data-color-scheme="light">',
+            '<html lang="en" data-theme="adminlte" data-bs-theme="light" data-color-scheme="light">',
             '<link rel="stylesheet" href="/legacy-theme.css">',
             '<link rel="icon" href="/favicon.svg?tenant=main&amp;size=small">',
             '<style data-runtime-properties>',
@@ -45,7 +45,7 @@ class LegacyThemeConfigurationTest extends TestCase
             'LC',
             'Legacy configuration menu',
             'id="theme-mode"',
-            '<footer class="app-footer main-footer small">',
+            '<footer class="app-footer main-footer small soa-footer">',
             '<strong>Legacy footer</strong>',
             '<em>Legacy version</em>',
         ]);
@@ -67,7 +67,7 @@ class LegacyThemeConfigurationTest extends TestCase
         $html = $this->renderLayout($this->bindLayoutTemplate());
 
         $this->assertStringNotContainsString('<link rel="icon"', $html);
-        $this->assertStringContainsString('<footer class="app-footer main-footer small">', $html);
+        $this->assertStringContainsString('<footer class="app-footer main-footer small soa-footer">', $html);
         $this->assertStringNotContainsString('<strong>Legacy footer</strong>', $html);
         $this->assertStringNotContainsString('<em>Legacy version</em>', $html);
         $this->assertStringNotContainsString('id="theme-mode"', $html);
@@ -95,11 +95,11 @@ class LegacyThemeConfigurationTest extends TestCase
         );
 
         $this->assertContainsAll($html, [
-            '<footer class="app-footer main-footer small">',
-            'class="asset-health-status" role="status"',
+            '<footer class="app-footer main-footer small soa-footer">',
+            'class="asset-health-status soa-asset-health" role="status"',
             'Published admin assets (12.0.0) do not match the installed package (12.1.0).',
             'Update assets:',
-            '<code class="asset-health-command">php artisan sleepingowl:update</code>',
+            '<code class="asset-health-command soa-asset-health-command">php artisan sleepingowl:update</code>',
         ]);
         $this->assertStringNotContainsString('<strong>Legacy footer</strong>', $html);
         $this->assertStringNotContainsString('<em>Legacy version</em>', $html);

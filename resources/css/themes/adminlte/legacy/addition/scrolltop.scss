@@ -1,10 +1,6 @@
-#scrolltotop, #scrolltobottom {
-  position: fixed;
-  right: 2.5rem;
-  padding: 0.5rem 1rem;
+.soa-scroll-control {
   background-color: rgba($white, 0.8);
   color: $black;
-  transition: $trans;
 
   &:hover {
     background-color: rgba($gray-900, 0.8);
@@ -12,24 +8,10 @@
   }
 }
 
-#scrolltotop {
-  bottom: 3.5rem;
+.soa-scroll-control-top {
   border-radius: 0.5rem 0.5rem 0 0;
-  opacity: 0;
-  visibility: hidden;
-
-  &.show {
-    opacity: 1;
-    visibility: visible;
-  }
 }
 
-#scrolltobottom {
-  bottom: 1rem;
+.soa-scroll-control-bottom {
   border-radius: 0 0 0.5rem 0.5rem;
-
-  &.hide {
-    opacity: 0;
-    visibility: hidden;
-  }
 }

@@ -2,8 +2,8 @@
 
 ## Статус и правила
 
-- Статус: **inventory, Laravel resource layout, canonical Blade owners и укрупнение asset/source boundaries готовы**.
-- Следующий checkpoint: создать отдельный override layer и общий semantic UI layer.
+- Статус: **инфраструктура, canonical application shell и fixed scroll controls готовы**.
+- Следующий checkpoint: общие controls, form fields и containers.
 - Общие декларации поставляются отдельным logical entry `shared:ui`, автоматически подключаемым для любой `ThemeInterface`; headless `core` не получает presentation.
 - Общий CSS может использовать только semantic `soa-*` classes, behavior hooks и canonical `--soa-*` variables. Тема задаёт значения tokens и действительно отличающиеся overrides.
 - В общем слое запрещены Bootstrap/AdminLTE/Tailwind imports, vendor selectors и literal palette. Одинаковые structural rules удаляются из theme adapters.
@@ -128,14 +128,14 @@ Canonical название хранится один раз — ключом `te
 
 ## 1. Постоянный application shell
 
-- [ ] `app-wrapper` / `.soa-app`: box sizing, минимальная высота и базовая grid/flex geometry.
-- [ ] `app-header` / `.soa-header`: позиция, высота, alignment, списки и responsive geometry.
-- [ ] Кнопки `app-header`: `.soa-header-action` / `.soa-icon-button`, одинаковые hit area, alignment, disabled и focus states.
-- [ ] `app-sidebar` / `.soa-sidebar`: размеры, flex/overflow, transition, collapsed/mobile geometry и overlay; цвета остаются tokens темы.
-- [ ] Sidebar navigation structure: scroll wrapper, list reset, item/link alignment, arrow placement и hidden tree state.
-- [ ] `app-main`, page heading и content container: min-width, placement, responsive paddings.
-- [ ] `app-footer` / `.soa-footer`: placement, inner/copy/version layout, wrapping и responsive paddings.
-- [ ] Asset-health block внутри footer: status/command geometry; severity colors остаются tokens темы.
+- [x] `app-wrapper` / `.soa-app`: box sizing, минимальная высота и базовая grid/flex geometry.
+- [x] `app-header` / `.soa-header`: позиция, высота, alignment, списки и responsive geometry.
+- [x] Кнопки `app-header`: `.soa-header-action` / `.soa-icon-button`, одинаковые hit area, alignment, disabled и focus states.
+- [x] `app-sidebar` / `.soa-sidebar`: размеры, flex/overflow, transition, collapsed/mobile geometry и overlay; цвета остаются tokens темы.
+- [x] Sidebar navigation structure: scroll wrapper, list reset, item/link alignment, arrow placement и hidden tree state.
+- [x] `app-main`, page heading и content container: min-width, placement, responsive paddings.
+- [x] `app-footer` / `.soa-footer`: placement, inner/copy/version layout, wrapping и responsive paddings.
+- [x] Asset-health block внутри footer: status/command geometry; severity colors остаются tokens темы.
 
 ## 2. Общие controls и containers
 
@@ -165,9 +165,9 @@ Canonical название хранится один раз — ключом `te
 
 ## 4. Fixed page controls
 
-- [ ] Унифицировать Blade markup `scrolltotop` / `scrolltobottom`: `.soa-scroll-control`, `href`, ARIA и page-end anchor во всех встроенных темах.
-- [ ] Вынести position, stack order, hit area, icon alignment и focus в `shared:ui`.
-- [ ] Вынести общие `show` / `hide` visibility states; theme adapters оставляют только token-driven surface/border/shadow/color.
+- [x] Унифицировать Blade markup `scrolltotop` / `scrolltobottom`: `.soa-scroll-control`, `href`, ARIA и page-end anchor во всех встроенных темах.
+- [x] Вынести position, stack order, hit area, icon alignment и focus в `shared:ui`.
+- [x] Вынести общие `show` / `hide` visibility states; theme adapters оставляют только token-driven surface/border/shadow/color.
 - [ ] Проверить top/bottom placement на desktop/mobile и отсутствие перекрытия footer/inline editor.
 
 ## 5. Acceptance
@@ -204,3 +204,4 @@ Canonical название хранится один раз — ключом `te
 | 2026-09-09 | Canonical theme name и scoped assets | `ThemeInterface::id()` удалён: выбранное lower-kebab имя хранит `ThemeSelection`, передаёт config/registry и получает Blade как `themeName`. Theme-классы объявляют только shared/unscoped feature dependencies; `ThemeAssetManifest` автоматически формирует `theme:<name>` и `feature:<feature>:theme:<name>`. External registry валидирует имя отдельно и отклоняет конфликты. Узкий PHP gate: 90 tests / 877 assertions. | текущий commit |
 | 2026-09-09 | Shared UI и override asset layers | Добавлены отдельный `shared:ui` и минимальные `theme:<name>:overrides` entries. Registrar разрешает независимый manifest order: CSS `core → shared UI → shared features → theme → overrides`, JavaScript `core → shared runtime → theme → feature drivers → overrides → modules`. `shared:ui` регистрируется runtime-assembler ровно один раз для встроенных и external themes. Оба профиля пересобраны; узкие gates: PHPUnit 97/892, Vitest 118/118, Stylelint и reachability 359/359. | текущий commit |
 | 2026-09-09 | Self-contained no-build theme scaffold | `ThemeRegistry::registerPackage()` принимает canonical name, class, единый theme root и public URL root, сам загружает `<root>/asset-manifest.json` и отклоняет конфликт имён. Scaffold темы создаёт class/provider, Laravel-layout CSS/JS/views, оба готовых профиля и manifest с фактическими MD5/SHA-256; provider публикует только `public`, sources в SleepingOwl не копируются. Узкий PHP gate: 13 tests / 134 assertions. | текущий commit |
+| 2026-09-09 | Semantic application shell | Один base Blade теперь обслуживает AdminLTE и Shadcn: корень получает canonical `data-theme`, а app/header/sidebar/navigation/main/footer/asset-health — стабильные `soa-*` owners; лишний Shadcn layout override удалён. `shared:ui` владеет grid/flex, collapsed/mobile, focus/reduced-motion и footer geometry, themes задают tokens и skin. Fixed scroll controls получили единый markup, hit area, stack и show/hide states. Chromium matrix: 13/13 для трёх themes и двух profiles; PHP: 38/38; Vitest/style boundary и reachability gates добавлены. | текущий commit |

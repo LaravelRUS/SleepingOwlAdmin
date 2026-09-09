@@ -16051,35 +16051,19 @@
     width: 1.3rem;
     text-align: center;
   }
-  #scrolltotop, #scrolltobottom {
-    position: fixed;
-    right: 2.5rem;
-    padding: 0.5rem 1rem;
+  .soa-scroll-control {
     background-color: rgba(255, 255, 255, 0.8);
     color: #000;
-    transition: 0.3s;
   }
-  #scrolltotop:hover, #scrolltobottom:hover {
+  .soa-scroll-control:hover {
     background-color: rgba(33, 37, 41, 0.8);
     color: #fff;
   }
-  #scrolltotop {
-    bottom: 3.5rem;
+  .soa-scroll-control-top {
     border-radius: 0.5rem 0.5rem 0 0;
-    opacity: 0;
-    visibility: hidden;
   }
-  #scrolltotop.show {
-    opacity: 1;
-    visibility: visible;
-  }
-  #scrolltobottom {
-    bottom: 1rem;
+  .soa-scroll-control-bottom {
     border-radius: 0 0 0.5rem 0.5rem;
-  }
-  #scrolltobottom.hide {
-    opacity: 0;
-    visibility: hidden;
   }
   .form-element-password .password-field {
     position: relative;
@@ -17758,6 +17742,7 @@
   --soa-primary-color: #3c8dbc;
   --soa-danger-color: #dc3545;
   --soa-surface-color: #fff;
+  --soa-elevated-surface-color: #fff;
   --soa-page-background-color: #f4f6f9;
   --soa-text-color: #212529;
   --soa-muted-text-color: #6c757d;
@@ -17768,11 +17753,33 @@
   --soa-line-height-base: 1.5;
   --soa-sidebar-bg: #343a40;
   --soa-sidebar-text-color: #c2c7d0;
+  --soa-sidebar-border-color: #dee2e6;
   --soa-sidebar-width: 15.625rem;
   --soa-sidebar-collapsed-width: 4.6rem;
   --soa-content-padding: 0.9375rem;
+  --soa-content-padding-compact: 0.75rem;
   --soa-border-radius: 0.25rem;
+  --soa-border-width: 0.0625rem;
   --soa-layout-transition-duration: 300ms;
+  --soa-disabled-opacity: 0.65;
+  --soa-font-size-caption: 0.875rem;
+  --soa-font-size-title: 2rem;
+  --soa-font-weight-medium: 500;
+  --soa-font-weight-semibold: 600;
+  --soa-line-height-tight: 1.2;
+  --soa-space-1: 0.25rem;
+  --soa-space-2: 0.5rem;
+  --soa-space-3: 0.75rem;
+  --soa-space-4: 1rem;
+  --soa-space-6: 1.5rem;
+  --soa-header-height: 3.5625rem;
+  --soa-header-action-size: 2.5rem;
+  --soa-shell-max-width: 100%;
+  --soa-header-z-index: 1034;
+  --soa-scroll-control-size: 2.5rem;
+  --soa-scroll-control-offset-inline: 2.5rem;
+  --soa-scroll-control-offset-block: 1rem;
+  --soa-scroll-control-z-index: 1039;
   --soa-asset-health-surface-color: #fff3cd;
   --soa-asset-health-text-color: #664d03;
   --soa-asset-health-border-color: #ffca2c;
@@ -17786,32 +17793,29 @@
 
 :root[data-color-scheme=dark] {
   --soa-surface-color: #343a40;
+  --soa-elevated-surface-color: #343a40;
   --soa-page-background-color: #454d55;
   --soa-text-color: #fff;
   --soa-muted-text-color: #ced4da;
   --soa-border-color: #6c757d;
   --soa-sidebar-bg: #343a40;
   --soa-sidebar-text-color: #fff;
+  --soa-sidebar-border-color: #6c757d;
   --soa-asset-health-surface-color: #332701;
   --soa-asset-health-text-color: #ffda6a;
   --soa-asset-health-border-color: #997404;
 }
 
 @layer sleepingowl-theme {
-  .asset-health-status {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--soa-asset-health-gap);
-    margin-top: var(--soa-asset-health-margin-top);
-    padding: var(--soa-asset-health-padding-block) var(--soa-asset-health-padding-inline);
+  .asset-health-status,
+  .soa-asset-health {
     color: var(--soa-asset-health-text-color);
     background-color: var(--soa-asset-health-surface-color);
     border-inline-start: var(--soa-asset-health-border-width) solid var(--soa-asset-health-border-color);
     border-radius: var(--soa-border-radius);
   }
-  .asset-health-command {
+  .asset-health-command,
+  .soa-asset-health-command {
     color: inherit;
     font-family: var(--soa-font-family-monospace);
   }

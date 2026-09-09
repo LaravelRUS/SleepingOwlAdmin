@@ -16,17 +16,6 @@
     margin: 0;
   }
 
-  .soa-app,
-  .soa-app *,
-  .soa-app *::before,
-  .soa-app *::after {
-    box-sizing: border-box;
-  }
-
-  .soa-app :where(button, input, select, textarea) {
-    font: inherit;
-  }
-
   .soa-app :where(a, button) {
     -webkit-tap-highlight-color: var(--soa-overlay-color);
   }
@@ -35,23 +24,4 @@
     color: inherit;
   }
 
-  .soa-app :where(a, button, input, select, textarea):focus-visible {
-    outline: var(--soa-focus-ring-width) solid var(--soa-focus-color);
-    outline-offset: 2px;
-  }
-
-  .soa-app [hidden] {
-    display: none !important;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .soa-app,
-    .soa-app *,
-    .soa-app *::before,
-    .soa-app *::after {
-      animation-duration: var(--soa-reduced-motion-duration) !important;
-      scroll-behavior: auto !important;
-      transition-duration: var(--soa-reduced-motion-duration) !important;
-    }
-  }
 }

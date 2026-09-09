@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en" data-theme="shadcn">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Shared semantic shell</title>
+        <script>
+            const parameters = new URLSearchParams(location.search)
+            const profile = parameters.get('profile') || 'development'
+            const theme = parameters.get('theme') || 'shadcn'
+            const supportedProfiles = ['development', 'production']
+            const supportedThemes = ['adminlte', 'framework-free-test', 'shadcn']
+
+            if (!supportedProfiles.includes(profile) || !supportedThemes.includes(theme)) {
+                throw new Error(`Unsupported shared shell fixture: ${profile}/${theme}`)
+            }
+
+            document.documentElement.dataset.theme = theme
+            for (const href of [
+                `/public/default/profiles/${profile}/css/admin-core.css`,
+                `/public/default/profiles/${profile}/css/shared/ui.css`,
+                `/public/default/profiles/${profile}/css/themes/${theme}.css`,
+            ]) {
+                const link = document.createElement('link')
+                link.rel = 'stylesheet'
+                link.href = href
+                document.head.append(link)
+            }
+        </script>
+        <style>
+            :root {
+                --soa-sidebar-width: 16rem;
+                --soa-sidebar-collapsed-width: 4rem;
+                --soa-header-height: 3.5rem;
+                --soa-header-action-size: 2.5rem;
+                --soa-shell-max-width: 80rem;
+                --soa-content-padding: 1rem;
+                --soa-content-padding-compact: 0.75rem;
+                --soa-scroll-control-size: 2.75rem;
+                --soa-scroll-control-offset-inline: 1rem;
+                --soa-scroll-control-offset-block: 1rem;
+            }
+
+            .fixture-content {
+                min-block-size: 70rem;
+            }
+        </style>
+    </head>
+    <body class="soa-body sidebar-mini">
+        <div class="soa-app" id="vueApp">
+            <header class="soa-header">
+                <ul class="soa-header-list">
+                    <li>
+                        <button class="soa-header-action" id="header-action" type="button">
+                            <span aria-hidden="true">☰</span>
+                            <span data-visually-hidden>Menu</span>
+                        </button>
+                    </li>
+                </ul>
+            </header>
+
+            <aside class="soa-sidebar" id="shell-sidebar">
+                <div class="soa-brand">
+                    <a class="soa-brand-link" href="#vueApp">
+                        <span class="soa-brand-logo">SO</span>
+                        <span class="soa-brand-mini">S</span>
+                        <span class="soa-brand-text">Sleeping Owl</span>
+                    </a>
+                </div>
+                <div class="soa-sidebar-scroll">
+                    <nav class="soa-sidebar-nav" aria-label="Fixture navigation">
+                        <ul class="soa-nav-tree">
+                            <li class="soa-nav-item menu-open">
+                                <a class="soa-nav-link" href="#shell-content">
+                                    <span aria-hidden="true">•</span>
+                                    <span class="soa-nav-link-content">
+                                        <span class="soa-nav-title">Overview</span>
+                                        <span class="soa-nav-arrow" aria-hidden="true">›</span>
+                                    </span>
+                                </a>
+                                <ul class="soa-nav-children">
+                                    <li class="soa-nav-item">
+                                        <a class="soa-nav-link" href="#page-end">End</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </aside>
+
+            <main class="soa-main" id="shell-content">
+                <header class="soa-page-heading">
+                    <ol class="soa-breadcrumbs">
+                        <li class="soa-breadcrumb-item">Home</li>
+                        <li class="soa-breadcrumb-item" aria-current="page">Overview</li>
+                    </ol>
+                    <h1 class="soa-page-title">Semantic shell</h1>
+                </header>
+                <div class="soa-content fixture-content">Shared content</div>
+            </main>
+
+            <footer class="soa-footer">
+                <div class="soa-footer-inner">
+                    <div class="soa-footer-copy" id="footer-copy">
+                        <span>Sleeping Owl</span>
+                        <span class="soa-version">13.dev</span>
+                    </div>
+                    <div class="soa-asset-health" role="status">
+                        <span class="soa-asset-health-message"
+                            >Published assets need updating.</span
+                        >
+                        <span class="soa-asset-health-action">
+                            Run
+                            <code class="soa-asset-health-command"
+                                >php artisan sleepingowl:update</code
+                            >
+                        </span>
+                    </div>
+                </div>
+            </footer>
+
+            <div class="soa-sidebar-overlay" id="sidebar-overlay"></div>
+        </div>
+
+        <a
+            class="soa-scroll-control soa-scroll-control-top"
+            id="scrolltotop"
+            href="#vueApp"
+            aria-label="Scroll to top"
+            >↑</a
+        >
+        <a
+            class="soa-scroll-control soa-scroll-control-bottom"
+            id="scrolltobottom"
+            href="#page-end"
+            aria-label="Scroll to bottom"
+            >↓</a
+        >
+        <span id="page-end" tabindex="-1"></span>
+    </body>
+</html>

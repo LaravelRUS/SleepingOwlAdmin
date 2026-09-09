@@ -61,6 +61,7 @@ const staticRoutes = new Map([
         [join(browserDirectory, 'native-controls.html'), 'text/html; charset=utf-8'],
     ],
     ['/runtime-theme', [join(browserDirectory, 'runtime-theme.html'), 'text/html; charset=utf-8']],
+    ['/shared-shell', [join(browserDirectory, 'shared-shell.html'), 'text/html; charset=utf-8']],
     [
         '/table-presentation',
         [join(browserDirectory, 'table-presentation.html'), 'text/html; charset=utf-8'],
@@ -318,7 +319,7 @@ function tailwindCapabilityStyles() {
 }
 
 function themeCapabilityStyles() {
-    const base = ['admin-core.css', 'icons.css', 'shared/features.css']
+    const base = ['admin-core.css', 'icons.css', 'shared/ui.css', 'shared/features.css']
     const legacy = ['themes/adminlte.css']
     const frameworkFree = ['themes/framework-free-test.css']
     return [...base, ...legacy, ...frameworkFree, ...tailwindCapabilityStyles()]

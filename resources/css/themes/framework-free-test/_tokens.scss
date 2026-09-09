@@ -15,30 +15,73 @@ $radius-medium: 0.5rem !default;
 $border-width: 0.0625rem !default;
 $focus-width: 0.1875rem !default;
 $shadow: 0 0.75rem 2rem !default;
+$sidebar-width: 16rem !default;
+$sidebar-collapsed-width: 4rem !default;
+$header-height: 3.5rem !default;
+$shell-max-width: 72rem !default;
 
 @mixin define {
   :root[data-theme='framework-free-test'] {
     --soa-primary-color: #{colors.$accent};
     --soa-danger-color: #{colors.$danger};
     --soa-surface-color: #{colors.$paper};
+    --soa-elevated-surface-color: #{colors.$paper};
     --soa-page-background-color: #{colors.$canvas};
     --soa-text-color: #{colors.$ink};
     --soa-muted-text-color: #{colors.$ink-soft};
     --soa-border-color: #{colors.$border};
     --soa-focus-color: #{colors.$marker};
+    --soa-sidebar-bg: #{colors.$ink};
+    --soa-sidebar-text-color: #{colors.$paper};
+    --soa-sidebar-border-color: #{colors.$border};
     --soa-font-family-sans: #{$font-family-body};
     --soa-font-family-monospace: #{$font-family-utility};
     --soa-font-size-base: #{$font-size-base};
     --soa-line-height-base: #{$line-height-base};
+    --soa-line-height-tight: 1.25;
+    --soa-font-size-caption: 0.875rem;
+    --soa-font-size-title: 1.75rem;
+    --soa-font-weight-medium: 500;
+    --soa-font-weight-semibold: 600;
+    --soa-sidebar-width: #{$sidebar-width};
+    --soa-sidebar-collapsed-width: #{$sidebar-collapsed-width};
+    --soa-content-padding: #{$space-4};
+    --soa-content-padding-compact: #{$space-2};
+    --soa-border-radius: #{$radius-small};
+    --soa-border-width: #{$border-width};
+    --soa-layout-transition-duration: var(--soa-motion-duration-normal);
+    --soa-disabled-opacity: 0.55;
+    --soa-space-1: #{$space-1};
+    --soa-space-2: #{$space-2};
+    --soa-space-3: #{$space-3};
+    --soa-space-4: #{$space-4};
+    --soa-space-6: #{$space-4};
+    --soa-header-height: #{$header-height};
+    --soa-header-action-size: 2.5rem;
+    --soa-shell-max-width: #{$shell-max-width};
+    --soa-header-z-index: 30;
+    --soa-sidebar-z-index: 40;
+    --soa-sidebar-overlay-z-index: 35;
+    --soa-sidebar-indicator-angle: -90deg;
+    --soa-scroll-control-size: 2.75rem;
+    --soa-scroll-control-offset-inline: #{$space-3};
+    --soa-scroll-control-offset-block: #{$space-3};
+    --soa-scroll-control-z-index: 30;
+    --soa-asset-health-gap: #{$space-2} #{$space-3};
+    --soa-asset-health-margin-top: #{$space-2};
+    --soa-asset-health-padding-block: #{$space-2};
+    --soa-asset-health-padding-inline: #{$space-3};
     --soa-shadow-color: #{colors.$shadow};
   }
 
   :root[data-theme='framework-free-test'][data-color-scheme='dark'] {
     --soa-surface-color: #{colors.$dark-paper};
+    --soa-elevated-surface-color: #{colors.$dark-paper};
     --soa-page-background-color: #{colors.$dark-canvas};
     --soa-text-color: #{colors.$dark-ink};
     --soa-muted-text-color: #{colors.$dark-ink-soft};
     --soa-border-color: #{colors.$dark-border};
+    --soa-sidebar-border-color: #{colors.$dark-border};
     --soa-shadow-color: #{colors.$dark-shadow};
   }
 }

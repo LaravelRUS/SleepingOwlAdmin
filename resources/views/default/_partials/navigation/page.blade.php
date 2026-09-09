@@ -28,10 +28,10 @@
 @endphp
 
 @if($hasChild)
-  <li class="nav-item {!! ($isActive) ? 'menu-open' : '' !!}">
+  <li class="nav-item soa-nav-item {!! ($isActive) ? 'menu-open' : '' !!}">
     <a href="#" {!! $linkAttributes !!}>
       {!! $icon !!}
-      <p>
+      <p class="soa-nav-link-content">
         <span class="soa-nav-title">{!! $title !!}</span>
         @if($badges->count() > 0)
           <span class="nav-badge sidebar-page-badges">
@@ -40,14 +40,14 @@
             @endforeach
           </span>
         @endif
-        <i class="nav-arrow fas fa-angle-right" aria-hidden="true"></i>
+        <i class="nav-arrow soa-nav-arrow fas fa-angle-right" aria-hidden="true"></i>
       </p>
     </a>
 
     @if($isActive)
-    <ul class="nav nav-treeview">
+    <ul class="nav nav-treeview soa-nav-children">
     @else
-    <ul class="nav nav-treeview" hidden>
+    <ul class="nav nav-treeview soa-nav-children" hidden>
     @endif
       @foreach($pages as $page)
         {!! $page->render() !!}
@@ -55,10 +55,10 @@
     </ul>
   </li>
 @else
-  <li class="nav-item">
+  <li class="nav-item soa-nav-item">
     <a href="{{ $url }}" {!! $linkAttributes !!}>
       {!! $icon !!}
-      <p>
+      <p class="soa-nav-link-content">
         <span class="soa-nav-title">{!! $title !!}</span>
         @if($badges->count() > 0)
           <span class="nav-badge sidebar-page-badges">
