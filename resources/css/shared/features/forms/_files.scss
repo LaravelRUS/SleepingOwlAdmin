@@ -1,15 +1,198 @@
-@use 'file-actions';
-@use 'file-grid';
-@use 'file-icon';
-@use 'file-labels';
-@use 'file-name';
-@use 'file-vertical';
-
+/* stylelint-disable selector-class-pattern -- Existing file element hooks are public compatibility selectors. */
 @mixin styles($thumbnail-border, $thumbnail-surface, $file-name-text) {
-  @include file-labels.styles;
-  @include file-grid.styles($thumbnail-border, $thumbnail-surface);
-  @include file-icon.styles;
-  @include file-actions.styles;
-  @include file-name.styles($file-name-text);
-  @include file-vertical.styles;
+  .form-element-files-wrapper .control-label.form-element-files-control-label {
+    display: block;
+  }
+
+  .form-element-files-wrapper
+    .control-label.form-element-files-control-label
+    + .form-element-helptext {
+    display: block;
+    margin-top: -0.3rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .fileUploadMultiple {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .fileUploadMultiple .files-group {
+    display: block;
+    width: 100%;
+    padding: 10px;
+  }
+
+  .fileUploadMultiple .files-group .fileThumbnail {
+    float: left;
+    width: 206px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    padding: 3px;
+    border: 1px solid $thumbnail-border;
+  }
+
+  .fileUploadMultiple .files-group .fileThumbnail .thumbnail {
+    margin: 0;
+    padding: 0;
+    background: $thumbnail-surface;
+    border: 0;
+    border-radius: 0;
+  }
+
+  .fileUploadMultiple .files-group .fileThumbnail .thumbnail .fileicon {
+    display: table;
+    width: 100%;
+    height: 130px;
+    margin-bottom: 5px;
+  }
+
+  .fileUploadMultiple .files-group .fileThumbnail .thumbnail .fileicon .fileicon-inner {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    background-position: 50% 50%;
+    background-size: contain;
+  }
+
+  .fileUploadMultiple
+    .files-group
+    .fileThumbnail
+    .thumbnail
+    .fileicon
+    .fileicon-inner
+    .file-extension,
+  .fileUploadMultiple
+    .files-group
+    .fileThumbnail
+    .thumbnail
+    .fileicon
+    .fileicon-inner
+    .file-mime {
+    display: block;
+    cursor: default;
+  }
+
+  .fileUploadMultiple
+    .files-group
+    .fileThumbnail
+    .thumbnail
+    .fileicon
+    .fileicon-inner
+    .file-extension {
+    font-size: 24px;
+    text-transform: uppercase;
+  }
+
+  .fileUploadMultiple
+    .files-group
+    .fileThumbnail
+    .thumbnail
+    .fileicon
+    .fileicon-inner
+    .file-mime {
+    font-size: 16px;
+  }
+
+  .fileUploadMultiple .files-group .fileThumbnail .thumbnail .file-actions {
+    margin: 5px auto 0;
+    padding: 0 0 10px;
+  }
+
+  .fileUploadMultiple .files-group .fileThumbnail .thumbnail .file-actions .fileinfo {
+    display: none;
+    width: 100%;
+    font-size: 12px;
+    text-align: center;
+    word-break: break-all;
+    cursor: default;
+  }
+
+  .fileUploadMultiple .files-group .fileThumbnail .thumbnail .file-actions .tit,
+  .fileUploadMultiple .files-group .fileThumbnail .thumbnail .file-actions .desc {
+    display: block;
+    width: 100%;
+    margin: 5px auto;
+    padding: 2px 5px;
+  }
+
+  .fileUploadMultiple .files-group .fileThumbnail .thumbnail .file-actions .desc {
+    resize: none;
+  }
+
+  .fileUploadMultiple .files-group .fileThumbnail .thumbnail .file-actions .tit.hidden,
+  .fileUploadMultiple .files-group .fileThumbnail .thumbnail .file-actions .desc.hidden {
+    display: none;
+  }
+
+  .fileUploadMultiple .files-group .fileThumbnail .thumbnail .file-actions .file-buttons {
+    clear: both;
+    margin: 10px 0 0;
+    padding: 0 10px;
+    text-align: center;
+  }
+
+  .fileUploadMultiple .files-group .fileThumbnail .thumbnail .file-clearfix {
+    clear: both;
+  }
+
+  .fileUploadMultiple .files-group .fileThumbnail .thumbnail .file-original_name {
+    display: block;
+    overflow: hidden;
+    color: $file-name-text;
+    font-size: 12px;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .fileUploadMultiple .files-group-vertical .fileThumbnail {
+    float: none;
+    width: 100%;
+  }
+
+  .fileUploadMultiple .files-group-vertical .fileThumbnail .thumbnail .fileicon {
+    float: left;
+    width: 30%;
+    margin-bottom: 0;
+  }
+
+  .fileUploadMultiple .files-group-vertical .fileThumbnail .thumbnail .file-actions {
+    position: relative;
+    float: right;
+    width: 70%;
+    height: 135px;
+    padding-right: 7px;
+    padding-left: 10px;
+  }
+
+  .fileUploadMultiple .files-group-vertical .fileThumbnail .thumbnail .file-actions .desc {
+    height: 45px;
+  }
+
+  .fileUploadMultiple
+    .files-group-vertical
+    .fileThumbnail
+    .thumbnail
+    .file-actions
+    .file-buttons {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 0 7px 7px 10px;
+  }
+
+  .fileUploadMultiple .files-group-vertical .fileThumbnail .thumbnail .file-original_name {
+    position: absolute;
+    right: 7px;
+    bottom: 5px;
+    left: auto;
+    width: calc(70% - 15px);
+    text-align: right;
+  }
 }
+/* stylelint-enable selector-class-pattern */
