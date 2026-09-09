@@ -1,14 +1,11 @@
 @use 'sass:meta';
 @use 'auto-update';
-@use 'filter';
-@use 'colors';
-@use 'custom-properties';
 @use 'inline-editor';
 @use 'layout';
 @use 'page-jump';
 @use 'table';
-@use 'variables';
-@include custom-properties.define;
+@use 'tokens';
+@include tokens.define;
 
 @layer sleepingowl-theme.table {
   @include meta.load-css(
@@ -22,5 +19,8 @@
   @include inline-editor.styles;
   @include table.styles;
   @include auto-update.styles;
-  @include filter.styles;
+
+  .button-filter-control {
+    margin-right: 1.25rem;
+  }
 }

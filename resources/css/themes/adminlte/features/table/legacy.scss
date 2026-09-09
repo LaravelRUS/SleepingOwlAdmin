@@ -1,11 +1,15 @@
-@use 'custom-properties';
+@use 'auto-update';
 @use 'inline-editor';
-@use 'presentation';
+@use 'layout';
+@use 'table';
+@use 'tokens';
 @import 'datatables.net-bs5/css/dataTables.bootstrap5.css';
 @import 'datatables.net-responsive-bs5/css/responsive.bootstrap5.css';
 
 @mixin styles {
-  @include custom-properties.define;
+  @include tokens.define;
   @include inline-editor.styles;
-  @include presentation.styles;
+  @include layout.styles;
+  @include table.styles;
+  @include auto-update.styles;
 }

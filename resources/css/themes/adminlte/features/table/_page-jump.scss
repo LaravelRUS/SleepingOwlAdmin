@@ -1,4 +1,4 @@
-@use 'variables';
+@use 'tokens';
 
 @mixin styles {
   .soa-dt-page-jump {
@@ -29,7 +29,7 @@
     }
   }
 
-  @media (width <= variables.$mobile-breakpoint) {
+  @media (width <= tokens.$mobile-breakpoint) {
     .soa-dt-page-jump {
       justify-content: center;
       margin: 0.5rem 0 0;

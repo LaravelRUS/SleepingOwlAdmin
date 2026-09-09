@@ -1,9 +1,9 @@
-@use 'variables';
+@use 'tokens';
 
 @mixin styles {
   .dt-container {
     position: relative;
-    min-height: variables.$minimum-height;
+    min-height: tokens.$minimum-height;
     color: var(--soa-text-color);
     font-family: var(--soa-font-family-sans);
     font-size: var(--soa-font-size-base);
@@ -12,7 +12,7 @@
       display: grid;
       grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
       align-items: center;
-      gap: variables.$layout-gap-block variables.$layout-gap-inline;
+      gap: tokens.$layout-gap-block tokens.$layout-gap-inline;
       margin: 0 0 1rem;
     }
 
@@ -35,7 +35,7 @@
     }
   }
 
-  @media (width <= variables.$mobile-breakpoint) {
+  @media (width <= tokens.$mobile-breakpoint) {
     .dt-container {
       .dt-layout-row {
         grid-template-columns: minmax(0, 1fr);

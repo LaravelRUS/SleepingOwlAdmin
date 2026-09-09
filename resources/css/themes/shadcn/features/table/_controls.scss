@@ -1,4 +1,4 @@
-@use 'variables';
+@use 'tokens';
 
 @mixin styles {
   .dt-container {
@@ -12,7 +12,7 @@
     }
 
     .dt-input {
-      min-height: variables.$control-height;
+      min-height: tokens.$control-height;
       padding: 0.4375rem 0.75rem;
       border: var(--soa-table-border-width) solid var(--soa-border-color);
       border-radius: var(--soa-border-radius);

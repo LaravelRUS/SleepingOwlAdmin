@@ -1,4 +1,4 @@
-@use 'variables';
+@use 'tokens';
 
 @mixin styles {
   .soa-inline-editable {
@@ -8,9 +8,9 @@
     cursor: pointer;
     background: transparent;
     border: 0;
-    border-bottom: variables.$inline-editor-border-width solid
+    border-bottom: tokens.$inline-editor-border-width solid
       var(--soa-inline-editor-accent);
-    border-radius: variables.$inline-editor-radius;
+    border-radius: tokens.$inline-editor-radius;
   }
 
   .soa-inline-editable[data-max-rows] {
@@ -37,19 +37,19 @@
 
   .soa-inline-editor {
     display: inline-block;
-    min-width: variables.$inline-editor-min-width;
+    min-width: tokens.$inline-editor-min-width;
     color: var(--soa-inline-editor-text);
   }
 
   .soa-inline-editor-popup {
     width: min(30rem, calc(100vw - 2rem));
     max-width: none;
-    padding: variables.$inline-editor-padding;
+    padding: tokens.$inline-editor-padding;
     margin: auto;
     background: var(--soa-inline-editor-surface);
-    border: variables.$inline-editor-border-width solid var(--soa-inline-editor-border);
-    border-radius: variables.$inline-editor-radius;
-    box-shadow: variables.$inline-editor-shadow var(--soa-inline-editor-shadow);
+    border: tokens.$inline-editor-border-width solid var(--soa-inline-editor-border);
+    border-radius: tokens.$inline-editor-radius;
+    box-shadow: tokens.$inline-editor-shadow var(--soa-inline-editor-shadow);
   }
 
   .soa-inline-editor-popup:not([open]) {
@@ -69,7 +69,7 @@
   .soa-inline-editor-checklist,
   .soa-inline-editor-range {
     display: grid;
-    gap: variables.$inline-editor-gap;
+    gap: tokens.$inline-editor-gap;
     margin: 0;
   }
 
@@ -83,8 +83,8 @@
     padding: 0.5rem 0.75rem;
     color: var(--soa-inline-editor-text);
     background: var(--soa-inline-editor-surface);
-    border: variables.$inline-editor-border-width solid var(--soa-inline-editor-border);
-    border-radius: variables.$inline-editor-radius;
+    border: tokens.$inline-editor-border-width solid var(--soa-inline-editor-border);
+    border-radius: tokens.$inline-editor-radius;
   }
 
   .soa-inline-editor-input {
@@ -147,7 +147,7 @@
 
   .soa-inline-editor-actions {
     display: flex;
-    gap: variables.$inline-editor-gap;
+    gap: tokens.$inline-editor-gap;
   }
 
   .soa-inline-editor-submit,
@@ -156,8 +156,8 @@
     padding: 0.375rem 0.75rem;
     font-weight: 600;
     cursor: pointer;
-    border: variables.$inline-editor-border-width solid transparent;
-    border-radius: variables.$inline-editor-radius;
+    border: tokens.$inline-editor-border-width solid transparent;
+    border-radius: tokens.$inline-editor-radius;
   }
 
   .soa-inline-editor-submit {
@@ -189,14 +189,14 @@
   }
 
   .soa-inline-editor-error {
-    max-width: variables.$inline-editor-min-width;
+    max-width: tokens.$inline-editor-min-width;
     color: var(--soa-inline-editor-error);
     line-height: 1.25;
   }
 
   .soa-inline-editor-check-option {
     display: flex;
-    gap: variables.$inline-editor-gap;
+    gap: tokens.$inline-editor-gap;
     align-items: center;
   }
 

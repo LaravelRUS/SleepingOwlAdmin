@@ -1,16 +1,16 @@
-@use 'variables';
+@use 'tokens';
 
 @mixin styles {
   .dt-container {
     position: relative;
-    min-height: variables.$minimum-height;
+    min-height: tokens.$minimum-height;
   }
 
   .dt-search {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    gap: variables.$control-gap;
+    gap: tokens.$control-gap;
     margin: 0.5rem 1.25rem;
 
     label {
@@ -53,7 +53,7 @@
   .dt-processing {
     position: absolute;
     z-index: 999;
-    top: variables.$processing-offset;
+    top: tokens.$processing-offset;
     left: 50%;
     color: var(--soa-text-color);
     transform: translateX(-50%);
@@ -104,7 +104,7 @@
     opacity: 0.55;
   }
 
-  @media (width <= variables.$mobile-breakpoint) {
+  @media (width <= tokens.$mobile-breakpoint) {
     .dt-paging .pagination {
       justify-content: center;
       padding-left: 0;

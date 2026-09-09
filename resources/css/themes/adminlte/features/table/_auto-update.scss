@@ -1,4 +1,4 @@
-@use 'variables';
+@use 'tokens';
 
 @mixin styles {
     .autoupdater-bar {
@@ -68,7 +68,7 @@
         border: 0;
     }
 
-    @media (width <= variables.$mobile-breakpoint) {
+    @media (width <= tokens.$mobile-breakpoint) {
         .autoupdater-bar {
             height: 1.5rem;
         }

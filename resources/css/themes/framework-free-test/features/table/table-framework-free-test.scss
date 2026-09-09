@@ -1,9 +1,41 @@
 @use 'colors';
-@use 'custom-properties';
-@use 'presentation';
-@use 'variables';
-@include custom-properties.define;
+
+$cell-padding: 0.625rem 0.75rem !default;
+$control-gap: 0.5rem !default;
+$header-letter-spacing: 0.04em !default;
+$radius: 0.375rem !default;
+
+:root[data-theme='framework-free-test'] {
+  --soa-workbench-table-border-color: #{colors.$border};
+  --soa-workbench-table-heading-color: #{colors.$heading};
+  --soa-workbench-table-radius: #{$radius};
+}
 
 @layer sleepingowl-theme.table {
-  @include presentation.styles;
+  /* stylelint-disable selector-class-pattern -- DataTables owns the public dataTable selector. */
+  [data-theme='framework-free-test'] .dt-container {
+    display: grid;
+    gap: $control-gap;
+  }
+
+  [data-theme='framework-free-test'] table.dataTable {
+    border: 0.0625rem solid var(--soa-workbench-table-border-color);
+    border-collapse: separate;
+    border-radius: var(--soa-workbench-table-radius);
+    border-spacing: 0;
+    width: 100%;
+  }
+
+  [data-theme='framework-free-test'] table.dataTable :where(th, td) {
+    border-block-end: 0.0625rem solid var(--soa-workbench-table-border-color);
+    padding: $cell-padding;
+    text-align: start;
+  }
+
+  [data-theme='framework-free-test'] table.dataTable th {
+    color: var(--soa-workbench-table-heading-color);
+    font-family: var(--soa-font-family-monospace);
+    letter-spacing: $header-letter-spacing;
+  }
+  /* stylelint-enable selector-class-pattern */
 }

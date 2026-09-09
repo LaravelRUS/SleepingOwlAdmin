@@ -1,13 +1,12 @@
 @use 'auto-update';
 @use 'controls';
-@use 'custom-properties';
 @use 'display';
 @use 'inline-editor';
 @use 'layout';
 @use 'page-jump';
 @use 'table';
-@use 'variables';
-@include custom-properties.define;
+@use 'tokens';
+@include tokens.define;
 
 @layer sleepingowl-theme.table {
   @include layout.styles;
