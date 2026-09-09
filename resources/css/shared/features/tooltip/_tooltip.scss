@@ -1,3 +1,17 @@
+@use 'colors';
+
+$maximum-width: 18rem !default;
+$stack-level: 1080 !default;
+
+@mixin properties {
+    :root {
+        --soa-tooltip-max-width: #{$maximum-width};
+        --soa-tooltip-z-index: #{$stack-level};
+        --soa-tooltip-surface: #{colors.$surface};
+        --soa-tooltip-text: #{colors.$text};
+    }
+}
+
 @mixin styles {
     [data-tooltip-popup] {
         position: fixed;

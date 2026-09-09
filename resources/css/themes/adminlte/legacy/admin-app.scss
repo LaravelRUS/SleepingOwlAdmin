@@ -10,9 +10,8 @@
 @use '../features/sidebar/legacy' as legacy-sidebar;
 @use '../features/tabs/legacy' as legacy-tabs;
 @use '../features/table/legacy' as legacy-datatables;
-@use '../../../shared/features/tooltip/custom-properties' as tooltip-properties;
 @use '../../../shared/features/tooltip/tooltip' as tooltip-driver;
-@use '../features/tooltip/legacy' as legacy-tooltip;
+@use '../features/tooltip/tooltip' as legacy-tooltip;
 @use '../features/tree/legacy' as legacy-tree;
 @use '../custom-properties' as theme-properties;
 @use '../asset-health' as theme-asset-health;
@@ -29,8 +28,9 @@
 @include legacy-sidebar.styles;
 @include legacy-tabs.styles;
 @include legacy-datatables.styles;
-@include tooltip-properties.define;
+@include tooltip-driver.properties;
 @include tooltip-driver.styles;
+@include legacy-tooltip.properties;
 @include legacy-tooltip.styles;
 @include legacy-tree.styles;
 @include form-files.styles(

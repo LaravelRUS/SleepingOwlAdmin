@@ -1,7 +1,0 @@
-@use 'custom-properties';
-@use 'tooltip';
-
-@mixin styles {
-    @include custom-properties.define;
-    @include tooltip.styles;
-}

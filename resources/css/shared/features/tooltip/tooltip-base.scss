@@ -1,9 +1,6 @@
-@use 'colors';
-@use 'custom-properties';
 @use 'tooltip';
-@use 'variables';
 @layer sleepingowl-feature.tooltip;
-@include custom-properties.define;
+@include tooltip.properties;
 
 @layer sleepingowl-feature.tooltip {
     @include tooltip.styles;
