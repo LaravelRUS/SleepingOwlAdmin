@@ -47,7 +47,7 @@
     border-inline-end: 0.0625rem solid var(--soa-workbench-sidebar-border-color);
     box-sizing: border-box;
     padding: 0.75rem;
-    width: 15rem;
+    width: var(--soa-workbench-sidebar-width);
   }
   [data-theme=framework-free-test] .nav-sidebar,
   [data-theme=framework-free-test] .nav-treeview {
@@ -84,8 +84,6 @@
     }
   }
 }
-/* stylelint-disable selector-class-pattern -- DataTables owns the public dataTable selector. */
-/* stylelint-enable selector-class-pattern */
 :root[data-theme=framework-free-test] {
   --soa-workbench-table-border-color: var(--soa-border-color);
   --soa-workbench-table-heading-color: var(--soa-muted-text-color);
@@ -93,6 +91,7 @@
 }
 
 @layer sleepingowl-theme.table {
+  /* stylelint-disable selector-class-pattern -- DataTables owns the public dataTable selector. */
   [data-theme=framework-free-test] .dt-container {
     display: grid;
     gap: 0.5rem;
@@ -114,6 +113,7 @@
     font-family: var(--soa-font-family-monospace);
     letter-spacing: 0.04em;
   }
+  /* stylelint-enable selector-class-pattern */
 }
 :root[data-theme=framework-free-test] {
   --soa-workbench-tabs-border-color: var(--soa-border-color);
@@ -132,7 +132,7 @@
   [data-theme=framework-free-test] [role=tab] {
     background: transparent;
     border: 0;
-    border-block-end: 0.1875rem solid transparent;
+    border-block-end: var(--soa-workbench-tabs-marker-width) solid transparent;
     color: var(--soa-workbench-tabs-muted-color);
     padding: 0.5rem 0.75rem;
   }

@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "sourceManifest": "public/default/asset-manifest.json",
   "packageVersion": "dev-master",
-  "buildId": "sha256:50bb3aac19eb721d26d02571c0fee76623200c5f594d8c480be2d6327b64dd1a",
+  "buildId": "sha256:4a9d08caa3f36504ceb3d7ba03664bb3822c81de0eb3e508bc5231bc7288ebee",
   "baseline": {
     "source": "docs/modernization/baseline/frontend.json",
     "bytes": 2585357,
@@ -58,10 +58,10 @@
             {
               "type": "scripts",
               "file": "profiles/production/js/shared/features.js",
-              "version": "cd8cc86a5d47f9f0e0d9d466fd1b91d0",
-              "checksum": "sha256:bf252574147438c754496459aebbf8107c356ff6b3f0e92f99ac8678d8250edc",
-              "bytes": 556178,
-              "gzipBytes": 147175
+              "version": "d2eaa4b82b329ff10f1248bd3a5f85a7",
+              "checksum": "sha256:5b6c5d1c6be79b2433de7290c882e1e58c6ed0082d5716608fa4989135a07594",
+              "bytes": 553314,
+              "gzipBytes": 147033
             },
             {
               "type": "styles",
@@ -74,8 +74,8 @@
           ],
           "totals": {
             "files": 2,
-            "bytes": 594654,
-            "gzipBytes": 154157
+            "bytes": 591790,
+            "gzipBytes": 154015
           }
         },
         "shared:icons": {
@@ -157,8 +157,8 @@
       },
       "totals": {
         "files": 10,
-        "bytes": 1797249,
-        "gzipBytes": 459328
+        "bytes": 1794385,
+        "gzipBytes": 459186
       }
     },
     "development": {
@@ -210,24 +210,24 @@
             {
               "type": "scripts",
               "file": "profiles/development/js/shared/features.js",
-              "version": "c3f400f93390e95fea7554a25741a10e",
-              "checksum": "sha256:57565fc169c5769dbb904e697043d125bbc9a6469df0075331cec7429412ca20",
-              "bytes": 1408332,
-              "gzipBytes": 299207
+              "version": "a16708e36c6e82ab47e5417e54a5ddf0",
+              "checksum": "sha256:3b15ba0f99503dbf06d9c48cfacc6f3a3459f2c6b7233befdf6190017c75c8b3",
+              "bytes": 1388597,
+              "gzipBytes": 298120
             },
             {
               "type": "styles",
               "file": "profiles/development/css/shared/features.css",
-              "version": "7ecdbfb7eb4650d90effe3a5871583fb",
-              "checksum": "sha256:f495b060ecf3f4249909a8a60b692176c8d782b22d199b89961bd2e9b8ca9cd3",
-              "bytes": 48811,
-              "gzipBytes": 7670
+              "version": "b19ce9d56375bd49c62fb0e5aab26621",
+              "checksum": "sha256:1c526cbf2fb6683ed892651c28177a9504c4838906b14533fa3822e5e0f0925c",
+              "bytes": 48171,
+              "gzipBytes": 7660
             }
           ],
           "totals": {
             "files": 2,
-            "bytes": 1457143,
-            "gzipBytes": 306877
+            "bytes": 1436768,
+            "gzipBytes": 305780
           }
         },
         "shared:icons": {
@@ -309,22 +309,22 @@
       },
       "totals": {
         "files": 10,
-        "bytes": 4758642,
-        "gzipBytes": 933165
+        "bytes": 4738267,
+        "gzipBytes": 932068
       }
     }
   },
   "productionVsLegacyAggregate": {
     "bytes": {
-      "current": 1797249,
+      "current": 1794385,
       "baseline": 2585357,
-      "delta": -788108,
-      "percent": -30.5
+      "delta": -790972,
+      "percent": -30.6
     },
     "gzipBytes": {
-      "current": 459328,
+      "current": 459186,
       "baseline": 587787,
-      "delta": -128459,
+      "delta": -128601,
       "percent": -21.9
     }
   }

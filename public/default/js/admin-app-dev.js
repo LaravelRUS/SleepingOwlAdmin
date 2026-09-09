@@ -1765,10 +1765,10 @@ function isRecord(value) {
 
 /***/ },
 
-/***/ "./resources/js/shared/features/alert/alert-elements.js"
-/*!**************************************************************!*\
-  !*** ./resources/js/shared/features/alert/alert-elements.js ***!
-  \**************************************************************/
+/***/ "./resources/js/shared/features/alert/alerts.js"
+/*!******************************************************!*\
+  !*** ./resources/js/shared/features/alert/alerts.js ***!
+  \******************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1776,12 +1776,72 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   ALERT_DISMISS_SELECTOR: () => (/* binding */ ALERT_DISMISS_SELECTOR),
 /* harmony export */   ALERT_SELECTOR: () => (/* binding */ ALERT_SELECTOR),
+/* harmony export */   dispatchAlertEvent: () => (/* binding */ dispatchAlertEvent),
 /* harmony export */   findAlert: () => (/* binding */ findAlert),
 /* harmony export */   findAlertDismiss: () => (/* binding */ findAlertDismiss),
-/* harmony export */   isAlertDismissDisabled: () => (/* binding */ isAlertDismissDisabled)
+/* harmony export */   isAlertDismissDisabled: () => (/* binding */ isAlertDismissDisabled),
+/* harmony export */   mountAlerts: () => (/* binding */ mountAlerts),
+/* harmony export */   transitionMilliseconds: () => (/* binding */ transitionMilliseconds),
+/* harmony export */   waitForAlertTransition: () => (/* binding */ waitForAlertTransition)
 /* harmony export */ });
+/* harmony import */ var _core_dom_listeners_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../core/dom/listeners.js */ "./resources/js/core/dom/listeners.js");
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+
 var ALERT_SELECTOR = '.alert';
 var ALERT_DISMISS_SELECTOR = '[data-bs-dismiss="alert"], [data-dismiss="alert"]';
+function mountAlerts(root) {
+  assertRoot(root);
+  var pending = new Map();
+  var unbind = (0,_core_dom_listeners_js__WEBPACK_IMPORTED_MODULE_0__.delegate)(root, 'click', ALERT_DISMISS_SELECTOR, function (event, trigger) {
+    if (isAlertDismissDisabled(trigger)) return;
+    event.preventDefault();
+    closeAlert(root, pending, trigger);
+  });
+  return {
+    close: function close(element) {
+      return closeAlert(root, pending, element);
+    },
+    destroy: function destroy() {
+      return destroyAlerts(pending, unbind);
+    }
+  };
+}
+function closeAlert(root, pending, element) {
+  var alert = findAlert(root, element);
+  if (!alert || pending.has(alert) || !permitAlertClose(alert, element)) return false;
+  alert.classList.remove('show');
+  var finish = function finish() {
+    return removeAlert(pending, alert, element);
+  };
+  pending.set(alert, function () {});
+  var cancel = waitForAlertTransition(alert, finish);
+  if (pending.has(alert)) pending.set(alert, cancel);
+  return true;
+}
+function removeAlert(pending, alert, trigger) {
+  var _pending$get;
+  (_pending$get = pending.get(alert)) === null || _pending$get === void 0 || _pending$get();
+  pending["delete"](alert);
+  alert.remove();
+  notifyAlertClosed(alert, trigger);
+}
+function destroyAlerts(pending, unbind) {
+  unbind();
+  pending.forEach(function (cancel) {
+    return cancel();
+  });
+  pending.clear();
+}
+function assertRoot(root) {
+  if (typeof (root === null || root === void 0 ? void 0 : root.addEventListener) !== 'function' || typeof (root === null || root === void 0 ? void 0 : root.contains) !== 'function') {
+    throw new TypeError('Alerts require a DOM query root.');
+  }
+}
 function findAlert(root, element) {
   var _ref, _directAlert;
   var target = (_ref = (_directAlert = directAlert(element)) !== null && _directAlert !== void 0 ? _directAlert : targetedAlert(element)) !== null && _ref !== void 0 ? _ref : closestAlert(element);
@@ -1795,46 +1855,6 @@ function findAlertDismiss(root, target) {
 function isAlertDismissDisabled(element) {
   return hasDisabledAttribute(element) || hasDisabledState(element);
 }
-function directAlert(element) {
-  var _element$matches;
-  return element !== null && element !== void 0 && (_element$matches = element.matches) !== null && _element$matches !== void 0 && _element$matches.call(element, ALERT_SELECTOR) ? element : null;
-}
-function closestAlert(element) {
-  var _element$closest, _element$closest2;
-  return (_element$closest = element === null || element === void 0 || (_element$closest2 = element.closest) === null || _element$closest2 === void 0 ? void 0 : _element$closest2.call(element, ALERT_SELECTOR)) !== null && _element$closest !== void 0 ? _element$closest : null;
-}
-function containedAlert(root, alert) {
-  return alert && root.contains(alert) ? alert : null;
-}
-function hasDisabledAttribute(element) {
-  var _element$hasAttribute;
-  return (element === null || element === void 0 || (_element$hasAttribute = element.hasAttribute) === null || _element$hasAttribute === void 0 ? void 0 : _element$hasAttribute.call(element, 'disabled')) === true;
-}
-function hasDisabledState(element) {
-  var _element$getAttribute, _element$classList;
-  return (element === null || element === void 0 || (_element$getAttribute = element.getAttribute) === null || _element$getAttribute === void 0 ? void 0 : _element$getAttribute.call(element, 'aria-disabled')) === 'true' || (element === null || element === void 0 || (_element$classList = element.classList) === null || _element$classList === void 0 ? void 0 : _element$classList.contains('disabled')) === true;
-}
-function targetedAlert(element) {
-  var _ref2, _element$getAttribute2, _element$getAttribute3, _element$getAttribute4;
-  var target = (_ref2 = (_element$getAttribute2 = element === null || element === void 0 || (_element$getAttribute3 = element.getAttribute) === null || _element$getAttribute3 === void 0 ? void 0 : _element$getAttribute3.call(element, 'data-target')) !== null && _element$getAttribute2 !== void 0 ? _element$getAttribute2 : element === null || element === void 0 || (_element$getAttribute4 = element.getAttribute) === null || _element$getAttribute4 === void 0 ? void 0 : _element$getAttribute4.call(element, 'href')) !== null && _ref2 !== void 0 ? _ref2 : '';
-  return target.startsWith('#') ? element.ownerDocument.getElementById(target.slice(1)) : null;
-}
-
-/***/ },
-
-/***/ "./resources/js/shared/features/alert/alert-events.js"
-/*!************************************************************!*\
-  !*** ./resources/js/shared/features/alert/alert-events.js ***!
-  \************************************************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   dispatchAlertEvent: () => (/* binding */ dispatchAlertEvent),
-/* harmony export */   notifyAlertClosed: () => (/* binding */ notifyAlertClosed),
-/* harmony export */   permitAlertClose: () => (/* binding */ permitAlertClose)
-/* harmony export */ });
 function dispatchAlertEvent(alert, name, trigger) {
   var cancelable = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
   var CustomEvent = alert.ownerDocument.defaultView.CustomEvent;
@@ -1847,34 +1867,6 @@ function dispatchAlertEvent(alert, name, trigger) {
     }
   }));
 }
-function permitAlertClose(alert, trigger) {
-  return dispatchAlertEvent(alert, 'alert:close', trigger, true) && dispatchAlertEvent(alert, 'close.bs.alert', trigger, true);
-}
-function notifyAlertClosed(alert, trigger) {
-  dispatchAlertEvent(alert, 'alert:closed', trigger);
-  dispatchAlertEvent(alert, 'closed.bs.alert', trigger);
-}
-
-/***/ },
-
-/***/ "./resources/js/shared/features/alert/alert-transition.js"
-/*!****************************************************************!*\
-  !*** ./resources/js/shared/features/alert/alert-transition.js ***!
-  \****************************************************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   transitionMilliseconds: () => (/* binding */ transitionMilliseconds),
-/* harmony export */   waitForAlertTransition: () => (/* binding */ waitForAlertTransition)
-/* harmony export */ });
-function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
-function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
-function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
-function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function transitionMilliseconds(element) {
   var styles = element.ownerDocument.defaultView.getComputedStyle(element);
   var durations = timeList(styles.transitionDuration);
@@ -1908,6 +1900,37 @@ function waitForAlertTransition(alert, callback) {
     alert.removeEventListener('transitionend', finish);
   };
 }
+function permitAlertClose(alert, trigger) {
+  return dispatchAlertEvent(alert, 'alert:close', trigger, true) && dispatchAlertEvent(alert, 'close.bs.alert', trigger, true);
+}
+function notifyAlertClosed(alert, trigger) {
+  dispatchAlertEvent(alert, 'alert:closed', trigger);
+  dispatchAlertEvent(alert, 'closed.bs.alert', trigger);
+}
+function directAlert(element) {
+  var _element$matches;
+  return element !== null && element !== void 0 && (_element$matches = element.matches) !== null && _element$matches !== void 0 && _element$matches.call(element, ALERT_SELECTOR) ? element : null;
+}
+function closestAlert(element) {
+  var _element$closest, _element$closest2;
+  return (_element$closest = element === null || element === void 0 || (_element$closest2 = element.closest) === null || _element$closest2 === void 0 ? void 0 : _element$closest2.call(element, ALERT_SELECTOR)) !== null && _element$closest !== void 0 ? _element$closest : null;
+}
+function containedAlert(root, alert) {
+  return alert && root.contains(alert) ? alert : null;
+}
+function hasDisabledAttribute(element) {
+  var _element$hasAttribute;
+  return (element === null || element === void 0 || (_element$hasAttribute = element.hasAttribute) === null || _element$hasAttribute === void 0 ? void 0 : _element$hasAttribute.call(element, 'disabled')) === true;
+}
+function hasDisabledState(element) {
+  var _element$getAttribute, _element$classList;
+  return (element === null || element === void 0 || (_element$getAttribute = element.getAttribute) === null || _element$getAttribute === void 0 ? void 0 : _element$getAttribute.call(element, 'aria-disabled')) === 'true' || (element === null || element === void 0 || (_element$classList = element.classList) === null || _element$classList === void 0 ? void 0 : _element$classList.contains('disabled')) === true;
+}
+function targetedAlert(element) {
+  var _ref2, _element$getAttribute2, _element$getAttribute3, _element$getAttribute4;
+  var target = (_ref2 = (_element$getAttribute2 = element === null || element === void 0 || (_element$getAttribute3 = element.getAttribute) === null || _element$getAttribute3 === void 0 ? void 0 : _element$getAttribute3.call(element, 'data-target')) !== null && _element$getAttribute2 !== void 0 ? _element$getAttribute2 : element === null || element === void 0 || (_element$getAttribute4 = element.getAttribute) === null || _element$getAttribute4 === void 0 ? void 0 : _element$getAttribute4.call(element, 'href')) !== null && _ref2 !== void 0 ? _ref2 : '';
+  return target.startsWith('#') ? element.ownerDocument.getElementById(target.slice(1)) : null;
+}
 function timeList(value) {
   return value.split(',').map(timeMilliseconds);
 }
@@ -1915,76 +1938,6 @@ function timeMilliseconds(value) {
   var number = Number.parseFloat(value);
   if (!Number.isFinite(number)) return 0;
   return value.trim().endsWith('ms') ? number : number * 1000;
-}
-
-/***/ },
-
-/***/ "./resources/js/shared/features/alert/alerts.js"
-/*!******************************************************!*\
-  !*** ./resources/js/shared/features/alert/alerts.js ***!
-  \******************************************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   mountAlerts: () => (/* binding */ mountAlerts)
-/* harmony export */ });
-/* harmony import */ var _core_dom_listeners_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../core/dom/listeners.js */ "./resources/js/core/dom/listeners.js");
-/* harmony import */ var _alert_elements_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./alert-elements.js */ "./resources/js/shared/features/alert/alert-elements.js");
-/* harmony import */ var _alert_events_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./alert-events.js */ "./resources/js/shared/features/alert/alert-events.js");
-/* harmony import */ var _alert_transition_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./alert-transition.js */ "./resources/js/shared/features/alert/alert-transition.js");
-
-
-
-
-function mountAlerts(root) {
-  assertRoot(root);
-  var pending = new Map();
-  var unbind = (0,_core_dom_listeners_js__WEBPACK_IMPORTED_MODULE_0__.delegate)(root, 'click', _alert_elements_js__WEBPACK_IMPORTED_MODULE_1__.ALERT_DISMISS_SELECTOR, function (event, trigger) {
-    if ((0,_alert_elements_js__WEBPACK_IMPORTED_MODULE_1__.isAlertDismissDisabled)(trigger)) return;
-    event.preventDefault();
-    closeAlert(root, pending, trigger);
-  });
-  return {
-    close: function close(element) {
-      return closeAlert(root, pending, element);
-    },
-    destroy: function destroy() {
-      return destroyAlerts(pending, unbind);
-    }
-  };
-}
-function closeAlert(root, pending, element) {
-  var alert = (0,_alert_elements_js__WEBPACK_IMPORTED_MODULE_1__.findAlert)(root, element);
-  if (!alert || pending.has(alert) || !(0,_alert_events_js__WEBPACK_IMPORTED_MODULE_2__.permitAlertClose)(alert, element)) return false;
-  alert.classList.remove('show');
-  var finish = function finish() {
-    return removeAlert(pending, alert, element);
-  };
-  pending.set(alert, function () {});
-  var cancel = (0,_alert_transition_js__WEBPACK_IMPORTED_MODULE_3__.waitForAlertTransition)(alert, finish);
-  if (pending.has(alert)) pending.set(alert, cancel);
-  return true;
-}
-function removeAlert(pending, alert, trigger) {
-  var _pending$get;
-  (_pending$get = pending.get(alert)) === null || _pending$get === void 0 || _pending$get();
-  pending["delete"](alert);
-  alert.remove();
-  (0,_alert_events_js__WEBPACK_IMPORTED_MODULE_2__.notifyAlertClosed)(alert, trigger);
-}
-function destroyAlerts(pending, unbind) {
-  unbind();
-  pending.forEach(function (cancel) {
-    return cancel();
-  });
-  pending.clear();
-}
-function assertRoot(root) {
-  if (typeof (root === null || root === void 0 ? void 0 : root.addEventListener) !== 'function' || typeof (root === null || root === void 0 ? void 0 : root.contains) !== 'function') {
-    throw new TypeError('Alerts require a DOM query root.');
-  }
 }
 
 /***/ },
@@ -2047,10 +2000,10 @@ function assertAdmin(admin) {
 
 /***/ },
 
-/***/ "./resources/js/shared/features/dropdown/dropdown-elements.js"
-/*!********************************************************************!*\
-  !*** ./resources/js/shared/features/dropdown/dropdown-elements.js ***!
-  \********************************************************************/
+/***/ "./resources/js/shared/features/dropdown/dropdowns.js"
+/*!************************************************************!*\
+  !*** ./resources/js/shared/features/dropdown/dropdowns.js ***!
+  \************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2059,14 +2012,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   DROPDOWN_CONTAINER_SELECTOR: () => (/* binding */ DROPDOWN_CONTAINER_SELECTOR),
 /* harmony export */   DROPDOWN_ITEM_SELECTOR: () => (/* binding */ DROPDOWN_ITEM_SELECTOR),
 /* harmony export */   DROPDOWN_MENU_SELECTOR: () => (/* binding */ DROPDOWN_MENU_SELECTOR),
+/* harmony export */   DROPDOWN_NAVIGATION_KEYS: () => (/* binding */ DROPDOWN_NAVIGATION_KEYS),
 /* harmony export */   DROPDOWN_TOGGLE_SELECTOR: () => (/* binding */ DROPDOWN_TOGGLE_SELECTOR),
+/* harmony export */   closeDropdown: () => (/* binding */ closeDropdown),
 /* harmony export */   collectDropdownToggles: () => (/* binding */ collectDropdownToggles),
 /* harmony export */   dropdownContext: () => (/* binding */ dropdownContext),
 /* harmony export */   dropdownItems: () => (/* binding */ dropdownItems),
+/* harmony export */   dropdownNavigationTarget: () => (/* binding */ dropdownNavigationTarget),
 /* harmony export */   findDropdownItem: () => (/* binding */ findDropdownItem),
 /* harmony export */   findDropdownToggle: () => (/* binding */ findDropdownToggle),
 /* harmony export */   isDropdownDisabled: () => (/* binding */ isDropdownDisabled),
-/* harmony export */   isDropdownFormControl: () => (/* binding */ isDropdownFormControl)
+/* harmony export */   isDropdownFormControl: () => (/* binding */ isDropdownFormControl),
+/* harmony export */   mountDropdowns: () => (/* binding */ mountDropdowns),
+/* harmony export */   normalizeDropdown: () => (/* binding */ normalizeDropdown),
+/* harmony export */   openDropdown: () => (/* binding */ openDropdown),
+/* harmony export */   resetDropdown: () => (/* binding */ resetDropdown)
 /* harmony export */ });
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -2074,10 +2034,144 @@ function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) 
 function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
 function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+var ROOT_EVENT_NAMES = ['click', 'focusin', 'keydown'];
 var DROPDOWN_TOGGLE_SELECTOR = '[data-bs-toggle="dropdown"], [data-toggle="dropdown"]';
 var DROPDOWN_CONTAINER_SELECTOR = '.dropdown, .btn-group, .nav-item';
 var DROPDOWN_MENU_SELECTOR = '.dropdown-menu';
 var DROPDOWN_ITEM_SELECTOR = '.dropdown-item, [role="menuitem"], a[href], button';
+var DROPDOWN_NAVIGATION_KEYS = new Set(['ArrowDown', 'ArrowUp', 'End', 'Home']);
+function mountDropdowns(root) {
+  assertRoot(root);
+  var state = {
+    current: null,
+    root: root
+  };
+  var listeners = bindDropdownListeners(state);
+  scanDropdowns(state, root);
+  return {
+    close: function close(options) {
+      return closeDropdown(state, options);
+    },
+    destroy: function destroy() {
+      return destroyDropdowns(state, listeners);
+    },
+    open: function open(toggle) {
+      return openToggle(state, toggle);
+    },
+    scan: function scan() {
+      var container = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : root;
+      return scanDropdowns(state, container);
+    },
+    toggle: function toggle(_toggle) {
+      return toggleDropdown(state, _toggle);
+    }
+  };
+}
+function bindDropdownListeners(state) {
+  var listeners = {
+    click: function click(event) {
+      return handleDropdownClick(state, event);
+    },
+    documentClick: function documentClick(event) {
+      return handleDocumentClick(state, event);
+    },
+    focusin: function focusin(event) {
+      return handleDropdownFocus(state, event);
+    },
+    keydown: function keydown(event) {
+      return handleDropdownKeydown(state, event);
+    }
+  };
+  ROOT_EVENT_NAMES.forEach(function (name) {
+    return state.root.addEventListener(name, listeners[name]);
+  });
+  state.root.ownerDocument.addEventListener('click', listeners.documentClick);
+  return listeners;
+}
+function handleDocumentClick(state, event) {
+  if (state.current && !state.root.contains(event.target)) closeDropdown(state);
+}
+function handleDropdownClick(state, event) {
+  var toggle = findDropdownToggle(state.root, event.target);
+  if (toggle) return handleToggleClick(state, event, toggle);
+  var current = state.current;
+  if (!current) return;
+  if (!current.root.contains(event.target)) return closeDropdown(state);
+  if (!current.menu.contains(event.target)) return closeDropdown(state);
+  if (isDropdownFormControl(current.menu, event.target)) return;
+  if (findDropdownItem(current.menu, event.target)) closeDropdown(state);
+}
+function handleToggleClick(state, event, toggle) {
+  if (!isPlainPrimaryClick(event) || isDropdownDisabled(toggle)) return false;
+  event.preventDefault();
+  event.stopPropagation();
+  return toggleDropdown(state, toggle);
+}
+function handleDropdownFocus(state, event) {
+  var current = state.current;
+  if (current && !current.root.contains(event.target)) closeDropdown(state);
+}
+function handleDropdownKeydown(state, event) {
+  if (event.key === 'Escape') return handleEscape(state, event);
+  if (!DROPDOWN_NAVIGATION_KEYS.has(event.key)) return false;
+  var context = keyboardContext(state, event.target);
+  if (!context) return false;
+  var items = dropdownItems(context.menu);
+  var current = findDropdownItem(context.menu, event.target);
+  var target = dropdownNavigationTarget(items, current, event.key);
+  event.preventDefault();
+  event.stopPropagation();
+  openDropdown(state, context);
+  target === null || target === void 0 || target.focus();
+  return true;
+}
+function handleEscape(state, event) {
+  var current = state.current;
+  if (!current || !current.root.contains(event.target)) return false;
+  event.preventDefault();
+  event.stopPropagation();
+  return closeDropdown(state, {
+    restoreFocus: true
+  });
+}
+function keyboardContext(state, target) {
+  var _state$current;
+  var toggle = findDropdownToggle(state.root, target);
+  if (toggle && !isDropdownDisabled(toggle)) return dropdownContext(toggle);
+  if ((_state$current = state.current) !== null && _state$current !== void 0 && _state$current.menu.contains(target)) return state.current;
+  return null;
+}
+function toggleDropdown(state, toggle) {
+  var _state$current2;
+  var context = dropdownContext(toggle);
+  if (!context || isDropdownDisabled(toggle)) return false;
+  if (((_state$current2 = state.current) === null || _state$current2 === void 0 ? void 0 : _state$current2.toggle) === toggle) return closeDropdown(state);
+  return openDropdown(state, context);
+}
+function openToggle(state, toggle) {
+  var context = dropdownContext(toggle);
+  return context && !isDropdownDisabled(toggle) ? openDropdown(state, context) : false;
+}
+function scanDropdowns(state, container) {
+  var toggles = collectDropdownToggles(container);
+  toggles.forEach(function (toggle) {
+    var _state$current3;
+    var context = dropdownContext(toggle);
+    if (context && context.toggle !== ((_state$current3 = state.current) === null || _state$current3 === void 0 ? void 0 : _state$current3.toggle)) normalizeDropdown(context);
+  });
+  return toggles.length;
+}
+function destroyDropdowns(state, listeners) {
+  if (state.current) resetDropdown(state.current);
+  state.current = null;
+  ROOT_EVENT_NAMES.forEach(function (name) {
+    return state.root.removeEventListener(name, listeners[name]);
+  });
+  state.root.ownerDocument.removeEventListener('click', listeners.documentClick);
+}
+function isPlainPrimaryClick(event) {
+  return !event.defaultPrevented && event.button === 0 && !event.altKey && !event.ctrlKey && !event.metaKey && !event.shiftKey;
+}
 function findDropdownToggle(root, target) {
   var _target$closest;
   var toggle = target === null || target === void 0 || (_target$closest = target.closest) === null || _target$closest === void 0 ? void 0 : _target$closest.call(target, DROPDOWN_TOGGLE_SELECTOR);
@@ -2119,49 +2213,6 @@ function isDropdownFormControl(menu, target) {
   var control = target === null || target === void 0 || (_target$closest3 = target.closest) === null || _target$closest3 === void 0 ? void 0 : _target$closest3.call(target, 'form, input, label, option, select, textarea, [contenteditable]');
   return Boolean(control && menu.contains(control));
 }
-function dropdownMenu(toggle) {
-  var _toggle$nextElementSi;
-  var target = targetMenu(toggle);
-  if (target) return target;
-  if ((_toggle$nextElementSi = toggle.nextElementSibling) !== null && _toggle$nextElementSi !== void 0 && _toggle$nextElementSi.matches(DROPDOWN_MENU_SELECTOR)) {
-    return toggle.nextElementSibling;
-  }
-  var root = dropdownRoot(toggle);
-  return _toConsumableArray(root.querySelectorAll(DROPDOWN_MENU_SELECTOR)).find(function (menu) {
-    return menu.closest(DROPDOWN_CONTAINER_SELECTOR) === root;
-  });
-}
-function dropdownRoot(toggle) {
-  var _toggle$closest;
-  return (_toggle$closest = toggle.closest(DROPDOWN_CONTAINER_SELECTOR)) !== null && _toggle$closest !== void 0 ? _toggle$closest : toggle.parentElement;
-}
-function targetMenu(toggle) {
-  var id = dropdownTargetId(toggle);
-  return id ? toggle.ownerDocument.getElementById(id) : null;
-}
-function dropdownTargetId(toggle) {
-  var _toggle$getAttribute, _ref, _toggle$getAttribute2;
-  var controlled = (_toggle$getAttribute = toggle.getAttribute('aria-controls')) === null || _toggle$getAttribute === void 0 ? void 0 : _toggle$getAttribute.trim();
-  if (controlled) return controlled;
-  var target = (_ref = (_toggle$getAttribute2 = toggle.getAttribute('data-target')) !== null && _toggle$getAttribute2 !== void 0 ? _toggle$getAttribute2 : toggle.getAttribute('href')) !== null && _ref !== void 0 ? _ref : '';
-  return target.startsWith('#') ? target.slice(1) : '';
-}
-
-/***/ },
-
-/***/ "./resources/js/shared/features/dropdown/dropdown-navigation.js"
-/*!**********************************************************************!*\
-  !*** ./resources/js/shared/features/dropdown/dropdown-navigation.js ***!
-  \**********************************************************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   DROPDOWN_NAVIGATION_KEYS: () => (/* binding */ DROPDOWN_NAVIGATION_KEYS),
-/* harmony export */   dropdownNavigationTarget: () => (/* binding */ dropdownNavigationTarget)
-/* harmony export */ });
-var DROPDOWN_NAVIGATION_KEYS = new Set(['ArrowDown', 'ArrowUp', 'End', 'Home']);
 function dropdownNavigationTarget(items, current, key) {
   if (items.length === 0 || !DROPDOWN_NAVIGATION_KEYS.has(key)) return null;
   if (key === 'Home') return items[0];
@@ -2170,26 +2221,9 @@ function dropdownNavigationTarget(items, current, key) {
   if (key === 'ArrowDown') return items[index < 0 ? 0 : (index + 1) % items.length];
   return items[index < 0 ? items.length - 1 : (index - 1 + items.length) % items.length];
 }
-
-/***/ },
-
-/***/ "./resources/js/shared/features/dropdown/dropdown-state.js"
-/*!*****************************************************************!*\
-  !*** ./resources/js/shared/features/dropdown/dropdown-state.js ***!
-  \*****************************************************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   closeDropdown: () => (/* binding */ closeDropdown),
-/* harmony export */   normalizeDropdown: () => (/* binding */ normalizeDropdown),
-/* harmony export */   openDropdown: () => (/* binding */ openDropdown),
-/* harmony export */   resetDropdown: () => (/* binding */ resetDropdown)
-/* harmony export */ });
 function openDropdown(state, context) {
-  var _state$current;
-  if (((_state$current = state.current) === null || _state$current === void 0 ? void 0 : _state$current.toggle) === context.toggle) return false;
+  var _state$current4;
+  if (((_state$current4 = state.current) === null || _state$current4 === void 0 ? void 0 : _state$current4.toggle) === context.toggle) return false;
   if (state.current && !closeDropdown(state)) return false;
   if (!dispatchDropdownEvent(context, 'dropdown:show', true)) return false;
   state.current = context;
@@ -2219,6 +2253,33 @@ function normalizeDropdown(context) {
 function resetDropdown(context) {
   applyDropdownState(context, false);
 }
+function dropdownMenu(toggle) {
+  var _toggle$nextElementSi;
+  var target = targetMenu(toggle);
+  if (target) return target;
+  if ((_toggle$nextElementSi = toggle.nextElementSibling) !== null && _toggle$nextElementSi !== void 0 && _toggle$nextElementSi.matches(DROPDOWN_MENU_SELECTOR)) {
+    return toggle.nextElementSibling;
+  }
+  var root = dropdownRoot(toggle);
+  return _toConsumableArray(root.querySelectorAll(DROPDOWN_MENU_SELECTOR)).find(function (menu) {
+    return menu.closest(DROPDOWN_CONTAINER_SELECTOR) === root;
+  });
+}
+function dropdownRoot(toggle) {
+  var _toggle$closest;
+  return (_toggle$closest = toggle.closest(DROPDOWN_CONTAINER_SELECTOR)) !== null && _toggle$closest !== void 0 ? _toggle$closest : toggle.parentElement;
+}
+function targetMenu(toggle) {
+  var id = dropdownTargetId(toggle);
+  return id ? toggle.ownerDocument.getElementById(id) : null;
+}
+function dropdownTargetId(toggle) {
+  var _toggle$getAttribute, _ref, _toggle$getAttribute2;
+  var controlled = (_toggle$getAttribute = toggle.getAttribute('aria-controls')) === null || _toggle$getAttribute === void 0 ? void 0 : _toggle$getAttribute.trim();
+  if (controlled) return controlled;
+  var target = (_ref = (_toggle$getAttribute2 = toggle.getAttribute('data-target')) !== null && _toggle$getAttribute2 !== void 0 ? _toggle$getAttribute2 : toggle.getAttribute('href')) !== null && _ref !== void 0 ? _ref : '';
+  return target.startsWith('#') ? target.slice(1) : '';
+}
 function applyDropdownState(context, open) {
   context.root.classList.toggle('show', open);
   context.root.classList.toggle('open', open);
@@ -2237,159 +2298,6 @@ function dispatchDropdownEvent(context, name) {
       toggle: context.toggle
     }
   }));
-}
-
-/***/ },
-
-/***/ "./resources/js/shared/features/dropdown/dropdowns.js"
-/*!************************************************************!*\
-  !*** ./resources/js/shared/features/dropdown/dropdowns.js ***!
-  \************************************************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   mountDropdowns: () => (/* binding */ mountDropdowns)
-/* harmony export */ });
-/* harmony import */ var _dropdown_elements_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./dropdown-elements.js */ "./resources/js/shared/features/dropdown/dropdown-elements.js");
-/* harmony import */ var _dropdown_navigation_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./dropdown-navigation.js */ "./resources/js/shared/features/dropdown/dropdown-navigation.js");
-/* harmony import */ var _dropdown_state_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./dropdown-state.js */ "./resources/js/shared/features/dropdown/dropdown-state.js");
-
-
-
-var ROOT_EVENT_NAMES = ['click', 'focusin', 'keydown'];
-function mountDropdowns(root) {
-  assertRoot(root);
-  var state = {
-    current: null,
-    root: root
-  };
-  var listeners = bindDropdownListeners(state);
-  scanDropdowns(state, root);
-  return {
-    close: function close(options) {
-      return (0,_dropdown_state_js__WEBPACK_IMPORTED_MODULE_2__.closeDropdown)(state, options);
-    },
-    destroy: function destroy() {
-      return destroyDropdowns(state, listeners);
-    },
-    open: function open(toggle) {
-      return openToggle(state, toggle);
-    },
-    scan: function scan() {
-      var container = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : root;
-      return scanDropdowns(state, container);
-    },
-    toggle: function toggle(_toggle) {
-      return toggleDropdown(state, _toggle);
-    }
-  };
-}
-function bindDropdownListeners(state) {
-  var listeners = {
-    click: function click(event) {
-      return handleDropdownClick(state, event);
-    },
-    documentClick: function documentClick(event) {
-      return handleDocumentClick(state, event);
-    },
-    focusin: function focusin(event) {
-      return handleDropdownFocus(state, event);
-    },
-    keydown: function keydown(event) {
-      return handleDropdownKeydown(state, event);
-    }
-  };
-  ROOT_EVENT_NAMES.forEach(function (name) {
-    return state.root.addEventListener(name, listeners[name]);
-  });
-  state.root.ownerDocument.addEventListener('click', listeners.documentClick);
-  return listeners;
-}
-function handleDocumentClick(state, event) {
-  if (state.current && !state.root.contains(event.target)) (0,_dropdown_state_js__WEBPACK_IMPORTED_MODULE_2__.closeDropdown)(state);
-}
-function handleDropdownClick(state, event) {
-  var toggle = (0,_dropdown_elements_js__WEBPACK_IMPORTED_MODULE_0__.findDropdownToggle)(state.root, event.target);
-  if (toggle) return handleToggleClick(state, event, toggle);
-  var current = state.current;
-  if (!current) return;
-  if (!current.root.contains(event.target)) return (0,_dropdown_state_js__WEBPACK_IMPORTED_MODULE_2__.closeDropdown)(state);
-  if (!current.menu.contains(event.target)) return (0,_dropdown_state_js__WEBPACK_IMPORTED_MODULE_2__.closeDropdown)(state);
-  if ((0,_dropdown_elements_js__WEBPACK_IMPORTED_MODULE_0__.isDropdownFormControl)(current.menu, event.target)) return;
-  if ((0,_dropdown_elements_js__WEBPACK_IMPORTED_MODULE_0__.findDropdownItem)(current.menu, event.target)) (0,_dropdown_state_js__WEBPACK_IMPORTED_MODULE_2__.closeDropdown)(state);
-}
-function handleToggleClick(state, event, toggle) {
-  if (!isPlainPrimaryClick(event) || (0,_dropdown_elements_js__WEBPACK_IMPORTED_MODULE_0__.isDropdownDisabled)(toggle)) return false;
-  event.preventDefault();
-  event.stopPropagation();
-  return toggleDropdown(state, toggle);
-}
-function handleDropdownFocus(state, event) {
-  var current = state.current;
-  if (current && !current.root.contains(event.target)) (0,_dropdown_state_js__WEBPACK_IMPORTED_MODULE_2__.closeDropdown)(state);
-}
-function handleDropdownKeydown(state, event) {
-  if (event.key === 'Escape') return handleEscape(state, event);
-  if (!_dropdown_navigation_js__WEBPACK_IMPORTED_MODULE_1__.DROPDOWN_NAVIGATION_KEYS.has(event.key)) return false;
-  var context = keyboardContext(state, event.target);
-  if (!context) return false;
-  var items = (0,_dropdown_elements_js__WEBPACK_IMPORTED_MODULE_0__.dropdownItems)(context.menu);
-  var current = (0,_dropdown_elements_js__WEBPACK_IMPORTED_MODULE_0__.findDropdownItem)(context.menu, event.target);
-  var target = (0,_dropdown_navigation_js__WEBPACK_IMPORTED_MODULE_1__.dropdownNavigationTarget)(items, current, event.key);
-  event.preventDefault();
-  event.stopPropagation();
-  (0,_dropdown_state_js__WEBPACK_IMPORTED_MODULE_2__.openDropdown)(state, context);
-  target === null || target === void 0 || target.focus();
-  return true;
-}
-function handleEscape(state, event) {
-  var current = state.current;
-  if (!current || !current.root.contains(event.target)) return false;
-  event.preventDefault();
-  event.stopPropagation();
-  return (0,_dropdown_state_js__WEBPACK_IMPORTED_MODULE_2__.closeDropdown)(state, {
-    restoreFocus: true
-  });
-}
-function keyboardContext(state, target) {
-  var _state$current;
-  var toggle = (0,_dropdown_elements_js__WEBPACK_IMPORTED_MODULE_0__.findDropdownToggle)(state.root, target);
-  if (toggle && !(0,_dropdown_elements_js__WEBPACK_IMPORTED_MODULE_0__.isDropdownDisabled)(toggle)) return (0,_dropdown_elements_js__WEBPACK_IMPORTED_MODULE_0__.dropdownContext)(toggle);
-  if ((_state$current = state.current) !== null && _state$current !== void 0 && _state$current.menu.contains(target)) return state.current;
-  return null;
-}
-function toggleDropdown(state, toggle) {
-  var _state$current2;
-  var context = (0,_dropdown_elements_js__WEBPACK_IMPORTED_MODULE_0__.dropdownContext)(toggle);
-  if (!context || (0,_dropdown_elements_js__WEBPACK_IMPORTED_MODULE_0__.isDropdownDisabled)(toggle)) return false;
-  if (((_state$current2 = state.current) === null || _state$current2 === void 0 ? void 0 : _state$current2.toggle) === toggle) return (0,_dropdown_state_js__WEBPACK_IMPORTED_MODULE_2__.closeDropdown)(state);
-  return (0,_dropdown_state_js__WEBPACK_IMPORTED_MODULE_2__.openDropdown)(state, context);
-}
-function openToggle(state, toggle) {
-  var context = (0,_dropdown_elements_js__WEBPACK_IMPORTED_MODULE_0__.dropdownContext)(toggle);
-  return context && !(0,_dropdown_elements_js__WEBPACK_IMPORTED_MODULE_0__.isDropdownDisabled)(toggle) ? (0,_dropdown_state_js__WEBPACK_IMPORTED_MODULE_2__.openDropdown)(state, context) : false;
-}
-function scanDropdowns(state, container) {
-  var toggles = (0,_dropdown_elements_js__WEBPACK_IMPORTED_MODULE_0__.collectDropdownToggles)(container);
-  toggles.forEach(function (toggle) {
-    var _state$current3;
-    var context = (0,_dropdown_elements_js__WEBPACK_IMPORTED_MODULE_0__.dropdownContext)(toggle);
-    if (context && context.toggle !== ((_state$current3 = state.current) === null || _state$current3 === void 0 ? void 0 : _state$current3.toggle)) (0,_dropdown_state_js__WEBPACK_IMPORTED_MODULE_2__.normalizeDropdown)(context);
-  });
-  return toggles.length;
-}
-function destroyDropdowns(state, listeners) {
-  if (state.current) (0,_dropdown_state_js__WEBPACK_IMPORTED_MODULE_2__.resetDropdown)(state.current);
-  state.current = null;
-  ROOT_EVENT_NAMES.forEach(function (name) {
-    return state.root.removeEventListener(name, listeners[name]);
-  });
-  state.root.ownerDocument.removeEventListener('click', listeners.documentClick);
-}
-function isPlainPrimaryClick(event) {
-  return !event.defaultPrevented && event.button === 0 && !event.altKey && !event.ctrlKey && !event.metaKey && !event.shiftKey;
 }
 function assertRoot(root) {
   if (typeof (root === null || root === void 0 ? void 0 : root.addEventListener) !== 'function' || typeof (root === null || root === void 0 ? void 0 : root.contains) !== 'function') {
@@ -4027,54 +3935,35 @@ function assertFunction(value, message) {
 
 /***/ },
 
-/***/ "./resources/js/shared/features/forms/generation/field-generator.js"
-/*!**************************************************************************!*\
-  !*** ./resources/js/shared/features/forms/generation/field-generator.js ***!
-  \**************************************************************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   bindFieldGenerator: () => (/* binding */ bindFieldGenerator)
-/* harmony export */ });
-/* harmony import */ var _core_dom_listeners_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../core/dom/listeners.js */ "./resources/js/core/dom/listeners.js");
-/* harmony import */ var _generated_value_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./generated-value.js */ "./resources/js/shared/features/forms/generation/generated-value.js");
-
-
-function bindFieldGenerator(root, field, random) {
-  var control = root.querySelector('.generate');
-  if (!control || !field) return function () {};
-  return (0,_core_dom_listeners_js__WEBPACK_IMPORTED_MODULE_0__.listen)(control, 'click', function () {
-    field.value = (0,_generated_value_js__WEBPACK_IMPORTED_MODULE_1__.generateFieldValue)(field, random);
-    dispatchValueChange(field);
-  });
-}
-function dispatchValueChange(field) {
-  var Event = field.ownerDocument.defaultView.Event;
-  field.dispatchEvent(new Event('input', {
-    bubbles: true
-  }));
-  field.dispatchEvent(new Event('change', {
-    bubbles: true
-  }));
-}
-
-/***/ },
-
-/***/ "./resources/js/shared/features/forms/generation/generated-value.js"
-/*!**************************************************************************!*\
-  !*** ./resources/js/shared/features/forms/generation/generated-value.js ***!
-  \**************************************************************************/
+/***/ "./resources/js/shared/features/forms/generation.js"
+/*!**********************************************************!*\
+  !*** ./resources/js/shared/features/forms/generation.js ***!
+  \**********************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   DEFAULT_GENERATED_CHARACTERS: () => (/* binding */ DEFAULT_GENERATED_CHARACTERS),
-/* harmony export */   generateFieldValue: () => (/* binding */ generateFieldValue)
+/* harmony export */   PASSWORD_COMPONENT: () => (/* binding */ PASSWORD_COMPONENT),
+/* harmony export */   PASSWORD_SELECTOR: () => (/* binding */ PASSWORD_SELECTOR),
+/* harmony export */   TEXT_GENERATOR_COMPONENT: () => (/* binding */ TEXT_GENERATOR_COMPONENT),
+/* harmony export */   TEXT_GENERATOR_SELECTOR: () => (/* binding */ TEXT_GENERATOR_SELECTOR),
+/* harmony export */   bindFieldGenerator: () => (/* binding */ bindFieldGenerator),
+/* harmony export */   createPasswordDefinition: () => (/* binding */ createPasswordDefinition),
+/* harmony export */   createTextGeneratorDefinition: () => (/* binding */ createTextGeneratorDefinition),
+/* harmony export */   generateFieldValue: () => (/* binding */ generateFieldValue),
+/* harmony export */   installPasswordControls: () => (/* binding */ installPasswordControls),
+/* harmony export */   installTextGenerators: () => (/* binding */ installTextGenerators),
+/* harmony export */   mountPasswordControl: () => (/* binding */ mountPasswordControl)
 /* harmony export */ });
+/* harmony import */ var _core_dom_listeners_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../core/dom/listeners.js */ "./resources/js/core/dom/listeners.js");
+
 var DEFAULT_GENERATED_CHARACTERS = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+var PASSWORD_COMPONENT = 'form-password';
+var PASSWORD_SELECTOR = '.password-field';
+var TEXT_GENERATOR_COMPONENT = 'form-text-generator';
+var TEXT_GENERATOR_SELECTOR = '.form-element-text';
 function generateFieldValue(field) {
   var random = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : Math.random;
   var characters = field.dataset.generateChars || DEFAULT_GENERATED_CHARACTERS;
@@ -4085,38 +3974,14 @@ function generateFieldValue(field) {
     return randomCharacter(characters, random);
   }).join('');
 }
-function randomCharacter(characters, random) {
-  var index = Math.floor(random() * characters.length);
-  return characters.charAt(Math.min(index, characters.length - 1));
+function bindFieldGenerator(root, field, random) {
+  var control = root.querySelector('.generate');
+  if (!control || !field) return function () {};
+  return (0,_core_dom_listeners_js__WEBPACK_IMPORTED_MODULE_0__.listen)(control, 'click', function () {
+    field.value = generateFieldValue(field, random);
+    dispatchValueChange(field);
+  });
 }
-function positiveInteger(value, fallback) {
-  var number = Number.parseInt(value, 10);
-  return Number.isInteger(number) && number > 0 ? number : fallback;
-}
-
-/***/ },
-
-/***/ "./resources/js/shared/features/forms/generation/password-control.js"
-/*!***************************************************************************!*\
-  !*** ./resources/js/shared/features/forms/generation/password-control.js ***!
-  \***************************************************************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   PASSWORD_COMPONENT: () => (/* binding */ PASSWORD_COMPONENT),
-/* harmony export */   PASSWORD_SELECTOR: () => (/* binding */ PASSWORD_SELECTOR),
-/* harmony export */   createPasswordDefinition: () => (/* binding */ createPasswordDefinition),
-/* harmony export */   installPasswordControls: () => (/* binding */ installPasswordControls),
-/* harmony export */   mountPasswordControl: () => (/* binding */ mountPasswordControl)
-/* harmony export */ });
-/* harmony import */ var _core_dom_listeners_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../core/dom/listeners.js */ "./resources/js/core/dom/listeners.js");
-/* harmony import */ var _field_generator_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./field-generator.js */ "./resources/js/shared/features/forms/generation/field-generator.js");
-
-
-var PASSWORD_COMPONENT = 'form-password';
-var PASSWORD_SELECTOR = '.password-field';
 function installPasswordControls(admin) {
   var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
   var definition = createPasswordDefinition(options.random);
@@ -4147,7 +4012,7 @@ function mountPasswordControl(element) {
   var random = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : Math.random;
   var field = element.querySelector('.passwd');
   var show = element.querySelector('.button-show');
-  var removers = [(0,_field_generator_js__WEBPACK_IMPORTED_MODULE_1__.bindFieldGenerator)(element, field, random)];
+  var removers = [bindFieldGenerator(element, field, random)];
   if (field && show) removers.push((0,_core_dom_listeners_js__WEBPACK_IMPORTED_MODULE_0__.listen)(show, 'click', function () {
     return togglePassword(field, show);
   }));
@@ -4157,42 +4022,13 @@ function mountPasswordControl(element) {
     });
   };
 }
-function togglePassword(field, control) {
-  var visible = field.type === 'password';
-  field.type = visible ? 'text' : 'password';
-  control.setAttribute('aria-pressed', String(visible));
-  var icon = control.querySelector('i');
-  icon === null || icon === void 0 || icon.classList.toggle('fa-eye', !visible);
-  icon === null || icon === void 0 || icon.classList.toggle('fa-eye-slash', visible);
-}
-
-/***/ },
-
-/***/ "./resources/js/shared/features/forms/generation/text-control.js"
-/*!***********************************************************************!*\
-  !*** ./resources/js/shared/features/forms/generation/text-control.js ***!
-  \***********************************************************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   TEXT_GENERATOR_COMPONENT: () => (/* binding */ TEXT_GENERATOR_COMPONENT),
-/* harmony export */   TEXT_GENERATOR_SELECTOR: () => (/* binding */ TEXT_GENERATOR_SELECTOR),
-/* harmony export */   createTextGeneratorDefinition: () => (/* binding */ createTextGeneratorDefinition),
-/* harmony export */   installTextGenerators: () => (/* binding */ installTextGenerators)
-/* harmony export */ });
-/* harmony import */ var _field_generator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./field-generator.js */ "./resources/js/shared/features/forms/generation/field-generator.js");
-
-var TEXT_GENERATOR_COMPONENT = 'form-text-generator';
-var TEXT_GENERATOR_SELECTOR = '.form-element-text';
 function installTextGenerators(admin) {
   var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
   var definition = createTextGeneratorDefinition(options.random);
   admin.Components.register(definition);
   var scan = function scan() {
-    var _options$root;
-    var root = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : (_options$root = options.root) !== null && _options$root !== void 0 ? _options$root : globalThis.document;
+    var _options$root2;
+    var root = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : (_options$root2 = options.root) !== null && _options$root2 !== void 0 ? _options$root2 : globalThis.document;
     return admin.Components.scan(root, TEXT_GENERATOR_COMPONENT);
   };
   admin.Modules.register('form.elements.text', function () {
@@ -4206,25 +4042,53 @@ function installTextGenerators(admin) {
 function createTextGeneratorDefinition(random) {
   return {
     mount: function mount(element) {
-      return (0,_field_generator_js__WEBPACK_IMPORTED_MODULE_0__.bindFieldGenerator)(element, element.querySelector('.text-element'), random);
+      return bindFieldGenerator(element, element.querySelector('.text-element'), random);
     },
     name: TEXT_GENERATOR_COMPONENT,
     selector: TEXT_GENERATOR_SELECTOR
   };
 }
+function dispatchValueChange(field) {
+  var Event = field.ownerDocument.defaultView.Event;
+  field.dispatchEvent(new Event('input', {
+    bubbles: true
+  }));
+  field.dispatchEvent(new Event('change', {
+    bubbles: true
+  }));
+}
+function randomCharacter(characters, random) {
+  var index = Math.floor(random() * characters.length);
+  return characters.charAt(Math.min(index, characters.length - 1));
+}
+function positiveInteger(value, fallback) {
+  var number = Number.parseInt(value, 10);
+  return Number.isInteger(number) && number > 0 ? number : fallback;
+}
+function togglePassword(field, control) {
+  var visible = field.type === 'password';
+  field.type = visible ? 'text' : 'password';
+  control.setAttribute('aria-pressed', String(visible));
+  var icon = control.querySelector('i');
+  icon === null || icon === void 0 || icon.classList.toggle('fa-eye', !visible);
+  icon === null || icon === void 0 || icon.classList.toggle('fa-eye-slash', visible);
+}
 
 /***/ },
 
-/***/ "./resources/js/shared/features/forms/wysiwyg/adapters/ckeditor4.js"
-/*!**************************************************************************!*\
-  !*** ./resources/js/shared/features/forms/wysiwyg/adapters/ckeditor4.js ***!
-  \**************************************************************************/
+/***/ "./resources/js/shared/features/forms/wysiwyg/adapters.js"
+/*!****************************************************************!*\
+  !*** ./resources/js/shared/features/forms/wysiwyg/adapters.js ***!
+  \****************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   createCkeditor4Adapter: () => (/* binding */ createCkeditor4Adapter)
+/* harmony export */   createCkeditor4Adapter: () => (/* binding */ createCkeditor4Adapter),
+/* harmony export */   createCkeditor5Adapter: () => (/* binding */ createCkeditor5Adapter),
+/* harmony export */   createSimpleMdeAdapter: () => (/* binding */ createSimpleMdeAdapter),
+/* harmony export */   createTinyMceAdapter: () => (/* binding */ createTinyMceAdapter)
 /* harmony export */ });
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
@@ -4252,20 +4116,6 @@ function executeCkeditor4(editor, command, _id, data) {
   if (command === 'insert') editor.insertText(data);
   if (command === 'changeHeight') editor.resize('100%', data);
 }
-
-/***/ },
-
-/***/ "./resources/js/shared/features/forms/wysiwyg/adapters/ckeditor5.js"
-/*!**************************************************************************!*\
-  !*** ./resources/js/shared/features/forms/wysiwyg/adapters/ckeditor5.js ***!
-  \**************************************************************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   createCkeditor5Adapter: () => (/* binding */ createCkeditor5Adapter)
-/* harmony export */ });
 function createCkeditor5Adapter(ClassicEditor) {
   var document = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : globalThis.document;
   if (typeof (ClassicEditor === null || ClassicEditor === void 0 ? void 0 : ClassicEditor.create) !== 'function') {
@@ -4284,34 +4134,14 @@ function createCkeditor5Adapter(ClassicEditor) {
 }
 function executeCkeditor5(editor, command, _id, data) {
   var _editor$resize;
-  if (command === 'insert') insertText(editor, data);
+  if (command === 'insert') insertCkeditor5Text(editor, data);
   if (command === 'changeHeight') (_editor$resize = editor.resize) === null || _editor$resize === void 0 || _editor$resize.call(editor, '100%', data);
 }
-function insertText(editor, data) {
+function insertCkeditor5Text(editor, data) {
   editor.model.change(function (writer) {
     editor.model.insertContent(writer.createText(String(data)));
   });
 }
-
-/***/ },
-
-/***/ "./resources/js/shared/features/forms/wysiwyg/adapters/simplemde.js"
-/*!**************************************************************************!*\
-  !*** ./resources/js/shared/features/forms/wysiwyg/adapters/simplemde.js ***!
-  \**************************************************************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   createSimpleMdeAdapter: () => (/* binding */ createSimpleMdeAdapter)
-/* harmony export */ });
-function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
-function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
-function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
-function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 function createSimpleMdeAdapter(SimpleMDE) {
   var document = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : globalThis.document;
   assertConstructor(SimpleMDE, 'SimpleMDE');
@@ -4336,26 +4166,6 @@ function executeSimpleMde(editor, command, data) {
 function assertConstructor(value, name) {
   if (typeof value !== 'function') throw new TypeError("".concat(name, " constructor is required."));
 }
-
-/***/ },
-
-/***/ "./resources/js/shared/features/forms/wysiwyg/adapters/tinymce.js"
-/*!************************************************************************!*\
-  !*** ./resources/js/shared/features/forms/wysiwyg/adapters/tinymce.js ***!
-  \************************************************************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   createTinyMceAdapter: () => (/* binding */ createTinyMceAdapter)
-/* harmony export */ });
-function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
-function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
-function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
-function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 function createTinyMceAdapter(tinymce) {
   if (typeof (tinymce === null || tinymce === void 0 ? void 0 : tinymce.init) !== 'function') throw new TypeError('TinyMCE API is required.');
   return {
@@ -4778,10 +4588,10 @@ function assertFunction(object, method, message) {
 
 /***/ },
 
-/***/ "./resources/js/shared/features/lightbox/lightbox-elements.js"
-/*!********************************************************************!*\
-  !*** ./resources/js/shared/features/lightbox/lightbox-elements.js ***!
-  \********************************************************************/
+/***/ "./resources/js/shared/features/lightbox/lightbox.js"
+/*!***********************************************************!*\
+  !*** ./resources/js/shared/features/lightbox/lightbox.js ***!
+  \***********************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4790,8 +4600,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   LIGHTBOX_TRIGGER_SELECTOR: () => (/* binding */ LIGHTBOX_TRIGGER_SELECTOR),
 /* harmony export */   collectLightboxGallery: () => (/* binding */ collectLightboxGallery),
 /* harmony export */   escapeLightboxText: () => (/* binding */ escapeLightboxText),
-/* harmony export */   findLightboxTrigger: () => (/* binding */ findLightboxTrigger)
+/* harmony export */   findLightboxTrigger: () => (/* binding */ findLightboxTrigger),
+/* harmony export */   mountLightbox: () => (/* binding */ mountLightbox)
 /* harmony export */ });
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
@@ -4855,28 +4672,6 @@ function escapeLightboxText(value) {
     return entities[character];
   });
 }
-
-/***/ },
-
-/***/ "./resources/js/shared/features/lightbox/lightbox.js"
-/*!***********************************************************!*\
-  !*** ./resources/js/shared/features/lightbox/lightbox.js ***!
-  \***********************************************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   mountLightbox: () => (/* binding */ mountLightbox)
-/* harmony export */ });
-/* harmony import */ var _lightbox_elements_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./lightbox-elements.js */ "./resources/js/shared/features/lightbox/lightbox-elements.js");
-function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
-function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
-function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
-function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
-
 function mountLightbox(root, factory) {
   var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
   assertDependencies(root, factory);
@@ -4898,9 +4693,9 @@ function mountLightbox(root, factory) {
 }
 function handleLightboxClick(state, event) {
   if (!shouldOpenLightbox(event)) return;
-  var trigger = (0,_lightbox_elements_js__WEBPACK_IMPORTED_MODULE_0__.findLightboxTrigger)(state.root, event.target);
+  var trigger = findLightboxTrigger(state.root, event.target);
   if (!trigger) return;
-  var gallery = (0,_lightbox_elements_js__WEBPACK_IMPORTED_MODULE_0__.collectLightboxGallery)(state.root, trigger);
+  var gallery = collectLightboxGallery(state.root, trigger);
   if (gallery.index < 0) return;
   event.preventDefault();
   openLightbox(state, trigger, gallery);
@@ -10240,10 +10035,10 @@ function assertFunction(object, method, message) {
 
 /***/ },
 
-/***/ "./resources/js/shared/features/tabs/tab-elements.js"
-/*!***********************************************************!*\
-  !*** ./resources/js/shared/features/tabs/tab-elements.js ***!
-  \***********************************************************/
+/***/ "./resources/js/shared/features/tabs/tabs.js"
+/*!***************************************************!*\
+  !*** ./resources/js/shared/features/tabs/tabs.js ***!
+  \***************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10251,13 +10046,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   TAB_LIST_SELECTOR: () => (/* binding */ TAB_LIST_SELECTOR),
 /* harmony export */   TAB_SELECTOR: () => (/* binding */ TAB_SELECTOR),
+/* harmony export */   activateTab: () => (/* binding */ activateTab),
 /* harmony export */   collectTabLists: () => (/* binding */ collectTabLists),
 /* harmony export */   findTab: () => (/* binding */ findTab),
 /* harmony export */   findTabList: () => (/* binding */ findTabList),
 /* harmony export */   findTabPanel: () => (/* binding */ findTabPanel),
+/* harmony export */   mountTabs: () => (/* binding */ mountTabs),
+/* harmony export */   readTabState: () => (/* binding */ readTabState),
+/* harmony export */   tabStateKey: () => (/* binding */ tabStateKey),
 /* harmony export */   tabTargetId: () => (/* binding */ tabTargetId),
-/* harmony export */   tabsInList: () => (/* binding */ tabsInList)
+/* harmony export */   tabsInList: () => (/* binding */ tabsInList),
+/* harmony export */   writeTabState: () => (/* binding */ writeTabState)
 /* harmony export */ });
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
@@ -10311,23 +10116,6 @@ function sameDocumentHash(document, href) {
     return '';
   }
 }
-
-/***/ },
-
-/***/ "./resources/js/shared/features/tabs/tab-state.js"
-/*!********************************************************!*\
-  !*** ./resources/js/shared/features/tabs/tab-state.js ***!
-  \********************************************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   readTabState: () => (/* binding */ readTabState),
-/* harmony export */   tabStateKey: () => (/* binding */ tabStateKey),
-/* harmony export */   writeTabState: () => (/* binding */ writeTabState)
-/* harmony export */ });
-function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function tabStateKey() {
   var pathname = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '/';
   var normalized = normalizeEditPath(pathname);
@@ -10339,7 +10127,7 @@ function readTabState(storage, key) {
     var _storage$getItem;
     var value = JSON.parse((_storage$getItem = storage.getItem(key)) !== null && _storage$getItem !== void 0 ? _storage$getItem : '{}');
     return isRecord(value) ? value : {};
-  } catch (_unused) {
+  } catch (_unused2) {
     return {};
   }
 }
@@ -10348,7 +10136,7 @@ function writeTabState(storage, key, state) {
   try {
     storage.setItem(key, JSON.stringify(state));
     return true;
-  } catch (_unused2) {
+  } catch (_unused3) {
     return false;
   }
 }
@@ -10359,31 +10147,6 @@ function normalizeEditPath(pathname) {
 function isRecord(value) {
   return value !== null && _typeof(value) === 'object' && !Array.isArray(value);
 }
-
-/***/ },
-
-/***/ "./resources/js/shared/features/tabs/tabs.js"
-/*!***************************************************!*\
-  !*** ./resources/js/shared/features/tabs/tabs.js ***!
-  \***************************************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   activateTab: () => (/* binding */ activateTab),
-/* harmony export */   mountTabs: () => (/* binding */ mountTabs)
-/* harmony export */ });
-/* harmony import */ var _tab_elements_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./tab-elements.js */ "./resources/js/shared/features/tabs/tab-elements.js");
-/* harmony import */ var _tab_state_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./tab-state.js */ "./resources/js/shared/features/tabs/tab-state.js");
-function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
-function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
-function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
-function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
-
-
 function mountTabs(root) {
   var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
   assertRoot(root);
@@ -10405,15 +10168,15 @@ function mountTabs(root) {
 }
 function activateTab(tab) {
   var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-  var tabList = (0,_tab_elements_js__WEBPACK_IMPORTED_MODULE_0__.findTabList)(tab);
-  var panel = (0,_tab_elements_js__WEBPACK_IMPORTED_MODULE_0__.findTabPanel)(tab);
+  var tabList = findTabList(tab);
+  var panel = findTabPanel(tab);
   if (!tabList || !panel || isDisabled(tab)) return false;
   var previousTab = activeTab(tabList);
-  var previousPanel = previousTab ? (0,_tab_elements_js__WEBPACK_IMPORTED_MODULE_0__.findTabPanel)(previousTab) : null;
+  var previousPanel = previousTab ? findTabPanel(previousTab) : null;
   if (previousTab === tab) return false;
   tabList.setAttribute('role', 'tablist');
-  (0,_tab_elements_js__WEBPACK_IMPORTED_MODULE_0__.tabsInList)(tabList).forEach(function (item) {
-    return setTabActive(item, (0,_tab_elements_js__WEBPACK_IMPORTED_MODULE_0__.findTabPanel)(item), item === tab);
+  tabsInList(tabList).forEach(function (item) {
+    return setTabActive(item, findTabPanel(item), item === tab);
   });
   publishChange(options.events, previousTab, previousPanel, tab, panel);
   return true;
@@ -10423,51 +10186,51 @@ function createTabsState(root, options) {
   return {
     events: options.events,
     root: root,
-    stateKey: stateEnabled ? (0,_tab_state_js__WEBPACK_IMPORTED_MODULE_1__.tabStateKey)(options.path) : null,
+    stateKey: stateEnabled ? tabStateKey(options.path) : null,
     storage: options.storage
   };
 }
 function initializeTabs(state) {
-  var lists = (0,_tab_elements_js__WEBPACK_IMPORTED_MODULE_0__.collectTabLists)(state.root);
+  var lists = collectTabLists(state.root);
   lists.forEach(normalizeTabList);
   restoreTabState(state, lists);
 }
 function normalizeTabList(tabList) {
   var _activeTab;
-  var tabs = (0,_tab_elements_js__WEBPACK_IMPORTED_MODULE_0__.tabsInList)(tabList);
+  var tabs = tabsInList(tabList);
   var selected = (_activeTab = activeTab(tabList)) !== null && _activeTab !== void 0 ? _activeTab : tabs[0];
   tabList.setAttribute('role', 'tablist');
   tabs.forEach(function (tab) {
-    return setTabActive(tab, (0,_tab_elements_js__WEBPACK_IMPORTED_MODULE_0__.findTabPanel)(tab), tab === selected);
+    return setTabActive(tab, findTabPanel(tab), tab === selected);
   });
 }
 function restoreTabState(state, lists) {
-  var stored = (0,_tab_state_js__WEBPACK_IMPORTED_MODULE_1__.readTabState)(state.storage, state.stateKey);
+  var stored = readTabState(state.storage, state.stateKey);
   Object.entries(stored).forEach(function (_ref) {
     var _ref2 = _slicedToArray(_ref, 2),
       index = _ref2[0],
       target = _ref2[1];
     var list = lists[Number(index)];
     if (!list) return;
-    var tab = (0,_tab_elements_js__WEBPACK_IMPORTED_MODULE_0__.tabsInList)(list).find(function (candidate) {
-      return (0,_tab_elements_js__WEBPACK_IMPORTED_MODULE_0__.tabTargetId)(candidate) === target;
+    var tab = tabsInList(list).find(function (candidate) {
+      return tabTargetId(candidate) === target;
     });
     if (tab) activateAndStore(state, tab);
   });
 }
 function handleClick(state, event) {
   if (!isPlainPrimaryClick(event)) return;
-  var tab = (0,_tab_elements_js__WEBPACK_IMPORTED_MODULE_0__.findTab)(state.root, event.target);
+  var tab = findTab(state.root, event.target);
   if (!tab || isDisabled(tab)) return;
   event.preventDefault();
   event.stopPropagation();
   activateAndStore(state, tab);
 }
 function handleKeydown(state, event) {
-  var tab = (0,_tab_elements_js__WEBPACK_IMPORTED_MODULE_0__.findTab)(state.root, event.target);
-  var tabList = tab && (0,_tab_elements_js__WEBPACK_IMPORTED_MODULE_0__.findTabList)(tab);
+  var tab = findTab(state.root, event.target);
+  var tabList = tab && findTabList(tab);
   if (!tabList) return;
-  var target = keyboardTarget((0,_tab_elements_js__WEBPACK_IMPORTED_MODULE_0__.tabsInList)(tabList), tab, event.key);
+  var target = keyboardTarget(tabsInList(tabList), tab, event.key);
   if (!target) return;
   event.preventDefault();
   event.stopPropagation();
@@ -10483,14 +10246,14 @@ function activateAndStore(state, tab) {
 }
 function persistTabState(state) {
   if (!state.stateKey) return;
-  var selected = Object.fromEntries((0,_tab_elements_js__WEBPACK_IMPORTED_MODULE_0__.collectTabLists)(state.root).map(function (list, index) {
+  var selected = Object.fromEntries(collectTabLists(state.root).map(function (list, index) {
     var _activeTab2;
-    return [index, (0,_tab_elements_js__WEBPACK_IMPORTED_MODULE_0__.tabTargetId)((_activeTab2 = activeTab(list)) !== null && _activeTab2 !== void 0 ? _activeTab2 : (0,_tab_elements_js__WEBPACK_IMPORTED_MODULE_0__.tabsInList)(list)[0])];
+    return [index, tabTargetId((_activeTab2 = activeTab(list)) !== null && _activeTab2 !== void 0 ? _activeTab2 : tabsInList(list)[0])];
   }));
-  (0,_tab_state_js__WEBPACK_IMPORTED_MODULE_1__.writeTabState)(state.storage, state.stateKey, selected);
+  writeTabState(state.storage, state.stateKey, selected);
 }
 function activeTab(tabList) {
-  return (0,_tab_elements_js__WEBPACK_IMPORTED_MODULE_0__.tabsInList)(tabList).find(function (tab) {
+  return tabsInList(tabList).find(function (tab) {
     var _tab$parentElement;
     return tab.getAttribute('aria-selected') === 'true' || tab.classList.contains('active') || ((_tab$parentElement = tab.parentElement) === null || _tab$parentElement === void 0 ? void 0 : _tab$parentElement.classList.contains('active'));
   });
@@ -10515,10 +10278,10 @@ function publishChange(events, previousTab, previousPanel, tab, panel) {
   if (previousTab) {
     var _events$fire;
     dispatchTabEvent(previousTab, 'tab:hidden', previousPanel, tab);
-    events === null || events === void 0 || (_events$fire = events.fire) === null || _events$fire === void 0 || _events$fire.call(events, 'bootstrap::tab::hidden', (0,_tab_elements_js__WEBPACK_IMPORTED_MODULE_0__.tabTargetId)(previousTab));
+    events === null || events === void 0 || (_events$fire = events.fire) === null || _events$fire === void 0 || _events$fire.call(events, 'bootstrap::tab::hidden', tabTargetId(previousTab));
   }
   dispatchTabEvent(tab, 'tab:shown', panel, previousTab);
-  events === null || events === void 0 || (_events$fire2 = events.fire) === null || _events$fire2 === void 0 || _events$fire2.call(events, 'bootstrap::tab::shown', (0,_tab_elements_js__WEBPACK_IMPORTED_MODULE_0__.tabTargetId)(tab));
+  events === null || events === void 0 || (_events$fire2 = events.fire) === null || _events$fire2 === void 0 || _events$fire2.call(events, 'bootstrap::tab::shown', tabTargetId(tab));
 }
 function dispatchTabEvent(tab, name, panel, relatedTab) {
   tab.dispatchEvent(new tab.ownerDocument.defaultView.CustomEvent(name, {
@@ -10621,42 +10384,6 @@ function assertAdmin(admin) {
   if (typeof admin.Components.scan !== 'function') {
     throw new TypeError('Tooltips require Admin.Components.scan().');
   }
-}
-
-/***/ },
-
-/***/ "./resources/js/shared/features/tooltip/tooltip-elements.js"
-/*!******************************************************************!*\
-  !*** ./resources/js/shared/features/tooltip/tooltip-elements.js ***!
-  \******************************************************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   TOOLTIP_TRIGGER_SELECTOR: () => (/* binding */ TOOLTIP_TRIGGER_SELECTOR),
-/* harmony export */   findTooltipTrigger: () => (/* binding */ findTooltipTrigger),
-/* harmony export */   tooltipPlacement: () => (/* binding */ tooltipPlacement),
-/* harmony export */   tooltipText: () => (/* binding */ tooltipText)
-/* harmony export */ });
-var TOOLTIP_TRIGGER_SELECTOR = '[data-bs-toggle="tooltip"], [data-toggle="tooltip"]';
-var PLACEMENTS = new Set(['top', 'right', 'bottom', 'left']);
-function findTooltipTrigger(root, target) {
-  var _target$closest;
-  var trigger = target === null || target === void 0 || (_target$closest = target.closest) === null || _target$closest === void 0 ? void 0 : _target$closest.call(target, TOOLTIP_TRIGGER_SELECTOR);
-  return trigger && root.contains(trigger) ? trigger : null;
-}
-function tooltipText(trigger) {
-  var _candidates$find$trim, _candidates$find;
-  var candidates = [trigger.getAttribute('title'), trigger.getAttribute('data-original-title')];
-  return (_candidates$find$trim = (_candidates$find = candidates.find(function (value) {
-    return value === null || value === void 0 ? void 0 : value.trim();
-  })) === null || _candidates$find === void 0 ? void 0 : _candidates$find.trim()) !== null && _candidates$find$trim !== void 0 ? _candidates$find$trim : '';
-}
-function tooltipPlacement(trigger) {
-  var _trigger$getAttribute;
-  var placement = (_trigger$getAttribute = trigger.getAttribute('data-placement')) !== null && _trigger$getAttribute !== void 0 ? _trigger$getAttribute : 'top';
-  return PLACEMENTS.has(placement) ? placement : 'top';
 }
 
 /***/ },
@@ -10788,15 +10515,36 @@ function findContentTarget(tooltip) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   mountTooltips: () => (/* binding */ mountTooltips)
+/* harmony export */   TOOLTIP_TRIGGER_SELECTOR: () => (/* binding */ TOOLTIP_TRIGGER_SELECTOR),
+/* harmony export */   findTooltipTrigger: () => (/* binding */ findTooltipTrigger),
+/* harmony export */   mountTooltips: () => (/* binding */ mountTooltips),
+/* harmony export */   tooltipPlacement: () => (/* binding */ tooltipPlacement),
+/* harmony export */   tooltipText: () => (/* binding */ tooltipText)
 /* harmony export */ });
-/* harmony import */ var _tooltip_elements_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./tooltip-elements.js */ "./resources/js/shared/features/tooltip/tooltip-elements.js");
-/* harmony import */ var _tooltip_position_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./tooltip-position.js */ "./resources/js/shared/features/tooltip/tooltip-position.js");
-/* harmony import */ var _tooltip_template_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./tooltip-template.js */ "./resources/js/shared/features/tooltip/tooltip-template.js");
+/* harmony import */ var _tooltip_position_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./tooltip-position.js */ "./resources/js/shared/features/tooltip/tooltip-position.js");
+/* harmony import */ var _tooltip_template_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./tooltip-template.js */ "./resources/js/shared/features/tooltip/tooltip-template.js");
 
 
-
+var TOOLTIP_TRIGGER_SELECTOR = '[data-bs-toggle="tooltip"], [data-toggle="tooltip"]';
 var ROOT_EVENT_NAMES = ['focusin', 'focusout', 'keydown', 'pointerout', 'pointerover'];
+var PLACEMENTS = new Set(['top', 'right', 'bottom', 'left']);
+function findTooltipTrigger(root, target) {
+  var _target$closest;
+  var trigger = target === null || target === void 0 || (_target$closest = target.closest) === null || _target$closest === void 0 ? void 0 : _target$closest.call(target, TOOLTIP_TRIGGER_SELECTOR);
+  return trigger && root.contains(trigger) ? trigger : null;
+}
+function tooltipText(trigger) {
+  var _candidates$find$trim, _candidates$find;
+  var candidates = [trigger.getAttribute('title'), trigger.getAttribute('data-original-title')];
+  return (_candidates$find$trim = (_candidates$find = candidates.find(function (value) {
+    return value === null || value === void 0 ? void 0 : value.trim();
+  })) === null || _candidates$find === void 0 ? void 0 : _candidates$find.trim()) !== null && _candidates$find$trim !== void 0 ? _candidates$find$trim : '';
+}
+function tooltipPlacement(trigger) {
+  var _trigger$getAttribute;
+  var placement = (_trigger$getAttribute = trigger.getAttribute('data-placement')) !== null && _trigger$getAttribute !== void 0 ? _trigger$getAttribute : 'top';
+  return PLACEMENTS.has(placement) ? placement : 'top';
+}
 function mountTooltips(root) {
   assertRoot(root);
   var state = createState(root);
@@ -10851,15 +10599,15 @@ function bindTooltipListeners(state) {
   return listeners;
 }
 function handlePointerOver(state, event) {
-  var trigger = (0,_tooltip_elements_js__WEBPACK_IMPORTED_MODULE_0__.findTooltipTrigger)(state.root, event.target);
+  var trigger = findTooltipTrigger(state.root, event.target);
   if (trigger && !trigger.contains(event.relatedTarget)) startTooltip(state, trigger, 'pointer');
 }
 function handleFocusOut(state, event) {
-  var trigger = (0,_tooltip_elements_js__WEBPACK_IMPORTED_MODULE_0__.findTooltipTrigger)(state.root, event.target);
+  var trigger = findTooltipTrigger(state.root, event.target);
   if (trigger && !trigger.contains(event.relatedTarget)) stopTooltip(state, trigger, 'focus');
 }
 function handlePointerOut(state, event) {
-  var trigger = (0,_tooltip_elements_js__WEBPACK_IMPORTED_MODULE_0__.findTooltipTrigger)(state.root, event.target);
+  var trigger = findTooltipTrigger(state.root, event.target);
   if (trigger && !trigger.contains(event.relatedTarget)) stopTooltip(state, trigger, 'pointer');
 }
 function handleKeydown(state, event) {
@@ -10871,7 +10619,7 @@ function handleKeydown(state, event) {
 }
 function startTooltip(state, target, reason) {
   var _state$current;
-  var trigger = (0,_tooltip_elements_js__WEBPACK_IMPORTED_MODULE_0__.findTooltipTrigger)(state.root, target);
+  var trigger = findTooltipTrigger(state.root, target);
   if (!trigger || isDisabled(trigger)) return false;
   if (((_state$current = state.current) === null || _state$current === void 0 ? void 0 : _state$current.trigger) === trigger) {
     state.current.reasons.add(reason);
@@ -10881,16 +10629,16 @@ function startTooltip(state, target, reason) {
 }
 function stopTooltip(state, target, reason) {
   var _state$current2;
-  var trigger = (0,_tooltip_elements_js__WEBPACK_IMPORTED_MODULE_0__.findTooltipTrigger)(state.root, target);
+  var trigger = findTooltipTrigger(state.root, target);
   if (!trigger || ((_state$current2 = state.current) === null || _state$current2 === void 0 ? void 0 : _state$current2.trigger) !== trigger) return;
   state.current.reasons["delete"](reason);
   if (state.current.reasons.size === 0) hideTooltip(state);
 }
 function showTooltip(state, trigger, reason) {
-  var content = (0,_tooltip_elements_js__WEBPACK_IMPORTED_MODULE_0__.tooltipText)(trigger);
+  var content = tooltipText(trigger);
   if (!content) return false;
   hideTooltip(state);
-  var tooltip = createTooltip(state, content, (0,_tooltip_elements_js__WEBPACK_IMPORTED_MODULE_0__.tooltipPlacement)(trigger));
+  var tooltip = createTooltip(state, content, tooltipPlacement(trigger));
   var current = createCurrent(trigger, tooltip, reason);
   state.current = current;
   trigger.ownerDocument.body.append(tooltip);
@@ -10900,12 +10648,12 @@ function showTooltip(state, trigger, reason) {
   return true;
 }
 function createTooltip(state, content, placement) {
-  return (0,_tooltip_template_js__WEBPACK_IMPORTED_MODULE_2__.createTooltipElement)(state.root, content, placement, "soa-tooltip-".concat(state.nextId++));
+  return (0,_tooltip_template_js__WEBPACK_IMPORTED_MODULE_1__.createTooltipElement)(state.root, content, placement, "soa-tooltip-".concat(state.nextId++));
 }
 function createCurrent(trigger, tooltip, reason) {
   return {
     describedBy: trigger.getAttribute('aria-describedby'),
-    placement: (0,_tooltip_elements_js__WEBPACK_IMPORTED_MODULE_0__.tooltipPlacement)(trigger),
+    placement: tooltipPlacement(trigger),
     reasons: new Set([reason]),
     title: trigger.hasAttribute('title') ? trigger.getAttribute('title') : null,
     tooltip: tooltip,
@@ -10921,7 +10669,7 @@ function repositionTooltip(state) {
   var current = state.current;
   if (!current) return;
   if (!current.trigger.isConnected) return hideTooltip(state);
-  var position = (0,_tooltip_position_js__WEBPACK_IMPORTED_MODULE_1__.tooltipPosition)(current.trigger.getBoundingClientRect(), current.tooltip.getBoundingClientRect(), current.placement, {
+  var position = (0,_tooltip_position_js__WEBPACK_IMPORTED_MODULE_0__.tooltipPosition)(current.trigger.getBoundingClientRect(), current.tooltip.getBoundingClientRect(), current.placement, {
     height: state.window.innerHeight,
     width: state.window.innerWidth
   });
@@ -10961,8 +10709,8 @@ function scanTooltips(state, container) {
 }
 function matchingTooltipCount(container) {
   var _container$querySelec, _container$querySelec2, _container$matches;
-  var descendants = (_container$querySelec = (_container$querySelec2 = container.querySelectorAll) === null || _container$querySelec2 === void 0 || (_container$querySelec2 = _container$querySelec2.call(container, _tooltip_elements_js__WEBPACK_IMPORTED_MODULE_0__.TOOLTIP_TRIGGER_SELECTOR)) === null || _container$querySelec2 === void 0 ? void 0 : _container$querySelec2.length) !== null && _container$querySelec !== void 0 ? _container$querySelec : 0;
-  return descendants + ((_container$matches = container.matches) !== null && _container$matches !== void 0 && _container$matches.call(container, _tooltip_elements_js__WEBPACK_IMPORTED_MODULE_0__.TOOLTIP_TRIGGER_SELECTOR) ? 1 : 0);
+  var descendants = (_container$querySelec = (_container$querySelec2 = container.querySelectorAll) === null || _container$querySelec2 === void 0 || (_container$querySelec2 = _container$querySelec2.call(container, TOOLTIP_TRIGGER_SELECTOR)) === null || _container$querySelec2 === void 0 ? void 0 : _container$querySelec2.length) !== null && _container$querySelec !== void 0 ? _container$querySelec : 0;
+  return descendants + ((_container$matches = container.matches) !== null && _container$matches !== void 0 && _container$matches.call(container, TOOLTIP_TRIGGER_SELECTOR) ? 1 : 0);
 }
 function isDisabled(trigger) {
   return trigger.hasAttribute('disabled') || trigger.getAttribute('aria-disabled') === 'true';
@@ -11969,7 +11717,7 @@ Admin.Files = installFiles(Admin, {
   \***********************************************************/
 (__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
 
-var _require = __webpack_require__(/*! ../../../features/forms/generation/password-control */ "./resources/js/shared/features/forms/generation/password-control.js"),
+var _require = __webpack_require__(/*! ../../../features/forms/generation */ "./resources/js/shared/features/forms/generation.js"),
   installPasswordControls = _require.installPasswordControls;
 installPasswordControls(Admin);
 
@@ -11981,7 +11729,7 @@ installPasswordControls(Admin);
   \*******************************************************/
 (__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
 
-var _require = __webpack_require__(/*! ../../../features/forms/generation/text-control */ "./resources/js/shared/features/forms/generation/text-control.js"),
+var _require = __webpack_require__(/*! ../../../features/forms/generation */ "./resources/js/shared/features/forms/generation.js"),
   installTextGenerators = _require.installTextGenerators;
 installTextGenerators(Admin);
 
@@ -12975,7 +12723,7 @@ window.ProgressBar = __webpack_require__(/*! progressbar.js */ "./node_modules/p
   \********************************************************/
 (__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
 
-var _require = __webpack_require__(/*! ../../features/forms/wysiwyg/adapters/ckeditor4 */ "./resources/js/shared/features/forms/wysiwyg/adapters/ckeditor4.js"),
+var _require = __webpack_require__(/*! ../../features/forms/wysiwyg/adapters */ "./resources/js/shared/features/forms/wysiwyg/adapters.js"),
   createCkeditor4Adapter = _require.createCkeditor4Adapter;
 var adapter;
 var current = function current() {
@@ -13000,7 +12748,7 @@ Admin.WYSIWYG.register('ckeditor', function () {
   \*********************************************************/
 (__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
 
-var _require = __webpack_require__(/*! ../../features/forms/wysiwyg/adapters/ckeditor5 */ "./resources/js/shared/features/forms/wysiwyg/adapters/ckeditor5.js"),
+var _require = __webpack_require__(/*! ../../features/forms/wysiwyg/adapters */ "./resources/js/shared/features/forms/wysiwyg/adapters.js"),
   createCkeditor5Adapter = _require.createCkeditor5Adapter;
 var adapter;
 var current = function current() {
@@ -13025,7 +12773,7 @@ Admin.WYSIWYG.register('ckeditor5', function () {
   \*********************************************************/
 (__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
 
-var _require = __webpack_require__(/*! ../../features/forms/wysiwyg/adapters/simplemde */ "./resources/js/shared/features/forms/wysiwyg/adapters/simplemde.js"),
+var _require = __webpack_require__(/*! ../../features/forms/wysiwyg/adapters */ "./resources/js/shared/features/forms/wysiwyg/adapters.js"),
   createSimpleMdeAdapter = _require.createSimpleMdeAdapter;
 var adapter;
 var current = function current() {
@@ -13050,7 +12798,7 @@ Admin.WYSIWYG.register('simplemde', function () {
   \*******************************************************/
 (__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
 
-var _require = __webpack_require__(/*! ../../features/forms/wysiwyg/adapters/tinymce */ "./resources/js/shared/features/forms/wysiwyg/adapters/tinymce.js"),
+var _require = __webpack_require__(/*! ../../features/forms/wysiwyg/adapters */ "./resources/js/shared/features/forms/wysiwyg/adapters.js"),
   createTinyMceAdapter = _require.createTinyMceAdapter;
 var adapter;
 var current = function current() {

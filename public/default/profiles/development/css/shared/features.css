@@ -20,14 +20,6 @@
 }
 /* stylelint-disable selector-class-pattern -- Existing file element hooks are public compatibility selectors. */
 /* stylelint-enable selector-class-pattern */
-/* stylelint-disable selector-class-pattern -- Existing file element hooks are public compatibility selectors. */
-/* stylelint-enable selector-class-pattern */
-/* stylelint-disable selector-class-pattern -- Existing file element hooks are public compatibility selectors. */
-/* stylelint-enable selector-class-pattern */
-/* stylelint-disable selector-class-pattern -- Existing file element hooks are public compatibility selectors. */
-/* stylelint-enable selector-class-pattern */
-/* stylelint-disable selector-class-pattern -- Existing file element hooks are public compatibility selectors. */
-/* stylelint-enable selector-class-pattern */
 @layer sleepingowl-feature.forms;
 :root {
   --soa-form-control-text-color: #1f2937;

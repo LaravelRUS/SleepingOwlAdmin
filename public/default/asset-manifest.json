@@ -34,8 +34,8 @@
                     "scripts": [
                         {
                             "file": "profiles/production/js/shared/features.js",
-                            "version": "cd8cc86a5d47f9f0e0d9d466fd1b91d0",
-                            "checksum": "sha256:bf252574147438c754496459aebbf8107c356ff6b3f0e92f99ac8678d8250edc"
+                            "version": "d2eaa4b82b329ff10f1248bd3a5f85a7",
+                            "checksum": "sha256:5b6c5d1c6be79b2433de7290c882e1e58c6ed0082d5716608fa4989135a07594"
                         }
                     ],
                     "styles": [
@@ -97,8 +97,8 @@
                     "styles": [
                         {
                             "file": "profiles/production/css/themes/framework-free-test.css",
-                            "version": "5e7fbeec5aea290dd32b3895c99ea30d",
-                            "checksum": "sha256:b4894d8eb3c2ce2c5e7e676de60b98a0f316e6ad9e33987dd2bd0bbb6077057b"
+                            "version": "550040b54fe1d105506ad681685f367e",
+                            "checksum": "sha256:dda0f3e24cede518351415151f856366b3a5c6b8c16b7df75f759b0e4627d7dd"
                         }
                     ]
                 },
@@ -157,15 +157,15 @@
                     "scripts": [
                         {
                             "file": "profiles/development/js/shared/features.js",
-                            "version": "c3f400f93390e95fea7554a25741a10e",
-                            "checksum": "sha256:57565fc169c5769dbb904e697043d125bbc9a6469df0075331cec7429412ca20"
+                            "version": "a16708e36c6e82ab47e5417e54a5ddf0",
+                            "checksum": "sha256:3b15ba0f99503dbf06d9c48cfacc6f3a3459f2c6b7233befdf6190017c75c8b3"
                         }
                     ],
                     "styles": [
                         {
                             "file": "profiles/development/css/shared/features.css",
-                            "version": "7ecdbfb7eb4650d90effe3a5871583fb",
-                            "checksum": "sha256:f495b060ecf3f4249909a8a60b692176c8d782b22d199b89961bd2e9b8ca9cd3"
+                            "version": "b19ce9d56375bd49c62fb0e5aab26621",
+                            "checksum": "sha256:1c526cbf2fb6683ed892651c28177a9504c4838906b14533fa3822e5e0f0925c"
                         }
                     ]
                 },
@@ -220,8 +220,8 @@
                     "styles": [
                         {
                             "file": "profiles/development/css/themes/framework-free-test.css",
-                            "version": "e97c594c570d0d5a5d8add1c8e438d28",
-                            "checksum": "sha256:85fdb9bb86110203a8cf995c83299a2a9f19652fc3c2c4c8e76118847a4c8a4b"
+                            "version": "cabdca0d68feab7e7e12856c575b2975",
+                            "checksum": "sha256:3e34a87e2fef149a19d14209a6a546e77c91d9c3857436db70674dd12233cc75"
                         }
                     ]
                 },
@@ -249,5 +249,5 @@
             }
         }
     },
-    "build_id": "sha256:50bb3aac19eb721d26d02571c0fee76623200c5f594d8c480be2d6327b64dd1a"
+    "build_id": "sha256:4a9d08caa3f36504ceb3d7ba03664bb3822c81de0eb3e508bc5231bc7288ebee"
 }

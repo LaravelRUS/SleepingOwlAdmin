@@ -1,14 +1,14 @@
 {
     "/js/vue.js": "/js/vue.js?id=14921ed14762d053bc44981b62eee382",
     "/js/vue-dev.js": "/js/vue-dev.js?id=494817259b29f4f42b0896c383987aa8",
-    "/js/admin-app.js": "/js/admin-app.js?id=473c1f42af58e7430c6a81c443f27dd6",
-    "/js/admin-app-dev.js": "/js/admin-app-dev.js?id=23dd2a9de592ec52c51ae10188bed3fa",
+    "/js/admin-app.js": "/js/admin-app.js?id=e093443018b433a347e755192e8ffe15",
+    "/js/admin-app-dev.js": "/js/admin-app-dev.js?id=773d63ee4009130480c4a8d91a407dd2",
     "/js/modules.js": "/js/modules.js?id=4ee4c59b2bce0af5059c6f4046845a9f",
     "/js/admin-core.js": "/js/admin-core.js?id=4b738c30e9b7da7a08fbd95f872b1b66",
     "/js/shared/compatibility.js": "/js/shared/compatibility.js?id=ad25c97ad48ffdfdb8f184941ffebfa0",
     "/js/shared/modules.js": "/js/shared/modules.js?id=8e6abcb6c9baa1f71b0de0096471f82a",
     "/js/shared/vue.js": "/js/shared/vue.js?id=1e207627bb516f12aa74eb15af716869",
-    "/js/shared/features.js": "/js/shared/features.js?id=cd8cc86a5d47f9f0e0d9d466fd1b91d0",
+    "/js/shared/features.js": "/js/shared/features.js?id=d2eaa4b82b329ff10f1248bd3a5f85a7",
     "/js/themes/adminlte.js": "/js/themes/adminlte.js?id=c03d04d7753cf62673c405f5af66673b",
     "/js/themes/shadcn.js": "/js/themes/shadcn.js?id=ce576db38446e81f1cc96f32f0f91c1e",
     "/css/admin-app.css": "/css/admin-app.css?id=d2e9d936ec621257039e4552aa65388c",
@@ -23,6 +23,6 @@
     "/css/admin-core.css": "/css/admin-core.css?id=e62a4a0c1b32afad6ab1f5ff2b1e9a06",
     "/css/themes/shadcn-utilities.css": "/css/themes/shadcn-utilities.css?id=2e22cccbfeef9f517fe798e203842034",
     "/css/themes/shadcn.css": "/css/themes/shadcn.css?id=9312b832ad0e346011f595f5b868c1d0",
-    "/css/themes/framework-free-test.css": "/css/themes/framework-free-test.css?id=5e7fbeec5aea290dd32b3895c99ea30d",
+    "/css/themes/framework-free-test.css": "/css/themes/framework-free-test.css?id=550040b54fe1d105506ad681685f367e",
     "/css/themes/adminlte.css": "/css/themes/adminlte.css?id=374eaceb0198a52ee123318cad0b71f8"
 }
