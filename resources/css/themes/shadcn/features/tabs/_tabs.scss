@@ -1,3 +1,31 @@
+$tab-gap: 0.25rem !default;
+$tab-padding-block: 0.5rem !default;
+$tab-padding-inline: 0.875rem !default;
+$tab-border-width: 1px !default;
+$tab-radius: 0.5rem !default;
+$tab-focus-width: 0.125rem !default;
+$tab-text: var(--soa-muted-text-color) !default;
+$tab-active-text: var(--soa-primary-color) !default;
+$tab-active-surface: var(--soa-accent-surface-color) !default;
+$tab-border: var(--soa-border-color) !default;
+$tab-focus: var(--soa-focus-color) !default;
+
+@mixin properties {
+    :root {
+        --soa-tabs-text: #{$tab-text};
+        --soa-tabs-active-text: #{$tab-active-text};
+        --soa-tabs-active-surface: #{$tab-active-surface};
+        --soa-tabs-border: #{$tab-border};
+        --soa-tabs-focus: #{$tab-focus};
+        --soa-tabs-gap: #{$tab-gap};
+        --soa-tabs-padding-block: #{$tab-padding-block};
+        --soa-tabs-padding-inline: #{$tab-padding-inline};
+        --soa-tabs-border-width: #{$tab-border-width};
+        --soa-tabs-radius: #{$tab-radius};
+        --soa-tabs-focus-width: #{$tab-focus-width};
+    }
+}
+
 @mixin styles {
     [data-tablist],
     [role='tablist'] {

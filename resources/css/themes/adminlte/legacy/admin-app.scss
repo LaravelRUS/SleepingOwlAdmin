@@ -8,7 +8,7 @@
 @use '../../../shared/features/sidebar/custom-properties' as sidebar-properties;
 @use '../../../shared/features/sidebar/sidebar' as sidebar-driver;
 @use '../features/sidebar/legacy' as legacy-sidebar;
-@use '../features/tabs/legacy' as legacy-tabs;
+@use '../features/tabs/tabs' as legacy-tabs;
 @use '../features/table/legacy' as legacy-datatables;
 @use '../../../shared/features/tooltip/tooltip' as tooltip-driver;
 @use '../features/tooltip/tooltip' as legacy-tooltip;
@@ -26,6 +26,7 @@
 @include sidebar-properties.define;
 @include sidebar-driver.styles;
 @include legacy-sidebar.styles;
+@include legacy-tabs.properties;
 @include legacy-tabs.styles;
 @include legacy-datatables.styles;
 @include tooltip-driver.properties;

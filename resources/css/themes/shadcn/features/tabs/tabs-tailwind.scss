@@ -1,8 +1,5 @@
-@use 'colors';
-@use 'custom-properties';
 @use 'tabs';
-@use 'variables';
-@include custom-properties.define;
+@include tabs.properties;
 
 @layer sleepingowl-theme.tabs {
     @include tabs.styles;

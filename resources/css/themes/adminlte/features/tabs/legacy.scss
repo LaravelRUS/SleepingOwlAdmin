@@ -1,7 +1,0 @@
-@use 'custom-properties';
-@use 'tabs';
-
-@mixin styles {
-    @include custom-properties.define;
-    @include tabs.styles;
-}

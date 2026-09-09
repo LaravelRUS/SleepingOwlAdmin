@@ -1,9 +1,6 @@
-@use 'colors';
-@use 'custom-properties';
-@use 'presentation';
-@use 'variables';
-@include custom-properties.define;
+@use 'tabs';
+@include tabs.properties;
 
 @layer sleepingowl-theme.tabs {
-  @include presentation.styles;
+  @include tabs.styles;
 }
