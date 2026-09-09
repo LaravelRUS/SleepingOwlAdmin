@@ -1,11 +1,11 @@
 @php
     $selectAttributes = (new \SleepingOwl\Admin\Support\HtmlAttributeBag($selectAttributesArray))
-        ->class(['form-control'])
+        ->class(['form-control', 'soa-select'])
         ->getAttributes();
     $selectProps = array_replace([
         'attributes' => $selectAttributes,
         'classes' => [
-            'required' => 'text-danger pt-2 pb-3',
+            'required' => 'text-danger pt-2 pb-3 soa-field-error',
         ],
         'labels' => [
             'deselect' => trans('sleeping_owl::lang.select.deselect'),

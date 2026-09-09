@@ -1,15 +1,15 @@
 @if ($visibled)
-    <div class="form-group form-element-text mb-3 {{ $errors->has($name) ? 'has-error' : '' }}">
-        <label for="{{ $name }}" class="form-label control-label {{ $required ? 'required' : '' }}">
+    <div class="form-group soa-field form-element-text mb-3 {{ $errors->has($name) ? 'has-error' : '' }}">
+        <label for="{{ $name }}" class="form-label control-label soa-label {{ $required ? 'required' : '' }}">
             {!! $label !!}
 
             @if($required)
-                <span class="form-element-required">*</span>
+                <span class="form-element-required soa-required">*</span>
             @endif
         </label>
 
-        <div class="position-relative">
-            <input v-pre {!! (new \SleepingOwl\Admin\Support\HtmlAttributeBag($attributesArray))->class(['form-control']) !!} value="{{$value}}"
+        <div class="position-relative soa-input-wrap">
+            <input v-pre {!! (new \SleepingOwl\Admin\Support\HtmlAttributeBag($attributesArray))->class(['form-control', 'soa-input']) !!} value="{{$value}}"
                    @if($readonly) readonly @endif
                    @if($canGenerate)
                         data-generate-length="{{ $generateLength }}"
@@ -18,8 +18,8 @@
             >
 
             @if($canGenerate && !$readonly)
-                <div class="control-button {{ isset($datalistOptions) && $datalistOptions ? 'pe-4' : '' }}">
-                    <span class="btn btn-sm text-muted generate">
+                <div class="control-button soa-input-actions {{ isset($datalistOptions) && $datalistOptions ? 'pe-4' : '' }}">
+                    <span class="btn btn-sm text-muted generate soa-icon-button">
                         <i class="fa-solid fa-plus"></i>
                     </span>
                 </div>

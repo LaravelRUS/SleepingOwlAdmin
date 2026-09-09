@@ -2,7 +2,7 @@
     @php
         $checkboxAttributes = (new \SleepingOwl\Admin\Support\HtmlAttributeBag($attributesArray ?? []))
             ->merge(['type' => 'checkbox', 'value' => 1])
-            ->class(['form-check-input']);
+            ->class(['form-check-input', 'soa-choice-control']);
 
         if ($readonly) {
             $checkboxAttributes = $checkboxAttributes->except('disabled')->merge(['disabled' => true]);
@@ -11,13 +11,13 @@
             $checkboxAttributes = $checkboxAttributes->except('checked')->merge(['checked' => true]);
         }
     @endphp
-    <div class="form-group form-element-checkbox mb-3 {{ $class ? ' ' . $class : '' }} {{ $errors->has($name) ? 'has-error' : '' }}"{!! $style ? ' style="' . $style . '"' : '' !!}>
-        <div class="form-check">
+    <div class="form-group soa-field form-element-checkbox mb-3 {{ $class ? ' ' . $class : '' }} {{ $errors->has($name) ? 'has-error' : '' }}"{!! $style ? ' style="' . $style . '"' : '' !!}>
+        <div class="form-check soa-choice">
             <input {!! $checkboxAttributes !!} />
-            <label class="form-check-label {{ $required ? 'required' : '' }}" for="{{ $checkboxAttributes->get('id') }}">
+            <label class="form-check-label soa-choice-label {{ $required ? 'required' : '' }}" for="{{ $checkboxAttributes->get('id') }}">
                 {!! $label !!}
                 @if($required)
-                    <span class="form-element-required">*</span>
+                    <span class="form-element-required soa-required">*</span>
                 @endif
             </label>
 

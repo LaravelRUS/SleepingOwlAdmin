@@ -1,13 +1,13 @@
 @if ($visibled)
-    <div class="form-group form-element-number mb-3 {{ $errors->has($name) ? 'has-error' : '' }}">
-        <label for="{{ $name }}" class="form-label control-label {{ $required ? 'required' : '' }}">
+    <div class="form-group soa-field form-element-number mb-3 {{ $errors->has($name) ? 'has-error' : '' }}">
+        <label for="{{ $name }}" class="form-label control-label soa-label {{ $required ? 'required' : '' }}">
             {!! $label !!}
 
             @if($required)
-                <span class="form-element-required">*</span>
+                <span class="form-element-required soa-required">*</span>
             @endif
         </label>
-        <input v-pre {!! (new \SleepingOwl\Admin\Support\HtmlAttributeBag($attributesArray))->class(['form-control']) !!}
+        <input v-pre {!! (new \SleepingOwl\Admin\Support\HtmlAttributeBag($attributesArray))->class(['form-control', 'soa-input']) !!}
                value="{{ $value }}"
                @if($readonly) readonly @endif
         >

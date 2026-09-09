@@ -7,7 +7,7 @@
         @foreach($val as $section)
             @section(implode('.', [$key, $section]))
                 <div {!! $buttonGroupAttributes !!}>
-                    <div class="btn-group" role="group">
+                    <div class="btn-group soa-button-group" role="group">
                         @foreach($buttons as $button)
                             @if($button instanceof \SleepingOwl\Admin\Form\Buttons\FormButton && $button->canShow())
                                 {!! $button->render() !!}
@@ -20,7 +20,7 @@
     @endforeach
 
 <div {!! $buttonGroupAttributes !!}>
-    <div class="btn-group" role="group">
+    <div class="btn-group soa-button-group" role="group">
         @foreach($buttons as $button)
             @if($button instanceof \SleepingOwl\Admin\Form\Buttons\FormButton && $button->canShow())
                 {!! $button->render() !!}
@@ -31,7 +31,7 @@
 
 @else
     <div {!! $buttonGroupAttributes !!}>
-        <div class="btn-group" role="group">
+        <div class="btn-group soa-button-group" role="group">
             @foreach($buttons as $button)
                 @if($button instanceof \SleepingOwl\Admin\Form\Buttons\FormButton && $button->canShow())
                     {!! $button->render() !!}

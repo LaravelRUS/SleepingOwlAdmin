@@ -1,1 +1,1 @@
-@include(AdminTemplate::getViewPath('form.card.element'), ['themeClasses' => ['card-body']])
+@include(AdminTemplate::getViewPath('form.card.element'), ['themeClasses' => ['card-body', 'soa-card-body']])

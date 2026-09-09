@@ -1,16 +1,16 @@
 @if ($visibled)
-    <div class="form-group form-element-radio mb-3 {{ $errors->has($name) ? 'has-error' : '' }}">
-        <label for="{{ $name }}" class="form-label control-label {{ $required ? 'required' : '' }}">
+    <div class="form-group soa-field form-element-radio mb-3 {{ $errors->has($name) ? 'has-error' : '' }}">
+        <label for="{{ $name }}" class="form-label control-label soa-label {{ $required ? 'required' : '' }}">
             {!! $label !!}
 
             @if($required)
-                <span class="form-element-required">*</span>
+                <span class="form-element-required soa-required">*</span>
             @endif
         </label>
 
         @foreach ($options as $option)
-            <div class="form-check">
-                <label class="form-check-label">
+            <div class="form-check soa-choice">
+                <label class="form-check-label soa-choice-label">
                     @php
                         $radioAttributes = (new \SleepingOwl\Admin\Support\HtmlAttributeBag($attributesArray ?? []))
                             ->merge([
@@ -18,7 +18,7 @@
                                 'name' => $name,
                                 'value' => $option['id'],
                             ])
-                            ->class(['form-check-input']);
+                            ->class(['form-check-input', 'soa-choice-control']);
                     @endphp
                     <input {!! $radioAttributes !!} />
                     {!! $option['text'] !!}

@@ -272,7 +272,8 @@ class TailwindThemeFormTest extends TestCase
         $this->assertSame('form-control soa-select project-select', $selectProps['attributes']['class']);
         $this->assertSame('status', $selectProps['attributes']['name']);
         $this->assertTrue($selectProps['required']);
-        $this->assertSame('soa-field-error', $selectProps['classes']['required']);
+        $this->assertStringContainsString('text-danger', $selectProps['classes']['required']);
+        $this->assertStringContainsString('soa-field-error', $selectProps['classes']['required']);
         $this->assertStringContainsString('soa-attachment-list', $fileProps['classes']['current']);
         $this->assertStringContainsString('soa-button-primary', $fileProps['classes']['uploadButton']);
         $this->assertStringContainsString('soa-attachment-preview', $imageProps['classes']['previewLink']);
