@@ -445,7 +445,13 @@ trait InteractsWithEditableColumn
             'required' => $this->isRequired(),
             'text' => $this->getModifierValue(),
             'editorType' => $this->editorType,
+            'editorControlType' => $this->getEditorControlType(),
         ];
+    }
+
+    protected function getEditorControlType(): string
+    {
+        return $this->editorType;
     }
 
     protected function persistInlineFormValue(

@@ -68,7 +68,7 @@ class TailwindThemeFormTest extends TestCase
             $views[] = $logical;
         }
 
-        $this->assertCount(46, $views);
+        $this->assertCount(40, $views);
     }
 
     public function test_native_controls_keep_names_states_user_attributes_and_date_hooks(): void

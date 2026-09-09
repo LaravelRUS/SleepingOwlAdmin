@@ -153,7 +153,7 @@ class LegacyThemePresentationTest extends TestCase
         ]);
     }
 
-    public function test_card_button_partial_keeps_a_single_themed_attribute_wrapper(): void
+    public function test_card_buttons_render_without_an_extra_blade_wrapper(): void
     {
         $buttons = view('sleeping_owl::default.form.buttons', [
             'attributesArray' => [
@@ -165,7 +165,7 @@ class LegacyThemePresentationTest extends TestCase
             'themeClasses' => ['card-footer'],
         ]);
 
-        $html = view('sleeping_owl::default.form.card.buttons', compact('buttons'))->render();
+        $html = $buttons->render();
 
         $this->assertContainsAll($html, [
             '<div class="card-footer form-buttons user-buttons"',

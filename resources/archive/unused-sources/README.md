@@ -29,5 +29,8 @@ Archived during the resource-layout migration:
 - nine inline-editor type adapters that only configured the existing editor
   host. Type data now comes from the editable column classes; the genuinely
   different control partials and checklist composition remain active.
+- an empty daterange form placeholder, the raw-output card-buttons wrapper and
+  the boolean control alias. Their active owners now render directly or select
+  the shared control through data.
 
 Nothing under `resources/archive` may be imported or compiled.

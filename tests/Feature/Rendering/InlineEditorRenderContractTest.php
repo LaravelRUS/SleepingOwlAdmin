@@ -199,6 +199,7 @@ class InlineEditorRenderContractTest extends TestCase
 
         if (in_array($type, ['boolean', 'checkbox'], true)) {
             return $presentation + [
+                'editorControlType' => $type === 'boolean' ? 'checklist' : 'checkbox',
                 'editorDisplayHtml' => true,
                 'editorEmptyText' => '<i>None</i>',
                 'editorOptions' => [['value' => 1, 'text' => 'Yes']],

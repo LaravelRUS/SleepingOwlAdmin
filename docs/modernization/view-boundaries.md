@@ -18,7 +18,7 @@
 `sleeping_owl_shadcn::default.*` keeps its separate application namespace.
 Laravel registers ordered package hints for it: `themes/shadcn`, then the
 package root. A missing Shadcn file therefore inherits the base implementation
-without a bridge or runtime existence check. The current tree contains 106
+without a bridge or runtime existence check. The current tree contains 103
 base logical views and one real Shadcn shell override. The earlier 27 component
 prototypes are archived because all useful `soa-*` hooks now live directly in
 the shared base markup and no runtime view references them.
@@ -103,7 +103,7 @@ The current compatibility implementation is explicitly identified as `adminlte` 
 
 Shadcn keeps `sleeping_owl_shadcn::default`, stores only the structurally
 different `_layout/inner` shell in `resources/views/themes/shadcn/default` and
-inherits the other 105 presentation views from the same base. External namespaces
+inherits the other 102 presentation views from the same base. External namespaces
 remain isolated unless their own provider explicitly
 registers a fallback. The physical view move does not change logical view names,
 template config, published override priority or public asset URLs. The stable

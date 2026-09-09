@@ -31,5 +31,5 @@
         </div>
     </div>
 
-    @include(AdminTemplate::getViewPath('form.card.buttons'), ['buttons' => $buttons])
+    {!! $buttons !!}
 </form>

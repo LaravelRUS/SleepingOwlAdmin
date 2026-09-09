@@ -6,6 +6,11 @@ class Boolean extends Checkbox
 {
     protected $editorType = 'boolean';
 
+    protected function getEditorControlType(): string
+    {
+        return 'checklist';
+    }
+
     public function getCheckedLabel()
     {
         return $this->checkedLabel ?? "<i class='fas fa-check'></i>";

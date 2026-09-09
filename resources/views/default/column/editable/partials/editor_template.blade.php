@@ -17,7 +17,7 @@
                 <div class="soa-inline-editor-title" id="{{ $editorTitleId }}">{!! $editorTitle !!}</div>
             @endif
             <div class="soa-inline-editor-input">
-                @include(AdminTemplate::getViewPath('column.editable.partials.controls.'.$editorType))
+                    @include(AdminTemplate::getViewPath('column.editable.partials.controls.'.($editorControlType ?? $editorType)))
                 @if($editorCanClear && !in_array($editorType, ['checklist', 'range', 'select'], true))
                     <button class="soa-inline-editor-clear soa-icon-button"
                             data-inline-editor-clear
