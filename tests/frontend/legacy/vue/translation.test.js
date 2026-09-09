@@ -1,19 +1,20 @@
-import { createApp } from 'vue'
+import { createApp, inject } from 'vue'
 import { describe, expect, it, vi } from 'vitest'
 
 import {
     createVueTranslation,
     installVueTranslation,
+    requireVueTranslation,
+    vueTranslationKey,
 } from '../../../../resources/js/shared/vue/legacy/translation'
-import { useTranslation } from '../../../../resources/js/shared/vue/legacy/use-translation'
 
 describe('Vue translation injection', () => {
-    it('provides a frozen app-local translator to the composable', () => {
+    it('provides a frozen app-local translator to Vue consumers', () => {
         const translate = vi.fn((key, replacements) => `${key}:${replacements.name}`)
         const translation = createVueTranslation(translate)
         const app = installVueTranslation(createApp({}), translation)
 
-        expect(app.runWithContext(useTranslation)).toBe(translation)
+        expect(useInApp(app)).toBe(translation)
         expect(useInApp(app).trans('welcome', { name: 'Ada' })).toBe('welcome:Ada')
         expect(translate).toHaveBeenCalledWith('welcome', { name: 'Ada' })
         expect(Object.isFrozen(translation)).toBe(true)
@@ -43,5 +44,5 @@ describe('Vue translation injection', () => {
 })
 
 function useInApp(app) {
-    return app.runWithContext(useTranslation)
+    return app.runWithContext(() => requireVueTranslation(inject(vueTranslationKey, null)))
 }
