@@ -9,7 +9,7 @@ class Index extends NamedColumn
     /**
      * @var string
      */
-    protected $view = 'column.custom';
+    protected $view = 'column.value';
 
     /**
      * @var string

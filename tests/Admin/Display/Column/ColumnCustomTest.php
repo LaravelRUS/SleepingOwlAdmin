@@ -17,7 +17,7 @@ class ColumnCustomTest extends TestCase
     {
         $column = $this->getColumn();
 
-        $this->assertEquals('column.custom', $column->getView());
+        $this->assertEquals('column.value', $column->getView());
     }
 
     public function test_gets_or_sets_callback()
@@ -62,5 +62,6 @@ class ColumnCustomTest extends TestCase
         });
 
         $this->assertTrue(array_key_exists('value', $column->toArray()));
+        $this->assertFalse($column->toArray()['escapeValue']);
     }
 }

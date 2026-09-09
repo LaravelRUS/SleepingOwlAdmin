@@ -18,7 +18,7 @@ class ColumnCountTest extends TestCase
     {
         $column = $this->getColumn();
 
-        $this->assertEquals('column.count', $column->getView());
+        $this->assertEquals('column.value', $column->getView());
     }
 
     public function test_gets_model_value_string()
@@ -59,5 +59,6 @@ class ColumnCountTest extends TestCase
         $model->shouldReceive('getAttribute')->andReturn('string');
 
         $this->assertTrue(array_key_exists('value', $column->toArray()));
+        $this->assertTrue($column->toArray()['escapeValue']);
     }
 }

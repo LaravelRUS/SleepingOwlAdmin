@@ -27,7 +27,7 @@ class DateTime extends NamedColumn
     /**
      * @var string
      */
-    protected $view = 'column.datetime';
+    protected $view = 'column.value';
 
     /**
      * @param  Model  $model
@@ -51,6 +51,7 @@ class DateTime extends NamedColumn
         return parent::toArray() + [
             'value' => $this->getFormatedDate($value),
             'originalValue' => $value,
+            'escapeValue' => true,
         ];
     }
 

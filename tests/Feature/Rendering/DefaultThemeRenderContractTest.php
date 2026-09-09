@@ -180,7 +180,7 @@ class DefaultThemeRenderContractTest extends TestCase
 
     public function test_simple_column_keeps_arbitrary_and_boolean_attributes(): void
     {
-        $html = view('sleeping_owl::default.column.text', [
+        $html = view('sleeping_owl::default.column.value', [
             'append' => null,
             'attributesArray' => [
                 'class' => 'project-column',
@@ -190,8 +190,9 @@ class DefaultThemeRenderContractTest extends TestCase
                 'hidden' => 'hidden',
             ],
             'small' => null,
-            'value' => 'Sales',
+            'value' => '<strong>Sales</strong>',
             'visibled' => true,
+            'escapeValue' => false,
         ])->render();
 
         $this->assertContainsAll($html, [
@@ -200,8 +201,19 @@ class DefaultThemeRenderContractTest extends TestCase
             'aria-describedby="sales-help"',
             'style="--project-accent: #123456"',
             'hidden="hidden"',
-            'Sales',
+            '<strong>Sales</strong>',
         ]);
+
+        $escaped = view('sleeping_owl::default.column.value', [
+            'append' => null,
+            'attributesArray' => [],
+            'small' => null,
+            'value' => '<strong>Sales</strong>',
+            'visibled' => true,
+            'escapeValue' => true,
+        ])->render();
+
+        $this->assertStringContainsString('&lt;strong&gt;Sales&lt;/strong&gt;', $escaped);
     }
 
     public function test_native_filter_select_keeps_groups_and_a_zero_selection_in_both_themes(): void

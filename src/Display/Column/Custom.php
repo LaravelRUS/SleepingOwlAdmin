@@ -17,7 +17,7 @@ class Custom extends NamedColumn
     /**
      * @var string
      */
-    protected $view = 'column.custom';
+    protected $view = 'column.value';
 
     /**
      * @var bool
@@ -94,6 +94,7 @@ class Custom extends NamedColumn
     {
         return parent::toArray() + [
             'value' => $this->getModelValue(),
+            'escapeValue' => false,
         ];
     }
 }

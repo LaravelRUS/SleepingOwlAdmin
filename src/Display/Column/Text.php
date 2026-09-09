@@ -9,7 +9,7 @@ class Text extends NamedColumn
     /**
      * @var string
      */
-    protected $view = 'column.text';
+    protected $view = 'column.value';
 
     /**
      * @var Closure|mixed
@@ -51,6 +51,7 @@ class Text extends NamedColumn
 
         return parent::toArray() + [
             'value' => $model_value,
+            'escapeValue' => false,
         ];
     }
 }

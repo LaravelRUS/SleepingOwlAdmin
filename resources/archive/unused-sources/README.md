@@ -24,5 +24,7 @@ Archived during the resource-layout migration:
   variant classes and render one control or card-part Blade implementation.
 - four nearly identical message views, replaced by one message template whose
   widget supplies alert classes, icon, role and session key.
+- four duplicate scalar column views, replaced by one value template with an
+  explicit escaped/raw value contract supplied by the column class.
 
 Nothing under `resources/archive` may be imported or compiled.

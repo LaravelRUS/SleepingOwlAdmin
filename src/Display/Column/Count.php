@@ -9,7 +9,7 @@ class Count extends NamedColumn
     /**
      * @var string
      */
-    protected $view = 'column.count';
+    protected $view = 'column.value';
 
     /**
      * @var bool
@@ -42,6 +42,7 @@ class Count extends NamedColumn
     {
         return parent::toArray() + [
             'value' => $this->getModelValue(),
+            'escapeValue' => true,
         ];
     }
 }
