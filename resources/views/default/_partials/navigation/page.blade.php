@@ -1,5 +1,5 @@
 @php
-  $linkClasses = ['nav-link'];
+  $linkClasses = ['nav-link', 'soa-nav-link'];
   $activeClass = config('navigation.class.active', 'active');
   $hasChildClass = config('navigation.class.has_child', 'has-child');
   $treeviewClass = config('navigation.class.has_child', 'treeview');
@@ -16,8 +16,14 @@
 
   $linkAttributes = (new \SleepingOwl\Admin\Support\HtmlAttributeBag($attributesArray ?? []))->class($linkClasses);
   $plainTitle = strip_tags($title);
-  if (strlen($plainTitle) > 15 && !$linkAttributes->has('title')) {
+  if ($plainTitle !== '' && !$linkAttributes->has('title')) {
     $linkAttributes = $linkAttributes->merge(['title' => $plainTitle]);
+  }
+  if ($hasChild) {
+    $linkAttributes = $linkAttributes->merge([
+      'aria-expanded' => $isActive ? 'true' : 'false',
+      'aria-haspopup' => 'true',
+    ]);
   }
 @endphp
 
@@ -26,21 +32,23 @@
     <a href="#" {!! $linkAttributes !!}>
       {!! $icon !!}
       <p>
-        {!! $title !!}
-        <span class="nav-badge sidebar-page-badges">
-          @if($badges->count() > 0)
-            <span class="sidebar-page-badges">
-              @foreach($badges as $badge)
-                {!! $badge->render() !!}
-              @endforeach
-            </span>
-          @endif
-        </span>
-        <i class="nav-arrow fas fa-angle-right"></i>
+        <span class="soa-nav-title">{!! $title !!}</span>
+        @if($badges->count() > 0)
+          <span class="nav-badge sidebar-page-badges">
+            @foreach($badges as $badge)
+              {!! $badge->render() !!}
+            @endforeach
+          </span>
+        @endif
+        <i class="nav-arrow fas fa-angle-right" aria-hidden="true"></i>
       </p>
     </a>
 
+    @if($isActive)
     <ul class="nav nav-treeview">
+    @else
+    <ul class="nav nav-treeview" hidden>
+    @endif
       @foreach($pages as $page)
         {!! $page->render() !!}
       @endforeach
@@ -51,7 +59,7 @@
     <a href="{{ $url }}" {!! $linkAttributes !!}>
       {!! $icon !!}
       <p>
-        {!! $title !!}
+        <span class="soa-nav-title">{!! $title !!}</span>
         @if($badges->count() > 0)
           <span class="nav-badge sidebar-page-badges">
               @foreach($badges as $badge)

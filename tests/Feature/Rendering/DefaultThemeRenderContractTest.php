@@ -90,9 +90,11 @@ class DefaultThemeRenderContractTest extends TestCase
 
         $this->assertContainsAll($html, [
             '<li class="nav-item menu-open">',
-            'class="nav-link active has-child user-parent"',
+            'class="nav-link soa-nav-link active has-child user-parent"',
             'data-contract="parent"',
             'aria-label="Catalog"',
+            'aria-expanded="true"',
+            'aria-haspopup="true"',
             'title="Catalog management screen"',
             '<span class="badge">7</span>',
             '<ul class="nav nav-treeview">',
@@ -119,7 +121,7 @@ class DefaultThemeRenderContractTest extends TestCase
         $this->assertContainsAll($html, [
             '<li class="nav-item">',
             'href="/admin/orders"',
-            'class="nav-link active user-attribute"',
+            'class="nav-link soa-nav-link active user-attribute"',
             'data-contract="leaf"',
             '<p>',
             'Orders',

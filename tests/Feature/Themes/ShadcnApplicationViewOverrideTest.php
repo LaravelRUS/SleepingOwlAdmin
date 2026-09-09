@@ -20,6 +20,8 @@ class ShadcnApplicationViewOverrideTest extends TestCase
         $fixtureRoot = realpath(__DIR__.'/../../Fixtures/application-views');
         $themeRoot = realpath(__DIR__.'/../../../resources/views/themes/shadcn');
         $baseRoot = realpath(__DIR__.'/../../../resources/views');
+        $packageFinder = clone $finder;
+        $packageFinder->replaceNamespace('sleeping_owl_shadcn', [$themeRoot, $baseRoot]);
 
         $this->assertSame(
             $fixtureRoot.DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.
@@ -29,8 +31,8 @@ class ShadcnApplicationViewOverrideTest extends TestCase
         );
         $this->assertSame(
             $themeRoot.DIRECTORY_SEPARATOR.'default'.DIRECTORY_SEPARATOR.
-                '_partials'.DIRECTORY_SEPARATOR.'navigation'.DIRECTORY_SEPARATOR.'page.blade.php',
-            realpath($finder->find('sleeping_owl_shadcn::default._partials.navigation.page'))
+                '_layout'.DIRECTORY_SEPARATOR.'inner.blade.php',
+            realpath($packageFinder->find('sleeping_owl_shadcn::default._layout.inner'))
         );
         $this->assertSame(
             $baseRoot.DIRECTORY_SEPARATOR.'default'.DIRECTORY_SEPARATOR.
