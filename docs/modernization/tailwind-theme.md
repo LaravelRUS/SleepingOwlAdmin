@@ -89,8 +89,8 @@ so the ledger rail and the data, not a display typeface, carry identity.
 | Layer | Owner | Rule |
 | --- | --- | --- |
 | Color literals | `_colors.scss` | light/dark palette and overlay/shadow color only |
-| Type, spacing, radius, geometry, motion | `_variables.scss` | build-time defaults with `!default` |
-| Public runtime contract | `_custom-properties.scss` | canonical `--soa-*` values and dark overrides |
+| Type, spacing, radius, geometry, motion | `_tokens.scss` | build-time defaults with `!default` |
+| Public runtime contract | `_tokens.scss` | canonical `--soa-*` values and dark overrides |
 | shadcn/Tailwind bridge | `_shadcn-theme.scss` | aliases `--color-*`, font, radius and shadow roles to `--soa-*`; no independent values |
 | Components/features | theme and feature SCSS | consume semantic variables; may not define palette literals |
 

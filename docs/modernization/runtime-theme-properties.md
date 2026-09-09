@@ -24,7 +24,7 @@ Sass variables remain the source-build defaults and fallbacks. A component consu
 | table feature | `--soa-table-*` | table source owner in `shared:features` |
 | theme layout | `--soa-sidebar-bg`, `--soa-sidebar-*`, `--soa-content-padding`, `--soa-border-radius`, `--soa-layout-transition-duration` | selected theme |
 
-The complete executable list is emitted by the `_custom-properties.scss` module beside each Sass entrypoint. New public properties must use the same prefix and remain owned by exactly one core/feature/theme layer.
+The complete executable list is emitted by the owner's `_tokens.scss`, or directly by a single-file feature adapter when no second token consumer exists. New public properties must use the same prefix and remain owned by exactly one core/feature/theme layer.
 
 The current AdminLTE/core/feature list and application CSS examples are maintained in [`theme-customization.md`](theme-customization.md). That list is covered by a source-to-documentation contract test.
 

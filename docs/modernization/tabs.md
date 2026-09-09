@@ -52,6 +52,6 @@ theme:adminlte
 theme:shadcn
 ```
 
-Colors are declared in each adapter's `_colors.scss`, dimensions in
-`_variables.scss`, and public runtime hooks use `--soa-tabs-*`. A custom theme
+Colors are declared in each adapter's `_colors.scss`; dimensions and public
+`--soa-tabs-*` hooks stay in the same adapter module. A custom theme
 can provide its own adapter without replacing the driver.

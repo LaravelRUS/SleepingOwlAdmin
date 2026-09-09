@@ -64,7 +64,7 @@ theme:adminlte
 theme:shadcn
 ```
 
-Colors live in each adapter's `_colors.scss`, dimensions in `_variables.scss`,
-and runtime overrides use `--soa-dropdown-*`. A custom theme can provide its
+Colors live in each adapter's `_colors.scss`; dimensions and `--soa-dropdown-*`
+emission stay in the same adapter module. A custom theme can provide its
 own adapter without replacing the native controller or rebuilding package
 assets.

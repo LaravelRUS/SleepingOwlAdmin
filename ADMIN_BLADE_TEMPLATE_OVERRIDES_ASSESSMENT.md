@@ -169,9 +169,9 @@ base и есть совместимая AdminLTE presentation. Пустой ка
 base contract, для него можно зарегистрировать такой же override root.
 
 `shared` и `features` не надо сливать в `default`: у них уже есть отдельная
-граница ownership. Однострочные compatibility bridges в base можно сохранить,
-поскольку они удерживают исторические `default.*` names; их не следует снова
-копировать в тему.
+граница ownership. После разрешения breaking paths однострочные compatibility
+bridges удалены, а их consumers используют canonical `shared.*`/`features.*`
+paths напрямую; создавать такие bridges снова не следует.
 
 ## Разрешение view paths
 

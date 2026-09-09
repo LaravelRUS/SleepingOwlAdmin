@@ -2,7 +2,7 @@
 
 ## Статус и правила
 
-- Статус: **inventory, Laravel resource layout и укрупнение asset boundaries готовы**.
+- Статус: **inventory, Laravel resource layout, canonical Blade owners и укрупнение asset/source boundaries готовы**.
 - Следующий checkpoint: создать отдельный override layer и общий semantic UI layer.
 - Общие декларации поставляются отдельным logical entry `shared:ui`, автоматически подключаемым для любой `ThemeInterface`; headless `core` не получает presentation.
 - Общий CSS может использовать только semantic `soa-*` classes, behavior hooks и canonical `--soa-*` variables. Тема задаёт значения tokens и действительно отличающиеся overrides.
@@ -123,7 +123,7 @@ Canonical название хранится один раз — ключом `te
 - [ ] Создать `resources/css/shared/shared-ui.scss` и logical entry `shared:ui` в обоих asset profiles.
 - [ ] Зафиксировать cascade order `core -> shared -> feature -> theme`; theme override должен быть явным и минимальным.
 - [ ] Автоматически регистрировать `shared:ui` ровно один раз для AdminLTE, Tailwind и любой custom theme.
-- [ ] Добавить одинаковые semantic classes в AdminLTE/Tailwind Blade; legacy classes оставить compatibility aliases.
+- [x] Добавить одинаковые semantic classes в AdminLTE/Tailwind Blade; legacy classes оставить compatibility aliases.
 - [ ] Добавить static gate: в theme SCSS нет копий перенесённых structural selectors.
 
 ## 1. Постоянный application shell
@@ -197,3 +197,6 @@ Canonical название хранится один раз — ключом `te
 | 2026-09-09 | Осмысленное укрупнение bundles | Все девять всегда загружаемых feature drivers и neutral CSS объединены в `shared:features`; built-in feature adapters входят в единый bundle своей темы. Manifest сокращён с 37 до 9 logical entries и с 51 до 14 файлов на профиль. Выбранный AdminLTE runtime сокращён с 33 до 10 файлов; production size уменьшился с 1 843 637 до 1 797 249 bytes, development — с 4 942 211 до 4 758 642 bytes за счёт устранения повторной bundler-обвязки. External independently shipped adapters остаются поддержаны. | текущий commit |
 | 2026-09-09 | Blade base + theme fallback | 136 AdminLTE-compatible views перенесены в общий `resources/views/default`; из Shadcn удалены 37 повторов и оставлены 99 реальных overrides плюс 27 theme-only components. Namespace paths приложений сохранены, finder проверен в порядке application → theme → base, одинаковый override запрещён architecture test. | `337f3184`, `14cccdce` |
 | 2026-09-09 | Browser fixtures после укрупнения bundles | Browser fixtures переведены с удалённых per-feature output paths на `shared/features` и единый bundle выбранной темы. Порядок AdminLTE CSS внутри theme entry исправлен на legacy base → feature adapters. Оба asset profiles пересобраны; Playwright: 141/141, ESLint и Stylelint прошли. | текущий commit |
+| 2026-09-09 | Canonical Blade owners | Class-only/config-only overrides заменены presentation data от PHP-владельцев и общими owner templates. Восемь bridges переведены на прямые `shared/features` paths; controls, card parts, messages, scalar columns и inline editors больше не создают Blade-файл на вариант классов. Активный runtime сокращён со 147 до 114 Blade: 103 base, один структурный Shadcn override и 10 shared/feature views. 35 бывших base-файлов и 27 Shadcn prototypes находятся только в archive namespace. | `08683a81`, `12f12956`, `b1e4d708`, `f30b9b63`, `8c1e749b`, `548d6197`, `3fc7818b` |
+| 2026-09-09 | Физическое укрупнение frontend owners | После отдельного JS-укрупнения Sass таблиц, forms, core и theme tokens приведён к правилу «один файл на реального владельца, отдельный файл только при втором consumer/lifecycle». Table source уменьшен с 31 до 21 файла, forms — с 14 до 7, core — с 5 до 1; modern `_custom-properties.scss` заменены едиными `_tokens.scss`. Feature mixin modules сохранены там, где их по-разному потребляют modern theme entry и legacy aggregate. Общий активный inventory уменьшен с 379 до 354 файлов: 210 JS, 138 SCSS, 5 Vue, 1 CSS. | `dd765561`, `1d64c85e`, `ee3aed18`, `a792394d`, `a4b39016`, `d8b018d9` |
+| 2026-09-09 | Исполняемый reachability gate | Добавлен `npm run check:reachability`: граф строится от всех modern/legacy build entries и поддерживаемых `index.js` source boundaries через JS/Vue imports, Sass dependencies и Tailwind config. Единственный настоящий orphan `shared/vue/legacy/use-translation.js` и пустой core palette placeholder перенесены в `resources/archive/unused-sources`; активный граф содержит 356/356 достижимых файлов с учётом двух Tailwind CJS config sources. Gate включён в `npm run check`. | `02680605` |

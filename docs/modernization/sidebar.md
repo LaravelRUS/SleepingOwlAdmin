@@ -61,8 +61,8 @@ theme:adminlte
 theme:shadcn
 ```
 
-Both Sass adapters keep colors in `_colors.scss`, dimensions in
-`_variables.scss` and runtime values in `--soa-sidebar-*` properties. The
+Both Sass adapters keep colors in `_colors.scss`; dimensions and runtime
+`--soa-sidebar-*` emission stay in the same adapter module. The
 existing validated `sidebar_background_color` config override continues to set
 `--soa-sidebar-bg` without rebuilding frontend assets.
 

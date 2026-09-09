@@ -45,7 +45,7 @@ owned keys. Neither service contains feature transport or presentation behavior.
 
 Leaf Sass owners load their local token and presentation modules through `@use`. The public `shared:features` and theme entrypoints are thin aggregators and do not invent another token layer. Variables stay local to their owner and use `!default`, so maintainers and external theme authors can configure a source build without cross-bundle globals. Core intentionally has no palette, while the selected theme supplies text, surface, focus and typography properties. The supported runtime/no-build subset is emitted under `:root` as public `--soa-*` custom properties. Dark values are property-only overrides on `:root[data-color-scheme="dark"]`; the detailed contract is documented in `runtime-theme-properties.md`.
 
-The former handwritten `resources/css/themes/adminlte/legacy/css/files.css` is split into owner-local form feature partials. A parameterized `files.styles(...)` mixin lets both the legacy aggregate and modern forms entry emit the same stable selectors while taking colors from their own `_colors.scss`. No handwritten plain CSS remains under `resources`; generated and vendor directories are explicit exceptions and are never edited as first-party Sass.
+The former handwritten `resources/css/themes/adminlte/legacy/css/files.css` is owned by one consolidated form file module. A parameterized `files.styles(...)` mixin lets both the legacy aggregate and modern forms entry emit the same stable selectors, while the shared `_tokens.scss` owns their common runtime properties. No handwritten plain CSS remains under `resources`; generated and vendor directories are explicit exceptions and are never edited as first-party Sass.
 
 ## Legacy bridge
 

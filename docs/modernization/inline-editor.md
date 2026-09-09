@@ -113,7 +113,7 @@ one DOM row, while the latter invalidates all DOM rows before drawing.
 
 AdminLTE and Tailwind each provide their own Sass adapter. All palette values
 come from the adapter `_colors.scss`; dimensions and motion come from
-`_variables.scss`; runtime overrides use the public `--soa-inline-editor-*`
+`_tokens.scss`; runtime overrides use the public `--soa-inline-editor-*`
 custom properties. A custom theme can style the stable `soa-inline-*` DOM
 contract without importing Bootstrap, AdminLTE, or Tailwind and without
 reimplementing transport or state.

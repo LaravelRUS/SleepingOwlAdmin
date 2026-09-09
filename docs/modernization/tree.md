@@ -99,8 +99,8 @@ a notification component; it does not load SweetAlert or the AdminLTE policy.
 The theme-neutral tree module inside `shared:features` owns lifecycle, serialization,
 transport, max-depth validation, and the minimal behavior stylesheet. AdminLTE
 and Tailwind each provide a separate Sass presentation adapter. Palette values
-come from `_colors.scss`; dimensions and motion come from `_variables.scss`;
-runtime overrides use public `--soa-tree-*` custom properties.
+come from `_colors.scss`; dimensions, motion and `--soa-tree-*` emission stay
+in the same adapter module.
 
 A custom theme can style the stable `soa-tree-*` DOM contract and listen to
 `tree:changed`/`tree:failed` for its own notifications without importing

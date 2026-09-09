@@ -64,8 +64,8 @@ access GLightbox internals.
 The theme-neutral lightbox module inside `shared:features` owns GLightbox, delegated behavior,
 gallery discovery, lifecycle, events, vendor base CSS, and the SVG sizing fix.
 AdminLTE and Tailwind each provide a separate Sass presentation adapter for
-controls and captions. Palette values come from `_colors.scss`; dimensions and
-motion come from `_variables.scss`; runtime overrides use public
+controls and captions. Palette values come from `_colors.scss`; dimensions,
+motion and public property emission stay in the adapter; runtime overrides use
 `--soa-lightbox-*` custom properties.
 
 A custom theme receives `shared:features`, can style the GLightbox DOM with the
