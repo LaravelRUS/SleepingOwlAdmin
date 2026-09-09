@@ -48,7 +48,7 @@ interface; those themes provide views, not a replacement rendering API.
 - A shared view must not depend on a theme, feature lifecycle, config-driven widget behavior, inline JavaScript or Vue directives.
 - A feature view may use shared views and first-party support classes, but must not include `default` theme views or resolve views through `AdminTemplate`.
 - A theme view may compose shared views, feature views and theme-local presentation partials.
-- Bootstrap/AdminLTE classes belong only to `themes/legacy/default`; shared and feature implementations cannot acquire them through an implicit fallback.
+- Bootstrap/AdminLTE classes belong only to `resources/views/themes/adminlte/default`; shared and feature implementations cannot acquire them through an implicit fallback.
 - A feature view that still needs framework classes remains a theme-owned feature presentation adapter; it is not moved into `features` merely because its PHP class belongs to a feature.
 - New cross-layer includes use explicit `sleeping_owl::shared.*` or `sleeping_owl::features.*` paths. No implicit fallback or semantic class resolver is introduced.
 
