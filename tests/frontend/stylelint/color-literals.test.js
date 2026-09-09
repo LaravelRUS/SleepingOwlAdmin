@@ -23,7 +23,7 @@ describe('SCSS color literal policy', () => {
         )
     })
 
-    it.each(['_colors.scss', '_variables.scss'])(
+    it.each(['_colors.scss', '_variables.scss', '_tokens.scss'])(
         'allows centralized literals in %s',
         async (filename) => {
             const result = await lintScss(

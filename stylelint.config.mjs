@@ -27,7 +27,7 @@ export default {
     ],
     overrides: [
         {
-            files: ['**/_colors.scss', '**/_variables.scss'],
+            files: ['**/_colors.scss', '**/_variables.scss', '**/_tokens.scss'],
             rules: {
                 'color-named': null,
                 'color-no-hex': null,

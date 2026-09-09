@@ -41,42 +41,51 @@ describe('Sass aggregate entries', () => {
 })
 
 describe('Sass entrypoint boundaries', () => {
-    it.each(sassTokenizedEntries)('$logicalId loads its owner-local Sass modules', (entry) => {
+    it.each(sassTokenizedEntries)('$logicalId loads its canonical token owner', (entry) => {
         const source = readSource(entry.source)
+        const isCore = entry.logicalId === 'core'
 
-        expect(source).toContain("@use 'variables';")
-        expect(readFileSync(siblingPath(entry, '_variables.scss')).byteLength).toBeGreaterThan(0)
-
-        for (const module of ['colors', 'custom-properties']) {
-            const path = siblingPath(entry, `_${module}.scss`)
-            if (!existsSync(path)) continue
-
-            expect(source).toContain(`@use '${module}';`)
-            expect(readFileSync(path).byteLength).toBeGreaterThan(0)
+        if (isCore) {
+            expect(source).not.toContain("@use 'tokens';")
+            expect(variableDeclarations(source)).not.toHaveLength(0)
+        } else {
+            expect(source).toContain("@use 'tokens';")
+            expect(readFileSync(siblingPath(entry, '_tokens.scss')).byteLength).toBeGreaterThan(0)
         }
+
+        const colorsPath = siblingPath(entry, '_colors.scss')
+        if (!existsSync(colorsPath)) return
+
+        expect(source).toContain("@use 'colors';")
+        expect(readFileSync(colorsPath).byteLength).toBeGreaterThan(0)
     })
 
     it.each(sassTokenizedEntries)(
         '$logicalId exposes owner-local overridable build-time tokens',
         (entry) => {
-            const variables = readFileSync(siblingPath(entry, '_variables.scss'), 'utf8')
+            const tokens =
+                entry.logicalId === 'core'
+                    ? readSource(entry.source)
+                    : readFileSync(siblingPath(entry, '_tokens.scss'), 'utf8')
             const colorsPath = siblingPath(entry, '_colors.scss')
 
-            expect(variableDeclarations(variables)).not.toHaveLength(0)
-            expect(nonDefaultDeclarations(variables)).toEqual([])
+            expect(variableDeclarations(tokens)).not.toHaveLength(0)
+            expect(nonDefaultDeclarations(tokens)).toEqual([])
 
             if (existsSync(colorsPath)) {
                 const colors = readFileSync(colorsPath, 'utf8')
 
-                if (entry.logicalId === 'core') {
-                    expect(variableDeclarations(colors)).toEqual([])
-                } else {
-                    expect(variableDeclarations(colors)).not.toHaveLength(0)
-                }
+                expect(variableDeclarations(colors)).not.toHaveLength(0)
                 expect(nonDefaultDeclarations(colors)).toEqual([])
             }
         },
     )
+
+    it('does not split modern token declarations from custom-property emission', () => {
+        const files = readdirSync(resolve(root, 'resources/css'), { recursive: true })
+
+        expect(files.filter((path) => path.endsWith('_custom-properties.scss'))).toEqual([])
+    })
 
     it('contains no handwritten plain CSS below resources', () => {
         const files = readdirSync(resolve(root, 'resources'), { recursive: true })
