@@ -18,11 +18,11 @@
     $stubGroup = new \SleepingOwl\Admin\Form\Related\Group(null, $stub->all());
     $relatedProps = array_replace([
         'classes' => [
-            'actions' => 'd-block clearfix',
-            'add' => 'grouped-elements__action float-end related-action_add btn btn-success btn-sm',
+            'actions' => 'd-block clearfix soa-form-actions',
+            'add' => 'grouped-elements__action float-end related-action_add btn btn-success btn-sm soa-button soa-button-sm soa-button-success',
             'addIcon' => 'fas fa-plus',
-            'groups' => 'related-elements__draggable',
-            'root' => 'grouped-elements clearfix',
+            'groups' => 'related-elements__draggable soa-related-groups',
+            'root' => 'grouped-elements clearfix soa-related',
         ],
         'draggable' => (bool) ($draggable ?? false),
         'groups' => $relatedGroups,

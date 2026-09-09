@@ -1,10 +1,10 @@
 @if ($visibled)
-    <div class="form-group form-element-image mb-3{{ $class ? ' ' . $class : '' }} {{ $errors->has($name) ? 'has-error' : '' }}">
-        <label for="{{ $name }}" class="form-label control-label{{ $required ? ' required' : '' }}">
+    <div class="form-group soa-field form-element-image mb-3{{ $class ? ' ' . $class : '' }} {{ $errors->has($name) ? 'has-error' : '' }}">
+        <label for="{{ $name }}" class="form-label control-label soa-label{{ $required ? ' required' : '' }}">
             {!! $label !!}
 
             @if($required)
-                <span class="form-element-required">*</span>
+                <span class="form-element-required soa-required">*</span>
             @endif
         </label>
 
@@ -14,21 +14,21 @@
             $imageProps = array_replace([
                 'assetPrefix' => (string) $asset_prefix,
                 'classes' => [
-                    'alert' => 'alert alert-warning',
-                    'alertClose' => 'btn-close float-end',
-                    'current' => 'form-element-files clearfix',
-                    'downloadButton' => 'btn btn-light btn-sm float-end',
+                    'alert' => 'alert alert-warning soa-alert',
+                    'alertClose' => 'btn-close float-end soa-icon-button',
+                    'current' => 'form-element-files clearfix soa-attachment-list',
+                    'downloadButton' => 'btn btn-light btn-sm float-end soa-button soa-button-sm soa-button-secondary',
                     'downloadIcon' => 'fa-fw fas fa-cloud-upload-alt',
                     'errorIcon' => 'fa-fw fas fa-image',
-                    'info' => 'form-element-files__info',
-                    'insertCurrentButton' => 'btn btn-light btn-sm float-end me-1',
+                    'info' => 'form-element-files__info soa-attachment-info',
+                    'insertCurrentButton' => 'btn btn-light btn-sm float-end me-1 soa-button soa-button-sm soa-button-secondary',
                     'insertIcon' => 'fa-fw fas fa-link',
-                    'insertNewButton' => 'btn btn-light btn-sm',
-                    'item' => 'form-element-files__item',
-                    'previewLink' => 'form-element-files__image',
-                    'removeButton' => 'btn btn-danger btn-sm',
+                    'insertNewButton' => 'btn btn-light btn-sm soa-button soa-button-sm soa-button-secondary',
+                    'item' => 'form-element-files__item soa-attachment',
+                    'previewLink' => 'form-element-files__image soa-attachment-preview',
+                    'removeButton' => 'btn btn-danger btn-sm soa-button soa-button-sm soa-button-danger',
                     'removeIcon' => 'fa-fw fas fa-times',
-                    'uploadButton' => 'btn btn-primary upload-button btn-sm',
+                    'uploadButton' => 'btn btn-primary upload-button btn-sm soa-button soa-button-sm soa-button-primary',
                     'uploadIcon' => 'fas fa-image',
                     'uploadingIcon' => 'fas fa-spinner fa-spin',
                 ],

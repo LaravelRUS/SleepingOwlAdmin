@@ -1,16 +1,16 @@
 @if ($visibled)
-    <div class="form-element-files-wrapper">
-        <label for="{{ $id }}" class="form-label control-label form-element-files-control-label">
+    <div class="form-element-files-wrapper soa-field">
+        <label for="{{ $id }}" class="form-label control-label soa-label form-element-files-control-label">
             {!! $label !!}
 
             @if($required)
-                <span class="form-element-required">*</span>
+                <span class="form-element-required soa-required">*</span>
             @endif
         </label>
 
         @include(AdminTemplate::getViewPath('form.element.partials.helptext'))
 
-        <div class="form-group form-element-file fileUploadMultiple mb-3{{ $class ? ' ' . $class : '' }} {{ $errors->has($name) ? 'has-error' : '' }}" {!! $style ? ' style="' . $style . '"' : '' !!}
+        <div class="form-group soa-field form-element-file fileUploadMultiple mb-3{{ $class ? ' ' . $class : '' }} {{ $errors->has($name) ? 'has-error' : '' }}" {!! $style ? ' style="' . $style . '"' : '' !!}
         data-target="{{ route('admin.form.element.file', [
 				'adminModel' => AdminSection::getModel($model)->getAlias(),
 				'field' => $path,
@@ -20,8 +20,8 @@
 
             @if (!$readonly)
                 <script type="text/html" class="RenderFile">
-                    <div class="fileThumbnail">
-                        <div class="thumbnail">
+                    <div class="fileThumbnail soa-attachment">
+                        <div class="thumbnail soa-attachment-inner">
                             <div class="fileicon">
                                 <div class="fileicon-inner" style="background-image:url('[%=img%]')">
                                     <span class="file-extension">[%=ext%]</span>
@@ -34,7 +34,7 @@
                                     [%=basename%]
                                 </div>
 
-                                <input type="text" class="form-control form-control-sm mb-2 tit{{ $show_title ? '' : ' hidden' }}"
+                                <input type="text" class="form-control form-control-sm mb-2 soa-input tit{{ $show_title ? '' : ' hidden' }}"
                                        data-id="title"
                                        data-toggle="tooltip"
                                        data-bs-toggle="tooltip"
@@ -42,7 +42,7 @@
                                        placeholder="{{ trans('sleeping_owl::lang.seo.title') }}"{{ $title_required ? ' required' : '' }}
                                 />
 
-                                <textarea class="form-control form-control-sm noresize desc{{ $show_description ? '' : ' hidden' }}"
+                                <textarea class="form-control form-control-sm noresize soa-textarea desc{{ $show_description ? '' : ' hidden' }}"
                                           data-id="description"
                                           rows="3"
                                           data-toggle="tooltip"
@@ -57,17 +57,17 @@
                                        data-id="original_name"
                                        value="[%=orig%]" />
 
-                                <div class="file-buttons mt-1 text-start">
-                                    <button class="btn btn-danger btn-delete btn-sm fileRemove" title="{{ trans('sleeping_owl::lang.button.remove') }}">
+                                <div class="file-buttons soa-button-group mt-1 text-start">
+                                    <button class="btn btn-danger btn-delete btn-sm fileRemove soa-button soa-button-sm soa-button-danger" title="{{ trans('sleeping_owl::lang.button.remove') }}">
                                         <i class="fas fa-fw fa-times"></i>
                                     </button>
 
                                     @if (isset($draggable) && $draggable)
-                                        <a class="btn btn-clear btn-sm float-end drag-cursor drag-handle">
+                                        <a class="btn btn-clear btn-sm float-end drag-cursor drag-handle soa-icon-button">
                                             <i class="fas fa-fw fa-arrows-alt"></i>
                                         </a>
                                     @endif
-                                    <a href="[%=url%]" download class="btn btn-light btn-sm float-end me-1" title="{{ trans('sleeping_owl::lang.button.download') }}">
+                                    <a href="[%=url%]" download class="btn btn-light btn-sm float-end me-1 soa-button soa-button-sm soa-button-secondary" title="{{ trans('sleeping_owl::lang.button.download') }}">
                                         <i class="fas fa-fw fa-cloud-download-alt"></i>
                                     </a>
                                 </div>
@@ -83,11 +83,11 @@
                 </script>
             @endif
 
-            <div class="files-group dropzone {{ $files_group_class }}{{ $readonly ? ' dissortable' : '' }}"
+            <div class="files-group dropzone soa-attachment-list {{ $files_group_class }}{{ $readonly ? ' dissortable' : '' }}"
                  data-draggable="{{ $draggable }}">
                 @foreach ($value ?? [] as $item)
-                    <div class="fileThumbnail">
-                        <div class="thumbnail">
+                    <div class="fileThumbnail soa-attachment">
+                        <div class="thumbnail soa-attachment-inner">
                             <div class="fileicon">
                                 <div class="fileicon-inner" {!! @$item['mime_base'] == 'image' || @$item['ext'] == 'svg' ? 'style="background-image:url(' . asset($item['url']) . ')"' : '' !!}>
                                     @if (@$item['mime_base'] != 'image' && @$item['ext'] != 'svg')
@@ -109,7 +109,7 @@
                                      data-url="{{ @asset($item['url']) }}">{{ @basename($item['url']) }}</div>
 
                                 <input type="text"
-                                       class="form-control form-control-sm mb-2 tit{{ $show_title ? '' : ' hidden' }}"
+                                       class="form-control form-control-sm mb-2 soa-input tit{{ $show_title ? '' : ' hidden' }}"
                                        data-id="title"
                                        data-toggle="tooltip"
                                        data-bs-toggle="tooltip"
@@ -118,7 +118,7 @@
                                        value="{{ @$item['title'] }}"{{ $title_required ? ' required' : '' }} />
 
                                 <textarea
-                                        class="form-control form-control-sm noresize desc{{ $show_description ? '' : ' hidden' }}"
+                                        class="form-control form-control-sm noresize soa-textarea desc{{ $show_description ? '' : ' hidden' }}"
                                         data-id="description"
                                         rows="3"
                                         {{ $readonly ? 'disabled' : '' }}
@@ -134,19 +134,19 @@
                                        data-id="original_name"
                                        value="{{ @$item['orig'] }}" />
 
-                                <div class="file-buttons mt-1{{ $readonly ? ' text-end' : ' text-start' }}">
+                                <div class="file-buttons soa-button-group mt-1{{ $readonly ? ' text-end' : ' text-start' }}">
                                     @if (!$readonly)
-                                        <button class="btn btn-danger btn-delete btn-sm fileRemove" title="{{ trans('sleeping_owl::lang.button.remove') }}">
+                                        <button class="btn btn-danger btn-delete btn-sm fileRemove soa-button soa-button-sm soa-button-danger" title="{{ trans('sleeping_owl::lang.button.remove') }}">
                                             <i class="fas fa-fw fa-times"></i>
                                         </button>
 
                                         @if (isset($draggable) && $draggable)
-                                            <a class="btn btn-clear btn-sm float-end drag-cursor drag-handle">
+                                            <a class="btn btn-clear btn-sm float-end drag-cursor drag-handle soa-icon-button">
                                                 <i class="fas fa-fw fa-arrows-alt"></i>
                                             </a>
                                         @endif
                                     @endif
-                                    <a href="{{ @asset($item['url']) }}" download class="btn btn-light btn-sm me-1{{ $readonly ? '' : ' float-end' }}" title="{{ trans('sleeping_owl::lang.button.download') }}">
+                                    <a href="{{ @asset($item['url']) }}" download class="btn btn-light btn-sm me-1 soa-button soa-button-sm soa-button-secondary{{ $readonly ? '' : ' float-end' }}" title="{{ trans('sleeping_owl::lang.button.download') }}">
                                         <i class="fas fa-fw fa-cloud-download-alt"></i>
                                     </a>
                                 </div>
@@ -163,8 +163,8 @@
             </div>
 
             @if (!$readonly)
-                <div class="form-element-button-add w-100 order-2 mt-2">
-                    <div class="btn btn-primary fileBrowse btn-sm">
+                <div class="form-element-button-add w-100 order-2 mt-2 soa-form-actions">
+                    <div class="btn btn-primary fileBrowse btn-sm soa-button soa-button-sm soa-button-primary">
                         <i class="fas fa-spinner fa-spin" style="display: none;"></i>
                         {{ trans('sleeping_owl::lang.file.browseMultiple') }}
                     </div>

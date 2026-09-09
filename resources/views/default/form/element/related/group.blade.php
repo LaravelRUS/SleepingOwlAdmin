@@ -1,11 +1,11 @@
 @php($groupLabel = $group->getLabel())
-<div class="grouped-element" data-related-group>
+<div class="grouped-element soa-related-group" data-related-group>
         @if ($groupLabel)
-          <div class="grouped-element__head">
+          <div class="grouped-element__head soa-related-group-header">
             <span><b>{{ $groupLabel }}</b></span>
           </div>
         @endif
-        <div class="grouped-element__body">
+        <div class="grouped-element__body soa-related-group-body">
             @foreach ($group as $item)
                 @if($item instanceof \Illuminate\Contracts\Support\Renderable)
                     {!! $item->render() !!}
@@ -16,9 +16,9 @@
         </div>
 
         @if (!$readonly)
-          <div class="grouped-element__footer form-group mb-3 clearfix">
+          <div class="grouped-element__footer form-group mb-3 clearfix soa-related-group-actions">
             @if (isset($draggable) && $draggable)
-              <a class="btn btn-clear btn-sm float-start me-1 drag-cursor drag-handle">
+              <a class="btn btn-clear btn-sm float-start me-1 drag-cursor drag-handle soa-icon-button">
                 <i class="fas fa-fw fa-arrows-alt" aria-hidden="true"></i>
               </a>
             @endif
@@ -30,7 +30,7 @@
                 data-original-text="{{ trans('sleeping_owl::lang.button.remove') }}"
                 data-toggle="tooltip"
                 data-bs-toggle="tooltip"
-                class="btn btn-warning float-end btn-sm grouped-element__delete"
+                class="btn btn-warning float-end btn-sm grouped-element__delete soa-button soa-button-sm soa-button-warning"
               >
                 <i class="fas fa-trash" aria-hidden="true"></i>
                 {{ trans('sleeping_owl::lang.button.remove') }}
@@ -40,5 +40,5 @@
           </div>
         @endif
 
-        <hr class="grouped-element__hr" />
+        <hr class="grouped-element__hr soa-separator" />
 </div>
