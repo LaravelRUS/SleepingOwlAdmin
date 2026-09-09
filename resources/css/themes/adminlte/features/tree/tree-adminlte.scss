@@ -1,8 +1,5 @@
-@use 'colors';
-@use 'custom-properties';
 @use 'tree';
-@use 'variables';
-@include custom-properties.define;
+@include tree.properties;
 
 @layer sleepingowl-theme.tree {
   @include tree.styles;

@@ -1,9 +1,0 @@
-@use 'colors';
-@use 'variables';
-
-@mixin define {
-    :root {
-        --soa-tree-empty-target-color: #{colors.$empty-target};
-        --soa-tree-empty-target-size: #{variables.$empty-target-size};
-    }
-}

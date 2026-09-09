@@ -11,7 +11,7 @@
 @use '../features/table/legacy' as legacy-datatables;
 @use '../../../shared/features/tooltip/tooltip' as tooltip-driver;
 @use '../features/tooltip/tooltip' as legacy-tooltip;
-@use '../features/tree/legacy' as legacy-tree;
+@use '../features/tree/tree' as legacy-tree;
 @use '../custom-properties' as theme-properties;
 @use '../asset-health' as theme-asset-health;
 @use '../legacy-build' as legacy-theme;
@@ -35,6 +35,7 @@
 @include tooltip-driver.styles;
 @include legacy-tooltip.properties;
 @include legacy-tooltip.styles;
+@include legacy-tree.properties;
 @include legacy-tree.styles;
 @include form-files.styles(
   $thumbnail-border: legacy-theme.$file-thumbnail-border,

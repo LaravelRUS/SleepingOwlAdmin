@@ -1,3 +1,53 @@
+@use 'colors';
+
+$indent: 1.5rem !default;
+$item-gap: 0.5rem !default;
+$content-padding-block: 0.45rem !default;
+$content-padding-inline: 0.75rem !default;
+$control-size: 1.75rem !default;
+$control-gap: 0.25rem !default;
+$menu-gap: 0.5rem !default;
+$border-width: 0.0625rem !default;
+$radius: 0.25rem !default;
+$transition-duration: 150ms !default;
+$ghost-opacity: 0.65 !default;
+$shadow-offset: 0.5rem !default;
+$shadow-blur: 1rem !default;
+
+@mixin properties {
+    :root {
+        --soa-tree-surface: #{colors.$surface};
+        --soa-tree-text: #{colors.$text};
+        --soa-tree-border: #{colors.$border};
+        --soa-tree-handle: #{colors.$handle};
+        --soa-tree-handle-hover: #{colors.$handle-hover};
+        --soa-tree-hover: #{colors.$hover};
+        --soa-tree-ghost: #{colors.$ghost};
+        --soa-tree-on-handle: #{colors.$on-handle};
+        --soa-tree-shadow: #{colors.$shadow};
+        --soa-tree-indent: #{$indent};
+        --soa-tree-item-gap: #{$item-gap};
+        --soa-tree-content-padding-block: #{$content-padding-block};
+        --soa-tree-content-padding-inline: #{$content-padding-inline};
+        --soa-tree-control-size: #{$control-size};
+        --soa-tree-control-gap: #{$control-gap};
+        --soa-tree-menu-gap: #{$menu-gap};
+        --soa-tree-border-width: #{$border-width};
+        --soa-tree-radius: #{$radius};
+        --soa-tree-transition-duration: #{$transition-duration};
+        --soa-tree-ghost-opacity: #{$ghost-opacity};
+        --soa-tree-shadow-offset: #{$shadow-offset};
+        --soa-tree-shadow-blur: #{$shadow-blur};
+    }
+
+    :root[data-color-scheme='dark'] {
+        --soa-tree-surface: #{colors.$dark-surface};
+        --soa-tree-text: #{colors.$dark-text};
+        --soa-tree-border: #{colors.$dark-border};
+        --soa-tree-hover: #{colors.$dark-hover};
+    }
+}
+
 @mixin styles {
     .soa-tree,
     .soa-tree-list {
