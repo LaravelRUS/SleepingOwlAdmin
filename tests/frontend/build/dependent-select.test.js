@@ -11,7 +11,7 @@ describe('dependent select build boundary', () => {
         const bootstrap = readSource('resources/js/shared/legacy/bootstrap.js')
         const component = readSource('resources/js/shared/legacy/admin/form/select.vue')
         const view = readSource(
-            'resources/views/themes/adminlte/default/form/element/dependentselect.blade.php',
+            'resources/views/default/form/element/dependentselect.blade.php',
         )
 
         expect(packageJson.dependencies).not.toHaveProperty('dependent-dropdown')

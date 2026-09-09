@@ -21,19 +21,19 @@ class ViewBoundaryTest extends TestCase
         }
     }
 
-    public function test_default_namespace_resolves_from_extracted_legacy_theme(): void
+    public function test_default_namespace_resolves_from_package_base(): void
     {
         $path = view()->getFinder()->find('sleeping_owl::default._layout.inner');
-        $expected = realpath(__DIR__.'/../../../resources/views/themes/adminlte/default/_layout/inner.blade.php');
+        $expected = realpath(__DIR__.'/../../../resources/views/default/_layout/inner.blade.php');
 
         $this->assertSame($expected, realpath($path));
     }
 
-    public function test_every_legacy_theme_view_keeps_its_default_logical_path(): void
+    public function test_every_base_view_keeps_its_default_logical_path(): void
     {
-        $root = realpath(__DIR__.'/../../../resources/views/themes/adminlte/default');
+        $root = realpath(__DIR__.'/../../../resources/views/default');
 
-        foreach ($this->bladeFiles('themes/adminlte/default') as $path) {
+        foreach ($this->bladeFiles('default') as $path) {
             $relative = substr($path, strlen($root) + 1);
             $logical = str_replace([DIRECTORY_SEPARATOR, '.blade.php'], ['.', ''], $relative);
             $resolved = view()->getFinder()->find("sleeping_owl::default.{$logical}");
@@ -42,17 +42,14 @@ class ViewBoundaryTest extends TestCase
         }
     }
 
-    public function test_package_root_precedes_legacy_theme_in_namespace_hints(): void
+    public function test_package_root_is_the_only_package_default_hint(): void
     {
         $hints = array_map('realpath', view()->getFinder()->getHints()['sleeping_owl']);
         $root = realpath(__DIR__.'/../../../resources/views');
-        $legacy = realpath(__DIR__.'/../../../resources/views/themes/adminlte');
-        $rootIndex = array_search($root, $hints, true);
-        $legacyIndex = array_search($legacy, $hints, true);
 
-        $this->assertNotFalse($rootIndex);
-        $this->assertNotFalse($legacyIndex);
-        $this->assertLessThan($legacyIndex, $rootIndex);
+        $this->assertContains($root, $hints);
+        $this->assertNotContains(false, $hints);
+        $this->assertSame($root, $hints[array_search($root, $hints, true)]);
     }
 
     public function test_legacy_paths_are_thin_compatibility_bridges(): void
@@ -128,10 +125,6 @@ class ViewBoundaryTest extends TestCase
 
     private function viewPath(string $view): string
     {
-        if (str_starts_with($view, 'default.')) {
-            $view = 'themes.adminlte.'.$view;
-        }
-
         $relative = str_replace('.', DIRECTORY_SEPARATOR, $view);
 
         return __DIR__."/../../../resources/views/{$relative}.blade.php";

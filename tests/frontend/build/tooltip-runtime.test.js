@@ -28,8 +28,8 @@ it('ships executable tooltip behavior in the shared feature runtime without jQue
 })
 
 it('keeps the legacy trigger and renders the normal popup from a Blade template', () => {
-    const base = read('resources/views/themes/adminlte/default/_layout/base.blade.php')
-    const partial = read('resources/views/themes/adminlte/default/_partials/tooltip.blade.php')
+    const base = read('resources/views/default/_layout/base.blade.php')
+    const partial = read('resources/views/default/_partials/tooltip.blade.php')
     const elements = read('resources/js/shared/features/tooltip/tooltip-elements.js')
     const runtime = read('resources/js/shared/features/tooltip/tooltips.js')
     const template = read('resources/js/shared/features/tooltip/tooltip-template.js')

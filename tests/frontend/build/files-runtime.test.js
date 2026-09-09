@@ -8,7 +8,7 @@ const read = (path) => readFileSync(resolve(root, path), 'utf8')
 
 describe('files runtime boundary', () => {
     it('keeps the legacy HTML contract while replacing its runtime', () => {
-        const view = read('resources/views/themes/adminlte/default/form/element/files.blade.php')
+        const view = read('resources/views/default/form/element/files.blade.php')
         const wrapper = read('resources/js/shared/legacy/admin/form/files.js')
 
         for (const marker of [

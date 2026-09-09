@@ -16,7 +16,7 @@ class TailwindThemeDisplayTest extends TestCase
 
     public function test_every_display_and_column_view_is_owned_by_tailwind(): void
     {
-        $legacyRoot = realpath(__DIR__.'/../../../resources/views/themes/adminlte/default');
+        $legacyRoot = realpath(__DIR__.'/../../../resources/views/default');
         $tailwindRoot = realpath(__DIR__.'/../../../resources/views/themes/shadcn/default');
         $views = [];
 

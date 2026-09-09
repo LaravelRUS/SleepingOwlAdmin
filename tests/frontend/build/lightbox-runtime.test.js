@@ -32,9 +32,9 @@ it('ships standalone lightbox sources and both theme adapters', () => {
 
 it('uses the native behavior marker in package-owned image views', () => {
     const files = [
-        'resources/views/themes/adminlte/default/column/image.blade.php',
-        'resources/views/themes/adminlte/default/column/gravatar.blade.php',
-        'resources/views/themes/adminlte/default/form/element/files.blade.php',
+        'resources/views/default/column/image.blade.php',
+        'resources/views/default/column/gravatar.blade.php',
+        'resources/views/default/form/element/files.blade.php',
         'resources/js/shared/legacy/admin/form/image.vue',
     ]
 

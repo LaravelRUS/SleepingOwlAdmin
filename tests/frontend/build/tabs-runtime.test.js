@@ -15,14 +15,14 @@ it('replaces Bootstrap tab calls with the native feature driver', () => {
 
 it('uses the native tab marker without replacing legacy compatibility attributes', () => {
     for (const file of [
-        'resources/views/themes/adminlte/default/display/tab.blade.php',
-        'resources/views/themes/adminlte/default/form/tabbed.blade.php',
+        'resources/views/default/display/tab.blade.php',
+        'resources/views/default/form/tabbed.blade.php',
     ]) {
         expect(read(file)).toContain('data-tab')
         expect(read(file)).not.toContain('data-soa-')
     }
 
-    const tabbedForm = read('resources/views/themes/adminlte/default/form/tabbed.blade.php')
+    const tabbedForm = read('resources/views/default/form/tabbed.blade.php')
     expect(tabbedForm).toContain('data-toggle="tab"')
     expect(tabbedForm).toContain('data-bs-toggle="tab"')
 })

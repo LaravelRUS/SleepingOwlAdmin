@@ -66,7 +66,7 @@ it.each(['production', 'development'])(
 
 it('keeps visible tree controls in the Blade item template', () => {
     const view = read('resources/js/shared/features/tree/tree-view.js')
-    const template = read('resources/views/themes/adminlte/default/display/tree_children.blade.php')
+    const template = read('resources/views/default/display/tree_children.blade.php')
 
     expect(view).not.toContain('createElement')
     expect(view).not.toContain("toggle.textContent = collapsed ? '+' : '−'")

@@ -98,15 +98,19 @@ class TailwindThemeTest extends TestCase
         }
     }
 
-    public function test_provider_registers_the_separate_blade_namespace(): void
+    public function test_provider_registers_theme_then_base_for_the_separate_blade_namespace(): void
     {
         $hints = view()->getFinder()->getHints();
         $paths = array_map(static fn (string $path): string => realpath($path), $hints['sleeping_owl_shadcn']);
+        $theme = realpath(__DIR__.'/../../../resources/views/themes/shadcn');
+        $base = realpath(__DIR__.'/../../../resources/views');
 
         $this->assertArrayHasKey('sleeping_owl_shadcn', $hints);
-        $this->assertContains(
-            realpath(__DIR__.'/../../../resources/views/themes').DIRECTORY_SEPARATOR.'shadcn',
-            $paths
+        $this->assertContains($theme, $paths);
+        $this->assertContains($base, $paths);
+        $this->assertLessThan(
+            array_search($base, $paths, true),
+            array_search($theme, $paths, true)
         );
     }
 
