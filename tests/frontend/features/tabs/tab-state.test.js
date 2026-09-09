@@ -4,7 +4,7 @@ import {
     readTabState,
     tabStateKey,
     writeTabState,
-} from '../../../../resources/js/shared/features/tabs/tab-state.js'
+} from '../../../../resources/js/shared/features/tabs/tabs.js'
 
 it('preserves the legacy tab storage key including edit route normalization', () => {
     expect(tabStateKey('/admin/users')).toBe('Tabbed_/admin/users')
