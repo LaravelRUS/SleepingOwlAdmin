@@ -40,21 +40,20 @@ export {
     readFile,
     serializeFiles,
 } from './files/files-values.js'
-export { bindFieldGenerator } from './generation/field-generator.js'
-export { DEFAULT_GENERATED_CHARACTERS, generateFieldValue } from './generation/generated-value.js'
 export {
+    bindFieldGenerator,
     createPasswordDefinition,
+    createTextGeneratorDefinition,
+    DEFAULT_GENERATED_CHARACTERS,
+    generateFieldValue,
     installPasswordControls,
+    installTextGenerators,
     mountPasswordControl,
     PASSWORD_COMPONENT,
     PASSWORD_SELECTOR,
-} from './generation/password-control.js'
-export {
-    createTextGeneratorDefinition,
-    installTextGenerators,
     TEXT_GENERATOR_COMPONENT,
     TEXT_GENERATOR_SELECTOR,
-} from './generation/text-control.js'
+} from './generation.js'
 export { createCkeditor4Adapter } from './wysiwyg/adapters/ckeditor4.js'
 export { createCkeditor5Adapter } from './wysiwyg/adapters/ckeditor5.js'
 export { createSimpleMdeAdapter } from './wysiwyg/adapters/simplemde.js'

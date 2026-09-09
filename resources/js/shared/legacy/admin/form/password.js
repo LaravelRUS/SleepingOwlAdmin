@@ -1,5 +1,5 @@
 const {
     installPasswordControls,
-} = require('../../../features/forms/generation/password-control')
+} = require('../../../features/forms/generation')
 
 installPasswordControls(Admin)

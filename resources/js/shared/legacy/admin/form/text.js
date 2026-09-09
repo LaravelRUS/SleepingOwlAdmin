@@ -1,5 +1,5 @@
 const {
     installTextGenerators,
-} = require('../../../features/forms/generation/text-control')
+} = require('../../../features/forms/generation')
 
 installTextGenerators(Admin)
