@@ -60,5 +60,4 @@ $router->group(['as' => 'admin.', 'namespace' => 'SleepingOwl\Admin\Http\Control
         'as' => 'deletedAll',
         'uses' => 'AdminController@deletedAll',
     ]);
-
 });

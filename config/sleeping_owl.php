@@ -53,8 +53,6 @@ return [
         'useHasManyLocalCard' => false,
     ],
 
-
-
     // Use the prebuilt development asset profile when true.
     'dev_assets' => env('ADMIN_DEV_ASSETS', false),
 
@@ -127,7 +125,6 @@ return [
     'wysiwyg' => [
         'default' => 'ckeditor',
 
-
         'cdn' => [
             // Перевод берется от настройки локального языка.
             'ckeditor5' => [
@@ -141,8 +138,6 @@ return [
                 'ver' => 4,
             ],
         ],
-
-
 
         // CKEditor 4 options: https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_config.html
         'ckeditor' => [
