@@ -1,6 +1,44 @@
-@use 'tabs';
-@include tabs.properties;
+$gap: 0.25rem !default;
+$padding: 0.5rem 0.75rem !default;
+$marker-width: 0.1875rem !default;
+$border: var(--soa-border-color) !default;
+$muted: var(--soa-muted-text-color) !default;
+$marker: var(--soa-primary-color) !default;
+$text: var(--soa-text-color) !default;
+
+@mixin properties {
+  :root[data-theme='framework-free-test'] {
+    --soa-workbench-tabs-border-color: #{$border};
+    --soa-workbench-tabs-muted-color: #{$muted};
+    --soa-workbench-tabs-marker-color: #{$marker};
+    --soa-workbench-tabs-text-color: #{$text};
+    --soa-workbench-tabs-marker-width: #{$marker-width};
+  }
+}
+
+@mixin styles {
+  [data-theme='framework-free-test'] [role='tablist'] {
+    border-block-end: 0.0625rem solid var(--soa-workbench-tabs-border-color);
+    display: flex;
+    gap: $gap;
+  }
+
+  [data-theme='framework-free-test'] [role='tab'] {
+    background: transparent;
+    border: 0;
+    border-block-end: var(--soa-workbench-tabs-marker-width) solid transparent;
+    color: var(--soa-workbench-tabs-muted-color);
+    padding: $padding;
+  }
+
+  [data-theme='framework-free-test'] [role='tab'][aria-selected='true'] {
+    border-block-end-color: var(--soa-workbench-tabs-marker-color);
+    color: var(--soa-workbench-tabs-text-color);
+  }
+}
+
+@include properties;
 
 @layer sleepingowl-theme.tabs {
-  @include tabs.styles;
+  @include styles;
 }
