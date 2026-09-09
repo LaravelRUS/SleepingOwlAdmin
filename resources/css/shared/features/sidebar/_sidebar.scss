@@ -1,3 +1,11 @@
+$transition-duration: 0.3s !default;
+
+@mixin properties {
+  :root {
+    --soa-sidebar-transition-duration: #{$transition-duration};
+  }
+}
+
 @mixin styles {
   [data-widget='pushmenu'] {
     cursor: pointer;

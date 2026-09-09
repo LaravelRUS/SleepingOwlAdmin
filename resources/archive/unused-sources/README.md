@@ -11,6 +11,8 @@ Archived during the resource-layout migration:
 - seven Open Sans variants that are not referenced by either the legacy or
   theme stylesheet (Bold, Italic and Regular remain active);
 - the redundant Tailwind view `.gitkeep` from a non-empty directory.
+- the unused shared sidebar color placeholder; its `$surface`/`$text`
+  variables were imported but never consumed or emitted into CSS;
 - 27 experimental Shadcn Blade primitives/patterns. Their useful semantic
   `soa-*` hooks now live directly in the shared `resources/views/default`
   markup; the prototypes had no remaining runtime callers and are retained

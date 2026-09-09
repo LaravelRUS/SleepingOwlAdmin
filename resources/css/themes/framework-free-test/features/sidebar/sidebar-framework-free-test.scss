@@ -1,9 +1,6 @@
-@use 'colors';
-@use 'custom-properties';
-@use 'presentation';
-@use 'variables';
-@include custom-properties.define;
+@use 'sidebar';
+@include sidebar.properties;
 
 @layer sleepingowl-theme.sidebar {
-  @include presentation.styles;
+  @include sidebar.styles;
 }

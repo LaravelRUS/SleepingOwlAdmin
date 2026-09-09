@@ -5,9 +5,8 @@
 @use '../features/dropdown/dropdown' as legacy-dropdown;
 @use '../../../shared/features/lightbox/lightbox' as legacy-lightbox-driver;
 @use '../features/lightbox/lightbox' as legacy-lightbox;
-@use '../../../shared/features/sidebar/custom-properties' as sidebar-properties;
 @use '../../../shared/features/sidebar/sidebar' as sidebar-driver;
-@use '../features/sidebar/legacy' as legacy-sidebar;
+@use '../features/sidebar/sidebar' as legacy-sidebar;
 @use '../features/tabs/tabs' as legacy-tabs;
 @use '../features/table/legacy' as legacy-datatables;
 @use '../../../shared/features/tooltip/tooltip' as tooltip-driver;
@@ -25,8 +24,9 @@
 @include legacy-lightbox-driver.styles;
 @include legacy-lightbox.properties;
 @include legacy-lightbox.styles;
-@include sidebar-properties.define;
+@include sidebar-driver.properties;
 @include sidebar-driver.styles;
+@include legacy-sidebar.properties;
 @include legacy-sidebar.styles;
 @include legacy-tabs.properties;
 @include legacy-tabs.styles;
