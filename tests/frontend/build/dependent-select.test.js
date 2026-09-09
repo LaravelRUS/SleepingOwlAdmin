@@ -10,9 +10,7 @@ describe('dependent select build boundary', () => {
     it('uses the shared Vue island without the jQuery plugin', () => {
         const bootstrap = readSource('resources/js/shared/legacy/bootstrap.js')
         const component = readSource('resources/js/shared/legacy/admin/form/select.vue')
-        const view = readSource(
-            'resources/views/default/form/element/dependentselect.blade.php',
-        )
+        const view = readSource('resources/views/default/form/element/dependentselect.blade.php')
 
         expect(packageJson.dependencies).not.toHaveProperty('dependent-dropdown')
         expect(packageLock.packages[''].dependencies).not.toHaveProperty('dependent-dropdown')

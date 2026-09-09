@@ -7,9 +7,7 @@ const root = resolve(import.meta.dirname, '../../..')
 
 it('replaces Bootstrap alert execution while preserving the public marker', () => {
     const views = ['error', 'info', 'success', 'warning']
-        .map((type) =>
-            read(`resources/views/default/_partials/messages/${type}.blade.php`),
-        )
+        .map((type) => read(`resources/views/default/_partials/messages/${type}.blade.php`))
         .join('\n')
     const runtime = [
         read('resources/js/shared/legacy/admin/alert.js'),

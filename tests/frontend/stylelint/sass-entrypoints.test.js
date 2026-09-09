@@ -80,7 +80,9 @@ describe('Sass entrypoint boundaries', () => {
             }
         },
     )
+})
 
+describe('Sass resource boundaries', () => {
     it('does not split modern token declarations from custom-property emission', () => {
         const files = readdirSync(resolve(root, 'resources/css'), { recursive: true })
 

@@ -158,9 +158,7 @@ it('publishes a namespaced extension API and a shared runtime external stub', ()
 
 describe('precompiled Vue islands', () => {
     it('mounts the file element directly and uses the Dropzone constructor', () => {
-        const view = readSource(
-            'resources/views/default/form/element/file.blade.php',
-        )
+        const view = readSource('resources/views/default/form/element/file.blade.php')
         const component = readSource('resources/js/shared/legacy/admin/form/file.vue')
         const dropzone = readSource('resources/js/shared/legacy/libs/dropzone.js')
 
@@ -183,15 +181,11 @@ describe('precompiled Vue islands', () => {
 })
 
 it('keeps both related theme shells in Blade', () => {
-    const card = readSource(
-        'resources/views/default/form/element/related/elements.blade.php',
-    )
+    const card = readSource('resources/views/default/form/element/related/elements.blade.php')
     const plain = readSource(
         'resources/views/default/form/element/related/elements_without_card.blade.php',
     )
-    const group = readSource(
-        'resources/views/default/form/element/related/group.blade.php',
-    )
+    const group = readSource('resources/views/default/form/element/related/group.blade.php')
 
     expect(card).toContain('card card-outline card-info')
     expect(plain).toContain('HtmlAttributeBag')
@@ -280,9 +274,7 @@ describe('Select2 migration boundary', () => {
     it('uses the shared remote Vue driver without first-party Select2 assets', () => {
         const bootstrap = readSource('resources/js/shared/legacy/bootstrap.js')
         const component = readSource('resources/js/shared/legacy/admin/form/select.vue')
-        const ajaxView = readSource(
-            'resources/views/default/form/element/selectajax.blade.php',
-        )
+        const ajaxView = readSource('resources/views/default/form/element/selectajax.blade.php')
 
         expect(packageJson.dependencies).not.toHaveProperty('select2')
         expect(packageLock.packages[''].dependencies).not.toHaveProperty('select2')
@@ -306,9 +298,7 @@ describe('Select2 migration boundary', () => {
 
 describe('precompiled image island', () => {
     it('mounts the image element directly without jQuery or Axios', () => {
-        const view = readSource(
-            'resources/views/default/form/element/image.blade.php',
-        )
+        const view = readSource('resources/views/default/form/element/image.blade.php')
         const component = readSource('resources/js/shared/legacy/admin/form/image.vue')
         const catalog = readSource('resources/js/shared/legacy/admin/vue-components.js')
 
@@ -336,9 +326,7 @@ describe('precompiled image island', () => {
 
 describe('precompiled images island', () => {
     it('mounts the images element directly without legacy frontend dependencies', () => {
-        const view = readSource(
-            'resources/views/default/form/element/images.blade.php',
-        )
+        const view = readSource('resources/views/default/form/element/images.blade.php')
         const component = readSource('resources/js/shared/legacy/admin/form/images.vue')
         const catalog = readSource('resources/js/shared/legacy/admin/vue-components.js')
 
