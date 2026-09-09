@@ -80,18 +80,25 @@ describe('compiled form entries', () => {
             expect(css).toContain('var(--soa-form-date-picker-selected-color)')
         }
     })
+})
 
-    it('publishes the Tailwind forms adapter from canonical theme tokens only', () => {
+describe('compiled Tailwind form entry', () => {
+    it('publishes the Tailwind forms skin without shared attachment geometry', () => {
         for (const profile of ['production', 'development']) {
             const forms = readFileSync(
                 resolve(root, `public/default/profiles/${profile}/css/themes/shadcn.css`),
+                'utf8',
+            )
+            const sharedUi = readFileSync(
+                resolve(root, `public/default/profiles/${profile}/css/shared/ui.css`),
                 'utf8',
             )
 
             expect(forms).toContain('@layer sleepingowl-theme.forms')
             expect(forms).toContain('var(--soa-primary-color)')
             expect(forms).toContain('.multiselect__tags')
-            expect(forms).toContain('.soa-attachment-list')
+            expect(forms).not.toContain('.soa-attachment-list')
+            expect(sharedUi).toContain('.soa-attachment-list')
         }
 
         const sources = filesUnder('resources/css/themes/shadcn/features/forms')

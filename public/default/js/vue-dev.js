@@ -15020,6 +15020,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 
 
 
+var SELECT_CLEAR_EVENT = 'select:clear';
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
   name: 'ElementSelect',
   components: {
@@ -15142,11 +15143,13 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
     }
   },
   mounted: function mounted() {
+    this.$el.addEventListener(SELECT_CLEAR_EVENT, this.clearSelection);
     this.mountRemoteSearch();
     this.mountDependentSelect();
   },
   beforeUnmount: function beforeUnmount() {
     var _this$dependentLoad, _this$remoteSearch;
+    this.$el.removeEventListener(SELECT_CLEAR_EVENT, this.clearSelection);
     (_this$dependentLoad = this.dependentLoad) === null || _this$dependentLoad === void 0 || _this$dependentLoad.destroy();
     this.dependentLoad = null;
     (_this$remoteSearch = this.remoteSearch) === null || _this$remoteSearch === void 0 || _this$remoteSearch.destroy();
@@ -15158,6 +15161,10 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       var next = (0,_select_values__WEBPACK_IMPORTED_MODULE_2__.appendSelectTag)(this.localOptions, this.selection, value, this.multiple);
       this.localOptions = next.options;
       this.selectionChanged(next.selection);
+    },
+    clearSelection: function clearSelection() {
+      if (this.required) return;
+      this.selectionChanged(this.multiple ? [] : null);
     },
     applyRemoteOptions: function applyRemoteOptions(options) {
       this.loadError = false;

@@ -23,8 +23,9 @@ available. The nine supported editor types are:
 - `datetime`.
 
 PHP does not select presentation classes. User-supplied classes and attributes
-continue to pass directly to the outer column element. The selected theme owns
-the button, form, validation, and popup presentation.
+continue to pass directly to the outer column element. The shared table feature
+owns the trigger, button, form, validation, popup, and control geometry; the
+selected theme supplies the documented `--soa-inline-editor-*` skin values.
 
 Options are encoded with `Illuminate\Support\Js::encode()` in an inert
 `application/json` script and referenced by id. They are not embedded as raw
@@ -111,12 +112,14 @@ one DOM row, while the latter invalidates all DOM rows before drawing.
 
 ## Theme ownership
 
-AdminLTE and Tailwind each provide their own Sass adapter. All palette values
-come from the adapter `_colors.scss`; dimensions and motion come from
-`_tokens.scss`; runtime overrides use the public `--soa-inline-editor-*`
-custom properties. A custom theme can style the stable `soa-inline-*` DOM
-contract without importing Bootstrap, AdminLTE, or Tailwind and without
-reimplementing transport or state.
+The shared table feature provides one framework-free Sass owner for every
+editor type. AdminLTE and Shadcn do not duplicate its selectors: their table
+tokens only assign the public `--soa-inline-editor-*` palette values. A custom
+theme receives the same geometry through `shared:features` and can change the
+stable token surface without importing Bootstrap, AdminLTE, or Tailwind and
+without reimplementing transport or state. Structural overrides are reserved
+for an intentional contract change and belong in the theme's explicit final
+override layer.
 
 The direct dependencies `x-editable-bs4`, `bootstrap4-datetimepicker`, `moment`,
 and `tempusdominus-core` have been removed. Moment and Tempus Dominus can remain

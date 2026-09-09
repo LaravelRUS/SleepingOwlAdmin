@@ -2,8 +2,8 @@
 
 ## Статус и правила
 
-- Статус: **инфраструктура, application shell, controls/containers и fixed scroll controls готовы**.
-- Следующий checkpoint: общий слой всех inline editable fields.
+- Статус: **инфраструктура, application shell, controls/containers и все inline editable fields готовы**.
+- Следующий checkpoint: overlap-proof для fixed controls и финальная acceptance matrix.
 - Общие декларации поставляются отдельным logical entry `shared:ui`, автоматически подключаемым для любой `ThemeInterface`; headless `core` не получает presentation.
 - Общий CSS может использовать только semantic `soa-*` classes, behavior hooks и canonical `--soa-*` variables. Тема задаёт значения tokens и действительно отличающиеся overrides.
 - В общем слое запрещены Bootstrap/AdminLTE/Tailwind imports, vendor selectors и literal palette. Одинаковые structural rules удаляются из theme adapters.
@@ -154,14 +154,14 @@ Canonical название хранится один раз — ключом `te
 
 ## 3. Все inline editable поля
 
-- [ ] Editable trigger: `.soa-inline-editable`, textarea content и `data-max-rows` clamp.
-- [ ] Inline/popup root: `.soa-inline-editor`, dialog sizing/open state/backdrop и form grid.
-- [ ] Общая control geometry для text, textarea, number, date и datetime.
-- [ ] Select/Multiselect geometry и место под clear control.
-- [ ] Checkbox, boolean и checklist layout/scrolling.
-- [ ] Range slider, output и numeric companion layout.
-- [ ] Clear/clear-all, submit/cancel buttons, error и `aria-busy` states.
-- [ ] Удалить дубли `_inline-editor.scss` из AdminLTE/Tailwind; в adapters оставить только `--soa-inline-editor-*` values и реальные skin overrides.
+- [x] Editable trigger: `.soa-inline-editable`, textarea content и `data-max-rows` clamp.
+- [x] Inline/popup root: `.soa-inline-editor`, dialog sizing/open state/backdrop и form grid.
+- [x] Общая control geometry для text, textarea, number, date и datetime.
+- [x] Select/Multiselect geometry и место под clear control.
+- [x] Checkbox, boolean и checklist layout/scrolling.
+- [x] Range slider, output и numeric companion layout.
+- [x] Clear/clear-all, submit/cancel buttons, error и `aria-busy` states.
+- [x] Удалить дубли `_inline-editor.scss` из AdminLTE/Tailwind; в adapters оставить только `--soa-inline-editor-*` values и реальные skin overrides.
 
 ## 4. Fixed page controls
 
@@ -206,3 +206,4 @@ Canonical название хранится один раз — ключом `te
 | 2026-09-09 | Self-contained no-build theme scaffold | `ThemeRegistry::registerPackage()` принимает canonical name, class, единый theme root и public URL root, сам загружает `<root>/asset-manifest.json` и отклоняет конфликт имён. Scaffold темы создаёт class/provider, Laravel-layout CSS/JS/views, оба готовых профиля и manifest с фактическими MD5/SHA-256; provider публикует только `public`, sources в SleepingOwl не копируются. Узкий PHP gate: 13 tests / 134 assertions. | текущий commit |
 | 2026-09-09 | Semantic application shell | Один base Blade теперь обслуживает AdminLTE и Shadcn: корень получает canonical `data-theme`, а app/header/sidebar/navigation/main/footer/asset-health — стабильные `soa-*` owners; лишний Shadcn layout override удалён. `shared:ui` владеет grid/flex, collapsed/mobile, focus/reduced-motion и footer geometry, themes задают tokens и skin. Fixed scroll controls получили единый markup, hit area, stack и show/hide states. Chromium matrix: 13/13 для трёх themes и двух profiles; PHP: 38/38; Vitest/style boundary и reachability gates добавлены. | текущий commit |
 | 2026-09-09 | Shared controls и containers | `shared:ui` декомпозирован на семь source owners при сохранении одного logical bundle. Общими стали button/input/choice/switch, field, card/dialog и attachment geometry со всеми disabled/focus/collapsed/maximized/empty/error/uploading/readonly states; Vue upload roots публикуют semantic state classes и ARIA. Theme SCSS оставляет tokens/skin, а новый static gate запрещает возврат structural declarations. Оба profiles пересобраны; Chromium: 19/19 shell+controls, PHP Rendering: 83 tests / 1005 assertions, узкие Vitest gates: 29/29. | текущий commit |
+| 2026-09-09 | Shared inline editors | Trigger/clamp, popup/inline shell, все девять control shapes, actions, clear/error/busy и scrollable checklist перенесены в один framework-free table feature partial. Два theme `_inline-editor.scss` удалены; AdminLTE/Shadcn оставляют token values, framework-free fixture публикует тот же token contract. Select получил рабочий clear event через headless binding и Vue island, range output становится видимым при синхронизации. Оба profiles пересобраны; Chromium behavior + geometry: 15/15, узкие Vitest gates: 133/133, PHP Rendering: 83 tests / 1005 assertions. | текущий commit |

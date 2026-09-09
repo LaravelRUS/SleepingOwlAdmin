@@ -32,4 +32,13 @@
         'selectTaggable' => false,
         'value' => $value,
     ])
+    @if($editorCanClear)
+        <button class="soa-inline-editor-clear soa-icon-button"
+                data-inline-editor-clear
+                type="button"
+                aria-label="@lang('sleeping_owl::lang.button.clear')"
+                title="@lang('sleeping_owl::lang.button.clear')">
+            <i class="fas fa-times" aria-hidden="true"></i>
+        </button>
+    @endif
 </div>

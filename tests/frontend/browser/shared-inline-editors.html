@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="en" data-theme="shadcn">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Shared inline editor geometry</title>
+        <script>
+            const parameters = new URLSearchParams(location.search)
+            const profile = parameters.get('profile') || 'development'
+            const theme = parameters.get('theme') || 'shadcn'
+            const supportedProfiles = ['development', 'production']
+            const supportedThemes = ['adminlte', 'framework-free-test', 'shadcn']
+
+            if (!supportedProfiles.includes(profile) || !supportedThemes.includes(theme)) {
+                throw new Error(`Unsupported inline editor fixture: ${profile}/${theme}`)
+            }
+
+            document.documentElement.dataset.theme = theme
+            for (const href of [
+                `/public/default/profiles/${profile}/css/admin-core.css`,
+                `/public/default/profiles/${profile}/css/shared/ui.css`,
+                `/public/default/profiles/${profile}/css/shared/features.css`,
+                `/public/default/profiles/${profile}/css/themes/${theme}.css`,
+            ]) {
+                const link = document.createElement('link')
+                link.rel = 'stylesheet'
+                link.href = href
+                document.head.append(link)
+            }
+        </script>
+        <style>
+            body {
+                margin: 0;
+                padding: 1rem;
+            }
+
+            .fixture-triggers {
+                display: flex;
+                gap: 1rem;
+                margin-block-end: 1rem;
+            }
+
+            .fixture-clamp {
+                inline-size: 10rem;
+            }
+
+            .fixture-editor-grid {
+                display: grid;
+                gap: 1rem;
+                grid-template-columns: repeat(2, minmax(14rem, 20rem));
+            }
+
+            .fixture-editor {
+                inline-size: 20rem;
+            }
+
+            @media (max-width: 40rem) {
+                .fixture-editor-grid {
+                    grid-template-columns: minmax(0, 1fr);
+                }
+
+                .fixture-editor {
+                    inline-size: min(100%, 20rem);
+                }
+            }
+        </style>
+    </head>
+    <body class="soa-body">
+        <main>
+            <div class="fixture-triggers">
+                <button
+                    class="soa-inline-editable fixture-clamp"
+                    id="clamped-trigger"
+                    type="button"
+                    data-inline-editor="textarea"
+                    data-max-rows="2"
+                    style="--soa-inline-editable-max-rows: 2"
+                >
+                    <span>First line<br />Second line<br />Third clipped line</span>
+                </button>
+                <button
+                    class="soa-inline-editable"
+                    id="busy-trigger"
+                    type="button"
+                    aria-busy="true"
+                    disabled
+                >
+                    Saving
+                </button>
+            </div>
+
+            <div class="fixture-editor-grid">
+                <section
+                    class="soa-inline-editor soa-inline-editor-inline soa-inline-editor-type-text fixture-editor"
+                    id="text-editor"
+                >
+                    <form class="soa-inline-editor-form">
+                        <div class="soa-inline-editor-title">Text</div>
+                        <div class="soa-inline-editor-input">
+                            <input
+                                class="soa-inline-editor-control soa-input"
+                                id="text-control"
+                                value="Draft"
+                            />
+                            <button
+                                class="soa-inline-editor-clear soa-icon-button"
+                                id="text-clear"
+                                type="button"
+                                aria-label="Clear text"
+                            >
+                                ×
+                            </button>
+                        </div>
+                        <div class="soa-inline-editor-actions" id="editor-actions">
+                            <button
+                                class="soa-inline-editor-submit soa-button soa-button-primary"
+                                id="editor-submit"
+                                type="submit"
+                            >
+                                Save
+                            </button>
+                            <button
+                                class="soa-inline-editor-cancel soa-button soa-button-secondary"
+                                type="button"
+                            >
+                                Cancel
+                            </button>
+                        </div>
+                        <div class="soa-inline-editor-error" id="editor-error" role="alert">
+                            Invalid value
+                        </div>
+                    </form>
+                </section>
+
+                <section
+                    class="soa-inline-editor soa-inline-editor-inline soa-inline-editor-type-textarea fixture-editor"
+                    id="textarea-editor"
+                >
+                    <form class="soa-inline-editor-form">
+                        <div class="soa-inline-editor-input">
+                            <textarea
+                                class="soa-inline-editor-control soa-input"
+                                id="textarea-control"
+                            ></textarea>
+                        </div>
+                    </form>
+                </section>
+
+                <section
+                    class="soa-inline-editor soa-inline-editor-inline soa-inline-editor-type-number fixture-editor"
+                    id="number-editor"
+                >
+                    <form class="soa-inline-editor-form">
+                        <div class="soa-inline-editor-input">
+                            <input
+                                class="soa-inline-editor-control soa-input"
+                                id="number-control"
+                                type="number"
+                                value="42"
+                            />
+                            <button
+                                class="soa-inline-editor-clear soa-icon-button"
+                                id="number-clear"
+                                type="button"
+                                aria-label="Clear number"
+                            >
+                                ×
+                            </button>
+                        </div>
+                    </form>
+                </section>
+
+                <section
+                    class="soa-inline-editor soa-inline-editor-inline soa-inline-editor-type-date fixture-editor"
+                    id="date-editors"
+                >
+                    <form class="soa-inline-editor-form">
+                        <input
+                            class="soa-inline-editor-control soa-input"
+                            id="date-control"
+                            data-date-control="date"
+                            value="09.09.2026"
+                        />
+                        <input
+                            class="soa-inline-editor-control soa-input"
+                            id="datetime-control"
+                            data-date-control="datetime"
+                            value="09.09.2026 17:30"
+                        />
+                    </form>
+                </section>
+
+                <section
+                    class="soa-inline-editor soa-inline-editor-inline soa-inline-editor-type-select fixture-editor"
+                    id="select-editor"
+                >
+                    <form class="soa-inline-editor-form">
+                        <div class="soa-inline-editor-input">
+                            <div
+                                class="soa-inline-editor-control soa-inline-editor-select"
+                                data-inline-editor-control
+                                data-inline-editor-select
+                            >
+                                <div data-select-root>
+                                    <select class="soa-select" id="select-control">
+                                        <option>Draft</option>
+                                        <option>Published</option>
+                                    </select>
+                                </div>
+                                <button
+                                    class="soa-inline-editor-clear soa-icon-button"
+                                    id="select-clear"
+                                    type="button"
+                                    aria-label="Clear selection"
+                                >
+                                    ×
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+
+                <section
+                    class="soa-inline-editor soa-inline-editor-inline soa-inline-editor-type-checklist fixture-editor"
+                    id="checklist-editor"
+                >
+                    <form class="soa-inline-editor-form">
+                        <fieldset class="soa-inline-editor-checklist" id="checklist-control">
+                            <label class="soa-inline-editor-check-option">
+                                <input
+                                    class="soa-inline-editor-check-input soa-checkbox"
+                                    id="checkbox-control"
+                                    type="checkbox"
+                                    checked
+                                />
+                                <span>Administrator</span>
+                            </label>
+                            <label class="soa-inline-editor-check-option">
+                                <input
+                                    class="soa-inline-editor-check-input soa-checkbox"
+                                    type="checkbox"
+                                />
+                                <span>Editor</span>
+                            </label>
+                            <label class="soa-inline-editor-check-option"
+                                ><input
+                                    class="soa-inline-editor-check-input soa-checkbox"
+                                    type="checkbox"
+                                /><span>Reviewer 01</span></label
+                            >
+                            <label class="soa-inline-editor-check-option"
+                                ><input
+                                    class="soa-inline-editor-check-input soa-checkbox"
+                                    type="checkbox"
+                                /><span>Reviewer 02</span></label
+                            >
+                            <label class="soa-inline-editor-check-option"
+                                ><input
+                                    class="soa-inline-editor-check-input soa-checkbox"
+                                    type="checkbox"
+                                /><span>Reviewer 03</span></label
+                            >
+                            <label class="soa-inline-editor-check-option"
+                                ><input
+                                    class="soa-inline-editor-check-input soa-checkbox"
+                                    type="checkbox"
+                                /><span>Reviewer 04</span></label
+                            >
+                            <label class="soa-inline-editor-check-option"
+                                ><input
+                                    class="soa-inline-editor-check-input soa-checkbox"
+                                    type="checkbox"
+                                /><span>Reviewer 05</span></label
+                            >
+                            <label class="soa-inline-editor-check-option"
+                                ><input
+                                    class="soa-inline-editor-check-input soa-checkbox"
+                                    type="checkbox"
+                                /><span>Reviewer 06</span></label
+                            >
+                            <label class="soa-inline-editor-check-option"
+                                ><input
+                                    class="soa-inline-editor-check-input soa-checkbox"
+                                    type="checkbox"
+                                /><span>Reviewer 07</span></label
+                            >
+                            <label class="soa-inline-editor-check-option"
+                                ><input
+                                    class="soa-inline-editor-check-input soa-checkbox"
+                                    type="checkbox"
+                                /><span>Reviewer 08</span></label
+                            >
+                            <label class="soa-inline-editor-check-option"
+                                ><input
+                                    class="soa-inline-editor-check-input soa-checkbox"
+                                    type="checkbox"
+                                /><span>Reviewer 09</span></label
+                            >
+                            <label class="soa-inline-editor-check-option"
+                                ><input
+                                    class="soa-inline-editor-check-input soa-checkbox"
+                                    type="checkbox"
+                                /><span>Reviewer 10</span></label
+                            >
+                            <label class="soa-inline-editor-check-option"
+                                ><input
+                                    class="soa-inline-editor-check-input soa-checkbox"
+                                    type="checkbox"
+                                /><span>Reviewer 11</span></label
+                            >
+                            <label class="soa-inline-editor-check-option"
+                                ><input
+                                    class="soa-inline-editor-check-input soa-checkbox"
+                                    type="checkbox"
+                                /><span>Reviewer 12</span></label
+                            >
+                        </fieldset>
+                    </form>
+                </section>
+
+                <section
+                    class="soa-inline-editor soa-inline-editor-inline soa-inline-editor-type-range fixture-editor"
+                    id="range-editor"
+                >
+                    <form class="soa-inline-editor-form">
+                        <div class="soa-inline-editor-input">
+                            <div class="soa-inline-editor-range" data-inline-editor-control>
+                                <input
+                                    class="soa-inline-editor-control soa-range"
+                                    id="range-control"
+                                    type="range"
+                                    value="42"
+                                />
+                                <output class="soa-inline-editor-range-value" id="range-output"
+                                    >42</output
+                                >
+                                <div class="soa-inline-editor-range-number-wrap">
+                                    <input
+                                        class="soa-inline-editor-control soa-inline-editor-range-number soa-input"
+                                        id="range-number"
+                                        type="number"
+                                        value="42"
+                                    />
+                                    <button
+                                        class="soa-inline-editor-clear soa-icon-button"
+                                        id="range-clear"
+                                        type="button"
+                                        aria-label="Clear range"
+                                    >
+                                        ×
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+
+                <section
+                    class="soa-inline-editor soa-inline-editor-inline fixture-editor"
+                    id="busy-editor"
+                >
+                    <form class="soa-inline-editor-form" aria-busy="true">
+                        <input
+                            class="soa-inline-editor-control soa-input"
+                            disabled
+                            value="Saving"
+                        />
+                        <div class="soa-inline-editor-actions">
+                            <button
+                                class="soa-inline-editor-submit soa-button"
+                                type="button"
+                                disabled
+                            >
+                                Saving
+                            </button>
+                        </div>
+                    </form>
+                </section>
+            </div>
+
+            <dialog
+                class="soa-inline-editor soa-inline-editor-popup soa-inline-editor-type-text"
+                id="popup-editor"
+                open
+            >
+                <form class="soa-inline-editor-form">
+                    <div class="soa-inline-editor-title">Popup editor</div>
+                    <input class="soa-inline-editor-control soa-input" value="Popup value" />
+                </form>
+            </dialog>
+            <dialog class="soa-inline-editor soa-inline-editor-popup" id="closed-popup"></dialog>
+        </main>
+    </body>
+</html>

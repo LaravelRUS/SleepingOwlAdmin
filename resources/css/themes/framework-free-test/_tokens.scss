@@ -114,6 +114,25 @@ $dialog-image-reserved-space: 8rem !default;
     --soa-order-badge-size: #{$order-badge-size};
     --soa-dragging-opacity: #{$dragging-opacity};
     --soa-dialog-image-reserved-space: #{$dialog-image-reserved-space};
+    --soa-inline-editor-surface: var(--soa-elevated-surface-color);
+    --soa-inline-editor-text: var(--soa-text-color);
+    --soa-inline-editor-border: var(--soa-input-border-color);
+    --soa-inline-editor-accent: var(--soa-primary-color);
+    --soa-inline-editor-accent-hover: color-mix(
+      in srgb,
+      var(--soa-primary-color) 88%,
+      var(--soa-text-color)
+    );
+    --soa-inline-editor-on-accent: var(--soa-on-primary-color);
+    --soa-inline-editor-muted: var(--soa-muted-text-color);
+    --soa-inline-editor-error: var(--soa-danger-color);
+    --soa-inline-editor-shadow: var(--soa-shadow-color);
+    --soa-inline-editor-backdrop: var(--soa-overlay-color);
+    --soa-inline-editor-focus-ring: color-mix(
+      in srgb,
+      var(--soa-focus-color) 20%,
+      transparent
+    );
   }
 
   :root[data-theme='framework-free-test'][data-color-scheme='dark'] {

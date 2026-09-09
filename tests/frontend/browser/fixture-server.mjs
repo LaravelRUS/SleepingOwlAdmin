@@ -67,6 +67,10 @@ const staticRoutes = new Map([
         [join(browserDirectory, 'shared-controls.html'), 'text/html; charset=utf-8'],
     ],
     [
+        '/shared-inline-editors',
+        [join(browserDirectory, 'shared-inline-editors.html'), 'text/html; charset=utf-8'],
+    ],
+    [
         '/table-presentation',
         [join(browserDirectory, 'table-presentation.html'), 'text/html; charset=utf-8'],
     ],

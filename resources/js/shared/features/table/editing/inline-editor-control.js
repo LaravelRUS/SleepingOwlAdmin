@@ -3,8 +3,10 @@ const RANGE_INPUT_SELECTOR = '[data-inline-editor-range-input]'
 const RANGE_NUMBER_SELECTOR = '[data-inline-editor-range-number]'
 const RANGE_OUTPUT_SELECTOR = '[data-inline-editor-range-output]'
 const RANGE_EMPTY_VALUE = '0'
+const SELECT_CLEAR_EVENT = 'select:clear'
 const SELECT_CONTROL_SELECTOR = '[data-inline-editor-select]'
 const SELECT_NATIVE_SELECTOR = '[data-inline-editor-select-native]'
+const SELECT_ROOT_SELECTOR = '[data-select-root]'
 
 export function bindInlineEditorControl(element, config) {
     if (config.type === 'boolean' || config.type === 'checkbox' || config.type === 'checklist') {
@@ -88,12 +90,21 @@ function bindSelect(element) {
     const nativeControl = () => element.querySelector(SELECT_NATIVE_SELECTOR)
 
     return {
+        clear: () => dispatchSelectClear(element),
         focusElement: element,
         read: () => nativeControl()?.value ?? '',
     }
 }
 
+function dispatchSelectClear(element) {
+    const root = element.querySelector(SELECT_ROOT_SELECTOR)
+    const EventConstructor = root?.ownerDocument?.defaultView?.Event ?? globalThis.Event
+
+    root?.dispatchEvent(new EventConstructor(SELECT_CLEAR_EVENT))
+}
+
 function setRangeOutput(output, value) {
+    output.hidden = false
     output.value = value
     output.textContent = value
 }

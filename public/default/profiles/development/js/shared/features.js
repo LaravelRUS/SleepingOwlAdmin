@@ -5695,8 +5695,10 @@ var RANGE_INPUT_SELECTOR = '[data-inline-editor-range-input]';
 var RANGE_NUMBER_SELECTOR = '[data-inline-editor-range-number]';
 var RANGE_OUTPUT_SELECTOR = '[data-inline-editor-range-output]';
 var RANGE_EMPTY_VALUE = '0';
+var SELECT_CLEAR_EVENT = 'select:clear';
 var SELECT_CONTROL_SELECTOR = '[data-inline-editor-select]';
 var SELECT_NATIVE_SELECTOR = '[data-inline-editor-select-native]';
+var SELECT_ROOT_SELECTOR = '[data-select-root]';
 function bindInlineEditorControl(element, config) {
   var _element$matches;
   if (config.type === 'boolean' || config.type === 'checkbox' || config.type === 'checklist') {
@@ -5790,6 +5792,9 @@ function bindSelect(element) {
     return element.querySelector(SELECT_NATIVE_SELECTOR);
   };
   return {
+    clear: function clear() {
+      return dispatchSelectClear(element);
+    },
     focusElement: element,
     read: function read() {
       var _nativeControl$value, _nativeControl;
@@ -5797,7 +5802,14 @@ function bindSelect(element) {
     }
   };
 }
+function dispatchSelectClear(element) {
+  var _root$ownerDocument$d, _root$ownerDocument;
+  var root = element.querySelector(SELECT_ROOT_SELECTOR);
+  var EventConstructor = (_root$ownerDocument$d = root === null || root === void 0 || (_root$ownerDocument = root.ownerDocument) === null || _root$ownerDocument === void 0 || (_root$ownerDocument = _root$ownerDocument.defaultView) === null || _root$ownerDocument === void 0 ? void 0 : _root$ownerDocument.Event) !== null && _root$ownerDocument$d !== void 0 ? _root$ownerDocument$d : globalThis.Event;
+  root === null || root === void 0 || root.dispatchEvent(new EventConstructor(SELECT_CLEAR_EVENT));
+}
 function setRangeOutput(output, value) {
+  output.hidden = false;
   output.value = value;
   output.textContent = value;
 }

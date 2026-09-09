@@ -107,6 +107,15 @@ test('setSelect2 compatibility options drive the same Vue island', async ({ page
     await expect(page.locator('#select2-alias-fixture .select2-container')).toHaveCount(0)
 })
 
+test('native select clear event resets a non-required Vue island', async ({ page }) => {
+    await openFixture(page)
+
+    await page.locator('#ajax-select-fixture [data-select-root]').dispatchEvent('select:clear')
+
+    await expect(page.locator('#project')).toHaveValue('')
+    await expect(page.locator('#ajax-select-fixture .multiselect__placeholder')).toBeVisible()
+})
+
 test('legacy disabled option disables both the widget and submitted control', async ({ page }) => {
     await openFixture(page)
 

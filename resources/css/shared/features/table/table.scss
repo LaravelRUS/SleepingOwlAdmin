@@ -1,4 +1,5 @@
 @use 'colors';
+@use 'inline-editor';
 @layer sleepingowl-feature.table;
 
 $cell-padding-block: 0.625rem !default;
@@ -16,4 +17,8 @@ $row-transition-duration: 150ms !default;
   --soa-table-cell-padding-inline: #{$cell-padding-inline};
   --soa-table-border-width: #{$border-width};
   --soa-table-row-transition-duration: #{$row-transition-duration};
+}
+
+@layer sleepingowl-feature.table {
+  @include inline-editor.styles;
 }

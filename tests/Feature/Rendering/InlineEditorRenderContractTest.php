@@ -18,7 +18,7 @@ class InlineEditorRenderContractTest extends TestCase
         $this->assertStringContainsString('data-inline-editor-root', $html);
         $this->assertStringContainsString('data-inline-editor-form', $html);
         $this->assertStringContainsString('data-inline-editor-control', $html);
-        if (in_array($type, ['boolean', 'checkbox', 'select'], true)) {
+        if (in_array($type, ['boolean', 'checkbox'], true)) {
             $this->assertStringNotContainsString('data-inline-editor-clear', $html);
         } else {
             $this->assertStringContainsString('data-inline-editor-clear', $html);

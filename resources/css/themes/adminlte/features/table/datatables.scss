@@ -1,6 +1,5 @@
 @use 'sass:meta';
 @use 'auto-update';
-@use 'inline-editor';
 @use 'layout';
 @use 'page-jump';
 @use 'table';
@@ -16,7 +15,6 @@
   );
   @include layout.styles;
   @include page-jump.styles;
-  @include inline-editor.styles;
   @include table.styles;
   @include auto-update.styles;
 

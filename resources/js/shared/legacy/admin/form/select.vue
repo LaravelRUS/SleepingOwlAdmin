@@ -87,6 +87,8 @@ import { mergeRemoteSelectOptions } from './select-remote-options'
 import { createRemoteSelectSearch } from './select-remote-search'
 import { normalizeLegacySelect2Options } from './select2-option-migration'
 
+const SELECT_CLEAR_EVENT = 'select:clear'
+
 export default defineComponent({
     name: 'ElementSelect',
     components: { Multiselect },
@@ -175,10 +177,12 @@ export default defineComponent({
         },
     },
     mounted() {
+        this.$el.addEventListener(SELECT_CLEAR_EVENT, this.clearSelection)
         this.mountRemoteSearch()
         this.mountDependentSelect()
     },
     beforeUnmount() {
+        this.$el.removeEventListener(SELECT_CLEAR_EVENT, this.clearSelection)
         this.dependentLoad?.destroy()
         this.dependentLoad = null
         this.remoteSearch?.destroy()
@@ -191,6 +195,11 @@ export default defineComponent({
             const next = appendSelectTag(this.localOptions, this.selection, value, this.multiple)
             this.localOptions = next.options
             this.selectionChanged(next.selection)
+        },
+        clearSelection() {
+            if (this.required) return
+
+            this.selectionChanged(this.multiple ? [] : null)
         },
         applyRemoteOptions(options) {
             this.loadError = false

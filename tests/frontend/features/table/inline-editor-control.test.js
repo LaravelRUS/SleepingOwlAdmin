@@ -46,14 +46,22 @@ it('clears scalar controls', () => {
     expect(control.read()).toBe('')
 })
 
-it('reads the editable multiselect without focusing or clearing it externally', () => {
+it('reads and clears the editable multiselect through its native island event', () => {
     const native = {
         value: 'published',
     }
+    let clearEvent = null
+    const root = {
+        dispatchEvent: (event) => (clearEvent = event.type),
+    }
     const element = {
         matches: () => true,
-        querySelector: (selector) =>
-            selector === '[data-inline-editor-select-native]' ? native : null,
+        querySelector: (selector) => {
+            if (selector === '[data-inline-editor-select-native]') return native
+            if (selector === '[data-select-root]') return root
+
+            return null
+        },
     }
     const control = bindInlineEditorControl(element, {
         type: 'select',
@@ -62,7 +70,8 @@ it('reads the editable multiselect without focusing or clearing it externally', 
 
     expect(control.read()).toBe('published')
     expect(control.focusElement).toBe(element)
-    expect(control.clear).toBeUndefined()
+    control.clear()
+    expect(clearEvent).toBe('select:clear')
 })
 
 it('resets an editable range to zero when it is cleared', () => {
@@ -77,7 +86,7 @@ it('resets an editable range to zero when it is cleared', () => {
     number.addEventListener = (name, listener) => (numberListeners[name] = listener)
     number.removeEventListener = () => {}
 
-    const output = { textContent: '42', value: '42' }
+    const output = { hidden: true, textContent: '42', value: '42' }
     const element = {
         querySelector: (selector) => {
             if (selector === '[data-inline-editor-range-input]') return range
@@ -97,17 +106,27 @@ it('resets an editable range to zero when it is cleared', () => {
     number.value = ''
     numberListeners.input()
 
-    expect(range.value).toBe('0')
-    expect(number.value).toBe('0')
-    expect(output.value).toBe('0')
+    expectClearedRange(range, number, output)
     expect(control.read()).toBe('0')
 
     range.value = '42'
     number.value = '42'
     control.clear()
 
-    expect(range.value).toBe('0')
-    expect(number.value).toBe('0')
-    expect(output.value).toBe('0')
+    expectClearedRange(range, number, output)
     expect(control.read()).toBe('0')
 })
+
+function expectClearedRange(range, number, output) {
+    expect({
+        hidden: output.hidden,
+        number: number.value,
+        output: output.value,
+        range: range.value,
+    }).toEqual({
+        hidden: false,
+        number: '0',
+        output: '0',
+        range: '0',
+    })
+}

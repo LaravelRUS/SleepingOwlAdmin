@@ -1,8 +1,8 @@
 @use 'auto-update';
-@use 'inline-editor';
 @use 'layout';
 @use 'table';
 @use 'tokens';
+@use '../../../../shared/features/table/inline-editor';
 @import 'datatables.net-bs5/css/dataTables.bootstrap5.css';
 @import 'datatables.net-responsive-bs5/css/responsive.bootstrap5.css';
 
