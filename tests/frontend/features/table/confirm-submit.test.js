@@ -1,6 +1,6 @@
 import { expect, it, vi } from 'vitest'
 
-import { bindConfirmedControls } from '../../../../resources/frontend/features/table/controls/confirm-submit.js'
+import { bindConfirmedControls } from '../../../../resources/js/shared/features/table/controls/confirm-submit.js'
 
 function createRoot() {
     let listener

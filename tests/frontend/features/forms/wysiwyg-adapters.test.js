@@ -1,9 +1,9 @@
 import { describe, expect, it, vi } from 'vitest'
 
-import { createCkeditor4Adapter } from '../../../../resources/frontend/features/forms/wysiwyg/adapters/ckeditor4.js'
-import { createCkeditor5Adapter } from '../../../../resources/frontend/features/forms/wysiwyg/adapters/ckeditor5.js'
-import { createSimpleMdeAdapter } from '../../../../resources/frontend/features/forms/wysiwyg/adapters/simplemde.js'
-import { createTinyMceAdapter } from '../../../../resources/frontend/features/forms/wysiwyg/adapters/tinymce.js'
+import { createCkeditor4Adapter } from '../../../../resources/js/shared/features/forms/wysiwyg/adapters/ckeditor4.js'
+import { createCkeditor5Adapter } from '../../../../resources/js/shared/features/forms/wysiwyg/adapters/ckeditor5.js'
+import { createSimpleMdeAdapter } from '../../../../resources/js/shared/features/forms/wysiwyg/adapters/simplemde.js'
+import { createTinyMceAdapter } from '../../../../resources/js/shared/features/forms/wysiwyg/adapters/tinymce.js'
 
 describe('synchronous WYSIWYG adapters', () => {
     it('binds CKEditor 4 and SimpleMDE to the existing textarea id', () => {

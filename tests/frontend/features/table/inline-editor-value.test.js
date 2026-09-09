@@ -4,7 +4,7 @@ import {
     applyInlineEditorValue,
     inlineEditorDisplayValue,
     normalizeInlineEditorValue,
-} from '../../../../resources/frontend/features/table/editing/inline-editor-value.js'
+} from '../../../../resources/js/shared/features/table/editing/inline-editor-value.js'
 
 const options = [
     { value: '1', text: 'Admin' },

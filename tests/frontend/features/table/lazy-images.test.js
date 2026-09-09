@@ -3,7 +3,7 @@ import { expect, it, vi } from 'vitest'
 import {
     loadLazyImage,
     loadLazyImages,
-} from '../../../../resources/frontend/features/table/hooks/lazy-images.js'
+} from '../../../../resources/js/shared/features/table/hooks/lazy-images.js'
 
 it('moves lazy image sources to native loading attributes', () => {
     const attributes = new Map([

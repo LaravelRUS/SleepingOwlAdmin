@@ -189,7 +189,7 @@ An application build can reuse the shipped canonical-token preset:
 
 ```js
 // tailwind.admin.config.js
-const preset = require('./vendor/laravelrus/sleepingowl/resources/frontend/themes/tailwind/tailwind.preset.cjs')
+const preset = require('./vendor/laravelrus/sleepingowl/resources/css/themes/shadcn/tailwind.preset.cjs')
 
 module.exports = {
     content: ['./resources/views/vendor/sleeping_owl_tailwind/**/*.blade.php'],

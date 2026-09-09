@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
-import { installLegacyTreeNotifications } from '../../../../resources/frontend/features/tree/themes/legacy-adminlte/browser.js'
+import { installLegacyTreeNotifications } from '../../../../resources/js/themes/adminlte/features/tree/browser.js'
 
 describe('legacy AdminLTE tree notifications', () => {
     afterEach(() => vi.restoreAllMocks())

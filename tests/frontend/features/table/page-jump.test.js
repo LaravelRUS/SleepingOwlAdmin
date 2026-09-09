@@ -4,7 +4,7 @@ import {
     createPageJumpControl,
     installPageJumpFeature,
     PAGE_JUMP_FEATURE,
-} from '../../../../resources/frontend/features/table/pagination/page-jump.js'
+} from '../../../../resources/js/shared/features/table/pagination/page-jump.js'
 
 function element(name) {
     const listeners = {}

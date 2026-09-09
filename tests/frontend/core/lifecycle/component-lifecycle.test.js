@@ -4,7 +4,7 @@ import {
     ComponentLifecycle,
     componentMountSkipped,
     createComponentLifecycle,
-} from '../../../../resources/frontend/core/lifecycle/component-lifecycle.js'
+} from '../../../../resources/js/core/lifecycle/component-lifecycle.js'
 
 function createElement(id, selectors = [], children = []) {
     const element = {

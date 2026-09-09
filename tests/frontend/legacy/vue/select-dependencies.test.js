@@ -3,7 +3,7 @@ import { expect, it } from 'vitest'
 import {
     appendSelectDependencies,
     readSelectDependencies,
-} from '../../../../resources/assets/js_owl/admin/form/select-dependencies.js'
+} from '../../../../resources/js/shared/legacy/admin/form/select-dependencies.js'
 
 function fixtureDocument() {
     const controls = new Map([

@@ -6,7 +6,7 @@ import {
     SIDEBAR_COLLAPSED,
     SIDEBAR_EXPANDED,
     writeSidebarPreference,
-} from '../../../../resources/frontend/features/sidebar/sidebar-storage.js'
+} from '../../../../resources/js/shared/features/sidebar/sidebar-storage.js'
 
 describe('sidebar preference storage', () => {
     it('accepts only the two public body state classes', () => {

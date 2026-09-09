@@ -8,13 +8,13 @@ const root = resolve(import.meta.dirname, '../../..')
 it('replaces Bootstrap alert execution while preserving the public marker', () => {
     const views = ['error', 'info', 'success', 'warning']
         .map((type) =>
-            read(`resources/views/themes/legacy/default/_partials/messages/${type}.blade.php`),
+            read(`resources/views/themes/adminlte/default/_partials/messages/${type}.blade.php`),
         )
         .join('\n')
     const runtime = [
-        read('resources/assets/js_owl/admin/alert.js'),
-        read('resources/frontend/features/alert/alerts.js'),
-        read('resources/frontend/features/alert/alert-elements.js'),
+        read('resources/js/shared/legacy/admin/alert.js'),
+        read('resources/js/shared/features/alert/alerts.js'),
+        read('resources/js/shared/features/alert/alert-elements.js'),
     ].join('\n')
 
     expect(views).toContain('data-dismiss="alert"')
@@ -30,7 +30,7 @@ it('ships alert behavior as an independent no-build entry', () => {
     expect(entry).toEqual({
         logicalId: 'feature:alert',
         output: 'js/features/alert.js',
-        source: 'resources/frontend/features/alert/browser.js',
+        source: 'resources/js/shared/features/alert/browser.js',
     })
     expect(entries.modern.styles.some(({ logicalId }) => logicalId === 'feature:alert')).toBe(false)
 })

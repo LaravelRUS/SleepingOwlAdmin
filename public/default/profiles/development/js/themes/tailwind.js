@@ -2,10 +2,10 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./resources/frontend/themes/tailwind/runtime.js"
-/*!*******************************************************!*\
-  !*** ./resources/frontend/themes/tailwind/runtime.js ***!
-  \*******************************************************/
+/***/ "./resources/js/themes/shadcn/runtime.js"
+/*!***********************************************!*\
+  !*** ./resources/js/themes/shadcn/runtime.js ***!
+  \***********************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
@@ -190,15 +190,15 @@ function writeStoredMode(target, mode) {
 var __webpack_exports__ = {};
 // This entry needs to be wrapped in an IIFE because it needs to be isolated against other modules in the chunk.
 (() => {
-/*!*****************************************************!*\
-  !*** ./resources/frontend/themes/tailwind/index.js ***!
-  \*****************************************************/
+/*!*********************************************!*\
+  !*** ./resources/js/themes/shadcn/theme.js ***!
+  \*********************************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   THEME_ID: () => (/* binding */ THEME_ID),
 /* harmony export */   installTailwindTheme: () => (/* reexport safe */ _runtime_js__WEBPACK_IMPORTED_MODULE_0__.installTailwindTheme)
 /* harmony export */ });
-/* harmony import */ var _runtime_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./runtime.js */ "./resources/frontend/themes/tailwind/runtime.js");
+/* harmony import */ var _runtime_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./runtime.js */ "./resources/js/themes/shadcn/runtime.js");
 
 if (globalThis.document) (0,_runtime_js__WEBPACK_IMPORTED_MODULE_0__.installTailwindTheme)(globalThis);
 var THEME_ID = 'tailwind';

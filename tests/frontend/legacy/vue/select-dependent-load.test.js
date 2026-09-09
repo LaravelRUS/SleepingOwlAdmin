@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest'
 
-import { createDependentSelectLoad } from '../../../../resources/assets/js_owl/admin/form/select-dependent-load.js'
+import { createDependentSelectLoad } from '../../../../resources/js/shared/legacy/admin/form/select-dependent-load.js'
 
 describe('dependent select load controller', () => {
     it('loads on demand, reports lifecycle in order and removes listeners', async () => {

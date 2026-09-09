@@ -3,7 +3,7 @@ import { expect, it, vi } from 'vitest'
 import {
     bindTableCheckboxes,
     updateRowSelection,
-} from '../../../../resources/frontend/features/table/selection/checkbox-controls.js'
+} from '../../../../resources/js/shared/features/table/selection/checkbox-controls.js'
 
 function createRoot() {
     let listener

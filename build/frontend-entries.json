@@ -2,29 +2,29 @@
     "legacy": {
         "scripts": [
             {
-                "source": "resources/assets/js_owl/vue-runtime.js",
+                "source": "resources/js/shared/legacy/vue-runtime.js",
                 "output": "js/vue.js"
             },
             {
-                "source": "resources/assets/js_owl/vue-runtime-dev.js",
+                "source": "resources/js/shared/legacy/vue-runtime-dev.js",
                 "output": "js/vue-dev.js"
             },
             {
-                "source": "resources/assets/js_owl/app.js",
+                "source": "resources/js/shared/legacy/app.js",
                 "output": "js/admin-app.js"
             },
             {
-                "source": "resources/assets/js_owl/app-dev.js",
+                "source": "resources/js/shared/legacy/app-dev.js",
                 "output": "js/admin-app-dev.js"
             },
             {
-                "source": "resources/assets/js_owl/modules_load.js",
+                "source": "resources/js/shared/legacy/modules_load.js",
                 "output": "js/modules.js"
             }
         ],
         "styles": [
             {
-                "source": "resources/assets/scss/admin-app.scss",
+                "source": "resources/css/themes/adminlte/legacy/admin-app.scss",
                 "output": "css/admin-app.css"
             }
         ]
@@ -33,259 +33,259 @@
         "scripts": [
             {
                 "logicalId": "core",
-                "source": "resources/frontend/core/browser.js",
+                "source": "resources/js/core/browser.js",
                 "output": "js/admin-core.js"
             },
             {
                 "logicalId": "shared:compatibility",
-                "source": "resources/frontend/shared/compatibility/browser.js",
+                "source": "resources/js/shared/compatibility/browser.js",
                 "output": "js/shared/compatibility.js"
             },
             {
                 "logicalId": "shared:modules",
-                "source": "resources/frontend/shared/modules/browser.js",
+                "source": "resources/js/shared/modules/browser.js",
                 "output": "js/shared/modules.js"
             },
             {
                 "logicalId": "shared:vue",
-                "source": "resources/frontend/shared/vue/browser.js",
+                "source": "resources/js/shared/vue/browser.js",
                 "output": "js/shared/vue.js"
             },
             {
                 "logicalId": "feature:alert",
-                "source": "resources/frontend/features/alert/browser.js",
+                "source": "resources/js/shared/features/alert/browser.js",
                 "output": "js/features/alert.js"
             },
             {
                 "logicalId": "feature:dropdown",
-                "source": "resources/frontend/features/dropdown/browser.js",
+                "source": "resources/js/shared/features/dropdown/browser.js",
                 "output": "js/features/dropdown.js"
             },
             {
                 "logicalId": "feature:forms",
-                "source": "resources/frontend/features/forms/browser.js",
+                "source": "resources/js/shared/features/forms/browser.js",
                 "output": "js/features/forms.js"
             },
             {
                 "logicalId": "feature:sidebar",
-                "source": "resources/frontend/features/sidebar/browser.js",
+                "source": "resources/js/shared/features/sidebar/browser.js",
                 "output": "js/features/sidebar.js"
             },
             {
                 "logicalId": "feature:lightbox",
-                "source": "resources/frontend/features/lightbox/browser.js",
+                "source": "resources/js/shared/features/lightbox/browser.js",
                 "output": "js/features/lightbox.js"
             },
             {
                 "logicalId": "feature:table",
-                "source": "resources/frontend/features/table/browser.js",
+                "source": "resources/js/shared/features/table/browser.js",
                 "output": "js/features/table.js"
             },
             {
                 "logicalId": "feature:tabs",
-                "source": "resources/frontend/features/tabs/browser.js",
+                "source": "resources/js/shared/features/tabs/browser.js",
                 "output": "js/features/tabs.js"
             },
             {
                 "logicalId": "feature:tooltip",
-                "source": "resources/frontend/features/tooltip/browser.js",
+                "source": "resources/js/shared/features/tooltip/browser.js",
                 "output": "js/features/tooltip.js"
             },
             {
                 "logicalId": "feature:tree",
-                "source": "resources/frontend/features/tree/browser.js",
+                "source": "resources/js/shared/features/tree/browser.js",
                 "output": "js/features/tree.js"
             },
             {
                 "logicalId": "feature:tree:theme:legacy-adminlte",
-                "source": "resources/frontend/features/tree/themes/legacy-adminlte/browser.js",
+                "source": "resources/js/themes/adminlte/features/tree/browser.js",
                 "output": "js/features/tree/themes/legacy-adminlte.js"
             },
             {
                 "logicalId": "feature:tree:theme:tailwind",
-                "source": "resources/frontend/features/tree/themes/tailwind/browser.js",
+                "source": "resources/js/themes/shadcn/features/tree/browser.js",
                 "output": "js/features/tree/themes/tailwind.js"
             },
             {
                 "logicalId": "feature:table:theme:legacy-adminlte",
-                "source": "resources/frontend/features/table/themes/legacy-adminlte/browser.js",
+                "source": "resources/js/themes/adminlte/features/table/browser.js",
                 "output": "js/features/table/themes/legacy-adminlte.js"
             },
             {
                 "logicalId": "theme:legacy-adminlte",
-                "source": "resources/frontend/themes/legacy-adminlte/index.js",
+                "source": "resources/js/themes/adminlte/theme.js",
                 "output": "js/themes/legacy-adminlte.js"
             },
             {
                 "logicalId": "theme:tailwind",
-                "source": "resources/frontend/themes/tailwind/index.js",
+                "source": "resources/js/themes/shadcn/theme.js",
                 "output": "js/themes/tailwind.js"
             }
         ],
         "styles": [
             {
                 "logicalId": "core",
-                "source": "resources/frontend/core/styles/admin-core.scss",
+                "source": "resources/css/core/admin-core.scss",
                 "output": "css/admin-core.css"
             },
             {
                 "logicalId": "shared:icons",
-                "source": "resources/frontend/shared/icons/styles/font-awesome.scss",
+                "source": "resources/css/shared/features/icons/font-awesome.scss",
                 "output": "css/icons.css"
             },
             {
                 "logicalId": "feature:dropdown",
-                "source": "resources/frontend/features/dropdown/styles/dropdown-base.scss",
+                "source": "resources/css/shared/features/dropdown/dropdown-base.scss",
                 "output": "css/features/dropdown.css"
             },
             {
                 "logicalId": "feature:forms",
-                "source": "resources/frontend/features/forms/styles/forms.scss",
+                "source": "resources/css/shared/features/forms/forms.scss",
                 "output": "css/features/forms.css"
             },
             {
                 "logicalId": "feature:forms:theme:tailwind",
-                "source": "resources/frontend/features/forms/themes/tailwind/styles/forms-tailwind.scss",
+                "source": "resources/css/themes/shadcn/features/forms/forms-tailwind.scss",
                 "output": "css/features/forms/themes/tailwind.css"
             },
             {
                 "logicalId": "feature:sidebar",
-                "source": "resources/frontend/features/sidebar/styles/sidebar-base.scss",
+                "source": "resources/css/shared/features/sidebar/sidebar-base.scss",
                 "output": "css/features/sidebar.css"
             },
             {
                 "logicalId": "feature:lightbox",
-                "source": "resources/frontend/features/lightbox/styles/lightbox-base.scss",
+                "source": "resources/css/shared/features/lightbox/lightbox-base.scss",
                 "output": "css/features/lightbox.css"
             },
             {
                 "logicalId": "feature:table",
-                "source": "resources/frontend/features/table/styles/table.scss",
+                "source": "resources/css/shared/features/table/table.scss",
                 "output": "css/features/table.css"
             },
             {
                 "logicalId": "feature:tooltip",
-                "source": "resources/frontend/features/tooltip/styles/tooltip-base.scss",
+                "source": "resources/css/shared/features/tooltip/tooltip-base.scss",
                 "output": "css/features/tooltip.css"
             },
             {
                 "logicalId": "feature:tree",
-                "source": "resources/frontend/features/tree/styles/tree.scss",
+                "source": "resources/css/shared/features/tree/tree.scss",
                 "output": "css/features/tree.css"
             },
             {
                 "logicalId": "feature:dropdown:theme:legacy-adminlte",
-                "source": "resources/frontend/features/dropdown/themes/legacy-adminlte/styles/dropdown-adminlte.scss",
+                "source": "resources/css/themes/adminlte/features/dropdown/dropdown-adminlte.scss",
                 "output": "css/features/dropdown/themes/legacy-adminlte.css"
             },
             {
                 "logicalId": "feature:dropdown:theme:framework-free-test",
-                "source": "resources/frontend/features/dropdown/themes/framework-free-test/styles/dropdown-framework-free-test.scss",
+                "source": "resources/css/themes/framework-free-test/features/dropdown/dropdown-framework-free-test.scss",
                 "output": "css/features/dropdown/themes/framework-free-test.css"
             },
             {
                 "logicalId": "feature:dropdown:theme:tailwind",
-                "source": "resources/frontend/features/dropdown/themes/tailwind/styles/dropdown-tailwind.scss",
+                "source": "resources/css/themes/shadcn/features/dropdown/dropdown-tailwind.scss",
                 "output": "css/features/dropdown/themes/tailwind.css"
             },
             {
                 "logicalId": "feature:sidebar:theme:legacy-adminlte",
-                "source": "resources/frontend/features/sidebar/themes/legacy-adminlte/styles/sidebar-adminlte.scss",
+                "source": "resources/css/themes/adminlte/features/sidebar/sidebar-adminlte.scss",
                 "output": "css/features/sidebar/themes/legacy-adminlte.css"
             },
             {
                 "logicalId": "feature:sidebar:theme:framework-free-test",
-                "source": "resources/frontend/features/sidebar/themes/framework-free-test/styles/sidebar-framework-free-test.scss",
+                "source": "resources/css/themes/framework-free-test/features/sidebar/sidebar-framework-free-test.scss",
                 "output": "css/features/sidebar/themes/framework-free-test.css"
             },
             {
                 "logicalId": "feature:sidebar:theme:tailwind",
-                "source": "resources/frontend/features/sidebar/themes/tailwind/styles/sidebar-tailwind.scss",
+                "source": "resources/css/themes/shadcn/features/sidebar/sidebar-tailwind.scss",
                 "output": "css/features/sidebar/themes/tailwind.css"
             },
             {
                 "logicalId": "feature:table:theme:legacy-adminlte",
-                "source": "resources/frontend/features/table/themes/legacy-adminlte/styles/datatables.scss",
+                "source": "resources/css/themes/adminlte/features/table/datatables.scss",
                 "output": "css/features/table/themes/datatables-legacy-adminlte.css"
             },
             {
                 "logicalId": "feature:table:theme:framework-free-test",
-                "source": "resources/frontend/features/table/themes/framework-free-test/styles/table-framework-free-test.scss",
+                "source": "resources/css/themes/framework-free-test/features/table/table-framework-free-test.scss",
                 "output": "css/features/table/themes/framework-free-test.css"
             },
             {
                 "logicalId": "feature:table:theme:tailwind",
-                "source": "resources/frontend/features/table/themes/tailwind/styles/datatables.scss",
+                "source": "resources/css/themes/shadcn/features/table/datatables.scss",
                 "output": "css/features/table/themes/tailwind.css"
             },
             {
                 "logicalId": "feature:lightbox:theme:legacy-adminlte",
-                "source": "resources/frontend/features/lightbox/themes/legacy-adminlte/styles/lightbox-adminlte.scss",
+                "source": "resources/css/themes/adminlte/features/lightbox/lightbox-adminlte.scss",
                 "output": "css/features/lightbox/themes/legacy-adminlte.css"
             },
             {
                 "logicalId": "feature:lightbox:theme:tailwind",
-                "source": "resources/frontend/features/lightbox/themes/tailwind/styles/lightbox-tailwind.scss",
+                "source": "resources/css/themes/shadcn/features/lightbox/lightbox-tailwind.scss",
                 "output": "css/features/lightbox/themes/tailwind.css"
             },
             {
                 "logicalId": "feature:tabs:theme:legacy-adminlte",
-                "source": "resources/frontend/features/tabs/themes/legacy-adminlte/styles/tabs-adminlte.scss",
+                "source": "resources/css/themes/adminlte/features/tabs/tabs-adminlte.scss",
                 "output": "css/features/tabs/themes/legacy-adminlte.css"
             },
             {
                 "logicalId": "feature:tabs:theme:framework-free-test",
-                "source": "resources/frontend/features/tabs/themes/framework-free-test/styles/tabs-framework-free-test.scss",
+                "source": "resources/css/themes/framework-free-test/features/tabs/tabs-framework-free-test.scss",
                 "output": "css/features/tabs/themes/framework-free-test.css"
             },
             {
                 "logicalId": "feature:tabs:theme:tailwind",
-                "source": "resources/frontend/features/tabs/themes/tailwind/styles/tabs-tailwind.scss",
+                "source": "resources/css/themes/shadcn/features/tabs/tabs-tailwind.scss",
                 "output": "css/features/tabs/themes/tailwind.css"
             },
             {
                 "logicalId": "feature:tooltip:theme:legacy-adminlte",
-                "source": "resources/frontend/features/tooltip/themes/legacy-adminlte/styles/tooltip-adminlte.scss",
+                "source": "resources/css/themes/adminlte/features/tooltip/tooltip-adminlte.scss",
                 "output": "css/features/tooltip/themes/legacy-adminlte.css"
             },
             {
                 "logicalId": "feature:tooltip:theme:framework-free-test",
-                "source": "resources/frontend/features/tooltip/themes/framework-free-test/styles/tooltip-framework-free-test.scss",
+                "source": "resources/css/themes/framework-free-test/features/tooltip/tooltip-framework-free-test.scss",
                 "output": "css/features/tooltip/themes/framework-free-test.css"
             },
             {
                 "logicalId": "feature:tooltip:theme:tailwind",
-                "source": "resources/frontend/features/tooltip/themes/tailwind/styles/tooltip-tailwind.scss",
+                "source": "resources/css/themes/shadcn/features/tooltip/tooltip-tailwind.scss",
                 "output": "css/features/tooltip/themes/tailwind.css"
             },
             {
                 "logicalId": "feature:tree:theme:legacy-adminlte",
-                "source": "resources/frontend/features/tree/themes/legacy-adminlte/styles/tree-adminlte.scss",
+                "source": "resources/css/themes/adminlte/features/tree/tree-adminlte.scss",
                 "output": "css/features/tree/themes/legacy-adminlte.css"
             },
             {
                 "logicalId": "feature:tree:theme:tailwind",
-                "source": "resources/frontend/features/tree/themes/tailwind/styles/tree-tailwind.scss",
+                "source": "resources/css/themes/shadcn/features/tree/tree-tailwind.scss",
                 "output": "css/features/tree/themes/tailwind.css"
             },
             {
                 "logicalId": "theme:legacy-adminlte",
-                "source": "resources/frontend/themes/legacy-adminlte/styles/theme.scss",
+                "source": "resources/css/themes/adminlte/theme.scss",
                 "output": "css/themes/legacy-adminlte.css"
             },
             {
                 "logicalId": "theme:framework-free-test",
-                "source": "resources/frontend/themes/framework-free-test/styles/theme.scss",
+                "source": "resources/css/themes/framework-free-test/theme.scss",
                 "output": "css/themes/framework-free-test.css"
             },
             {
                 "logicalId": "theme:tailwind",
-                "source": "resources/frontend/themes/tailwind/styles/theme.scss",
+                "source": "resources/css/themes/shadcn/theme.scss",
                 "output": "css/themes/tailwind.css"
             },
             {
                 "logicalId": "theme:tailwind",
-                "source": "resources/frontend/themes/tailwind/tailwind.input.css",
+                "source": "resources/css/themes/shadcn/tailwind.input.css",
                 "output": "css/themes/tailwind-utilities.css",
                 "processor": "postcss"
             }

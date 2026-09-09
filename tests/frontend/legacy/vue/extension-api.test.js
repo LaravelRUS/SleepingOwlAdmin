@@ -1,7 +1,7 @@
 import { expect, it, vi } from 'vitest'
 
-import { createVueExtensionApi } from '../../../../resources/frontend/legacy/vue/extension-api.js'
-import { vueAppLifecycleName } from '../../../../resources/frontend/legacy/vue/app-lifecycle.js'
+import { createVueExtensionApi } from '../../../../resources/js/shared/vue/legacy/extension-api.js'
+import { vueAppLifecycleName } from '../../../../resources/js/shared/vue/legacy/app-lifecycle.js'
 
 function dependencies() {
     return {

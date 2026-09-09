@@ -6,9 +6,9 @@
 | --- | --- | --- |
 | `resources/views/shared` | UI core | Theme-independent composition and minimal semantic HTML with no feature lifecycle or CSS-framework classes |
 | `resources/views/features` | Named feature | Feature behavior, protocol responses and theme-neutral feature markup |
-| `resources/views/themes/legacy/default` | Default AdminLTE theme | AdminLTE 4/Bootstrap 5 layout, presentation markup and feature presentation adapters |
+| `resources/views/themes/adminlte/default` | Default AdminLTE theme | AdminLTE 4/Bootstrap 5 layout, presentation markup and feature presentation adapters |
 
-`sleeping_owl::default.*` remains the compatibility namespace used by `TemplateDefault` and existing custom templates. Laravel receives both the package view root and `resources/views/themes/legacy` as hints for the same `sleeping_owl` namespace. Application overrides keep the highest priority, while `default.*` resolves from the extracted legacy theme without changing its logical name.
+`sleeping_owl::default.*` remains the compatibility namespace used by `TemplateDefault` and existing custom templates. Laravel receives both the package view root and `resources/views/themes/adminlte` as hints for the same `sleeping_owl` namespace. Application overrides keep the highest priority, while `default.*` resolves from the extracted legacy theme without changing its logical name.
 
 When a historical path now belongs to `shared` or `features`, its file inside the legacy theme is kept as a one-line bridge include. This preserves published view overrides and PHP view names while moving the implementation to its real owner.
 
@@ -32,7 +32,7 @@ Laravel's ordinary application override stays first in the lookup order:
 ```text
 resources/views/vendor/sleeping_owl/<logical path>
     -> resources/views/<shared or feature path>
-    -> resources/views/themes/legacy/<logical path>
+    -> resources/views/themes/adminlte/<logical path>
 ```
 
 `ApplicationViewOverrideTest` boots the package with a real simulated
@@ -73,7 +73,7 @@ The current compatibility implementation is explicitly identified as `legacy-adm
 
 - default theme/template selector: `SleepingOwl\Admin\Themes\AdminLTETheme`;
 - legacy template lifecycle retained for published config: `SleepingOwl\Admin\Templates\TemplateDefault`;
-- Blade implementation: `resources/views/themes/legacy/default`;
+- Blade implementation: `resources/views/themes/adminlte/default`;
 - stable logical namespace: `sleeping_owl::default`;
 - current precompiled distribution: `public/default`;
 - compatibility source tree: `resources/assets`, retained only for deprecated aggregate entrypoints while direct theme assets live under `resources/frontend`.

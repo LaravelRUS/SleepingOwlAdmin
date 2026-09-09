@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest'
 import {
     createStorageRepository,
     StorageRepository,
-} from '../../../../resources/frontend/core/storage/storage-repository.js'
+} from '../../../../resources/js/core/storage/storage-repository.js'
 
 function memoryStorage(initial = {}) {
     const values = new Map(Object.entries(initial))

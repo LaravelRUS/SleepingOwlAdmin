@@ -10,7 +10,7 @@ import {
     mountTableAutoUpdate,
     mountTableAutoUpdates,
     readAutoUpdateConfig,
-} from '../../../../resources/frontend/features/table/autoupdate/table-auto-update.js'
+} from '../../../../resources/js/shared/features/table/autoupdate/table-auto-update.js'
 
 function fixture() {
     let click

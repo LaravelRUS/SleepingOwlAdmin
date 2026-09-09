@@ -1,7 +1,7 @@
 import { expect, it } from 'vitest'
 
-import { createDatePickerOptions } from '../../../../resources/frontend/features/forms/date/date-options.js'
-import { resolveDatePickerLocale } from '../../../../resources/frontend/features/forms/date/date-locales.js'
+import { createDatePickerOptions } from '../../../../resources/js/shared/features/forms/date/date-options.js'
+import { resolveDatePickerLocale } from '../../../../resources/js/shared/features/forms/date/date-locales.js'
 
 const locale = resolveDatePickerLocale('en')
 

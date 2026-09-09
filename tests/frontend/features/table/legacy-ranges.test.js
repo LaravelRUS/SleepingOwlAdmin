@@ -5,7 +5,7 @@ import {
     dataTableSearchExtensions,
     isDateInRange,
     isNumberInRange,
-} from '../../../../resources/frontend/features/table/filters/filter-drivers.js'
+} from '../../../../resources/js/shared/features/table/filters/filter-drivers.js'
 
 it('preserves numeric range boundary behavior', () => {
     expect(isNumberInRange(Number.NaN, Number.NaN, 10)).toBe(true)

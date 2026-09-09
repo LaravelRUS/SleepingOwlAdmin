@@ -2,10 +2,10 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./resources/frontend/features/sidebar/install-sidebar.js"
-/*!****************************************************************!*\
-  !*** ./resources/frontend/features/sidebar/install-sidebar.js ***!
-  \****************************************************************/
+/***/ "./resources/js/shared/features/sidebar/install-sidebar.js"
+/*!*****************************************************************!*\
+  !*** ./resources/js/shared/features/sidebar/install-sidebar.js ***!
+  \*****************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
@@ -14,7 +14,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   SIDEBAR_ROOT_SELECTOR: () => (/* binding */ SIDEBAR_ROOT_SELECTOR),
 /* harmony export */   installSidebar: () => (/* binding */ installSidebar)
 /* harmony export */ });
-/* harmony import */ var _sidebars_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./sidebars.js */ "./resources/frontend/features/sidebar/sidebars.js");
+/* harmony import */ var _sidebars_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./sidebars.js */ "./resources/js/shared/features/sidebar/sidebars.js");
 
 var SIDEBAR_COMPONENT = 'sidebar-navigation';
 var SIDEBAR_ROOT_SELECTOR = 'body';
@@ -84,10 +84,10 @@ function assertAdmin(admin) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/sidebar/sidebar-elements.js"
-/*!*****************************************************************!*\
-  !*** ./resources/frontend/features/sidebar/sidebar-elements.js ***!
-  \*****************************************************************/
+/***/ "./resources/js/shared/features/sidebar/sidebar-elements.js"
+/*!******************************************************************!*\
+  !*** ./resources/js/shared/features/sidebar/sidebar-elements.js ***!
+  \******************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
@@ -197,10 +197,10 @@ function collectMatching(root, selector) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/sidebar/sidebar-navigation.js"
-/*!*******************************************************************!*\
-  !*** ./resources/frontend/features/sidebar/sidebar-navigation.js ***!
-  \*******************************************************************/
+/***/ "./resources/js/shared/features/sidebar/sidebar-navigation.js"
+/*!********************************************************************!*\
+  !*** ./resources/js/shared/features/sidebar/sidebar-navigation.js ***!
+  \********************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
@@ -208,8 +208,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   TREE_NAVIGATION_KEYS: () => (/* binding */ TREE_NAVIGATION_KEYS),
 /* harmony export */   navigateTree: () => (/* binding */ navigateTree)
 /* harmony export */ });
-/* harmony import */ var _sidebar_elements_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./sidebar-elements.js */ "./resources/frontend/features/sidebar/sidebar-elements.js");
-/* harmony import */ var _sidebar_tree_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./sidebar-tree.js */ "./resources/frontend/features/sidebar/sidebar-tree.js");
+/* harmony import */ var _sidebar_elements_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./sidebar-elements.js */ "./resources/js/shared/features/sidebar/sidebar-elements.js");
+/* harmony import */ var _sidebar_tree_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./sidebar-tree.js */ "./resources/js/shared/features/sidebar/sidebar-tree.js");
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
@@ -265,10 +265,10 @@ function isInsideHiddenMenu(link) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/sidebar/sidebar-state.js"
-/*!**************************************************************!*\
-  !*** ./resources/frontend/features/sidebar/sidebar-state.js ***!
-  \**************************************************************/
+/***/ "./resources/js/shared/features/sidebar/sidebar-state.js"
+/*!***************************************************************!*\
+  !*** ./resources/js/shared/features/sidebar/sidebar-state.js ***!
+  \***************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
@@ -280,7 +280,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   sidebarPreference: () => (/* binding */ sidebarPreference),
 /* harmony export */   toggleSidebar: () => (/* binding */ toggleSidebar)
 /* harmony export */ });
-/* harmony import */ var _sidebar_storage_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./sidebar-storage.js */ "./resources/frontend/features/sidebar/sidebar-storage.js");
+/* harmony import */ var _sidebar_storage_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./sidebar-storage.js */ "./resources/js/shared/features/sidebar/sidebar-storage.js");
 
 var COLLAPSED_EVENTS = ['sidebar:collapsed', 'collapsed.lte.pushmenu'];
 var EXPANDED_EVENTS = ['sidebar:shown', 'shown.lte.pushmenu'];
@@ -365,10 +365,10 @@ function dispatchSidebarEvent(target, name, state) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/sidebar/sidebar-storage.js"
-/*!****************************************************************!*\
-  !*** ./resources/frontend/features/sidebar/sidebar-storage.js ***!
-  \****************************************************************/
+/***/ "./resources/js/shared/features/sidebar/sidebar-storage.js"
+/*!*****************************************************************!*\
+  !*** ./resources/js/shared/features/sidebar/sidebar-storage.js ***!
+  \*****************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
@@ -418,10 +418,10 @@ function writeCookie(document, value) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/sidebar/sidebar-tree.js"
-/*!*************************************************************!*\
-  !*** ./resources/frontend/features/sidebar/sidebar-tree.js ***!
-  \*************************************************************/
+/***/ "./resources/js/shared/features/sidebar/sidebar-tree.js"
+/*!**************************************************************!*\
+  !*** ./resources/js/shared/features/sidebar/sidebar-tree.js ***!
+  \**************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
@@ -431,7 +431,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   normalizeTree: () => (/* binding */ normalizeTree),
 /* harmony export */   toggleTreeItem: () => (/* binding */ toggleTreeItem)
 /* harmony export */ });
-/* harmony import */ var _sidebar_elements_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./sidebar-elements.js */ "./resources/frontend/features/sidebar/sidebar-elements.js");
+/* harmony import */ var _sidebar_elements_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./sidebar-elements.js */ "./resources/js/shared/features/sidebar/sidebar-elements.js");
 
 function normalizeTree(tree) {
   var _tree$getAttribute;
@@ -495,21 +495,21 @@ function dispatchTreeEvent(context, name) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/sidebar/sidebars.js"
-/*!*********************************************************!*\
-  !*** ./resources/frontend/features/sidebar/sidebars.js ***!
-  \*********************************************************/
+/***/ "./resources/js/shared/features/sidebar/sidebars.js"
+/*!**********************************************************!*\
+  !*** ./resources/js/shared/features/sidebar/sidebars.js ***!
+  \**********************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   mountSidebar: () => (/* binding */ mountSidebar)
 /* harmony export */ });
-/* harmony import */ var _sidebar_elements_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./sidebar-elements.js */ "./resources/frontend/features/sidebar/sidebar-elements.js");
-/* harmony import */ var _sidebar_navigation_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./sidebar-navigation.js */ "./resources/frontend/features/sidebar/sidebar-navigation.js");
-/* harmony import */ var _sidebar_state_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./sidebar-state.js */ "./resources/frontend/features/sidebar/sidebar-state.js");
-/* harmony import */ var _sidebar_storage_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./sidebar-storage.js */ "./resources/frontend/features/sidebar/sidebar-storage.js");
-/* harmony import */ var _sidebar_tree_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./sidebar-tree.js */ "./resources/frontend/features/sidebar/sidebar-tree.js");
+/* harmony import */ var _sidebar_elements_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./sidebar-elements.js */ "./resources/js/shared/features/sidebar/sidebar-elements.js");
+/* harmony import */ var _sidebar_navigation_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./sidebar-navigation.js */ "./resources/js/shared/features/sidebar/sidebar-navigation.js");
+/* harmony import */ var _sidebar_state_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./sidebar-state.js */ "./resources/js/shared/features/sidebar/sidebar-state.js");
+/* harmony import */ var _sidebar_storage_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./sidebar-storage.js */ "./resources/js/shared/features/sidebar/sidebar-storage.js");
+/* harmony import */ var _sidebar_tree_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./sidebar-tree.js */ "./resources/js/shared/features/sidebar/sidebar-tree.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
@@ -777,14 +777,14 @@ function assertRoot(root) {
 var __webpack_exports__ = {};
 // This entry needs to be wrapped in an IIFE because it needs to be isolated against other modules in the chunk.
 (() => {
-/*!********************************************************!*\
-  !*** ./resources/frontend/features/sidebar/browser.js ***!
-  \********************************************************/
+/*!*********************************************************!*\
+  !*** ./resources/js/shared/features/sidebar/browser.js ***!
+  \*********************************************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   bootSidebar: () => (/* binding */ bootSidebar)
 /* harmony export */ });
-/* harmony import */ var _install_sidebar_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./install-sidebar.js */ "./resources/frontend/features/sidebar/install-sidebar.js");
+/* harmony import */ var _install_sidebar_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./install-sidebar.js */ "./resources/js/shared/features/sidebar/install-sidebar.js");
 
 if (globalThis.document) bootSidebar(globalThis);
 function bootSidebar(target) {

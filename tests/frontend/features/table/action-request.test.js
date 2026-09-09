@@ -3,7 +3,7 @@ import { expect, it, vi } from 'vitest'
 import {
     actionRequestSettings,
     executeTableAction,
-} from '../../../../resources/frontend/features/table/actions/action-request.js'
+} from '../../../../resources/js/shared/features/table/actions/action-request.js'
 
 function dependencies(overrides = {}) {
     const message = { message: 'Updated', text: 'Done', type: 'success' }

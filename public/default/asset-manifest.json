@@ -374,8 +374,8 @@
                     "scripts": [
                         {
                             "file": "profiles/production/js/shared/compatibility.js",
-                            "version": "8bc57d6cfcebfb8a4c673a225c838bc9",
-                            "checksum": "sha256:7985bde17e20b9c371db2c609b9b4cbc8afdf75e4495aca71be6654f34ed3e2e"
+                            "version": "ad25c97ad48ffdfdb8f184941ffebfa0",
+                            "checksum": "sha256:3bdfd03de38c0f21dd23e3fd94a7f9af3663aeb46dcf83c9bf7bd2d3fc0fab08"
                         }
                     ],
                     "styles": []
@@ -404,8 +404,8 @@
                     "scripts": [
                         {
                             "file": "profiles/production/js/shared/vue.js",
-                            "version": "a070f14a52baca94c77896e92c7fe616",
-                            "checksum": "sha256:5c4e3d82927587e022aafa98dc750d01e444ae44909b2c088c960984c6cfa999"
+                            "version": "1e207627bb516f12aa74eb15af716869",
+                            "checksum": "sha256:a697b2dd9a3254c33773a3e260f74f04d095b20eda39a7495e6b023ac9f7f82c"
                         }
                     ],
                     "styles": []
@@ -424,8 +424,8 @@
                     "scripts": [
                         {
                             "file": "profiles/production/js/themes/legacy-adminlte.js",
-                            "version": "80b8635dba3259fbf9b9eea57297abf7",
-                            "checksum": "sha256:08bab5e0bdef5432cef1e7d252e65a19ba937d79e7e854bf287452776f1e97be"
+                            "version": "c4b903ad93465e00c5b59ff8167e2bba",
+                            "checksum": "sha256:96448cc6153e8884bbfc559f584297130af25cb1c0aae945bb9242d20e39bdf5"
                         }
                     ],
                     "styles": [
@@ -465,8 +465,8 @@
                     "scripts": [
                         {
                             "file": "profiles/development/js/admin-core.js",
-                            "version": "a20753e383d92dbbc424b6e36570dd6d",
-                            "checksum": "sha256:522767597bb9a54e8c9e81ca9439ece690404de36d59161b73b6da179224a43d"
+                            "version": "8c965cb01ad23a7df076bd66d5a3a8bf",
+                            "checksum": "sha256:31a7c02c2a7c1895e3b224fdf179aaf881885b29bad290af5c37faa3418d0b16"
                         }
                     ],
                     "styles": [
@@ -481,8 +481,8 @@
                     "scripts": [
                         {
                             "file": "profiles/development/js/features/alert.js",
-                            "version": "10a5b6197371935e4ecfa3836265b656",
-                            "checksum": "sha256:c452293b4f4cf1f7535491afc35bc09b2a10b7765d61033d11e1cc0bc09d367f"
+                            "version": "23d204e57830d5a33fe44a99d595815d",
+                            "checksum": "sha256:57557eb6b360d57b302066ed9195402bf05591620f5e1953a400be46695dce49"
                         }
                     ],
                     "styles": []
@@ -491,8 +491,8 @@
                     "scripts": [
                         {
                             "file": "profiles/development/js/features/dropdown.js",
-                            "version": "1b8c5f65f1c7e90f41f8eb049f51e8c5",
-                            "checksum": "sha256:9ec218da78d3a312e5d209da6253bba7806a688ea19a30c175292d7e3e6cf904"
+                            "version": "544dd3fa0653547622239aa2ad47d50d",
+                            "checksum": "sha256:239fe5ae4bdc62789fea81767701af0a2d7a37b06eca1d83a15dab5655e12ce6"
                         }
                     ],
                     "styles": [
@@ -537,8 +537,8 @@
                     "scripts": [
                         {
                             "file": "profiles/development/js/features/forms.js",
-                            "version": "230eb880aa30f8b81ca2f200928b0489",
-                            "checksum": "sha256:84fb900773c4af1961fd11f3076b06e3e2b51f359c2f157c9e73bdc873b08576"
+                            "version": "48c0bc61d424071bafbb1edb59ee35e0",
+                            "checksum": "sha256:03daad413aab2cb7080411866de8b861ff5a187e2f329dc187a355f67799565d"
                         }
                     ],
                     "styles": [
@@ -563,8 +563,8 @@
                     "scripts": [
                         {
                             "file": "profiles/development/js/features/lightbox.js",
-                            "version": "56f81f9ba7c6faf50b0dbaba50c3c01f",
-                            "checksum": "sha256:ce1885e5658999bfda7afa5ff9b4449338cb56d09d4068e6fea5728597da4adf"
+                            "version": "533bf44bebf744ee072de5b34c97134d",
+                            "checksum": "sha256:0596a842b9dcce251ee497d11ffaf377addd9b02c51ed2c270a80a571b478f02"
                         }
                     ],
                     "styles": [
@@ -599,8 +599,8 @@
                     "scripts": [
                         {
                             "file": "profiles/development/js/features/sidebar.js",
-                            "version": "e82cfa8d75d39c65eb80275764a350cb",
-                            "checksum": "sha256:0bca75cb5e650eacb7d89c8f9b3e39c7d9b163bfd53df6b8c4f8d32c4f15d4c0"
+                            "version": "dd1172399ca49ac151c288a2e270c4ae",
+                            "checksum": "sha256:7438eb3eff58b99b9750ec41f12ba57c0eb52e48a1de7742d68f5a8b733c5675"
                         }
                     ],
                     "styles": [
@@ -645,8 +645,8 @@
                     "scripts": [
                         {
                             "file": "profiles/development/js/features/table.js",
-                            "version": "d27e9b3d8364271a3f494355b928a492",
-                            "checksum": "sha256:be2fba197cafcd6a5e362392825541c170ae3c6a623d82ca926d042ec815f3af"
+                            "version": "85f0787acc3f395982f66d70d4526a64",
+                            "checksum": "sha256:ba2644ace1ec992231a4b73fa5e9a7091caf7c2f24e6b8765d7a83dafd1f1ef1"
                         }
                     ],
                     "styles": [
@@ -671,8 +671,8 @@
                     "scripts": [
                         {
                             "file": "profiles/development/js/features/table/themes/legacy-adminlte.js",
-                            "version": "51d53cbca89fcfd7a6e3dc2bdd231c49",
-                            "checksum": "sha256:12340b16ac7858ac7e2ab9823d8bbedbdd0ddb48da3c95f881b212a932e74259"
+                            "version": "e40a71e5560e887960cb260d8967aaab",
+                            "checksum": "sha256:1d28e1081780f2e16b1e87fdd9f544583aa8a44247ac151e69a9bed2350399ca"
                         }
                     ],
                     "styles": [
@@ -697,8 +697,8 @@
                     "scripts": [
                         {
                             "file": "profiles/development/js/features/tabs.js",
-                            "version": "f49ee3606517e23cb8a99dd253347770",
-                            "checksum": "sha256:ac3df0dd032c704647ecfe1c99cf2eb2012fb0a0b56bffb375e0ae80b15de15a"
+                            "version": "21419eecd3c5a51408d063d44fe5db97",
+                            "checksum": "sha256:a160e1dcd4e69c88293f3e26b064e8cf1652f2aca519fba44fea7e638f011c57"
                         }
                     ],
                     "styles": []
@@ -737,8 +737,8 @@
                     "scripts": [
                         {
                             "file": "profiles/development/js/features/tooltip.js",
-                            "version": "58ce68272eff9474055a2dcae6e0b36d",
-                            "checksum": "sha256:b982103978cbfdf3d4bf74e266b2001f3bf88ad88461b3c4f3f13bb12c7a51fc"
+                            "version": "8ff85281461011b0a7d26bd8b2e8a803",
+                            "checksum": "sha256:0e2494a4793a9843cd9e2c3b9585ab7dbe7c9dbb276d5c562637000d651ef994"
                         }
                     ],
                     "styles": [
@@ -783,8 +783,8 @@
                     "scripts": [
                         {
                             "file": "profiles/development/js/features/tree.js",
-                            "version": "f5e47c457d4ff6bc0224dfb4bdf86f82",
-                            "checksum": "sha256:b559351f71f84c25c7b320a41d5b7938396917a83ab6f4003bbd52494237be58"
+                            "version": "9a962cdff724a91a088bb66d030f488b",
+                            "checksum": "sha256:a598c6bd0e6c54d85b1fe1e83406b5252d4de03d8f4b4b4a0809fbae7aab8705"
                         }
                     ],
                     "styles": [
@@ -799,8 +799,8 @@
                     "scripts": [
                         {
                             "file": "profiles/development/js/features/tree/themes/legacy-adminlte.js",
-                            "version": "85f43c7e04af31214e4145bcc4ad19dc",
-                            "checksum": "sha256:94585b3557e9dfd704b16db10606e1ab66b75d2ebe0c7372f576c1b0abb8998d"
+                            "version": "3bf3e8970661624238ee93eb226c9f0f",
+                            "checksum": "sha256:52257019c4989cd76cbb2f347be2b844d82baf4acc1f413e97c9382dfe742f53"
                         }
                     ],
                     "styles": [
@@ -815,8 +815,8 @@
                     "scripts": [
                         {
                             "file": "profiles/development/js/features/tree/themes/tailwind.js",
-                            "version": "8d0470c1e403ee116ea5574bfd87eda3",
-                            "checksum": "sha256:ffeadb8cc3231c7f6e400b61cc5871eccf1312d10d650253ef0b8fd0183ea9a8"
+                            "version": "dde44afa03c4499aaaff277ba498516b",
+                            "checksum": "sha256:26b5cd0844bca3b2bbfdba9eb0a21d56a4604f396f6d04908554aa721e1d0802"
                         }
                     ],
                     "styles": [
@@ -831,8 +831,8 @@
                     "scripts": [
                         {
                             "file": "profiles/development/js/shared/compatibility.js",
-                            "version": "0d7a9bdae5e8edcb57983f0bd9a3e50d",
-                            "checksum": "sha256:737fe56fff43a90eca3b4c877afef5ed302d3ca085a7e1b1135ac500da600aeb"
+                            "version": "26ebc35ff921e1bde4f0ac0e0538f2b5",
+                            "checksum": "sha256:bd4eb1b1289614b97e65d301724a757aae121dbc1ef7b711cb24ccd5314afba4"
                         }
                     ],
                     "styles": []
@@ -851,8 +851,8 @@
                     "scripts": [
                         {
                             "file": "profiles/development/js/shared/modules.js",
-                            "version": "376f74f86d02876623c8dc682c190db9",
-                            "checksum": "sha256:895be733c8c014f3e2f21bdbf7dd9fb9714f3ff8ced232b6e6c49a63b9249e17"
+                            "version": "40f1426e469668fd59f5607662a6a0e4",
+                            "checksum": "sha256:f3446ed40feba9ca6cfb78bdff330789eb8f873f1d573a4be20663b069327fd7"
                         }
                     ],
                     "styles": []
@@ -861,8 +861,8 @@
                     "scripts": [
                         {
                             "file": "profiles/development/js/shared/vue.js",
-                            "version": "28ce562e100178b8d494ee56df5f306d",
-                            "checksum": "sha256:b68c5c2e09cee00ceb48bb823e5ae68e12b4c65661794860df21ca98a9c2e884"
+                            "version": "21f205e50c53d33bfa0b307d305ad572",
+                            "checksum": "sha256:5c381f152b59cd3918ca450d9ec8ccf9ea93d96c089b8c9bb4b54f2b5b966a67"
                         }
                     ],
                     "styles": []
@@ -881,8 +881,8 @@
                     "scripts": [
                         {
                             "file": "profiles/development/js/themes/legacy-adminlte.js",
-                            "version": "3e2aef766484a8e0383cfebb2a580eb0",
-                            "checksum": "sha256:1da43ae95e1b69d395c5071346972a6da4e32a67871f80de63bfcec762c00b6f"
+                            "version": "379316f719e8628aad328673154a59d9",
+                            "checksum": "sha256:72b7f90f1a979bdd950fc607424916aa327743dcc8f5748ecc46f786d00ce9ee"
                         }
                     ],
                     "styles": [
@@ -897,8 +897,8 @@
                     "scripts": [
                         {
                             "file": "profiles/development/js/themes/tailwind.js",
-                            "version": "4dabe156aa11e13e226b0c95214e03de",
-                            "checksum": "sha256:8a4650400382975e397e350ba78b802aa68b9c790b074220cef94625ecf89384"
+                            "version": "c50c74dae6b1e2d366658c9045fbc9f4",
+                            "checksum": "sha256:6239da1d0aa2a7b6c06bd0c2678ec0f7d18750eecbfbcef3c2f7495ca91cf9f7"
                         }
                     ],
                     "styles": [
@@ -917,5 +917,5 @@
             }
         }
     },
-    "build_id": "sha256:5b5f51feeabbd43e7d71a9e69939ccb840576be7781b348fcf6f8defd8d9e8be"
+    "build_id": "sha256:ee13ac725a2d6c4753376c6711363af65f8d1e3c692893058aed40376ea06d89"
 }

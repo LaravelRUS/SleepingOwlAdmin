@@ -5,7 +5,7 @@ import {
     serializeTree,
     treeBranchDepth,
     treeListDepth,
-} from '../../../../resources/frontend/features/tree/tree-structure.js'
+} from '../../../../resources/js/shared/features/tree/tree-structure.js'
 
 it('serializes nested tree ids without empty children arrays', () => {
     const child = treeItem('2')

@@ -43,8 +43,8 @@ class TailwindThemeFormTest extends TestCase
 
     public function test_every_form_view_and_form_primitive_is_owned_by_tailwind(): void
     {
-        $legacyRoot = realpath(__DIR__.'/../../../resources/views/themes/legacy/default');
-        $tailwindRoot = realpath(__DIR__.'/../../../resources/views/themes/tailwind/default');
+        $legacyRoot = realpath(__DIR__.'/../../../resources/views/themes/adminlte/default');
+        $tailwindRoot = realpath(__DIR__.'/../../../resources/views/themes/shadcn/default');
         $directory = new RecursiveDirectoryIterator(
             $legacyRoot.DIRECTORY_SEPARATOR.'form',
             FilesystemIterator::SKIP_DOTS

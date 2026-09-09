@@ -31,7 +31,7 @@ class ThemeDependencyBoundaryTest extends TestCase
     {
         $violations = [];
 
-        foreach ($this->filesIn('resources/frontend/core', 'js') as $path) {
+        foreach ($this->filesIn('resources/js/core', 'js') as $path) {
             foreach ($this->moduleSpecifiers(file_get_contents($path)) as $specifier) {
                 if ($this->isConcreteFrontendImport($specifier)) {
                     $violations[$this->relativePath($path)][] = $specifier;

@@ -3,7 +3,7 @@ import { describe, expect, it, vi } from 'vitest'
 import {
     createImagesUpload,
     imagesUploadOptions,
-} from '../../../../resources/assets/js_owl/admin/form/images-upload'
+} from '../../../../resources/js/shared/legacy/admin/form/images-upload'
 
 function uploadConfig(overrides = {}) {
     return {

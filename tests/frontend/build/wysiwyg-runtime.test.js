@@ -9,9 +9,9 @@ const read = (path) => readFileSync(resolve(root, path), 'utf8')
 describe('WYSIWYG runtime boundary', () => {
     it('keeps public markers and API while removing jQuery scans', () => {
         const php = read('src/Form/Element/Wysiwyg.php')
-        const wrapper = read('resources/assets/js_owl/admin/form/wysiwyg.js')
-        const registry = read('resources/frontend/features/forms/wysiwyg/wysiwyg-registry.js')
-        const simpleMde = read('resources/assets/js_owl/wysiwyg/simplemde.js')
+        const wrapper = read('resources/js/shared/legacy/admin/form/wysiwyg.js')
+        const registry = read('resources/js/shared/features/forms/wysiwyg/wysiwyg-registry.js')
+        const simpleMde = read('resources/js/shared/legacy/wysiwyg/simplemde.js')
 
         expect(php).toContain("'data-wysiwyg-editor'")
         expect(php).toContain("'data-wysiwyg-parameters'")

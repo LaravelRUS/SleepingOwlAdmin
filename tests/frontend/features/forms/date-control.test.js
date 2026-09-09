@@ -1,10 +1,10 @@
 import { expect, it, vi } from 'vitest'
 
-import { componentMountSkipped } from '../../../../resources/frontend/core/lifecycle/component-lifecycle.js'
+import { componentMountSkipped } from '../../../../resources/js/core/lifecycle/component-lifecycle.js'
 import {
     createDateControlDefinition,
     mountDateControl,
-} from '../../../../resources/frontend/features/forms/date/date-control.js'
+} from '../../../../resources/js/shared/features/forms/date/date-control.js'
 
 function control(overrides = {}) {
     const addon = {

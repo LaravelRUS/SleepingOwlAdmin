@@ -1,6 +1,6 @@
 import { expect, it, vi } from 'vitest'
 
-import { createVueAppPlugins } from '../../../../resources/frontend/legacy/vue/app-plugins.js'
+import { createVueAppPlugins } from '../../../../resources/js/shared/vue/legacy/app-plugins.js'
 
 function fakeApp() {
     return { use: vi.fn() }

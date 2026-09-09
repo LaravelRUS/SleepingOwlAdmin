@@ -1,10 +1,10 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./resources/assets/js_owl/admin/display/themes.js"
-/*!*********************************************************!*\
-  !*** ./resources/assets/js_owl/admin/display/themes.js ***!
-  \*********************************************************/
+/***/ "./resources/js/shared/legacy/admin/display/themes.js"
+/*!************************************************************!*\
+  !*** ./resources/js/shared/legacy/admin/display/themes.js ***!
+  \************************************************************/
 (__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
 
 Admin.Modules.register('display.theme', function () {
@@ -38,10 +38,10 @@ Admin.Modules.register('display.theme', function () {
 
 /***/ },
 
-/***/ "./resources/frontend/themes/legacy-adminlte/scroll-controls.js"
-/*!**********************************************************************!*\
-  !*** ./resources/frontend/themes/legacy-adminlte/scroll-controls.js ***!
-  \**********************************************************************/
+/***/ "./resources/js/themes/adminlte/scroll-controls.js"
+/*!*********************************************************!*\
+  !*** ./resources/js/themes/adminlte/scroll-controls.js ***!
+  \*********************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -369,16 +369,16 @@ var __webpack_exports__ = {};
 // This entry needs to be wrapped in an IIFE because it needs to be in strict mode.
 (() => {
 "use strict";
-/*!************************************************************!*\
-  !*** ./resources/frontend/themes/legacy-adminlte/index.js ***!
-  \************************************************************/
+/*!***********************************************!*\
+  !*** ./resources/js/themes/adminlte/theme.js ***!
+  \***********************************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   THEME_ID: () => (/* binding */ THEME_ID)
 /* harmony export */ });
-/* harmony import */ var _assets_js_owl_admin_display_themes__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../assets/js_owl/admin/display/themes */ "./resources/assets/js_owl/admin/display/themes.js");
-/* harmony import */ var _assets_js_owl_admin_display_themes__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_assets_js_owl_admin_display_themes__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _scroll_controls_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./scroll-controls.js */ "./resources/frontend/themes/legacy-adminlte/scroll-controls.js");
+/* harmony import */ var _shared_legacy_admin_display_themes__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../shared/legacy/admin/display/themes */ "./resources/js/shared/legacy/admin/display/themes.js");
+/* harmony import */ var _shared_legacy_admin_display_themes__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_shared_legacy_admin_display_themes__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _scroll_controls_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./scroll-controls.js */ "./resources/js/themes/adminlte/scroll-controls.js");
 
 
 if (globalThis.document) (0,_scroll_controls_js__WEBPACK_IMPORTED_MODULE_1__.installScrollControls)(globalThis);

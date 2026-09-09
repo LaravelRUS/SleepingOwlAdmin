@@ -4,7 +4,7 @@ import {
     applyServerOptions,
     readTableDefinition,
     tableLayout,
-} from '../../../../resources/frontend/features/table/options/table-options.js'
+} from '../../../../resources/js/shared/features/table/options/table-options.js'
 
 function element(dataset) {
     return { dataset, nodeType: 1 }

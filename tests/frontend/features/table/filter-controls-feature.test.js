@@ -5,7 +5,7 @@ import {
     createFilterControlsFeature,
     FILTER_CONTROLS_FEATURE,
     installFilterControlsFeature,
-} from '../../../../resources/frontend/features/table/filters/filter-controls-feature.js'
+} from '../../../../resources/js/shared/features/table/filters/filter-controls-feature.js'
 
 function fixture() {
     const control = { parentNode: null }

@@ -6,7 +6,7 @@ import {
     isPersistedPrimary,
     normalizeRelatedGroups,
     normalizeRemovedGroups,
-} from '../../../../resources/assets/js_owl/admin/form/related/related-state'
+} from '../../../../resources/js/shared/legacy/admin/form/related/related-state'
 
 it('normalizes initial related groups without sharing mutable records', () => {
     const groups = normalizeRelatedGroups([

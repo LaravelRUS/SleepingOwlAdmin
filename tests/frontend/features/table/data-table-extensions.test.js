@@ -4,7 +4,7 @@ import {
     DATE_TIME_ORDER,
     dateTimeOrderValues,
     installDataTableExtensions,
-} from '../../../../resources/frontend/features/table/engine/extensions.js'
+} from '../../../../resources/js/shared/features/table/engine/extensions.js'
 
 function fixture() {
     const cells = [

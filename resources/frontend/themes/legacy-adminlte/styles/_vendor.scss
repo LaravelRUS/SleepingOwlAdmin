@@ -1,5 +1,0 @@
-@use 'sass:meta';
-@include meta.load-css('../../../../../node_modules/dropzone/dist/dropzone.css');
-@include meta.load-css(
-  '../../../../../node_modules/vue-multiselect/dist/vue-multiselect.css'
-);

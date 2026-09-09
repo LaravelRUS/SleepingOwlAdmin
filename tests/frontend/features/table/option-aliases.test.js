@@ -1,6 +1,6 @@
 import { expect, it, vi } from 'vitest'
 
-import { normalizeDataTableOptions } from '../../../../resources/frontend/features/table/options/option-aliases.js'
+import { normalizeDataTableOptions } from '../../../../resources/js/shared/features/table/options/option-aliases.js'
 
 it('moves supported legacy aliases to current DataTables option names', () => {
     const drawCallback = vi.fn()

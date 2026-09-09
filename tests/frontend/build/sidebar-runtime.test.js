@@ -6,9 +6,9 @@ import { expect, it } from 'vitest'
 const root = resolve(import.meta.dirname, '../../..')
 
 it('replaces AdminLTE PushMenu and Treeview execution with a native feature', () => {
-    const bootstrap = read('resources/assets/js_owl/bootstrap.js')
-    const sidebar = read('resources/frontend/features/sidebar/sidebars.js')
-    const legacy = read('resources/assets/js_owl/admin/sidebar.js')
+    const bootstrap = read('resources/js/shared/legacy/bootstrap.js')
+    const sidebar = read('resources/js/shared/features/sidebar/sidebars.js')
+    const legacy = read('resources/js/shared/legacy/admin/sidebar.js')
 
     expect(bootstrap).not.toContain("require('admin-lte')")
     expect(bootstrap).not.toContain("require('./libs/js-cookie')")
@@ -17,11 +17,11 @@ it('replaces AdminLTE PushMenu and Treeview execution with a native feature', ()
 })
 
 it('keeps existing PushMenu and Treeview markers without replacement attributes', () => {
-    const header = read('resources/views/themes/legacy/default/_partials/header.blade.php')
-    const layout = read('resources/views/themes/legacy/default/_layout/inner.blade.php')
-    const navigation = read('resources/views/themes/legacy/default/_partials/navigation.blade.php')
-    const elements = read('resources/frontend/features/sidebar/sidebar-elements.js')
-    const sidebar = read('resources/frontend/features/sidebar/sidebars.js')
+    const header = read('resources/views/themes/adminlte/default/_partials/header.blade.php')
+    const layout = read('resources/views/themes/adminlte/default/_layout/inner.blade.php')
+    const navigation = read('resources/views/themes/adminlte/default/_partials/navigation.blade.php')
+    const elements = read('resources/js/shared/features/sidebar/sidebar-elements.js')
+    const sidebar = read('resources/js/shared/features/sidebar/sidebars.js')
 
     expect(header).toContain('data-widget="pushmenu"')
     expect(layout).toContain('id="sidebar-overlay"')
@@ -35,16 +35,16 @@ it('keeps existing PushMenu and Treeview markers without replacement attributes'
 })
 
 it('ships independent behavior and AdminLTE/Tailwind Sass adapters', () => {
-    expect(read('resources/frontend/features/sidebar/styles/sidebar-base.scss')).toContain(
+    expect(read('resources/css/shared/features/sidebar/sidebar-base.scss')).toContain(
         '@layer sleepingowl-feature.sidebar',
     )
     expect(
         read(
-            'resources/frontend/features/sidebar/themes/legacy-adminlte/styles/sidebar-adminlte.scss',
+            'resources/css/themes/adminlte/features/sidebar/sidebar-adminlte.scss',
         ),
     ).toContain('@layer sleepingowl-theme.sidebar')
     expect(
-        read('resources/frontend/features/sidebar/themes/tailwind/styles/sidebar-tailwind.scss'),
+        read('resources/css/themes/shadcn/features/sidebar/sidebar-tailwind.scss'),
     ).toContain('@layer sleepingowl-theme.sidebar')
 })
 

@@ -1,6 +1,6 @@
 import { expect, it } from 'vitest'
 
-import { readTreeConfig } from '../../../../resources/frontend/features/tree/tree-config.js'
+import { readTreeConfig } from '../../../../resources/js/shared/features/tree/tree-config.js'
 
 it('reads bounded tree configuration and referenced inert parameters', () => {
     const script = {

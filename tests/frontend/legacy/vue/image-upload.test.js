@@ -5,7 +5,7 @@ import {
     imageUploadError,
     imageUploadOptions,
     postPastedImage,
-} from '../../../../resources/assets/js_owl/admin/form/image-upload'
+} from '../../../../resources/js/shared/legacy/admin/form/image-upload'
 
 function uploadConfig(overrides = {}) {
     return {

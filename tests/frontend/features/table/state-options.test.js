@@ -1,6 +1,6 @@
 import { expect, it } from 'vitest'
 
-import { applyTableStateOptions } from '../../../../resources/frontend/features/table/options/state-options.js'
+import { applyTableStateOptions } from '../../../../resources/js/shared/features/table/options/state-options.js'
 
 it('enables DataTables state without changing filter state when both flags are on', () => {
     const options = applyTableStateOptions({}, { stateDatatables: true, stateFilters: true })

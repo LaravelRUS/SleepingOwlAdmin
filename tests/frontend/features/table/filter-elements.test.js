@@ -3,7 +3,7 @@ import { expect, it, vi } from 'vitest'
 import {
     forEachColumnFilter,
     readControlValue,
-} from '../../../../resources/frontend/features/table/filters/filter-elements.js'
+} from '../../../../resources/js/shared/features/table/filters/filter-elements.js'
 
 it('iterates filters only inside containers owned by the table id', () => {
     const filter = {

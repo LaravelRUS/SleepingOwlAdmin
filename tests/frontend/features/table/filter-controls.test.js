@@ -3,7 +3,7 @@ import { expect, it, vi } from 'vitest'
 import {
     bindFilterControls,
     clearFilterControls,
-} from '../../../../resources/frontend/features/table/filters/filter-controls.js'
+} from '../../../../resources/js/shared/features/table/filters/filter-controls.js'
 
 function interactiveControl(properties = {}) {
     const listeners = new Map()

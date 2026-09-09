@@ -2,10 +2,10 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./resources/frontend/features/tree/themes/legacy-adminlte/notifications.js"
-/*!**********************************************************************************!*\
-  !*** ./resources/frontend/features/tree/themes/legacy-adminlte/notifications.js ***!
-  \**********************************************************************************/
+/***/ "./resources/js/themes/adminlte/features/tree/notifications.js"
+/*!*********************************************************************!*\
+  !*** ./resources/js/themes/adminlte/features/tree/notifications.js ***!
+  \*********************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
@@ -113,14 +113,14 @@ function assertDependencies(swal, messages) {
 var __webpack_exports__ = {};
 // This entry needs to be wrapped in an IIFE because it needs to be isolated against other modules in the chunk.
 (() => {
-/*!****************************************************************************!*\
-  !*** ./resources/frontend/features/tree/themes/legacy-adminlte/browser.js ***!
-  \****************************************************************************/
+/*!***************************************************************!*\
+  !*** ./resources/js/themes/adminlte/features/tree/browser.js ***!
+  \***************************************************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   installLegacyTreeNotifications: () => (/* binding */ installLegacyTreeNotifications)
 /* harmony export */ });
-/* harmony import */ var _notifications_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./notifications.js */ "./resources/frontend/features/tree/themes/legacy-adminlte/notifications.js");
+/* harmony import */ var _notifications_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./notifications.js */ "./resources/js/themes/adminlte/features/tree/notifications.js");
 
 if (globalThis.document) installLegacyTreeNotifications(globalThis);
 function installLegacyTreeNotifications(target) {

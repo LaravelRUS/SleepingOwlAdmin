@@ -4,8 +4,8 @@ import { describe, expect, it, vi } from 'vitest'
 import {
     createVueTranslation,
     installVueTranslation,
-} from '../../../../resources/frontend/legacy/vue/translation'
-import { useTranslation } from '../../../../resources/frontend/legacy/vue/use-translation'
+} from '../../../../resources/js/shared/vue/legacy/translation'
+import { useTranslation } from '../../../../resources/js/shared/vue/legacy/use-translation'
 
 describe('Vue translation injection', () => {
     it('provides a frozen app-local translator to the composable', () => {

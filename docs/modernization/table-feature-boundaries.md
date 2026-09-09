@@ -22,7 +22,7 @@ not contain the jQuery library.
 | `lifecycle/data-table-adapter.js` | engine creation, registry registration and adapter lifecycle              |
 | `options/option-aliases.js`       | legacy option aliases at the server/config compatibility boundary         |
 
-`resources/assets/js_owl/admin/display/datatables.js` is transitional
+`resources/js/shared/legacy/admin/display/datatables.js` is transitional
 orchestration: it reads config, composes the modules, delegates engine creation
 to the neutral factory and binds legacy controls. The previous 413-line closure,
 implicit globals and inline state/filter implementations are removed.

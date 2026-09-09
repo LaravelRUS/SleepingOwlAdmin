@@ -1,6 +1,6 @@
 import { expect, it } from 'vitest'
 
-import { bindInlineEditorControl } from '../../../../resources/frontend/features/table/editing/inline-editor-control.js'
+import { bindInlineEditorControl } from '../../../../resources/js/shared/features/table/editing/inline-editor-control.js'
 
 function input() {
     return {

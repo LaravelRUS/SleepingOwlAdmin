@@ -3,7 +3,7 @@ import { describe, expect, it, vi } from 'vitest'
 import {
     fileDownloadUrl,
     normalizeFileValue,
-} from '../../../../resources/assets/js_owl/admin/form/file-value'
+} from '../../../../resources/js/shared/legacy/admin/form/file-value'
 
 describe('file value', () => {
     it('normalizes empty and scalar values for the hidden form field', () => {

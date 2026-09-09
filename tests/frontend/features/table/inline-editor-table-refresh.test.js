@@ -1,6 +1,6 @@
 import { expect, it, vi } from 'vitest'
 
-import { bindInlineEditorTableRefresh } from '../../../../resources/frontend/features/table/editing/inline-editor-table-refresh.js'
+import { bindInlineEditorTableRefresh } from '../../../../resources/js/shared/features/table/editing/inline-editor-table-refresh.js'
 
 function eventRoot() {
     const listeners = new Map()

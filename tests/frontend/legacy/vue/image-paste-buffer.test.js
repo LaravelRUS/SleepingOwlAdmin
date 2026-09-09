@@ -5,7 +5,7 @@ import {
     dataUrlToFile,
     readImagePasteBuffer,
     removeImagePasteBuffer,
-} from '../../../../resources/assets/js_owl/admin/form/image-paste-buffer'
+} from '../../../../resources/js/shared/legacy/admin/form/image-paste-buffer'
 
 class FakeFile {
     constructor(parts, name, options) {

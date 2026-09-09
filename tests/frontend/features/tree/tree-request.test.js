@@ -3,7 +3,7 @@ import { expect, it, vi } from 'vitest'
 import {
     submitTreeOrder,
     treeRequestParameters,
-} from '../../../../resources/frontend/features/tree/tree-request.js'
+} from '../../../../resources/js/shared/features/tree/tree-request.js'
 
 it('preserves the nested jQuery-compatible tree reorder payload', () => {
     const data = [{ id: '1', children: [{ id: '2' }] }, { id: '3' }]

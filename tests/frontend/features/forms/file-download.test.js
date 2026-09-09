@@ -1,6 +1,6 @@
 import { expect, it, vi } from 'vitest'
 
-import { downloadFile } from '../../../../resources/frontend/features/forms/file-download.js'
+import { downloadFile } from '../../../../resources/js/shared/features/forms/file-download.js'
 
 it('fetches a file as a blob and starts a browser download without opening a window', async () => {
     const blob = { type: 'image/svg+xml' }

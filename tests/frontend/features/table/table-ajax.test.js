@@ -3,7 +3,7 @@ import { expect, it, vi } from 'vitest'
 import {
     appendNamedFilterData,
     createTableAjax,
-} from '../../../../resources/frontend/features/table/transport/table-ajax.js'
+} from '../../../../resources/js/shared/features/table/transport/table-ajax.js'
 
 function filterRoot(filter) {
     const container = {

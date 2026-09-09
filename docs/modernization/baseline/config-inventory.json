@@ -522,14 +522,14 @@
             "consumers": [
                 {
                     "key": "datatables_settings.state_datatables",
-                    "file": "resources/views/themes/legacy/default/_partials/header.blade.php",
+                    "file": "resources/views/themes/adminlte/default/_partials/header.blade.php",
                     "line": 6,
                     "source": "blade",
                     "accessor": "config-helper"
                 },
                 {
                     "key": "datatables_settings.state_datatables",
-                    "file": "resources/views/themes/tailwind/default/_partials/header.blade.php",
+                    "file": "resources/views/themes/shadcn/default/_partials/header.blade.php",
                     "line": 15,
                     "source": "blade",
                     "accessor": "config-helper"
@@ -552,14 +552,14 @@
             "consumers": [
                 {
                     "key": "datatables_settings.state_filters",
-                    "file": "resources/views/themes/legacy/default/_partials/header.blade.php",
+                    "file": "resources/views/themes/adminlte/default/_partials/header.blade.php",
                     "line": 6,
                     "source": "blade",
                     "accessor": "config-helper"
                 },
                 {
                     "key": "datatables_settings.state_filters",
-                    "file": "resources/views/themes/tailwind/default/_partials/header.blade.php",
+                    "file": "resources/views/themes/shadcn/default/_partials/header.blade.php",
                     "line": 15,
                     "source": "blade",
                     "accessor": "config-helper"
@@ -582,14 +582,14 @@
             "consumers": [
                 {
                     "key": "datatables_settings.state_tabs",
-                    "file": "resources/views/themes/legacy/default/_partials/header.blade.php",
+                    "file": "resources/views/themes/adminlte/default/_partials/header.blade.php",
                     "line": 6,
                     "source": "blade",
                     "accessor": "config-helper"
                 },
                 {
                     "key": "datatables_settings.state_tabs",
-                    "file": "resources/views/themes/tailwind/default/_partials/header.blade.php",
+                    "file": "resources/views/themes/shadcn/default/_partials/header.blade.php",
                     "line": 15,
                     "source": "blade",
                     "accessor": "config-helper"
@@ -862,14 +862,14 @@
             "consumers": [
                 {
                     "key": "images.lazy_load_file",
-                    "file": "resources/views/themes/legacy/default/column/image.blade.php",
+                    "file": "resources/views/themes/adminlte/default/column/image.blade.php",
                     "line": 6,
                     "source": "blade",
                     "accessor": "config-helper"
                 },
                 {
                     "key": "images.lazy_load_file",
-                    "file": "resources/views/themes/tailwind/default/column/image.blade.php",
+                    "file": "resources/views/themes/shadcn/default/column/image.blade.php",
                     "line": 6,
                     "source": "blade",
                     "accessor": "config-helper"
@@ -1090,14 +1090,14 @@
             "consumers": [
                 {
                     "key": "ui.body_default_class",
-                    "file": "resources/views/themes/legacy/default/_layout/base.blade.php",
+                    "file": "resources/views/themes/adminlte/default/_layout/base.blade.php",
                     "line": 13,
                     "source": "blade",
                     "accessor": "config-helper"
                 },
                 {
                     "key": "ui.body_default_class",
-                    "file": "resources/views/themes/tailwind/default/_layout/base.blade.php",
+                    "file": "resources/views/themes/shadcn/default/_layout/base.blade.php",
                     "line": 4,
                     "source": "blade",
                     "accessor": "config-helper"
@@ -1141,14 +1141,14 @@
             "consumers": [
                 {
                     "key": "ui.favicon",
-                    "file": "resources/views/themes/legacy/default/_layout/base.blade.php",
+                    "file": "resources/views/themes/adminlte/default/_layout/base.blade.php",
                     "line": 7,
                     "source": "blade",
                     "accessor": "config-helper"
                 },
                 {
                     "key": "ui.favicon",
-                    "file": "resources/views/themes/tailwind/default/_layout/base.blade.php",
+                    "file": "resources/views/themes/shadcn/default/_layout/base.blade.php",
                     "line": 12,
                     "source": "blade",
                     "accessor": "config-helper"
@@ -1170,14 +1170,14 @@
             "consumers": [
                 {
                     "key": "ui.footer_text",
-                    "file": "resources/views/themes/legacy/default/_layout/inner.blade.php",
+                    "file": "resources/views/themes/adminlte/default/_layout/inner.blade.php",
                     "line": 45,
                     "source": "blade",
                     "accessor": "config-helper"
                 },
                 {
                     "key": "ui.footer_text",
-                    "file": "resources/views/themes/tailwind/default/_layout/inner.blade.php",
+                    "file": "resources/views/themes/shadcn/default/_layout/inner.blade.php",
                     "line": 31,
                     "source": "blade",
                     "accessor": "config-helper"
@@ -1286,14 +1286,14 @@
             "consumers": [
                 {
                     "key": "ui.scroll_to_bottom",
-                    "file": "resources/views/themes/legacy/default/helper/scrolltotop.blade.php",
+                    "file": "resources/views/themes/adminlte/default/helper/scrolltotop.blade.php",
                     "line": 7,
                     "source": "blade",
                     "accessor": "config-helper"
                 },
                 {
                     "key": "ui.scroll_to_bottom",
-                    "file": "resources/views/themes/tailwind/default/helper/scrolltotop.blade.php",
+                    "file": "resources/views/themes/shadcn/default/helper/scrolltotop.blade.php",
                     "line": 7,
                     "source": "blade",
                     "accessor": "config-helper"
@@ -1315,14 +1315,14 @@
             "consumers": [
                 {
                     "key": "ui.scroll_to_top",
-                    "file": "resources/views/themes/legacy/default/helper/scrolltotop.blade.php",
+                    "file": "resources/views/themes/adminlte/default/helper/scrolltotop.blade.php",
                     "line": 1,
                     "source": "blade",
                     "accessor": "config-helper"
                 },
                 {
                     "key": "ui.scroll_to_top",
-                    "file": "resources/views/themes/tailwind/default/helper/scrolltotop.blade.php",
+                    "file": "resources/views/themes/shadcn/default/helper/scrolltotop.blade.php",
                     "line": 1,
                     "source": "blade",
                     "accessor": "config-helper"
@@ -1344,14 +1344,14 @@
             "consumers": [
                 {
                     "key": "ui.show_color_mode_toggle",
-                    "file": "resources/views/themes/legacy/default/_partials/header.blade.php",
+                    "file": "resources/views/themes/adminlte/default/_partials/header.blade.php",
                     "line": 14,
                     "source": "blade",
                     "accessor": "config-helper"
                 },
                 {
                     "key": "ui.show_color_mode_toggle",
-                    "file": "resources/views/themes/tailwind/default/_partials/header.blade.php",
+                    "file": "resources/views/themes/shadcn/default/_partials/header.blade.php",
                     "line": 33,
                     "source": "blade",
                     "accessor": "config-helper"
@@ -1373,14 +1373,14 @@
             "consumers": [
                 {
                     "key": "ui.show_footer",
-                    "file": "resources/views/themes/legacy/default/_layout/inner.blade.php",
+                    "file": "resources/views/themes/adminlte/default/_layout/inner.blade.php",
                     "line": 44,
                     "source": "blade",
                     "accessor": "config-helper"
                 },
                 {
                     "key": "ui.show_footer",
-                    "file": "resources/views/themes/tailwind/default/_layout/inner.blade.php",
+                    "file": "resources/views/themes/shadcn/default/_layout/inner.blade.php",
                     "line": 29,
                     "source": "blade",
                     "accessor": "config-helper"
@@ -1402,14 +1402,14 @@
             "consumers": [
                 {
                     "key": "ui.show_version",
-                    "file": "resources/views/themes/legacy/default/_layout/inner.blade.php",
+                    "file": "resources/views/themes/adminlte/default/_layout/inner.blade.php",
                     "line": 47,
                     "source": "blade",
                     "accessor": "config-helper"
                 },
                 {
                     "key": "ui.show_version",
-                    "file": "resources/views/themes/tailwind/default/_layout/inner.blade.php",
+                    "file": "resources/views/themes/shadcn/default/_layout/inner.blade.php",
                     "line": 33,
                     "source": "blade",
                     "accessor": "config-helper"
@@ -1446,7 +1446,7 @@
             "consumers": [
                 {
                     "key": "ui.title",
-                    "file": "resources/views/themes/tailwind/components/patterns/sidebar.blade.php",
+                    "file": "resources/views/themes/shadcn/components/patterns/sidebar.blade.php",
                     "line": 15,
                     "source": "blade",
                     "accessor": "config-helper"
@@ -1570,14 +1570,14 @@
             "consumers": [
                 {
                     "key": "url_prefix",
-                    "file": "resources/views/themes/legacy/default/_partials/navigation.blade.php",
+                    "file": "resources/views/themes/adminlte/default/_partials/navigation.blade.php",
                     "line": 2,
                     "source": "blade",
                     "accessor": "config-helper"
                 },
                 {
                     "key": "url_prefix",
-                    "file": "resources/views/themes/tailwind/components/patterns/sidebar.blade.php",
+                    "file": "resources/views/themes/shadcn/components/patterns/sidebar.blade.php",
                     "line": 2,
                     "source": "blade",
                     "accessor": "config-helper"
@@ -2509,7 +2509,7 @@
     "derivedScriptConsumers": [
         {
             "key": "",
-            "file": "resources/frontend/shared/compatibility/runtime.js",
+            "file": "resources/js/shared/compatibility/runtime.js",
             "line": 21,
             "source": "javascript",
             "accessor": "admin-config",

@@ -1,0 +1,26 @@
+@use 'sass:meta';
+@use 'auto-update';
+@use 'filter';
+@use 'colors';
+@use 'custom-properties';
+@use 'inline-editor';
+@use 'layout';
+@use 'page-jump';
+@use 'table';
+@use 'variables';
+@include custom-properties.define;
+
+@layer sleepingowl-theme.table {
+  @include meta.load-css(
+    '../../../../../../node_modules/datatables.net-bs5/css/dataTables.bootstrap5.css'
+  );
+  @include meta.load-css(
+    '../../../../../../node_modules/datatables.net-responsive-bs5/css/responsive.bootstrap5.css'
+  );
+  @include layout.styles;
+  @include page-jump.styles;
+  @include inline-editor.styles;
+  @include table.styles;
+  @include auto-update.styles;
+  @include filter.styles;
+}

@@ -19,20 +19,20 @@ it('pins Tailwind 4 build-only dependencies and an explicit PostCSS entry', () =
         logicalId: 'theme:tailwind',
         output: 'css/themes/tailwind-utilities.css',
         processor: 'postcss',
-        source: 'resources/frontend/themes/tailwind/tailwind.input.css',
+        source: 'resources/css/themes/shadcn/tailwind.input.css',
     })
 })
 
 it('uses explicit Tailwind sources and a canonical-token preset without preflight', () => {
-    const input = read('resources/frontend/themes/tailwind/tailwind.input.css')
-    const config = read('resources/frontend/themes/tailwind/tailwind.config.cjs')
-    const preset = read('resources/frontend/themes/tailwind/tailwind.preset.cjs')
+    const input = read('resources/css/themes/shadcn/tailwind.input.css')
+    const config = read('resources/css/themes/shadcn/tailwind.config.cjs')
+    const preset = read('resources/css/themes/shadcn/tailwind.preset.cjs')
 
     expect(input).toContain("tailwindcss/utilities.css' layer(utilities) source(none)")
     expect(input).toContain("@config './tailwind.config.cjs'")
-    expect(input).toContain("@source '../../../views/themes/tailwind'")
+    expect(input).toContain("@source '../../../views/themes/shadcn'")
     expect(input).toContain("@source inline('flex grid')")
-    expect(config).toContain('./resources/views/themes/tailwind/**/*.blade.php')
+    expect(config).toContain('./resources/views/themes/shadcn/**/*.blade.php')
     expect(config).toContain("require('./tailwind.preset.cjs')")
     expect(preset).toContain('var(--soa-primary-color)')
     expect(preset).toContain('var(--soa-surface-color)')

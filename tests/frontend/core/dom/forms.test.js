@@ -4,7 +4,7 @@ import {
     createPostForm,
     submitForm,
     submitPostForm,
-} from '../../../../resources/frontend/core/dom/forms.js'
+} from '../../../../resources/js/core/dom/forms.js'
 
 function createNode(tagName) {
     return {

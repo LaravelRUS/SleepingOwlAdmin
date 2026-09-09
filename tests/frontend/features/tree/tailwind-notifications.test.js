@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest'
 
-import { installTailwindTreeNotifications } from '../../../../resources/frontend/features/tree/themes/tailwind/browser.js'
+import { installTailwindTreeNotifications } from '../../../../resources/js/themes/shadcn/features/tree/browser.js'
 
 describe('Tailwind tree notifications', () => {
     it('maps public native tree events to the theme-owned live region', () => {

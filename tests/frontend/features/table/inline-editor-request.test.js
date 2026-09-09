@@ -5,7 +5,7 @@ import {
     inlineEditParameters,
     InlineEditRejectedError,
     normalizeInlineEditResponse,
-} from '../../../../resources/frontend/features/table/editing/inline-editor-request.js'
+} from '../../../../resources/js/shared/features/table/editing/inline-editor-request.js'
 
 describe('inline edit request contract', () => {
     it('preserves scalar and checklist wire fields', () => {

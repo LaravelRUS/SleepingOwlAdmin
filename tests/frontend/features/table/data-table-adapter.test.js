@@ -3,7 +3,7 @@ import { expect, it, vi } from 'vitest'
 import {
     DataTableAdapter,
     mountDataTable,
-} from '../../../../resources/frontend/features/table/lifecycle/data-table-adapter.js'
+} from '../../../../resources/js/shared/features/table/lifecycle/data-table-adapter.js'
 
 function engine() {
     const rowApi = {

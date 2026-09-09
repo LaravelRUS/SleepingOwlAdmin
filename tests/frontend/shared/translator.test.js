@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { createTranslator } from '../../../resources/frontend/shared/compatibility/translator'
+import { createTranslator } from '../../../resources/js/shared/compatibility/translator'
 
 describe('compatibility translator', () => {
     const trans = createTranslator({

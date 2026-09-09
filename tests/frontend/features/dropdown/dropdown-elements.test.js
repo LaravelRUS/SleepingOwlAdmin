@@ -4,7 +4,7 @@ import {
     dropdownItems,
     findDropdownToggle,
     isDropdownDisabled,
-} from '../../../../resources/frontend/features/dropdown/dropdown-elements.js'
+} from '../../../../resources/js/shared/features/dropdown/dropdown-elements.js'
 
 it('resolves a nested dropdown toggle inside the delegated root', () => {
     const toggle = {}

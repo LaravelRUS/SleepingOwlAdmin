@@ -2,10 +2,10 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./resources/frontend/core/dom/listeners.js"
-/*!**************************************************!*\
-  !*** ./resources/frontend/core/dom/listeners.js ***!
-  \**************************************************/
+/***/ "./resources/js/core/dom/listeners.js"
+/*!********************************************!*\
+  !*** ./resources/js/core/dom/listeners.js ***!
+  \********************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
@@ -77,10 +77,10 @@ function assertListener(listener) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/alert/alert-elements.js"
-/*!*************************************************************!*\
-  !*** ./resources/frontend/features/alert/alert-elements.js ***!
-  \*************************************************************/
+/***/ "./resources/js/shared/features/alert/alert-elements.js"
+/*!**************************************************************!*\
+  !*** ./resources/js/shared/features/alert/alert-elements.js ***!
+  \**************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
@@ -133,10 +133,10 @@ function targetedAlert(element) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/alert/alert-events.js"
-/*!***********************************************************!*\
-  !*** ./resources/frontend/features/alert/alert-events.js ***!
-  \***********************************************************/
+/***/ "./resources/js/shared/features/alert/alert-events.js"
+/*!************************************************************!*\
+  !*** ./resources/js/shared/features/alert/alert-events.js ***!
+  \************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
@@ -167,10 +167,10 @@ function notifyAlertClosed(alert, trigger) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/alert/alert-transition.js"
-/*!***************************************************************!*\
-  !*** ./resources/frontend/features/alert/alert-transition.js ***!
-  \***************************************************************/
+/***/ "./resources/js/shared/features/alert/alert-transition.js"
+/*!****************************************************************!*\
+  !*** ./resources/js/shared/features/alert/alert-transition.js ***!
+  \****************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
@@ -228,20 +228,20 @@ function timeMilliseconds(value) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/alert/alerts.js"
-/*!*****************************************************!*\
-  !*** ./resources/frontend/features/alert/alerts.js ***!
-  \*****************************************************/
+/***/ "./resources/js/shared/features/alert/alerts.js"
+/*!******************************************************!*\
+  !*** ./resources/js/shared/features/alert/alerts.js ***!
+  \******************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   mountAlerts: () => (/* binding */ mountAlerts)
 /* harmony export */ });
-/* harmony import */ var _core_dom_listeners_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../core/dom/listeners.js */ "./resources/frontend/core/dom/listeners.js");
-/* harmony import */ var _alert_elements_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./alert-elements.js */ "./resources/frontend/features/alert/alert-elements.js");
-/* harmony import */ var _alert_events_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./alert-events.js */ "./resources/frontend/features/alert/alert-events.js");
-/* harmony import */ var _alert_transition_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./alert-transition.js */ "./resources/frontend/features/alert/alert-transition.js");
+/* harmony import */ var _core_dom_listeners_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../core/dom/listeners.js */ "./resources/js/core/dom/listeners.js");
+/* harmony import */ var _alert_elements_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./alert-elements.js */ "./resources/js/shared/features/alert/alert-elements.js");
+/* harmony import */ var _alert_events_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./alert-events.js */ "./resources/js/shared/features/alert/alert-events.js");
+/* harmony import */ var _alert_transition_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./alert-transition.js */ "./resources/js/shared/features/alert/alert-transition.js");
 
 
 
@@ -297,10 +297,10 @@ function assertRoot(root) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/alert/install-alerts.js"
-/*!*************************************************************!*\
-  !*** ./resources/frontend/features/alert/install-alerts.js ***!
-  \*************************************************************/
+/***/ "./resources/js/shared/features/alert/install-alerts.js"
+/*!**************************************************************!*\
+  !*** ./resources/js/shared/features/alert/install-alerts.js ***!
+  \**************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
@@ -309,7 +309,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   ALERT_ROOT_SELECTOR: () => (/* binding */ ALERT_ROOT_SELECTOR),
 /* harmony export */   installAlerts: () => (/* binding */ installAlerts)
 /* harmony export */ });
-/* harmony import */ var _alerts_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./alerts.js */ "./resources/frontend/features/alert/alerts.js");
+/* harmony import */ var _alerts_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./alerts.js */ "./resources/js/shared/features/alert/alerts.js");
 
 var ALERT_COMPONENT = 'alerts';
 var ALERT_ROOT_SELECTOR = 'body';
@@ -419,14 +419,14 @@ function assertAdmin(admin) {
 var __webpack_exports__ = {};
 // This entry needs to be wrapped in an IIFE because it needs to be isolated against other modules in the chunk.
 (() => {
-/*!******************************************************!*\
-  !*** ./resources/frontend/features/alert/browser.js ***!
-  \******************************************************/
+/*!*******************************************************!*\
+  !*** ./resources/js/shared/features/alert/browser.js ***!
+  \*******************************************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   bootAlerts: () => (/* binding */ bootAlerts)
 /* harmony export */ });
-/* harmony import */ var _install_alerts_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./install-alerts.js */ "./resources/frontend/features/alert/install-alerts.js");
+/* harmony import */ var _install_alerts_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./install-alerts.js */ "./resources/js/shared/features/alert/install-alerts.js");
 
 if (globalThis.document) bootAlerts(globalThis);
 function bootAlerts(target) {

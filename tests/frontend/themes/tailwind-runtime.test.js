@@ -4,7 +4,7 @@ import {
     applyColorMode,
     installTailwindCardControls,
     installTailwindTheme,
-} from '../../../resources/frontend/themes/tailwind/runtime.js'
+} from '../../../resources/js/themes/shadcn/runtime.js'
 
 describe('Tailwind theme runtime', () => {
     it('restores, toggles and persists the color scheme without a framework runtime', () => {

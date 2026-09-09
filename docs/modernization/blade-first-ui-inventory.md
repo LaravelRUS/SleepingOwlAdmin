@@ -20,7 +20,7 @@ boundary for the remaining theme migration:
 - all built-in templates and Vue components are distributed in both prepared
   asset profiles, so a consumer does not run npm or rebuild the package.
 
-The scan covers `resources/frontend` and `resources/assets/js_owl`. The
+The scan covers `resources/frontend` and `resources/js/shared/legacy`. The
 read-only reference project is intentionally not scanned again.
 
 ## Decision rules

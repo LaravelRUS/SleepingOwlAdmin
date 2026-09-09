@@ -7,7 +7,7 @@ import {
     loadFilterState,
     migrateLegacyFilterState,
     saveFilterState,
-} from '../../../../resources/frontend/features/table/state/filter-state.js'
+} from '../../../../resources/js/shared/features/table/state/filter-state.js'
 
 function storage(initial = {}) {
     const values = new Map(Object.entries(initial))

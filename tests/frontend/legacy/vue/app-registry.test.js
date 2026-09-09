@@ -3,8 +3,8 @@ import { expect, it, vi } from 'vitest'
 import {
     createVueAppRegistry,
     vueAppSelector,
-} from '../../../../resources/frontend/legacy/vue/app-registry.js'
-import { createVueComponentCatalog } from '../../../../resources/frontend/legacy/vue/component-catalog.js'
+} from '../../../../resources/js/shared/vue/legacy/app-registry.js'
+import { createVueComponentCatalog } from '../../../../resources/js/shared/vue/legacy/component-catalog.js'
 
 function createElement(id, marked = false, children = []) {
     const element = {

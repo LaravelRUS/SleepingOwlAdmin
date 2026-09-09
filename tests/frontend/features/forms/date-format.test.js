@@ -4,7 +4,7 @@ import {
     formatDateValue,
     parseDateValue,
     toAirDateFormat,
-} from '../../../../resources/frontend/features/forms/date/date-format.js'
+} from '../../../../resources/js/shared/features/forms/date/date-format.js'
 
 const locale = {
     months: [

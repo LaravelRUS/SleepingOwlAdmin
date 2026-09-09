@@ -2,10 +2,10 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./resources/frontend/features/tree/themes/tailwind/notifications.js"
-/*!***************************************************************************!*\
-  !*** ./resources/frontend/features/tree/themes/tailwind/notifications.js ***!
-  \***************************************************************************/
+/***/ "./resources/js/themes/shadcn/features/tree/notifications.js"
+/*!*******************************************************************!*\
+  !*** ./resources/js/themes/shadcn/features/tree/notifications.js ***!
+  \*******************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
@@ -104,14 +104,14 @@ function updateRegion(region, state, message) {
 var __webpack_exports__ = {};
 // This entry needs to be wrapped in an IIFE because it needs to be isolated against other modules in the chunk.
 (() => {
-/*!*********************************************************************!*\
-  !*** ./resources/frontend/features/tree/themes/tailwind/browser.js ***!
-  \*********************************************************************/
+/*!*************************************************************!*\
+  !*** ./resources/js/themes/shadcn/features/tree/browser.js ***!
+  \*************************************************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   installTailwindTreeNotifications: () => (/* binding */ installTailwindTreeNotifications)
 /* harmony export */ });
-/* harmony import */ var _notifications_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./notifications.js */ "./resources/frontend/features/tree/themes/tailwind/notifications.js");
+/* harmony import */ var _notifications_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./notifications.js */ "./resources/js/themes/shadcn/features/tree/notifications.js");
 
 var TREE_SELECTOR = '[data-tree]';
 var NOTIFICATION_SELECTOR = '[data-tree-notification]';

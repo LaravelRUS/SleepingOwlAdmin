@@ -4,7 +4,7 @@ import {
     configureTableLayoutSlots,
     findTableLayoutSlots,
     isTableLayoutPosition,
-} from '../../../../resources/frontend/features/table/layout/table-layout-slots.js'
+} from '../../../../resources/js/shared/features/table/layout/table-layout-slots.js'
 
 function fixture(slotDefinitions = [['top3Start', 'first']], tableId = 'orders') {
     const comments = []

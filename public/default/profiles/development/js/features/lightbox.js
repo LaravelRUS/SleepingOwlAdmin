@@ -1,10 +1,10 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./resources/frontend/features/lightbox/install-lightboxes.js"
-/*!********************************************************************!*\
-  !*** ./resources/frontend/features/lightbox/install-lightboxes.js ***!
-  \********************************************************************/
+/***/ "./resources/js/shared/features/lightbox/install-lightboxes.js"
+/*!*********************************************************************!*\
+  !*** ./resources/js/shared/features/lightbox/install-lightboxes.js ***!
+  \*********************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -17,7 +17,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var glightbox__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! glightbox */ "./node_modules/glightbox/dist/js/glightbox.min.js");
 /* harmony import */ var glightbox__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(glightbox__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _lightbox_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./lightbox.js */ "./resources/frontend/features/lightbox/lightbox.js");
+/* harmony import */ var _lightbox_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./lightbox.js */ "./resources/js/shared/features/lightbox/lightbox.js");
 
 
 var LIGHTBOX_COMPONENT = 'lightbox';
@@ -62,10 +62,10 @@ function assertFunction(object, method, message) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/lightbox/lightbox-elements.js"
-/*!*******************************************************************!*\
-  !*** ./resources/frontend/features/lightbox/lightbox-elements.js ***!
-  \*******************************************************************/
+/***/ "./resources/js/shared/features/lightbox/lightbox-elements.js"
+/*!********************************************************************!*\
+  !*** ./resources/js/shared/features/lightbox/lightbox-elements.js ***!
+  \********************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -142,10 +142,10 @@ function escapeLightboxText(value) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/lightbox/lightbox.js"
-/*!**********************************************************!*\
-  !*** ./resources/frontend/features/lightbox/lightbox.js ***!
-  \**********************************************************/
+/***/ "./resources/js/shared/features/lightbox/lightbox.js"
+/*!***********************************************************!*\
+  !*** ./resources/js/shared/features/lightbox/lightbox.js ***!
+  \***********************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -153,7 +153,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   mountLightbox: () => (/* binding */ mountLightbox)
 /* harmony export */ });
-/* harmony import */ var _lightbox_elements_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./lightbox-elements.js */ "./resources/frontend/features/lightbox/lightbox-elements.js");
+/* harmony import */ var _lightbox_elements_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./lightbox-elements.js */ "./resources/js/shared/features/lightbox/lightbox-elements.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
@@ -337,14 +337,14 @@ var __webpack_exports__ = {};
 // This entry needs to be wrapped in an IIFE because it needs to be in strict mode.
 (() => {
 "use strict";
-/*!*********************************************************!*\
-  !*** ./resources/frontend/features/lightbox/browser.js ***!
-  \*********************************************************/
+/*!**********************************************************!*\
+  !*** ./resources/js/shared/features/lightbox/browser.js ***!
+  \**********************************************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   bootLightboxes: () => (/* binding */ bootLightboxes)
 /* harmony export */ });
-/* harmony import */ var _install_lightboxes_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./install-lightboxes.js */ "./resources/frontend/features/lightbox/install-lightboxes.js");
+/* harmony import */ var _install_lightboxes_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./install-lightboxes.js */ "./resources/js/shared/features/lightbox/install-lightboxes.js");
 
 if (globalThis.document) bootLightboxes(globalThis);
 function bootLightboxes(target) {

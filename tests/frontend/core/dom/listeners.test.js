@@ -1,6 +1,6 @@
 import { expect, it, vi } from 'vitest'
 
-import { delegate, listen } from '../../../../resources/frontend/core/dom/listeners.js'
+import { delegate, listen } from '../../../../resources/js/core/dom/listeners.js'
 
 function createTarget() {
     const listeners = new Map()

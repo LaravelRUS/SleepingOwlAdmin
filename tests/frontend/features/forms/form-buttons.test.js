@@ -1,6 +1,6 @@
 import { expect, it, vi } from 'vitest'
 
-import { bindFormButtons } from '../../../../resources/frontend/features/forms/actions/form-buttons.js'
+import { bindFormButtons } from '../../../../resources/js/shared/features/forms/actions/form-buttons.js'
 
 function createRoot() {
     let listener

@@ -3,7 +3,7 @@ import { expect, it } from 'vitest'
 import {
     DEFAULT_GENERATED_CHARACTERS,
     generateFieldValue,
-} from '../../../../resources/frontend/features/forms/generation/generated-value.js'
+} from '../../../../resources/js/shared/features/forms/generation/generated-value.js'
 
 it('generates the configured length from custom characters', () => {
     const field = { dataset: { generateChars: 'ab', generateLength: '4' } }

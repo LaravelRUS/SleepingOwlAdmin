@@ -3,7 +3,7 @@ import { expect, it, vi } from 'vitest'
 import {
     highlightColumn,
     syncColumnHighlight,
-} from '../../../../resources/frontend/features/table/hooks/column-highlight.js'
+} from '../../../../resources/js/shared/features/table/hooks/column-highlight.js'
 
 function node() {
     return { classList: { add: vi.fn(), remove: vi.fn() } }

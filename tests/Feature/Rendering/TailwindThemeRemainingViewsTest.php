@@ -26,8 +26,8 @@ class TailwindThemeRemainingViewsTest extends TestCase
 
     public function test_tailwind_owns_every_legacy_logical_view(): void
     {
-        $legacyRoot = realpath(__DIR__.'/../../../resources/views/themes/legacy/default');
-        $tailwindRoot = realpath(__DIR__.'/../../../resources/views/themes/tailwind/default');
+        $legacyRoot = realpath(__DIR__.'/../../../resources/views/themes/adminlte/default');
+        $tailwindRoot = realpath(__DIR__.'/../../../resources/views/themes/shadcn/default');
         $directory = new RecursiveDirectoryIterator($legacyRoot, FilesystemIterator::SKIP_DOTS);
         $views = [];
 

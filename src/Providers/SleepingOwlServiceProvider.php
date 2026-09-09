@@ -16,7 +16,7 @@ class SleepingOwlServiceProvider extends AdminSectionsServiceProvider
         $this->mergeConfigFrom(__DIR__.'/../../config/navigation.php', 'navigation');
         $this->loadViewsFrom($this->viewPaths(), 'sleeping_owl');
         $this->loadViewsFrom(
-            __DIR__.'/../../resources/views/themes/tailwind',
+            __DIR__.'/../../resources/views/themes/shadcn',
             'sleeping_owl_tailwind'
         );
 
@@ -70,7 +70,7 @@ class SleepingOwlServiceProvider extends AdminSectionsServiceProvider
     {
         return [
             __DIR__.'/../../resources/views',
-            __DIR__.'/../../resources/views/themes/legacy',
+            __DIR__.'/../../resources/views/themes/adminlte',
         ];
     }
 

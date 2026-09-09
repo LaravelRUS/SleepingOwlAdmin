@@ -146,10 +146,10 @@ exports["default"] = _default;
 
 /***/ },
 
-/***/ "./resources/frontend/core/dom/forms.js"
-/*!**********************************************!*\
-  !*** ./resources/frontend/core/dom/forms.js ***!
-  \**********************************************/
+/***/ "./resources/js/core/dom/forms.js"
+/*!****************************************!*\
+  !*** ./resources/js/core/dom/forms.js ***!
+  \****************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -223,10 +223,10 @@ function assertParameters(parameters) {
 
 /***/ },
 
-/***/ "./resources/frontend/core/dom/listeners.js"
-/*!**************************************************!*\
-  !*** ./resources/frontend/core/dom/listeners.js ***!
-  \**************************************************/
+/***/ "./resources/js/core/dom/listeners.js"
+/*!********************************************!*\
+  !*** ./resources/js/core/dom/listeners.js ***!
+  \********************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -299,10 +299,10 @@ function assertListener(listener) {
 
 /***/ },
 
-/***/ "./resources/frontend/core/lifecycle/component-lifecycle.js"
-/*!******************************************************************!*\
-  !*** ./resources/frontend/core/lifecycle/component-lifecycle.js ***!
-  \******************************************************************/
+/***/ "./resources/js/core/lifecycle/component-lifecycle.js"
+/*!************************************************************!*\
+  !*** ./resources/js/core/lifecycle/component-lifecycle.js ***!
+  \************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -531,10 +531,10 @@ function assertNonEmptyString(value, field) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/forms/date/date-format.js"
-/*!***************************************************************!*\
-  !*** ./resources/frontend/features/forms/date/date-format.js ***!
-  \***************************************************************/
+/***/ "./resources/js/shared/features/forms/date/date-format.js"
+/*!****************************************************************!*\
+  !*** ./resources/js/shared/features/forms/date/date-format.js ***!
+  \****************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -738,10 +738,10 @@ function isValidDate(value) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/forms/date/date-locales.js"
-/*!****************************************************************!*\
-  !*** ./resources/frontend/features/forms/date/date-locales.js ***!
-  \****************************************************************/
+/***/ "./resources/js/shared/features/forms/date/date-locales.js"
+/*!*****************************************************************!*\
+  !*** ./resources/js/shared/features/forms/date/date-locales.js ***!
+  \*****************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -779,10 +779,10 @@ function normalizeLocale(locale) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/table/actions/action-context.js"
-/*!*********************************************************************!*\
-  !*** ./resources/frontend/features/table/actions/action-context.js ***!
-  \*********************************************************************/
+/***/ "./resources/js/shared/features/table/actions/action-context.js"
+/*!**********************************************************************!*\
+  !*** ./resources/js/shared/features/table/actions/action-context.js ***!
+  \**********************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -867,10 +867,10 @@ function actionCallbackContext(form, table) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/table/actions/action-request.js"
-/*!*********************************************************************!*\
-  !*** ./resources/frontend/features/table/actions/action-request.js ***!
-  \*********************************************************************/
+/***/ "./resources/js/shared/features/table/actions/action-request.js"
+/*!**********************************************************************!*\
+  !*** ./resources/js/shared/features/table/actions/action-request.js ***!
+  \**********************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -963,10 +963,10 @@ function appendQuery(url, query) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/table/actions/bulk-actions.js"
-/*!*******************************************************************!*\
-  !*** ./resources/frontend/features/table/actions/bulk-actions.js ***!
-  \*******************************************************************/
+/***/ "./resources/js/shared/features/table/actions/bulk-actions.js"
+/*!********************************************************************!*\
+  !*** ./resources/js/shared/features/table/actions/bulk-actions.js ***!
+  \********************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -974,9 +974,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   bindBulkActions: () => (/* binding */ bindBulkActions)
 /* harmony export */ });
-/* harmony import */ var _core_dom_listeners_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../core/dom/listeners.js */ "./resources/frontend/core/dom/listeners.js");
-/* harmony import */ var _action_context_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./action-context.js */ "./resources/frontend/features/table/actions/action-context.js");
-/* harmony import */ var _action_request_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./action-request.js */ "./resources/frontend/features/table/actions/action-request.js");
+/* harmony import */ var _core_dom_listeners_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../core/dom/listeners.js */ "./resources/js/core/dom/listeners.js");
+/* harmony import */ var _action_context_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./action-context.js */ "./resources/js/shared/features/table/actions/action-context.js");
+/* harmony import */ var _action_request_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./action-request.js */ "./resources/js/shared/features/table/actions/action-request.js");
 function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
 function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
@@ -1088,10 +1088,10 @@ function assertDependencies(dependencies) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/table/actions/form-actions.js"
-/*!*******************************************************************!*\
-  !*** ./resources/frontend/features/table/actions/form-actions.js ***!
-  \*******************************************************************/
+/***/ "./resources/js/shared/features/table/actions/form-actions.js"
+/*!********************************************************************!*\
+  !*** ./resources/js/shared/features/table/actions/form-actions.js ***!
+  \********************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1099,9 +1099,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   bindFormActions: () => (/* binding */ bindFormActions)
 /* harmony export */ });
-/* harmony import */ var _core_dom_listeners_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../core/dom/listeners.js */ "./resources/frontend/core/dom/listeners.js");
-/* harmony import */ var _action_context_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./action-context.js */ "./resources/frontend/features/table/actions/action-context.js");
-/* harmony import */ var _action_request_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./action-request.js */ "./resources/frontend/features/table/actions/action-request.js");
+/* harmony import */ var _core_dom_listeners_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../core/dom/listeners.js */ "./resources/js/core/dom/listeners.js");
+/* harmony import */ var _action_context_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./action-context.js */ "./resources/js/shared/features/table/actions/action-context.js");
+/* harmony import */ var _action_request_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./action-request.js */ "./resources/js/shared/features/table/actions/action-request.js");
 function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
 function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
@@ -1197,10 +1197,10 @@ function assertDependencies(dependencies) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/table/actions/named-action-callbacks.js"
-/*!*****************************************************************************!*\
-  !*** ./resources/frontend/features/table/actions/named-action-callbacks.js ***!
-  \*****************************************************************************/
+/***/ "./resources/js/shared/features/table/actions/named-action-callbacks.js"
+/*!******************************************************************************!*\
+  !*** ./resources/js/shared/features/table/actions/named-action-callbacks.js ***!
+  \******************************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1234,10 +1234,10 @@ function invokeNamedCallback(root, message, parameters) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/table/autoupdate/table-auto-update.js"
-/*!***************************************************************************!*\
-  !*** ./resources/frontend/features/table/autoupdate/table-auto-update.js ***!
-  \***************************************************************************/
+/***/ "./resources/js/shared/features/table/autoupdate/table-auto-update.js"
+/*!****************************************************************************!*\
+  !*** ./resources/js/shared/features/table/autoupdate/table-auto-update.js ***!
+  \****************************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1729,10 +1729,10 @@ function assertTableCollection(tables) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/table/browser-options.js"
-/*!**************************************************************!*\
-  !*** ./resources/frontend/features/table/browser-options.js ***!
-  \**************************************************************/
+/***/ "./resources/js/shared/features/table/browser-options.js"
+/*!***************************************************************!*\
+  !*** ./resources/js/shared/features/table/browser-options.js ***!
+  \***************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1784,10 +1784,10 @@ function translated(target, key, fallback) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/table/controls/confirm-submit.js"
-/*!**********************************************************************!*\
-  !*** ./resources/frontend/features/table/controls/confirm-submit.js ***!
-  \**********************************************************************/
+/***/ "./resources/js/shared/features/table/controls/confirm-submit.js"
+/*!***********************************************************************!*\
+  !*** ./resources/js/shared/features/table/controls/confirm-submit.js ***!
+  \***********************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1795,8 +1795,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   bindConfirmedControls: () => (/* binding */ bindConfirmedControls)
 /* harmony export */ });
-/* harmony import */ var _core_dom_forms_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../core/dom/forms.js */ "./resources/frontend/core/dom/forms.js");
-/* harmony import */ var _core_dom_listeners_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../core/dom/listeners.js */ "./resources/frontend/core/dom/listeners.js");
+/* harmony import */ var _core_dom_forms_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../core/dom/forms.js */ "./resources/js/core/dom/forms.js");
+/* harmony import */ var _core_dom_listeners_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../core/dom/listeners.js */ "./resources/js/core/dom/listeners.js");
 function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
 function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
@@ -1901,10 +1901,10 @@ function assertQuestion(value, action) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/table/editing/inline-editor-config.js"
-/*!***************************************************************************!*\
-  !*** ./resources/frontend/features/table/editing/inline-editor-config.js ***!
-  \***************************************************************************/
+/***/ "./resources/js/shared/features/table/editing/inline-editor-config.js"
+/*!****************************************************************************!*\
+  !*** ./resources/js/shared/features/table/editing/inline-editor-config.js ***!
+  \****************************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1993,10 +1993,10 @@ function assertType(type) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/table/editing/inline-editor-control.js"
-/*!****************************************************************************!*\
-  !*** ./resources/frontend/features/table/editing/inline-editor-control.js ***!
-  \****************************************************************************/
+/***/ "./resources/js/shared/features/table/editing/inline-editor-control.js"
+/*!*****************************************************************************!*\
+  !*** ./resources/js/shared/features/table/editing/inline-editor-control.js ***!
+  \*****************************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2154,10 +2154,10 @@ function requiredRangePart(element, selector, label) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/table/editing/inline-editor-request.js"
-/*!****************************************************************************!*\
-  !*** ./resources/frontend/features/table/editing/inline-editor-request.js ***!
-  \****************************************************************************/
+/***/ "./resources/js/shared/features/table/editing/inline-editor-request.js"
+/*!*****************************************************************************!*\
+  !*** ./resources/js/shared/features/table/editing/inline-editor-request.js ***!
+  \*****************************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2354,10 +2354,10 @@ function assertHttp(http) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/table/editing/inline-editor-table-refresh.js"
-/*!**********************************************************************************!*\
-  !*** ./resources/frontend/features/table/editing/inline-editor-table-refresh.js ***!
-  \**********************************************************************************/
+/***/ "./resources/js/shared/features/table/editing/inline-editor-table-refresh.js"
+/*!***********************************************************************************!*\
+  !*** ./resources/js/shared/features/table/editing/inline-editor-table-refresh.js ***!
+  \***********************************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2412,10 +2412,10 @@ function assertMethod(object, method, message) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/table/editing/inline-editor-template.js"
-/*!*****************************************************************************!*\
-  !*** ./resources/frontend/features/table/editing/inline-editor-template.js ***!
-  \*****************************************************************************/
+/***/ "./resources/js/shared/features/table/editing/inline-editor-template.js"
+/*!******************************************************************************!*\
+  !*** ./resources/js/shared/features/table/editing/inline-editor-template.js ***!
+  \******************************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2472,10 +2472,10 @@ function requiredDescendant(root, selector, label) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/table/editing/inline-editor-value.js"
-/*!**************************************************************************!*\
-  !*** ./resources/frontend/features/table/editing/inline-editor-value.js ***!
-  \**************************************************************************/
+/***/ "./resources/js/shared/features/table/editing/inline-editor-value.js"
+/*!***************************************************************************!*\
+  !*** ./resources/js/shared/features/table/editing/inline-editor-value.js ***!
+  \***************************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2542,10 +2542,10 @@ function optionText(options, value) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/table/editing/inline-editor-view.js"
-/*!*************************************************************************!*\
-  !*** ./resources/frontend/features/table/editing/inline-editor-view.js ***!
-  \*************************************************************************/
+/***/ "./resources/js/shared/features/table/editing/inline-editor-view.js"
+/*!**************************************************************************!*\
+  !*** ./resources/js/shared/features/table/editing/inline-editor-view.js ***!
+  \**************************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2553,8 +2553,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   createInlineEditorView: () => (/* binding */ createInlineEditorView)
 /* harmony export */ });
-/* harmony import */ var _inline_editor_control_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./inline-editor-control.js */ "./resources/frontend/features/table/editing/inline-editor-control.js");
-/* harmony import */ var _inline_editor_template_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./inline-editor-template.js */ "./resources/frontend/features/table/editing/inline-editor-template.js");
+/* harmony import */ var _inline_editor_control_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./inline-editor-control.js */ "./resources/js/shared/features/table/editing/inline-editor-control.js");
+/* harmony import */ var _inline_editor_template_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./inline-editor-template.js */ "./resources/js/shared/features/table/editing/inline-editor-template.js");
 
 
 function createInlineEditorView(trigger, config, labels, handlers) {
@@ -2678,10 +2678,10 @@ function focusControl(element) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/table/editing/inline-editor.js"
-/*!********************************************************************!*\
-  !*** ./resources/frontend/features/table/editing/inline-editor.js ***!
-  \********************************************************************/
+/***/ "./resources/js/shared/features/table/editing/inline-editor.js"
+/*!*********************************************************************!*\
+  !*** ./resources/js/shared/features/table/editing/inline-editor.js ***!
+  \*********************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2692,10 +2692,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   createInlineEditorDefinition: () => (/* binding */ createInlineEditorDefinition),
 /* harmony export */   mountInlineEditor: () => (/* binding */ mountInlineEditor)
 /* harmony export */ });
-/* harmony import */ var _inline_editor_config_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./inline-editor-config.js */ "./resources/frontend/features/table/editing/inline-editor-config.js");
-/* harmony import */ var _inline_editor_request_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./inline-editor-request.js */ "./resources/frontend/features/table/editing/inline-editor-request.js");
-/* harmony import */ var _inline_editor_value_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./inline-editor-value.js */ "./resources/frontend/features/table/editing/inline-editor-value.js");
-/* harmony import */ var _inline_editor_view_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./inline-editor-view.js */ "./resources/frontend/features/table/editing/inline-editor-view.js");
+/* harmony import */ var _inline_editor_config_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./inline-editor-config.js */ "./resources/js/shared/features/table/editing/inline-editor-config.js");
+/* harmony import */ var _inline_editor_request_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./inline-editor-request.js */ "./resources/js/shared/features/table/editing/inline-editor-request.js");
+/* harmony import */ var _inline_editor_value_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./inline-editor-value.js */ "./resources/js/shared/features/table/editing/inline-editor-value.js");
+/* harmony import */ var _inline_editor_view_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./inline-editor-view.js */ "./resources/js/shared/features/table/editing/inline-editor-view.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
 function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
@@ -3032,10 +3032,10 @@ function assertFunction(object, method, message) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/table/editing/install-inline-editors.js"
-/*!*****************************************************************************!*\
-  !*** ./resources/frontend/features/table/editing/install-inline-editors.js ***!
-  \*****************************************************************************/
+/***/ "./resources/js/shared/features/table/editing/install-inline-editors.js"
+/*!******************************************************************************!*\
+  !*** ./resources/js/shared/features/table/editing/install-inline-editors.js ***!
+  \******************************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3043,8 +3043,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   installInlineEditors: () => (/* binding */ installInlineEditors)
 /* harmony export */ });
-/* harmony import */ var _inline_editor_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./inline-editor.js */ "./resources/frontend/features/table/editing/inline-editor.js");
-/* harmony import */ var _inline_editor_table_refresh_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./inline-editor-table-refresh.js */ "./resources/frontend/features/table/editing/inline-editor-table-refresh.js");
+/* harmony import */ var _inline_editor_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./inline-editor.js */ "./resources/js/shared/features/table/editing/inline-editor.js");
+/* harmony import */ var _inline_editor_table_refresh_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./inline-editor-table-refresh.js */ "./resources/js/shared/features/table/editing/inline-editor-table-refresh.js");
 
 
 function installInlineEditors(admin) {
@@ -3093,10 +3093,10 @@ function assertFunction(object, method, message) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/table/engine/data-table-engine.js"
-/*!***********************************************************************!*\
-  !*** ./resources/frontend/features/table/engine/data-table-engine.js ***!
-  \***********************************************************************/
+/***/ "./resources/js/shared/features/table/engine/data-table-engine.js"
+/*!************************************************************************!*\
+  !*** ./resources/js/shared/features/table/engine/data-table-engine.js ***!
+  \************************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3126,10 +3126,10 @@ function dataTableEngineVersions() {
 
 /***/ },
 
-/***/ "./resources/frontend/features/table/engine/extensions.js"
-/*!****************************************************************!*\
-  !*** ./resources/frontend/features/table/engine/extensions.js ***!
-  \****************************************************************/
+/***/ "./resources/js/shared/features/table/engine/extensions.js"
+/*!*****************************************************************!*\
+  !*** ./resources/js/shared/features/table/engine/extensions.js ***!
+  \*****************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3168,10 +3168,10 @@ function assertExtensionDependencies(engine, onError) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/table/filters/date-filter-support.js"
-/*!**************************************************************************!*\
-  !*** ./resources/frontend/features/table/filters/date-filter-support.js ***!
-  \**************************************************************************/
+/***/ "./resources/js/shared/features/table/filters/date-filter-support.js"
+/*!***************************************************************************!*\
+  !*** ./resources/js/shared/features/table/filters/date-filter-support.js ***!
+  \***************************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3179,7 +3179,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   createDateFilterSupport: () => (/* binding */ createDateFilterSupport)
 /* harmony export */ });
-/* harmony import */ var _forms_date_date_format_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../forms/date/date-format.js */ "./resources/frontend/features/forms/date/date-format.js");
+/* harmony import */ var _forms_date_date_format_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../forms/date/date-format.js */ "./resources/js/shared/features/forms/date/date-format.js");
 
 function createDateFilterSupport() {
   var locale = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
@@ -3194,10 +3194,10 @@ function createDateFilterSupport() {
 
 /***/ },
 
-/***/ "./resources/frontend/features/table/filters/filter-controls-feature.js"
-/*!******************************************************************************!*\
-  !*** ./resources/frontend/features/table/filters/filter-controls-feature.js ***!
-  \******************************************************************************/
+/***/ "./resources/js/shared/features/table/filters/filter-controls-feature.js"
+/*!*******************************************************************************!*\
+  !*** ./resources/js/shared/features/table/filters/filter-controls-feature.js ***!
+  \*******************************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3307,10 +3307,10 @@ function restorePlacements(placements) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/table/filters/filter-controls.js"
-/*!**********************************************************************!*\
-  !*** ./resources/frontend/features/table/filters/filter-controls.js ***!
-  \**********************************************************************/
+/***/ "./resources/js/shared/features/table/filters/filter-controls.js"
+/*!***********************************************************************!*\
+  !*** ./resources/js/shared/features/table/filters/filter-controls.js ***!
+  \***********************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3487,10 +3487,10 @@ function assertCallbacks(clear, execute, reload) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/table/filters/filter-drivers.js"
-/*!*********************************************************************!*\
-  !*** ./resources/frontend/features/table/filters/filter-drivers.js ***!
-  \*********************************************************************/
+/***/ "./resources/js/shared/features/table/filters/filter-drivers.js"
+/*!**********************************************************************!*\
+  !*** ./resources/js/shared/features/table/filters/filter-drivers.js ***!
+  \**********************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3687,10 +3687,10 @@ function dateTimestamp(value) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/table/filters/filter-elements.js"
-/*!**********************************************************************!*\
-  !*** ./resources/frontend/features/table/filters/filter-elements.js ***!
-  \**********************************************************************/
+/***/ "./resources/js/shared/features/table/filters/filter-elements.js"
+/*!***********************************************************************!*\
+  !*** ./resources/js/shared/features/table/filters/filter-elements.js ***!
+  \***********************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3755,10 +3755,10 @@ function assertRoot(root) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/table/hooks/column-highlight.js"
-/*!*********************************************************************!*\
-  !*** ./resources/frontend/features/table/hooks/column-highlight.js ***!
-  \*********************************************************************/
+/***/ "./resources/js/shared/features/table/hooks/column-highlight.js"
+/*!**********************************************************************!*\
+  !*** ./resources/js/shared/features/table/hooks/column-highlight.js ***!
+  \**********************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3827,10 +3827,10 @@ function handleMouseOver(element, table, event) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/table/hooks/lazy-images.js"
-/*!****************************************************************!*\
-  !*** ./resources/frontend/features/table/hooks/lazy-images.js ***!
-  \****************************************************************/
+/***/ "./resources/js/shared/features/table/hooks/lazy-images.js"
+/*!*****************************************************************!*\
+  !*** ./resources/js/shared/features/table/hooks/lazy-images.js ***!
+  \*****************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3879,10 +3879,10 @@ function matchingElements(root, selector) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/table/hooks/table-hooks.js"
-/*!****************************************************************!*\
-  !*** ./resources/frontend/features/table/hooks/table-hooks.js ***!
-  \****************************************************************/
+/***/ "./resources/js/shared/features/table/hooks/table-hooks.js"
+/*!*****************************************************************!*\
+  !*** ./resources/js/shared/features/table/hooks/table-hooks.js ***!
+  \*****************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3934,10 +3934,10 @@ function assertHookDependencies(events) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/table/layout/table-layout-slots.js"
-/*!************************************************************************!*\
-  !*** ./resources/frontend/features/table/layout/table-layout-slots.js ***!
-  \************************************************************************/
+/***/ "./resources/js/shared/features/table/layout/table-layout-slots.js"
+/*!*************************************************************************!*\
+  !*** ./resources/js/shared/features/table/layout/table-layout-slots.js ***!
+  \*************************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4056,10 +4056,10 @@ function once(callback) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/table/lifecycle/data-table-adapter.js"
-/*!***************************************************************************!*\
-  !*** ./resources/frontend/features/table/lifecycle/data-table-adapter.js ***!
-  \***************************************************************************/
+/***/ "./resources/js/shared/features/table/lifecycle/data-table-adapter.js"
+/*!****************************************************************************!*\
+  !*** ./resources/js/shared/features/table/lifecycle/data-table-adapter.js ***!
+  \****************************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4068,7 +4068,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   DataTableAdapter: () => (/* binding */ DataTableAdapter),
 /* harmony export */   mountDataTable: () => (/* binding */ mountDataTable)
 /* harmony export */ });
-/* harmony import */ var _selection_selected_rows_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../selection/selected-rows.js */ "./resources/frontend/features/table/selection/selected-rows.js");
+/* harmony import */ var _selection_selected_rows_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../selection/selected-rows.js */ "./resources/js/shared/features/table/selection/selected-rows.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
 function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
@@ -4150,10 +4150,10 @@ function assertMountDependencies(createEngine, registry) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/table/options/option-aliases.js"
-/*!*********************************************************************!*\
-  !*** ./resources/frontend/features/table/options/option-aliases.js ***!
-  \*********************************************************************/
+/***/ "./resources/js/shared/features/table/options/option-aliases.js"
+/*!**********************************************************************!*\
+  !*** ./resources/js/shared/features/table/options/option-aliases.js ***!
+  \**********************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4217,10 +4217,10 @@ function warnRemovedOption(message) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/table/options/state-options.js"
-/*!********************************************************************!*\
-  !*** ./resources/frontend/features/table/options/state-options.js ***!
-  \********************************************************************/
+/***/ "./resources/js/shared/features/table/options/state-options.js"
+/*!*********************************************************************!*\
+  !*** ./resources/js/shared/features/table/options/state-options.js ***!
+  \*********************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4228,7 +4228,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   applyTableStateOptions: () => (/* binding */ applyTableStateOptions)
 /* harmony export */ });
-/* harmony import */ var _state_filter_state_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../state/filter-state.js */ "./resources/frontend/features/table/state/filter-state.js");
+/* harmony import */ var _state_filter_state_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../state/filter-state.js */ "./resources/js/shared/features/table/state/filter-state.js");
 
 function applyTableStateOptions(options, config) {
   var stateLoadParams = options.stateLoadParams;
@@ -4254,10 +4254,10 @@ function applyTableStateOptions(options, config) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/table/options/table-options.js"
-/*!********************************************************************!*\
-  !*** ./resources/frontend/features/table/options/table-options.js ***!
-  \********************************************************************/
+/***/ "./resources/js/shared/features/table/options/table-options.js"
+/*!*********************************************************************!*\
+  !*** ./resources/js/shared/features/table/options/table-options.js ***!
+  \*********************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4267,7 +4267,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   readTableDefinition: () => (/* binding */ readTableDefinition),
 /* harmony export */   tableLayout: () => (/* binding */ tableLayout)
 /* harmony export */ });
-/* harmony import */ var _option_aliases_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./option-aliases.js */ "./resources/frontend/features/table/options/option-aliases.js");
+/* harmony import */ var _option_aliases_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./option-aliases.js */ "./resources/js/shared/features/table/options/option-aliases.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
@@ -4365,10 +4365,10 @@ function assertElement(element) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/table/pagination/page-jump.js"
-/*!*******************************************************************!*\
-  !*** ./resources/frontend/features/table/pagination/page-jump.js ***!
-  \*******************************************************************/
+/***/ "./resources/js/shared/features/table/pagination/page-jump.js"
+/*!********************************************************************!*\
+  !*** ./resources/js/shared/features/table/pagination/page-jump.js ***!
+  \********************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4467,10 +4467,10 @@ function bindPageJumpInput(input, jump) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/table/runtime/install-data-tables.js"
-/*!**************************************************************************!*\
-  !*** ./resources/frontend/features/table/runtime/install-data-tables.js ***!
-  \**************************************************************************/
+/***/ "./resources/js/shared/features/table/runtime/install-data-tables.js"
+/*!***************************************************************************!*\
+  !*** ./resources/js/shared/features/table/runtime/install-data-tables.js ***!
+  \***************************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4481,18 +4481,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   createDataTableDefinition: () => (/* binding */ createDataTableDefinition),
 /* harmony export */   installDataTables: () => (/* binding */ installDataTables)
 /* harmony export */ });
-/* harmony import */ var _core_lifecycle_component_lifecycle_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../core/lifecycle/component-lifecycle.js */ "./resources/frontend/core/lifecycle/component-lifecycle.js");
-/* harmony import */ var _forms_date_date_locales_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../forms/date/date-locales.js */ "./resources/frontend/features/forms/date/date-locales.js");
-/* harmony import */ var _engine_data_table_engine_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../engine/data-table-engine.js */ "./resources/frontend/features/table/engine/data-table-engine.js");
-/* harmony import */ var _engine_extensions_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../engine/extensions.js */ "./resources/frontend/features/table/engine/extensions.js");
-/* harmony import */ var _filters_filter_drivers_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../filters/filter-drivers.js */ "./resources/frontend/features/table/filters/filter-drivers.js");
-/* harmony import */ var _filters_date_filter_support_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../filters/date-filter-support.js */ "./resources/frontend/features/table/filters/date-filter-support.js");
-/* harmony import */ var _filters_filter_controls_feature_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../filters/filter-controls-feature.js */ "./resources/frontend/features/table/filters/filter-controls-feature.js");
-/* harmony import */ var _lifecycle_data_table_adapter_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../lifecycle/data-table-adapter.js */ "./resources/frontend/features/table/lifecycle/data-table-adapter.js");
-/* harmony import */ var _options_table_options_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../options/table-options.js */ "./resources/frontend/features/table/options/table-options.js");
-/* harmony import */ var _pagination_page_jump_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../pagination/page-jump.js */ "./resources/frontend/features/table/pagination/page-jump.js");
-/* harmony import */ var _table_filters_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./table-filters.js */ "./resources/frontend/features/table/runtime/table-filters.js");
-/* harmony import */ var _table_runtime_options_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./table-runtime-options.js */ "./resources/frontend/features/table/runtime/table-runtime-options.js");
+/* harmony import */ var _core_lifecycle_component_lifecycle_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../core/lifecycle/component-lifecycle.js */ "./resources/js/core/lifecycle/component-lifecycle.js");
+/* harmony import */ var _forms_date_date_locales_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../forms/date/date-locales.js */ "./resources/js/shared/features/forms/date/date-locales.js");
+/* harmony import */ var _engine_data_table_engine_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../engine/data-table-engine.js */ "./resources/js/shared/features/table/engine/data-table-engine.js");
+/* harmony import */ var _engine_extensions_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../engine/extensions.js */ "./resources/js/shared/features/table/engine/extensions.js");
+/* harmony import */ var _filters_filter_drivers_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../filters/filter-drivers.js */ "./resources/js/shared/features/table/filters/filter-drivers.js");
+/* harmony import */ var _filters_date_filter_support_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../filters/date-filter-support.js */ "./resources/js/shared/features/table/filters/date-filter-support.js");
+/* harmony import */ var _filters_filter_controls_feature_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../filters/filter-controls-feature.js */ "./resources/js/shared/features/table/filters/filter-controls-feature.js");
+/* harmony import */ var _lifecycle_data_table_adapter_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../lifecycle/data-table-adapter.js */ "./resources/js/shared/features/table/lifecycle/data-table-adapter.js");
+/* harmony import */ var _options_table_options_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../options/table-options.js */ "./resources/js/shared/features/table/options/table-options.js");
+/* harmony import */ var _pagination_page_jump_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../pagination/page-jump.js */ "./resources/js/shared/features/table/pagination/page-jump.js");
+/* harmony import */ var _table_filters_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./table-filters.js */ "./resources/js/shared/features/table/runtime/table-filters.js");
+/* harmony import */ var _table_runtime_options_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./table-runtime-options.js */ "./resources/js/shared/features/table/runtime/table-runtime-options.js");
 
 
 
@@ -4630,10 +4630,10 @@ function assertOptions(options) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/table/runtime/install-table-auto-updates.js"
-/*!*********************************************************************************!*\
-  !*** ./resources/frontend/features/table/runtime/install-table-auto-updates.js ***!
-  \*********************************************************************************/
+/***/ "./resources/js/shared/features/table/runtime/install-table-auto-updates.js"
+/*!**********************************************************************************!*\
+  !*** ./resources/js/shared/features/table/runtime/install-table-auto-updates.js ***!
+  \**********************************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4643,7 +4643,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   TABLE_AUTO_UPDATES_SELECTOR: () => (/* binding */ TABLE_AUTO_UPDATES_SELECTOR),
 /* harmony export */   installTableAutoUpdates: () => (/* binding */ installTableAutoUpdates)
 /* harmony export */ });
-/* harmony import */ var _autoupdate_table_auto_update_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../autoupdate/table-auto-update.js */ "./resources/frontend/features/table/autoupdate/table-auto-update.js");
+/* harmony import */ var _autoupdate_table_auto_update_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../autoupdate/table-auto-update.js */ "./resources/js/shared/features/table/autoupdate/table-auto-update.js");
 
 var TABLE_AUTO_UPDATES_COMPONENT = 'table-auto-updates';
 var TABLE_AUTO_UPDATES_SELECTOR = '[data-admin-table-autoupdate]';
@@ -4673,10 +4673,10 @@ function assertOptions(admin, options) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/table/runtime/install-table-controls.js"
-/*!*****************************************************************************!*\
-  !*** ./resources/frontend/features/table/runtime/install-table-controls.js ***!
-  \*****************************************************************************/
+/***/ "./resources/js/shared/features/table/runtime/install-table-controls.js"
+/*!******************************************************************************!*\
+  !*** ./resources/js/shared/features/table/runtime/install-table-controls.js ***!
+  \******************************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4687,11 +4687,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   createTableControlsDefinition: () => (/* binding */ createTableControlsDefinition),
 /* harmony export */   installTableControls: () => (/* binding */ installTableControls)
 /* harmony export */ });
-/* harmony import */ var _actions_bulk_actions_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/bulk-actions.js */ "./resources/frontend/features/table/actions/bulk-actions.js");
-/* harmony import */ var _actions_form_actions_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/form-actions.js */ "./resources/frontend/features/table/actions/form-actions.js");
-/* harmony import */ var _actions_named_action_callbacks_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../actions/named-action-callbacks.js */ "./resources/frontend/features/table/actions/named-action-callbacks.js");
-/* harmony import */ var _controls_confirm_submit_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../controls/confirm-submit.js */ "./resources/frontend/features/table/controls/confirm-submit.js");
-/* harmony import */ var _selection_checkbox_controls_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../selection/checkbox-controls.js */ "./resources/frontend/features/table/selection/checkbox-controls.js");
+/* harmony import */ var _actions_bulk_actions_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/bulk-actions.js */ "./resources/js/shared/features/table/actions/bulk-actions.js");
+/* harmony import */ var _actions_form_actions_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/form-actions.js */ "./resources/js/shared/features/table/actions/form-actions.js");
+/* harmony import */ var _actions_named_action_callbacks_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../actions/named-action-callbacks.js */ "./resources/js/shared/features/table/actions/named-action-callbacks.js");
+/* harmony import */ var _controls_confirm_submit_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../controls/confirm-submit.js */ "./resources/js/shared/features/table/controls/confirm-submit.js");
+/* harmony import */ var _selection_checkbox_controls_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../selection/checkbox-controls.js */ "./resources/js/shared/features/table/selection/checkbox-controls.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
@@ -4793,10 +4793,10 @@ function hasBrowserDependencies(options) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/table/runtime/table-filters.js"
-/*!********************************************************************!*\
-  !*** ./resources/frontend/features/table/runtime/table-filters.js ***!
-  \********************************************************************/
+/***/ "./resources/js/shared/features/table/runtime/table-filters.js"
+/*!*********************************************************************!*\
+  !*** ./resources/js/shared/features/table/runtime/table-filters.js ***!
+  \*********************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4804,10 +4804,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   createTableFilters: () => (/* binding */ createTableFilters)
 /* harmony export */ });
-/* harmony import */ var _filters_filter_controls_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../filters/filter-controls.js */ "./resources/frontend/features/table/filters/filter-controls.js");
-/* harmony import */ var _filters_filter_controls_feature_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../filters/filter-controls-feature.js */ "./resources/frontend/features/table/filters/filter-controls-feature.js");
-/* harmony import */ var _filters_filter_elements_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../filters/filter-elements.js */ "./resources/frontend/features/table/filters/filter-elements.js");
-/* harmony import */ var _state_filter_state_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../state/filter-state.js */ "./resources/frontend/features/table/state/filter-state.js");
+/* harmony import */ var _filters_filter_controls_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../filters/filter-controls.js */ "./resources/js/shared/features/table/filters/filter-controls.js");
+/* harmony import */ var _filters_filter_controls_feature_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../filters/filter-controls-feature.js */ "./resources/js/shared/features/table/filters/filter-controls-feature.js");
+/* harmony import */ var _filters_filter_elements_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../filters/filter-elements.js */ "./resources/js/shared/features/table/filters/filter-elements.js");
+/* harmony import */ var _state_filter_state_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../state/filter-state.js */ "./resources/js/shared/features/table/state/filter-state.js");
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
@@ -4916,10 +4916,10 @@ function normalizeOptions(options) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/table/runtime/table-runtime-options.js"
-/*!****************************************************************************!*\
-  !*** ./resources/frontend/features/table/runtime/table-runtime-options.js ***!
-  \****************************************************************************/
+/***/ "./resources/js/shared/features/table/runtime/table-runtime-options.js"
+/*!*****************************************************************************!*\
+  !*** ./resources/js/shared/features/table/runtime/table-runtime-options.js ***!
+  \*****************************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4927,15 +4927,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   createRuntimeTableOptions: () => (/* binding */ createRuntimeTableOptions)
 /* harmony export */ });
-/* harmony import */ var _transport_table_ajax_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../transport/table-ajax.js */ "./resources/frontend/features/table/transport/table-ajax.js");
-/* harmony import */ var _autoupdate_table_auto_update_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../autoupdate/table-auto-update.js */ "./resources/frontend/features/table/autoupdate/table-auto-update.js");
-/* harmony import */ var _filters_filter_controls_feature_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../filters/filter-controls-feature.js */ "./resources/frontend/features/table/filters/filter-controls-feature.js");
-/* harmony import */ var _hooks_column_highlight_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../hooks/column-highlight.js */ "./resources/frontend/features/table/hooks/column-highlight.js");
-/* harmony import */ var _hooks_lazy_images_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../hooks/lazy-images.js */ "./resources/frontend/features/table/hooks/lazy-images.js");
-/* harmony import */ var _hooks_table_hooks_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../hooks/table-hooks.js */ "./resources/frontend/features/table/hooks/table-hooks.js");
-/* harmony import */ var _layout_table_layout_slots_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../layout/table-layout-slots.js */ "./resources/frontend/features/table/layout/table-layout-slots.js");
-/* harmony import */ var _options_table_options_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../options/table-options.js */ "./resources/frontend/features/table/options/table-options.js");
-/* harmony import */ var _options_state_options_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../options/state-options.js */ "./resources/frontend/features/table/options/state-options.js");
+/* harmony import */ var _transport_table_ajax_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../transport/table-ajax.js */ "./resources/js/shared/features/table/transport/table-ajax.js");
+/* harmony import */ var _autoupdate_table_auto_update_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../autoupdate/table-auto-update.js */ "./resources/js/shared/features/table/autoupdate/table-auto-update.js");
+/* harmony import */ var _filters_filter_controls_feature_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../filters/filter-controls-feature.js */ "./resources/js/shared/features/table/filters/filter-controls-feature.js");
+/* harmony import */ var _hooks_column_highlight_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../hooks/column-highlight.js */ "./resources/js/shared/features/table/hooks/column-highlight.js");
+/* harmony import */ var _hooks_lazy_images_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../hooks/lazy-images.js */ "./resources/js/shared/features/table/hooks/lazy-images.js");
+/* harmony import */ var _hooks_table_hooks_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../hooks/table-hooks.js */ "./resources/js/shared/features/table/hooks/table-hooks.js");
+/* harmony import */ var _layout_table_layout_slots_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../layout/table-layout-slots.js */ "./resources/js/shared/features/table/layout/table-layout-slots.js");
+/* harmony import */ var _options_table_options_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../options/table-options.js */ "./resources/js/shared/features/table/options/table-options.js");
+/* harmony import */ var _options_state_options_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../options/state-options.js */ "./resources/js/shared/features/table/options/state-options.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
@@ -4997,10 +4997,10 @@ function createRuntimeDrawHook(element, settings) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/table/selection/checkbox-controls.js"
-/*!**************************************************************************!*\
-  !*** ./resources/frontend/features/table/selection/checkbox-controls.js ***!
-  \**************************************************************************/
+/***/ "./resources/js/shared/features/table/selection/checkbox-controls.js"
+/*!***************************************************************************!*\
+  !*** ./resources/js/shared/features/table/selection/checkbox-controls.js ***!
+  \***************************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5009,7 +5009,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   bindTableCheckboxes: () => (/* binding */ bindTableCheckboxes),
 /* harmony export */   updateRowSelection: () => (/* binding */ updateRowSelection)
 /* harmony export */ });
-/* harmony import */ var _core_dom_listeners_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../core/dom/listeners.js */ "./resources/frontend/core/dom/listeners.js");
+/* harmony import */ var _core_dom_listeners_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../core/dom/listeners.js */ "./resources/js/core/dom/listeners.js");
 
 var CHECKBOX_SELECTOR = '.adminCheckboxRow, .adminCheckboxAll';
 function bindTableCheckboxes(_ref) {
@@ -5060,10 +5060,10 @@ function dispatchChange(element) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/table/selection/selected-rows.js"
-/*!**********************************************************************!*\
-  !*** ./resources/frontend/features/table/selection/selected-rows.js ***!
-  \**********************************************************************/
+/***/ "./resources/js/shared/features/table/selection/selected-rows.js"
+/*!***********************************************************************!*\
+  !*** ./resources/js/shared/features/table/selection/selected-rows.js ***!
+  \***********************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5088,10 +5088,10 @@ function selectedRowValues(element) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/table/state/filter-state.js"
-/*!*****************************************************************!*\
-  !*** ./resources/frontend/features/table/state/filter-state.js ***!
-  \*****************************************************************/
+/***/ "./resources/js/shared/features/table/state/filter-state.js"
+/*!******************************************************************!*\
+  !*** ./resources/js/shared/features/table/state/filter-state.js ***!
+  \******************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5104,7 +5104,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   migrateLegacyFilterState: () => (/* binding */ migrateLegacyFilterState),
 /* harmony export */   saveFilterState: () => (/* binding */ saveFilterState)
 /* harmony export */ });
-/* harmony import */ var _filters_filter_elements_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../filters/filter-elements.js */ "./resources/frontend/features/table/filters/filter-elements.js");
+/* harmony import */ var _filters_filter_elements_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../filters/filter-elements.js */ "./resources/js/shared/features/table/filters/filter-elements.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -5329,10 +5329,10 @@ function parseState(serialized) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/table/transport/table-ajax.js"
-/*!*******************************************************************!*\
-  !*** ./resources/frontend/features/table/transport/table-ajax.js ***!
-  \*******************************************************************/
+/***/ "./resources/js/shared/features/table/transport/table-ajax.js"
+/*!********************************************************************!*\
+  !*** ./resources/js/shared/features/table/transport/table-ajax.js ***!
+  \********************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5341,7 +5341,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   appendNamedFilterData: () => (/* binding */ appendNamedFilterData),
 /* harmony export */   createTableAjax: () => (/* binding */ createTableAjax)
 /* harmony export */ });
-/* harmony import */ var _filters_filter_elements_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../filters/filter-elements.js */ "./resources/frontend/features/table/filters/filter-elements.js");
+/* harmony import */ var _filters_filter_elements_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../filters/filter-elements.js */ "./resources/js/shared/features/table/filters/filter-elements.js");
 
 function createTableAjax(_ref) {
   var events = _ref.events,
@@ -22499,21 +22499,21 @@ var __webpack_exports__ = {};
 // This entry needs to be wrapped in an IIFE because it needs to be in strict mode.
 (() => {
 "use strict";
-/*!******************************************************!*\
-  !*** ./resources/frontend/features/table/browser.js ***!
-  \******************************************************/
+/*!*******************************************************!*\
+  !*** ./resources/js/shared/features/table/browser.js ***!
+  \*******************************************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   bootTables: () => (/* binding */ bootTables)
 /* harmony export */ });
 /* harmony import */ var progressbar_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! progressbar.js */ "./node_modules/progressbar.js/dist/progressbar.js");
 /* harmony import */ var progressbar_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(progressbar_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _editing_install_inline_editors_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./editing/install-inline-editors.js */ "./resources/frontend/features/table/editing/install-inline-editors.js");
-/* harmony import */ var _engine_data_table_engine_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./engine/data-table-engine.js */ "./resources/frontend/features/table/engine/data-table-engine.js");
-/* harmony import */ var _browser_options_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./browser-options.js */ "./resources/frontend/features/table/browser-options.js");
-/* harmony import */ var _runtime_install_data_tables_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./runtime/install-data-tables.js */ "./resources/frontend/features/table/runtime/install-data-tables.js");
-/* harmony import */ var _runtime_install_table_auto_updates_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./runtime/install-table-auto-updates.js */ "./resources/frontend/features/table/runtime/install-table-auto-updates.js");
-/* harmony import */ var _runtime_install_table_controls_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./runtime/install-table-controls.js */ "./resources/frontend/features/table/runtime/install-table-controls.js");
+/* harmony import */ var _editing_install_inline_editors_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./editing/install-inline-editors.js */ "./resources/js/shared/features/table/editing/install-inline-editors.js");
+/* harmony import */ var _engine_data_table_engine_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./engine/data-table-engine.js */ "./resources/js/shared/features/table/engine/data-table-engine.js");
+/* harmony import */ var _browser_options_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./browser-options.js */ "./resources/js/shared/features/table/browser-options.js");
+/* harmony import */ var _runtime_install_data_tables_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./runtime/install-data-tables.js */ "./resources/js/shared/features/table/runtime/install-data-tables.js");
+/* harmony import */ var _runtime_install_table_auto_updates_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./runtime/install-table-auto-updates.js */ "./resources/js/shared/features/table/runtime/install-table-auto-updates.js");
+/* harmony import */ var _runtime_install_table_controls_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./runtime/install-table-controls.js */ "./resources/js/shared/features/table/runtime/install-table-controls.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }

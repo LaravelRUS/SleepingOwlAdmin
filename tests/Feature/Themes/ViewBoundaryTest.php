@@ -24,14 +24,14 @@ class ViewBoundaryTest extends TestCase
     public function test_default_namespace_resolves_from_extracted_legacy_theme(): void
     {
         $path = view()->getFinder()->find('sleeping_owl::default._layout.inner');
-        $expected = realpath(__DIR__.'/../../../resources/views/themes/legacy/default/_layout/inner.blade.php');
+        $expected = realpath(__DIR__.'/../../../resources/views/themes/adminlte/default/_layout/inner.blade.php');
 
         $this->assertSame($expected, realpath($path));
     }
 
     public function test_every_legacy_theme_view_keeps_its_default_logical_path(): void
     {
-        $root = realpath(__DIR__.'/../../../resources/views/themes/legacy/default');
+        $root = realpath(__DIR__.'/../../../resources/views/themes/adminlte/default');
 
         foreach ($this->bladeFiles('themes/legacy/default') as $path) {
             $relative = substr($path, strlen($root) + 1);
@@ -46,7 +46,7 @@ class ViewBoundaryTest extends TestCase
     {
         $hints = array_map('realpath', view()->getFinder()->getHints()['sleeping_owl']);
         $root = realpath(__DIR__.'/../../../resources/views');
-        $legacy = realpath(__DIR__.'/../../../resources/views/themes/legacy');
+        $legacy = realpath(__DIR__.'/../../../resources/views/themes/adminlte');
         $rootIndex = array_search($root, $hints, true);
         $legacyIndex = array_search($legacy, $hints, true);
 

@@ -1,6 +1,6 @@
 import { expect, it, vi } from 'vitest'
 
-import { normalizeLegacySelect2Options } from '../../../../resources/assets/js_owl/admin/form/select2-option-migration.js'
+import { normalizeLegacySelect2Options } from '../../../../resources/js/shared/legacy/admin/form/select2-option-migration.js'
 
 it('maps supported Select2 options onto the Vue Multiselect contract', () => {
     expect(

@@ -1,11 +1,11 @@
 import { describe, expect, it, vi } from 'vitest'
 
-import { componentMountSkipped } from '../../../../resources/frontend/core/lifecycle/component-lifecycle.js'
+import { componentMountSkipped } from '../../../../resources/js/core/lifecycle/component-lifecycle.js'
 import {
     parseParameters,
     readWysiwygConfig,
-} from '../../../../resources/frontend/features/forms/wysiwyg/wysiwyg-config.js'
-import { mountWysiwyg } from '../../../../resources/frontend/features/forms/wysiwyg/wysiwyg-component.js'
+} from '../../../../resources/js/shared/features/forms/wysiwyg/wysiwyg-config.js'
+import { mountWysiwyg } from '../../../../resources/js/shared/features/forms/wysiwyg/wysiwyg-component.js'
 
 function textarea(attributes = []) {
     const values = new Set(attributes)

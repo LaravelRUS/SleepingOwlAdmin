@@ -120,7 +120,7 @@ resources/frontend/
 - `_colors.scss` каждого слоя является единственным first-party местом color literals этого слоя; `_variables.scss` содержит остальные Sass defaults с `!default` там, где нужен build-time override.
 - Theme-specific feature presentation хранится рядом с темой либо в явном adapter entry, но не возвращается в generic feature stylesheet.
 - `tailwind.input.css` содержит только необходимые Tailwind/PostCSS directives/config и считается build-tool input; все написанные вручную overrides остаются в `theme.scss`. Generated Tailwind CSS существует только в output и вручную не редактируется.
-- Текущие `resources/assets/scss/admin-app.scss`, глобальные `_variables.scss`/`colors.scss` и component aggregators разбираются по этим владельцам постепенно; монолит удаляется после parity обеих тем.
+- Текущие `resources/css/themes/adminlte/legacy/admin-app.scss`, глобальные `_variables.scss`/`colors.scss` и component aggregators разбираются по этим владельцам постепенно; монолит удаляется после parity обеих тем.
 
 Color literals и dark mode:
 
@@ -433,7 +433,7 @@ No-build consumer contract является release-blocking:
 - Инициализировать DataTables 3 через engine-neutral границу `data-table-engine` и `new DataTable(element, options)`, без `$(element).DataTable()` в коде проекта.
 - На первом этапе сохранить текущий серверный wire protocol, чтобы не смешивать frontend-миграцию с переписыванием PHP query layer.
 - Перевести внешние consumers (actions, inline-edit, auto-update) с прямого DataTables API на `Admin.Tables`.
-- Удалить собственный renderer из `resources/assets/js_owl/libs/datatables.js`.
+- Удалить собственный renderer из `resources/js/shared/legacy/libs/datatables.js`.
 - DataTables core/behavior не должен зависеть от темы. AdminLTE-тема подключает подходящий Bootstrap adapter, Tailwind-тема — Tailwind/base adapter, custom theme — собственный presentation layer.
 
 ### Vue 3
@@ -733,7 +733,7 @@ No-build consumer contract является release-blocking:
 
 ### Этап 8. Удалить jQuery и очистить сборку
 
-- [x] Удалить `resources/assets/js_owl/libs/jquery.js` и его import.
+- [x] Удалить `resources/js/shared/legacy/libs/jquery.js` и его import.
 - [x] Удалить неиспользуемый `jquery-form` из `package.json` и lockfile.
 - [x] Удалить прямой `jquery` из `package.json`; оставшиеся jQuery-only transitive dependencies удаляются вместе с legacy AdminLTE/Bootstrap packages.
 - [x] Удалить глобальные `window.$`, `window.jQuery`, `global.jQuery`.
@@ -806,9 +806,9 @@ php artisan sleepingowl:update
 Дополнительно проверить поиском:
 
 ```bash
-rg -n "jquery|jQuery|\\$\\(" resources/assets/js_owl resources/views package.json
+rg -n "jquery|jQuery|\\$\\(" resources/js/shared/legacy resources/views package.json
 rg -n "data-toggle|data-target|data-dismiss" resources/views
-rg -n "inline-template|new Vue|Vue\\.component|Vue\\.extend|Vue\\.http|Vue\\.prototype" resources/assets/js_owl resources/views
+rg -n "inline-template|new Vue|Vue\\.component|Vue\\.extend|Vue\\.http|Vue\\.prototype" resources/js/shared/legacy resources/views
 rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 ```
 
@@ -1053,7 +1053,7 @@ Tailwind acceptance matrix находится только в [`ADMIN_TAILWIND_T
 | 2026-09-06 | Этап 2 / presentation defaults | Bootstrap/AdminLTE defaults встроенных buttons, forms, cards, grid, tabs, badges, tables, filters и controls перенесены из PHP core в legacy Blade views; behavior hooks сохранены. `ComponentAttributeBag` объединяет theme defaults с пользовательскими attributes, отдельные tests фиксируют variants/grid/tabs/controls, PHP guard запрещает возврат framework class defaults и проверяет синтаксис всех legacy Blade views. Уточнён read-only inventory `Laluna/Modules`: 72 sections, 74 datatables displays, 444 прямых class attributes и 72 placement-вхождения. Полный PHP gate: 357 tests, 1140 assertions, 2 прежних TODO-skip; frontend gate: 9 Vitest + 12 Playwright | текущий commit |
 | 2026-09-06 | Этап 2 / user attributes | Прямой API пользовательских classes/attributes сохранён без semantic resolver: raw arrays доступны темам, прежние строковые keys оставлены для custom views. Все default theme views используют first-party `HtmlAttributeBag`, который объединяет theme/user classes и безопасно экранирует values только при HTML-выводе; static guard запрещает возврат к raw attribute strings. Покрыты navigation, headers, extensions, columns, `data-*`, `aria-*`, inline style и boolean attributes. Полный PHP gate: 366 tests, 1171 assertions, 2 прежних TODO-skip; frontend gate: 9 Vitest + 12 Playwright | текущий commit |
 | 2026-09-06 | Этап 2 / view boundaries | Blade implementations разделены по физическим ownership roots `shared`, `features` и theme-owned `default`; framework-dependent feature markup оставлен theme adapter-слою. Восемь прежних `sleeping_owl::default.*` paths сохранены однострочными bridge views, поэтому published overrides и custom templates продолжают работать. Добавлены карта границ и guards: shared не зависит от theme/runtime, features не зависит от default theme, все package Blade views компилируются. Полный PHP gate: 371 test, 1199 assertions, 2 прежних TODO-skip; frontend gate: 9 Vitest + 12 Playwright | текущий commit |
-| 2026-09-06 | Этап 2 / legacy theme extraction | `default` физически перенесён в `resources/views/themes/legacy/default` и явно идентифицирован через `ThemeInterface` как `legacy-adminlte`; стабильный namespace `sleeping_owl::default`, `TemplateDefault`, config selector, published overrides и `public/default` URLs не изменены. Provider регистрирует общий root перед legacy root; executable contract проверяет разрешение каждого legacy Blade-файла. Asset source/distribution пока только объявлены legacy-owned и будут физически разделены вместе с versioned manifests, без промежуточного сломанного runtime. Полный PHP gate: 374 tests, 1326 assertions, 2 прежних TODO-skip; frontend gate: 9 Vitest + 12 Playwright | текущий commit |
+| 2026-09-06 | Этап 2 / legacy theme extraction | `default` физически перенесён в `resources/views/themes/adminlte/default` и явно идентифицирован через `ThemeInterface` как `legacy-adminlte`; стабильный namespace `sleeping_owl::default`, `TemplateDefault`, config selector, published overrides и `public/default` URLs не изменены. Provider регистрирует общий root перед legacy root; executable contract проверяет разрешение каждого legacy Blade-файла. Asset source/distribution пока только объявлены legacy-owned и будут физически разделены вместе с versioned manifests, без промежуточного сломанного runtime. Полный PHP gate: 374 tests, 1326 assertions, 2 прежних TODO-skip; frontend gate: 9 Vitest + 12 Playwright | текущий commit |
 | 2026-09-06 | Этап 2 / cross-theme rendering | Один и тот же PHP display и form рендерятся через две независимые test themes с разной HTML-разметкой; object identity, общие данные, пользовательские classes/`data-*`/`aria-*`/inline style/boolean attributes и отсутствие theme-specific mutation закреплены contract tests. Полный PHP gate с PDO SQLite: 376 tests, 1370 assertions, 2 прежних TODO-skip; frontend gate: 9 Vitest + 12 Playwright | текущий commit |
 | 2026-09-06 | Этап 2 / theme metadata | Зафиксированы логические theme manifest ids `theme:<id>`/`feature:<id>:theme:<id>` без физических путей, семь типизированных presentation capabilities и безопасный registry theme-owned icon tokens. Legacy adapter валидирует metadata, а extracted theme объявляет собственный logical entry и capabilities; границы и custom-theme пример описаны в `docs/modernization/theme-contract.md`. Полный PHP gate с PDO SQLite: 383 tests, 1395 assertions, 2 прежних TODO-skip; frontend gate: 9 Vitest + 12 Playwright | текущий commit |
 | 2026-09-06 | Этап 2 / theme selector | Существующий `sleeping_owl.template` выбирает как legacy `TemplateInterface`, так и прямой custom `ThemeInterface`; узкий resolver создаёт парный transitional adapter без смены config key и без fallback к AdminLTE для неверного класса. `ThemeConfiguration` передаёт 14 существующих theme-owned keys и planned sidebar color под исходными именами/типами, а template renderer предоставляет theme/config выбранным views. Полный PHP gate с PDO SQLite: 387 tests, 1413 assertions, 2 прежних TODO-skip; frontend gate: 9 Vitest + 12 Playwright | текущий commit |

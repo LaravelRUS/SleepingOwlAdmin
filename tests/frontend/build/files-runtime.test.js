@@ -8,8 +8,8 @@ const read = (path) => readFileSync(resolve(root, path), 'utf8')
 
 describe('files runtime boundary', () => {
     it('keeps the legacy HTML contract while replacing its runtime', () => {
-        const view = read('resources/views/themes/legacy/default/form/element/files.blade.php')
-        const wrapper = read('resources/assets/js_owl/admin/form/files.js')
+        const view = read('resources/views/themes/adminlte/default/form/element/files.blade.php')
+        const wrapper = read('resources/js/shared/legacy/admin/form/files.js')
 
         for (const marker of [
             'fileUploadMultiple',
@@ -27,11 +27,11 @@ describe('files runtime boundary', () => {
 
     it('does not execute templates or depend on Flow.js', () => {
         const sources = [
-            'resources/frontend/features/forms/files/files-controller.js',
-            'resources/frontend/features/forms/files/files-template.js',
-            'resources/frontend/features/forms/files/files-uploader.js',
-            'resources/frontend/features/forms/files/files-values.js',
-            'resources/frontend/features/forms/files/install-files.js',
+            'resources/js/shared/features/forms/files/files-controller.js',
+            'resources/js/shared/features/forms/files/files-template.js',
+            'resources/js/shared/features/forms/files/files-uploader.js',
+            'resources/js/shared/features/forms/files/files-values.js',
+            'resources/js/shared/features/forms/files/install-files.js',
         ].map(read)
         const packageJson = read('package.json')
 

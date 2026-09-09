@@ -1,10 +1,328 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./resources/assets/js_owl/components/admin.js"
-/*!*****************************************************!*\
-  !*** ./resources/assets/js_owl/components/admin.js ***!
-  \*****************************************************/
+/***/ "./resources/js/shared/compatibility/runtime.js"
+/*!******************************************************!*\
+  !*** ./resources/js/shared/compatibility/runtime.js ***!
+  \******************************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   installCompatibilityRuntime: () => (/* binding */ installCompatibilityRuntime)
+/* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/lib/axios.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _legacy_components_admin__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../legacy/components/admin */ "./resources/js/shared/legacy/components/admin.js");
+/* harmony import */ var _legacy_components_messages__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../legacy/components/messages */ "./resources/js/shared/legacy/components/messages.js");
+/* harmony import */ var _legacy_components_messages__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_legacy_components_messages__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _legacy_components_modules__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../legacy/components/modules */ "./resources/js/shared/legacy/components/modules.js");
+/* harmony import */ var _legacy_components_modules__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_legacy_components_modules__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _features_forms_wysiwyg_wysiwyg_registry__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../features/forms/wysiwyg/wysiwyg-registry */ "./resources/js/shared/features/forms/wysiwyg/wysiwyg-registry.js");
+/* harmony import */ var _translator__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./translator */ "./resources/js/shared/compatibility/translator.js");
+
+
+
+
+
+
+
+
+var INSTALLATION = Symbol["for"]('sleepingowl.shared.compatibility');
+function installCompatibilityRuntime(target) {
+  if (target[INSTALLATION]) return target.Admin;
+  var core = requireCore(target.Admin);
+  target._ = (lodash__WEBPACK_IMPORTED_MODULE_1___default());
+  target.axios = configuredAxios();
+  target.Swal = (sweetalert2__WEBPACK_IMPORTED_MODULE_2___default());
+  target.Admin = createLegacyAdmin(target, core);
+  target.trans = (0,_translator__WEBPACK_IMPORTED_MODULE_7__.createTranslator)({
+    lang: target.Admin.Config.get('lang')
+  });
+  installLegacyServices(target.Admin);
+  target[INSTALLATION] = true;
+  return target.Admin;
+}
+function createLegacyAdmin(target, core) {
+  var _target$document, _target$GlobalConfig;
+  var token = (_target$document = target.document) === null || _target$document === void 0 || (_target$document = _target$document.querySelector('meta[name="csrf-token"]')) === null || _target$document === void 0 ? void 0 : _target$document.getAttribute('content');
+  var admin = new _legacy_components_admin__WEBPACK_IMPORTED_MODULE_3__["default"](token !== null && token !== void 0 ? token : '', (_target$GlobalConfig = target.GlobalConfig) !== null && _target$GlobalConfig !== void 0 ? _target$GlobalConfig : {});
+  Object.assign(admin, core);
+  return admin;
+}
+function installLegacyServices(admin) {
+  admin.Messages = (_legacy_components_messages__WEBPACK_IMPORTED_MODULE_4___default());
+  admin.Modules = (_legacy_components_modules__WEBPACK_IMPORTED_MODULE_5___default());
+  admin.WYSIWYG = (0,_features_forms_wysiwyg_wysiwyg_registry__WEBPACK_IMPORTED_MODULE_6__.createWysiwygRegistry)({
+    events: admin.Events,
+    log: function log(message, scope) {
+      return admin.log(message, scope);
+    }
+  });
+}
+function configuredAxios() {
+  axios__WEBPACK_IMPORTED_MODULE_0__["default"].defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+  return axios__WEBPACK_IMPORTED_MODULE_0__["default"];
+}
+function requireCore(admin) {
+  if (!(admin !== null && admin !== void 0 && admin.Components) || !(admin !== null && admin !== void 0 && admin.Events) || !(admin !== null && admin !== void 0 && admin.Http)) {
+    throw new TypeError('SleepingOwl compatibility runtime requires the headless core.');
+  }
+  return admin;
+}
+
+/***/ },
+
+/***/ "./resources/js/shared/compatibility/translator.js"
+/*!*********************************************************!*\
+  !*** ./resources/js/shared/compatibility/translator.js ***!
+  \*********************************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   createTranslator: () => (/* binding */ createTranslator)
+/* harmony export */ });
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+function createTranslator() {
+  var translations = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  return function (key, parameters) {
+    var value = resolveTranslation(translations, key);
+    return replaceParameters(value !== null && value !== void 0 ? value : key, parameters);
+  };
+}
+function resolveTranslation(translations, key) {
+  return String(key).split('.').reduce(function (value, segment) {
+    return readSegment(value, segment);
+  }, translations);
+}
+function readSegment(value, segment) {
+  if (!isRecord(value) || !Object.hasOwn(value, segment)) return undefined;
+  return value[segment];
+}
+function replaceParameters(value) {
+  var parameters = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  return Object.entries(parameters !== null && parameters !== void 0 ? parameters : {}).reverse().reduce(function (translation, _ref) {
+    var _ref2 = _slicedToArray(_ref, 2),
+      name = _ref2[0],
+      replacement = _ref2[1];
+    return translation.replace(":".concat(name), String(replacement));
+  }, String(value));
+}
+function isRecord(value) {
+  return value !== null && _typeof(value) === 'object';
+}
+
+/***/ },
+
+/***/ "./resources/js/shared/features/forms/wysiwyg/wysiwyg-registry.js"
+/*!************************************************************************!*\
+  !*** ./resources/js/shared/features/forms/wysiwyg/wysiwyg-registry.js ***!
+  \************************************************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   createWysiwygRegistry: () => (/* binding */ createWysiwygRegistry)
+/* harmony export */ });
+function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
+function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function createWysiwygRegistry() {
+  var _options$log;
+  var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var adapters = new Map();
+  var records = new Map();
+  var events = options.events;
+  var log = (_options$log = options.log) !== null && _options$log !== void 0 ? _options$log : function () {};
+  return {
+    add: function add(name, switchOn, switchOff, exec) {
+      return this.register(name, switchOn, switchOff, exec);
+    },
+    destroyAll: function destroyAll() {
+      return Promise.all(_toConsumableArray(records.keys()).map(function (id) {
+        return _switchOff(records, id, events, log);
+      }));
+    },
+    editor: function editor(id) {
+      return editorFor(records, id);
+    },
+    exec: function exec(id, command, data) {
+      return execute(records, id, command, data, events);
+    },
+    get: function get(id) {
+      var _records$get;
+      return (_records$get = records.get(id)) === null || _records$get === void 0 ? void 0 : _records$get.adapter;
+    },
+    register: function register(name, on, off, exec) {
+      return registerAdapter(adapters, name, on, off, exec, log);
+    },
+    switchOff: function switchOff(id) {
+      return _switchOff(records, id, events, log);
+    },
+    switchOn: function switchOn(id, name, params) {
+      return _switchOn(adapters, records, id, name, params, events, log);
+    }
+  };
+}
+function registerAdapter(adapters, name, switchOn, switchOff, exec, log) {
+  if (typeof switchOn !== 'function' || typeof switchOff !== 'function') {
+    log('System try to add editor without required callbacks.', 'Wysiwyg');
+    return false;
+  }
+  adapters.set(name, Object.freeze([name, switchOn, switchOff, exec]));
+  return true;
+}
+function _switchOn(_x, _x2, _x3, _x4, _x5, _x6, _x7) {
+  return _switchOn2.apply(this, arguments);
+}
+function _switchOn2() {
+  _switchOn2 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee(adapters, records, id, name, params, events, log) {
+    var adapter, active;
+    return _regenerator().w(function (_context) {
+      while (1) switch (_context.n) {
+        case 0:
+          adapter = adapters.get(name);
+          if (adapter) {
+            _context.n = 1;
+            break;
+          }
+          log("Unknown WYSIWYG editor [".concat(name, "]."), 'Wysiwyg');
+          return _context.a(2, null);
+        case 1:
+          active = records.get(id);
+          if (!((active === null || active === void 0 ? void 0 : active.adapter) === adapter)) {
+            _context.n = 2;
+            break;
+          }
+          return _context.a(2, active.ready);
+        case 2:
+          if (!active) {
+            _context.n = 3;
+            break;
+          }
+          _context.n = 3;
+          return _switchOff(records, id, events, log);
+        case 3:
+          return _context.a(2, activate(records, id, adapter, params, events, log));
+      }
+    }, _callee);
+  }));
+  return _switchOn2.apply(this, arguments);
+}
+function activate(records, id, adapter, params, events, log) {
+  var record = {
+    adapter: adapter,
+    editor: null,
+    ready: null
+  };
+  records.set(id, record);
+  record.ready = Promise.resolve().then(function () {
+    return adapter[1](id, params);
+  }).then(normalizeEditor).then(function (editor) {
+    return editorReady(records, record, id, editor, events);
+  })["catch"](function (error) {
+    return editorFailed(records, record, id, error, log);
+  });
+  return record.ready;
+}
+function editorReady(records, record, id, editor, events) {
+  var _events$fire;
+  record.editor = editor;
+  if (records.get(id) === record) events === null || events === void 0 || (_events$fire = events.fire) === null || _events$fire === void 0 || _events$fire.call(events, 'wysiwyg:switchOn', editor);
+  return editor;
+}
+function editorFailed(records, record, id, error, log) {
+  if (records.get(id) === record) records["delete"](id);
+  log(error, 'Wysiwyg');
+  return null;
+}
+function _switchOff(_x8, _x9, _x0, _x1) {
+  return _switchOff2.apply(this, arguments);
+}
+function _switchOff2() {
+  _switchOff2 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2(records, id, events, log) {
+    var record, _events$fire3, editor, _t;
+    return _regenerator().w(function (_context2) {
+      while (1) switch (_context2.p = _context2.n) {
+        case 0:
+          record = records.get(id);
+          if (record) {
+            _context2.n = 1;
+            break;
+          }
+          return _context2.a(2, false);
+        case 1:
+          records["delete"](id);
+          _context2.p = 2;
+          _context2.n = 3;
+          return record.ready;
+        case 3:
+          editor = _context2.v;
+          if (!editor) {
+            _context2.n = 4;
+            break;
+          }
+          _context2.n = 4;
+          return record.adapter[2](editor, id);
+        case 4:
+          events === null || events === void 0 || (_events$fire3 = events.fire) === null || _events$fire3 === void 0 || _events$fire3.call(events, 'wysiwyg:switchOff', id);
+          return _context2.a(2, true);
+        case 5:
+          _context2.p = 5;
+          _t = _context2.v;
+          log(_t, 'Wysiwyg');
+          return _context2.a(2, false);
+      }
+    }, _callee2, null, [[2, 5]]);
+  }));
+  return _switchOff2.apply(this, arguments);
+}
+function execute(records, id, command, data, events) {
+  var _record$adapter, _events$fire2;
+  var record = records.get(id);
+  if (typeof (record === null || record === void 0 || (_record$adapter = record.adapter) === null || _record$adapter === void 0 ? void 0 : _record$adapter[3]) !== 'function') return undefined;
+  events === null || events === void 0 || (_events$fire2 = events.fire) === null || _events$fire2 === void 0 || _events$fire2.call(events, 'wysiwyg:exec', command, id, data);
+  if (record.editor) return record.adapter[3](record.editor, command, id, data);
+  return record.ready.then(function (editor) {
+    if (editor) return record.adapter[3](editor, command, id, data);
+  });
+}
+function editorFor(records, id) {
+  var _record$editor;
+  var record = records.get(id);
+  return (_record$editor = record === null || record === void 0 ? void 0 : record.editor) !== null && _record$editor !== void 0 ? _record$editor : record === null || record === void 0 ? void 0 : record.ready;
+}
+function normalizeEditor(editor) {
+  var _editor$;
+  return Array.isArray(editor) ? (_editor$ = editor[0]) !== null && _editor$ !== void 0 ? _editor$ : null : editor;
+}
+
+/***/ },
+
+/***/ "./resources/js/shared/legacy/components/admin.js"
+/*!********************************************************!*\
+  !*** ./resources/js/shared/legacy/components/admin.js ***!
+  \********************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -12,11 +330,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Admin)
 /* harmony export */ });
-/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./config */ "./resources/assets/js_owl/components/config.js");
+/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./config */ "./resources/js/shared/legacy/components/config.js");
 /* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_config__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _url__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./url */ "./resources/assets/js_owl/components/url.js");
+/* harmony import */ var _url__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./url */ "./resources/js/shared/legacy/components/url.js");
 /* harmony import */ var _url__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_url__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _user__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./user */ "./resources/assets/js_owl/components/user.js");
+/* harmony import */ var _user__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./user */ "./resources/js/shared/legacy/components/user.js");
 /* harmony import */ var _user__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_user__WEBPACK_IMPORTED_MODULE_2__);
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
@@ -130,10 +448,10 @@ var Admin = /*#__PURE__*/function () {
 
 /***/ },
 
-/***/ "./resources/assets/js_owl/components/config.js"
-/*!******************************************************!*\
-  !*** ./resources/assets/js_owl/components/config.js ***!
-  \******************************************************/
+/***/ "./resources/js/shared/legacy/components/config.js"
+/*!*********************************************************!*\
+  !*** ./resources/js/shared/legacy/components/config.js ***!
+  \*********************************************************/
 (module) {
 
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
@@ -220,10 +538,10 @@ module.exports = /*#__PURE__*/function () {
 
 /***/ },
 
-/***/ "./resources/assets/js_owl/components/messages.js"
-/*!********************************************************!*\
-  !*** ./resources/assets/js_owl/components/messages.js ***!
-  \********************************************************/
+/***/ "./resources/js/shared/legacy/components/messages.js"
+/*!***********************************************************!*\
+  !*** ./resources/js/shared/legacy/components/messages.js ***!
+  \***********************************************************/
 (module) {
 
 module.exports = function () {
@@ -437,10 +755,10 @@ module.exports = function () {
 
 /***/ },
 
-/***/ "./resources/assets/js_owl/components/modules.js"
-/*!*******************************************************!*\
-  !*** ./resources/assets/js_owl/components/modules.js ***!
-  \*******************************************************/
+/***/ "./resources/js/shared/legacy/components/modules.js"
+/*!**********************************************************!*\
+  !*** ./resources/js/shared/legacy/components/modules.js ***!
+  \**********************************************************/
 (module) {
 
 module.exports = function () {
@@ -509,10 +827,10 @@ module.exports = function () {
 
 /***/ },
 
-/***/ "./resources/assets/js_owl/components/url.js"
-/*!***************************************************!*\
-  !*** ./resources/assets/js_owl/components/url.js ***!
-  \***************************************************/
+/***/ "./resources/js/shared/legacy/components/url.js"
+/*!******************************************************!*\
+  !*** ./resources/js/shared/legacy/components/url.js ***!
+  \******************************************************/
 (module) {
 
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
@@ -706,10 +1024,10 @@ module.exports = /*#__PURE__*/function () {
 
 /***/ },
 
-/***/ "./resources/assets/js_owl/components/user.js"
-/*!****************************************************!*\
-  !*** ./resources/assets/js_owl/components/user.js ***!
-  \****************************************************/
+/***/ "./resources/js/shared/legacy/components/user.js"
+/*!*******************************************************!*\
+  !*** ./resources/js/shared/legacy/components/user.js ***!
+  \*******************************************************/
 (module) {
 
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
@@ -744,324 +1062,6 @@ module.exports = /*#__PURE__*/function () {
     }
   }]);
 }();
-
-/***/ },
-
-/***/ "./resources/frontend/features/forms/wysiwyg/wysiwyg-registry.js"
-/*!***********************************************************************!*\
-  !*** ./resources/frontend/features/forms/wysiwyg/wysiwyg-registry.js ***!
-  \***********************************************************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   createWysiwygRegistry: () => (/* binding */ createWysiwygRegistry)
-/* harmony export */ });
-function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
-function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
-function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
-function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
-function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
-function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
-function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
-function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
-function createWysiwygRegistry() {
-  var _options$log;
-  var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  var adapters = new Map();
-  var records = new Map();
-  var events = options.events;
-  var log = (_options$log = options.log) !== null && _options$log !== void 0 ? _options$log : function () {};
-  return {
-    add: function add(name, switchOn, switchOff, exec) {
-      return this.register(name, switchOn, switchOff, exec);
-    },
-    destroyAll: function destroyAll() {
-      return Promise.all(_toConsumableArray(records.keys()).map(function (id) {
-        return _switchOff(records, id, events, log);
-      }));
-    },
-    editor: function editor(id) {
-      return editorFor(records, id);
-    },
-    exec: function exec(id, command, data) {
-      return execute(records, id, command, data, events);
-    },
-    get: function get(id) {
-      var _records$get;
-      return (_records$get = records.get(id)) === null || _records$get === void 0 ? void 0 : _records$get.adapter;
-    },
-    register: function register(name, on, off, exec) {
-      return registerAdapter(adapters, name, on, off, exec, log);
-    },
-    switchOff: function switchOff(id) {
-      return _switchOff(records, id, events, log);
-    },
-    switchOn: function switchOn(id, name, params) {
-      return _switchOn(adapters, records, id, name, params, events, log);
-    }
-  };
-}
-function registerAdapter(adapters, name, switchOn, switchOff, exec, log) {
-  if (typeof switchOn !== 'function' || typeof switchOff !== 'function') {
-    log('System try to add editor without required callbacks.', 'Wysiwyg');
-    return false;
-  }
-  adapters.set(name, Object.freeze([name, switchOn, switchOff, exec]));
-  return true;
-}
-function _switchOn(_x, _x2, _x3, _x4, _x5, _x6, _x7) {
-  return _switchOn2.apply(this, arguments);
-}
-function _switchOn2() {
-  _switchOn2 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee(adapters, records, id, name, params, events, log) {
-    var adapter, active;
-    return _regenerator().w(function (_context) {
-      while (1) switch (_context.n) {
-        case 0:
-          adapter = adapters.get(name);
-          if (adapter) {
-            _context.n = 1;
-            break;
-          }
-          log("Unknown WYSIWYG editor [".concat(name, "]."), 'Wysiwyg');
-          return _context.a(2, null);
-        case 1:
-          active = records.get(id);
-          if (!((active === null || active === void 0 ? void 0 : active.adapter) === adapter)) {
-            _context.n = 2;
-            break;
-          }
-          return _context.a(2, active.ready);
-        case 2:
-          if (!active) {
-            _context.n = 3;
-            break;
-          }
-          _context.n = 3;
-          return _switchOff(records, id, events, log);
-        case 3:
-          return _context.a(2, activate(records, id, adapter, params, events, log));
-      }
-    }, _callee);
-  }));
-  return _switchOn2.apply(this, arguments);
-}
-function activate(records, id, adapter, params, events, log) {
-  var record = {
-    adapter: adapter,
-    editor: null,
-    ready: null
-  };
-  records.set(id, record);
-  record.ready = Promise.resolve().then(function () {
-    return adapter[1](id, params);
-  }).then(normalizeEditor).then(function (editor) {
-    return editorReady(records, record, id, editor, events);
-  })["catch"](function (error) {
-    return editorFailed(records, record, id, error, log);
-  });
-  return record.ready;
-}
-function editorReady(records, record, id, editor, events) {
-  var _events$fire;
-  record.editor = editor;
-  if (records.get(id) === record) events === null || events === void 0 || (_events$fire = events.fire) === null || _events$fire === void 0 || _events$fire.call(events, 'wysiwyg:switchOn', editor);
-  return editor;
-}
-function editorFailed(records, record, id, error, log) {
-  if (records.get(id) === record) records["delete"](id);
-  log(error, 'Wysiwyg');
-  return null;
-}
-function _switchOff(_x8, _x9, _x0, _x1) {
-  return _switchOff2.apply(this, arguments);
-}
-function _switchOff2() {
-  _switchOff2 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2(records, id, events, log) {
-    var record, _events$fire3, editor, _t;
-    return _regenerator().w(function (_context2) {
-      while (1) switch (_context2.p = _context2.n) {
-        case 0:
-          record = records.get(id);
-          if (record) {
-            _context2.n = 1;
-            break;
-          }
-          return _context2.a(2, false);
-        case 1:
-          records["delete"](id);
-          _context2.p = 2;
-          _context2.n = 3;
-          return record.ready;
-        case 3:
-          editor = _context2.v;
-          if (!editor) {
-            _context2.n = 4;
-            break;
-          }
-          _context2.n = 4;
-          return record.adapter[2](editor, id);
-        case 4:
-          events === null || events === void 0 || (_events$fire3 = events.fire) === null || _events$fire3 === void 0 || _events$fire3.call(events, 'wysiwyg:switchOff', id);
-          return _context2.a(2, true);
-        case 5:
-          _context2.p = 5;
-          _t = _context2.v;
-          log(_t, 'Wysiwyg');
-          return _context2.a(2, false);
-      }
-    }, _callee2, null, [[2, 5]]);
-  }));
-  return _switchOff2.apply(this, arguments);
-}
-function execute(records, id, command, data, events) {
-  var _record$adapter, _events$fire2;
-  var record = records.get(id);
-  if (typeof (record === null || record === void 0 || (_record$adapter = record.adapter) === null || _record$adapter === void 0 ? void 0 : _record$adapter[3]) !== 'function') return undefined;
-  events === null || events === void 0 || (_events$fire2 = events.fire) === null || _events$fire2 === void 0 || _events$fire2.call(events, 'wysiwyg:exec', command, id, data);
-  if (record.editor) return record.adapter[3](record.editor, command, id, data);
-  return record.ready.then(function (editor) {
-    if (editor) return record.adapter[3](editor, command, id, data);
-  });
-}
-function editorFor(records, id) {
-  var _record$editor;
-  var record = records.get(id);
-  return (_record$editor = record === null || record === void 0 ? void 0 : record.editor) !== null && _record$editor !== void 0 ? _record$editor : record === null || record === void 0 ? void 0 : record.ready;
-}
-function normalizeEditor(editor) {
-  var _editor$;
-  return Array.isArray(editor) ? (_editor$ = editor[0]) !== null && _editor$ !== void 0 ? _editor$ : null : editor;
-}
-
-/***/ },
-
-/***/ "./resources/frontend/shared/compatibility/runtime.js"
-/*!************************************************************!*\
-  !*** ./resources/frontend/shared/compatibility/runtime.js ***!
-  \************************************************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   installCompatibilityRuntime: () => (/* binding */ installCompatibilityRuntime)
-/* harmony export */ });
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/lib/axios.js");
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
-/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _assets_js_owl_components_admin__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../assets/js_owl/components/admin */ "./resources/assets/js_owl/components/admin.js");
-/* harmony import */ var _assets_js_owl_components_messages__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../assets/js_owl/components/messages */ "./resources/assets/js_owl/components/messages.js");
-/* harmony import */ var _assets_js_owl_components_messages__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_assets_js_owl_components_messages__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _assets_js_owl_components_modules__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../assets/js_owl/components/modules */ "./resources/assets/js_owl/components/modules.js");
-/* harmony import */ var _assets_js_owl_components_modules__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_assets_js_owl_components_modules__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _features_forms_wysiwyg_wysiwyg_registry__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../features/forms/wysiwyg/wysiwyg-registry */ "./resources/frontend/features/forms/wysiwyg/wysiwyg-registry.js");
-/* harmony import */ var _translator__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./translator */ "./resources/frontend/shared/compatibility/translator.js");
-
-
-
-
-
-
-
-
-var INSTALLATION = Symbol["for"]('sleepingowl.shared.compatibility');
-function installCompatibilityRuntime(target) {
-  if (target[INSTALLATION]) return target.Admin;
-  var core = requireCore(target.Admin);
-  target._ = (lodash__WEBPACK_IMPORTED_MODULE_1___default());
-  target.axios = configuredAxios();
-  target.Swal = (sweetalert2__WEBPACK_IMPORTED_MODULE_2___default());
-  target.Admin = createLegacyAdmin(target, core);
-  target.trans = (0,_translator__WEBPACK_IMPORTED_MODULE_7__.createTranslator)({
-    lang: target.Admin.Config.get('lang')
-  });
-  installLegacyServices(target.Admin);
-  target[INSTALLATION] = true;
-  return target.Admin;
-}
-function createLegacyAdmin(target, core) {
-  var _target$document, _target$GlobalConfig;
-  var token = (_target$document = target.document) === null || _target$document === void 0 || (_target$document = _target$document.querySelector('meta[name="csrf-token"]')) === null || _target$document === void 0 ? void 0 : _target$document.getAttribute('content');
-  var admin = new _assets_js_owl_components_admin__WEBPACK_IMPORTED_MODULE_3__["default"](token !== null && token !== void 0 ? token : '', (_target$GlobalConfig = target.GlobalConfig) !== null && _target$GlobalConfig !== void 0 ? _target$GlobalConfig : {});
-  Object.assign(admin, core);
-  return admin;
-}
-function installLegacyServices(admin) {
-  admin.Messages = (_assets_js_owl_components_messages__WEBPACK_IMPORTED_MODULE_4___default());
-  admin.Modules = (_assets_js_owl_components_modules__WEBPACK_IMPORTED_MODULE_5___default());
-  admin.WYSIWYG = (0,_features_forms_wysiwyg_wysiwyg_registry__WEBPACK_IMPORTED_MODULE_6__.createWysiwygRegistry)({
-    events: admin.Events,
-    log: function log(message, scope) {
-      return admin.log(message, scope);
-    }
-  });
-}
-function configuredAxios() {
-  axios__WEBPACK_IMPORTED_MODULE_0__["default"].defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-  return axios__WEBPACK_IMPORTED_MODULE_0__["default"];
-}
-function requireCore(admin) {
-  if (!(admin !== null && admin !== void 0 && admin.Components) || !(admin !== null && admin !== void 0 && admin.Events) || !(admin !== null && admin !== void 0 && admin.Http)) {
-    throw new TypeError('SleepingOwl compatibility runtime requires the headless core.');
-  }
-  return admin;
-}
-
-/***/ },
-
-/***/ "./resources/frontend/shared/compatibility/translator.js"
-/*!***************************************************************!*\
-  !*** ./resources/frontend/shared/compatibility/translator.js ***!
-  \***************************************************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   createTranslator: () => (/* binding */ createTranslator)
-/* harmony export */ });
-function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
-function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
-function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
-function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
-function createTranslator() {
-  var translations = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  return function (key, parameters) {
-    var value = resolveTranslation(translations, key);
-    return replaceParameters(value !== null && value !== void 0 ? value : key, parameters);
-  };
-}
-function resolveTranslation(translations, key) {
-  return String(key).split('.').reduce(function (value, segment) {
-    return readSegment(value, segment);
-  }, translations);
-}
-function readSegment(value, segment) {
-  if (!isRecord(value) || !Object.hasOwn(value, segment)) return undefined;
-  return value[segment];
-}
-function replaceParameters(value) {
-  var parameters = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-  return Object.entries(parameters !== null && parameters !== void 0 ? parameters : {}).reverse().reduce(function (translation, _ref) {
-    var _ref2 = _slicedToArray(_ref, 2),
-      name = _ref2[0],
-      replacement = _ref2[1];
-    return translation.replace(":".concat(name), String(replacement));
-  }, String(value));
-}
-function isRecord(value) {
-  return value !== null && _typeof(value) === 'object';
-}
 
 /***/ },
 
@@ -30433,14 +30433,14 @@ var __webpack_exports__ = {};
 // This entry needs to be wrapped in an IIFE because it needs to be in strict mode.
 (() => {
 "use strict";
-/*!************************************************************!*\
-  !*** ./resources/frontend/shared/compatibility/browser.js ***!
-  \************************************************************/
+/*!******************************************************!*\
+  !*** ./resources/js/shared/compatibility/browser.js ***!
+  \******************************************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   installCompatibilityRuntime: () => (/* reexport safe */ _runtime__WEBPACK_IMPORTED_MODULE_0__.installCompatibilityRuntime)
 /* harmony export */ });
-/* harmony import */ var _runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./runtime */ "./resources/frontend/shared/compatibility/runtime.js");
+/* harmony import */ var _runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./runtime */ "./resources/js/shared/compatibility/runtime.js");
 
 if (globalThis.document) (0,_runtime__WEBPACK_IMPORTED_MODULE_0__.installCompatibilityRuntime)(globalThis);
 

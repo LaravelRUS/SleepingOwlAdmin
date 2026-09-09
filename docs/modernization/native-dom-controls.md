@@ -2,7 +2,7 @@
 
 This milestone removes jQuery and Lodash from runtime asset loading, form action buttons,
 table/tree confirmation controls and table row checkboxes. The modern implementations live
-in `resources/frontend`; files under `resources/assets/js_owl` are compatibility adapters that
+in `resources/frontend`; files under `resources/js/shared/legacy` are compatibility adapters that
 only supply legacy selectors, translations and the AdminLTE row class.
 
 ## `Admin.Asset`

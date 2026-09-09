@@ -35,7 +35,7 @@
 src/Themes/
 └── TailwindTheme.php
 
-resources/views/themes/tailwind/
+resources/views/themes/shadcn/
 ├── components/
 │   ├── ui/                 # выбранные shadcn-derived Blade primitives
 │   └── patterns/           # admin shell, toolbar, empty/error states

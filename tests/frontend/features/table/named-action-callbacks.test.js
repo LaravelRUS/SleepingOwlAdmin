@@ -1,6 +1,6 @@
 import { expect, it, vi } from 'vitest'
 
-import { createNamedActionCallbacks } from '../../../../resources/frontend/features/table/actions/named-action-callbacks.js'
+import { createNamedActionCallbacks } from '../../../../resources/js/shared/features/table/actions/named-action-callbacks.js'
 
 it('keeps the bulk callback name, argument order and message', () => {
     const callback = vi.fn()

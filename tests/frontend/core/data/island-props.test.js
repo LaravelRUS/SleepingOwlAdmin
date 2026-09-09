@@ -5,7 +5,7 @@ import {
     parseJsonProps,
     parseNumber,
     readDataset,
-} from '../../../../resources/frontend/core/data/island-props.js'
+} from '../../../../resources/js/core/data/island-props.js'
 
 describe('island props', () => {
     it('parses explicit boolean values without truthy coercion', () => {

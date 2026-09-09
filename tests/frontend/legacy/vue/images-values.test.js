@@ -7,7 +7,7 @@ import {
     reorderImageValues,
     replaceImageValue,
     serializeImagesValues,
-} from '../../../../resources/assets/js_owl/admin/form/images-values'
+} from '../../../../resources/js/shared/legacy/admin/form/images-values'
 
 describe('images values', () => {
     it('normalizes submitted scalar values and drops empty entries', () => {

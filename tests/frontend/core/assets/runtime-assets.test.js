@@ -1,6 +1,6 @@
 import { expect, it, vi } from 'vitest'
 
-import { createRuntimeAssetLoader } from '../../../../resources/frontend/core/assets/runtime-assets.js'
+import { createRuntimeAssetLoader } from '../../../../resources/js/core/assets/runtime-assets.js'
 
 function createElement(tagName) {
     return { tagName, href: '', rel: '', src: '', type: '' }

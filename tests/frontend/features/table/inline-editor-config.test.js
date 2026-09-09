@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { readInlineEditorConfig } from '../../../../resources/frontend/features/table/editing/inline-editor-config.js'
+import { readInlineEditorConfig } from '../../../../resources/js/shared/features/table/editing/inline-editor-config.js'
 
 function element(dataset) {
     return { dataset }

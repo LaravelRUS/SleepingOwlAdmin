@@ -31,9 +31,9 @@ it('pins the dependency-free DataTables 3 and Responsive 4 package lines', () =>
 })
 
 it('keeps the engine independent from the legacy theme presentation adapter', () => {
-    const engine = readSource('resources/frontend/features/table/engine/data-table-engine.js')
+    const engine = readSource('resources/js/shared/features/table/engine/data-table-engine.js')
     const presentation = readSource(
-        'resources/frontend/features/table/themes/legacy-adminlte/datatables.js',
+        'resources/js/themes/adminlte/features/table/datatables.js',
     )
 
     expect(engine).toContain("from 'datatables.net'")
@@ -45,10 +45,10 @@ it('keeps the engine independent from the legacy theme presentation adapter', ()
 })
 
 it('removes the handwritten Bootstrap 3 renderer and owns vendor CSS in the adapter', () => {
-    const legacyRenderer = resolve(root, 'resources/assets/js_owl/libs/datatables.js')
-    const bootstrap = readSource('resources/assets/js_owl/bootstrap.js')
+    const legacyRenderer = resolve(root, 'resources/js/shared/legacy/libs/datatables.js')
+    const bootstrap = readSource('resources/js/shared/legacy/bootstrap.js')
     const styles = readSource(
-        'resources/frontend/features/table/themes/legacy-adminlte/styles/datatables.scss',
+        'resources/css/themes/adminlte/features/table/datatables.scss',
     )
 
     expect(existsSync(legacyRenderer)).toBe(false)
@@ -60,9 +60,9 @@ it('removes the handwritten Bootstrap 3 renderer and owns vendor CSS in the adap
 })
 
 it('mounts live tables through the engine-neutral constructor boundary', () => {
-    const bridge = readSource('resources/assets/js_owl/admin/display/datatables.js')
+    const bridge = readSource('resources/js/shared/legacy/admin/display/datatables.js')
     const orchestration = readSource(
-        'resources/frontend/features/table/runtime/install-data-tables.js',
+        'resources/js/shared/features/table/runtime/install-data-tables.js',
     )
 
     expect(bridge).toContain('installDataTables(Admin')
@@ -73,10 +73,10 @@ it('mounts live tables through the engine-neutral constructor boundary', () => {
 
 it('uses current DataTables 3 option names in first-party runtime code', () => {
     const orchestration = readSource(
-        'resources/frontend/features/table/runtime/table-runtime-options.js',
+        'resources/js/shared/features/table/runtime/table-runtime-options.js',
     )
-    const stateOptions = readSource('resources/frontend/features/table/options/state-options.js')
-    const tableOptions = readSource('resources/frontend/features/table/options/table-options.js')
+    const stateOptions = readSource('resources/js/shared/features/table/options/state-options.js')
+    const tableOptions = readSource('resources/js/shared/features/table/options/table-options.js')
 
     expect(orchestration).toContain('options.drawCallback')
     expect(orchestration).toContain('applyTableStateOptions')
@@ -88,9 +88,9 @@ it('uses current DataTables 3 option names in first-party runtime code', () => {
 })
 
 it('registers errors, ordering and search through the active engine API', () => {
-    const extensions = readSource('resources/frontend/features/table/engine/extensions.js')
-    const filters = readSource('resources/frontend/features/table/filters/filter-drivers.js')
-    const orchestration = readSource('resources/assets/js_owl/admin/display/datatables.js')
+    const extensions = readSource('resources/js/shared/features/table/engine/extensions.js')
+    const filters = readSource('resources/js/shared/features/table/filters/filter-drivers.js')
+    const orchestration = readSource('resources/js/shared/legacy/admin/display/datatables.js')
 
     expect(extensions).toContain('engine.ext.errMode')
     expect(extensions).toContain('engine.ext.order[DATE_TIME_ORDER]')
@@ -100,8 +100,8 @@ it('registers errors, ordering and search through the active engine API', () => 
 })
 
 it('keeps the reusable filter modules on native DOM APIs', () => {
-    const controls = readSource('resources/frontend/features/table/filters/filter-controls.js')
-    const drivers = readSource('resources/frontend/features/table/filters/filter-drivers.js')
+    const controls = readSource('resources/js/shared/features/table/filters/filter-controls.js')
+    const drivers = readSource('resources/js/shared/features/table/filters/filter-drivers.js')
 
     expect(`${controls}\n${drivers}`).not.toMatch(/(?:\$|jQuery)\s*\(/)
     expect(`${controls}\n${drivers}`).not.toContain("from 'jquery'")
@@ -110,48 +110,42 @@ it('keeps the reusable filter modules on native DOM APIs', () => {
     expect(drivers).toContain('addEventListener')
 })
 
-it('keeps reusable draw hooks native and isolates legacy plugins in theme adapters', () => {
-    const orchestration = readSource('resources/assets/js_owl/admin/display/datatables.js')
+it('keeps reusable draw hooks and inline editing on native DOM APIs', () => {
+    const orchestration = readSource('resources/js/shared/legacy/admin/display/datatables.js')
     const hooks = [
-        readSource('resources/frontend/features/table/hooks/table-hooks.js'),
-        readSource('resources/frontend/features/table/hooks/column-highlight.js'),
-        readSource('resources/frontend/features/table/hooks/lazy-images.js'),
+        readSource('resources/js/shared/features/table/hooks/table-hooks.js'),
+        readSource('resources/js/shared/features/table/hooks/column-highlight.js'),
+        readSource('resources/js/shared/features/table/hooks/lazy-images.js'),
     ].join('\n')
     const inlineEditor = [
-        readSource('resources/frontend/features/table/editing/inline-editor.js'),
-        readSource('resources/frontend/features/table/editing/inline-editor-request.js'),
-        readSource('resources/frontend/features/table/editing/install-inline-editors.js'),
+        readSource('resources/js/shared/features/table/editing/inline-editor.js'),
+        readSource('resources/js/shared/features/table/editing/inline-editor-request.js'),
+        readSource('resources/js/shared/features/table/editing/install-inline-editors.js'),
     ].join('\n')
-    const tooltips = readSource(
-        'resources/frontend/features/table/themes/legacy-adminlte/tooltips.js',
-    )
-
     expect(`${orchestration}\n${hooks}`).not.toMatch(/(?:\$|jQuery)\s*\(/)
     expect(hooks).toContain('addEventListener')
     expect(hooks).toContain("element.loading = 'lazy'")
     expect(inlineEditor).not.toMatch(/(?:\$|jQuery)\s*\(/)
     expect(inlineEditor).toContain('http: admin.Http')
-    expect(tooltips).not.toMatch(/(?:\$|jQuery)\s*\(/)
-    expect(tooltips).toContain('admin?.Tooltips?.scan')
 })
 
 it('routes actions and auto-update through native modules and Admin.Tables', () => {
     const legacyActions = [
-        readSource('resources/assets/js_owl/admin/display/actions.js'),
-        readSource('resources/assets/js_owl/admin/display/actions_form.js'),
+        readSource('resources/js/shared/legacy/admin/display/actions.js'),
+        readSource('resources/js/shared/legacy/admin/display/actions_form.js'),
     ].join('\n')
     const actions = [
-        readSource('resources/frontend/features/table/actions/action-context.js'),
-        readSource('resources/frontend/features/table/actions/action-request.js'),
-        readSource('resources/frontend/features/table/actions/bulk-actions.js'),
-        readSource('resources/frontend/features/table/actions/form-actions.js'),
+        readSource('resources/js/shared/features/table/actions/action-context.js'),
+        readSource('resources/js/shared/features/table/actions/action-request.js'),
+        readSource('resources/js/shared/features/table/actions/bulk-actions.js'),
+        readSource('resources/js/shared/features/table/actions/form-actions.js'),
     ].join('\n')
     const autoUpdate = readSource(
-        'resources/frontend/features/table/autoupdate/table-auto-update.js',
+        'resources/js/shared/features/table/autoupdate/table-auto-update.js',
     )
     const autoUpdateView = readSource('resources/views/features/datatables/autoupdate.blade.php')
     const namedCallbacks = readSource(
-        'resources/frontend/features/table/actions/named-action-callbacks.js',
+        'resources/js/shared/features/table/actions/named-action-callbacks.js',
     )
 
     expect(`${legacyActions}\n${actions}\n${autoUpdate}`).not.toMatch(

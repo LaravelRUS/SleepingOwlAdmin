@@ -6,38 +6,38 @@ import { expect, it } from 'vitest'
 const root = resolve(import.meta.dirname, '../../..')
 
 it('keeps framework imports behind the legacy AdminLTE theme boundary', () => {
-    const entrypoint = read('resources/assets/scss/admin-app.scss')
-    const legacyBuild = read('resources/frontend/themes/legacy-adminlte/styles/_legacy-build.scss')
-    const framework = read('resources/frontend/themes/legacy-adminlte/styles/_framework.scss')
-    const vendor = read('resources/frontend/themes/legacy-adminlte/styles/_vendor.scss')
-    const sharedIcons = read('resources/frontend/shared/icons/styles/font-awesome.scss')
+    const entrypoint = read('resources/css/themes/adminlte/legacy/admin-app.scss')
+    const legacyBuild = read('resources/css/themes/adminlte/_legacy-build.scss')
+    const framework = read('resources/css/themes/adminlte/_framework.scss')
+    const vendor = read('resources/css/themes/adminlte/_vendor.scss')
+    const sharedIcons = read('resources/css/shared/features/icons/font-awesome.scss')
 
     expect(entrypoint).toContain(
-        "@use '../../frontend/themes/legacy-adminlte/styles/legacy-build' as legacy-theme;",
+        "@use '../legacy-build' as legacy-theme;",
     )
     for (const legacyImport of [
         'bootstrap/scss/',
-        'assets/scss/adminLte',
+        'legacy/adminLte',
         '@fortawesome/fontawesome',
-        'assets/scss/components',
-        'assets/scss/addition',
+        'legacy/components',
+        'legacy/addition',
     ]) {
         expect(entrypoint).not.toContain(legacyImport)
     }
 
     for (const owner of [
-        'assets/scss/variables',
-        'assets/scss/colors',
+        'legacy/variables',
+        'legacy/colors',
         'admin-lte/src/scss/adminlte',
-        'assets/scss/font',
-        'assets/scss/components',
-        'assets/scss/addition',
+        'legacy/font',
+        'legacy/components',
+        'legacy/addition',
     ]) {
         expect(framework).toContain(owner)
     }
     expect(legacyBuild).toContain('@layer sleepingowl-theme.framework')
-    expect(legacyBuild).toContain("meta.load-css('vendor')")
-    expect(legacyBuild).toContain("meta.load-css('framework')")
+    expect(legacyBuild).toContain("meta.load-css('./vendor')")
+    expect(legacyBuild).toContain("meta.load-css('./framework')")
     expect(vendor).toContain('node_modules/dropzone/dist/dropzone.css')
     expect(vendor).toContain('node_modules/vue-multiselect/dist/vue-multiselect.css')
     expect(sharedIcons).toContain('@fortawesome/fontawesome-free/scss/fontawesome')

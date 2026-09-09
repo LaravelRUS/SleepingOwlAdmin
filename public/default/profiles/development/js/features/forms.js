@@ -174,10 +174,10 @@ exports["default"] = _default;
 
 /***/ },
 
-/***/ "./resources/frontend/core/dom/forms.js"
-/*!**********************************************!*\
-  !*** ./resources/frontend/core/dom/forms.js ***!
-  \**********************************************/
+/***/ "./resources/js/core/dom/forms.js"
+/*!****************************************!*\
+  !*** ./resources/js/core/dom/forms.js ***!
+  \****************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -251,10 +251,10 @@ function assertParameters(parameters) {
 
 /***/ },
 
-/***/ "./resources/frontend/core/dom/listeners.js"
-/*!**************************************************!*\
-  !*** ./resources/frontend/core/dom/listeners.js ***!
-  \**************************************************/
+/***/ "./resources/js/core/dom/listeners.js"
+/*!********************************************!*\
+  !*** ./resources/js/core/dom/listeners.js ***!
+  \********************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -327,10 +327,10 @@ function assertListener(listener) {
 
 /***/ },
 
-/***/ "./resources/frontend/core/lifecycle/component-lifecycle.js"
-/*!******************************************************************!*\
-  !*** ./resources/frontend/core/lifecycle/component-lifecycle.js ***!
-  \******************************************************************/
+/***/ "./resources/js/core/lifecycle/component-lifecycle.js"
+/*!************************************************************!*\
+  !*** ./resources/js/core/lifecycle/component-lifecycle.js ***!
+  \************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -559,10 +559,10 @@ function assertNonEmptyString(value, field) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/forms/actions/form-buttons.js"
-/*!*******************************************************************!*\
-  !*** ./resources/frontend/features/forms/actions/form-buttons.js ***!
-  \*******************************************************************/
+/***/ "./resources/js/shared/features/forms/actions/form-buttons.js"
+/*!********************************************************************!*\
+  !*** ./resources/js/shared/features/forms/actions/form-buttons.js ***!
+  \********************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -570,8 +570,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   bindFormButtons: () => (/* binding */ bindFormButtons)
 /* harmony export */ });
-/* harmony import */ var _core_dom_listeners_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../core/dom/listeners.js */ "./resources/frontend/core/dom/listeners.js");
-/* harmony import */ var _core_dom_forms_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../core/dom/forms.js */ "./resources/frontend/core/dom/forms.js");
+/* harmony import */ var _core_dom_listeners_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../core/dom/listeners.js */ "./resources/js/core/dom/listeners.js");
+/* harmony import */ var _core_dom_forms_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../core/dom/forms.js */ "./resources/js/core/dom/forms.js");
 function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
 function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
@@ -697,10 +697,10 @@ function assertDependencies(_ref3) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/forms/actions/install-form-buttons.js"
-/*!***************************************************************************!*\
-  !*** ./resources/frontend/features/forms/actions/install-form-buttons.js ***!
-  \***************************************************************************/
+/***/ "./resources/js/shared/features/forms/actions/install-form-buttons.js"
+/*!****************************************************************************!*\
+  !*** ./resources/js/shared/features/forms/actions/install-form-buttons.js ***!
+  \****************************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -711,7 +711,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   createFormButtonsDefinition: () => (/* binding */ createFormButtonsDefinition),
 /* harmony export */   installFormButtons: () => (/* binding */ installFormButtons)
 /* harmony export */ });
-/* harmony import */ var _form_buttons_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./form-buttons.js */ "./resources/frontend/features/forms/actions/form-buttons.js");
+/* harmony import */ var _form_buttons_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./form-buttons.js */ "./resources/js/shared/features/forms/actions/form-buttons.js");
 
 var FORM_BUTTONS_COMPONENT = 'form-buttons';
 var FORM_BUTTONS_ROOT_SELECTOR = 'body';
@@ -759,10 +759,10 @@ function assertAdmin(admin) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/forms/browser-options.js"
-/*!**************************************************************!*\
-  !*** ./resources/frontend/features/forms/browser-options.js ***!
-  \**************************************************************/
+/***/ "./resources/js/shared/features/forms/browser-options.js"
+/*!***************************************************************!*\
+  !*** ./resources/js/shared/features/forms/browser-options.js ***!
+  \***************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -807,10 +807,10 @@ function translate(target, key, fallback) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/forms/date/date-control.js"
-/*!****************************************************************!*\
-  !*** ./resources/frontend/features/forms/date/date-control.js ***!
-  \****************************************************************/
+/***/ "./resources/js/shared/features/forms/date/date-control.js"
+/*!*****************************************************************!*\
+  !*** ./resources/js/shared/features/forms/date/date-control.js ***!
+  \*****************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -821,8 +821,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   createDateControlDefinition: () => (/* binding */ createDateControlDefinition),
 /* harmony export */   mountDateControl: () => (/* binding */ mountDateControl)
 /* harmony export */ });
-/* harmony import */ var _core_lifecycle_component_lifecycle_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../core/lifecycle/component-lifecycle.js */ "./resources/frontend/core/lifecycle/component-lifecycle.js");
-/* harmony import */ var _date_options_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./date-options.js */ "./resources/frontend/features/forms/date/date-options.js");
+/* harmony import */ var _core_lifecycle_component_lifecycle_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../core/lifecycle/component-lifecycle.js */ "./resources/js/core/lifecycle/component-lifecycle.js");
+/* harmony import */ var _date_options_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./date-options.js */ "./resources/js/shared/features/forms/date/date-options.js");
 
 
 var DATE_CONTROL_COMPONENT = 'date-control';
@@ -869,10 +869,10 @@ function findAddon(input) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/forms/date/date-format.js"
-/*!***************************************************************!*\
-  !*** ./resources/frontend/features/forms/date/date-format.js ***!
-  \***************************************************************/
+/***/ "./resources/js/shared/features/forms/date/date-format.js"
+/*!****************************************************************!*\
+  !*** ./resources/js/shared/features/forms/date/date-format.js ***!
+  \****************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1076,10 +1076,10 @@ function isValidDate(value) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/forms/date/date-locales.js"
-/*!****************************************************************!*\
-  !*** ./resources/frontend/features/forms/date/date-locales.js ***!
-  \****************************************************************/
+/***/ "./resources/js/shared/features/forms/date/date-locales.js"
+/*!*****************************************************************!*\
+  !*** ./resources/js/shared/features/forms/date/date-locales.js ***!
+  \*****************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1117,10 +1117,10 @@ function normalizeLocale(locale) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/forms/date/date-options.js"
-/*!****************************************************************!*\
-  !*** ./resources/frontend/features/forms/date/date-options.js ***!
-  \****************************************************************/
+/***/ "./resources/js/shared/features/forms/date/date-options.js"
+/*!*****************************************************************!*\
+  !*** ./resources/js/shared/features/forms/date/date-options.js ***!
+  \*****************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1129,8 +1129,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   DATE_CONTROL_TYPES: () => (/* binding */ DATE_CONTROL_TYPES),
 /* harmony export */   createDatePickerOptions: () => (/* binding */ createDatePickerOptions)
 /* harmony export */ });
-/* harmony import */ var _date_format_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./date-format.js */ "./resources/frontend/features/forms/date/date-format.js");
-/* harmony import */ var _date_range_options_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./date-range-options.js */ "./resources/frontend/features/forms/date/date-range-options.js");
+/* harmony import */ var _date_format_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./date-format.js */ "./resources/js/shared/features/forms/date/date-format.js");
+/* harmony import */ var _date_range_options_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./date-range-options.js */ "./resources/js/shared/features/forms/date/date-range-options.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
@@ -1184,10 +1184,10 @@ function assertControlType(type) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/forms/date/date-range-options.js"
-/*!**********************************************************************!*\
-  !*** ./resources/frontend/features/forms/date/date-range-options.js ***!
-  \**********************************************************************/
+/***/ "./resources/js/shared/features/forms/date/date-range-options.js"
+/*!***********************************************************************!*\
+  !*** ./resources/js/shared/features/forms/date/date-range-options.js ***!
+  \***********************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1197,7 +1197,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   createDateRangeOptions: () => (/* binding */ createDateRangeOptions),
 /* harmony export */   parseDateRangeValue: () => (/* binding */ parseDateRangeValue)
 /* harmony export */ });
-/* harmony import */ var _date_format_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./date-format.js */ "./resources/frontend/features/forms/date/date-format.js");
+/* harmony import */ var _date_format_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./date-format.js */ "./resources/js/shared/features/forms/date/date-format.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 
 var DATE_RANGE_SEPARATOR = ' - ';
@@ -1274,10 +1274,10 @@ function number(value) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/forms/date/install-date-controls.js"
-/*!*************************************************************************!*\
-  !*** ./resources/frontend/features/forms/date/install-date-controls.js ***!
-  \*************************************************************************/
+/***/ "./resources/js/shared/features/forms/date/install-date-controls.js"
+/*!**************************************************************************!*\
+  !*** ./resources/js/shared/features/forms/date/install-date-controls.js ***!
+  \**************************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1287,8 +1287,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   installDateControls: () => (/* binding */ installDateControls)
 /* harmony export */ });
 /* harmony import */ var air_datepicker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! air-datepicker */ "./node_modules/air-datepicker/index.es.js");
-/* harmony import */ var _date_control_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./date-control.js */ "./resources/frontend/features/forms/date/date-control.js");
-/* harmony import */ var _date_locales_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./date-locales.js */ "./resources/frontend/features/forms/date/date-locales.js");
+/* harmony import */ var _date_control_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./date-control.js */ "./resources/js/shared/features/forms/date/date-control.js");
+/* harmony import */ var _date_locales_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./date-locales.js */ "./resources/js/shared/features/forms/date/date-locales.js");
 
 
 
@@ -1328,10 +1328,10 @@ function assertAdminServices(admin) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/forms/file-download.js"
-/*!************************************************************!*\
-  !*** ./resources/frontend/features/forms/file-download.js ***!
-  \************************************************************/
+/***/ "./resources/js/shared/features/forms/file-download.js"
+/*!*************************************************************!*\
+  !*** ./resources/js/shared/features/forms/file-download.js ***!
+  \*************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1428,10 +1428,10 @@ function assertDependencies(document, fetch, urlApi) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/forms/files/files-controller.js"
-/*!*********************************************************************!*\
-  !*** ./resources/frontend/features/forms/files/files-controller.js ***!
-  \*********************************************************************/
+/***/ "./resources/js/shared/features/forms/files/files-controller.js"
+/*!**********************************************************************!*\
+  !*** ./resources/js/shared/features/forms/files/files-controller.js ***!
+  \**********************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1442,10 +1442,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   createFilesDefinition: () => (/* binding */ createFilesDefinition),
 /* harmony export */   mountFiles: () => (/* binding */ mountFiles)
 /* harmony export */ });
-/* harmony import */ var _file_download_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../file-download.js */ "./resources/frontend/features/forms/file-download.js");
-/* harmony import */ var _files_template_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./files-template.js */ "./resources/frontend/features/forms/files/files-template.js");
-/* harmony import */ var _files_uploader_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./files-uploader.js */ "./resources/frontend/features/forms/files/files-uploader.js");
-/* harmony import */ var _files_values_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./files-values.js */ "./resources/frontend/features/forms/files/files-values.js");
+/* harmony import */ var _file_download_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../file-download.js */ "./resources/js/shared/features/forms/file-download.js");
+/* harmony import */ var _files_template_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./files-template.js */ "./resources/js/shared/features/forms/files/files-template.js");
+/* harmony import */ var _files_uploader_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./files-uploader.js */ "./resources/js/shared/features/forms/files/files-uploader.js");
+/* harmony import */ var _files_values_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./files-values.js */ "./resources/js/shared/features/forms/files/files-values.js");
 
 
 
@@ -1654,10 +1654,10 @@ function assertFunction(value, message) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/forms/files/files-template.js"
-/*!*******************************************************************!*\
-  !*** ./resources/frontend/features/forms/files/files-template.js ***!
-  \*******************************************************************/
+/***/ "./resources/js/shared/features/forms/files/files-template.js"
+/*!********************************************************************!*\
+  !*** ./resources/js/shared/features/forms/files/files-template.js ***!
+  \********************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1666,7 +1666,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   createFileItem: () => (/* binding */ createFileItem),
 /* harmony export */   cssUrl: () => (/* binding */ cssUrl)
 /* harmony export */ });
-/* harmony import */ var _files_values_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./files-values.js */ "./resources/frontend/features/forms/files/files-values.js");
+/* harmony import */ var _files_values_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./files-values.js */ "./resources/js/shared/features/forms/files/files-values.js");
 
 function createFileItem(source, response) {
   var item = cloneFileItem(source);
@@ -1737,10 +1737,10 @@ function cssUrl(value) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/forms/files/files-uploader.js"
-/*!*******************************************************************!*\
-  !*** ./resources/frontend/features/forms/files/files-uploader.js ***!
-  \*******************************************************************/
+/***/ "./resources/js/shared/features/forms/files/files-uploader.js"
+/*!********************************************************************!*\
+  !*** ./resources/js/shared/features/forms/files/files-uploader.js ***!
+  \********************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2023,10 +2023,10 @@ function assertFunction(value, message) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/forms/files/files-values.js"
-/*!*****************************************************************!*\
-  !*** ./resources/frontend/features/forms/files/files-values.js ***!
-  \*****************************************************************/
+/***/ "./resources/js/shared/features/forms/files/files-values.js"
+/*!******************************************************************!*\
+  !*** ./resources/js/shared/features/forms/files/files-values.js ***!
+  \******************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2112,10 +2112,10 @@ function requiredString(value, name) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/forms/files/install-files.js"
-/*!******************************************************************!*\
-  !*** ./resources/frontend/features/forms/files/install-files.js ***!
-  \******************************************************************/
+/***/ "./resources/js/shared/features/forms/files/install-files.js"
+/*!*******************************************************************!*\
+  !*** ./resources/js/shared/features/forms/files/install-files.js ***!
+  \*******************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2125,7 +2125,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   installFiles: () => (/* binding */ installFiles)
 /* harmony export */ });
 /* harmony import */ var sortablejs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sortablejs */ "./node_modules/sortablejs/modular/sortable.esm.js");
-/* harmony import */ var _files_controller_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./files-controller.js */ "./resources/frontend/features/forms/files/files-controller.js");
+/* harmony import */ var _files_controller_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./files-controller.js */ "./resources/js/shared/features/forms/files/files-controller.js");
 
 
 var LEGACY_FILES_MODULE = 'form.elements.files';
@@ -2162,10 +2162,10 @@ function assertFunction(value, message) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/forms/generation/field-generator.js"
-/*!*************************************************************************!*\
-  !*** ./resources/frontend/features/forms/generation/field-generator.js ***!
-  \*************************************************************************/
+/***/ "./resources/js/shared/features/forms/generation/field-generator.js"
+/*!**************************************************************************!*\
+  !*** ./resources/js/shared/features/forms/generation/field-generator.js ***!
+  \**************************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2173,8 +2173,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   bindFieldGenerator: () => (/* binding */ bindFieldGenerator)
 /* harmony export */ });
-/* harmony import */ var _core_dom_listeners_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../core/dom/listeners.js */ "./resources/frontend/core/dom/listeners.js");
-/* harmony import */ var _generated_value_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./generated-value.js */ "./resources/frontend/features/forms/generation/generated-value.js");
+/* harmony import */ var _core_dom_listeners_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../core/dom/listeners.js */ "./resources/js/core/dom/listeners.js");
+/* harmony import */ var _generated_value_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./generated-value.js */ "./resources/js/shared/features/forms/generation/generated-value.js");
 
 
 function bindFieldGenerator(root, field, random) {
@@ -2197,10 +2197,10 @@ function dispatchValueChange(field) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/forms/generation/generated-value.js"
-/*!*************************************************************************!*\
-  !*** ./resources/frontend/features/forms/generation/generated-value.js ***!
-  \*************************************************************************/
+/***/ "./resources/js/shared/features/forms/generation/generated-value.js"
+/*!**************************************************************************!*\
+  !*** ./resources/js/shared/features/forms/generation/generated-value.js ***!
+  \**************************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2231,10 +2231,10 @@ function positiveInteger(value, fallback) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/forms/generation/password-control.js"
-/*!**************************************************************************!*\
-  !*** ./resources/frontend/features/forms/generation/password-control.js ***!
-  \**************************************************************************/
+/***/ "./resources/js/shared/features/forms/generation/password-control.js"
+/*!***************************************************************************!*\
+  !*** ./resources/js/shared/features/forms/generation/password-control.js ***!
+  \***************************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2246,8 +2246,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   installPasswordControls: () => (/* binding */ installPasswordControls),
 /* harmony export */   mountPasswordControl: () => (/* binding */ mountPasswordControl)
 /* harmony export */ });
-/* harmony import */ var _core_dom_listeners_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../core/dom/listeners.js */ "./resources/frontend/core/dom/listeners.js");
-/* harmony import */ var _field_generator_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./field-generator.js */ "./resources/frontend/features/forms/generation/field-generator.js");
+/* harmony import */ var _core_dom_listeners_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../core/dom/listeners.js */ "./resources/js/core/dom/listeners.js");
+/* harmony import */ var _field_generator_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./field-generator.js */ "./resources/js/shared/features/forms/generation/field-generator.js");
 
 
 var PASSWORD_COMPONENT = 'form-password';
@@ -2303,10 +2303,10 @@ function togglePassword(field, control) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/forms/generation/text-control.js"
-/*!**********************************************************************!*\
-  !*** ./resources/frontend/features/forms/generation/text-control.js ***!
-  \**********************************************************************/
+/***/ "./resources/js/shared/features/forms/generation/text-control.js"
+/*!***********************************************************************!*\
+  !*** ./resources/js/shared/features/forms/generation/text-control.js ***!
+  \***********************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2317,7 +2317,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   createTextGeneratorDefinition: () => (/* binding */ createTextGeneratorDefinition),
 /* harmony export */   installTextGenerators: () => (/* binding */ installTextGenerators)
 /* harmony export */ });
-/* harmony import */ var _field_generator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./field-generator.js */ "./resources/frontend/features/forms/generation/field-generator.js");
+/* harmony import */ var _field_generator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./field-generator.js */ "./resources/js/shared/features/forms/generation/field-generator.js");
 
 var TEXT_GENERATOR_COMPONENT = 'form-text-generator';
 var TEXT_GENERATOR_SELECTOR = '.form-element-text';
@@ -2350,10 +2350,10 @@ function createTextGeneratorDefinition(random) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/forms/wysiwyg/adapters/ckeditor4.js"
-/*!*************************************************************************!*\
-  !*** ./resources/frontend/features/forms/wysiwyg/adapters/ckeditor4.js ***!
-  \*************************************************************************/
+/***/ "./resources/js/shared/features/forms/wysiwyg/adapters/ckeditor4.js"
+/*!**************************************************************************!*\
+  !*** ./resources/js/shared/features/forms/wysiwyg/adapters/ckeditor4.js ***!
+  \**************************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2390,10 +2390,10 @@ function executeCkeditor4(editor, command, _id, data) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/forms/wysiwyg/adapters/ckeditor5.js"
-/*!*************************************************************************!*\
-  !*** ./resources/frontend/features/forms/wysiwyg/adapters/ckeditor5.js ***!
-  \*************************************************************************/
+/***/ "./resources/js/shared/features/forms/wysiwyg/adapters/ckeditor5.js"
+/*!**************************************************************************!*\
+  !*** ./resources/js/shared/features/forms/wysiwyg/adapters/ckeditor5.js ***!
+  \**************************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2430,10 +2430,10 @@ function insertText(editor, data) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/forms/wysiwyg/adapters/simplemde.js"
-/*!*************************************************************************!*\
-  !*** ./resources/frontend/features/forms/wysiwyg/adapters/simplemde.js ***!
-  \*************************************************************************/
+/***/ "./resources/js/shared/features/forms/wysiwyg/adapters/simplemde.js"
+/*!**************************************************************************!*\
+  !*** ./resources/js/shared/features/forms/wysiwyg/adapters/simplemde.js ***!
+  \**************************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2474,10 +2474,10 @@ function assertConstructor(value, name) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/forms/wysiwyg/adapters/tinymce.js"
-/*!***********************************************************************!*\
-  !*** ./resources/frontend/features/forms/wysiwyg/adapters/tinymce.js ***!
-  \***********************************************************************/
+/***/ "./resources/js/shared/features/forms/wysiwyg/adapters/tinymce.js"
+/*!************************************************************************!*\
+  !*** ./resources/js/shared/features/forms/wysiwyg/adapters/tinymce.js ***!
+  \************************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2524,10 +2524,10 @@ function cssEscape(value) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/forms/wysiwyg/install-wysiwyg-adapters.js"
-/*!*******************************************************************************!*\
-  !*** ./resources/frontend/features/forms/wysiwyg/install-wysiwyg-adapters.js ***!
-  \*******************************************************************************/
+/***/ "./resources/js/shared/features/forms/wysiwyg/install-wysiwyg-adapters.js"
+/*!********************************************************************************!*\
+  !*** ./resources/js/shared/features/forms/wysiwyg/install-wysiwyg-adapters.js ***!
+  \********************************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2535,10 +2535,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   installWysiwygAdapters: () => (/* binding */ installWysiwygAdapters)
 /* harmony export */ });
-/* harmony import */ var _adapters_ckeditor4_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./adapters/ckeditor4.js */ "./resources/frontend/features/forms/wysiwyg/adapters/ckeditor4.js");
-/* harmony import */ var _adapters_ckeditor5_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./adapters/ckeditor5.js */ "./resources/frontend/features/forms/wysiwyg/adapters/ckeditor5.js");
-/* harmony import */ var _adapters_simplemde_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./adapters/simplemde.js */ "./resources/frontend/features/forms/wysiwyg/adapters/simplemde.js");
-/* harmony import */ var _adapters_tinymce_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./adapters/tinymce.js */ "./resources/frontend/features/forms/wysiwyg/adapters/tinymce.js");
+/* harmony import */ var _adapters_ckeditor4_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./adapters/ckeditor4.js */ "./resources/js/shared/features/forms/wysiwyg/adapters/ckeditor4.js");
+/* harmony import */ var _adapters_ckeditor5_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./adapters/ckeditor5.js */ "./resources/js/shared/features/forms/wysiwyg/adapters/ckeditor5.js");
+/* harmony import */ var _adapters_simplemde_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./adapters/simplemde.js */ "./resources/js/shared/features/forms/wysiwyg/adapters/simplemde.js");
+/* harmony import */ var _adapters_tinymce_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./adapters/tinymce.js */ "./resources/js/shared/features/forms/wysiwyg/adapters/tinymce.js");
 
 
 
@@ -2577,10 +2577,10 @@ function registerLazy(registry, name, createAdapter) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/forms/wysiwyg/install-wysiwyg.js"
-/*!**********************************************************************!*\
-  !*** ./resources/frontend/features/forms/wysiwyg/install-wysiwyg.js ***!
-  \**********************************************************************/
+/***/ "./resources/js/shared/features/forms/wysiwyg/install-wysiwyg.js"
+/*!***********************************************************************!*\
+  !*** ./resources/js/shared/features/forms/wysiwyg/install-wysiwyg.js ***!
+  \***********************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2589,7 +2589,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   LEGACY_WYSIWYG_MODULE: () => (/* binding */ LEGACY_WYSIWYG_MODULE),
 /* harmony export */   installWysiwyg: () => (/* binding */ installWysiwyg)
 /* harmony export */ });
-/* harmony import */ var _wysiwyg_component_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./wysiwyg-component.js */ "./resources/frontend/features/forms/wysiwyg/wysiwyg-component.js");
+/* harmony import */ var _wysiwyg_component_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./wysiwyg-component.js */ "./resources/js/shared/features/forms/wysiwyg/wysiwyg-component.js");
 
 var LEGACY_WYSIWYG_MODULE = 'form.elements.wysiwyg';
 function installWysiwyg(admin) {
@@ -2624,10 +2624,10 @@ function assertFunction(value, message) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/forms/wysiwyg/wysiwyg-component.js"
-/*!************************************************************************!*\
-  !*** ./resources/frontend/features/forms/wysiwyg/wysiwyg-component.js ***!
-  \************************************************************************/
+/***/ "./resources/js/shared/features/forms/wysiwyg/wysiwyg-component.js"
+/*!*************************************************************************!*\
+  !*** ./resources/js/shared/features/forms/wysiwyg/wysiwyg-component.js ***!
+  \*************************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2639,8 +2639,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   createWysiwygDefinition: () => (/* binding */ createWysiwygDefinition),
 /* harmony export */   mountWysiwyg: () => (/* binding */ mountWysiwyg)
 /* harmony export */ });
-/* harmony import */ var _core_lifecycle_component_lifecycle_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../core/lifecycle/component-lifecycle.js */ "./resources/frontend/core/lifecycle/component-lifecycle.js");
-/* harmony import */ var _wysiwyg_config_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./wysiwyg-config.js */ "./resources/frontend/features/forms/wysiwyg/wysiwyg-config.js");
+/* harmony import */ var _core_lifecycle_component_lifecycle_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../core/lifecycle/component-lifecycle.js */ "./resources/js/core/lifecycle/component-lifecycle.js");
+/* harmony import */ var _wysiwyg_config_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./wysiwyg-config.js */ "./resources/js/shared/features/forms/wysiwyg/wysiwyg-config.js");
 
 
 var WYSIWYG_COMPONENT = 'wysiwyg';
@@ -2676,10 +2676,10 @@ function assertRegistry(registry) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/forms/wysiwyg/wysiwyg-config.js"
-/*!*********************************************************************!*\
-  !*** ./resources/frontend/features/forms/wysiwyg/wysiwyg-config.js ***!
-  \*********************************************************************/
+/***/ "./resources/js/shared/features/forms/wysiwyg/wysiwyg-config.js"
+/*!**********************************************************************!*\
+  !*** ./resources/js/shared/features/forms/wysiwyg/wysiwyg-config.js ***!
+  \**********************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6171,21 +6171,21 @@ var __webpack_exports__ = {};
 // This entry needs to be wrapped in an IIFE because it needs to be in strict mode.
 (() => {
 "use strict";
-/*!******************************************************!*\
-  !*** ./resources/frontend/features/forms/browser.js ***!
-  \******************************************************/
+/*!*******************************************************!*\
+  !*** ./resources/js/shared/features/forms/browser.js ***!
+  \*******************************************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   bootForms: () => (/* binding */ bootForms)
 /* harmony export */ });
-/* harmony import */ var _actions_install_form_buttons_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./actions/install-form-buttons.js */ "./resources/frontend/features/forms/actions/install-form-buttons.js");
-/* harmony import */ var _browser_options_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./browser-options.js */ "./resources/frontend/features/forms/browser-options.js");
-/* harmony import */ var _date_install_date_controls_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./date/install-date-controls.js */ "./resources/frontend/features/forms/date/install-date-controls.js");
-/* harmony import */ var _files_install_files_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./files/install-files.js */ "./resources/frontend/features/forms/files/install-files.js");
-/* harmony import */ var _generation_password_control_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./generation/password-control.js */ "./resources/frontend/features/forms/generation/password-control.js");
-/* harmony import */ var _generation_text_control_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./generation/text-control.js */ "./resources/frontend/features/forms/generation/text-control.js");
-/* harmony import */ var _wysiwyg_install_wysiwyg_adapters_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./wysiwyg/install-wysiwyg-adapters.js */ "./resources/frontend/features/forms/wysiwyg/install-wysiwyg-adapters.js");
-/* harmony import */ var _wysiwyg_install_wysiwyg_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./wysiwyg/install-wysiwyg.js */ "./resources/frontend/features/forms/wysiwyg/install-wysiwyg.js");
+/* harmony import */ var _actions_install_form_buttons_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./actions/install-form-buttons.js */ "./resources/js/shared/features/forms/actions/install-form-buttons.js");
+/* harmony import */ var _browser_options_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./browser-options.js */ "./resources/js/shared/features/forms/browser-options.js");
+/* harmony import */ var _date_install_date_controls_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./date/install-date-controls.js */ "./resources/js/shared/features/forms/date/install-date-controls.js");
+/* harmony import */ var _files_install_files_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./files/install-files.js */ "./resources/js/shared/features/forms/files/install-files.js");
+/* harmony import */ var _generation_password_control_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./generation/password-control.js */ "./resources/js/shared/features/forms/generation/password-control.js");
+/* harmony import */ var _generation_text_control_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./generation/text-control.js */ "./resources/js/shared/features/forms/generation/text-control.js");
+/* harmony import */ var _wysiwyg_install_wysiwyg_adapters_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./wysiwyg/install-wysiwyg-adapters.js */ "./resources/js/shared/features/forms/wysiwyg/install-wysiwyg-adapters.js");
+/* harmony import */ var _wysiwyg_install_wysiwyg_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./wysiwyg/install-wysiwyg.js */ "./resources/js/shared/features/forms/wysiwyg/install-wysiwyg.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }

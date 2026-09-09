@@ -31,10 +31,10 @@ class ThemeCustomizationDocumentationTest extends TestCase
     private function sourceProperties(string $root): array
     {
         $patterns = [
-            '/resources/frontend/core/styles/_custom-properties.scss',
-            '/resources/frontend/themes/legacy-adminlte/styles/_custom-properties.scss',
-            '/resources/frontend/features/*/styles/_custom-properties.scss',
-            '/resources/frontend/features/*/themes/legacy-adminlte/styles/_custom-properties.scss',
+            '/resources/css/core/_custom-properties.scss',
+            '/resources/css/themes/adminlte/_custom-properties.scss',
+            '/resources/css/shared/features/*/_custom-properties.scss',
+            '/resources/css/themes/adminlte/features/*/_custom-properties.scss',
         ];
         $sources = [];
 

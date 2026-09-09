@@ -15,7 +15,7 @@ describe('SCSS color literal policy', () => {
     it('rejects color literals in component styles', async () => {
         const result = await lintScss(
             '.button { color: red; background: #fff; border-color: rgb(0 0 0); }',
-            'resources/frontend/core/styles/button.scss',
+            'resources/css/core/button.scss',
         )
 
         expect(ruleNames(result)).toEqual(
@@ -28,7 +28,7 @@ describe('SCSS color literal policy', () => {
         async (filename) => {
             const result = await lintScss(
                 '$text: red !default; $surface: #fff !default; $shadow: rgb(0 0 0) !default;',
-                `resources/frontend/core/styles/${filename}`,
+                `resources/css/core/${filename}`,
             )
 
             expect(result.errored).toBe(false)
@@ -41,7 +41,7 @@ describe('SCSS color literal policy', () => {
                 color: var(--soa-text-color);
                 background: var(--soa-surface-color);
             }`,
-            'resources/frontend/core/styles/button.scss',
+            'resources/css/core/button.scss',
         )
 
         expect(result.errored).toBe(false)

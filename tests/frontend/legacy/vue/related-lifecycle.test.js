@@ -4,7 +4,7 @@ import {
     destroyRelatedGroup,
     initializeRelatedGroup,
     relatedModuleNames,
-} from '../../../../resources/assets/js_owl/admin/form/related/related-lifecycle'
+} from '../../../../resources/js/shared/legacy/admin/form/related/related-lifecycle'
 
 it('initializes legacy adapters before scanning a dynamic related group', () => {
     const calls = []

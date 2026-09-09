@@ -4,7 +4,7 @@ import {
     appendSelectedRows,
     formParameters,
     selectedRowParameters,
-} from '../../../../resources/frontend/features/table/actions/action-context.js'
+} from '../../../../resources/js/shared/features/table/actions/action-context.js'
 
 it('serializes selected rows with the existing repeated parameter name', () => {
     const table = {}

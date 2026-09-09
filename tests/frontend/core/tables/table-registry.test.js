@@ -4,7 +4,7 @@ import {
     assertTableAdapter,
     createTableRegistry,
     TableRegistry,
-} from '../../../../resources/frontend/core/tables/table-registry.js'
+} from '../../../../resources/js/core/tables/table-registry.js'
 
 function createElement(id = 'orders') {
     return { id, nodeType: 1 }

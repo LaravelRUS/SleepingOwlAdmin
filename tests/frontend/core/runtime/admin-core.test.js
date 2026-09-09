@@ -3,7 +3,7 @@ import { expect, it, vi } from 'vitest'
 import {
     createAdminCore,
     installAdminCore,
-} from '../../../../resources/frontend/core/runtime/admin-core.js'
+} from '../../../../resources/js/core/runtime/admin-core.js'
 
 function documentFixture() {
     const document = new globalThis.EventTarget()

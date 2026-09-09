@@ -1,7 +1,8 @@
 node_modules/
 public/
-resources/assets/**/*.*
-!resources/assets/**/*.vue
+resources/archive/
+resources/js/shared/legacy/**/*.*
+!resources/js/shared/legacy/**/*.vue
 vendor/
 docs/modernization/baseline/
 package-lock.json

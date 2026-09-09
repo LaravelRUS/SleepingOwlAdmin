@@ -1,6 +1,6 @@
 import { expect, it, vi } from 'vitest'
 
-import { createTableFilterDrivers } from '../../../../resources/frontend/features/table/filters/filter-drivers.js'
+import { createTableFilterDrivers } from '../../../../resources/js/shared/features/table/filters/filter-drivers.js'
 
 function control({ closest = null, selectedOptions = [], value = '' } = {}) {
     const listeners = new Map()

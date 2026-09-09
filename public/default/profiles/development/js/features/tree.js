@@ -2,10 +2,10 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./resources/frontend/features/tree/install-trees.js"
-/*!***********************************************************!*\
-  !*** ./resources/frontend/features/tree/install-trees.js ***!
-  \***********************************************************/
+/***/ "./resources/js/shared/features/tree/install-trees.js"
+/*!************************************************************!*\
+  !*** ./resources/js/shared/features/tree/install-trees.js ***!
+  \************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
@@ -13,7 +13,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   installTrees: () => (/* binding */ installTrees)
 /* harmony export */ });
 /* harmony import */ var sortablejs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sortablejs */ "./node_modules/sortablejs/modular/sortable.esm.js");
-/* harmony import */ var _tree_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./tree.js */ "./resources/frontend/features/tree/tree.js");
+/* harmony import */ var _tree_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./tree.js */ "./resources/js/shared/features/tree/tree.js");
 
 
 function installTrees(admin) {
@@ -52,10 +52,10 @@ function assertFunction(object, method, message) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/tree/tree-config.js"
-/*!*********************************************************!*\
-  !*** ./resources/frontend/features/tree/tree-config.js ***!
-  \*********************************************************/
+/***/ "./resources/js/shared/features/tree/tree-config.js"
+/*!**********************************************************!*\
+  !*** ./resources/js/shared/features/tree/tree-config.js ***!
+  \**********************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
@@ -109,10 +109,10 @@ function assertElement(element) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/tree/tree-request.js"
-/*!**********************************************************!*\
-  !*** ./resources/frontend/features/tree/tree-request.js ***!
-  \**********************************************************/
+/***/ "./resources/js/shared/features/tree/tree-request.js"
+/*!***********************************************************!*\
+  !*** ./resources/js/shared/features/tree/tree-request.js ***!
+  \***********************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
@@ -183,10 +183,10 @@ function assertHttp(http) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/tree/tree-sortable.js"
-/*!***********************************************************!*\
-  !*** ./resources/frontend/features/tree/tree-sortable.js ***!
-  \***********************************************************/
+/***/ "./resources/js/shared/features/tree/tree-sortable.js"
+/*!************************************************************!*\
+  !*** ./resources/js/shared/features/tree/tree-sortable.js ***!
+  \************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
@@ -194,7 +194,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   mountTreeSortables: () => (/* binding */ mountTreeSortables),
 /* harmony export */   sortableOptions: () => (/* binding */ sortableOptions)
 /* harmony export */ });
-/* harmony import */ var _tree_structure_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./tree-structure.js */ "./resources/frontend/features/tree/tree-structure.js");
+/* harmony import */ var _tree_structure_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./tree-structure.js */ "./resources/js/shared/features/tree/tree-structure.js");
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
@@ -264,10 +264,10 @@ function assertSortable(sortable) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/tree/tree-structure.js"
-/*!************************************************************!*\
-  !*** ./resources/frontend/features/tree/tree-structure.js ***!
-  \************************************************************/
+/***/ "./resources/js/shared/features/tree/tree-structure.js"
+/*!*************************************************************!*\
+  !*** ./resources/js/shared/features/tree/tree-structure.js ***!
+  \*************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
@@ -350,10 +350,10 @@ function serializeTreeItem(item) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/tree/tree-view.js"
-/*!*******************************************************!*\
-  !*** ./resources/frontend/features/tree/tree-view.js ***!
-  \*******************************************************/
+/***/ "./resources/js/shared/features/tree/tree-view.js"
+/*!********************************************************!*\
+  !*** ./resources/js/shared/features/tree/tree-view.js ***!
+  \********************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
@@ -363,7 +363,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   setTreeBusy: () => (/* binding */ setTreeBusy),
 /* harmony export */   syncTreeView: () => (/* binding */ syncTreeView)
 /* harmony export */ });
-/* harmony import */ var _tree_structure_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./tree-structure.js */ "./resources/frontend/features/tree/tree-structure.js");
+/* harmony import */ var _tree_structure_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./tree-structure.js */ "./resources/js/shared/features/tree/tree-structure.js");
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
@@ -470,10 +470,10 @@ function emptyList() {
 
 /***/ },
 
-/***/ "./resources/frontend/features/tree/tree.js"
-/*!**************************************************!*\
-  !*** ./resources/frontend/features/tree/tree.js ***!
-  \**************************************************/
+/***/ "./resources/js/shared/features/tree/tree.js"
+/*!***************************************************!*\
+  !*** ./resources/js/shared/features/tree/tree.js ***!
+  \***************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
@@ -483,11 +483,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   createTreeDefinition: () => (/* binding */ createTreeDefinition),
 /* harmony export */   mountTree: () => (/* binding */ mountTree)
 /* harmony export */ });
-/* harmony import */ var _tree_config_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./tree-config.js */ "./resources/frontend/features/tree/tree-config.js");
-/* harmony import */ var _tree_request_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./tree-request.js */ "./resources/frontend/features/tree/tree-request.js");
-/* harmony import */ var _tree_structure_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./tree-structure.js */ "./resources/frontend/features/tree/tree-structure.js");
-/* harmony import */ var _tree_sortable_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./tree-sortable.js */ "./resources/frontend/features/tree/tree-sortable.js");
-/* harmony import */ var _tree_view_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./tree-view.js */ "./resources/frontend/features/tree/tree-view.js");
+/* harmony import */ var _tree_config_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./tree-config.js */ "./resources/js/shared/features/tree/tree-config.js");
+/* harmony import */ var _tree_request_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./tree-request.js */ "./resources/js/shared/features/tree/tree-request.js");
+/* harmony import */ var _tree_structure_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./tree-structure.js */ "./resources/js/shared/features/tree/tree-structure.js");
+/* harmony import */ var _tree_sortable_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./tree-sortable.js */ "./resources/js/shared/features/tree/tree-sortable.js");
+/* harmony import */ var _tree_view_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./tree-view.js */ "./resources/js/shared/features/tree/tree-view.js");
 
 
 
@@ -4063,14 +4063,14 @@ Sortable.mount(Remove, Revert);
 var __webpack_exports__ = {};
 // This entry needs to be wrapped in an IIFE because it needs to be isolated against other modules in the chunk.
 (() => {
-/*!*****************************************************!*\
-  !*** ./resources/frontend/features/tree/browser.js ***!
-  \*****************************************************/
+/*!******************************************************!*\
+  !*** ./resources/js/shared/features/tree/browser.js ***!
+  \******************************************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   bootTrees: () => (/* binding */ bootTrees)
 /* harmony export */ });
-/* harmony import */ var _install_trees_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./install-trees.js */ "./resources/frontend/features/tree/install-trees.js");
+/* harmony import */ var _install_trees_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./install-trees.js */ "./resources/js/shared/features/tree/install-trees.js");
 
 if (globalThis.document) bootTrees(globalThis);
 function bootTrees(target) {

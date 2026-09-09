@@ -1,6 +1,6 @@
 import { expect, it, vi } from 'vitest'
 
-import { bootCompatibilityModules } from '../../../resources/frontend/shared/modules/browser.js'
+import { bootCompatibilityModules } from '../../../resources/js/shared/modules/browser.js'
 
 it('boots legacy modules before the final idempotent component scan', () => {
     const calls = []

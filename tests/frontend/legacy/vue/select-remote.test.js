@@ -3,11 +3,11 @@ import { afterEach, expect, it, vi } from 'vitest'
 import {
     mergeRemoteSelectOptions,
     normalizeRemoteSelectOptions,
-} from '../../../../resources/assets/js_owl/admin/form/select-remote-options.js'
+} from '../../../../resources/js/shared/legacy/admin/form/select-remote-options.js'
 import {
     createRemoteSelectSearch,
     remoteSelectParameters,
-} from '../../../../resources/assets/js_owl/admin/form/select-remote-search.js'
+} from '../../../../resources/js/shared/legacy/admin/form/select-remote-search.js'
 
 afterEach(() => vi.useRealTimers())
 

@@ -4,7 +4,7 @@ import {
     dependentSelectParameters,
     dependentSelectValue,
     normalizeDependentSelectResponse,
-} from '../../../../resources/assets/js_owl/admin/form/select-dependent-options.js'
+} from '../../../../resources/js/shared/legacy/admin/form/select-dependent-options.js'
 
 describe('dependent select parameters', () => {
     it('preserves the legacy parent and named parameter payload', () => {

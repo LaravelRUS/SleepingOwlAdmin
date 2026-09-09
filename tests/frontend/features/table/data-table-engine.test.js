@@ -18,7 +18,7 @@ import {
     createDataTableEngine,
     dataTableEngineRuntime,
     dataTableEngineVersions,
-} from '../../../../resources/frontend/features/table/engine/data-table-engine.js'
+} from '../../../../resources/js/shared/features/table/engine/data-table-engine.js'
 
 it('creates the active table engine through its constructor API', () => {
     const element = { nodeType: 1 }

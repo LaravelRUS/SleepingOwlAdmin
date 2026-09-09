@@ -4,7 +4,7 @@ import {
     imagePreviewUrl,
     isBlobImageValue,
     normalizeImageValue,
-} from '../../../../resources/assets/js_owl/admin/form/image-value'
+} from '../../../../resources/js/shared/legacy/admin/form/image-value'
 
 function preview(value, overrides = {}) {
     return imagePreviewUrl(value, {

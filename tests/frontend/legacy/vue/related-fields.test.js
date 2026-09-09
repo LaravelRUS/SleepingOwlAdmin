@@ -4,7 +4,7 @@ import {
     appendRelatedIndex,
     createRelatedName,
     rewriteRelatedIslandProps,
-} from '../../../../resources/assets/js_owl/admin/form/related/related-fields'
+} from '../../../../resources/js/shared/legacy/admin/form/related/related-fields'
 
 it('adds a related index once to control ids', () => {
     expect(appendRelatedIndex('product_id', 3)).toBe('product_id_3')

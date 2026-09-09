@@ -122,14 +122,14 @@ const staticRoutes = new Map([
     ],
     ['/date-controls', [join(browserDirectory, 'date-controls.html'), 'text/html; charset=utf-8']],
     [
-        '/resources/frontend/core/data/island-props.js',
+        '/resources/js/core/data/island-props.js',
         [
             join(projectRoot, 'resources', 'frontend', 'core', 'data', 'island-props.js'),
             'text/javascript',
         ],
     ],
     [
-        '/resources/frontend/core/dom/listeners.js',
+        '/resources/js/core/dom/listeners.js',
         [
             join(projectRoot, 'resources', 'frontend', 'core', 'dom', 'listeners.js'),
             'text/javascript',

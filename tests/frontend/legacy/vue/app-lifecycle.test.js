@@ -1,14 +1,14 @@
 import { expect, it, vi } from 'vitest'
 
-import { createComponentLifecycle } from '../../../../resources/frontend/core/lifecycle/component-lifecycle.js'
+import { createComponentLifecycle } from '../../../../resources/js/core/lifecycle/component-lifecycle.js'
 import {
     registerVueAppLifecycle,
     vueAppLifecycleName,
-} from '../../../../resources/frontend/legacy/vue/app-lifecycle.js'
+} from '../../../../resources/js/shared/vue/legacy/app-lifecycle.js'
 import {
     createVueAppRegistry,
     vueAppSelector,
-} from '../../../../resources/frontend/legacy/vue/app-registry.js'
+} from '../../../../resources/js/shared/vue/legacy/app-registry.js'
 
 function createElement(id, marked = false, children = []) {
     const element = {

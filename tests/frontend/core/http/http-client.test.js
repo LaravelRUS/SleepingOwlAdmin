@@ -1,10 +1,10 @@
 import { describe, expect, it, vi } from 'vitest'
 
-import { readCsrfToken } from '../../../../resources/frontend/core/http/csrf-token.js'
+import { readCsrfToken } from '../../../../resources/js/core/http/csrf-token.js'
 import {
     createHttpClient,
     HttpError,
-} from '../../../../resources/frontend/core/http/http-client.js'
+} from '../../../../resources/js/core/http/http-client.js'
 
 function response({ ok = true, status = 200, statusText = 'OK' } = {}) {
     return { ok, status, statusText }

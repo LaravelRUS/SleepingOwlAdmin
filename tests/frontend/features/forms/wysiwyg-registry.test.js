@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest'
 
-import { createWysiwygRegistry } from '../../../../resources/frontend/features/forms/wysiwyg/wysiwyg-registry.js'
+import { createWysiwygRegistry } from '../../../../resources/js/shared/features/forms/wysiwyg/wysiwyg-registry.js'
 
 function eventRecorder() {
     const calls = []

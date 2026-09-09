@@ -11,11 +11,11 @@ const { resolveVueRuntime, runtimeFiles } = require('../../../build/vue-runtime'
 const packageJson = readJson('package.json')
 const packageLock = readJson('package-lock.json')
 const legacyVueViews = [
-    'resources/views/themes/legacy/default/form/element/file.blade.php',
-    'resources/views/themes/legacy/default/form/element/image.blade.php',
-    'resources/views/themes/legacy/default/form/element/images.blade.php',
-    'resources/views/themes/legacy/default/form/element/partials/select_island.blade.php',
-    'resources/views/themes/legacy/default/form/element/related/inner_element.blade.php',
+    'resources/views/themes/adminlte/default/form/element/file.blade.php',
+    'resources/views/themes/adminlte/default/form/element/image.blade.php',
+    'resources/views/themes/adminlte/default/form/element/images.blade.php',
+    'resources/views/themes/adminlte/default/form/element/partials/select_island.blade.php',
+    'resources/views/themes/adminlte/default/form/element/related/inner_element.blade.php',
 ]
 
 function readJson(path) {
@@ -48,12 +48,12 @@ describe('Vue 3 runtime dependencies', () => {
     })
 
     it('uses Admin.Http instead of vue-resource', () => {
-        const bootstrap = readSource('resources/assets/js_owl/bootstrap.js')
+        const bootstrap = readSource('resources/js/shared/legacy/bootstrap.js')
 
         expect(packageJson.dependencies).not.toHaveProperty('vue-resource')
         expect(packageLock.packages).not.toHaveProperty('node_modules/vue-resource')
         expect(bootstrap).not.toMatch(/vue-resource|Vue\.http|\$http/)
-        expect(readSource('resources/frontend/core/runtime/admin-core.js')).toContain(
+        expect(readSource('resources/js/core/runtime/admin-core.js')).toContain(
             'Http: createHttpClient',
         )
     })
@@ -108,8 +108,8 @@ describe('bounded legacy Vue apps', () => {
     })
 
     it('mounts bounded hosts through the tolerant shared lifecycle', () => {
-        const initializer = readSource('resources/frontend/shared/vue/browser.js')
-        const legacyBridge = readSource('resources/assets/js_owl/vue_init.js')
+        const initializer = readSource('resources/js/shared/vue/browser.js')
+        const legacyBridge = readSource('resources/js/shared/legacy/vue_init.js')
 
         expect(initializer).toContain('createVueAppRegistry')
         expect(initializer).toContain('registerVueAppLifecycle')
@@ -117,12 +117,12 @@ describe('bounded legacy Vue apps', () => {
             initializer.indexOf('registerVueAppLifecycle(Admin.Components, vueApps)'),
         ).toBeLessThan(initializer.indexOf('Admin.Vue.scan(document)'))
         expect(initializer).not.toMatch(/vueApps\.mountAll|new Vue|#vueApp/)
-        expect(legacyBridge).toContain("import '../../frontend/shared/vue/browser'")
+        expect(legacyBridge).toContain("import '../vue/browser'")
     })
 
     it('provides translations per app without a global Vue prototype plugin', () => {
-        const initializer = readSource('resources/frontend/shared/vue/browser.js')
-        const bootstrap = readSource('resources/assets/js_owl/bootstrap.js')
+        const initializer = readSource('resources/js/shared/vue/browser.js')
+        const bootstrap = readSource('resources/js/shared/legacy/bootstrap.js')
 
         expect(initializer).toContain('createVueTranslation')
         expect(initializer).toContain('installVueTranslation')
@@ -131,12 +131,12 @@ describe('bounded legacy Vue apps', () => {
     })
 
     it('contains no package-owned global component registration', () => {
-        const sources = readSource('resources/assets/js_owl/bootstrap.js')
+        const sources = readSource('resources/js/shared/legacy/bootstrap.js')
 
-        expect(readSource('resources/assets/js_owl/admin/vue-components.js')).toContain(
+        expect(readSource('resources/js/shared/legacy/admin/vue-components.js')).toContain(
             'vueComponents',
         )
-        expect(readSource('resources/assets/js_owl/bootstrap.js')).not.toContain(
+        expect(readSource('resources/js/shared/legacy/bootstrap.js')).not.toContain(
             'Admin.LegacyVueComponents',
         )
         expect(sources).not.toMatch(/Vue\.(?:component|extend)/)
@@ -144,8 +144,8 @@ describe('bounded legacy Vue apps', () => {
 })
 
 it('publishes a namespaced extension API and a shared runtime external stub', () => {
-    const initializer = readSource('resources/frontend/shared/vue/browser.js')
-    const extension = readSource('resources/frontend/legacy/vue/extension-api.js')
+    const initializer = readSource('resources/js/shared/vue/browser.js')
+    const extension = readSource('resources/js/shared/vue/legacy/extension-api.js')
     const stub = readSource('docs/modernization/examples/custom-vue-island/webpack.mix.js')
 
     expect(initializer).toContain("import * as VueRuntime from 'vue'")
@@ -158,9 +158,9 @@ it('publishes a namespaced extension API and a shared runtime external stub', ()
 
 describe('precompiled Vue islands', () => {
     it('mounts the file element directly and uses the Dropzone constructor', () => {
-        const view = readSource('resources/views/themes/legacy/default/form/element/file.blade.php')
-        const component = readSource('resources/assets/js_owl/admin/form/file.vue')
-        const dropzone = readSource('resources/assets/js_owl/libs/dropzone.js')
+        const view = readSource('resources/views/themes/adminlte/default/form/element/file.blade.php')
+        const component = readSource('resources/js/shared/legacy/admin/form/file.vue')
+        const dropzone = readSource('resources/js/shared/legacy/libs/dropzone.js')
 
         expect(view).toContain('data-vue-component="element-file"')
         expect(view).toContain('data-vue-props=')
@@ -182,13 +182,13 @@ describe('precompiled Vue islands', () => {
 
 it('keeps both related theme shells in Blade', () => {
     const card = readSource(
-        'resources/views/themes/legacy/default/form/element/related/elements.blade.php',
+        'resources/views/themes/adminlte/default/form/element/related/elements.blade.php',
     )
     const plain = readSource(
-        'resources/views/themes/legacy/default/form/element/related/elements_without_card.blade.php',
+        'resources/views/themes/adminlte/default/form/element/related/elements_without_card.blade.php',
     )
     const group = readSource(
-        'resources/views/themes/legacy/default/form/element/related/group.blade.php',
+        'resources/views/themes/adminlte/default/form/element/related/group.blade.php',
     )
 
     expect(card).toContain('card card-outline card-info')
@@ -199,7 +199,7 @@ it('keeps both related theme shells in Blade', () => {
 
 it('passes trusted related group HTML through referenced JSON props', () => {
     const island = readSource(
-        'resources/views/themes/legacy/default/form/element/related/inner_element.blade.php',
+        'resources/views/themes/adminlte/default/form/element/related/inner_element.blade.php',
     )
 
     expect(island).toContain('data-vue-component="related-elements"')
@@ -211,8 +211,8 @@ it('passes trusted related group HTML through referenced JSON props', () => {
 })
 
 it('uses precompiled related state, native Sortable and shared lifecycle modules', () => {
-    const component = readSource('resources/assets/js_owl/admin/form/related/elements.vue')
-    const catalog = readSource('resources/assets/js_owl/admin/vue-components.js')
+    const component = readSource('resources/js/shared/legacy/admin/form/related/elements.vue')
+    const catalog = readSource('resources/js/shared/legacy/admin/vue-components.js')
 
     expect(component).toContain('<template>')
     expect(component).toContain(':class="classes.root"')
@@ -230,13 +230,13 @@ it('uses precompiled related state, native Sortable and shared lifecycle modules
 })
 
 it('removes every package inline-template bridge owner', () => {
-    expect(existsSync(resolve(root, 'resources/assets/js_owl/libs/vue-inline-template.js'))).toBe(
+    expect(existsSync(resolve(root, 'resources/js/shared/legacy/libs/vue-inline-template.js'))).toBe(
         false,
     )
     expect(
-        existsSync(resolve(root, 'resources/assets/js_owl/admin/form/related/elements.js')),
+        existsSync(resolve(root, 'resources/js/shared/legacy/admin/form/related/elements.js')),
     ).toBe(false)
-    expect(existsSync(resolve(root, 'resources/assets/js_owl/admin/form/related/group.js'))).toBe(
+    expect(existsSync(resolve(root, 'resources/js/shared/legacy/admin/form/related/group.js'))).toBe(
         false,
     )
 })
@@ -244,10 +244,10 @@ it('removes every package inline-template bridge owner', () => {
 describe('precompiled select island', () => {
     it('mounts single and multiple modes through one native Vue 3 component', () => {
         const partial = readSource(
-            'resources/views/themes/legacy/default/form/element/partials/select_island.blade.php',
+            'resources/views/themes/adminlte/default/form/element/partials/select_island.blade.php',
         )
-        const component = readSource('resources/assets/js_owl/admin/form/select.vue')
-        const catalog = readSource('resources/assets/js_owl/admin/vue-components.js')
+        const component = readSource('resources/js/shared/legacy/admin/form/select.vue')
+        const catalog = readSource('resources/js/shared/legacy/admin/vue-components.js')
 
         expect(partial).toContain('data-vue-component="element-select"')
         expect(partial).toContain('data-vue-props=')
@@ -264,9 +264,9 @@ describe('precompiled select island', () => {
         expect(catalog).toContain("'element-select': ElementSelect")
         expect(catalog).not.toMatch(/\bdeselect\b|\bmultiselect:/)
         expect(
-            existsSync(resolve(root, 'resources/assets/js_owl/admin/form/multiselect-compat.js')),
+            existsSync(resolve(root, 'resources/js/shared/legacy/admin/form/multiselect-compat.js')),
         ).toBe(false)
-        expect(existsSync(resolve(root, 'resources/assets/js_owl/admin/form/deselect.js'))).toBe(
+        expect(existsSync(resolve(root, 'resources/js/shared/legacy/admin/form/deselect.js'))).toBe(
             false,
         )
     })
@@ -274,10 +274,10 @@ describe('precompiled select island', () => {
 
 describe('Select2 migration boundary', () => {
     it('uses the shared remote Vue driver without first-party Select2 assets', () => {
-        const bootstrap = readSource('resources/assets/js_owl/bootstrap.js')
-        const component = readSource('resources/assets/js_owl/admin/form/select.vue')
+        const bootstrap = readSource('resources/js/shared/legacy/bootstrap.js')
+        const component = readSource('resources/js/shared/legacy/admin/form/select.vue')
         const ajaxView = readSource(
-            'resources/views/themes/legacy/default/form/element/selectajax.blade.php',
+            'resources/views/themes/adminlte/default/form/element/selectajax.blade.php',
         )
 
         expect(packageJson.dependencies).not.toHaveProperty('select2')
@@ -288,11 +288,11 @@ describe('Select2 migration boundary', () => {
         )
         expect(component).not.toMatch(/\$\(|jQuery|\.select2\(/)
         expect(ajaxView).toContain("'selectExtraProps' => ['remote' => $remoteSelect]")
-        expect(existsSync(resolve(root, 'resources/assets/js_owl/libs/select2.js'))).toBe(false)
-        expect(existsSync(resolve(root, 'resources/assets/scss/components/select2.scss'))).toBe(
+        expect(existsSync(resolve(root, 'resources/js/shared/legacy/libs/select2.js'))).toBe(false)
+        expect(existsSync(resolve(root, 'resources/css/themes/adminlte/legacy/components/select2.scss'))).toBe(
             false,
         )
-        expect(existsSync(resolve(root, 'resources/assets/js_owl/admin/form/selectajax.js'))).toBe(
+        expect(existsSync(resolve(root, 'resources/js/shared/legacy/admin/form/selectajax.js'))).toBe(
             false,
         )
     })
@@ -301,12 +301,12 @@ describe('Select2 migration boundary', () => {
 describe('precompiled image island', () => {
     it('mounts the image element directly without jQuery or Axios', () => {
         const view = readSource(
-            'resources/views/themes/legacy/default/form/element/image.blade.php',
+            'resources/views/themes/adminlte/default/form/element/image.blade.php',
         )
-        const component = readSource('resources/assets/js_owl/admin/form/image.vue')
-        const catalog = readSource('resources/assets/js_owl/admin/vue-components.js')
+        const component = readSource('resources/js/shared/legacy/admin/form/image.vue')
+        const catalog = readSource('resources/js/shared/legacy/admin/vue-components.js')
 
-        expect(existsSync(resolve(root, 'resources/assets/js_owl/admin/form/image.js'))).toBe(false)
+        expect(existsSync(resolve(root, 'resources/js/shared/legacy/admin/form/image.js'))).toBe(false)
         expect(view).toContain('data-vue-component="element-image"')
         expect(view).toContain('data-vue-props=')
         expect(view).toContain('v-pre')
@@ -329,12 +329,12 @@ describe('precompiled image island', () => {
 describe('precompiled images island', () => {
     it('mounts the images element directly without legacy frontend dependencies', () => {
         const view = readSource(
-            'resources/views/themes/legacy/default/form/element/images.blade.php',
+            'resources/views/themes/adminlte/default/form/element/images.blade.php',
         )
-        const component = readSource('resources/assets/js_owl/admin/form/images.vue')
-        const catalog = readSource('resources/assets/js_owl/admin/vue-components.js')
+        const component = readSource('resources/js/shared/legacy/admin/form/images.vue')
+        const catalog = readSource('resources/js/shared/legacy/admin/vue-components.js')
 
-        expect(existsSync(resolve(root, 'resources/assets/js_owl/admin/form/images.js'))).toBe(
+        expect(existsSync(resolve(root, 'resources/js/shared/legacy/admin/form/images.js'))).toBe(
             false,
         )
         expect(view).toContain('data-vue-component="element-images"')

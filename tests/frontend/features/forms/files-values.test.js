@@ -5,7 +5,7 @@ import {
     fileExtension,
     filePresentation,
     isImageExtension,
-} from '../../../../resources/frontend/features/forms/files/files-values.js'
+} from '../../../../resources/js/shared/features/forms/files/files-values.js'
 
 describe('files value parsing', () => {
     it('normalizes file names and extensions without changing public values', () => {

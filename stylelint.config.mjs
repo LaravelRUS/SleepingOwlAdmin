@@ -19,7 +19,12 @@ const COLOR_LITERAL_RULES = {
 
 export default {
     extends: ['stylelint-config-standard-scss'],
-    ignoreFiles: ['public/**', 'resources/assets/**', 'vendor/**'],
+    ignoreFiles: [
+        'public/**',
+        'resources/archive/**',
+        'resources/css/themes/adminlte/legacy/**',
+        'vendor/**',
+    ],
     overrides: [
         {
             files: ['**/_colors.scss', '**/_variables.scss'],

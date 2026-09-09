@@ -99,7 +99,7 @@ function makeConfigItem(string $path, mixed $value): array
 
 function sourceFiles(): array
 {
-    $roots = ['src', 'resources/views', 'resources/assets/js_owl', 'resources/frontend'];
+    $roots = ['src', 'resources/views', 'resources/js'];
     $files = [];
 
     foreach ($roots as $root) {
@@ -247,7 +247,7 @@ function scriptConsumers(): array
 {
     $consumers = [];
 
-    foreach (['resources/assets/js_owl', 'resources/frontend'] as $root) {
+    foreach (['resources/js'] as $root) {
         foreach (filesUnder(projectRoot().'/'.$root) as $path) {
             foreach (file($path) as $index => $line) {
                 $consumers = [...$consumers, ...scriptLineConsumers($path, $line, $index + 1)];

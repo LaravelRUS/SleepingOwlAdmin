@@ -2,10 +2,10 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./resources/frontend/features/dropdown/dropdown-elements.js"
-/*!*******************************************************************!*\
-  !*** ./resources/frontend/features/dropdown/dropdown-elements.js ***!
-  \*******************************************************************/
+/***/ "./resources/js/shared/features/dropdown/dropdown-elements.js"
+/*!********************************************************************!*\
+  !*** ./resources/js/shared/features/dropdown/dropdown-elements.js ***!
+  \********************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
@@ -103,10 +103,10 @@ function dropdownTargetId(toggle) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/dropdown/dropdown-navigation.js"
-/*!*********************************************************************!*\
-  !*** ./resources/frontend/features/dropdown/dropdown-navigation.js ***!
-  \*********************************************************************/
+/***/ "./resources/js/shared/features/dropdown/dropdown-navigation.js"
+/*!**********************************************************************!*\
+  !*** ./resources/js/shared/features/dropdown/dropdown-navigation.js ***!
+  \**********************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
@@ -126,10 +126,10 @@ function dropdownNavigationTarget(items, current, key) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/dropdown/dropdown-state.js"
-/*!****************************************************************!*\
-  !*** ./resources/frontend/features/dropdown/dropdown-state.js ***!
-  \****************************************************************/
+/***/ "./resources/js/shared/features/dropdown/dropdown-state.js"
+/*!*****************************************************************!*\
+  !*** ./resources/js/shared/features/dropdown/dropdown-state.js ***!
+  \*****************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
@@ -193,19 +193,19 @@ function dispatchDropdownEvent(context, name) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/dropdown/dropdowns.js"
-/*!***********************************************************!*\
-  !*** ./resources/frontend/features/dropdown/dropdowns.js ***!
-  \***********************************************************/
+/***/ "./resources/js/shared/features/dropdown/dropdowns.js"
+/*!************************************************************!*\
+  !*** ./resources/js/shared/features/dropdown/dropdowns.js ***!
+  \************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   mountDropdowns: () => (/* binding */ mountDropdowns)
 /* harmony export */ });
-/* harmony import */ var _dropdown_elements_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./dropdown-elements.js */ "./resources/frontend/features/dropdown/dropdown-elements.js");
-/* harmony import */ var _dropdown_navigation_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./dropdown-navigation.js */ "./resources/frontend/features/dropdown/dropdown-navigation.js");
-/* harmony import */ var _dropdown_state_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./dropdown-state.js */ "./resources/frontend/features/dropdown/dropdown-state.js");
+/* harmony import */ var _dropdown_elements_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./dropdown-elements.js */ "./resources/js/shared/features/dropdown/dropdown-elements.js");
+/* harmony import */ var _dropdown_navigation_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./dropdown-navigation.js */ "./resources/js/shared/features/dropdown/dropdown-navigation.js");
+/* harmony import */ var _dropdown_state_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./dropdown-state.js */ "./resources/js/shared/features/dropdown/dropdown-state.js");
 
 
 
@@ -350,10 +350,10 @@ function assertRoot(root) {
 
 /***/ },
 
-/***/ "./resources/frontend/features/dropdown/install-dropdowns.js"
-/*!*******************************************************************!*\
-  !*** ./resources/frontend/features/dropdown/install-dropdowns.js ***!
-  \*******************************************************************/
+/***/ "./resources/js/shared/features/dropdown/install-dropdowns.js"
+/*!********************************************************************!*\
+  !*** ./resources/js/shared/features/dropdown/install-dropdowns.js ***!
+  \********************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
@@ -362,7 +362,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   DROPDOWN_ROOT_SELECTOR: () => (/* binding */ DROPDOWN_ROOT_SELECTOR),
 /* harmony export */   installDropdowns: () => (/* binding */ installDropdowns)
 /* harmony export */ });
-/* harmony import */ var _dropdowns_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./dropdowns.js */ "./resources/frontend/features/dropdown/dropdowns.js");
+/* harmony import */ var _dropdowns_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./dropdowns.js */ "./resources/js/shared/features/dropdown/dropdowns.js");
 
 var DROPDOWN_COMPONENT = 'dropdowns';
 var DROPDOWN_ROOT_SELECTOR = 'body';
@@ -487,14 +487,14 @@ function assertAdmin(admin) {
 var __webpack_exports__ = {};
 // This entry needs to be wrapped in an IIFE because it needs to be isolated against other modules in the chunk.
 (() => {
-/*!*********************************************************!*\
-  !*** ./resources/frontend/features/dropdown/browser.js ***!
-  \*********************************************************/
+/*!**********************************************************!*\
+  !*** ./resources/js/shared/features/dropdown/browser.js ***!
+  \**********************************************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   bootDropdowns: () => (/* binding */ bootDropdowns)
 /* harmony export */ });
-/* harmony import */ var _install_dropdowns_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./install-dropdowns.js */ "./resources/frontend/features/dropdown/install-dropdowns.js");
+/* harmony import */ var _install_dropdowns_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./install-dropdowns.js */ "./resources/js/shared/features/dropdown/install-dropdowns.js");
 
 if (globalThis.document) bootDropdowns(globalThis);
 function bootDropdowns(target) {

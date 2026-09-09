@@ -3,7 +3,7 @@ import { describe, expect, it, vi } from 'vitest'
 import {
     createImagesSortable,
     imagesSortableOptions,
-} from '../../../../resources/assets/js_owl/admin/form/images-sortable'
+} from '../../../../resources/js/shared/legacy/admin/form/images-sortable'
 
 describe('images sortable driver', () => {
     it('creates a handle-only sortable collection', () => {

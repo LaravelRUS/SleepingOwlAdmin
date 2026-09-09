@@ -3,7 +3,7 @@ import { expect, it, vi } from 'vitest'
 import {
     applyCreatedRowClass,
     createDrawHook,
-} from '../../../../resources/frontend/features/table/hooks/table-hooks.js'
+} from '../../../../resources/js/shared/features/table/hooks/table-hooks.js'
 
 it('preserves the DataTable.Dom callback context and its public api method', () => {
     const calls = []

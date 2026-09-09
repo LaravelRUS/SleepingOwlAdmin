@@ -8,7 +8,7 @@ import {
     isSelectOptionSelected,
     selectFormValue,
     selectedOptionIds,
-} from '../../../../resources/assets/js_owl/admin/form/select-values'
+} from '../../../../resources/js/shared/legacy/admin/form/select-values'
 
 const options = [
     { id: null, text: 'None' },

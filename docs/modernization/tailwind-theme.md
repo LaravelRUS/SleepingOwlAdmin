@@ -49,7 +49,7 @@ both LTR and RTL layouts.
 | Fault red | `#b42318` | destructive action, invalid state and failure |
 
 All light and dark derivatives live only in
-`resources/frontend/themes/tailwind/styles/_colors.scss`. Dark mode uses deep
+`resources/css/themes/shadcn/_colors.scss`. Dark mode uses deep
 navy work surfaces rather than pure black and raises chroma/luminance for
 status colors. Components consume semantic custom properties, never literals.
 
@@ -132,7 +132,7 @@ feature drivers are not repeated in theme metadata. Until their presentation
 checkpoints close, no Tailwind feature adapter or capability is declared.
 
 The theme owns the `sleeping_owl_tailwind::default` Blade namespace rooted at
-`resources/views/themes/tailwind/default`. Relative logical view names remain
+`resources/views/themes/shadcn/default`. Relative logical view names remain
 unchanged. An application can override this namespace through Laravel's usual
 view namespace mechanism, and an external package can use the existing
 `ThemeRegistry` service-provider hook documented in `theme-customization.md`.

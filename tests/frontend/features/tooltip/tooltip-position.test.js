@@ -1,6 +1,6 @@
 import { expect, it } from 'vitest'
 
-import { tooltipPosition } from '../../../../resources/frontend/features/tooltip/tooltip-position.js'
+import { tooltipPosition } from '../../../../resources/js/shared/features/tooltip/tooltip-position.js'
 
 it('centers a top tooltip with the configured gap', () => {
     const position = tooltipPosition(rect(40, 40, 20, 10), rect(0, 0, 30, 12), 'top', {

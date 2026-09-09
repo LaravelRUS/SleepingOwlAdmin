@@ -1,6 +1,6 @@
 import { expect, it, vi } from 'vitest'
 
-import { createRelatedSortable } from '../../../../resources/assets/js_owl/admin/form/related/related-sortable'
+import { createRelatedSortable } from '../../../../resources/js/shared/legacy/admin/form/related/related-sortable'
 
 it('creates a handle-only Sortable driver when related ordering is enabled', () => {
     const element = { id: 'related-groups' }

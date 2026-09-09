@@ -67,7 +67,7 @@ describe('Sass entrypoint boundaries', () => {
 
 describe('Sass custom property namespaces', () => {
     it('uses the public --soa-* namespace outside explicit vendor adapters', () => {
-        const stylesRoot = resolve(root, 'resources/frontend')
+        const stylesRoot = resolve(root, 'resources/css')
         const declarations = readdirSync(stylesRoot, { recursive: true })
             .filter((path) => path.endsWith('.scss'))
             .flatMap((path) =>
@@ -83,7 +83,7 @@ describe('Sass custom property namespaces', () => {
     })
 
     it('limits shadcn aliases to the Tailwind bridge and canonical --soa-* values', () => {
-        const source = readSource('resources/frontend/themes/tailwind/styles/_shadcn-theme.scss')
+        const source = readSource('resources/css/themes/shadcn/_shadcn-theme.scss')
         const aliases = customPropertyDeclarations(source)
         const bridgedAliases = [
             ...source.matchAll(
@@ -98,7 +98,7 @@ describe('Sass custom property namespaces', () => {
 
 describe('Core Sass boundary', () => {
     it('is limited to accessibility and behavior', () => {
-        const coreRoot = resolve(root, 'resources/frontend/core/styles')
+        const coreRoot = resolve(root, 'resources/css/core')
         const source = readdirSync(coreRoot)
             .filter((path) => path.endsWith('.scss'))
             .map((path) => readFileSync(resolve(coreRoot, path), 'utf8'))
@@ -126,7 +126,7 @@ function isHandwrittenCss(path) {
 
     return (
         normalized.endsWith('.css') &&
-        normalized !== 'frontend/themes/tailwind/tailwind.input.css' &&
+        normalized !== 'css/themes/shadcn/tailwind.input.css' &&
         !/(^|\/)(generated|vendor)\//.test(normalized)
     )
 }
@@ -138,7 +138,7 @@ function customPropertyDeclarations(source) {
 function allowedCustomProperty({ name, path }) {
     if (name.startsWith('--soa-')) return true
 
-    if (path === 'themes/tailwind/styles/_shadcn-theme.scss') {
+    if (path === 'themes/shadcn/_shadcn-theme.scss') {
         return /^--(?:color|font|radius|shadow)-/.test(name)
     }
 

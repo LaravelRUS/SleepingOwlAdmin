@@ -8,10 +8,10 @@ const packageLock = readJson('package-lock.json')
 
 describe('dependent select build boundary', () => {
     it('uses the shared Vue island without the jQuery plugin', () => {
-        const bootstrap = readSource('resources/assets/js_owl/bootstrap.js')
-        const component = readSource('resources/assets/js_owl/admin/form/select.vue')
+        const bootstrap = readSource('resources/js/shared/legacy/bootstrap.js')
+        const component = readSource('resources/js/shared/legacy/admin/form/select.vue')
         const view = readSource(
-            'resources/views/themes/legacy/default/form/element/dependentselect.blade.php',
+            'resources/views/themes/adminlte/default/form/element/dependentselect.blade.php',
         )
 
         expect(packageJson.dependencies).not.toHaveProperty('dependent-dropdown')
@@ -23,10 +23,10 @@ describe('dependent select build boundary', () => {
         expect(view).toContain("'selectExtraProps' => ['dependent' => $dependentSelect]")
         expect(view).not.toMatch(/Form::select|html\(\)->select/)
         expect(
-            existsSync(resolve(root, 'resources/assets/js_owl/admin/form/dependent-select.js')),
+            existsSync(resolve(root, 'resources/js/shared/legacy/admin/form/dependent-select.js')),
         ).toBe(false)
         expect(
-            existsSync(resolve(root, 'resources/assets/js_owl/libs/dependent-dropdown.js')),
+            existsSync(resolve(root, 'resources/js/shared/legacy/libs/dependent-dropdown.js')),
         ).toBe(false)
     })
 })

@@ -2,10 +2,10 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./resources/frontend/core/assets/runtime-assets.js"
-/*!**********************************************************!*\
-  !*** ./resources/frontend/core/assets/runtime-assets.js ***!
-  \**********************************************************/
+/***/ "./resources/js/core/assets/runtime-assets.js"
+/*!****************************************************!*\
+  !*** ./resources/js/core/assets/runtime-assets.js ***!
+  \****************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
@@ -164,10 +164,10 @@ function assertFunction(value, label) {
 
 /***/ },
 
-/***/ "./resources/frontend/core/data/island-props.js"
-/*!******************************************************!*\
-  !*** ./resources/frontend/core/data/island-props.js ***!
-  \******************************************************/
+/***/ "./resources/js/core/data/island-props.js"
+/*!************************************************!*\
+  !*** ./resources/js/core/data/island-props.js ***!
+  \************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
@@ -239,10 +239,10 @@ function parseDatasetValue(value, type, name) {
 
 /***/ },
 
-/***/ "./resources/frontend/core/dom/forms.js"
-/*!**********************************************!*\
-  !*** ./resources/frontend/core/dom/forms.js ***!
-  \**********************************************/
+/***/ "./resources/js/core/dom/forms.js"
+/*!****************************************!*\
+  !*** ./resources/js/core/dom/forms.js ***!
+  \****************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
@@ -315,10 +315,10 @@ function assertParameters(parameters) {
 
 /***/ },
 
-/***/ "./resources/frontend/core/dom/listeners.js"
-/*!**************************************************!*\
-  !*** ./resources/frontend/core/dom/listeners.js ***!
-  \**************************************************/
+/***/ "./resources/js/core/dom/listeners.js"
+/*!********************************************!*\
+  !*** ./resources/js/core/dom/listeners.js ***!
+  \********************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
@@ -390,10 +390,10 @@ function assertListener(listener) {
 
 /***/ },
 
-/***/ "./resources/frontend/core/events/event-bus.js"
-/*!*****************************************************!*\
-  !*** ./resources/frontend/core/events/event-bus.js ***!
-  \*****************************************************/
+/***/ "./resources/js/core/events/event-bus.js"
+/*!***********************************************!*\
+  !*** ./resources/js/core/events/event-bus.js ***!
+  \***********************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
@@ -579,10 +579,10 @@ function assertCallback(callback) {
 
 /***/ },
 
-/***/ "./resources/frontend/core/http/csrf-token.js"
-/*!****************************************************!*\
-  !*** ./resources/frontend/core/http/csrf-token.js ***!
-  \****************************************************/
+/***/ "./resources/js/core/http/csrf-token.js"
+/*!**********************************************!*\
+  !*** ./resources/js/core/http/csrf-token.js ***!
+  \**********************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
@@ -598,10 +598,10 @@ function readCsrfToken() {
 
 /***/ },
 
-/***/ "./resources/frontend/core/http/http-client.js"
-/*!*****************************************************!*\
-  !*** ./resources/frontend/core/http/http-client.js ***!
-  \*****************************************************/
+/***/ "./resources/js/core/http/http-client.js"
+/*!***********************************************!*\
+  !*** ./resources/js/core/http/http-client.js ***!
+  \***********************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
@@ -785,10 +785,10 @@ function assertOptions(options) {
 
 /***/ },
 
-/***/ "./resources/frontend/core/lifecycle/component-lifecycle.js"
-/*!******************************************************************!*\
-  !*** ./resources/frontend/core/lifecycle/component-lifecycle.js ***!
-  \******************************************************************/
+/***/ "./resources/js/core/lifecycle/component-lifecycle.js"
+/*!************************************************************!*\
+  !*** ./resources/js/core/lifecycle/component-lifecycle.js ***!
+  \************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
@@ -1016,10 +1016,10 @@ function assertNonEmptyString(value, field) {
 
 /***/ },
 
-/***/ "./resources/frontend/core/runtime/admin-core.js"
-/*!*******************************************************!*\
-  !*** ./resources/frontend/core/runtime/admin-core.js ***!
-  \*******************************************************/
+/***/ "./resources/js/core/runtime/admin-core.js"
+/*!*************************************************!*\
+  !*** ./resources/js/core/runtime/admin-core.js ***!
+  \*************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
@@ -1027,16 +1027,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   createAdminCore: () => (/* binding */ createAdminCore),
 /* harmony export */   installAdminCore: () => (/* binding */ installAdminCore)
 /* harmony export */ });
-/* harmony import */ var _assets_runtime_assets_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../assets/runtime-assets.js */ "./resources/frontend/core/assets/runtime-assets.js");
-/* harmony import */ var _data_island_props_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../data/island-props.js */ "./resources/frontend/core/data/island-props.js");
-/* harmony import */ var _dom_forms_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../dom/forms.js */ "./resources/frontend/core/dom/forms.js");
-/* harmony import */ var _dom_listeners_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../dom/listeners.js */ "./resources/frontend/core/dom/listeners.js");
-/* harmony import */ var _events_event_bus_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../events/event-bus.js */ "./resources/frontend/core/events/event-bus.js");
-/* harmony import */ var _http_csrf_token_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../http/csrf-token.js */ "./resources/frontend/core/http/csrf-token.js");
-/* harmony import */ var _http_http_client_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../http/http-client.js */ "./resources/frontend/core/http/http-client.js");
-/* harmony import */ var _lifecycle_component_lifecycle_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../lifecycle/component-lifecycle.js */ "./resources/frontend/core/lifecycle/component-lifecycle.js");
-/* harmony import */ var _storage_storage_repository_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../storage/storage-repository.js */ "./resources/frontend/core/storage/storage-repository.js");
-/* harmony import */ var _tables_table_registry_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../tables/table-registry.js */ "./resources/frontend/core/tables/table-registry.js");
+/* harmony import */ var _assets_runtime_assets_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../assets/runtime-assets.js */ "./resources/js/core/assets/runtime-assets.js");
+/* harmony import */ var _data_island_props_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../data/island-props.js */ "./resources/js/core/data/island-props.js");
+/* harmony import */ var _dom_forms_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../dom/forms.js */ "./resources/js/core/dom/forms.js");
+/* harmony import */ var _dom_listeners_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../dom/listeners.js */ "./resources/js/core/dom/listeners.js");
+/* harmony import */ var _events_event_bus_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../events/event-bus.js */ "./resources/js/core/events/event-bus.js");
+/* harmony import */ var _http_csrf_token_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../http/csrf-token.js */ "./resources/js/core/http/csrf-token.js");
+/* harmony import */ var _http_http_client_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../http/http-client.js */ "./resources/js/core/http/http-client.js");
+/* harmony import */ var _lifecycle_component_lifecycle_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../lifecycle/component-lifecycle.js */ "./resources/js/core/lifecycle/component-lifecycle.js");
+/* harmony import */ var _storage_storage_repository_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../storage/storage-repository.js */ "./resources/js/core/storage/storage-repository.js");
+/* harmony import */ var _tables_table_registry_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../tables/table-registry.js */ "./resources/js/core/tables/table-registry.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -1144,10 +1144,10 @@ function assertTarget(target) {
 
 /***/ },
 
-/***/ "./resources/frontend/core/storage/storage-repository.js"
-/*!***************************************************************!*\
-  !*** ./resources/frontend/core/storage/storage-repository.js ***!
-  \***************************************************************/
+/***/ "./resources/js/core/storage/storage-repository.js"
+/*!*********************************************************!*\
+  !*** ./resources/js/core/storage/storage-repository.js ***!
+  \*********************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
@@ -1284,10 +1284,10 @@ function assertKey(key) {
 
 /***/ },
 
-/***/ "./resources/frontend/core/tables/table-registry.js"
-/*!**********************************************************!*\
-  !*** ./resources/frontend/core/tables/table-registry.js ***!
-  \**********************************************************/
+/***/ "./resources/js/core/tables/table-registry.js"
+/*!****************************************************!*\
+  !*** ./resources/js/core/tables/table-registry.js ***!
+  \****************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
@@ -1522,11 +1522,11 @@ function invokeAdapters(registry, method, element) {
 var __webpack_exports__ = {};
 // This entry needs to be wrapped in an IIFE because it needs to be isolated against other modules in the chunk.
 (() => {
-/*!********************************************!*\
-  !*** ./resources/frontend/core/browser.js ***!
-  \********************************************/
+/*!**************************************!*\
+  !*** ./resources/js/core/browser.js ***!
+  \**************************************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _runtime_admin_core_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./runtime/admin-core.js */ "./resources/frontend/core/runtime/admin-core.js");
+/* harmony import */ var _runtime_admin_core_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./runtime/admin-core.js */ "./resources/js/core/runtime/admin-core.js");
 
 if (globalThis.document) (0,_runtime_admin_core_js__WEBPACK_IMPORTED_MODULE_0__.installAdminCore)(globalThis);
 })();

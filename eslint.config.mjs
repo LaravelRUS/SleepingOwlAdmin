@@ -2,7 +2,7 @@ import js from '@eslint/js'
 import vue from 'eslint-plugin-vue'
 
 const modernJavaScript = [
-    'resources/frontend/**/*.js',
+    'resources/js/**/*.js',
     'tests/frontend/**/*.js',
     'tests/frontend/**/*.mjs',
     'scripts/modernization/build-asset-profiles.mjs',
@@ -12,14 +12,14 @@ const modernJavaScript = [
 ]
 
 const legacyFirstPartyJavaScript = [
-    'resources/assets/js_owl/*.js',
-    'resources/assets/js_owl/libs/vue-*.js',
-    'resources/assets/js_owl/admin/**/*.js',
-    'resources/assets/js_owl/components/**/*.js',
-    'resources/assets/js_owl/wysiwyg/**/*.js',
+    'resources/js/shared/legacy/*.js',
+    'resources/js/shared/legacy/libs/vue-*.js',
+    'resources/js/shared/legacy/admin/**/*.js',
+    'resources/js/shared/legacy/components/**/*.js',
+    'resources/js/shared/legacy/wysiwyg/**/*.js',
 ]
 
-const legacyVueComponents = ['resources/assets/js_owl/**/*.vue']
+const legacyVueComponents = ['resources/js/shared/legacy/**/*.vue']
 const vueEssential = vue.configs['flat/essential'].map((config) => ({
     ...config,
     files: legacyVueComponents,
@@ -73,6 +73,7 @@ export default [
     {
         ...js.configs.recommended,
         files: modernJavaScript,
+        ignores: ['resources/js/shared/legacy/**'],
         languageOptions: {
             ecmaVersion: 'latest',
             sourceType: 'module',
@@ -105,7 +106,7 @@ export default [
         },
     },
     {
-        files: ['resources/frontend/core/**/*.js'],
+        files: ['resources/js/core/**/*.js'],
         rules: {
             'no-restricted-imports': [
                 'error',
@@ -131,7 +132,7 @@ export default [
         },
     },
     {
-        files: ['resources/frontend/features/**/*.js'],
+        files: ['resources/js/shared/features/**/*.js'],
         rules: {
             'no-restricted-imports': [
                 'error',

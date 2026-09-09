@@ -1,6 +1,6 @@
 import { expect, it } from 'vitest'
 
-import { createVueComponentCatalog } from '../../../../resources/frontend/legacy/vue/component-catalog.js'
+import { createVueComponentCatalog } from '../../../../resources/js/shared/vue/legacy/component-catalog.js'
 
 it('registers initial and late Vue component definitions', () => {
     const initial = { name: 'Initial' }
