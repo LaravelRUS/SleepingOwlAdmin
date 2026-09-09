@@ -1,336 +1,480 @@
-# SleepingOwl Admin Documentation
+# SleepingOwl Admin: документация текущей ветки
 
-SleepingOwl Admin — это мощный конструктор административных интерфейсов для Laravel, позволяющий быстро создавать CRUD-панели с минимальным количеством кода.
+SleepingOwl Admin — PHP-first конструктор административных интерфейсов для
+Laravel. Секции описывают CRUD-поведение Eloquent-моделей, а display/form DSL
+создаёт таблицы, фильтры, формы, uploads, inline editing и навигацию.
 
-## 1. Структура пакета
+## 1. Требования и установка
 
-- `src/`: Основная логика PHP.
-    - `Admin.php`: Центральный реестр моделей и секций.
-    - `Display/`: Компоненты для отображения данных (таблицы, вкладки, деревья).
-    - `Form/`: Компоненты для редактирования данных (формы, элементы форм).
-    - `Factories/`: Фабрики для создания компонентов через фасады.
-    - `Http/`: Контроллеры, маршруты и middleware.
-    - `Providers/`: Сервис-провайдеры для интеграции с Laravel.
-- `resources/`:
-    - `views/`: Blade-шаблоны.
-    - `lang/`: Файлы локализации (en, ru, de и др.).
-    - `assets/`: Исходники JS/SASS.
-- `config/`: Дефолтная конфигурация.
+Текущая development-ветка поддерживает:
 
-## 2. Инициализация и требования
+- PHP 8.1 и новее;
+- Laravel 10, 11, 12 и 13;
+- Composer 2.
 
-- **PHP:** >= 8.1
-- **Laravel:** >= 10
-- **Зависимости:** `doctrine/dbal`, `erusev/parsedown`, `diglactic/laravel-breadcrumbs`.
+Lumen не поддерживается. Node.js приложению-потребителю не нужен: пакет
+публикует заранее собранные production/development assets.
 
-После `php artisan sleepingowl:install` пакет:
-1. Публикует конфиг `config/sleeping_owl.php`.
-2. Публикует ассеты в `public/packages/sleepingowl`.
-3. Создает директорию `app/Admin` (по умолчанию) для регистрации секций.
+```bash
+composer require laravelrus/sleepingowl
+php artisan sleepingowl:install
+```
 
-## 3. Конфигурация (config/sleeping_owl.php)
+Stable release может отставать от development-ветки, описанной в этом файле.
+Для установленной стабильной версии используйте документацию из её release
+artifact.
 
-| Ключ | Описание | Дефолт |
-| :--- | :--- | :--- |
-| `url_prefix` | Префикс URL для админки | `admin` |
-| `middleware` | Middleware для маршрутов админки | `['web']` |
-| `template.default` | Название выбранной темы | `adminlte` |
-| `template.themes` | Карта названий тем на классы | `adminlte`, `shadcn` |
-| `ui` | Branding, layout, footer, cards и scroll controls | См. файл |
-| `images`, `files` | Загрузка и отображение файлов | См. файл |
-| `wysiwyg` | CDN и настройки редакторов | `ckeditor` |
-| `datatables_settings` | Состояние, поведение и auto-update таблиц | См. файл |
-| `aliases` | Список алиасов для фасадов | См. файл |
+Для явной установки текущей development-ветки:
 
-Выбор `ThemeInterface`, подключение отдельного CSS/JS, поддерживаемые `--soa-*` properties и service-provider hook внешней готовой темы описаны в [no-build theme customization](docs/modernization/theme-customization.md). Эти операции не требуют npm или пересборки core/theme bundles.
+```bash
+composer require laravelrus/sleepingowl:dev-development
+php artisan sleepingowl:install
+```
 
-## 4. Ядро (Admin Core)
+`sleepingowl:install`:
 
-Центральный класс `SleepingOwl\Admin\Admin` управляет регистрацией моделей.
+1. публикует `config/sleeping_owl.php`;
+2. публикует готовые assets в `public/packages/sleepingowl`;
+3. создаёт `app/Admin/bootstrap.php`, `navigation.php` и `routes.php`;
+4. создаёт `app/Providers/AdminSectionsServiceProvider.php`, если его нет.
 
-### Регистрация модели
+После обновления Composer package:
+
+```bash
+php artisan sleepingowl:update
+php artisan sleepingowl:update --check
+```
+
+`--check` ничего не записывает: он проверяет оба asset profile, manifest и
+checksums и возвращает ненулевой exit code при несовпадении.
+
+## 2. Структура пакета
+
+```text
+src/
+├── Admin.php                 # Реестр моделей и доступ к template/theme
+├── Section.php               # Базовый класс секции
+├── Model/                    # ModelConfiguration и repositories
+├── Display/                  # Displays, columns, filters и extensions
+├── Form/                     # Forms, elements и related forms
+├── Navigation/               # Навигационные элементы
+├── Routing/                  # ModelRouter и binding adminModel
+├── Http/                     # Controllers, routes и middleware
+├── Factories/                # Alias-based factories публичного DSL
+├── Themes/                   # Выбор темы, registry и runtime assets
+├── Assets/                   # Manifest, resolver, registrar и verifier
+├── Templates/                # Compatibility/rendering adapter
+└── Providers/                # Laravel service providers
+
+resources/
+├── css/                      # core, shared, themes и theme-overrides
+├── js/                       # core, shared, themes и theme-overrides
+├── views/default/            # Полный базовый Blade contract
+├── views/themes/shadcn/      # Только реальные Shadcn overrides
+├── views/features/           # Общие feature-owned views
+└── lang/                     # Локализация
+
+public/default/
+├── asset-manifest.json
+└── profiles/
+    ├── production/
+    └── development/
+```
+
+Generated-файлы под `public/default` вручную не редактируются.
+
+## 3. Конфигурация и темы
+
+Основные настройки находятся в `config/sleeping_owl.php`:
+
+| Ключ                  | Назначение                                         | Значение по умолчанию |
+| :-------------------- | :------------------------------------------------- | :-------------------- |
+| `template.default`    | Имя выбранной темы                                 | `adminlte`            |
+| `template.themes`     | Карта имён на `ThemeInterface` classes             | `adminlte`, `shadcn`  |
+| `ui`                  | Branding, shell, footer и presentation switches    | См. config            |
+| `dev_assets`          | Выбор готового development profile                 | `false`               |
+| `url_prefix`          | URL-префикс админки                                | `admin`               |
+| `domain`              | Ограничение admin routes по host                   | `false`               |
+| `middleware`          | Middleware admin routes                            | `['web']`             |
+| `bootstrapDirectory`  | Application-owned admin bootstrap files            | `app/Admin`           |
+| `images`, `files`     | Upload paths, extensions и filename behavior       | См. config            |
+| `timezone`            | Timezone админки; `null` использует `app.timezone` | `null`                |
+| `wysiwyg`             | Редакторы, files и options                         | `ckeditor`            |
+| `datatables_settings` | State, pagination, editing и auto-update           | См. config            |
+
+Выбор темы выполняется по имени:
+
 ```php
-AdminSection::registerModel(User::class, function (ModelConfiguration $model) {
+'template' => [
+    'default' => env('SLEEPINGOWL_TEMPLATE', 'adminlte'),
+    'themes' => [
+        'adminlte' => SleepingOwl\Admin\Themes\AdminLTETheme::class,
+        'shadcn' => SleepingOwl\Admin\Themes\TailwindTheme::class,
+    ],
+],
+```
+
+`adminlte` использует AdminLTE 4/Bootstrap 5. `shadcn` выбирает готовую
+TailwindTheme. Разрешается только выбранная тема; неверное имя, class,
+capability или manifest вызывает диагностическое исключение без silent fallback.
+
+Обе темы получают общие `core`, feature drivers и `shared:ui`; presentation и
+theme tokens остаются в выбранной теме. Application CSS/JS загружается после
+package runtime. Обычный пользователь может:
+
+- переключить готовую тему;
+- изменить поддерживаемые `--soa-*` custom properties;
+- подключить application CSS/JS через `MetaInterface`;
+- переопределить отдельные Blade views;
+- установить внешнюю self-contained Composer theme с готовыми assets.
+
+Это не требует npm или пересборки пакета. Подробный контракт, пути Blade
+overrides и регистрация внешней темы описаны в
+[`docs/modernization/theme-customization.md`](docs/modernization/theme-customization.md).
+
+`ADMIN_DEV_ASSETS=true` выбирает уже собранный development profile с source maps
+и Vue diagnostics. Не включайте его в production.
+
+## 4. Секции и модели
+
+Для нового кода рекомендуется класс секции:
+
+```php
+use App\Models\User;
+use App\Admin\Sections\UserSection;
+use SleepingOwl\Admin\Providers\AdminSectionsServiceProvider as ServiceProvider;
+
+final class AdminSectionsServiceProvider extends ServiceProvider
+{
+    protected $sections = [
+        User::class => UserSection::class,
+    ];
+}
+```
+
+Секция наследуется от `SleepingOwl\Admin\Section` и обычно определяет
+`onDisplay()`, `onCreate()` и `onEdit()`. В `initialize()` можно добавить её в
+навигацию:
+
+```php
+public function initialize(): void
+{
+    $this->addToNavigation()
+        ->setPriority(100)
+        ->setIcon('fa-solid fa-users');
+}
+```
+
+Closure-based registration остаётся рабочим compatibility API:
+
+```php
+AdminSection::registerModel(User::class, function ($model): void {
     $model->setTitle('Пользователи');
-    $model->onDisplay(function () {
-        return AdminDisplay::table()->setColumns([
-            AdminColumn::text('id', '#'),
-            AdminColumn::text('name', 'Имя'),
-        ]);
-    });
+    $model->onDisplay(fn () => AdminDisplay::table()->setColumns([
+        AdminColumn::text('id', '#'),
+        AdminColumn::text('name', 'Имя'),
+    ]));
 });
 ```
 
-### Секции (Sections)
-Рекомендуется использовать классы секций, наследуемые от `SleepingOwl\Admin\Section`.
-Регистрация секций происходит в `app/Providers/AdminSectionsServiceProvider.php`.
+## 5. Displays и колонки
 
-## 5. Компоненты отображения (Display)
+Основные display factories:
 
-### Типы Display
-- `AdminDisplay::table()`: Статическая таблица.
-- `AdminDisplay::datatables()`: Таблица с поддержкой DataTables (JS).
-- `AdminDisplay::datatablesAsync()`: Асинхронная загрузка данных.
-- `AdminDisplay::tree()`: Древовидная структура.
-- `AdminDisplay::tabbed()`: Интерфейс с вкладками.
+| Factory                                        | Результат                            |
+| :--------------------------------------------- | :----------------------------------- |
+| `AdminDisplay::table()`                        | Синхронная таблица                   |
+| `AdminDisplay::datatables()`                   | Server-side DataTables 3             |
+| `AdminDisplay::datatablesAsync()`              | Alias того же async display          |
+| `AdminDisplay::datatablesAsyncAlterPaginate()` | Async display с alternate pagination |
+| `AdminDisplay::tree()`                         | Дерево                               |
+| `AdminDisplay::tab()` / `tabbed()`             | Вкладка/набор вкладок                |
 
-Для асинхронных DataTables настройка
-`sleeping_owl.datatables_settings.display_info = false` скрывает строку с
-количеством записей и отключает отдельный запрос общего количества записей.
-Подсчёт отфильтрованных записей сохраняется, поскольку он нужен для точной
-постраничной навигации. Для отдельной таблицы настройку можно переопределить
-методом `setDisplayInfo(bool)`.
+Доступные обычные колонки: `index`, `action`, `checkbox`, `control`, `count`,
+`custom`, `datetime`, `filter`, `gravatar`, `image`, `lists`, `number`, `order`,
+`text`, `boolean`, `link`, `relatedLink`, `email`, `treeControl`, `url`.
 
-Переход к конкретному номеру страницы включён по умолчанию. Его можно отключить
-через `sleeping_owl.datatables_settings.page_jump = false`.
+`AdminColumn::timestamp()` и `AdminColumn::textaddon()` не существуют. Методы с
+такими именами есть только у `AdminFormElement`.
 
-### Колонки (Columns)
-| Тип | Метод | Описание |
-| :--- | :--- | :--- |
-| **Text** | `AdminColumn::text('name', 'Label')` | Обычный текст |
-| **Link** | `AdminColumn::link('name', 'Label')` | Ссылка на редактирование |
-| **Image** | `AdminColumn::image('photo', 'Label')` | Превью изображения |
-| **DateTime** | `AdminColumn::datetime('created_at', 'Date')` | Форматированная дата |
-| **Boolean** | `AdminColumn::boolean('is_active', 'Active')` | Иконка true/false |
-| **Custom** | `AdminColumn::custom('Label', function($model) { ... })` | Произвольный HTML |
+### Общие параметры колонок
 
-### Добавление кастомных вьюшек (addCustomView)
-Метод `addCustomView($view, $placement, array $data = [])` позволяет выводить кастомные Blade-шаблоны или готовые объекты `View` в `yield`-секции (placable blocks) макета страницы без конфликтов перезаписи.
-
-**Пример использования:**
-```php
-$display = AdminDisplay::datatables();
-$display
-    // Через имя шаблона и массив параметров
-    ->addCustomView('Product::status-form', 'card.heading.actions', [
-        'statuses' => $this->statuses
-    ])
-    // Через объект View и метод ->with()
-    ->addCustomView(
-        view('Product::clear-comment')->with('statuses', $this->statuses),
-        'card.heading.actions'
-    );
-```
-
-**Доступные секции разметки (`$placement`):**
-* **Блоки вокруг карточки/таблицы:**
-  * `before.card` (или `before.panel`) — верх страницы перед карточкой (дефолтное значение).
-  * `card.heading` (или `panel.heading`) — заголовок карточки.
-  * `card.heading.actions` (или `panel.heading.actions`) — правая часть заголовка (кнопки управления).
-  * `card.buttons` (или `panel.buttons`) — область кнопок внутри карточки.
-  * `card.footer` (или `panel.footer`) — подвал карточки.
-  * `after.card` (или `after.panel`) — низ страницы под карточкой.
-* **Блоки внутри самой таблицы:**
-  * `table.header` — перед строками `<thead>` таблицы.
-  * `table.footer` — в самом низу таблицы перед закрывающим тегом.
-
-### Слоты layout DataTables
-
-Для `AdminDisplay::datatables()` и `AdminDisplay::datatablesAsync()` блок можно поместить
-в отдельную строку layout DataTables через placement `datatable.{position}`.
-
-Доступные слоты:
-
-| Placement | Положение |
-| :--- | :--- |
-| `datatable.top3` | Полноширинная третья строка над таблицей |
-| `datatable.top3Start` | Начало третьей строки над таблицей |
-| `datatable.top3End` | Конец третьей строки над таблицей |
-| `datatable.top4` | Полноширинная четвертая строка над таблицей |
-| `datatable.top4Start` | Начало четвертой строки над таблицей |
-| `datatable.top4End` | Конец четвертой строки над таблицей |
-| `datatable.bottom3` | Полноширинная третья строка под таблицей |
-| `datatable.bottom3Start` | Начало третьей строки под таблицей |
-| `datatable.bottom3End` | Конец третьей строки под таблицей |
-| `datatable.bottom4` | Полноширинная четвертая строка под таблицей |
-| `datatable.bottom4Start` | Начало четвертой строки под таблицей |
-| `datatable.bottom4End` | Конец четвертой строки под таблицей |
-
-Номер не ограничен значениями `3` и `4`: поддерживается любой положительный номер без
-ведущего нуля, например `datatable.top5Start` или `datatable.bottom10End`. `Start` и `End`
-являются логическими началом и концом строки (в LTR-интерфейсе — слева и справа). Без
-суффикса блок занимает всю ширину. На одном номере рекомендуется использовать либо
-полноширинный слот, либо пару `Start`/`End` — DataTables выводит полноширинный и разделенный
-варианты отдельными строками.
-
-Чем больше номер, тем дальше строка находится от таблицы: `top4` располагается выше
-`top3`, а `bottom4` — ниже `bottom3`. Строки `top3`, `top4`, `bottom3` и `bottom4`
-предназначены для пользовательских блоков и не конфликтуют со штатным layout:
-
-| Штатный position | Содержимое |
-| :--- | :--- |
-| `top` | Полоса автообновления, если она включена |
-| `top2Start` | Поиск DataTables |
-| `top2End` | `pageLength`, затем кнопки «Фильтр/Очистить» |
-| `bottomStart` | Информация о количестве записей |
-| `bottom1Start` | Пагинация |
-| `bottom1End` | Переход к номеру страницы, если он включен |
-
-#### Блок из Blade-шаблона
-
-Создайте обычный Blade-файл, например
-`resources/views/admin/orders/table-summary.blade.php`:
-
-```blade
-<div class="orders-summary">
-    Найдено заказов: {{ $ordersCount }}
-    <button type="button" data-refresh-orders>Обновить</button>
-</div>
-```
-
-В `onDisplay()` класса admin-секции подключите его через `addCustomView()`, передав имя
-слота вторым аргументом (`$placement`):
+Третий аргумент named column — дополнительное маленькое значение под основным:
 
 ```php
-public function onDisplay($payload = [])
-{
-    $display = AdminDisplay::datatablesAsync()
-        ->setColumns($this->columns());
-
-    $display->addCustomView(
-        'admin.orders.table-summary',
-        'datatable.top3Start',
-        ['ordersCount' => Order::query()->count()]
-    );
-
-    return $display;
-}
+AdminColumn::link('title', 'Title', 'created_at');
+AdminColumn::text('created_at', 'Created', 'updated_at');
 ```
 
-Можно передать и уже созданный объект `View`:
+Он трактуется как путь к полю или callback. Для постоянной строки передайте
+второй аргумент `true` в `setSmall()`:
 
 ```php
-$summary = view('admin.orders.table-summary')
-    ->with('ordersCount', $ordersCount);
-
-$display->addCustomView($summary, 'datatable.top4');
+AdminColumn::link('title', 'Title')->setSmall('Редактировать', true);
 ```
 
-Несколько вызовов `addCustomView()` с одинаковым placement попадут в один слот в порядке
-добавления.
-
-#### Штатный блок из класса admin-секции
-
-Любой placable extension, у которого есть `setPlacement()`, переносится тем же способом.
-Например, действия можно поставить справа от пользовательского Blade-блока:
+Полезные общие методы:
 
 ```php
-public function onDisplay($payload = [])
-{
-    $display = AdminDisplay::datatables()
-        ->setColumns($this->columns());
-
-    $display->addCustomView(
-        'admin.orders.table-summary',
-        'datatable.top3Start'
-    );
-
-    $display->getActions()->setPlacement('datatable.top3End');
-    $display->getLinks()->setPlacement('datatable.top4Start');
-
-    return $display;
-}
+AdminColumn::text('status', 'Status')
+    ->setWidth('140px')
+    ->setHtmlAttribute('class', 'project-status')
+    ->setModifier(fn ($value, $model) => strtoupper((string) $value))
+    ->setSearchable(true)
+    ->setOrderable(true);
 ```
 
-Таким образом можно размещать `Actions`, `ActionsForm`, `ColumnFilters`, `ColumnsTotal`,
-`Links` и `CustomView`. В layout переносится исходный DOM-узел без клонирования, поэтому
-формы, обработчики событий и функции кнопок продолжают работать. Для нескольких таблиц
-блок привязывается к `data-id` своей таблицы и не попадет в соседнюю.
+`setModifier()` получает текущее значение и модель. `setOrderable()` принимает
+`bool`, имя поля или callback. Для вычисляемых полей и сложных relations задайте
+callbacks явно:
 
-`datatable.*` — namespace placement API, а не имя обычной Blade-секции. Конструкция
-`@section('datatable.top3Start')` сама по себе не подключит блок: Blade-разметку следует
-передавать через `addCustomView()`, а штатный блок секции — через `setPlacement()`.
-
-## 6. Компоненты форм (Form)
-
-### Типы форм
-- `AdminForm::panel()`: Простая панель с элементами.
-- `AdminForm::card()`: Форма в виде карточки.
-- `AdminForm::tabbed()`: Форма с вкладками.
-
-### Элементы форм (Elements)
-| Элемент | Метод |
-| :--- | :--- |
-| **Text** | `AdminFormElement::text('field', 'Label')` |
-| **Select** | `AdminFormElement::select('field', 'Label', [options])` |
-| **Checkbox** | `AdminFormElement::checkbox('field', 'Label')` |
-| **Wysiwyg** | `AdminFormElement::wysiwyg('field', 'Label')` |
-| **Image** | `AdminFormElement::image('field', 'Label')` |
-| **DependentSelect** | `AdminFormElement::dependentSelect('field', 'Label', ['dep_field'])` |
-| **Password** | `AdminFormElement::password('field', 'Label')` |
-
-### Дополнительные возможности элементов:
-- **Генерация значений (Text/Password):**
-  ```php
-  AdminFormElement::text('promocode', 'Promo')
-      ->canGenerate(8) // Длина строки
-      ->setCharsGenerate('ABC1234567890'); // Набор символов
-  ```
-- **Callable/Closure:**
-  Можно использовать функции для динамических значений:
-  ```php
-  // Значение по умолчанию
-  AdminFormElement::date('date', 'Date')->setDefaultValue(fn() => now()->addDays(2));
-  
-  // Динамический текст помощи
-  AdminFormElement::text('title', 'Title')->setHelpText(fn(Model $model) => $model->title);
-  ```
-- **Работа с отношениями:**
-  Для отображения данных из отношений в элементах форм:
-  ```php
-  AdminFormElement::images('images', 'Image in Relation')
-      ->setExactValue($this->getModelValue()->images->pluck('image_path'));
-  ```
-
-## 7. Маршрутизация и Контроллеры
-
-Пакет использует динамическую маршрутизацию. Основной контроллер — `AdminController`.
-Маршруты определяются в `src/Http/routes.php` с использованием паттерна `{adminModel}`.
-
-[Важно] Если вы хотите переопределить логику для конкретной модели, можно указать кастомный контроллер в конфигурации модели:
 ```php
-$model->setControllerClass(MyCustomController::class);
+AdminColumn::link('customer.name', 'Customer')
+    ->setSearchCallback(function ($column, $query, $search) {
+        return $query->whereHas('customer', fn ($q) =>
+            $q->where('name', 'like', '%'.$search.'%')
+        );
+    })
+    ->setOrderable(false);
 ```
 
-## 8. События (Events)
+Не оставляйте автоматическую сортировку/поиск включёнными для relation,
+computed или неоднозначных SQL-полей, если query не умеет их обработать. Чтобы
+включить сортировку relation, передайте в `setOrderable()` callback с безопасным
+join/subquery для конкретной схемы.
 
-Секции поддерживают события жизненного цикла (на базе Laravel Dispatcher):
-- `creating`, `created`
-- `updating`, `updated`
-- `saving`, `saved`
-- `deleting`, `deleted`
-- `restoring`, `restored`
+### Специализированные колонки
 
-Пример использования:
+`AdminColumn::url()` поддерживает:
+
+- `setText($fieldOrText, $asString = false)`;
+- `setIcon($classOrFalse)`;
+- `setLinkAttributes(array $attributes)`.
+
+`AdminColumn::gravatar()` поддерживает `setSize()` и `setRating()`. Сейчас он
+формирует внешний URL `www.gravatar.com`; custom avatar field и локальный
+offline fallback отсутствуют.
+
+`AdminColumn::image()` поддерживает `setImageWidth()`, `setAssetPrefix()` и
+`setLazyLoad()`. Отдельного height helper и общего form/display size contract
+пока нет.
+
+### Visibility
+
+У колонок есть два разных уровня:
+
 ```php
-$model->updating(function (ModelConfiguration $section, Model $item) {
-    // логика перед обновлением
-});
+// Скрывает всю колонку. Callback получает объект колонки.
+AdminColumn::text('internal', 'Internal')
+    ->setVisible(fn ($column) => auth()->user()->can('view-internal'));
+
+// Вычисляется для текущей строки; callback получает модель строки.
+AdminColumn::text('secret', 'Secret')
+    ->setVisibled(fn ($model) => auth()->user()->can('view', $model));
 ```
 
-## 9. Навигация
+`setVisibilityCondition()` остаётся compatibility alias для `setVisible()` и
+не помечен deprecated. Для нового кода используйте `setVisible()`.
 
-Навигация настраивается в `config/navigation.php` или через `AdminNavigation`.
-При установке "из коробки" навигация пуста. Каждую модель нужно явно добавить:
+Form elements, `DisplayTab` и `DisplayTabbed` также поддерживают
+`setVisible(bool|Closure)`; их callback получает текущую модель.
+
+## 6. Editable columns
+
+Доступны:
+
 ```php
-$model->addToNavigation($priority = 100, $badge = null);
+AdminColumnEditable::text('title', 'Title');
+AdminColumnEditable::textarea('description', 'Description')->setMaxRows(6);
+AdminColumnEditable::number('priority', 'Priority');
+AdminColumnEditable::date('published_at', 'Date');
+AdminColumnEditable::datetime('published_at', 'Date and time');
+AdminColumnEditable::select('status', 'Status', $options);
+AdminColumnEditable::checkbox('enabled', 'Enabled');
+AdminColumnEditable::boolean('enabled', 'Enabled');
+AdminColumnEditable::checklist('roles', 'Roles', $options);
+AdminColumnEditable::range('score', 'Score');
 ```
 
-## 10. Состояние "из коробки" и расширение
+Обычный режим — `popup`; для поддерживаемых типов его можно изменить через
+`setEditableMode('inline')`. `boolean` является специальным случаем: прямой клик
+сразу переключает и сохраняет значение без popup. Editable columns также
+поддерживают validation rules/messages, `setReadonly()`, `setModifier()` и
+search/order/filter callbacks.
 
-[Важно] После установки пакет предоставляет пустую оболочку. Для работы необходимо:
-1. Создать модели Eloquent.
-2. Зарегистрировать их как секции в `AdminSectionsServiceProvider`.
-3. Описать методы `onDisplay`, `onCreate`, `onEdit` в секциях.
+## 7. DataTables и column filters
 
-[Расширение] Вы можете создавать свои типы колонок и элементов форм, наследуя базовые классы `TableColumn` или `NamedFormElement` и регистрируя их через `AliasBinder`.
+Column filters задаются позиционно относительно колонок:
 
-[Frontend] По умолчанию используется готовая `AdminLTETheme` на AdminLTE 4 и Bootstrap 5. Поведение core и feature drivers не зависит от CSS-фреймворка; конкретная разметка и классы остаются в переопределяемых Blade-шаблонах выбранной темы.
+```php
+$display = AdminDisplay::datatables()
+    ->setName('orders')
+    ->setMethod('POST')
+    ->setColumns([
+        AdminColumn::text('id', '#'),
+        AdminColumn::text('status', 'Status'),
+    ]);
 
-[No-build] Пользователь выбирает готовую тему через существующий ключ `template`, меняет поддерживаемые `--soa-*` свойства и подключает собственные CSS/JS без сборки пакета. Production/development assets публикуются командой `php artisan sleepingowl:update`; Node.js нужен только разработчикам пакета и авторам распространяемых тем.
+$display->setColumnFilters([
+    null,
+    AdminColumnFilter::select($statuses, 'Status')
+        ->setColumnName('status')
+        ->setPlaceholder('All statuses'),
+]);
+```
 
-Подробности: [`docs/modernization/upgrade-guide.md`](docs/modernization/upgrade-guide.md) и [`docs/modernization/theme-customization.md`](docs/modernization/theme-customization.md).
+Factories фильтров: `text`, `date`, `daterange`, `number`, `range`, `select` и
+`control`. Общие методы включают `setColumnName()`, `setColumnRawName()`,
+`setHelpText()`, `setWidth()` и `setVisibled()`. `setCallback()` у самого filter
+помечен deprecated; новый код задаёт `setFilterCallback()` на колонке.
 
-Цельный backend-first пример Section, server-side DataTables, card form, module provider,
-policy, widget, custom element/assets и Vue 3 island находится в
-[`docs/modernization/backend-extension-cookbook.md`](docs/modernization/backend-extension-cookbook.md).
+Для async DataTables:
+
+- `datatables_settings.display_info = false` скрывает summary и пропускает
+  запрос общего нефильтрованного количества;
+- `datatables_settings.page_jump` включает/выключает переход к номеру страницы;
+- `datatables_settings.state_datatables`, `state_filters` и `state_tabs`
+  управляют сохранением состояния;
+- `datatables_settings.datatables_inline_edit_refresh` принимает `row`, `table`
+  или `false`.
+
+### Auto-update
+
+Auto-update включается совпадением CSS-класса таблицы с профилем config:
+
+```php
+// Section
+AdminDisplay::datatables()
+    ->setHtmlAttribute('class', 'table autoupdate');
+```
+
+```php
+// config/sleeping_owl.php
+'datatables_settings' => [
+    'autoupdate' => [
+        'autoupdate' => ['interval' => 300, 'color' => '#dc3545'],
+        'orders-live' => ['interval' => 60, 'color' => '#2563eb'],
+    ],
+],
+```
+
+Интервал задаётся в секундах. UI содержит pause/resume toggle; настройки
+профиля валидируются. Пустая карта полностью отключает feature.
+
+### Custom placements
+
+`addCustomView($view, $placement, array $data = [])` принимает Blade view или
+готовый `View`. Для DataTables доступны numbered logical rows:
+
+| Placement                               | Положение                         |
+| :-------------------------------------- | :-------------------------------- |
+| `datatable.top3`, `datatable.top4`, …   | Полноширинная строка над таблицей |
+| `datatable.top3Start` / `top3End`       | Начало/конец строки над таблицей  |
+| `datatable.bottom3`, `bottom4`, …       | Полноширинная строка под таблицей |
+| `datatable.bottom3Start` / `bottom3End` | Начало/конец строки под таблицей  |
+
+Поддерживается любой положительный номер без ведущего нуля. Без суффикса блок
+занимает всю ширину; `Start`/`End` образуют пару. На том же ряду не смешивайте
+полноширинный placement с `Start`/`End`.
+
+```php
+$display->addCustomView(
+    'admin.orders.table-summary',
+    'datatable.top3Start',
+    ['ordersCount' => Order::query()->count()]
+);
+$display->getActions()->setPlacement('datatable.top3End');
+```
+
+Обычные placements `before.card`, `card.heading`, `card.heading.actions`,
+`card.buttons`, `card.footer`, `after.card`, `table.header` и `table.footer`
+также сохраняются. Имена `panel.*` являются compatibility aliases для
+соответствующих `card.*` slots.
+
+## 8. Формы и элементы
+
+Основные формы:
+
+- `AdminForm::form()` — базовая форма;
+- `AdminForm::elements()` — набор элементов;
+- `AdminForm::card()` — форма-карточка;
+- `AdminForm::tabbed()` — форма с вкладками;
+- `AdminForm::panel()` — compatibility alias `FormCard`; для нового кода
+  используйте `card()`.
+
+Form element factories включают:
+
+- text: `text`, `email`, `password`, `textarea`, `number`, `hidden`, `textaddon`;
+- date/time: `date`, `datetime`, `time`, `timestamp`;
+- choice: `checkbox`, `radio`, `select`, `multiselect`, `selectajax`,
+  `multiselectajax`, `dependentselect`, `multidependentselect`;
+- files: `image`, `images`, `file`, `files`, `upload`;
+- rich content: `wysiwyg`, `ckeditor`, `trix`;
+- layout/custom: `columns`, `column`, `custom`, `html`, `view`;
+- relations: `hasMany`, `hasManyLocal`, `manyToMany`, `belongsTo`.
+
+SelectAjax и DependentSelect используют общий локализованный Vue Multiselect
+island. Старый `setSelect2()` является compatibility option normalizer, а не
+подключением Select2 runtime.
+
+Общие form-element возможности:
+
+```php
+AdminFormElement::text('title', 'Title')
+    ->setDefaultValue(fn () => 'Draft')
+    ->setHelpText(fn ($model) => 'ID: '.($model?->getKey() ?? 'new'))
+    ->setVisible(fn ($model) => auth()->user()->can('edit', $model))
+    ->setReadonly(fn ($model) => $model?->is_locked)
+    ->required();
+```
+
+Для WYSIWYG доступны `setEditor()`, `setHeight()`, `setParameters()`,
+`disableFilter()`, `setFilteredValueToField()`, `withoutCard()` и
+`setCollapsed(bool)`. Collapse presentation применяется, когда редактор
+рендерится в card wrapper.
+
+## 9. Messages, navigation и routing
+
+Временное сообщение можно добавить через facade:
+
+```php
+use SleepingOwl\Admin\Facades\MessageStack;
+
+MessageStack::addSuccess('Сохранено');
+MessageStack::addError('Не удалось сохранить');
+MessageStack::addWarning('Проверьте данные');
+MessageStack::addInfo('Обновление запущено');
+```
+
+Соответствующие session keys: `success_message`, `error_message`,
+`warning_message`, `info_message`. Ошибки и предупреждения рендерятся с
+`role="alert"`; success/info используют status semantics.
+
+Application navigation хранится в `app/Admin/navigation.php` либо строится
+через `addToNavigation()`/`AdminNavigation`. Application routes добавляются в
+`app/Admin/routes.php`; package CRUD routes находятся в `src/Http/routes.php` и
+используют model binding `{adminModel}`.
+
+`AdminController` обслуживает стандартный CRUD lifecycle. Для отдельной секции
+можно задать свой controller через `setControllerClass()`. ENV editor удалён из
+пакета: routes, config keys и методы controller отсутствуют.
+
+## 10. Расширение и дополнительные руководства
+
+Новые columns/form elements регистрируются через существующие AliasBinder
+factories. Команда `sleepingowl:extension:make` умеет создавать scaffolds form
+element, widget, policy, module provider, Vue island и custom theme.
+
+Дополнительные материалы:
+
+- [`docs/modernization/backend-extension-cookbook.md`](docs/modernization/backend-extension-cookbook.md)
+- [`docs/modernization/upgrade-guide.md`](docs/modernization/upgrade-guide.md)
+- [`docs/modernization/theme-customization.md`](docs/modernization/theme-customization.md)
+- [`docs/modernization/table-feature-boundaries.md`](docs/modernization/table-feature-boundaries.md)
+- [`docs/modernization/first-party-assets.md`](docs/modernization/first-party-assets.md)
+- [`architecture.md`](architecture.md)
+
+Legacy classes вроде `hidden-sm`, `.last`, `.badge-list-warning` и `.th-center`
+не являются новым cross-theme API. Для нового кода используйте semantic
+`soa-*` hooks, public custom properties и application-owned CSS. Не переносите
+Bootstrap/AdminLTE/Tailwind classes в PHP core или feature JavaScript.

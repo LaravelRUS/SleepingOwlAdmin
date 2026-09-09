@@ -1,63 +1,55 @@
-![bg](https://image.ibb.co/m7Bx0F/12.png)
+# SleepingOwl Admin
 
-## Laravel Admin Panel SleepingOwl
-
-[![Build Status](https://travis-ci.org/LaravelRUS/SleepingOwlAdmin.svg?branch=development)](https://travis-ci.org/LaravelRUS/SleepingOwlAdmin)
-[![StyleCI](https://styleci.io/repos/52141393/shield?branch=development)](https://styleci.io/repos/52141393)
-[![Laravel Support](https://img.shields.io/badge/Laravel-5.5--8.44-brightgreen.svg)]()
-[![PHP Support](https://img.shields.io/badge/PHP-7.1.3+-brightgreen.svg)]()
-
-[![Official Site](https://img.shields.io/badge/official-site-blue.svg)](https://sleepingowladmin.ru)
-[![Demo Site](https://img.shields.io/badge/demo-site-blue.svg)](https://demo.sleepingowladmin.ru/)
-[![Telegram Chat](https://img.shields.io/badge/telegram-chat-blue.svg)](https://t.me/prtcls)
+[![Tests](https://github.com/LaravelRUS/SleepingOwlAdmin/actions/workflows/tests.yml/badge.svg?branch=development)](https://github.com/LaravelRUS/SleepingOwlAdmin/actions/workflows/tests.yml)
 [![Latest Stable Version](https://poser.pugx.org/laravelrus/sleepingowl/v/stable)](https://packagist.org/packages/laravelrus/sleepingowl)
 [![Total Downloads](https://poser.pugx.org/laravelrus/sleepingowl/downloads)](https://packagist.org/packages/laravelrus/sleepingowl)
-[![License](https://poser.pugx.org/laravelrus/sleepingowl/license)](https://packagist.org/packages/laravelrus/sleepingowl)
+[![License](https://poser.pugx.org/laravelrus/sleepingowl/license)](LICENSE)
 
-SleepingOwl Admin is an administrative interface builder for Laravel. __Completely free__
+SleepingOwl Admin is a free administrative interface builder for Laravel. It
+provides a PHP-first DSL for model sections, CRUD forms, synchronous and
+server-side tables, filters, inline editing, navigation, uploads and widgets.
 
-## ⚠️ Laravel Version Support
+The documentation in this repository describes the current development branch.
 
-> **Starting from the next major release, SleepingOwl Admin will support Laravel 10 and above only.**
->
-> Support for older Laravel versions (<= 9) will be dropped to align with modern PHP (>= 8.1) and Laravel standards.
+## Requirements
 
-Please ensure your application is updated before upgrading to the next version.
+- PHP 8.1 or newer;
+- Laravel 10, 11, 12 or 13;
+- Composer 2.
 
+Lumen is not supported.
 
-## Support
-- `Laravel > 5.5 - 5.8` (`PHP < 7.1.3`)
-- `Laravel 6.*` (`PHP >= 7.2`)
-- `Laravel 7.*` (`PHP >= 7.2.5`)
-- `Laravel 8.*` (`PHP >= 7.3`)
-- `Laravel 9.*` (`PHP >= 8.0`)
-- `Laravel 10.*` (`PHP >= 8.1`)
-- `Laravel 11.*` (`PHP >= 8.2`)
-- `Laravel 12.*` (`PHP >= 8.2`)
-- `Laravel 13.*` (`PHP >= 8.3`)
+Application developers do not need Node.js. SleepingOwl publishes ready
+production and development asset profiles through Composer/PHP/Artisan. Node.js
+is required only for package maintainers and authors building distributable
+theme packages.
 
-__Tested and worked on Laravel (v10.48) and php 8.3__
+## Installation
 
+Install the latest stable release selected by Composer:
 
+```bash
+composer require laravelrus/sleepingowl
+php artisan sleepingowl:install
+```
 
-__Lumen is NOT supported(((__
+Stable releases can lag behind the development branch described by these files;
+use the documentation shipped with the installed release for its exact API.
 
+To test the current development branch explicitly:
 
-## Documentation ver.10
+```bash
+composer require laravelrus/sleepingowl:dev-development
+php artisan sleepingowl:install
+```
 
-Powered by Laravel 5.5 - 10. (latest tested version 10.48.2)
+The install command publishes `config/sleeping_owl.php` and ready assets under
+`public/packages/sleepingowl`, creates the configured `app/Admin` bootstrap
+directory and files, and creates `app/Providers/AdminSectionsServiceProvider.php`
+when it is missing.
 
-* [Russian](http://sleepingowladmin.ru/#/ru/) (90% process)
-* [English](http://sleepingowladmin.ru/#/en/) (30% process)
-
-* [Docs Github](https://github.com/SleepingOwlAdmin/docs/tree/new)
-
-## Next major frontend
-
-The next major release ships a prebuilt, jQuery-free frontend with AdminLTE 4,
-Bootstrap 5, Vue 3 islands and DataTables 3. Application developers continue to
-define sections, forms and displays in PHP and do not install Node.js or rebuild
-package assets.
+After updating the Composer package, republish and verify the package-owned
+assets:
 
 ```bash
 composer update laravelrus/sleepingowl
@@ -65,97 +57,127 @@ php artisan sleepingowl:update
 php artisan sleepingowl:update --check
 ```
 
-Keep the existing published `config/sleeping_owl.php`; missing keys use package
-defaults. `ADMIN_DEV_ASSETS=false` selects the production profile, while
-`ADMIN_DEV_ASSETS=true` selects the already-built development profile with
-source maps and Vue diagnostics. Changing the profile does not compile assets.
-The read-only `--check` command validates both published profiles and returns a
-non-zero deployment health-check exit code if a manifest, file or checksum is invalid.
+`sleepingowl:update --check` is read-only. It validates the manifests,
+production/development profiles and checksums and returns a non-zero exit code
+when the published assets are missing or inconsistent.
 
-AdminLTE remains the default ready theme. The package also ships the ready,
-framework-independent `SleepingOwl\Admin\Themes\TailwindTheme`; select it through
-the existing `sleeping_owl.template` key without Node.js or a frontend rebuild.
-Applications may select a ready custom `ThemeInterface`, override individual
-Blade views, add their own CSS/JavaScript, or change supported `--soa-*`
-properties without rebuilding SleepingOwl. Start
-with the [major upgrade guide](docs/modernization/upgrade-guide.md), the
-[AdminLTE 4 migration](docs/modernization/adminlte-4-migration.md), and the
-[theme customization guide](docs/modernization/theme-customization.md).
+## Sections and navigation
 
-Node.js is required only for package maintainers and theme authors. Maintainers
-install the locked toolchain with `npm ci`, use `npm run watch` while developing,
-run `npm run production` to regenerate both distributable profiles and manifests,
-and run `npm run check:ci` for the complete frontend gate.
+Application sections normally extend `SleepingOwl\Admin\Section` and are mapped
+to Eloquent models in `app/Providers/AdminSectionsServiceProvider.php`. The
+installation also creates these application-owned bootstrap files:
 
+```text
+app/Admin/
+├── bootstrap.php
+├── navigation.php
+└── routes.php
+```
 
-## Install `ver 8.*` <small>(last Released)</small>
+The class-based Section API is preferred for new code. Closure-based
+`AdminSection::registerModel()` registration remains supported.
 
-  Install SleepingOwl Admin
+A complete, executable example with a Section, server-side DataTables, filters,
+a card form, policy, widget, custom assets and a Vue 3 island is available in the
+[backend extension cookbook](docs/modernization/backend-extension-cookbook.md).
 
-  `composer require laravelrus/sleepingowl:8.*`
+## Frontend and themes
 
+The current frontend is prebuilt and jQuery-free:
 
-## Install `ver 7.*`
+- AdminLTE 4 and Bootstrap 5 for the default `adminlte` theme;
+- a ready Tailwind 4/Shadcn-inspired theme selected as `shadcn`;
+- Vue 3 runtime-only islands for interactive form controls;
+- DataTables 3 and native feature drivers;
+- framework-independent core, shared feature bundles and `shared:ui`;
+- separate production and development profiles with a versioned asset manifest.
 
-  1. Install SleepingOwl Admin
+Choose a theme by configured name:
 
-  `composer require laravelrus/sleepingowl:7.*`
+```php
+// config/sleeping_owl.php
+'template' => [
+    'default' => env('SLEEPINGOWL_TEMPLATE', 'adminlte'),
+    'themes' => [
+        'adminlte' => SleepingOwl\Admin\Themes\AdminLTETheme::class,
+        'shadcn' => SleepingOwl\Admin\Themes\TailwindTheme::class,
+    ],
+],
+```
 
-  __or__
+Only the selected theme is resolved and loaded. An invalid theme name, class,
+capability or manifest fails explicitly instead of falling back silently to
+AdminLTE.
 
-  If you upgrade the old version change in `composer.json`
+Set `ADMIN_DEV_ASSETS=true` only in a local/debug environment to select the
+already-built development profile with source maps and Vue diagnostics. This
+switch does not compile assets.
 
-  ```
-  "laravelrus/sleepingowl": "^7.*"
-  ```
+Applications can add their own CSS/JavaScript, override individual Blade views
+and change supported `--soa-*` custom properties without rebuilding the package.
+See:
 
-  after run `composer update laravelrus/sleepingowl`
+- [major upgrade guide](docs/modernization/upgrade-guide.md);
+- [AdminLTE 4 migration](docs/modernization/adminlte-4-migration.md);
+- [theme customization and external themes](docs/modernization/theme-customization.md);
+- [first-party asset API](docs/modernization/first-party-assets.md).
 
-  and run `php artisan sleepingowl:update` for update assets
-
-
-2. Run this command in the terminal (if you want to know more about what exactly this command does, see [install command documentation](https://sleepingowladmin.ru/#/en/installation)):
-
-  ```
-  php artisan sleepingowl:install
-  ```
+Keep application-owned files outside `public/packages/sleepingowl`; the update
+command replaces that package-owned directory.
 
 ## Authentication
 
-1. By default, admin module uses Laravel authentication.
+The default route middleware is `['web']`. To require the application's normal
+Laravel authentication, update the published configuration:
 
-  If you want to use auth, you can run artisan command `php artisan make:auth` (https://laravel.com/docs/authentication)
-  and append middleware `auth` to `config/sleeping_owl.php`
+```php
+'middleware' => ['web', 'auth'],
+```
 
-  ```php
-  ...
-  'middleware' => ['web', 'auth']
-  ...
-  ```
+Authentication scaffolding is application-owned. Configure guards and users
+with the Laravel version and authentication package used by the application.
+ACL middleware such as `role:admin` or `permission:admin` can be added to the
+same array.
 
-2. Setting up middleware
+## Development
 
-  By default `auth` middleware use default guard, selected in `config/auth.php`
+PHP checks:
 
-  ```php
-  'defaults' => [
-    'guard' => 'web', <- default
-    ...
-  ],
-  ```
+```bash
+composer install
+composer test
+```
 
-3. If you are using some package for ACL like (Laratrust, Zizaco Entrust, etc...)
+Frontend checks for maintainers:
 
-  ```php
-  'middleware' => ['web', 'role:admin'],
-  ```
-  or
-  ```php
-  'middleware' => ['web', 'permission:admin'],
-  ```
+```bash
+npm ci
+npm run check
+npm run test:e2e
+```
 
+Useful build commands:
 
-## Copyright and License
+```bash
+npm run watch
+npm run production
+```
 
-Admin was written by Sleeping Owl for the Laravel framework and is released under the MIT License.
-See the LICENSE file for details.
+`npm run production` regenerates both distributable profiles and their
+manifests. Do not edit generated files under `public/default` manually.
+
+The CI workflow runs the PHP suite, the complete frontend gate and a clean
+no-build consumer installation that rejects accidental Node.js use.
+
+## Documentation and support
+
+- [Package documentation](DOCUMENTATION.md)
+- [Architecture](architecture.md)
+- [Upgrade guide](docs/modernization/upgrade-guide.md)
+- [Issue tracker](https://github.com/LaravelRUS/SleepingOwlAdmin/issues)
+- [Official site](https://sleepingowladmin.ru)
+- [Telegram community](https://t.me/prtcls)
+
+## License
+
+SleepingOwl Admin is open-source software licensed under the [MIT License](LICENSE).
