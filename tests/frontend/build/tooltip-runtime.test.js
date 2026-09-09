@@ -17,7 +17,6 @@ it('ships executable tooltip behavior in the shared feature runtime without jQue
     const sources = [
         'browser.js',
         'install-tooltips.js',
-        'tooltip-elements.js',
         'tooltip-position.js',
         'tooltip-template.js',
         'tooltips.js',
@@ -30,7 +29,6 @@ it('ships executable tooltip behavior in the shared feature runtime without jQue
 it('keeps the legacy trigger and renders the normal popup from a Blade template', () => {
     const base = read('resources/views/default/_layout/base.blade.php')
     const partial = read('resources/views/default/_partials/tooltip.blade.php')
-    const elements = read('resources/js/shared/features/tooltip/tooltip-elements.js')
     const runtime = read('resources/js/shared/features/tooltip/tooltips.js')
     const template = read('resources/js/shared/features/tooltip/tooltip-template.js')
 
@@ -38,10 +36,10 @@ it('keeps the legacy trigger and renders the normal popup from a Blade template'
     expect(partial).toContain('data-tooltip-template')
     expect(partial).toContain('data-tooltip-popup')
     expect(partial).toContain('data-tooltip-content')
-    expect(elements).toContain('[data-toggle="tooltip"]')
+    expect(runtime).toContain('[data-toggle="tooltip"]')
     expect(runtime).not.toContain('createElement(')
     expect(template).toContain("document.createElement('div')")
-    expect(`${base}\n${partial}\n${elements}`).not.toContain('data-tooltip="')
+    expect(`${base}\n${partial}\n${runtime}`).not.toContain('data-tooltip="')
 })
 
 function read(path) {

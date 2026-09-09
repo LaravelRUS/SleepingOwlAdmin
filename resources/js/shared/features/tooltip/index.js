@@ -4,9 +4,9 @@ export { bootTooltips } from './browser.js'
 export { installTooltips, TOOLTIP_COMPONENT, TOOLTIP_ROOT_SELECTOR } from './install-tooltips.js'
 export {
     findTooltipTrigger,
+    mountTooltips,
     tooltipPlacement,
     tooltipText,
     TOOLTIP_TRIGGER_SELECTOR,
-} from './tooltip-elements.js'
+} from './tooltips.js'
 export { tooltipPosition } from './tooltip-position.js'
-export { mountTooltips } from './tooltips.js'

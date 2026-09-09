@@ -4,7 +4,7 @@ import {
     findTooltipTrigger,
     tooltipPlacement,
     tooltipText,
-} from '../../../../resources/js/shared/features/tooltip/tooltip-elements.js'
+} from '../../../../resources/js/shared/features/tooltip/tooltips.js'
 
 it('resolves a nested target and prefers the native title', () => {
     const trigger = element({ 'data-original-title': 'Legacy', title: 'Native' })
