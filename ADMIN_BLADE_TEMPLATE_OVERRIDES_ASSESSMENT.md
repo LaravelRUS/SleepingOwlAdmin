@@ -31,8 +31,8 @@
   feature adapters внутри общего theme entry, чтобы adapters сохраняли
   приоритет после укрупнения. Полная Playwright matrix: 141/141.
 - после финального объединения Blade оба asset profiles повторно пересобраны.
-  Итоговые gates: PHPUnit 632 tests / 2997 assertions (11 skipped), Vitest
-  115 files / 494 tests, Playwright 141/141, ESLint и Stylelint без ошибок.
+  Итоговые gates: PHPUnit 635 tests / 3286 assertions (11 skipped), Vitest
+  115 files / 496 tests, Playwright 141/141, ESLint и Stylelint без ошибок.
 
 Follow-up после разрешения breaking paths укрупнил не только theme mirrors, но
 и сам base: 35 файлов без самостоятельного markup ownership перенесены в
