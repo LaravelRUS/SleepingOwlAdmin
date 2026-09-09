@@ -8,8 +8,17 @@
   `resources/views/default` (`337f3184`);
 - Shadcn зарегистрирован с ordered roots `theme, base`, при этом прежние
   application namespaces сохранены;
-- заново пересчитаны и удалены ровно 37 одинаковых Shadcn copies; остались 99
-  отличающихся overrides и 27 theme-only components (`14cccdce`);
+- заново пересчитаны и удалены ровно 37 одинаковых Shadcn copies
+  (`14cccdce`);
+- оставшиеся 99 overrides классифицированы по реальной причине различия.
+  Semantic `soa-*` hooks перенесены в общий base рядом с сохранёнными
+  Bootstrap/AdminLTE compatibility classes; после этого удалены ещё 95
+  presentation-only overrides;
+- в `resources/views/themes/shadcn/default` оставлены только четыре реальных
+  DOM/behavior overrides: `_layout/inner`, `_partials/navigation/page`,
+  `display/table` и `pages/login`;
+- 27 Shadcn component prototypes без runtime ownership перенесены в
+  `resources/archive/unused-sources`; активный namespace их не разрешает;
 - tests проверяют все 136 logical paths для обеих тем, три уровня приоритета,
   nested theme context, отсутствие одинаковых overrides и отсутствие
   неявного fallback у внешней темы;
@@ -54,9 +63,9 @@ application override paths. Поддержку наследования для �
 лучше добавить как совместимый opt-in поверх того же механизма, не меняя
 поведение уже существующих полных внешних тем.
 
-## Что есть сейчас
+## Исходная инвентаризация (до реализации)
 
-На 2026-09-09 оба каталога содержат одинаковый набор из 136 логических путей:
+До перехода оба каталога содержали одинаковый набор из 136 логических путей:
 
 ```text
 resources/views/themes/adminlte/default  136 Blade, 2719 строк
@@ -67,14 +76,14 @@ resources/views/themes/shadcn/default    136 Blade, 2713 строк
 форматирующего whitespace и пустых строк без Blade/HTML-содержимого:
 
 - 37 файлов функционально одинаковы и могут наследоваться из base;
-- 99 файлов содержат реальные различия и остаются Shadcn overrides;
+- 99 файлов содержали различия, требовавшие дальнейшей классификации;
 - уникальных logical paths только в одной теме сейчас нет;
 - после первого этапа два `default`-дерева уменьшаются с 272 до 235 файлов:
   136 base + 99 overrides;
 - удаляется 37 файлов и около 318 строк из Shadcn mirror, то есть 13,6% файлов
   двух текущих `default`-деревьев;
-- 27 файлов `resources/views/themes/shadcn/components` являются настоящими
-  theme-owned primitives и в эту дедупликацию не входят.
+- 27 файлов `resources/views/themes/shadcn/components` первоначально считались
+  theme-owned primitives и не входили в первый проход дедупликации.
 
 Распределение по группам:
 
@@ -90,10 +99,25 @@ resources/views/themes/shadcn/default    136 Blade, 2713 строк
 | `pages` | 1 | 0 | 1 |
 | **Итого** | **136** | **37** | **99** |
 
-Вывод из инвентаризации: каскад нужен архитектурно и уже убирает 37
-бессодержательных копий, но он не превращает оставшиеся 99 файлов в дубли.
-Большинство из них действительно владеет другой разметкой, классами, Shadcn
-components или presentation props. Их механически объединять нельзя.
+Первый проход сознательно удалял только byte-equivalent copies. Второй проход
+показал, что 95 из 99 различий были presentation-only: классы, props с
+классами либо небольшие общие accessibility improvements. Они объединены не
+механическим копированием, а единым контрактом `legacy classes + soa-*`.
+Четыре файла с реальной разницей структуры или поведения остались overrides.
+
+Итоговый runtime inventory:
+
+| Группа | Base paths | Наследуются Shadcn | Shadcn overrides |
+| --- | ---: | ---: | ---: |
+| `_layout` | 2 | 1 | 1 |
+| `_partials` | 15 | 14 | 1 |
+| `column` | 53 | 53 | 0 |
+| `dashboard.blade.php` | 1 | 1 | 0 |
+| `display` | 15 | 14 | 1 |
+| `form` | 46 | 46 | 0 |
+| `helper` | 3 | 3 | 0 |
+| `pages` | 1 | 0 | 1 |
+| **Итого** | **136** | **132** | **4** |
 
 ## Целевая физическая структура
 
@@ -111,8 +135,10 @@ resources/views/
 ├── shared/                          # существующие shared views
 └── themes/
     └── shadcn/
-        ├── components/              # theme-only primitives, без base аналога
-        └── default/                 # только 99 отличающихся overrides
+        └── default/                 # только 4 DOM/behavior overrides
+
+resources/archive/unused-sources/
+└── resources/views/themes/shadcn/components/  # 27 reference prototypes
 ```
 
 Отдельный `resources/views/themes/adminlte/default` после переноса не нужен:
@@ -216,14 +242,15 @@ application override для всех тем — отдельное продук�
 
 ### Blade
 
-- 136 файлов из `resources/views/themes/adminlte/default` перемещаются в
-  `resources/views/default` как git renames без изменения HTML;
-- 37 совпадающих Shadcn files удаляются;
-- 99 отличающихся Shadcn files и 27 Shadcn components остаются на месте;
-- `shared`/`features` не перемещаются;
-- deeper deduplication оставшихся файлов выполняется только отдельными
-  небольшими изменениями с render/browser contract, а не в этом structural
-  migration.
+- 136 файлов из `resources/views/themes/adminlte/default` перемещены в
+  `resources/views/default`;
+- 37 совпадающих Shadcn files удалены первым structural checkpoint;
+- 95 presentation-only overrides сведены в общий markup отдельными слоями:
+  columns, display, basic forms, rich forms, layout/partials;
+- четыре DOM/behavior overrides оставлены в теме;
+- 27 component prototypes перенесены в archive после проверки отсутствия
+  runtime references;
+- `shared`/`features` не перемещались: их ownership уже был корректным.
 
 ### Tests
 
@@ -242,7 +269,8 @@ application override для всех тем — отдельное продук�
 5. Application override возвращается раньше theme и base.
 6. В `themes/shadcn/default` нет файла, равного base после нормализации line
    endings и trailing whitespace.
-7. Theme-only components разрешаются только из Shadcn namespace.
+7. Архивные component prototypes не разрешаются ни из Shadcn, ни из base
+   namespace.
 8. Вложенные вызовы через `AdminTemplate::getViewPath()` сохраняют выбранную
    тему и тот же каскад.
 
@@ -261,12 +289,11 @@ application override для всех тем — отдельное продук�
 
 ### Tailwind build
 
-После удаления 37 Shadcn copies Tailwind content scan перестанет видеть эти
-физические файлы в `themes/shadcn`. В текущем наборе это не должно удалить
-нужные utilities: единственный literal Tailwind utility среди совпадающих
-файлов, `mb-2`, встречается и в оставшихся Shadcn overrides. Тем не менее после
-миграции необходимо сравнить production/development CSS и прогнать compiled
-tests.
+После удаления presentation-only Shadcn copies Tailwind content scan видит
+только четыре физических overrides. Нужный theme contract теперь задаётся
+стабильными `soa-*` selectors в Sass, а не случайным обнаружением utility names
+в дублирующихся Blade. Production/development CSS необходимо пересобирать и
+проверять как prepared artifacts.
 
 Не следует без измерения добавлять весь AdminLTE-compatible base root в
 Tailwind scan: scanner может принять совпавшие Bootstrap class names за
@@ -305,12 +332,10 @@ theme tests. Она включает реализацию и проверки, �
 | **Итого, встроенные темы** | Небьющий structural migration | **19–32 ч (примерно 2,5–4 дня)** |
 | Optional external API | Registrar/registry API, scaffold, external provider tests и docs | **+6–10 ч** |
 
-Оценка не включает объединение оставшихся 99 отличающихся Blade. Для них
-нужен отдельный inventory по типу различия. Уже сейчас 40 файлов отличаются
-не более чем четырьмя строками diff, чаще всего theme classes или параметрами;
-часть из них потенциально можно свести к base + theme component/slot. Это
-следующий рефакторинг с более высоким риском смешения presentation layers, а
-не условие запуска fallback.
+Последующая классификация 99 Blade выполнена отдельными checkpoint-коммитами.
+Она не вводит PHP class registry, slot abstraction или conditional theme
+branches: base хранит один markup с двумя совместимыми наборами классов, а
+override существует только при реальной DOM/behavior разнице.
 
 ## Основные риски и меры
 
@@ -324,7 +349,7 @@ theme tests. Она включает реализацию и проверки, �
 | Новые дубли возвращаются | Mirror постепенно восстанавливается | Architecture test отклоняет override, совпадающий с base |
 | Большой rename скрывает HTML-изменения | Сложный review и регрессия | Отдельный commit только для moves, затем provider/tests, затем pruning |
 
-## Рекомендуемая последовательность commits
+## Выполненная последовательность commits
 
 1. Tests для ordered resolution и no-identical-override guard.
 2. Чистый rename `themes/adminlte/default -> default` без редактирования Blade.
@@ -346,13 +371,13 @@ theme tests. Она включает реализацию и проверки, �
 - все 136 base logical paths доступны обеим встроенным темам;
 - в Shadcn `default` остаются только реально отличающиеся overrides;
 - одинаковый с base новый override останавливает architecture test;
-- Shadcn components остаются theme-owned и не становятся частью base;
+- архивные Shadcn component prototypes не являются runtime views;
 - PHP/render/frontend/browser tests проходят в обоих asset profiles;
 - production/development asset manifests остаются согласованными;
 - внешний theme package не получает fallback без явного opt-in;
 - документация больше не требует полного mirror logical paths внутри темы.
 
-## Приложение: первые 37 inherited views
+## Приложение: первые 37 inherited views (исторический список)
 
 Эти Shadcn files совпадают с AdminLTE/base после нормализации line endings и
 конечного whitespace и являются кандидатами на удаление в первом проходе:
@@ -397,5 +422,5 @@ helper/autoupdate.blade.php
 helper/ckeditor/ckeditor_upload_file.blade.php
 ```
 
-Перед фактическим удалением список следует пересчитать в том же commit, чтобы
-не удалить файл, который успел получить theme-specific изменение.
+Список был пересчитан непосредственно перед удалением в `14cccdce`; все эти
+пути теперь разрешаются из `resources/views/default`.

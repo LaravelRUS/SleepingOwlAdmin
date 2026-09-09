@@ -36,7 +36,7 @@ the copyright and permission notice remains with substantial copied portions.
    files. The CLI may fetch or diff a snapshot in a temporary maintainer
    workspace but must not overwrite package Blade/Sass sources.
 4. Port relevant markup, Tailwind utilities, tokens and accessibility states
-   deliberately into the listed Blade owner. Do not copy React, Radix,
+   deliberately into the listed active owner. Do not copy React, Radix,
    `class-variance-authority`, `lucide-react` or event/state behavior.
 5. Keep SleepingOwl behavior hooks and the behavior owner in the table below;
    update this inventory, the notice when required, targeted render/browser
@@ -45,44 +45,26 @@ the copyright and permission notice remains with substantial copied portions.
 Composer consumers receive the resulting Blade views and prepared CSS. They
 never run shadcn CLI, Tailwind content scanning or npm.
 
-## Selected recipes
+## Selected recipes and active ownership
 
-Every row refers to registry type `registry:ui`, style `new-york-v4`, source
-commit `7c9eaba1c0a6404c990c144a654792e3313c650d`. A local owner is the planned
-Blade primitive; the listed consumers remain the stable logical view paths.
+Every recipe still refers to registry type `registry:ui`, style `new-york-v4`
+and source commit `7c9eaba1c0a6404c990c144a654792e3313c650d`.
+They are design inputs, not a requirement to create one Blade file per recipe.
 
-| Registry name | Local Blade owner | SleepingOwl consumers and required states | Behavior owner / reason |
-| --- | --- | --- | --- |
-| `alert` | `resources/views/themes/shadcn/components/ui/alert.blade.php` | `_partials/messages/{success,info,warning,error}` and asset-health warning; title/body, dismissible, success/warning/error | Alert driver and native status semantics; establishes the common message recipe. |
-| `alert-dialog` | `resources/views/themes/shadcn/components/ui/alert-dialog.blade.php` | destructive table/form actions; closed/open, labelled description, cancel/confirm, pending/error | Existing confirmation/notification adapter; only the accessible destructive-dialog presentation is ported. |
-| `attachment` | `resources/views/themes/shadcn/components/ui/attachment.blade.php` | `form/element/{file,files,image,images,upload}`; queued/uploading/success/error/readonly/removable | Existing Vue file/image islands and upload driver; supplies a consistent file-row recipe. |
-| `badge` | `resources/views/themes/shadcn/components/ui/badge.blade.php` | navigation and tab badges, boolean/status columns; neutral/success/warning/destructive/outline | Blade value rendering; compact status and count presentation. |
-| `breadcrumb` | `resources/views/themes/shadcn/components/ui/breadcrumb.blade.php` | `_partials/breadcrumbs`; root/intermediate/current/overflow and compact viewport | Native links plus `aria-current`; preserves server-rendered navigation. |
-| `button` | `resources/views/themes/shadcn/components/ui/button.blade.php` | form buttons, row/bulk actions, tree and upload controls; default/destructive/outline/secondary/ghost/link, sizes, disabled/loading/focus | Native button/link plus existing action drivers; base interactive primitive. |
-| `button-group` | `resources/views/themes/shadcn/components/ui/button-group.blade.php` | `form/buttons`, table toolbar and grouped actions; horizontal/vertical, attached/separated, disabled member | Blade grouping and existing action drivers; keeps dense CRUD actions coherent. |
-| `card` | `resources/views/themes/shadcn/components/ui/card.blade.php` | `form/card/*`, dashboard widgets and display shells; header/body/footer/actions, nested, loading/error | Blade composition; primary page-section container. |
-| `checkbox` | `resources/views/themes/shadcn/components/ui/checkbox.blade.php` | form/column/filter checkboxes and bulk selection; unchecked/checked/indeterminate/disabled/invalid/focus | Native checkbox and table/form drivers; no Radix checkbox runtime. |
-| `collapsible` | `resources/views/themes/shadcn/components/ui/collapsible.blade.php` | nested navigation, tree nodes and filter panels; expanded/collapsed, animated/reduced-motion, disabled | Sidebar/tree drivers own state and ARIA; only disclosure states and classes are adapted. |
-| `dialog` | `resources/views/themes/shadcn/components/ui/dialog.blade.php` | image/gallery dialogs, generic modal and editor overlays; closed/open, labelled, focus trapped, escape/close | Existing modal/lightbox/Vue island boundary; no Radix dialog runtime. |
-| `dropdown-menu` | `resources/views/themes/shadcn/components/ui/dropdown-menu.blade.php` | header/user menu and display actions; closed/open, active/focus, disabled, checked, submenu | Public dropdown driver owns keyboard/state; visual menu anatomy is ported. |
-| `empty` | `resources/views/themes/shadcn/components/ui/empty.blade.php` | empty tables, dashboard, tree, uploads/gallery and no-results states; icon/title/body/action | Blade or vendor empty callback; gives all data-heavy empty states one pattern. |
-| `field` | `resources/views/themes/shadcn/components/ui/field.blade.php` | `form/element/*`, help and errors, related groups; vertical/horizontal/responsive, required, help, one/many errors | Blade and native validation own semantics; replaces React form composition. |
-| `input-group` | `resources/views/themes/shadcn/components/ui/input-group.blade.php` | text addons, date/time controls, filters and inline editor; leading/trailing addon, focus-within, disabled/invalid | Native controls plus existing feature drivers; preserves add-on presentation without JS rendering. |
-| `input` | `resources/views/themes/shadcn/components/ui/input.blade.php` | text/password/number/date/time/filter/generator inputs; normal/placeholder/focus/disabled/readonly/invalid | Native input; shared control recipe used by forms and tables. |
-| `label` | `resources/views/themes/shadcn/components/ui/label.blade.php` | form labels, filter labels and checkbox/radio captions; required/disabled and control association | Native `label`; consistent accessible labelling. |
-| `native-select` | `resources/views/themes/shadcn/components/ui/native-select.blade.php` | native select fallback, table length and filters; placeholder/value, required/disabled/invalid | Native select and existing Vue select island boundary; shadcn React select/combobox are intentionally excluded. |
-| `pagination` | `resources/views/themes/shadcn/components/ui/pagination.blade.php` | DataTables paging adapter; previous/next, current, disabled, ellipsis and compact viewport | DataTables 3 owns generated DOM/state; recipe supplies presentation and ARIA expectations only. |
-| `progress` | `resources/views/themes/shadcn/components/ui/progress.blade.php` | uploads and table auto-update; determinate/indeterminate, paused/success/error, reduced-motion | Upload/auto-update drivers own values and lifecycle; no Radix progress runtime. |
-| `radio-group` | `resources/views/themes/shadcn/components/ui/radio-group.blade.php` | radio and boolean choices; unchecked/checked/disabled/invalid/focus, horizontal/stacked | Native radio inputs; reusable choice-group presentation. |
-| `separator` | `resources/views/themes/shadcn/components/ui/separator.blade.php` | navigation dividers, cards, menus and toolbars; horizontal/vertical and decorative/semantic | Native element/ARIA; small structural primitive reused across shells. |
-| `sidebar` | `resources/views/themes/shadcn/components/patterns/sidebar.blade.php` | `_layout/*` and `_partials/navigation*`; expanded/collapsed, nested/active, mobile overlay, keyboard focus | Existing sidebar driver/storage and Blade navigation own behavior/content; React context, sheet and cookie code are excluded. |
-| `skeleton` | `resources/views/themes/shadcn/components/ui/skeleton.blade.php` | initial table/widget/island loading; text/row/card shapes and reduced-motion | Server/Vue/vendor loading state; stable placeholder presentation. |
-| `spinner` | `resources/views/themes/shadcn/components/ui/spinner.blade.php` | buttons, remote selects, tables and uploads; labelled/unlabelled, small/default, reduced-motion | Existing async owners toggle visibility; shared busy indicator. |
-| `switch` | `resources/views/themes/shadcn/components/ui/switch.blade.php` | boolean form/inline controls; on/off, disabled/readonly/invalid/focus | Native checkbox with switch semantics and existing form/inline drivers; no Radix runtime. |
-| `table` | `resources/views/themes/shadcn/components/ui/table.blade.php` | `display/table`, columns/filters/actions and DataTables adapter; header/body/footer, selected/expanded, empty, responsive | Blade owns base table; DataTables 3 owns ephemeral controls and table driver owns behavior. |
-| `tabs` | `resources/views/themes/shadcn/components/ui/tabs.blade.php` | `display/{tab,tabbed}` and form tabs; active/inactive/disabled, keyboard focus, restored state | Public tabs driver owns selection/keyboard/state; no Radix tabs runtime. |
-| `textarea` | `resources/views/themes/shadcn/components/ui/textarea.blade.php` | textarea, inline textarea and WYSIWYG native fallback; focus/disabled/readonly/invalid/resize | Native textarea and editor adapters; consistent multiline control. |
-| `tooltip` | `resources/views/themes/shadcn/components/ui/tooltip.blade.php` | `_partials/tooltip` and icon/action help; hidden/open, placement, keyboard focus, reduced-motion | Public tooltip driver owns trigger/popup lifecycle; no Radix portal/runtime. |
+The first implementation produced 27 component prototypes. Runtime analysis
+showed that 20 had no callers and the other seven only added one indirection
+around a single logical view. All useful markup, ARIA and `soa-*` hooks now
+live at the real logical owners; the prototypes are preserved under
+`resources/archive/unused-sources/resources/views/themes/shadcn/components`
+and must not be registered, included or scanned by the build.
+
+| Recipe group | Active owner | Runtime boundary |
+| --- | --- | --- |
+| alert, badge, breadcrumb, button, separator, sidebar, tooltip | `resources/views/default/_layout`, `_partials`, `helper` | Shared server markup carries legacy classes plus `soa-*`; existing feature drivers own behavior. |
+| button-group, card, checkbox, field, input, input-group, label, native-select, radio-group, switch, textarea | `resources/views/default/form` and `resources/views/default/column` | Native controls and Vue islands keep names, attributes, validation and lifecycle; theme CSS styles semantic hooks. |
+| table, pagination, empty, alert-dialog | `resources/views/default/display`, the four Shadcn DOM overrides and table adapters | Blade owns stable table markup; DataTables and table drivers own generated state and transport. |
+| attachment, dialog, progress, skeleton, spinner | Existing form/gallery markup, Vue props and feature CSS/JS | These remain conceptual recipes; there is no generic Blade component API until multiple real callers require one. |
+| collapsible, dropdown-menu, tabs | Navigation/tree/dropdown/tab logical views and public feature drivers | State and keyboard behavior stay in existing drivers; no React/Radix runtime is introduced. |
 
 ## Existing view-to-primitive mapping
 

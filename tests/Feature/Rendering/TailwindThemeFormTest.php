@@ -41,10 +41,9 @@ class TailwindThemeFormTest extends TestCase
         AdminFacade::swap($admin);
     }
 
-    public function test_every_form_view_is_resolvable_and_primitives_are_theme_owned(): void
+    public function test_every_form_view_is_resolvable_from_the_shared_base(): void
     {
         $baseRoot = realpath(__DIR__.'/../../../resources/views/default');
-        $tailwindRoot = realpath(__DIR__.'/../../../resources/views/themes/shadcn/default');
         $directory = new RecursiveDirectoryIterator(
             $baseRoot.DIRECTORY_SEPARATOR.'form',
             FilesystemIterator::SKIP_DOTS
@@ -61,11 +60,8 @@ class TailwindThemeFormTest extends TestCase
             $resolved = view()->getFinder()->find(
                 app('sleeping_owl.template')->getViewPath($logical)
             );
-            $override = $tailwindRoot.DIRECTORY_SEPARATOR.$relative;
-            $expected = is_file($override) ? $override : $file->getPathname();
-
             $this->assertSame(
-                realpath($expected),
+                realpath($file->getPathname()),
                 realpath($resolved),
                 $logical
             );
@@ -73,26 +69,6 @@ class TailwindThemeFormTest extends TestCase
         }
 
         $this->assertCount(46, $views);
-
-        foreach ([
-            'attachment',
-            'card',
-            'dialog',
-            'field',
-            'input-group',
-            'label',
-            'progress',
-            'radio-group',
-            'skeleton',
-            'spinner',
-            'switch',
-            'textarea',
-        ] as $primitive) {
-            $this->assertTrue(
-                view()->exists("sleeping_owl_shadcn::components.ui.{$primitive}"),
-                $primitive
-            );
-        }
     }
 
     public function test_native_controls_keep_names_states_user_attributes_and_date_hooks(): void

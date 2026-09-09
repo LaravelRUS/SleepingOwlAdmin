@@ -8,7 +8,7 @@
 | `resources/views/features` | Named feature | Feature behavior, protocol responses and theme-neutral feature markup |
 | `resources/views/default` | Package default | Complete AdminLTE-compatible base contract for every `sleeping_owl::default.*` logical path |
 | `resources/views/themes/shadcn/default` | Shadcn theme | Only Blade implementations whose presentation differs from the package default |
-| `resources/views/themes/shadcn/components` | Shadcn theme | Theme-only primitives with no package-default counterpart |
+| `resources/archive/unused-sources/resources/views/themes/shadcn/components` | Archive only | Retired component prototypes; never a runtime view root |
 
 `sleeping_owl::default.*` remains the compatibility namespace used by
 `TemplateDefault` and existing custom templates. Its package root is
@@ -19,7 +19,9 @@
 Laravel registers ordered package hints for it: `themes/shadcn`, then the
 package root. A missing Shadcn file therefore inherits the base implementation
 without a bridge or runtime existence check. The current tree contains 136
-base logical views, 99 real Shadcn overrides and 27 Shadcn-only components.
+base logical views and four real Shadcn overrides. The earlier 27 component
+prototypes are archived because all useful `soa-*` hooks now live directly in
+the shared base markup and no runtime view references them.
 
 When a historical path now belongs to `shared` or `features`, its file inside the legacy theme is kept as a one-line bridge include. This preserves published view overrides and PHP view names while moving the implementation to its real owner.
 
@@ -95,9 +97,10 @@ The current compatibility implementation is explicitly identified as `adminlte` 
 - current precompiled distribution: `public/default`;
 - compatibility JavaScript: `resources/js/shared/legacy`; theme styles/scripts: `resources/{css,js}/themes/adminlte`; active legacy aggregate Sass: `resources/css/themes/adminlte/legacy`.
 
-Shadcn keeps `sleeping_owl_shadcn::default`, stores only its differing files in
-`resources/views/themes/shadcn/default` and inherits the rest from the same
-base. External namespaces remain isolated unless their own provider explicitly
+Shadcn keeps `sleeping_owl_shadcn::default`, stores only four structurally or
+behaviorally different files in `resources/views/themes/shadcn/default` and
+inherits the other 132 logical views from the same base. External namespaces
+remain isolated unless their own provider explicitly
 registers a fallback. The physical view move does not change logical view names,
 template config, published override priority or public asset URLs. The stable
 `adminlte` id names a compatibility handle, not the installed AdminLTE major
@@ -115,6 +118,7 @@ version.
 resolves through its original `sleeping_owl::default.*` logical name. The
 Tailwind rendering contracts repeat that walk through the Shadcn namespace,
 select the theme file when present and the base file otherwise, reject an
-override identical to base, and keep theme-only components outside the base.
+override identical to base, and prove that archived component prototypes are
+not runtime-resolvable views.
 
 The modern frontend ESLint config repeats the `core → features/themes` restriction through `no-restricted-imports`, so a new JavaScript violation fails at lint time before the wider PHPUnit architecture gate. Theme selection remains data-driven through `sleeping_owl.template`; adding a theme does not authorize a core import of its implementation.

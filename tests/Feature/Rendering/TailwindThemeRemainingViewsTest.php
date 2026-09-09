@@ -114,9 +114,11 @@ class TailwindThemeRemainingViewsTest extends TestCase
         );
     }
 
-    public function test_shadcn_components_remain_theme_owned(): void
+    public function test_archived_shadcn_components_are_not_runtime_views(): void
     {
-        $root = realpath(__DIR__.'/../../../resources/views/themes/shadcn/components');
+        $root = realpath(
+            __DIR__.'/../../../resources/archive/unused-sources/resources/views/themes/shadcn/components'
+        );
         $directory = new RecursiveDirectoryIterator($root, FilesystemIterator::SKIP_DOTS);
         $components = [];
 
@@ -128,7 +130,7 @@ class TailwindThemeRemainingViewsTest extends TestCase
             $relative = substr($file->getPathname(), strlen($root) + 1);
             $logical = str_replace([DIRECTORY_SEPARATOR, '.blade.php'], ['.', ''], $relative);
 
-            $this->assertTrue(view()->exists("sleeping_owl_shadcn::components.{$logical}"));
+            $this->assertFalse(view()->exists("sleeping_owl_shadcn::components.{$logical}"));
             $this->assertFalse(view()->exists("sleeping_owl::components.{$logical}"));
             $components[] = $logical;
         }
