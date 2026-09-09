@@ -209,7 +209,7 @@ class DefaultThemeRenderContractTest extends TestCase
             'width' => '',
         ];
 
-        foreach (['sleeping_owl::default.column.filter.select', 'sleeping_owl_tailwind::default.column.filter.select'] as $view) {
+        foreach (['sleeping_owl::default.column.filter.select', 'sleeping_owl_shadcn::default.column.filter.select'] as $view) {
             $html = view($view, $data)->render();
 
             $this->assertStringContainsString('<optgroup label="Status">', $html);
@@ -228,7 +228,7 @@ class DefaultThemeRenderContractTest extends TestCase
             'visibled' => true,
         ];
 
-        foreach (['sleeping_owl::default.column.email', 'sleeping_owl_tailwind::default.column.email'] as $view) {
+        foreach (['sleeping_owl::default.column.email', 'sleeping_owl_shadcn::default.column.email'] as $view) {
             $html = view($view, $data)->render();
 
             $this->assertStringContainsString(

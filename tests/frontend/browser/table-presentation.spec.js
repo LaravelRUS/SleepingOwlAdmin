@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test'
 
 test('AdminLTE table adapter owns Bootstrap DataTables presentation', async ({ page }) => {
-    await page.goto('/table-presentation?theme=legacy-adminlte')
+    await page.goto('/table-presentation?theme=adminlte')
 
     await expect(page.locator('#table-presentation')).toHaveCSS('min-height', '112px')
     await expect(page.locator('.dt-search')).toHaveCSS('justify-content', 'flex-start')
@@ -30,7 +30,7 @@ test('Tailwind table adapter is standalone, compact and theme-token driven', asy
 })
 
 for (const [theme, height, right] of [
-    ['legacy-adminlte', '0px', '6px'],
+    ['adminlte', '0px', '6px'],
     ['tailwind', '36px', '0px'],
 ]) {
     test(`${theme} auto-update presentation keeps the progress line beside its toggle`, async ({

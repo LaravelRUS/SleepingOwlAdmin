@@ -13087,7 +13087,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var datatables_net_responsive_bs5__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! datatables.net-responsive-bs5 */ "./node_modules/datatables.net-responsive-bs5/js/responsive.bootstrap5.mjs");
 
 
-var DATATABLES_PRESENTATION_ID = 'legacy-adminlte.bootstrap5';
+var DATATABLES_PRESENTATION_ID = 'adminlte.bootstrap5';
 function createLegacyDataTableEngine(element, options) {
   return new datatables_net_bs5__WEBPACK_IMPORTED_MODULE_0__["default"](element, options);
 }

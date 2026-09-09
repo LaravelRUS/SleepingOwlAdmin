@@ -1,1 +1,1 @@
-@include('sleeping_owl_tailwind::components.ui.tooltip')
+@include('sleeping_owl_shadcn::components.ui.tooltip')

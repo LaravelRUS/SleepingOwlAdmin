@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test'
 
 for (const [theme, surface, radius] of [
-    ['legacy-adminlte', 'rgb(255, 255, 255)', '4px'],
+    ['adminlte', 'rgb(255, 255, 255)', '4px'],
     ['tailwind', 'rgb(255, 255, 255)', '8px'],
 ]) {
     test(`${theme} dropdown adapter owns presentation`, async ({ page }) => {

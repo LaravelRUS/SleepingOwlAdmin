@@ -56,7 +56,7 @@ Application регистрирует class и manifest fragment под canonical
 
 `resources/{css,js}/theme-overrides/<theme-name>` содержит локальные изменения/исправления, применяется только к выбранной теме и всегда идёт последним. Application Blade overrides используют стандартный Laravel path `resources/views/vendor/<theme-namespace>`.
 
-Публичные output paths, logical ids и Blade logical view names при перемещении sources не меняются.
+Публичные output paths, logical ids, `data-theme` и Blade theme namespace используют то же canonical `<theme-name>`, что и config/resource folders. При полном обновлении старые compatibility names не сохраняются: оба asset profiles пересобираются, а устаревшие generated files удаляются.
 
 ## Порядок подключения
 
@@ -96,9 +96,9 @@ Canonical название хранится один раз — ключом `te
 - [x] Зафиксировать тему как logical unit: одинаковое `<theme-name>` связывает `css/themes`, `js/themes` и `views/themes`.
 - [x] Отделить локальные CSS/JS исправления в `resources/{css,js}/theme-overrides/<theme-name>`; Blade overrides используют Laravel `views/vendor`.
 - [x] Отказаться от отдельного theme id: canonical название хранится только ключом `template.themes`, выбор — в `template.default`.
-- [ ] Создать каталоги `resources/{css,js}/{core,shared,themes,theme-overrides}` по целевой структуре.
-- [ ] Переместить общий core/runtime и feature sources без изменения public output paths и logical ids.
-- [ ] Разложить CSS/JS темы и её feature adapters по `resources/{css,js}/themes/<theme-name>`; сохранить Blade в `resources/views/themes/<theme-name>`.
+- [x] Создать каталоги `resources/{css,js}/{core,shared,themes,theme-overrides}` по целевой структуре.
+- [x] Переместить общий core/runtime и feature sources; привести public output paths и logical ids к canonical theme names.
+- [x] Разложить CSS/JS темы и её feature adapters по `resources/{css,js}/themes/<theme-name>`; сохранить Blade в `resources/views/themes/<theme-name>`.
 - [ ] Заменить `ThemeInterface::id()` и внутренний `themeId` на имя, передаваемое config/registry; Theme-класс не дублирует название.
 - [x] Добавить новый shape `template.default` + `template.themes`, сохранив fallback для прежнего `'template' => ThemeClass::class`.
 - [ ] Ввести logical entry `theme:<name>:overrides`, подключаемый только для выбранной темы и после всех её base/feature entries.
@@ -178,3 +178,5 @@ Canonical название хранится один раз — ключом `te
 | 2026-09-09 | Laravel resource layout | Целевая структура приведена к Laravel convention: `resources/css`, `resources/js`, `resources/views`. Тема остаётся логическим unit через общее `<theme-name>` в type folders; Composer package является физически переносимой единицей. CSS/JS overrides отделены в `theme-overrides/<name>`, application Blade overrides используют стандартный `views/vendor/<namespace>`. Код/assets не менялись, tests не запускались. | текущий commit |
 | 2026-09-09 | Выбор темы по названию | Отдельный theme id исключён из целевого контракта. `template` становится блоком с `default` и картой `themes`; canonical name хранится только ключом этой карты. Старый class-string остаётся совместимым. Resolver передаёт имя manifest scope, Theme-класс его не дублирует; `core/shared` не зависят от выбора, загружаются только assets выбранной темы и её overrides. Код/assets не менялись, tests не запускались. | текущий commit |
 | 2026-09-09 | Config-driven выбор темы | Package config публикует `template.default` и `template.themes`; resolver валидирует имя/карту, создаёт только выбранный класс и сохраняет runtime fallback для прежнего class-string. Default AdminLTE, switch на `shadcn`, внешний provider, invalid map и unselected-theme поведение закреплены точечными test cases. Документация и migration matrix обновлены; каталоги/assets не перемещались, tests по указанию не запускались. | текущий commit |
+| 2026-09-09 | Laravel resource migration | Core, shared features, compatibility code и встроенные темы физически разложены по `resources/css`, `resources/js` и `resources/views/themes`; каталоги тем используют canonical config names `adminlte` и `shadcn`. Неиспользуемый tooltip bridge, семь неподключённых Open Sans variants и лишний `.gitkeep` перенесены в `resources/archive/unused-sources` с сохранением прежних относительных путей. Public output paths и logical ids сохранены, development/production profiles пересобраны. `npm test -- --run`: 115 файлов, 723 теста прошли. | `bda141a8` |
+| 2026-09-09 | Canonical asset names | После уточнения scope снято ограничение backward compatibility: runtime ids, `data-theme`, Blade namespace и generated paths приведены к `adminlte`/`shadcn`; 94 старых generated-файла `legacy-adminlte`/`tailwind` удалены и оба профиля пересобраны. Manifest содержит только canonical theme entries. Vitest: 115 файлов, 723 теста; PHPUnit Themes: 78 тестов / 633 assertions; Rendering: 79 тестов / 930 assertions. | текущий commit |

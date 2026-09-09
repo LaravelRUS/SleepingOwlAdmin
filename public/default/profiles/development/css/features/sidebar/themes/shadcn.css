@@ -1,0 +1,79 @@
+:root {
+  --soa-sidebar-link-hover-bg: var(--soa-sidebar-active-color);
+  --soa-sidebar-link-active-bg: var(--soa-sidebar-active-color);
+  --soa-sidebar-link-active-text: var(--soa-sidebar-text-color);
+  --soa-sidebar-submenu-bg: var(--soa-sidebar-bg);
+  --soa-sidebar-overlay-bg: var(--soa-overlay-color);
+  --soa-sidebar-z-index: 40;
+  --soa-sidebar-overlay-z-index: 30;
+  --soa-sidebar-indicator-angle: -90deg;
+  --soa-sidebar-link-radius: 0.375rem;
+  --soa-sidebar-link-gap: 0.5rem;
+  --soa-sidebar-link-padding-block: 0.625rem;
+  --soa-sidebar-link-padding-inline: 0.75rem;
+  --soa-sidebar-submenu-padding-inline: 1rem;
+}
+
+@layer sleepingowl-theme.sidebar {
+  .main-sidebar {
+    background: var(--soa-sidebar-bg);
+    color: var(--soa-sidebar-text-color);
+    width: var(--soa-sidebar-width);
+    z-index: var(--soa-sidebar-z-index);
+    transition: transform var(--soa-layout-transition-duration) ease, width var(--soa-layout-transition-duration) ease;
+  }
+  .nav-sidebar .nav-link {
+    align-items: center;
+    border-radius: var(--soa-sidebar-link-radius);
+    color: var(--soa-sidebar-text-color);
+    display: flex;
+    gap: var(--soa-sidebar-link-gap);
+    padding: var(--soa-sidebar-link-padding-block) var(--soa-sidebar-link-padding-inline);
+    position: relative;
+  }
+  .nav-sidebar .nav-link:hover {
+    background: var(--soa-sidebar-link-hover-bg);
+  }
+  .nav-sidebar .nav-link.active {
+    background: var(--soa-sidebar-link-active-bg);
+    color: var(--soa-sidebar-link-active-text);
+  }
+  .nav-sidebar .nav-link.active::before {
+    background: var(--soa-status-rail-color);
+    block-size: calc(100% - 2 * var(--soa-space-2));
+    border-radius: var(--soa-border-radius-full);
+    content: "";
+    inline-size: var(--soa-status-rail-width);
+    inset-block-start: var(--soa-space-2);
+    inset-inline-start: 0;
+    position: absolute;
+  }
+  .nav-treeview {
+    background: var(--soa-sidebar-submenu-bg);
+    padding-inline-start: var(--soa-sidebar-submenu-padding-inline);
+  }
+  .menu-open > .nav-link :is(.right, .nav-arrow) {
+    transform: rotate(var(--soa-sidebar-indicator-angle));
+  }
+  .sidebar-collapse .main-sidebar {
+    width: var(--soa-sidebar-collapsed-width);
+  }
+  #sidebar-overlay {
+    background: var(--soa-sidebar-overlay-bg);
+    display: none;
+    inset: 0;
+    position: fixed;
+    z-index: var(--soa-sidebar-overlay-z-index);
+  }
+  @media (max-width: 64rem) {
+    .sidebar-closed .main-sidebar,
+    .sidebar-collapse:not(.sidebar-open) .main-sidebar {
+      transform: translateX(-100%);
+    }
+    .sidebar-open #sidebar-overlay {
+      display: block;
+    }
+  }
+}
+
+/*# sourceMappingURL=shadcn.css.map*/

@@ -75,8 +75,8 @@ Both no-build profiles expose these logical entries:
 
 ```text
 feature:lightbox
-feature:lightbox:theme:legacy-adminlte
-feature:lightbox:theme:tailwind
+feature:lightbox:theme:adminlte
+feature:lightbox:theme:shadcn
 ```
 
 They resolve to precompiled JavaScript and CSS under `public/default`. The

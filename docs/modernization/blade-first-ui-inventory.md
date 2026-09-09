@@ -20,7 +20,8 @@ boundary for the remaining theme migration:
 - all built-in templates and Vue components are distributed in both prepared
   asset profiles, so a consumer does not run npm or rebuild the package.
 
-The scan covers `resources/frontend` and `resources/js/shared/legacy`. The
+The scan covers active sources under `resources/js`, `resources/css` and
+`resources/views/themes`; compatibility adapters live under `resources/js/shared/legacy`. The
 read-only reference project is intentionally not scanned again.
 
 ## Decision rules
@@ -82,9 +83,9 @@ remain examples for the migrations above.
 
 | JavaScript path | Blade owner | Why it already satisfies the boundary |
 | --- | --- | --- |
-| `features/forms/files/files-template.js` | `default.form.element.files` | JavaScript clones the server-rendered `.RenderFile` template and fills known fields, links and text. Both the historical inert script form and `<template>` remain accepted for project overrides. |
-| `assets/js_owl/admin/form/related/related-dom.js` | `default.form.element.related.group` via `default.form.element.related.inner_element` | JavaScript parses trusted server-rendered group HTML, rewrites ids/names/props and runs lifecycle hooks. It does not invent group classes or controls. |
-| `features/table/editing/inline-editor-value.js` | Editable column view and server response | The optional `innerHTML` assignment updates developer-authorized display content after save; it does not construct editor presentation. The default remains text content. |
+| `resources/js/shared/features/forms/files/files-template.js` | `default.form.element.files` | JavaScript clones the server-rendered `.RenderFile` template and fills known fields, links and text. Both the historical inert script form and `<template>` remain accepted for project overrides. |
+| `resources/js/shared/legacy/admin/form/related/related-dom.js` | `default.form.element.related.group` via `default.form.element.related.inner_element` | JavaScript parses trusted server-rendered group HTML, rewrites ids/names/props and runs lifecycle hooks. It does not invent group classes or controls. |
+| `resources/js/shared/features/table/editing/inline-editor-value.js` | Editable column view and server response | The optional `innerHTML` assignment updates developer-authorized display content after save; it does not construct editor presentation. The default remains text content. |
 
 ## Precompiled Vue internals
 
@@ -132,11 +133,11 @@ Blade:
 
 | Path | Technical DOM / reason |
 | --- | --- |
-| `core/assets/runtime-assets.js`, `core/runtime/admin-core.js` and the legacy `assets/js_owl/components/asset.js` bridge | Runtime `<script>`, `<link>` and image probes used to load or verify assets. |
-| `core/dom/forms.js` | Temporary POST form and hidden inputs used for navigation/action submission. |
-| `features/forms/files/files-uploader.js` | Hidden native multiple-file input attached to the existing Blade browse control. |
-| `assets/js_owl/components/messages.js` | Legacy hidden paste-buffer image; it is non-presentational and remains technical DOM until the legacy prompt service is migrated. |
-| `assets/js_owl/admin/form/related/related-dom.js` | Temporary inert `<template>` used only to materialize Blade-rendered HTML. |
+| `resources/js/core/assets/runtime-assets.js`, `resources/js/core/runtime/admin-core.js` and the legacy `resources/js/shared/legacy/components/asset.js` bridge | Runtime `<script>`, `<link>` and image probes used to load or verify assets. |
+| `resources/js/core/dom/forms.js` | Temporary POST form and hidden inputs used for navigation/action submission. |
+| `resources/js/shared/features/forms/files/files-uploader.js` | Hidden native multiple-file input attached to the existing Blade browse control. |
+| `resources/js/shared/legacy/components/messages.js` | Legacy hidden paste-buffer image; it is non-presentational and remains technical DOM until the legacy prompt service is migrated. |
+| `resources/js/shared/legacy/admin/form/related/related-dom.js` | Temporary inert `<template>` used only to materialize Blade-rendered HTML. |
 
 `FormData`, URL search parameters, JSON payload scripts and lifecycle event
 objects are data/transport structures rather than DOM presentation and are not

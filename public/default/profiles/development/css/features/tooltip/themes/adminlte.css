@@ -1,0 +1,30 @@
+:root {
+  --soa-tooltip-surface: #000;
+  --soa-tooltip-text: #fff;
+  --soa-tooltip-padding-block: 0.25rem;
+  --soa-tooltip-padding-inline: 0.5rem;
+  --soa-tooltip-radius: 0.25rem;
+  --soa-tooltip-font-size: 0.875rem;
+  --soa-tooltip-line-height: 1.25;
+  --soa-tooltip-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.18);
+}
+
+:root[data-color-scheme=dark] {
+  --soa-tooltip-surface: #f8f9fa;
+  --soa-tooltip-text: #212529;
+}
+
+@layer sleepingowl-theme.tooltip {
+  [data-tooltip-popup] {
+    padding: var(--soa-tooltip-padding-block) var(--soa-tooltip-padding-inline);
+    border-radius: var(--soa-tooltip-radius);
+    background: var(--soa-tooltip-surface);
+    box-shadow: var(--soa-tooltip-shadow);
+    color: var(--soa-tooltip-text);
+    font-size: var(--soa-tooltip-font-size);
+    line-height: var(--soa-tooltip-line-height);
+    text-align: center;
+  }
+}
+
+/*# sourceMappingURL=adminlte.css.map*/

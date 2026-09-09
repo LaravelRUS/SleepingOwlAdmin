@@ -69,16 +69,16 @@ The bridge list is executable contract data in `ViewBoundaryTest`: every listed 
 
 ## Extracted legacy AdminLTE theme
 
-The current compatibility implementation is explicitly identified as `legacy-adminlte` through `ThemeInterface`. Its ownership boundary is:
+The current compatibility implementation is explicitly identified as `adminlte` through `ThemeInterface`. Its ownership boundary is:
 
 - default theme/template selector: `SleepingOwl\Admin\Themes\AdminLTETheme`;
 - legacy template lifecycle retained for published config: `SleepingOwl\Admin\Templates\TemplateDefault`;
 - Blade implementation: `resources/views/themes/adminlte/default`;
 - stable logical namespace: `sleeping_owl::default`;
 - current precompiled distribution: `public/default`;
-- compatibility source tree: `resources/assets`, retained only for deprecated aggregate entrypoints while direct theme assets live under `resources/frontend`.
+- compatibility JavaScript: `resources/js/shared/legacy`; theme styles/scripts: `resources/{css,js}/themes/adminlte`; active legacy aggregate Sass: `resources/css/themes/adminlte/legacy`.
 
-The physical view move and AdminLTE 4 markup migration do not change logical view names, template config, published override priority or public asset URLs. The stable `legacy-adminlte` id names a compatibility handle, not the installed AdminLTE major version.
+The physical view move and AdminLTE 4 markup migration do not change logical view names, template config, published override priority or public asset URLs. The stable `adminlte` id names a compatibility handle, not the installed AdminLTE major version.
 
 ## Executable dependency guards
 

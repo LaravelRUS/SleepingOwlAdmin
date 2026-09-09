@@ -17,7 +17,7 @@ class SleepingOwlServiceProvider extends AdminSectionsServiceProvider
         $this->loadViewsFrom($this->viewPaths(), 'sleeping_owl');
         $this->loadViewsFrom(
             __DIR__.'/../../resources/views/themes/shadcn',
-            'sleeping_owl_tailwind'
+            'sleeping_owl_shadcn'
         );
 
         $this->registerCore();

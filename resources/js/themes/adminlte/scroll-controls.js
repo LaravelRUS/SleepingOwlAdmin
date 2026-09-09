@@ -1,4 +1,4 @@
-const INSTALLATION = Symbol.for('sleepingowl.theme.legacy-adminlte.scroll-controls')
+const INSTALLATION = Symbol.for('sleepingowl.theme.adminlte.scroll-controls')
 const SCROLL_END_TOLERANCE = 10
 
 export function installScrollControls(target = globalThis) {

@@ -54,9 +54,9 @@ function isAdminLteEntry(logicalId) {
     return (
         logicalId === 'core' ||
         logicalId.startsWith('shared:') ||
-        logicalId === 'theme:legacy-adminlte' ||
+        logicalId === 'theme:adminlte' ||
         /^feature:[^:]+$/.test(logicalId) ||
-        logicalId.endsWith(':theme:legacy-adminlte')
+        logicalId.endsWith(':theme:adminlte')
     )
 }
 

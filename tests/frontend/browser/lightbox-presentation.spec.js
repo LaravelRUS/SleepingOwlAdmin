@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test'
 
 for (const [theme, controlSurface] of [
-    ['legacy-adminlte', 'rgb(52, 58, 64)'],
+    ['adminlte', 'rgb(52, 58, 64)'],
     ['tailwind', 'rgb(20, 32, 51)'],
 ]) {
     test(`${theme} lightbox adapter owns controls and caption presentation`, async ({ page }) => {

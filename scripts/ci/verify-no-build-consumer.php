@@ -141,8 +141,8 @@ function verifyThemes(string $appRoot, string $expectedTheme): void
     $app->make(Kernel::class)->bootstrap();
 
     $expectedClass = match ($expectedTheme) {
-        'legacy-adminlte' => AdminLTETheme::class,
-        'tailwind' => TailwindTheme::class,
+        'adminlte' => AdminLTETheme::class,
+        'shadcn' => TailwindTheme::class,
         default => fail("Unsupported expected theme [{$expectedTheme}]."),
     };
 
@@ -161,7 +161,7 @@ function verifyThemes(string $appRoot, string $expectedTheme): void
         fail('The framework-free test theme did not resolve its precompiled assets.');
     }
 
-    if (str_contains($sources, 'legacy-adminlte')) {
+    if (str_contains($sources, 'adminlte')) {
         fail('The framework-free test theme resolved AdminLTE assets.');
     }
 
@@ -170,11 +170,11 @@ function verifyThemes(string $appRoot, string $expectedTheme): void
     $assets = [...$registry->registeredScripts(), ...$registry->registeredStyles()];
     $sources = implode("\n", array_map(static fn ($asset): string => $asset->source(), $assets));
 
-    if (! str_contains($sources, 'css/themes/tailwind-utilities.css')) {
+    if (! str_contains($sources, 'css/themes/shadcn-utilities.css')) {
         fail('TailwindTheme did not resolve its precompiled utility layer.');
     }
 
-    if (str_contains($sources, 'legacy-adminlte')) {
+    if (str_contains($sources, 'adminlte')) {
         fail('TailwindTheme resolved AdminLTE assets.');
     }
 }
@@ -183,9 +183,9 @@ function main(array $arguments): void
 {
     $appRoot = isset($arguments[1]) ? realpath($arguments[1]) : false;
     if ($appRoot === false || ! is_dir($appRoot)) {
-        fail('Usage: php verify-no-build-consumer.php <laravel-application> [legacy-adminlte|tailwind]');
+        fail('Usage: php verify-no-build-consumer.php <laravel-application> [adminlte|shadcn]');
     }
-    $expectedTheme = $arguments[2] ?? 'legacy-adminlte';
+    $expectedTheme = $arguments[2] ?? 'adminlte';
 
     $assetRoot = $appRoot.'/public/packages/sleepingowl/default';
     verifyProfiles($assetRoot, loadManifest($assetRoot));

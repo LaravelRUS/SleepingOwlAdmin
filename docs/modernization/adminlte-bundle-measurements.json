@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "sourceManifest": "public/default/asset-manifest.json",
   "packageVersion": "dev-master",
-  "buildId": "sha256:ee13ac725a2d6c4753376c6711363af65f8d1e3c692893058aed40376ea06d89",
+  "buildId": "sha256:49c19837b517fa5a7fd3eae7b21c69cff470b34b0f64f8435270103ca8cd4b7b",
   "baseline": {
     "source": "docs/modernization/baseline/frontend.json",
     "bytes": 2585357,
@@ -78,11 +78,11 @@
             "gzipBytes": 2742
           }
         },
-        "feature:dropdown:theme:legacy-adminlte": {
+        "feature:dropdown:theme:adminlte": {
           "assets": [
             {
               "type": "styles",
-              "file": "profiles/production/css/features/dropdown/themes/legacy-adminlte.css",
+              "file": "profiles/production/css/features/dropdown/themes/adminlte.css",
               "version": "b25f56f0bf2a62b08a0bc796f7f90906",
               "checksum": "sha256:e43d9228f2ba5454444eaf41e2b060f05dd2d8b02cabdf7e55dacf443cdaa0d3",
               "bytes": 2057,
@@ -145,11 +145,11 @@
             "gzipBytes": 19576
           }
         },
-        "feature:lightbox:theme:legacy-adminlte": {
+        "feature:lightbox:theme:adminlte": {
           "assets": [
             {
               "type": "styles",
-              "file": "profiles/production/css/features/lightbox/themes/legacy-adminlte.css",
+              "file": "profiles/production/css/features/lightbox/themes/adminlte.css",
               "version": "b2ad9d34ee0ab88d09a66e77cc0447ed",
               "checksum": "sha256:564008c427a13c7cce7a01610ac1c1cde0a77bd6546ea70794fc3ddd3d84df55",
               "bytes": 1095,
@@ -187,11 +187,11 @@
             "gzipBytes": 4266
           }
         },
-        "feature:sidebar:theme:legacy-adminlte": {
+        "feature:sidebar:theme:adminlte": {
           "assets": [
             {
               "type": "styles",
-              "file": "profiles/production/css/features/sidebar/themes/legacy-adminlte.css",
+              "file": "profiles/production/css/features/sidebar/themes/adminlte.css",
               "version": "476c3862b96e74f79b9158a0833f84fb",
               "checksum": "sha256:e9fa96553deae1fbedfade671ab1bc01df67be5f9914fdd36082b2982ed8a14b",
               "bytes": 1397,
@@ -229,19 +229,19 @@
             "gzipBytes": 85122
           }
         },
-        "feature:table:theme:legacy-adminlte": {
+        "feature:table:theme:adminlte": {
           "assets": [
             {
               "type": "scripts",
-              "file": "profiles/production/js/features/table/themes/legacy-adminlte.js",
-              "version": "98490b77ef86872caf2a6d468e6b639d",
-              "checksum": "sha256:6aa64c5ac5ef6889b6ab001d6c52ce8e6fef036a15acd4af74ba0d2d92258bb1",
-              "bytes": 143898,
-              "gzipBytes": 47011
+              "file": "profiles/production/js/features/table/themes/adminlte.js",
+              "version": "5ada00084d6c3b8a71fbc5761395e36e",
+              "checksum": "sha256:2546c33e34efbc5a682f4eb7b3d387ca09b5f3d57f965ced0df3883584ad75d0",
+              "bytes": 143884,
+              "gzipBytes": 47002
             },
             {
               "type": "styles",
-              "file": "profiles/production/css/features/table/themes/datatables-legacy-adminlte.css",
+              "file": "profiles/production/css/features/table/themes/adminlte.css",
               "version": "4e0f701ce2dfef021f6aafd0d1bfba1e",
               "checksum": "sha256:335f124d4f1037c04883f640979718b2f9b9a0b2eada1478343b314a3c934452",
               "bytes": 37892,
@@ -250,8 +250,8 @@
           ],
           "totals": {
             "files": 2,
-            "bytes": 181790,
-            "gzipBytes": 52944
+            "bytes": 181776,
+            "gzipBytes": 52935
           }
         },
         "feature:tabs": {
@@ -271,11 +271,11 @@
             "gzipBytes": 2920
           }
         },
-        "feature:tabs:theme:legacy-adminlte": {
+        "feature:tabs:theme:adminlte": {
           "assets": [
             {
               "type": "styles",
-              "file": "profiles/production/css/features/tabs/themes/legacy-adminlte.css",
+              "file": "profiles/production/css/features/tabs/themes/adminlte.css",
               "version": "e16a5d6c5f142ce3c6a7b0bf0b1aa9c4",
               "checksum": "sha256:81de3290501f25f086ab2555aeb53507c9718b7448958db6cfe34a74dabd7345",
               "bytes": 1366,
@@ -313,11 +313,11 @@
             "gzipBytes": 2456
           }
         },
-        "feature:tooltip:theme:legacy-adminlte": {
+        "feature:tooltip:theme:adminlte": {
           "assets": [
             {
               "type": "styles",
-              "file": "profiles/production/css/features/tooltip/themes/legacy-adminlte.css",
+              "file": "profiles/production/css/features/tooltip/themes/adminlte.css",
               "version": "d55c2962f4d968824f9ae3356b0d7852",
               "checksum": "sha256:203e316fa4f4cbee422e5adfa29df62c0402c294643ef6402c3c519b1a0f74b8",
               "bytes": 740,
@@ -355,11 +355,11 @@
             "gzipBytes": 17051
           }
         },
-        "feature:tree:theme:legacy-adminlte": {
+        "feature:tree:theme:adminlte": {
           "assets": [
             {
               "type": "scripts",
-              "file": "profiles/production/js/features/tree/themes/legacy-adminlte.js",
+              "file": "profiles/production/js/features/tree/themes/adminlte.js",
               "version": "ed971bcdec78a7c806fe1b29bc497023",
               "checksum": "sha256:5debe240d97b7c92bcd16ebe7166272c054ecce3bdc4882a165dd1f9608c269a",
               "bytes": 1352,
@@ -367,7 +367,7 @@
             },
             {
               "type": "styles",
-              "file": "profiles/production/css/features/tree/themes/legacy-adminlte.css",
+              "file": "profiles/production/css/features/tree/themes/adminlte.css",
               "version": "7704a1b9702d53c8f9b8c1a1ab0ea77e",
               "checksum": "sha256:90bfb8e83a37a1b696e58770b62ea710d8d1df3b98f240db11e25f879581f9ae",
               "bytes": 2549,
@@ -448,19 +448,19 @@
             "gzipBytes": 97454
           }
         },
-        "theme:legacy-adminlte": {
+        "theme:adminlte": {
           "assets": [
             {
               "type": "scripts",
-              "file": "profiles/production/js/themes/legacy-adminlte.js",
-              "version": "c4b903ad93465e00c5b59ff8167e2bba",
-              "checksum": "sha256:96448cc6153e8884bbfc559f584297130af25cb1c0aae945bb9242d20e39bdf5",
-              "bytes": 4003,
-              "gzipBytes": 1723
+              "file": "profiles/production/js/themes/adminlte.js",
+              "version": "684757156c708ae3178731b56ff4268d",
+              "checksum": "sha256:5587ea55211384ed4ba9edf8c81e1d0c49ef110f98b33a3d4ee89b1608b47cf9",
+              "bytes": 3996,
+              "gzipBytes": 1717
             },
             {
               "type": "styles",
-              "file": "profiles/production/css/themes/legacy-adminlte.css",
+              "file": "profiles/production/css/themes/adminlte.css",
               "version": "d5ce33b48170690b711c06afc6fb9862",
               "checksum": "sha256:a079ae51e7ea8512dc925734667c6b5487035114bd02f8d5f89b9b797ee137f2",
               "bytes": 333733,
@@ -469,15 +469,15 @@
           ],
           "totals": {
             "files": 2,
-            "bytes": 337736,
-            "gzipBytes": 51203
+            "bytes": 337729,
+            "gzipBytes": 51197
           }
         }
       },
       "totals": {
         "files": 33,
-        "bytes": 1843658,
-        "gzipBytes": 488384
+        "bytes": 1843637,
+        "gzipBytes": 488369
       }
     },
     "development": {
@@ -549,21 +549,21 @@
             "gzipBytes": 5578
           }
         },
-        "feature:dropdown:theme:legacy-adminlte": {
+        "feature:dropdown:theme:adminlte": {
           "assets": [
             {
               "type": "styles",
-              "file": "profiles/development/css/features/dropdown/themes/legacy-adminlte.css",
-              "version": "7b69f008548979c5f2e7786f49caf45c",
-              "checksum": "sha256:150878d6597410705629fd55b910eec26970742a3017c5c98b091739bc2a98b2",
-              "bytes": 2456,
-              "gzipBytes": 719
+              "file": "profiles/development/css/features/dropdown/themes/adminlte.css",
+              "version": "7888c8cd20968e94135ddb3db96dfbaf",
+              "checksum": "sha256:94a4a5a697cce784683416a1af17bc183c7db2c76c9161dc313e64065ceb3779",
+              "bytes": 2449,
+              "gzipBytes": 713
             }
           ],
           "totals": {
             "files": 1,
-            "bytes": 2456,
-            "gzipBytes": 719
+            "bytes": 2449,
+            "gzipBytes": 713
           }
         },
         "feature:forms": {
@@ -616,21 +616,21 @@
             "gzipBytes": 22396
           }
         },
-        "feature:lightbox:theme:legacy-adminlte": {
+        "feature:lightbox:theme:adminlte": {
           "assets": [
             {
               "type": "styles",
-              "file": "profiles/development/css/features/lightbox/themes/legacy-adminlte.css",
-              "version": "a41cf729c57872305a97a94297dac484",
-              "checksum": "sha256:146186dc4f664f21d0f5bb22c6947d516a37596f2dd4f5f6ab9d15a8f44a2391",
-              "bytes": 1290,
-              "gzipBytes": 394
+              "file": "profiles/development/css/features/lightbox/themes/adminlte.css",
+              "version": "492499a2bc594efe0eb20fdc267c9a00",
+              "checksum": "sha256:fd96374fdd414645343e282d3e679216c7bc193e7334b62ad421dfe552a50cf5",
+              "bytes": 1283,
+              "gzipBytes": 389
             }
           ],
           "totals": {
             "files": 1,
-            "bytes": 1290,
-            "gzipBytes": 394
+            "bytes": 1283,
+            "gzipBytes": 389
           }
         },
         "feature:sidebar": {
@@ -658,21 +658,21 @@
             "gzipBytes": 8422
           }
         },
-        "feature:sidebar:theme:legacy-adminlte": {
+        "feature:sidebar:theme:adminlte": {
           "assets": [
             {
               "type": "styles",
-              "file": "profiles/development/css/features/sidebar/themes/legacy-adminlte.css",
-              "version": "bcf7e49d824be5ad0dc48266a8503710",
-              "checksum": "sha256:d15acd33e70d3bdba96c85348288e9533824e1904280c87e9a2492c0f0c79888",
-              "bytes": 1758,
-              "gzipBytes": 561
+              "file": "profiles/development/css/features/sidebar/themes/adminlte.css",
+              "version": "cbe8c777d9beb08909522bf11cf1d491",
+              "checksum": "sha256:1d006f0997b570726769725335246346990adf1c1a7765acee2df5fb978fde90",
+              "bytes": 1751,
+              "gzipBytes": 556
             }
           ],
           "totals": {
             "files": 1,
-            "bytes": 1758,
-            "gzipBytes": 561
+            "bytes": 1751,
+            "gzipBytes": 556
           }
         },
         "feature:table": {
@@ -700,29 +700,29 @@
             "gzipBytes": 196513
           }
         },
-        "feature:table:theme:legacy-adminlte": {
+        "feature:table:theme:adminlte": {
           "assets": [
             {
               "type": "scripts",
-              "file": "profiles/development/js/features/table/themes/legacy-adminlte.js",
-              "version": "e40a71e5560e887960cb260d8967aaab",
-              "checksum": "sha256:1d28e1081780f2e16b1e87fdd9f544583aa8a44247ac151e69a9bed2350399ca",
-              "bytes": 506963,
-              "gzipBytes": 123635
+              "file": "profiles/development/js/features/table/themes/adminlte.js",
+              "version": "57ac356f2f7d0c4657a6767912530b6d",
+              "checksum": "sha256:50716aeb86c04bff8bf9114412ddbbfa9d26efe00d1ccc826c6fbf8f010f1cd8",
+              "bytes": 506949,
+              "gzipBytes": 123629
             },
             {
               "type": "styles",
-              "file": "profiles/development/css/features/table/themes/datatables-legacy-adminlte.css",
-              "version": "66b95ee35c065af72d35705ff9f47770",
-              "checksum": "sha256:67d3125040ee49cde521fc36ecd6b4798f38a9a5772187cf4da93d92f79a1884",
-              "bytes": 45934,
-              "gzipBytes": 6387
+              "file": "profiles/development/css/features/table/themes/adminlte.css",
+              "version": "43a4e2123da7b04d48c204b26ffb4201",
+              "checksum": "sha256:03d3f8edc5c13e49dd28c812cc68f11b9798febc461e95c97f0414a97ed34b52",
+              "bytes": 45916,
+              "gzipBytes": 6380
             }
           ],
           "totals": {
             "files": 2,
-            "bytes": 552897,
-            "gzipBytes": 130022
+            "bytes": 552865,
+            "gzipBytes": 130009
           }
         },
         "feature:tabs": {
@@ -742,21 +742,21 @@
             "gzipBytes": 5661
           }
         },
-        "feature:tabs:theme:legacy-adminlte": {
+        "feature:tabs:theme:adminlte": {
           "assets": [
             {
               "type": "styles",
-              "file": "profiles/development/css/features/tabs/themes/legacy-adminlte.css",
-              "version": "6aeedaafe0d08fd5a26a87e6ff03ba2c",
-              "checksum": "sha256:17916487d31690a45b5091ef8541d02a3babe8643cb8944b4608707bd1e919c8",
-              "bytes": 1623,
-              "gzipBytes": 538
+              "file": "profiles/development/css/features/tabs/themes/adminlte.css",
+              "version": "a7d86161892da245e8216164071ac2dd",
+              "checksum": "sha256:ca6fae944fc0e2f01e0b4883c97f81c661276c00074b3f73851c04aaa7d6d9ca",
+              "bytes": 1616,
+              "gzipBytes": 533
             }
           ],
           "totals": {
             "files": 1,
-            "bytes": 1623,
-            "gzipBytes": 538
+            "bytes": 1616,
+            "gzipBytes": 533
           }
         },
         "feature:tooltip": {
@@ -784,21 +784,21 @@
             "gzipBytes": 5165
           }
         },
-        "feature:tooltip:theme:legacy-adminlte": {
+        "feature:tooltip:theme:adminlte": {
           "assets": [
             {
               "type": "styles",
-              "file": "profiles/development/css/features/tooltip/themes/legacy-adminlte.css",
-              "version": "b5b8c3974977ff6e18441d68a4d9e582",
-              "checksum": "sha256:c355ae2151c88fdf4456557d70c1cc99df52457e49b94206c6ac62a03a3463c5",
-              "bytes": 899,
-              "gzipBytes": 366
+              "file": "profiles/development/css/features/tooltip/themes/adminlte.css",
+              "version": "4981aab6bf222b61cbbc96deaed1ef90",
+              "checksum": "sha256:07415d75500a8588112c31b91fe0c13eac69cd9c0397122d2d9857d9db617508",
+              "bytes": 892,
+              "gzipBytes": 362
             }
           ],
           "totals": {
             "files": 1,
-            "bytes": 899,
-            "gzipBytes": 366
+            "bytes": 892,
+            "gzipBytes": 362
           }
         },
         "feature:tree": {
@@ -826,29 +826,29 @@
             "gzipBytes": 36187
           }
         },
-        "feature:tree:theme:legacy-adminlte": {
+        "feature:tree:theme:adminlte": {
           "assets": [
             {
               "type": "scripts",
-              "file": "profiles/development/js/features/tree/themes/legacy-adminlte.js",
-              "version": "3bf3e8970661624238ee93eb226c9f0f",
-              "checksum": "sha256:52257019c4989cd76cbb2f347be2b844d82baf4acc1f413e97c9382dfe742f53",
-              "bytes": 7054,
-              "gzipBytes": 1957
+              "file": "profiles/development/js/features/tree/themes/adminlte.js",
+              "version": "22c553a1d419b29ef1ec35732ff189ac",
+              "checksum": "sha256:4848ab25e2f78093a8974e58a560d216734892c493d50671daf93e7d6991bcb0",
+              "bytes": 7047,
+              "gzipBytes": 1954
             },
             {
               "type": "styles",
-              "file": "profiles/development/css/features/tree/themes/legacy-adminlte.css",
-              "version": "c9c2cccca13e3f73818fef02838a821c",
-              "checksum": "sha256:acbae922945c6186adeb984573748bcf7db22ca9b15c563db5ff4155dd96ba1d",
-              "bytes": 3086,
-              "gzipBytes": 867
+              "file": "profiles/development/css/features/tree/themes/adminlte.css",
+              "version": "b46e3b97442141859a8a437917b1d215",
+              "checksum": "sha256:659442ca62babc259d457ec293c2ed1d47ead32d5f284b79108782563f74433d",
+              "bytes": 3079,
+              "gzipBytes": 863
             }
           ],
           "totals": {
             "files": 2,
-            "bytes": 10140,
-            "gzipBytes": 2824
+            "bytes": 10126,
+            "gzipBytes": 2817
           }
         },
         "shared:compatibility": {
@@ -919,50 +919,50 @@
             "gzipBytes": 199597
           }
         },
-        "theme:legacy-adminlte": {
+        "theme:adminlte": {
           "assets": [
             {
               "type": "scripts",
-              "file": "profiles/development/js/themes/legacy-adminlte.js",
-              "version": "379316f719e8628aad328673154a59d9",
-              "checksum": "sha256:72b7f90f1a979bdd950fc607424916aa327743dcc8f5748ecc46f786d00ce9ee",
-              "bytes": 13947,
-              "gzipBytes": 3854
+              "file": "profiles/development/js/themes/adminlte.js",
+              "version": "cf74949fd53933799697b77752eeb75c",
+              "checksum": "sha256:0c29c5c10fc6e06a50704304cbcaa33fb480f5b6737d5a411ced2178a3a660c5",
+              "bytes": 13926,
+              "gzipBytes": 3849
             },
             {
               "type": "styles",
-              "file": "profiles/development/css/themes/legacy-adminlte.css",
-              "version": "4a2714bf13a3dba47d81e8b093e1bb8e",
-              "checksum": "sha256:ad2ed0455fd333f92c8d0d8361c772e04a2279f891d8bb950f4686d8de082c01",
-              "bytes": 444292,
-              "gzipBytes": 56514
+              "file": "profiles/development/css/themes/adminlte.css",
+              "version": "263b7b9c9fccf36cbeada36d6011d53c",
+              "checksum": "sha256:70fca2e56193931a1ea1a46b935a29d8e7b4fd6fd9aaf9ce9c9b2d5d7f096558",
+              "bytes": 444285,
+              "gzipBytes": 56508
             }
           ],
           "totals": {
             "files": 2,
-            "bytes": 458239,
-            "gzipBytes": 60368
+            "bytes": 458211,
+            "gzipBytes": 60357
           }
         }
       },
       "totals": {
         "files": 33,
-        "bytes": 4942320,
-        "gzipBytes": 989497
+        "bytes": 4942211,
+        "gzipBytes": 989441
       }
     }
   },
   "productionVsLegacyAggregate": {
     "bytes": {
-      "current": 1843658,
+      "current": 1843637,
       "baseline": 2585357,
-      "delta": -741699,
+      "delta": -741720,
       "percent": -28.7
     },
     "gzipBytes": {
-      "current": 488384,
+      "current": 488369,
       "baseline": 587787,
-      "delta": -99403,
+      "delta": -99418,
       "percent": -16.9
     }
   }

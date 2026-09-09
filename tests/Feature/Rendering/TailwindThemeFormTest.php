@@ -87,7 +87,7 @@ class TailwindThemeFormTest extends TestCase
             'textarea',
         ] as $primitive) {
             $this->assertTrue(
-                view()->exists("sleeping_owl_tailwind::components.ui.{$primitive}"),
+                view()->exists("sleeping_owl_shadcn::components.ui.{$primitive}"),
                 $primitive
             );
         }

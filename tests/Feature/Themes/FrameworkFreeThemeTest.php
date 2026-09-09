@@ -121,7 +121,7 @@ class FrameworkFreeThemeTest extends TestCase
             $adminlteSources = $this->registeredSources(AdminLTETheme::class, $profile);
 
             $this->assertSelectedThemeSources($customSources, $profile, 'framework-free-test');
-            $this->assertSelectedThemeSources($adminlteSources, $profile, 'legacy-adminlte');
+            $this->assertSelectedThemeSources($adminlteSources, $profile, 'adminlte');
             $this->assertStringNotContainsString('icons.css', implode('|', $customSources));
         }
     }

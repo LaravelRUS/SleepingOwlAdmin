@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test'
 
 for (const [theme, activeSurface] of [
-    ['legacy-adminlte', 'rgb(255, 255, 255)'],
+    ['adminlte', 'rgb(255, 255, 255)'],
     ['tailwind', 'rgb(230, 238, 252)'],
 ]) {
     test(`${theme} tabs adapter owns active and focus presentation`, async ({ page }) => {

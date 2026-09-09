@@ -19,12 +19,12 @@ final class TailwindTheme implements ThemeInterface
 
     public function id(): string
     {
-        return 'tailwind';
+        return 'shadcn';
     }
 
     public function viewNamespace(): string
     {
-        return 'sleeping_owl_tailwind::default';
+        return 'sleeping_owl_shadcn::default';
     }
 
     public function assets(): array
@@ -34,7 +34,7 @@ final class TailwindTheme implements ThemeInterface
             'shared:compatibility',
             'shared:modules',
             'shared:vue',
-            'theme:tailwind',
+            'theme:shadcn',
             ...array_map(
                 fn (string $feature): string => "feature:{$feature}:theme:{$this->id()}",
                 self::FEATURE_ADAPTERS

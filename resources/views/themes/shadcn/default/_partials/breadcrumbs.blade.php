@@ -1,3 +1,3 @@
-@include('sleeping_owl_tailwind::components.ui.breadcrumb', [
+@include('sleeping_owl_shadcn::components.ui.breadcrumb', [
     'breadcrumbs' => $breadcrumbs,
 ])

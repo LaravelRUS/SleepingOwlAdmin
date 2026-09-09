@@ -57,8 +57,8 @@ normalization.
 Behavior is shipped by `feature:sidebar`. Presentation is selected separately:
 
 ```text
-feature:sidebar:theme:legacy-adminlte
-feature:sidebar:theme:tailwind
+feature:sidebar:theme:adminlte
+feature:sidebar:theme:shadcn
 ```
 
 Both Sass adapters keep colors in `_colors.scss`, dimensions in

@@ -1,6 +1,6 @@
 <ul class="nav navbar-nav soa-header-list">
     <li class="nav-item">
-        @include('sleeping_owl_tailwind::components.ui.button', [
+        @include('sleeping_owl_shadcn::components.ui.button', [
             'attributesArray' => [
                 'aria-label' => 'Menu',
                 'class' => 'nav-link',
@@ -14,7 +14,7 @@
 
     @if(config('sleeping_owl.datatables_settings.state_datatables') || config('sleeping_owl.datatables_settings.state_tabs') || config('sleeping_owl.datatables_settings.state_filters'))
         <li class="nav-item">
-            @include('sleeping_owl_tailwind::components.ui.button', [
+            @include('sleeping_owl_shadcn::components.ui.button', [
                 'attributesArray' => [
                     'aria-label' => trans('sleeping_owl::lang.button.clear').' LocalStorage',
                     'class' => 'nav-link',
@@ -33,7 +33,7 @@
     @if(config('sleeping_owl.ui.show_color_mode_toggle'))
         @php($mode = ($_COOKIE['theme-mode'] ?? 'light') === 'dark' ? 'dark' : 'light')
         <li class="nav-item">
-            @include('sleeping_owl_tailwind::components.ui.button', [
+            @include('sleeping_owl_shadcn::components.ui.button', [
                 'attributesArray' => [
                     'aria-label' => trans('sleeping_owl::lang.button.theme'),
                     'class' => 'nav-link',

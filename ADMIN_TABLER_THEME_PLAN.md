@@ -69,20 +69,19 @@ resources/views/themes/tabler/
     ├── helper/
     └── pages/
 
-resources/frontend/themes/tabler/
-├── index.js                # только доказанный theme-specific runtime
-└── styles/
-    ├── _colors.scss
-    ├── _variables.scss
-    ├── _custom-properties.scss
-    ├── _tabler-bridge.scss
-    ├── _framework.scss
-    ├── _base.scss
-    ├── _components.scss
-    └── theme.scss
+resources/js/themes/tabler/
+└── theme.js                # только доказанный theme-specific runtime
 
-resources/frontend/features/*/themes/tabler/styles/
-└── *.scss                  # feature presentation adapters
+resources/css/themes/tabler/
+├── _colors.scss
+├── _variables.scss
+├── _custom-properties.scss
+├── _tabler-bridge.scss
+├── _framework.scss
+├── _base.scss
+├── _components.scss
+├── theme.scss
+└── features/*/             # feature presentation adapters внутри theme ownership
 
 tests/Feature/Themes/
 └── TablerThemeTest.php

@@ -45,8 +45,8 @@ assert_artifact_boundary() {
     test -f "${PACKAGE_ROOT}/public/default/asset-manifest.json"
     test -f "${PACKAGE_ROOT}/public/default/profiles/production/js/admin-core.js"
     test -f "${PACKAGE_ROOT}/public/default/profiles/development/js/admin-core.js"
-    test -f "${PACKAGE_ROOT}/public/default/profiles/production/css/themes/tailwind-utilities.css"
-    test -f "${PACKAGE_ROOT}/public/default/profiles/development/css/themes/tailwind-utilities.css"
+    test -f "${PACKAGE_ROOT}/public/default/profiles/production/css/themes/shadcn-utilities.css"
+    test -f "${PACKAGE_ROOT}/public/default/profiles/development/css/themes/shadcn-utilities.css"
     test ! -d "${PACKAGE_ROOT}/node_modules"
     test ! -d "${PACKAGE_ROOT}/vendor"
 }
@@ -70,16 +70,16 @@ run_consumer_workflow() {
     php "${APP_ROOT}/artisan" sleepingowl:install --no-interaction
     php "${APP_ROOT}/artisan" sleepingowl:update --no-interaction
     php "${APP_ROOT}/artisan" sleepingowl:update --check --no-interaction
-    php "${PROJECT_ROOT}/scripts/ci/verify-no-build-consumer.php" "${APP_ROOT}" legacy-adminlte
+    php "${PROJECT_ROOT}/scripts/ci/verify-no-build-consumer.php" "${APP_ROOT}" adminlte
     assert_check_is_read_only
-    select_tailwind_theme
+    select_shadcn_theme
     php "${APP_ROOT}/artisan" sleepingowl:update --check --no-interaction
-    php "${PROJECT_ROOT}/scripts/ci/verify-no-build-consumer.php" "${APP_ROOT}" tailwind
+    php "${PROJECT_ROOT}/scripts/ci/verify-no-build-consumer.php" "${APP_ROOT}" shadcn
     ADMIN_DEV_ASSETS=true php "${APP_ROOT}/artisan" sleepingowl:update --no-interaction
     php "${APP_ROOT}/artisan" route:list --path=admin --no-ansi > /dev/null
 }
 
-select_tailwind_theme() {
+select_shadcn_theme() {
     php -r '
 $path = $argv[1];
 $contents = file_get_contents($path);

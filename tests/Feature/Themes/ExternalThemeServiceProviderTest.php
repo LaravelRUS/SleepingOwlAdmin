@@ -48,7 +48,7 @@ class ExternalThemeServiceProviderTest extends TestCase
                 '22222222222222222222222222222222',
             $sources
         );
-        $this->assertStringNotContainsString('legacy-adminlte', implode('|', $sources));
+        $this->assertStringNotContainsString('adminlte', implode('|', $sources));
     }
 
     public function test_provider_settings_runtime_property_and_extra_assets_need_no_build(): void

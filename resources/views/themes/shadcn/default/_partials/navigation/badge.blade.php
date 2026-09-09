@@ -1,4 +1,4 @@
-@include('sleeping_owl_tailwind::components.ui.badge', [
+@include('sleeping_owl_shadcn::components.ui.badge', [
     'attributesArray' => $attributesArray,
     'value' => $value,
 ])

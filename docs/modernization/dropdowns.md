@@ -60,8 +60,8 @@ Behavior and visibility belong to `feature:dropdown`. AdminLTE and Tailwind
 provide independent Sass presentation adapters:
 
 ```text
-feature:dropdown:theme:legacy-adminlte
-feature:dropdown:theme:tailwind
+feature:dropdown:theme:adminlte
+feature:dropdown:theme:shadcn
 ```
 
 Colors live in each adapter's `_colors.scss`, dimensions in `_variables.scss`,

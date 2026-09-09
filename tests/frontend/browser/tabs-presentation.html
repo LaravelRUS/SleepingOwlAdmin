@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <script>
             const theme = new URLSearchParams(location.search).get('theme') || 'tailwind'
-            const supported = ['legacy-adminlte', 'tailwind']
+            const supported = ['adminlte', 'tailwind']
             if (!supported.includes(theme)) throw new Error(`Unsupported fixture theme: ${theme}`)
 
             for (const href of [

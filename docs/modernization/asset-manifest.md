@@ -12,7 +12,7 @@ Manifest создаётся после Laravel Mix build из `build/frontend-en
 - общие `shared:icons`, `shared:compatibility`, profile-aware `shared:vue` и завершающий `shared:modules`;
 - behavior entries `feature:<feature-id>`;
 - presentation adapters `feature:<feature-id>:theme:<theme-id>`;
-- встроенные `theme:legacy-adminlte` и `theme:tailwind`.
+- встроенные `theme:adminlte` и `theme:shadcn`.
 
 Table driver не содержит presentation CSS. Встроенные table adapters публикуются отдельными
 feature/theme entries и загружаются только вместе с выбранной темой и активным table feature.

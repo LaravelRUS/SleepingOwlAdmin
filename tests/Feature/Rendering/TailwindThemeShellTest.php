@@ -79,7 +79,7 @@ class TailwindThemeShellTest extends TestCase
         $this->app['translator']->setFallback('en');
         $this->app->setLocale('fr');
 
-        $html = view('sleeping_owl_tailwind::default._partials.asset_health', [
+        $html = view('sleeping_owl_shadcn::default._partials.asset_health', [
             'status' => new AssetHealthStatus('12.1.0', '12.0.0'),
         ])->render();
 
@@ -95,7 +95,7 @@ class TailwindThemeShellTest extends TestCase
         $child = new TailwindShellRenderable('<li data-contract="child">Child</li>');
         $badge = new TailwindShellRenderable('<small class="badge">3</small>');
 
-        $html = view('sleeping_owl_tailwind::default._partials.navigation.page', [
+        $html = view('sleeping_owl_shadcn::default._partials.navigation.page', [
             'attributesArray' => [
                 'aria-label' => 'Orders',
                 'class' => 'project-link',
@@ -130,7 +130,7 @@ class TailwindThemeShellTest extends TestCase
         $session->put('error_message', 'Failure');
         $this->app->instance('session', $session);
 
-        $html = view('sleeping_owl_tailwind::default._partials.messages.error', [
+        $html = view('sleeping_owl_shadcn::default._partials.messages.error', [
             'messages' => '<strong>Request failed</strong>',
         ])->render();
 

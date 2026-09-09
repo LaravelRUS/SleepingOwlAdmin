@@ -4,7 +4,7 @@ import { expect, test } from '@playwright/test'
 
 const themes = [
     {
-        id: 'legacy-adminlte',
+        id: 'adminlte',
         route: '/theme-capabilities-adminlte',
     },
     {
@@ -182,7 +182,7 @@ function assertIsolatedThemeRequests(requests, profile, selectedTheme) {
     }
 
     if (selectedTheme === 'tailwind') {
-        expect(requests).toContain(`${profileRoot}css/themes/tailwind-utilities.css`)
+        expect(requests).toContain(`${profileRoot}css/themes/shadcn-utilities.css`)
     }
     if (selectedTheme === 'framework-free-test') {
         expect(requests.some((path) => path.endsWith('/css/icons.css'))).toBe(false)

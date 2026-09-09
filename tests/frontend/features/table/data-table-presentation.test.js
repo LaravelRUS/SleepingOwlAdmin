@@ -11,7 +11,7 @@ import {
 } from '../../../../resources/js/themes/adminlte/features/table/datatables.js'
 
 it('binds the Bootstrap presentation only to the active engine instance', () => {
-    expect(DATATABLES_PRESENTATION_ID).toBe('legacy-adminlte.bootstrap5')
+    expect(DATATABLES_PRESENTATION_ID).toBe('adminlte.bootstrap5')
     expect(installLegacyDataTablesPresentation(BootstrapDataTable)).toBe(BootstrapDataTable)
     expect(() => installLegacyDataTablesPresentation(vi.fn())).toThrow('active table engine')
 })

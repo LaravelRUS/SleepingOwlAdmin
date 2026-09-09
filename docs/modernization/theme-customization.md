@@ -180,7 +180,7 @@ and use the committed production/development CSS:
 ```
 
 The precompiled utility snapshot scans package views only. An override in
-`resources/views/vendor/sleeping_owl_tailwind` may freely reuse utilities that
+`resources/views/vendor/sleeping_owl_shadcn` may freely reuse utilities that
 already exist in that snapshot. If it introduces an arbitrary or previously
 unused utility, the application owns a small extra Tailwind build; it does not
 rebuild package core or overwrite `public/packages/sleepingowl`.
@@ -192,7 +192,7 @@ An application build can reuse the shipped canonical-token preset:
 const preset = require('./vendor/laravelrus/sleepingowl/resources/css/themes/shadcn/tailwind.preset.cjs')
 
 module.exports = {
-    content: ['./resources/views/vendor/sleeping_owl_tailwind/**/*.blade.php'],
+    content: ['./resources/views/vendor/sleeping_owl_shadcn/**/*.blade.php'],
     presets: [preset],
 }
 ```
@@ -201,7 +201,7 @@ module.exports = {
 /* resources/css/admin-tailwind.css */
 @import 'tailwindcss/utilities.css' layer(utilities) source(none);
 @config '../../tailwind.admin.config.js';
-@source '../views/vendor/sleeping_owl_tailwind';
+@source '../views/vendor/sleeping_owl_shadcn';
 ```
 
 Compile that file with the application's own Tailwind 4/PostCSS toolchain and

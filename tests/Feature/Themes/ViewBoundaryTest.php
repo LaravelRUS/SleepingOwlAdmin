@@ -33,7 +33,7 @@ class ViewBoundaryTest extends TestCase
     {
         $root = realpath(__DIR__.'/../../../resources/views/themes/adminlte/default');
 
-        foreach ($this->bladeFiles('themes/legacy/default') as $path) {
+        foreach ($this->bladeFiles('themes/adminlte/default') as $path) {
             $relative = substr($path, strlen($root) + 1);
             $logical = str_replace([DIRECTORY_SEPARATOR, '.blade.php'], ['.', ''], $relative);
             $resolved = view()->getFinder()->find("sleeping_owl::default.{$logical}");
@@ -129,7 +129,7 @@ class ViewBoundaryTest extends TestCase
     private function viewPath(string $view): string
     {
         if (str_starts_with($view, 'default.')) {
-            $view = 'themes.legacy.'.$view;
+            $view = 'themes.adminlte.'.$view;
         }
 
         $relative = str_replace('.', DIRECTORY_SEPARATOR, $view);

@@ -6,11 +6,11 @@
         <link rel="stylesheet" href="/public/default/css/features/table.css" />
         <script>
             const theme = new URLSearchParams(location.search).get('theme') || 'tailwind'
-            const supported = ['legacy-adminlte', 'tailwind']
+            const supported = ['adminlte', 'tailwind']
 
             if (!supported.includes(theme)) throw new Error(`Unsupported fixture theme: ${theme}`)
 
-            const adapter = theme === 'legacy-adminlte' ? 'datatables-legacy-adminlte' : 'tailwind'
+            const adapter = theme === 'adminlte' ? 'datatables-adminlte' : 'tailwind'
 
             for (const href of [
                 `/public/default/css/themes/${theme}.css`,

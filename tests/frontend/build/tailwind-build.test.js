@@ -8,7 +8,7 @@ const root = resolve(import.meta.dirname, '../../..')
 it('pins Tailwind 4 build-only dependencies and an explicit PostCSS entry', () => {
     const packageJson = readJson('package.json')
     const entries = readJson('build/frontend-entries.json').modern.styles.filter(
-        ({ logicalId }) => logicalId === 'theme:tailwind',
+        ({ logicalId }) => logicalId === 'theme:shadcn',
     )
 
     expect(packageJson.dependencies.tailwindcss).toBeUndefined()
@@ -16,8 +16,8 @@ it('pins Tailwind 4 build-only dependencies and an explicit PostCSS entry', () =
     expect(packageJson.devDependencies.tailwindcss).toBe('4.3.3')
     expect(packageJson.devDependencies['@tailwindcss/postcss']).toBe('4.3.3')
     expect(entries).toContainEqual({
-        logicalId: 'theme:tailwind',
-        output: 'css/themes/tailwind-utilities.css',
+        logicalId: 'theme:shadcn',
+        output: 'css/themes/shadcn-utilities.css',
         processor: 'postcss',
         source: 'resources/css/themes/shadcn/tailwind.input.css',
     })
@@ -43,7 +43,7 @@ it('uses explicit Tailwind sources and a canonical-token preset without prefligh
 it.each(['production', 'development'])(
     'ships a framework-free %s Tailwind utility layer',
     (profile) => {
-        const css = read(`public/default/profiles/${profile}/css/themes/tailwind-utilities.css`)
+        const css = read(`public/default/profiles/${profile}/css/themes/shadcn-utilities.css`)
 
         expect(css).toContain('@layer utilities')
         expect(css).toMatch(/\.flex\b/)

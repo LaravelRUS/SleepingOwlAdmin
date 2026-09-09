@@ -13,10 +13,10 @@ The modernization build publishes independent entrypoints for the default `Admin
 | `shared:modules` | `js/shared/modules.js` | — | final compatibility module boot and idempotent component scan |
 | `feature:forms` | `js/features/forms.js` | `css/features/forms.css` | form behavior independent of a concrete theme |
 | `feature:table` | `js/features/table.js` | `css/features/table.css` | table registry and drivers independent of presentation |
-| `feature:table:theme:legacy-adminlte` | `js/features/table/themes/legacy-adminlte.js` | `css/features/table/themes/datatables-legacy-adminlte.css` | Bootstrap 5/DataTables presentation owned by the AdminLTE table adapter |
-| `feature:table:theme:tailwind` | — | `css/features/table/themes/tailwind.css` | standalone Tailwind-oriented DataTables presentation without a Tailwind CLI runtime |
-| `theme:legacy-adminlte` | `js/themes/legacy-adminlte.js` | `css/themes/legacy-adminlte.css` | AdminLTE 4/Bootstrap 5 presentation; the logical id remains stable for compatibility |
-| `theme:tailwind` | `js/themes/tailwind.js` | `css/themes/tailwind.css` | Tailwind presentation |
+| `feature:table:theme:adminlte` | `js/features/table/themes/adminlte.js` | `css/features/table/themes/datatables-adminlte.css` | Bootstrap 5/DataTables presentation owned by the AdminLTE table adapter |
+| `feature:table:theme:shadcn` | — | `css/features/table/themes/shadcn.css` | standalone Tailwind-oriented DataTables presentation without a Tailwind CLI runtime |
+| `theme:adminlte` | `js/themes/adminlte.js` | `css/themes/adminlte.css` | AdminLTE 4/Bootstrap 5 presentation; the logical id remains stable for compatibility |
+| `theme:shadcn` | `js/themes/shadcn.js` | `css/themes/shadcn.css` | Tailwind presentation |
 
 The source/output mapping is declared once in `build/frontend-entries.json` and consumed by Laravel Mix. The same file is a build-time contract; after compilation it generates `public/default/asset-manifest.json`, which maps logical ids to validated runtime files, content versions and SHA-256 checksums. The schema and PHP resolver are documented in `asset-manifest.md`.
 

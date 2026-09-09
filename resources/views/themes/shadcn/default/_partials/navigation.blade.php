@@ -1,3 +1,3 @@
-@include('sleeping_owl_tailwind::components.patterns.sidebar', [
+@include('sleeping_owl_shadcn::components.patterns.sidebar', [
     'template' => $template,
 ])

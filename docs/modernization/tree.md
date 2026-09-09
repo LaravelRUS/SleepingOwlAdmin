@@ -113,8 +113,8 @@ The no-build distribution exposes these logical entries in both profiles:
 
 ```text
 feature:tree
-feature:tree:theme:legacy-adminlte
-feature:tree:theme:tailwind
+feature:tree:theme:adminlte
+feature:tree:theme:shadcn
 ```
 
 They resolve to precompiled JavaScript and CSS under `public/default`. The

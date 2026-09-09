@@ -97,29 +97,29 @@
                 "output": "js/features/tree.js"
             },
             {
-                "logicalId": "feature:tree:theme:legacy-adminlte",
+                "logicalId": "feature:tree:theme:adminlte",
                 "source": "resources/js/themes/adminlte/features/tree/browser.js",
-                "output": "js/features/tree/themes/legacy-adminlte.js"
+                "output": "js/features/tree/themes/adminlte.js"
             },
             {
-                "logicalId": "feature:tree:theme:tailwind",
+                "logicalId": "feature:tree:theme:shadcn",
                 "source": "resources/js/themes/shadcn/features/tree/browser.js",
-                "output": "js/features/tree/themes/tailwind.js"
+                "output": "js/features/tree/themes/shadcn.js"
             },
             {
-                "logicalId": "feature:table:theme:legacy-adminlte",
+                "logicalId": "feature:table:theme:adminlte",
                 "source": "resources/js/themes/adminlte/features/table/browser.js",
-                "output": "js/features/table/themes/legacy-adminlte.js"
+                "output": "js/features/table/themes/adminlte.js"
             },
             {
-                "logicalId": "theme:legacy-adminlte",
+                "logicalId": "theme:adminlte",
                 "source": "resources/js/themes/adminlte/theme.js",
-                "output": "js/themes/legacy-adminlte.js"
+                "output": "js/themes/adminlte.js"
             },
             {
-                "logicalId": "theme:tailwind",
+                "logicalId": "theme:shadcn",
                 "source": "resources/js/themes/shadcn/theme.js",
-                "output": "js/themes/tailwind.js"
+                "output": "js/themes/shadcn.js"
             }
         ],
         "styles": [
@@ -144,9 +144,9 @@
                 "output": "css/features/forms.css"
             },
             {
-                "logicalId": "feature:forms:theme:tailwind",
+                "logicalId": "feature:forms:theme:shadcn",
                 "source": "resources/css/themes/shadcn/features/forms/forms-tailwind.scss",
-                "output": "css/features/forms/themes/tailwind.css"
+                "output": "css/features/forms/themes/shadcn.css"
             },
             {
                 "logicalId": "feature:sidebar",
@@ -174,9 +174,9 @@
                 "output": "css/features/tree.css"
             },
             {
-                "logicalId": "feature:dropdown:theme:legacy-adminlte",
+                "logicalId": "feature:dropdown:theme:adminlte",
                 "source": "resources/css/themes/adminlte/features/dropdown/dropdown-adminlte.scss",
-                "output": "css/features/dropdown/themes/legacy-adminlte.css"
+                "output": "css/features/dropdown/themes/adminlte.css"
             },
             {
                 "logicalId": "feature:dropdown:theme:framework-free-test",
@@ -184,14 +184,14 @@
                 "output": "css/features/dropdown/themes/framework-free-test.css"
             },
             {
-                "logicalId": "feature:dropdown:theme:tailwind",
+                "logicalId": "feature:dropdown:theme:shadcn",
                 "source": "resources/css/themes/shadcn/features/dropdown/dropdown-tailwind.scss",
-                "output": "css/features/dropdown/themes/tailwind.css"
+                "output": "css/features/dropdown/themes/shadcn.css"
             },
             {
-                "logicalId": "feature:sidebar:theme:legacy-adminlte",
+                "logicalId": "feature:sidebar:theme:adminlte",
                 "source": "resources/css/themes/adminlte/features/sidebar/sidebar-adminlte.scss",
-                "output": "css/features/sidebar/themes/legacy-adminlte.css"
+                "output": "css/features/sidebar/themes/adminlte.css"
             },
             {
                 "logicalId": "feature:sidebar:theme:framework-free-test",
@@ -199,14 +199,14 @@
                 "output": "css/features/sidebar/themes/framework-free-test.css"
             },
             {
-                "logicalId": "feature:sidebar:theme:tailwind",
+                "logicalId": "feature:sidebar:theme:shadcn",
                 "source": "resources/css/themes/shadcn/features/sidebar/sidebar-tailwind.scss",
-                "output": "css/features/sidebar/themes/tailwind.css"
+                "output": "css/features/sidebar/themes/shadcn.css"
             },
             {
-                "logicalId": "feature:table:theme:legacy-adminlte",
+                "logicalId": "feature:table:theme:adminlte",
                 "source": "resources/css/themes/adminlte/features/table/datatables.scss",
-                "output": "css/features/table/themes/datatables-legacy-adminlte.css"
+                "output": "css/features/table/themes/adminlte.css"
             },
             {
                 "logicalId": "feature:table:theme:framework-free-test",
@@ -214,24 +214,24 @@
                 "output": "css/features/table/themes/framework-free-test.css"
             },
             {
-                "logicalId": "feature:table:theme:tailwind",
+                "logicalId": "feature:table:theme:shadcn",
                 "source": "resources/css/themes/shadcn/features/table/datatables.scss",
-                "output": "css/features/table/themes/tailwind.css"
+                "output": "css/features/table/themes/shadcn.css"
             },
             {
-                "logicalId": "feature:lightbox:theme:legacy-adminlte",
+                "logicalId": "feature:lightbox:theme:adminlte",
                 "source": "resources/css/themes/adminlte/features/lightbox/lightbox-adminlte.scss",
-                "output": "css/features/lightbox/themes/legacy-adminlte.css"
+                "output": "css/features/lightbox/themes/adminlte.css"
             },
             {
-                "logicalId": "feature:lightbox:theme:tailwind",
+                "logicalId": "feature:lightbox:theme:shadcn",
                 "source": "resources/css/themes/shadcn/features/lightbox/lightbox-tailwind.scss",
-                "output": "css/features/lightbox/themes/tailwind.css"
+                "output": "css/features/lightbox/themes/shadcn.css"
             },
             {
-                "logicalId": "feature:tabs:theme:legacy-adminlte",
+                "logicalId": "feature:tabs:theme:adminlte",
                 "source": "resources/css/themes/adminlte/features/tabs/tabs-adminlte.scss",
-                "output": "css/features/tabs/themes/legacy-adminlte.css"
+                "output": "css/features/tabs/themes/adminlte.css"
             },
             {
                 "logicalId": "feature:tabs:theme:framework-free-test",
@@ -239,14 +239,14 @@
                 "output": "css/features/tabs/themes/framework-free-test.css"
             },
             {
-                "logicalId": "feature:tabs:theme:tailwind",
+                "logicalId": "feature:tabs:theme:shadcn",
                 "source": "resources/css/themes/shadcn/features/tabs/tabs-tailwind.scss",
-                "output": "css/features/tabs/themes/tailwind.css"
+                "output": "css/features/tabs/themes/shadcn.css"
             },
             {
-                "logicalId": "feature:tooltip:theme:legacy-adminlte",
+                "logicalId": "feature:tooltip:theme:adminlte",
                 "source": "resources/css/themes/adminlte/features/tooltip/tooltip-adminlte.scss",
-                "output": "css/features/tooltip/themes/legacy-adminlte.css"
+                "output": "css/features/tooltip/themes/adminlte.css"
             },
             {
                 "logicalId": "feature:tooltip:theme:framework-free-test",
@@ -254,24 +254,24 @@
                 "output": "css/features/tooltip/themes/framework-free-test.css"
             },
             {
-                "logicalId": "feature:tooltip:theme:tailwind",
+                "logicalId": "feature:tooltip:theme:shadcn",
                 "source": "resources/css/themes/shadcn/features/tooltip/tooltip-tailwind.scss",
-                "output": "css/features/tooltip/themes/tailwind.css"
+                "output": "css/features/tooltip/themes/shadcn.css"
             },
             {
-                "logicalId": "feature:tree:theme:legacy-adminlte",
+                "logicalId": "feature:tree:theme:adminlte",
                 "source": "resources/css/themes/adminlte/features/tree/tree-adminlte.scss",
-                "output": "css/features/tree/themes/legacy-adminlte.css"
+                "output": "css/features/tree/themes/adminlte.css"
             },
             {
-                "logicalId": "feature:tree:theme:tailwind",
+                "logicalId": "feature:tree:theme:shadcn",
                 "source": "resources/css/themes/shadcn/features/tree/tree-tailwind.scss",
-                "output": "css/features/tree/themes/tailwind.css"
+                "output": "css/features/tree/themes/shadcn.css"
             },
             {
-                "logicalId": "theme:legacy-adminlte",
+                "logicalId": "theme:adminlte",
                 "source": "resources/css/themes/adminlte/theme.scss",
-                "output": "css/themes/legacy-adminlte.css"
+                "output": "css/themes/adminlte.css"
             },
             {
                 "logicalId": "theme:framework-free-test",
@@ -279,14 +279,14 @@
                 "output": "css/themes/framework-free-test.css"
             },
             {
-                "logicalId": "theme:tailwind",
+                "logicalId": "theme:shadcn",
                 "source": "resources/css/themes/shadcn/theme.scss",
-                "output": "css/themes/tailwind.css"
+                "output": "css/themes/shadcn.css"
             },
             {
-                "logicalId": "theme:tailwind",
+                "logicalId": "theme:shadcn",
                 "source": "resources/css/themes/shadcn/tailwind.input.css",
-                "output": "css/themes/tailwind-utilities.css",
+                "output": "css/themes/shadcn-utilities.css",
                 "processor": "postcss"
             }
         ]

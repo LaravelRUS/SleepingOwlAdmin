@@ -19,7 +19,7 @@ final class AdminLTETheme extends TemplateDefault implements ThemeInterface
 
     private const LEGACY_HANDLES = [
         'shared:vue' => 'admin-vue-init',
-        'feature:tree:theme:legacy-adminlte' => 'admin-default',
+        'feature:tree:theme:adminlte' => 'admin-default',
         'shared:modules' => 'admin-modules-load',
     ];
 
@@ -33,7 +33,7 @@ final class AdminLTETheme extends TemplateDefault implements ThemeInterface
 
     public function id(): string
     {
-        return 'legacy-adminlte';
+        return 'adminlte';
     }
 
     public function viewNamespace(): string

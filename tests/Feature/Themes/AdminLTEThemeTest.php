@@ -28,7 +28,7 @@ class AdminLTEThemeTest extends TestCase
         $this->assertInstanceOf(TemplateInterface::class, $theme);
         $this->assertSame($theme, $template);
         $this->assertSame($theme, $this->app->make('sleeping_owl')->theme());
-        $this->assertSame('legacy-adminlte', $theme->id());
+        $this->assertSame('adminlte', $theme->id());
         $this->assertSame('sleeping_owl::default', $theme->viewNamespace());
     }
 
@@ -41,23 +41,23 @@ class AdminLTEThemeTest extends TestCase
             'shared:compatibility',
             'shared:modules',
             'shared:vue',
-            'theme:legacy-adminlte',
-            'feature:dropdown:theme:legacy-adminlte',
-            'feature:lightbox:theme:legacy-adminlte',
-            'feature:sidebar:theme:legacy-adminlte',
-            'feature:table:theme:legacy-adminlte',
-            'feature:tabs:theme:legacy-adminlte',
-            'feature:tooltip:theme:legacy-adminlte',
-            'feature:tree:theme:legacy-adminlte',
+            'theme:adminlte',
+            'feature:dropdown:theme:adminlte',
+            'feature:lightbox:theme:adminlte',
+            'feature:sidebar:theme:adminlte',
+            'feature:table:theme:adminlte',
+            'feature:tabs:theme:adminlte',
+            'feature:tooltip:theme:adminlte',
+            'feature:tree:theme:adminlte',
         ], $manifest->entries());
         $this->assertSame([
             'shared:icons',
             'shared:compatibility',
             'shared:modules',
             'shared:vue',
-            'theme:legacy-adminlte',
-            'feature:tabs:theme:legacy-adminlte',
-            'feature:table:theme:legacy-adminlte',
+            'theme:adminlte',
+            'feature:tabs:theme:adminlte',
+            'feature:table:theme:adminlte',
         ], $manifest->entriesFor(['tabs', 'table']));
     }
 
@@ -134,7 +134,7 @@ class AdminLTEThemeTest extends TestCase
         $this->assertLegacyHandles($scripts, $styles);
         $this->assertRuntimeProfile($scriptSources, "profiles/{$profile}");
         $this->assertRuntimeProfile($styleSources, "profiles/{$profile}");
-        $this->assertStringNotContainsString('tailwind', implode('|', [...$scriptSources, ...$styleSources]));
+        $this->assertStringNotContainsString('shadcn', implode('|', [...$scriptSources, ...$styleSources]));
         $this->assertStringNotContainsString('js/admin-app', implode('|', $scriptSources));
         $this->assertStringNotContainsString('/js/vue.js', implode('|', $scriptSources));
         $this->assertStringNotContainsString('/js/modules.js', implode('|', $scriptSources));
@@ -189,18 +189,18 @@ class AdminLTEThemeTest extends TestCase
             "{$root}/admin-core.js",
             "{$root}/shared/compatibility.js",
             "{$root}/shared/vue.js",
-            "{$root}/themes/legacy-adminlte.js",
+            "{$root}/themes/adminlte.js",
             "{$root}/features/alert.js",
             "{$root}/features/tooltip.js",
             "{$root}/features/dropdown.js",
             "{$root}/features/sidebar.js",
             "{$root}/features/lightbox.js",
-            "{$root}/features/table/themes/legacy-adminlte.js",
+            "{$root}/features/table/themes/adminlte.js",
             "{$root}/features/table.js",
             "{$root}/features/tabs.js",
             "{$root}/features/forms.js",
             "{$root}/features/tree.js",
-            "{$root}/features/tree/themes/legacy-adminlte.js",
+            "{$root}/features/tree/themes/adminlte.js",
             "{$root}/shared/modules.js",
         ];
     }
@@ -212,21 +212,21 @@ class AdminLTEThemeTest extends TestCase
         return [
             "{$root}/admin-core.css",
             "{$root}/icons.css",
-            "{$root}/themes/legacy-adminlte.css",
+            "{$root}/themes/adminlte.css",
             "{$root}/features/tooltip.css",
-            "{$root}/features/tooltip/themes/legacy-adminlte.css",
+            "{$root}/features/tooltip/themes/adminlte.css",
             "{$root}/features/dropdown.css",
-            "{$root}/features/dropdown/themes/legacy-adminlte.css",
+            "{$root}/features/dropdown/themes/adminlte.css",
             "{$root}/features/sidebar.css",
-            "{$root}/features/sidebar/themes/legacy-adminlte.css",
+            "{$root}/features/sidebar/themes/adminlte.css",
             "{$root}/features/lightbox.css",
-            "{$root}/features/lightbox/themes/legacy-adminlte.css",
-            "{$root}/features/table/themes/datatables-legacy-adminlte.css",
+            "{$root}/features/lightbox/themes/adminlte.css",
+            "{$root}/features/table/themes/adminlte.css",
             "{$root}/features/table.css",
-            "{$root}/features/tabs/themes/legacy-adminlte.css",
+            "{$root}/features/tabs/themes/adminlte.css",
             "{$root}/features/forms.css",
             "{$root}/features/tree.css",
-            "{$root}/features/tree/themes/legacy-adminlte.css",
+            "{$root}/features/tree/themes/adminlte.css",
         ];
     }
 }

@@ -127,11 +127,11 @@ The public config selects the built-in theme by name without a consumer build:
 
 `TailwindTheme` directly implements `ThemeInterface`. The transitional
 `ThemeTemplateAdapter` composes its runtime through `ThemeRuntimeAssets`, so
-the class declares only shared dependencies and `theme:tailwind`; package
+the class declares only shared dependencies and `theme:shadcn`; package
 feature drivers are not repeated in theme metadata. Until their presentation
 checkpoints close, no Tailwind feature adapter or capability is declared.
 
-The theme owns the `sleeping_owl_tailwind::default` Blade namespace rooted at
+The theme owns the `sleeping_owl_shadcn::default` Blade namespace rooted at
 `resources/views/themes/shadcn/default`. Relative logical view names remain
 unchanged. An application can override this namespace through Laravel's usual
 view namespace mechanism, and an external package can use the existing
@@ -150,11 +150,11 @@ preflight—and limits source discovery to the Tailwind theme namespace. Its
 shadows resolve to canonical `--soa-*` properties.
 
 The build matrix publishes two files under the single logical
-`theme:tailwind` entry:
+`theme:shadcn` entry:
 
 ```text
-css/themes/tailwind.css
-css/themes/tailwind-utilities.css
+css/themes/shadcn.css
+css/themes/shadcn-utilities.css
 ```
 
 The first is the handwritten Sass/token layer; the second is generated and is

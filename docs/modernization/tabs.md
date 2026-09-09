@@ -48,8 +48,8 @@ Tailwind, jQuery, or presentation classes. AdminLTE and Tailwind provide
 independent Sass adapters:
 
 ```text
-feature:tabs:theme:legacy-adminlte
-feature:tabs:theme:tailwind
+feature:tabs:theme:adminlte
+feature:tabs:theme:shadcn
 ```
 
 Colors are declared in each adapter's `_colors.scss`, dimensions in

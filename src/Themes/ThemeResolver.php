@@ -106,8 +106,8 @@ final class ThemeResolver
     {
         $theme = new LegacyTemplateThemeAdapter(
             $template,
-            'legacy-adminlte',
-            ['shared:icons', 'theme:legacy-adminlte'],
+            'adminlte',
+            ['shared:icons', 'theme:adminlte'],
             [],
             $this->allCapabilityIds()
         );

@@ -37,8 +37,8 @@ class TailwindThemeTest extends TestCase
         $this->assertSame(TailwindTheme::class, config('sleeping_owl.template.themes.shadcn'));
         $this->assertInstanceOf(TailwindTheme::class, $theme);
         $this->assertInstanceOf(ThemeTemplateAdapter::class, $template);
-        $this->assertSame('tailwind', $theme->id());
-        $this->assertSame('sleeping_owl_tailwind::default', $template->getViewNamespace());
+        $this->assertSame('shadcn', $theme->id());
+        $this->assertSame('sleeping_owl_shadcn::default', $template->getViewNamespace());
         $this->assertSame([
             'tooltip',
             'dropdown',
@@ -60,39 +60,39 @@ class TailwindThemeTest extends TestCase
             'shared:compatibility',
             'shared:modules',
             'shared:vue',
-            'theme:tailwind',
-            'feature:dropdown:theme:tailwind',
-            'feature:forms:theme:tailwind',
-            'feature:lightbox:theme:tailwind',
-            'feature:sidebar:theme:tailwind',
-            'feature:table:theme:tailwind',
-            'feature:tabs:theme:tailwind',
-            'feature:tooltip:theme:tailwind',
-            'feature:tree:theme:tailwind',
+            'theme:shadcn',
+            'feature:dropdown:theme:shadcn',
+            'feature:forms:theme:shadcn',
+            'feature:lightbox:theme:shadcn',
+            'feature:sidebar:theme:shadcn',
+            'feature:table:theme:shadcn',
+            'feature:tabs:theme:shadcn',
+            'feature:tooltip:theme:shadcn',
+            'feature:tree:theme:shadcn',
         ], $manifest->entries());
         $this->assertSame([
             'core',
             'shared:icons',
             'shared:compatibility',
             'shared:vue',
-            'theme:tailwind',
+            'theme:shadcn',
             'feature:alert',
             'feature:tooltip',
-            'feature:tooltip:theme:tailwind',
+            'feature:tooltip:theme:shadcn',
             'feature:dropdown',
-            'feature:dropdown:theme:tailwind',
+            'feature:dropdown:theme:shadcn',
             'feature:sidebar',
-            'feature:sidebar:theme:tailwind',
+            'feature:sidebar:theme:shadcn',
             'feature:lightbox',
-            'feature:lightbox:theme:tailwind',
-            'feature:table:theme:tailwind',
+            'feature:lightbox:theme:shadcn',
+            'feature:table:theme:shadcn',
             'feature:table',
             'feature:tabs',
-            'feature:tabs:theme:tailwind',
+            'feature:tabs:theme:shadcn',
             'feature:forms',
-            'feature:forms:theme:tailwind',
+            'feature:forms:theme:shadcn',
             'feature:tree',
-            'feature:tree:theme:tailwind',
+            'feature:tree:theme:shadcn',
             'shared:modules',
         ], app(ThemeRuntimeAssets::class)->logicalEntries(app(TailwindTheme::class)));
     }
@@ -112,31 +112,31 @@ class TailwindThemeTest extends TestCase
             ];
             $joined = implode('|', $sources);
 
-            $this->assertStringContainsString("profiles/{$profile}/js/themes/tailwind.js", $joined);
-            $this->assertStringContainsString("profiles/{$profile}/css/themes/tailwind.css", $joined);
-            $this->assertStringContainsString("profiles/{$profile}/css/themes/tailwind-utilities.css", $joined);
+            $this->assertStringContainsString("profiles/{$profile}/js/themes/shadcn.js", $joined);
+            $this->assertStringContainsString("profiles/{$profile}/css/themes/shadcn.css", $joined);
+            $this->assertStringContainsString("profiles/{$profile}/css/themes/shadcn-utilities.css", $joined);
             $this->assertStringContainsString("profiles/{$profile}/css/icons.css", $joined);
-            $this->assertStringNotContainsString('legacy-adminlte', $joined);
-            $this->assertStringContainsString('features/dropdown/themes/tailwind.css', $joined);
-            $this->assertStringContainsString('features/forms/themes/tailwind.css', $joined);
-            $this->assertStringContainsString('features/lightbox/themes/tailwind.css', $joined);
-            $this->assertStringContainsString('features/sidebar/themes/tailwind.css', $joined);
-            $this->assertStringContainsString('features/table/themes/tailwind.css', $joined);
-            $this->assertStringContainsString('features/tabs/themes/tailwind.css', $joined);
-            $this->assertStringContainsString('features/tooltip/themes/tailwind.css', $joined);
-            $this->assertStringContainsString('features/tree/themes/tailwind.css', $joined);
-            $this->assertStringContainsString('features/tree/themes/tailwind.js', $joined);
+            $this->assertStringNotContainsString('adminlte', $joined);
+            $this->assertStringContainsString('features/dropdown/themes/shadcn.css', $joined);
+            $this->assertStringContainsString('features/forms/themes/shadcn.css', $joined);
+            $this->assertStringContainsString('features/lightbox/themes/shadcn.css', $joined);
+            $this->assertStringContainsString('features/sidebar/themes/shadcn.css', $joined);
+            $this->assertStringContainsString('features/table/themes/shadcn.css', $joined);
+            $this->assertStringContainsString('features/tabs/themes/shadcn.css', $joined);
+            $this->assertStringContainsString('features/tooltip/themes/shadcn.css', $joined);
+            $this->assertStringContainsString('features/tree/themes/shadcn.css', $joined);
+            $this->assertStringContainsString('features/tree/themes/shadcn.js', $joined);
         }
     }
 
     public function test_provider_registers_the_separate_blade_namespace(): void
     {
         $hints = view()->getFinder()->getHints();
-        $paths = array_map(static fn (string $path): string => realpath($path), $hints['sleeping_owl_tailwind']);
+        $paths = array_map(static fn (string $path): string => realpath($path), $hints['sleeping_owl_shadcn']);
 
-        $this->assertArrayHasKey('sleeping_owl_tailwind', $hints);
+        $this->assertArrayHasKey('sleeping_owl_shadcn', $hints);
         $this->assertContains(
-            realpath(__DIR__.'/../../../resources/views/themes').DIRECTORY_SEPARATOR.'tailwind',
+            realpath(__DIR__.'/../../../resources/views/themes').DIRECTORY_SEPARATOR.'shadcn',
             $paths
         );
     }

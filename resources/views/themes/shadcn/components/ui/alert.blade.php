@@ -8,7 +8,7 @@
     <div {!! $alertAttributes !!}>
         <i class="soa-alert-icon {{ $iconClass }}" aria-hidden="true"></i>
         <div class="soa-alert-content">{!! $messages !!}</div>
-        @include('sleeping_owl_tailwind::components.ui.button', [
+        @include('sleeping_owl_shadcn::components.ui.button', [
             'attributesArray' => [
                 'aria-label' => 'Close',
                 'class' => 'soa-alert-dismiss',

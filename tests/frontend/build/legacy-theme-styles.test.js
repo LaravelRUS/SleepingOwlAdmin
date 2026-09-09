@@ -59,7 +59,7 @@ it('preserves the structural AdminLTE selectors in the legacy aggregate', () => 
 })
 
 it('builds a standalone AdminLTE theme without embedding shared icons', () => {
-    const css = read('public/default/css/themes/legacy-adminlte.css')
+    const css = read('public/default/css/themes/adminlte.css')
 
     for (const selector of [
         '.app-header',
@@ -95,11 +95,11 @@ it('publishes font assets once and resolves them from every built stylesheet', (
     for (const stylesheet of [
         'css/admin-app.css',
         'css/icons.css',
-        'css/themes/legacy-adminlte.css',
+        'css/themes/adminlte.css',
         'profiles/development/css/icons.css',
-        'profiles/development/css/themes/legacy-adminlte.css',
+        'profiles/development/css/themes/adminlte.css',
         'profiles/production/css/icons.css',
-        'profiles/production/css/themes/legacy-adminlte.css',
+        'profiles/production/css/themes/adminlte.css',
     ]) {
         const path = resolve(publicRoot, stylesheet)
         for (const fontUrl of fontUrls(readFileSync(path, 'utf8'))) {
@@ -110,7 +110,7 @@ it('publishes font assets once and resolves them from every built stylesheet', (
 
 it('styles the asset health footer in standalone and compatibility bundles', () => {
     for (const css of [
-        read('public/default/css/themes/legacy-adminlte.css'),
+        read('public/default/css/themes/adminlte.css'),
         read('public/default/css/admin-app.css'),
     ]) {
         expect(css).toContain('.asset-health-status')

@@ -50,7 +50,7 @@ function expectedSourceRoots(logicalId) {
 }
 
 function themeSourceName(logicalId) {
-    return { 'legacy-adminlte': 'adminlte', tailwind: 'shadcn' }[logicalId] ?? logicalId
+    return logicalId
 }
 
 describe('frontend build entries', () => {
@@ -76,8 +76,8 @@ describe('frontend build entries', () => {
         'feature:table',
         'feature:tooltip',
         'feature:tree',
-        'theme:legacy-adminlte',
-        'theme:tailwind',
+        'theme:adminlte',
+        'theme:shadcn',
     ])('defines independent script and style outputs for %s', (logicalId) => {
         expect(modernEntry(logicalId, 'scripts')).toBeDefined()
         expect(modernEntry(logicalId, 'styles')).toBeDefined()
@@ -167,13 +167,13 @@ describe('frontend build entry files', () => {
 
 describe('table presentation entries', () => {
     it('publishes the AdminLTE presentation and DataTables adapter together', () => {
-        const logicalId = 'feature:table:theme:legacy-adminlte'
+        const logicalId = 'feature:table:theme:adminlte'
 
         expect(modernEntry(logicalId, 'styles')).toBeDefined()
         expect(modernEntry(logicalId, 'scripts')).toBeDefined()
     })
 
-    it.each(['framework-free-test', 'tailwind'])(
+    it.each(['framework-free-test', 'shadcn'])(
         'publishes the %s adapter as an independent stylesheet',
         (theme) => {
             const logicalId = `feature:table:theme:${theme}`
@@ -186,7 +186,7 @@ describe('table presentation entries', () => {
 
 describe('forms presentation entries', () => {
     it('publishes the Tailwind adapter as an independent stylesheet', () => {
-        const logicalId = 'feature:forms:theme:tailwind'
+        const logicalId = 'feature:forms:theme:shadcn'
 
         expect(modernEntry(logicalId, 'styles')).toBeDefined()
         expect(modernEntry(logicalId, 'scripts')).toBeUndefined()
@@ -195,14 +195,14 @@ describe('forms presentation entries', () => {
 
 describe('tree presentation entries', () => {
     it('publishes the AdminLTE presentation and notification adapter together', () => {
-        const logicalId = 'feature:tree:theme:legacy-adminlte'
+        const logicalId = 'feature:tree:theme:adminlte'
 
         expect(modernEntry(logicalId, 'styles')).toBeDefined()
         expect(modernEntry(logicalId, 'scripts')).toBeDefined()
     })
 
     it('publishes Tailwind presentation with its native-event notification adapter', () => {
-        const logicalId = 'feature:tree:theme:tailwind'
+        const logicalId = 'feature:tree:theme:shadcn'
 
         expect(modernEntry(logicalId, 'styles')).toBeDefined()
         expect(modernEntry(logicalId, 'scripts')).toBeDefined()
@@ -210,7 +210,7 @@ describe('tree presentation entries', () => {
 })
 
 describe('lightbox presentation entries', () => {
-    it.each(['legacy-adminlte', 'tailwind'])(
+    it.each(['adminlte', 'shadcn'])(
         'publishes the %s adapter as an independent stylesheet',
         (theme) => {
             const logicalId = `feature:lightbox:theme:${theme}`
@@ -222,7 +222,7 @@ describe('lightbox presentation entries', () => {
 })
 
 describe('tabs presentation entries', () => {
-    it.each(['legacy-adminlte', 'tailwind'])(
+    it.each(['adminlte', 'shadcn'])(
         'publishes the %s adapter as an independent stylesheet',
         (theme) => {
             const logicalId = `feature:tabs:theme:${theme}`
@@ -234,7 +234,7 @@ describe('tabs presentation entries', () => {
 })
 
 describe('tooltip presentation entries', () => {
-    it.each(['legacy-adminlte', 'tailwind'])(
+    it.each(['adminlte', 'shadcn'])(
         'publishes the %s adapter as an independent stylesheet',
         (theme) => {
             const logicalId = `feature:tooltip:theme:${theme}`
@@ -246,7 +246,7 @@ describe('tooltip presentation entries', () => {
 })
 
 describe('dropdown presentation entries', () => {
-    it.each(['legacy-adminlte', 'tailwind'])(
+    it.each(['adminlte', 'shadcn'])(
         'publishes the %s adapter as an independent stylesheet',
         (theme) => {
             const logicalId = `feature:dropdown:theme:${theme}`
@@ -258,7 +258,7 @@ describe('dropdown presentation entries', () => {
 })
 
 describe('sidebar presentation entries', () => {
-    it.each(['legacy-adminlte', 'tailwind'])(
+    it.each(['adminlte', 'shadcn'])(
         'publishes the %s adapter as an independent stylesheet',
         (theme) => {
             const logicalId = `feature:sidebar:theme:${theme}`

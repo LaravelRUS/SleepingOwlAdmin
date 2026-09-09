@@ -86,7 +86,7 @@ describe('compiled form entries', () => {
             const forms = readFileSync(
                 resolve(
                     root,
-                    `public/default/profiles/${profile}/css/features/forms/themes/tailwind.css`,
+                    `public/default/profiles/${profile}/css/features/forms/themes/shadcn.css`,
                 ),
                 'utf8',
             )
@@ -108,7 +108,7 @@ describe('compiled Tailwind content adapters', () => {
                 const css = readFileSync(
                     resolve(
                         root,
-                        `public/default/profiles/${profile}/css/features/${feature}/themes/tailwind.css`,
+                        `public/default/profiles/${profile}/css/features/${feature}/themes/shadcn.css`,
                     ),
                     'utf8',
                 )
@@ -147,7 +147,7 @@ describe('compiled core boundaries', () => {
                 'utf8',
             )
 
-            expect(table).not.toMatch(/legacy-adminlte\/filter-events/)
+            expect(table).not.toMatch(/adminlte\/filter-events/)
         }
     })
 
@@ -283,12 +283,12 @@ describe('compiled runtime properties', () => {
                 '--soa-form-date-picker-surface-color',
             ],
             'css/features/table.css': ['--soa-table-text-color', '--soa-table-row-selected-color'],
-            'css/themes/legacy-adminlte.css': [
+            'css/themes/adminlte.css': [
                 '--soa-sidebar-bg',
                 '--soa-sidebar-width',
                 '--soa-font-family-sans',
             ],
-            'css/themes/tailwind.css': [
+            'css/themes/shadcn.css': [
                 '--soa-sidebar-bg',
                 '--soa-sidebar-width',
                 '--soa-font-family-sans',
@@ -305,7 +305,7 @@ describe('compiled runtime properties', () => {
 
     it('keeps the sidebar variable live in both color schemes and the legacy aggregate', () => {
         const theme = readFileSync(
-            resolve(root, 'public/default/css/themes/legacy-adminlte.css'),
+            resolve(root, 'public/default/css/themes/adminlte.css'),
             'utf8',
         )
         const legacy = readFileSync(resolve(root, 'public/default/css/admin-app.css'), 'utf8')
