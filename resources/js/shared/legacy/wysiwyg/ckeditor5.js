@@ -1,6 +1,6 @@
 const {
     createCkeditor5Adapter,
-} = require('../../features/forms/wysiwyg/adapters/ckeditor5')
+} = require('../../features/forms/wysiwyg/adapters')
 
 let adapter
 const current = () =>

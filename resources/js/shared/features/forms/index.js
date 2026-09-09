@@ -54,10 +54,12 @@ export {
     TEXT_GENERATOR_COMPONENT,
     TEXT_GENERATOR_SELECTOR,
 } from './generation.js'
-export { createCkeditor4Adapter } from './wysiwyg/adapters/ckeditor4.js'
-export { createCkeditor5Adapter } from './wysiwyg/adapters/ckeditor5.js'
-export { createSimpleMdeAdapter } from './wysiwyg/adapters/simplemde.js'
-export { createTinyMceAdapter } from './wysiwyg/adapters/tinymce.js'
+export {
+    createCkeditor4Adapter,
+    createCkeditor5Adapter,
+    createSimpleMdeAdapter,
+    createTinyMceAdapter,
+} from './wysiwyg/adapters.js'
 export { installWysiwygAdapters } from './wysiwyg/install-wysiwyg-adapters.js'
 export { installWysiwyg, LEGACY_WYSIWYG_MODULE } from './wysiwyg/install-wysiwyg.js'
 export { parseParameters, readWysiwygConfig } from './wysiwyg/wysiwyg-config.js'

@@ -1,6 +1,6 @@
 const {
     createCkeditor4Adapter,
-} = require('../../features/forms/wysiwyg/adapters/ckeditor4')
+} = require('../../features/forms/wysiwyg/adapters')
 
 let adapter
 const current = () => (adapter ??= createCkeditor4Adapter(globalThis.CKEDITOR))

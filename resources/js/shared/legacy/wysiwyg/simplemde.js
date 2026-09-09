@@ -1,6 +1,6 @@
 const {
     createSimpleMdeAdapter,
-} = require('../../features/forms/wysiwyg/adapters/simplemde')
+} = require('../../features/forms/wysiwyg/adapters')
 
 let adapter
 const current = () =>

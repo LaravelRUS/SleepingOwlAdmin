@@ -1,7 +1,9 @@
-import { createCkeditor4Adapter } from './adapters/ckeditor4.js'
-import { createCkeditor5Adapter } from './adapters/ckeditor5.js'
-import { createSimpleMdeAdapter } from './adapters/simplemde.js'
-import { createTinyMceAdapter } from './adapters/tinymce.js'
+import {
+    createCkeditor4Adapter,
+    createCkeditor5Adapter,
+    createSimpleMdeAdapter,
+    createTinyMceAdapter,
+} from './adapters.js'
 
 export function installWysiwygAdapters(registry, target = globalThis) {
     registerLazy(registry, 'ckeditor', () => createCkeditor4Adapter(target.CKEDITOR))

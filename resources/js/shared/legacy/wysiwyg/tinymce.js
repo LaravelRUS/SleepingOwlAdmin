@@ -1,6 +1,6 @@
 const {
     createTinyMceAdapter,
-} = require('../../features/forms/wysiwyg/adapters/tinymce')
+} = require('../../features/forms/wysiwyg/adapters')
 
 let adapter
 const current = () => (adapter ??= createTinyMceAdapter(globalThis.tinymce))
