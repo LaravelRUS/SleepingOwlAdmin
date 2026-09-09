@@ -11,7 +11,9 @@ class Number extends FormNumber implements ColumnEditableInterface
 {
     use InteractsWithEditableColumn;
 
-    protected $view = 'column.editable.number';
+    protected $view = 'column.editable.partials.editor';
+
+    protected $editorType = 'number';
 
     public function __construct($name, $label = null, $small = null)
     {

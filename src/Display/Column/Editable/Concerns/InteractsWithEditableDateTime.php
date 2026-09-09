@@ -47,6 +47,7 @@ trait InteractsWithEditableDateTime
             'type' => $this->type,
             'text' => $this->getModifierValue(),
             'combodateValue' => $this->getCombodateValue(),
+            'editorDateFormat' => $this->getJsPickerFormat(),
         ]);
     }
 

@@ -11,7 +11,9 @@ class Checkbox extends FormCheckbox implements ColumnEditableInterface
 {
     use InteractsWithEditableColumn;
 
-    protected $view = 'column.editable.checkbox';
+    protected $view = 'column.editable.partials.editor';
+
+    protected $editorType = 'checkbox';
 
     protected $checkedLabel;
 
@@ -77,6 +79,10 @@ class Checkbox extends FormCheckbox implements ColumnEditableInterface
             'checkedLabel' => $this->getCheckedLabel(),
             'uncheckedLabel' => $this->getUncheckedLabel(),
             'text' => $this->getModifierValue(),
+            'editorDisplayHtml' => true,
+            'editorEmptyText' => $this->getUncheckedLabel(),
+            'editorOptions' => [['value' => 1, 'text' => $this->getCheckedLabel()]],
+            'editorTextHtml' => true,
         ];
     }
 

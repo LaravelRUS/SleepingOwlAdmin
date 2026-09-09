@@ -11,7 +11,9 @@ class Select extends FormSelect implements ColumnEditableInterface
 {
     use InteractsWithEditableColumn;
 
-    protected $view = 'column.editable.select';
+    protected $view = 'column.editable.partials.editor';
+
+    protected $editorType = 'select';
 
     protected $relationKey;
 
@@ -84,6 +86,10 @@ class Select extends FormSelect implements ColumnEditableInterface
             'limit' => $this->getLimit(),
             'nullable' => $this->isNullable(),
             'select2Options' => $this->getSelect2Options(),
+            'editorEmptyText' => trans('sleeping_owl::lang.select.no_items'),
+            'editorOptions' => $options,
+            'editorTextHtml' => true,
+            'editorTitle' => $this->getTitle(),
         ];
     }
 

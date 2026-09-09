@@ -5,9 +5,9 @@ use PHPUnit\Framework\Attributes\DataProvider;
 class InlineEditorRenderContractTest extends TestCase
 {
     #[DataProvider('editorViews')]
-    public function test_editable_views_publish_the_native_contract(string $view, string $type): void
+    public function test_editor_variants_publish_the_native_contract(string $type): void
     {
-        $html = $this->renderEditor($view);
+        $html = $this->renderEditor($type);
 
         $this->assertStringContainsString('data-inline-editor="'.$type.'"', $html);
         $this->assertStringContainsString('data-name="status"', $html);
@@ -122,10 +122,10 @@ class InlineEditorRenderContractTest extends TestCase
 
     #[DataProvider('editorControlMarkers')]
     public function test_each_editor_type_renders_its_control_in_blade(
-        string $view,
+        string $type,
         string $marker
     ): void {
-        $this->assertStringContainsString($marker, $this->renderEditor($view));
+        $this->assertStringContainsString($marker, $this->renderEditor($type));
     }
 
     public function test_project_can_override_editor_shell_and_one_control_partial(): void
@@ -148,16 +148,16 @@ class InlineEditorRenderContractTest extends TestCase
     public static function editorViews(): array
     {
         return [
-            ['boolean', 'boolean'],
-            ['checkbox', 'checkbox'],
-            ['checklist', 'checklist'],
-            ['date', 'date'],
-            ['datetime', 'datetime'],
-            ['number', 'number'],
-            ['range', 'range'],
-            ['select', 'select'],
-            ['text', 'text'],
-            ['textarea', 'textarea'],
+            ['boolean'],
+            ['checkbox'],
+            ['checklist'],
+            ['date'],
+            ['datetime'],
+            ['number'],
+            ['range'],
+            ['select'],
+            ['text'],
+            ['textarea'],
         ];
     }
 
@@ -177,12 +177,56 @@ class InlineEditorRenderContractTest extends TestCase
         ];
     }
 
-    private function renderEditor(string $view, array $override = []): string
+    private function renderEditor(string $type, array $override = []): string
     {
+        $logicalView = $type === 'checklist'
+            ? 'column.editable.checklist'
+            : 'column.editable.partials.editor';
+        $data = array_replace($this->editorData(), $this->editorPresentation($type), $override);
+        if ($type === 'select') {
+            $data['editorTitle'] = $data['title'];
+        }
+
         return view(
-            'sleeping_owl::default.column.editable.'.$view,
-            array_replace($this->editorData(), $override)
+            'sleeping_owl::default.'.$logicalView,
+            $data
         )->render();
+    }
+
+    private function editorPresentation(string $type): array
+    {
+        $presentation = ['editorType' => $type];
+
+        if (in_array($type, ['boolean', 'checkbox'], true)) {
+            return $presentation + [
+                'editorDisplayHtml' => true,
+                'editorEmptyText' => '<i>None</i>',
+                'editorOptions' => [['value' => 1, 'text' => 'Yes']],
+                'editorTextHtml' => true,
+            ];
+        }
+
+        if ($type === 'select') {
+            return $presentation + [
+                'editorEmptyText' => trans('sleeping_owl::lang.select.no_items'),
+                'editorOptions' => [['value' => 1, 'text' => 'One & Two']],
+                'editorTextHtml' => true,
+                'editorTitle' => 'Status',
+            ];
+        }
+
+        if (in_array($type, ['date', 'datetime'], true)) {
+            return $presentation + ['editorDateFormat' => 'DD.MM.YYYY HH:mm'];
+        }
+
+        if ($type === 'textarea') {
+            return $presentation + [
+                'editorDisplayHtml' => false,
+                'editorTextHtml' => false,
+            ];
+        }
+
+        return $presentation;
     }
 
     private function editorData(): array

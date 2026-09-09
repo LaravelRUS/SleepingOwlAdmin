@@ -48,7 +48,7 @@ class TailwindThemeDisplayTest extends TestCase
             }
         }
 
-        $this->assertCount(68, $views);
+        $this->assertCount(47, $views);
     }
 
     public function test_sync_table_keeps_data_and_attributes_with_tailwind_presentation(): void

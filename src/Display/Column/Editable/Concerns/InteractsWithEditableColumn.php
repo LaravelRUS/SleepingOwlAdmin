@@ -444,6 +444,7 @@ trait InteractsWithEditableColumn
             'mode' => $this->getEditableMode(),
             'required' => $this->isRequired(),
             'text' => $this->getModifierValue(),
+            'editorType' => $this->editorType,
         ];
     }
 

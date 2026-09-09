@@ -9,7 +9,9 @@ class Range extends Number implements ColumnEditableInterface
     /**
      * @var string
      */
-    protected $view = 'column.editable.range';
+    protected $view = 'column.editable.partials.editor';
+
+    protected $editorType = 'range';
 
     /**
      * @var int

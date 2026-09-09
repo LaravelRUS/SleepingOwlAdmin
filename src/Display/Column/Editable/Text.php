@@ -11,7 +11,9 @@ class Text extends FormText implements ColumnEditableInterface
 {
     use InteractsWithEditableColumn;
 
-    protected $view = 'column.editable.text';
+    protected $view = 'column.editable.partials.editor';
+
+    protected $editorType = 'text';
 
     public function __construct($name, $label = null, $small = null)
     {

@@ -57,7 +57,7 @@ class TailwindThemeRemainingViewsTest extends TestCase
 
         $this->assertContains('dashboard', $views);
         $this->assertContains('pages.login', $views);
-        $this->assertCount(115, $views);
+        $this->assertCount(106, $views);
         $this->assertSame(count($views), $inherited + $overridden);
         $this->assertGreaterThan(0, $inherited);
         $this->assertGreaterThan(0, $overridden);
@@ -96,13 +96,13 @@ class TailwindThemeRemainingViewsTest extends TestCase
         $finder = view()->getFinder();
         $base = realpath(__DIR__.'/../../../resources/views/default');
 
-        $inherited = $finder->find($template->getViewPath('column.editable.text'));
+        $inherited = $finder->find($template->getViewPath('column.editable.checklist'));
         $nestedFallback = $finder->find(
             $template->getViewPath('column.editable.partials.editor_template')
         );
 
         $this->assertSame(
-            realpath($base.DIRECTORY_SEPARATOR.'column/editable/text.blade.php'),
+            realpath($base.DIRECTORY_SEPARATOR.'column/editable/checklist.blade.php'),
             realpath($inherited)
         );
         $this->assertSame(

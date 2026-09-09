@@ -13,7 +13,9 @@ class DateTime extends FormDateTime implements ColumnEditableInterface
         InteractsWithEditableDateTime::getModifierValue insteadof InteractsWithEditableColumn;
     }
 
-    protected $view = 'column.editable.datetime';
+    protected $view = 'column.editable.partials.editor';
+
+    protected $editorType = 'datetime';
 
     public function __construct($name, $label = null, $small = null)
     {

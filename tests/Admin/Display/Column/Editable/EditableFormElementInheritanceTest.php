@@ -28,7 +28,15 @@ class EditableFormElementInheritanceTest extends TestCase
         string $editableClass,
         string $formElementClass
     ): void {
-        $this->assertInstanceOf($formElementClass, new $editableClass('field'));
+        $column = new $editableClass('field');
+
+        $this->assertInstanceOf($formElementClass, $column);
+        $this->assertSame(
+            $editableClass === EditableChecklist::class
+                ? 'column.editable.checklist'
+                : 'column.editable.partials.editor',
+            $column->getView()
+        );
     }
 
     public function test_select_and_checklist_accept_callable_options_and_select_configuration(): void

@@ -20,6 +20,8 @@ class Checklist extends Select implements ColumnEditableInterface
 
     protected $view = 'column.editable.checklist';
 
+    protected $editorType = 'checklist';
+
     protected $forceSaveRelation;
 
     public function getModifierValue()

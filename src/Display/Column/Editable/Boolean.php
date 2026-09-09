@@ -4,7 +4,7 @@ namespace SleepingOwl\Admin\Display\Column\Editable;
 
 class Boolean extends Checkbox
 {
-    protected $view = 'column.editable.boolean';
+    protected $editorType = 'boolean';
 
     public function getCheckedLabel()
     {

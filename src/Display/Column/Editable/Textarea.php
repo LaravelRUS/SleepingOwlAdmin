@@ -11,7 +11,9 @@ class Textarea extends FormTextarea implements ColumnEditableInterface
 {
     use InteractsWithEditableColumn;
 
-    protected $view = 'column.editable.textarea';
+    protected $view = 'column.editable.partials.editor';
+
+    protected $editorType = 'textarea';
 
     protected $maxRows = 0;
 
@@ -27,6 +29,8 @@ class Textarea extends FormTextarea implements ColumnEditableInterface
             'rows' => $this->getRows(),
             'maxRows' => $this->getMaxRows(),
             'isolated' => $this->getIsolated(),
+            'editorTextHtml' => ! $this->getIsolated(),
+            'editorDisplayHtml' => ! $this->getIsolated(),
         ];
     }
 

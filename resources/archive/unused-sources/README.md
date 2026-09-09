@@ -26,5 +26,8 @@ Archived during the resource-layout migration:
   widget supplies alert classes, icon, role and session key.
 - four duplicate scalar column views, replaced by one value template with an
   explicit escaped/raw value contract supplied by the column class.
+- nine inline-editor type adapters that only configured the existing editor
+  host. Type data now comes from the editable column classes; the genuinely
+  different control partials and checklist composition remain active.
 
 Nothing under `resources/archive` may be imported or compiled.
