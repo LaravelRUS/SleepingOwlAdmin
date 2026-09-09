@@ -11,5 +11,5 @@ export {
     escapeLightboxText,
     findLightboxTrigger,
     LIGHTBOX_TRIGGER_SELECTOR,
-} from './lightbox-elements.js'
-export { mountLightbox } from './lightbox.js'
+    mountLightbox,
+} from './lightbox.js'

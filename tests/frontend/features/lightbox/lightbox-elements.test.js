@@ -3,7 +3,7 @@ import { expect, it } from 'vitest'
 import {
     collectLightboxGallery,
     findLightboxTrigger,
-} from '../../../../resources/js/shared/features/lightbox/lightbox-elements.js'
+} from '../../../../resources/js/shared/features/lightbox/lightbox.js'
 
 it('collects only the selected gallery in document order', () => {
     const first = trigger('/one.svg', 'catalog', 'One')
