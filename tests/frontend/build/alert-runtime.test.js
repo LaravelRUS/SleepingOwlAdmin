@@ -14,7 +14,6 @@ it('replaces Bootstrap alert execution while preserving the public marker', () =
     const runtime = [
         read('resources/js/shared/legacy/admin/alert.js'),
         read('resources/js/shared/features/alert/alerts.js'),
-        read('resources/js/shared/features/alert/alert-elements.js'),
     ].join('\n')
 
     expect(views).toContain('data-dismiss="alert"')
