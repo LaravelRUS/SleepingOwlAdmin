@@ -90,10 +90,10 @@ class InlineEditorRenderContractTest extends TestCase
             'values' => ['Первый', 'Второй', 'Третий'],
         ]);
 
-        $this->assertStringContainsString('class="soa-inline-editor-clear-all"', $html);
+        $this->assertStringContainsString('class="soa-inline-editor-clear-all soa-button soa-button-ghost"', $html);
         $this->assertStringContainsString('>Очистить всё</button>', $html);
-        $this->assertStringContainsString('class="badge table-badge" v-pre>Первый</span>', $html);
-        $this->assertStringContainsString('class="badge table-badge" v-pre>Второй</span>', $html);
+        $this->assertStringContainsString('class="badge table-badge soa-badge" v-pre>Первый</span>', $html);
+        $this->assertStringContainsString('class="badge table-badge soa-badge" v-pre>Второй</span>', $html);
         $this->assertStringNotContainsString('v-pre>Третий</span>', $html);
         $this->assertStringContainsString('и еще 1', $html);
     }
@@ -173,7 +173,7 @@ class InlineEditorRenderContractTest extends TestCase
             ['range', 'data-inline-editor-range-input'],
             ['select', 'data-inline-editor-select'],
             ['text', 'type="text"'],
-            ['textarea', '<textarea class="soa-inline-editor-control"'],
+            ['textarea', '<textarea class="soa-inline-editor-control soa-input"'],
         ];
     }
 

@@ -25,7 +25,7 @@ class DefaultThemeRenderContractTest extends TestCase
 
         $this->assertContainsAll($html, [
             '<meta data-contract="meta">',
-            '<body class="contract-body">',
+            '<body class="soa-body contract-body">',
             '<div class="app-wrapper" id="vueApp">',
             '<nav class="app-header navbar navbar-expand bg-body">',
             '<aside class="app-sidebar shadow" data-bs-theme="dark">',
@@ -37,7 +37,7 @@ class DefaultThemeRenderContractTest extends TestCase
             '<footer class="app-footer main-footer small">',
             '<div id="sidebar-overlay"></div>',
             '<template data-tooltip-template>',
-            '<div data-tooltip-popup role="tooltip">',
+            '<div class="soa-tooltip" data-tooltip-popup role="tooltip">',
             '<span data-tooltip-content></span>',
             '<span data-contract="scripts"></span>',
         ]);
@@ -265,13 +265,13 @@ class DefaultThemeRenderContractTest extends TestCase
         ])->render();
 
         $this->assertContainsAll($html, [
-            '<table class="table user-table" data-contract="display">',
+            '<table class="table soa-table user-table" data-contract="display">',
             '<col width="120px"/>',
             '<th class="user-heading" data-sort="id">',
             '<span>ID</span>',
             '<td v-pre>',
             '<a data-contract="cell">1001</a>',
-            '<div class="card-footer">',
+            '<div class="card-footer soa-card-footer">',
             '<nav data-contract="pagination">Next</nav>',
         ]);
     }
@@ -387,19 +387,19 @@ class DefaultThemeRenderContractTest extends TestCase
     private function textElementContract(): array
     {
         return [
-            'form-group form-element-text mb-3 has-error',
-            'class="form-label control-label required"',
-            '<span class="form-element-required">*</span>',
+            'form-group soa-field form-element-text mb-3 has-error',
+            'class="form-label control-label soa-label required"',
+            '<span class="form-element-required soa-required">*</span>',
             'name="name"',
             'id="profile_name"',
-            'class="form-control user-class"',
+            'class="form-control soa-input user-class"',
             'data-contract="kept"',
             'value="Alice &amp; Bob"',
             'readonly',
             'data-generate-length="16"',
             '<datalist id="profile_nameDatalist">',
-            '<small class="form-element-helptext"><em>Public help</em></small>',
-            '<ul class="form-element-errors">',
+            '<small class="form-element-helptext soa-help-text"><em>Public help</em></small>',
+            '<ul class="form-element-errors soa-field-errors">',
             '<li>Name is required</li>',
         ];
     }

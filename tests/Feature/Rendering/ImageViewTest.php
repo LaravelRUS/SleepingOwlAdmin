@@ -26,7 +26,7 @@ class ImageViewTest extends TestCase
         $this->assertTrue($props['onlyLink']);
         $this->assertFalse($props['readonly']);
         $this->assertSame('/admin/products/image/avatar/7', $props['url']);
-        $this->assertSame('alert alert-warning', $props['classes']['alert']);
+        $this->assertSame('alert alert-warning soa-alert', $props['classes']['alert']);
         $this->assertSame('fas fa-image', $props['classes']['uploadIcon']);
         $this->assertSame('fas fa-spinner fa-spin', $props['classes']['uploadingIcon']);
         $this->assertStringNotContainsString('<script>', $html);

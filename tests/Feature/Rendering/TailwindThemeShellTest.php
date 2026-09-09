@@ -135,7 +135,8 @@ class TailwindThemeShellTest extends TestCase
         ])->render();
 
         $this->assertContainsAll($html, [
-            'alert alert-message soa-alert alert-error alert-danger',
+            'alert alert-error alert-danger alert-message',
+            'soa-alert',
             'role="alert"',
             'fas fa-times fa-lg',
             '<strong>Request failed</strong>',

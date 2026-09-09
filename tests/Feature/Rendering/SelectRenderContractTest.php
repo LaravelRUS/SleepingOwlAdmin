@@ -15,9 +15,9 @@ class SelectRenderContractTest extends TestCase
         $this->assertSame(2, $props['value']);
         $this->assertNull($props['options'][0]['id']);
         $this->assertSame('2', $props['options'][2]['id']);
-        $this->assertSame('form-control project-select', $props['attributes']['class']);
+        $this->assertSame('form-control soa-select project-select', $props['attributes']['class']);
         $this->assertSame('Sales & "support"', $props['attributes']['data-contract']);
-        $this->assertSame('text-danger pt-2 pb-3', $props['classes']['required']);
+        $this->assertSame('text-danger pt-2 pb-3 soa-field-error', $props['classes']['required']);
     }
 
     public function test_multiselect_renders_limits_taggable_state_and_array_value(): void
@@ -97,7 +97,7 @@ class SelectRenderContractTest extends TestCase
         $this->assertIslandHost($html);
         $this->assertSame('/admin/dependent/cities', $props['dependent']['url']);
         $this->assertSame(['country'], $props['dependent']['dependencies']);
-        $this->assertSame('form-control project-dependent', $props['attributes']['class']);
+        $this->assertSame('form-control soa-select project-dependent', $props['attributes']['class']);
         $this->assertStringNotContainsString('<select', $html);
         $this->assertStringNotContainsString('input-select-dependent', $html);
     }

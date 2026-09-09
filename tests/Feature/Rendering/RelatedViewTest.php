@@ -27,11 +27,11 @@ class RelatedViewTest extends TestCase
         $this->assertSame('items', $props['name']);
         $this->assertSame(3, $props['limit']);
         $this->assertTrue($props['draggable']);
-        $this->assertSame('grouped-elements clearfix', $props['classes']['root']);
-        $this->assertSame('related-elements__draggable', $props['classes']['groups']);
-        $this->assertSame('d-block clearfix', $props['classes']['actions']);
+        $this->assertSame('grouped-elements clearfix soa-related', $props['classes']['root']);
+        $this->assertSame('related-elements__draggable soa-related-groups', $props['classes']['groups']);
+        $this->assertSame('d-block clearfix soa-form-actions', $props['classes']['actions']);
         $this->assertSame(
-            'grouped-elements__action float-end related-action_add btn btn-success btn-sm',
+            'grouped-elements__action float-end related-action_add btn btn-success btn-sm soa-button soa-button-sm soa-button-success',
             $props['classes']['add']
         );
         $this->assertSame('fas fa-plus', $props['classes']['addIcon']);

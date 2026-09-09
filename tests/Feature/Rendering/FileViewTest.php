@@ -24,7 +24,7 @@ class FileViewTest extends TestCase
         $this->assertSame(12, $props['maxFileSize']);
         $this->assertFalse($props['readonly']);
         $this->assertSame('/admin/products/file/document/7', $props['url']);
-        $this->assertSame('alert alert-warning', $props['classes']['alert']);
+        $this->assertSame('alert alert-warning soa-alert', $props['classes']['alert']);
         $this->assertSame('fas fa-file-upload', $props['classes']['uploadIcon']);
         $this->assertSame('fas fa-spinner fa-spin', $props['classes']['uploadingIcon']);
         $this->assertStringNotContainsString('<script>', $html);
