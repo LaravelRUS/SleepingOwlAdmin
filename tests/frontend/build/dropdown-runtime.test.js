@@ -15,7 +15,7 @@ it('replaces Bootstrap dropdown execution with a delegated native feature', () =
 
 it('keeps the public marker without introducing replacement attributes', () => {
     const view = read('resources/views/default/form/button.blade.php')
-    const elements = read('resources/js/shared/features/dropdown/dropdown-elements.js')
+    const elements = read('resources/js/shared/features/dropdown/dropdowns.js')
 
     expect(view).toContain('data-toggle="dropdown"')
     expect(view).not.toContain('data-dropdown')

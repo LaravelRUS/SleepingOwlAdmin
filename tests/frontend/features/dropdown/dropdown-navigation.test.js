@@ -1,6 +1,6 @@
 import { expect, it } from 'vitest'
 
-import { dropdownNavigationTarget } from '../../../../resources/js/shared/features/dropdown/dropdown-navigation.js'
+import { dropdownNavigationTarget } from '../../../../resources/js/shared/features/dropdown/dropdowns.js'
 
 it('wraps arrow navigation in both directions', () => {
     const items = [{ id: 1 }, { id: 2 }, { id: 3 }]
