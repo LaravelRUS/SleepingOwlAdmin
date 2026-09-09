@@ -17,15 +17,18 @@ it('replaces Nestable with the shared SortableJS tree driver', () => {
     expect(existsSync(resolve(root, 'resources/js/shared/legacy/libs/nestable.js'))).toBe(false)
 })
 
-it('keeps the tree driver and both theme adapters in separate owned sources', () => {
+it('keeps tree behavior and presentation in shared owned sources', () => {
     const files = [
         'resources/js/shared/features/tree/index.js',
         'resources/css/shared/features/tree/tree.scss',
-        'resources/css/themes/adminlte/features/tree/tree-adminlte.scss',
-        'resources/css/themes/shadcn/features/tree/tree-tailwind.scss',
+        'resources/css/shared/_tokens.scss',
     ]
 
     files.forEach((file) => expect(existsSync(resolve(root, file))).toBe(true))
+    expect(read('resources/css/shared/features/tree/tree.scss')).toContain('.soa-tree-content')
+    expect(
+        existsSync(resolve(root, 'resources/css/themes/adminlte/features/tree/tree-adminlte.scss')),
+    ).toBe(false)
 })
 
 it('keeps theme notification policies out of the neutral tree entry', () => {

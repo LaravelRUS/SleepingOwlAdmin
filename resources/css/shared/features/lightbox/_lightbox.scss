@@ -1,16 +1,4 @@
 @use 'sass:meta';
-@use 'colors';
-
-$backdrop-opacity: 0.92 !default;
-$svg-min-size: 5rem !default;
-
-@mixin properties {
-    :root {
-        --soa-lightbox-backdrop: #{colors.$backdrop};
-        --soa-lightbox-backdrop-opacity: #{$backdrop-opacity};
-        --soa-lightbox-svg-min-size: #{$svg-min-size};
-    }
-}
 
 @mixin styles {
     @include meta.load-css('../../../../../node_modules/glightbox/dist/css/glightbox.css');
@@ -20,8 +8,30 @@ $svg-min-size: 5rem !default;
         opacity: var(--soa-lightbox-backdrop-opacity);
     }
 
-    .gslide-image img[src$='.svg'] {
-        min-inline-size: var(--soa-lightbox-svg-min-size);
-        min-block-size: var(--soa-lightbox-svg-min-size);
-    }
+  .gslide-image img[src$='.svg'] {
+    min-inline-size: var(--soa-lightbox-svg-min-size);
+    min-block-size: var(--soa-lightbox-svg-min-size);
+  }
+
+  .glightbox-container .gbtn {
+    background: var(--soa-lightbox-control-surface);
+    block-size: var(--soa-lightbox-control-size);
+    border-radius: var(--soa-lightbox-control-radius);
+    inline-size: var(--soa-lightbox-control-size);
+    transition: background var(--soa-lightbox-transition-duration);
+  }
+
+  .glightbox-container .gbtn:hover {
+    background: var(--soa-lightbox-control-surface-hover);
+  }
+
+  .glightbox-container .gbtn path {
+    fill: var(--soa-lightbox-control-text);
+  }
+
+  .glightbox-container .gslide-description {
+    background: var(--soa-lightbox-caption-surface);
+    border-radius: var(--soa-lightbox-caption-radius);
+    color: var(--soa-lightbox-caption-text);
+  }
 }

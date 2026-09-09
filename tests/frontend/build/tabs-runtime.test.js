@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs'
+import { existsSync, readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 
 import { expect, it } from 'vitest'
@@ -27,17 +27,18 @@ it('uses the native tab marker without replacing legacy compatibility attributes
     expect(tabbedForm).toContain('data-bs-toggle="tab"')
 })
 
-it('ships theme-independent behavior and both presentation adapters', () => {
+it('ships theme-independent behavior and shared token-driven presentation', () => {
     expect(read('resources/js/shared/features/tabs/browser.js')).toContain(
         'installTabs(target.Admin',
     )
     expect(read('resources/js/shared/features/tabs/index.js')).toContain("TABS_FEATURE_ID = 'tabs'")
-    expect(read('resources/css/themes/adminlte/features/tabs/tabs-adminlte.scss')).toContain(
-        '@layer sleepingowl-theme.tabs',
+    expect(read('resources/css/shared/features/tabs/tabs.scss')).toContain(
+        '@layer sleepingowl-feature.tabs',
     )
-    expect(read('resources/css/themes/shadcn/features/tabs/tabs-tailwind.scss')).toContain(
-        '@layer sleepingowl-theme.tabs',
-    )
+    expect(read('resources/css/shared/_tokens.scss')).toContain('--soa-tabs-active-surface:')
+    expect(
+        existsSync(resolve(root, 'resources/css/themes/adminlte/features/tabs/tabs-adminlte.scss')),
+    ).toBe(false)
 })
 
 function read(path) {

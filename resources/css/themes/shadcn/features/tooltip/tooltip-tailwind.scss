@@ -1,6 +1,0 @@
-@use 'tooltip';
-@include tooltip.properties;
-
-@layer sleepingowl-theme.tooltip {
-    @include tooltip.styles;
-}

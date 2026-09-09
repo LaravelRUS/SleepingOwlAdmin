@@ -1,5 +1,4 @@
 @use 'dropdown';
-@include dropdown.properties;
 
 @layer sleepingowl-feature.dropdown {
     @include dropdown.styles;

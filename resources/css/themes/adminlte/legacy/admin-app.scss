@@ -1,48 +1,30 @@
 @use '../../../shared/features/forms/files' as form-files;
 @use '../../../shared/features/forms/date-picker' as form-date-picker;
-@use '../../../shared/features/forms/tokens' as form-tokens;
 @use '../../../shared/features/dropdown/dropdown' as dropdown-driver;
-@use '../features/dropdown/dropdown' as legacy-dropdown;
 @use '../../../shared/features/lightbox/lightbox' as legacy-lightbox-driver;
-@use '../features/lightbox/lightbox' as legacy-lightbox;
 @use '../../../shared/features/sidebar/sidebar' as sidebar-driver;
 @use '../features/sidebar/sidebar' as legacy-sidebar;
-@use '../features/tabs/tabs' as legacy-tabs;
+@use '../../../shared/features/tabs/tabs';
 @use '../features/table/legacy' as legacy-datatables;
 @use '../../../shared/features/tooltip/tooltip' as tooltip-driver;
-@use '../features/tooltip/tooltip' as legacy-tooltip;
-@use '../features/tree/tree' as legacy-tree;
+@use '../../../shared/tokens' as shared-tokens;
+@use '../../../shared/features/tree/tree';
 @use '../tokens' as theme-tokens;
 @use '../asset-health' as theme-asset-health;
 @use '../legacy-build' as legacy-theme;
 
-@include dropdown-driver.properties;
+@include shared-tokens.define;
 @include dropdown-driver.styles;
-@include legacy-dropdown.properties;
-@include legacy-dropdown.styles;
-@include legacy-lightbox-driver.properties;
 @include legacy-lightbox-driver.styles;
-@include legacy-lightbox.properties;
-@include legacy-lightbox.styles;
-@include sidebar-driver.properties;
 @include sidebar-driver.styles;
-@include legacy-sidebar.properties;
 @include legacy-sidebar.styles;
-@include legacy-tabs.properties;
-@include legacy-tabs.styles;
 @include legacy-datatables.styles;
-@include tooltip-driver.properties;
 @include tooltip-driver.styles;
-@include legacy-tooltip.properties;
-@include legacy-tooltip.styles;
-@include legacy-tree.properties;
-@include legacy-tree.styles;
 @include form-files.styles(
   $thumbnail-border: legacy-theme.$file-thumbnail-border,
   $thumbnail-surface: legacy-theme.$file-thumbnail-surface,
   $file-name-text: legacy-theme.$file-name-text,
 );
-@include form-tokens.define;
 @include form-date-picker.styles;
 @include theme-tokens.define;
 @include theme-asset-health.styles;

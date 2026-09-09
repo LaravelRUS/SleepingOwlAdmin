@@ -1,5 +1,4 @@
 @use 'sidebar';
-@include sidebar.properties;
 
 @layer sleepingowl-theme.sidebar {
   @include sidebar.styles;

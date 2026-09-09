@@ -23,19 +23,21 @@ it('keeps the public marker without introducing replacement attributes', () => {
     expect(elements).not.toContain('data-dropdown')
 })
 
-it('ships independent behavior and AdminLTE/Tailwind Sass adapters', () => {
+it('ships independent behavior, shared presentation and theme token overrides', () => {
     expect(read('resources/js/shared/features/dropdown/browser.js')).toContain(
         'installDropdowns(target.Admin',
     )
-    expect(read('resources/css/shared/features/dropdown/dropdown-base.scss')).toContain(
-        '@layer sleepingowl-feature.dropdown',
-    )
+    const presentation = read('resources/css/shared/features/dropdown/_dropdown.scss')
+
+    expect(presentation).toContain('.dropdown-menu')
+    expect(presentation).toContain('var(--soa-dropdown-radius)')
+    expect(read('resources/css/themes/adminlte/_tokens.scss')).toContain('--soa-dropdown-radius:')
+    expect(read('resources/css/themes/shadcn/_tokens.scss')).toContain('--soa-dropdown-radius:')
     expect(
-        read('resources/css/themes/adminlte/features/dropdown/dropdown-adminlte.scss'),
-    ).toContain('@layer sleepingowl-theme.dropdown')
-    expect(read('resources/css/themes/shadcn/features/dropdown/dropdown-tailwind.scss')).toContain(
-        '@layer sleepingowl-theme.dropdown',
-    )
+        existsSync(
+            resolve(root, 'resources/css/themes/adminlte/features/dropdown/dropdown-adminlte.scss'),
+        ),
+    ).toBe(false)
 })
 
 it('removes the legacy AdminLTE and aggregate dropdown style owners', () => {

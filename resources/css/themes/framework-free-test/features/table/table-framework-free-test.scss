@@ -1,15 +1,6 @@
-@use 'colors';
-
 $cell-padding: 0.625rem 0.75rem !default;
 $control-gap: 0.5rem !default;
 $header-letter-spacing: 0.04em !default;
-$radius: 0.375rem !default;
-
-:root[data-theme='framework-free-test'] {
-  --soa-workbench-table-border-color: #{colors.$border};
-  --soa-workbench-table-heading-color: #{colors.$heading};
-  --soa-workbench-table-radius: #{$radius};
-}
 
 @layer sleepingowl-theme.table {
   /* stylelint-disable selector-class-pattern -- DataTables owns the public dataTable selector. */

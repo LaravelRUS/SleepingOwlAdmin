@@ -1,25 +1,18 @@
-@use 'colors';
-
-$maximum-width: 18rem !default;
-$stack-level: 1080 !default;
-
-@mixin properties {
-    :root {
-        --soa-tooltip-max-width: #{$maximum-width};
-        --soa-tooltip-z-index: #{$stack-level};
-        --soa-tooltip-surface: #{colors.$surface};
-        --soa-tooltip-text: #{colors.$text};
-    }
-}
-
 @mixin styles {
     [data-tooltip-popup] {
-        position: fixed;
-        z-index: var(--soa-tooltip-z-index);
-        max-inline-size: min(var(--soa-tooltip-max-width), calc(100vw - 0.5rem));
         background: var(--soa-tooltip-surface);
+        border-radius: var(--soa-tooltip-radius);
+        box-shadow: var(--soa-tooltip-shadow);
         color: var(--soa-tooltip-text);
-        pointer-events: none;
+        font-size: var(--soa-tooltip-font-size);
+        font-weight: var(--soa-tooltip-font-weight);
+        line-height: var(--soa-tooltip-line-height);
+        max-inline-size: min(var(--soa-tooltip-max-width), calc(100vw - 0.5rem));
         overflow-wrap: anywhere;
+        padding: var(--soa-tooltip-padding-block) var(--soa-tooltip-padding-inline);
+        pointer-events: none;
+        position: fixed;
+        text-align: center;
+        z-index: var(--soa-tooltip-z-index);
     }
 }

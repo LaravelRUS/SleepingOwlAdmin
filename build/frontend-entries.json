@@ -99,6 +99,11 @@
                 "output": "css/themes/framework-free-test.css"
             },
             {
+                "logicalId": "theme:empty",
+                "source": "resources/css/themes/empty/theme.scss",
+                "output": "css/themes/empty.css"
+            },
+            {
                 "logicalId": "theme:shadcn",
                 "source": "resources/css/themes/shadcn/theme.scss",
                 "output": "css/themes/shadcn.css"

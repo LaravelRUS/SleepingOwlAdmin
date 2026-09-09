@@ -1,6 +1,0 @@
-@use 'tree';
-@include tree.properties;
-
-@layer sleepingowl-theme.tree {
-  @include tree.styles;
-}

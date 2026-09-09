@@ -19,15 +19,19 @@ it('replaces Magnific Popup with the GLightbox feature driver', () => {
     )
 })
 
-it('ships standalone lightbox sources and both theme adapters', () => {
+it('ships standalone behavior with shared presentation and theme token overrides', () => {
     const files = [
         'resources/js/shared/features/lightbox/index.js',
         'resources/css/shared/features/lightbox/lightbox-base.scss',
-        'resources/css/themes/adminlte/features/lightbox/lightbox-adminlte.scss',
-        'resources/css/themes/shadcn/features/lightbox/lightbox-tailwind.scss',
+        'resources/css/shared/_tokens.scss',
+        'resources/css/themes/adminlte/_tokens.scss',
+        'resources/css/themes/shadcn/_tokens.scss',
     ]
 
     files.forEach((file) => expect(existsSync(resolve(root, file))).toBe(true))
+    expect(read('resources/css/shared/features/lightbox/_lightbox.scss')).toContain(
+        '.glightbox-container .gbtn',
+    )
 })
 
 it('uses the native behavior marker in package-owned image views', () => {

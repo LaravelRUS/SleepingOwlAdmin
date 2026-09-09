@@ -1,11 +1,115 @@
 @layer sleepingowl-feature.tree;
 
-:root {
-    --soa-tree-empty-target-color: transparent;
-    --soa-tree-empty-target-size: 1.25rem;
-}
-
 @layer sleepingowl-feature.tree {
+    .soa-tree,
+    .soa-tree-list {
+        display: block;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .soa-tree-menu {
+        display: flex;
+        flex-wrap: var(--soa-tree-menu-wrap);
+        gap: var(--soa-tree-menu-gap);
+        margin: 0;
+    }
+
+    .soa-tree-list .soa-tree-list {
+        padding-inline-start: var(--soa-tree-indent);
+    }
+
+    .soa-tree-item {
+        position: relative;
+        margin-block: var(--soa-tree-item-gap);
+        color: var(--soa-tree-text);
+    }
+
+    .soa-tree-content {
+        display: flex;
+        min-block-size: var(--soa-tree-control-size);
+        align-items: center;
+        justify-content: space-between;
+        padding: var(--soa-tree-content-padding-block) var(--soa-tree-content-padding-inline);
+        padding-inline-start: calc(var(--soa-tree-control-size) * 2 + var(--soa-tree-menu-gap));
+        border: var(--soa-tree-content-border);
+        border-block-end: var(--soa-tree-content-border-block-end);
+        border-radius: var(--soa-tree-content-radius);
+        background: var(--soa-tree-surface);
+        transition: background var(--soa-tree-transition-duration);
+    }
+
+    .soa-tree-item:hover > .soa-tree-content {
+        background: var(--soa-tree-hover);
+    }
+
+    .soa-tree-handle,
+    .soa-tree-toggle {
+        position: absolute;
+        z-index: 1;
+        inset-block-start: 0;
+        inline-size: var(--soa-tree-control-size);
+        block-size: var(--soa-tree-control-size);
+        border: 0;
+        border-radius: var(--soa-tree-radius);
+    }
+
+    .soa-tree-handle {
+        inset-inline-start: 0;
+        cursor: grab;
+        background: var(--soa-tree-handle);
+        color: var(--soa-tree-on-handle);
+    }
+
+    .soa-tree-handle:hover {
+        background: var(--soa-tree-handle-hover);
+    }
+
+    .soa-tree-toggle {
+        inset-inline-start: calc(var(--soa-tree-control-size) + var(--soa-tree-control-gap));
+        background: transparent;
+        color: inherit;
+    }
+
+    .soa-tree-item-static > .soa-tree-content {
+        padding-inline-start: var(--soa-tree-content-padding-inline);
+    }
+
+    .soa-tree-ghost {
+        background: var(--soa-tree-ghost);
+        opacity: var(--soa-tree-ghost-opacity);
+    }
+
+    .soa-tree-chosen {
+        box-shadow: 0 var(--soa-tree-shadow-offset) var(--soa-tree-shadow-blur)
+            var(--soa-tree-shadow);
+    }
+
+    .soa-tree-handle:focus-visible,
+    .soa-tree-toggle:focus-visible {
+        outline: var(--soa-focus-ring-width) solid var(--soa-focus-color);
+        outline-offset: var(--soa-focus-ring-width);
+    }
+
+    .soa-tree-notification {
+        --soa-status-rail-color: var(--soa-success-color);
+
+        border-inline-start: var(--soa-status-rail-width) solid
+            var(--soa-status-rail-color);
+        color: var(--soa-text-color);
+        margin: var(--soa-space-3);
+        padding: var(--soa-space-2) var(--soa-space-3);
+    }
+
+    .soa-tree-notification[data-state='error'] {
+        --soa-status-rail-color: var(--soa-danger-color);
+    }
+
+    .soa-tree[aria-busy='true'] .soa-tree-handle {
+        cursor: wait;
+    }
+
     [data-tree-dragging] [data-tree-list]:empty {
         min-block-size: var(--soa-tree-empty-target-size);
         background: var(--soa-tree-empty-target-color);

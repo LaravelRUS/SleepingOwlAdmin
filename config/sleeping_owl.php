@@ -18,6 +18,7 @@ return [
         'themes' => [
             'adminlte' => SleepingOwl\Admin\Themes\AdminLTETheme::class,
             'shadcn' => SleepingOwl\Admin\Themes\TailwindTheme::class,
+            'empty' => SleepingOwl\Admin\Themes\EmptyTheme::class,
             // 'tabler' => SleepingOwl\Admin\Themes\TablerTheme::class,
         ],
     ],
@@ -36,7 +37,9 @@ return [
 
         // Additional application classes; each theme owns its structural body classes.
         'body_default_class' => '',
-        'sidebar_background_color' => null,
+
+        //Sidebar color. null or '#abc'
+        'sidebar_background_color' => '#abc',
 
         'breadcrumbs' => true,
         'show_color_mode_toggle' => true,

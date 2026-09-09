@@ -1,9 +1,6 @@
 @use 'colors';
+@use 'features/table/colors' as table;
 
-$font-family-body: 'Segoe UI Variable', 'Aptos', 'Segoe UI', sans-serif !default;
-$font-family-utility: 'Cascadia Mono', 'SFMono-Regular', consolas, monospace !default;
-$font-size-base: 1rem !default;
-$line-height-base: 1.5 !default;
 $content-width: 72rem !default;
 $rail-width: 0.375rem !default;
 $space-1: 0.375rem !default;
@@ -15,26 +12,9 @@ $radius-medium: 0.5rem !default;
 $border-width: 0.0625rem !default;
 $focus-width: 0.1875rem !default;
 $shadow: 0 0.75rem 2rem !default;
-$sidebar-width: 16rem !default;
-$sidebar-collapsed-width: 4rem !default;
-$layout-transition-duration: 360ms !default;
-$header-height: 3.5rem !default;
-$shell-max-width: 72rem !default;
-$control-size: 2.375rem !default;
-$control-size-small: 2rem !default;
-$icon-control-size: 2.25rem !default;
-$control-padding-block: 0.5rem !default;
-$control-padding-inline: 1rem !default;
-$control-padding-block-small: 0.25rem !default;
-$control-padding-inline-small: 0.5rem !default;
-$choice-size: 1rem !default;
-$switch-track-padding: 0.125rem !default;
-$attachment-empty-min-height: 5rem !default;
-$attachment-preview-ratio: 1.6 !default;
-$order-badge-size: 1.5rem !default;
-$dragging-opacity: 0.45 !default;
-$dialog-image-reserved-space: 8rem !default;
 
+// The shared token layer owns the complete contract. This fixture only
+// reassigns its intentionally distinctive values.
 @mixin define {
   :root[data-theme='framework-free-test'] {
     --soa-primary-color: #{colors.$accent};
@@ -53,45 +33,37 @@ $dialog-image-reserved-space: 8rem !default;
     --soa-input-border-color: #{colors.$input};
     --soa-focus-color: #{colors.$marker};
     --soa-overlay-color: #{colors.$overlay};
+    --soa-shadow-color: #{colors.$shadow};
     --soa-shadow-sm: 0 0.125rem 0.25rem #{colors.$shadow};
     --soa-shadow-md: #{$shadow} #{colors.$shadow};
     --soa-sidebar-bg: #{colors.$ink};
     --soa-sidebar-text-color: #{colors.$paper};
+    --soa-sidebar-muted-text-color: #{colors.$paper};
     --soa-sidebar-border-color: #{colors.$border};
-    --soa-font-family-sans: #{$font-family-body};
-    --soa-font-family-monospace: #{$font-family-utility};
-    --soa-font-size-base: #{$font-size-base};
-    --soa-line-height-base: #{$line-height-base};
+    --soa-font-family-sans: 'Segoe UI Variable', 'Aptos', 'Segoe UI', sans-serif;
+    --soa-font-family-mono: 'Cascadia Mono', 'SFMono-Regular', consolas, monospace;
+    --soa-font-family-monospace: var(--soa-font-family-mono);
     --soa-line-height-tight: 1.25;
-    --soa-font-size-caption: 0.875rem;
-    --soa-font-size-section: 1.125rem;
     --soa-font-size-title: 1.75rem;
-    --soa-font-weight-medium: 500;
-    --soa-font-weight-semibold: 600;
-    --soa-sidebar-width: #{$sidebar-width};
-    --soa-sidebar-collapsed-width: #{$sidebar-collapsed-width};
+    --soa-sidebar-width: 16rem;
+    --soa-sidebar-collapsed-width: 4rem;
     --soa-content-padding: #{$space-4};
     --soa-content-padding-compact: #{$space-2};
     --soa-border-radius: #{$radius-small};
     --soa-border-radius-sm: #{$radius-small};
     --soa-border-radius-lg: #{$radius-medium};
-    --soa-border-radius-full: 9999px;
-    --soa-border-width: #{$border-width};
-    --soa-layout-transition-duration: #{$layout-transition-duration};
     --soa-disabled-opacity: 0.55;
     --soa-space-1: #{$space-1};
     --soa-space-2: #{$space-2};
     --soa-space-3: #{$space-3};
     --soa-space-4: #{$space-4};
     --soa-space-6: #{$space-4};
-    --soa-header-height: #{$header-height};
-    --soa-header-action-size: 2.5rem;
-    --soa-shell-max-width: #{$shell-max-width};
+    --soa-header-height: 3.5rem;
+    --soa-shell-max-width: 72rem;
     --soa-header-z-index: 30;
     --soa-overlay-z-index: 35;
     --soa-sidebar-z-index: 40;
     --soa-sidebar-overlay-z-index: 35;
-    --soa-sidebar-indicator-angle: -90deg;
     --soa-scroll-control-size: 2.75rem;
     --soa-scroll-control-offset-inline: #{$space-3};
     --soa-scroll-control-offset-block: #{$space-3};
@@ -100,40 +72,37 @@ $dialog-image-reserved-space: 8rem !default;
     --soa-asset-health-margin-top: #{$space-2};
     --soa-asset-health-padding-block: #{$space-2};
     --soa-asset-health-padding-inline: #{$space-3};
-    --soa-shadow-color: #{colors.$shadow};
-    --soa-control-size: #{$control-size};
-    --soa-control-size-sm: #{$control-size-small};
-    --soa-icon-control-size: #{$icon-control-size};
-    --soa-control-padding-block: #{$control-padding-block};
-    --soa-control-padding-inline: #{$control-padding-inline};
-    --soa-control-padding-block-sm: #{$control-padding-block-small};
-    --soa-control-padding-inline-sm: #{$control-padding-inline-small};
-    --soa-choice-size: #{$choice-size};
-    --soa-switch-track-padding: #{$switch-track-padding};
-    --soa-attachment-empty-min-height: #{$attachment-empty-min-height};
-    --soa-attachment-preview-ratio: #{$attachment-preview-ratio};
-    --soa-order-badge-size: #{$order-badge-size};
-    --soa-dragging-opacity: #{$dragging-opacity};
-    --soa-dialog-image-reserved-space: #{$dialog-image-reserved-space};
-    --soa-inline-editor-surface: var(--soa-elevated-surface-color);
-    --soa-inline-editor-text: var(--soa-text-color);
-    --soa-inline-editor-border: var(--soa-input-border-color);
-    --soa-inline-editor-accent: var(--soa-primary-color);
-    --soa-inline-editor-accent-hover: color-mix(
-      in srgb,
-      var(--soa-primary-color) 88%,
-      var(--soa-text-color)
-    );
-    --soa-inline-editor-on-accent: var(--soa-on-primary-color);
-    --soa-inline-editor-muted: var(--soa-muted-text-color);
-    --soa-inline-editor-error: var(--soa-danger-color);
+    --soa-dropdown-surface: var(--soa-surface-color);
+    --soa-dropdown-border: var(--soa-border-color);
+    --soa-dropdown-text: var(--soa-text-color);
+    --soa-dropdown-shadow: 0 0.625rem 1.5rem var(--soa-shadow-color);
+    --soa-dropdown-min-width: 10rem;
+    --soa-dropdown-offset: 0.375rem;
+    --soa-dropdown-padding-block: 0.375rem;
+    --soa-dropdown-padding-inline: 0.375rem;
+    --soa-dropdown-item-padding-block: 0.5rem;
+    --soa-dropdown-item-padding-inline: 0.75rem;
+    --soa-dropdown-radius: 0.375rem;
+    --soa-dropdown-inset-inline: 0 auto;
+    --soa-dropdown-z-index: 20;
     --soa-inline-editor-shadow: var(--soa-shadow-color);
-    --soa-inline-editor-backdrop: var(--soa-overlay-color);
-    --soa-inline-editor-focus-ring: color-mix(
-      in srgb,
-      var(--soa-focus-color) 20%,
-      transparent
-    );
+    --soa-tabs-active-surface: transparent;
+    --soa-tabs-active-text: var(--soa-text-color);
+    --soa-tabs-padding-inline: 0.75rem;
+    --soa-tabs-radius: 0;
+    --soa-tabs-active-border-color: transparent transparent
+      var(--soa-primary-color);
+    --soa-tooltip-radius: 0.25rem;
+    --soa-tooltip-shadow: 0 0.5rem 1.25rem var(--soa-shadow-color);
+    --soa-tooltip-z-index: 40;
+    --soa-workbench-sidebar-surface: var(--soa-surface-color);
+    --soa-workbench-sidebar-border-color: var(--soa-border-color);
+    --soa-workbench-sidebar-text-color: var(--soa-text-color);
+    --soa-workbench-sidebar-overlay-color: var(--soa-text-color);
+    --soa-workbench-sidebar-width: 15rem;
+    --soa-workbench-table-border-color: #{table.$border};
+    --soa-workbench-table-heading-color: #{table.$heading};
+    --soa-workbench-table-radius: 0.375rem;
   }
 
   :root[data-theme='framework-free-test'][data-color-scheme='dark'] {
@@ -146,9 +115,9 @@ $dialog-image-reserved-space: 8rem !default;
     --soa-border-color: #{colors.$dark-border};
     --soa-input-border-color: #{colors.$dark-input};
     --soa-overlay-color: #{colors.$dark-overlay};
+    --soa-shadow-color: #{colors.$dark-shadow};
     --soa-shadow-sm: 0 0.125rem 0.25rem #{colors.$dark-shadow};
     --soa-shadow-md: #{$shadow} #{colors.$dark-shadow};
     --soa-sidebar-border-color: #{colors.$dark-border};
-    --soa-shadow-color: #{colors.$dark-shadow};
   }
 }

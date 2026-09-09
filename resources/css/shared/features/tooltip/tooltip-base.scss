@@ -1,6 +1,5 @@
 @use 'tooltip';
 @layer sleepingowl-feature.tooltip;
-@include tooltip.properties;
 
 @layer sleepingowl-feature.tooltip {
     @include tooltip.styles;

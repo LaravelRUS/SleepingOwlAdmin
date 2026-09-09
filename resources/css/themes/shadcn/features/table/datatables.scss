@@ -5,7 +5,6 @@
 @use 'page-jump';
 @use 'table';
 @use 'tokens';
-@include tokens.define;
 
 @layer sleepingowl-theme.table {
   @include layout.styles;

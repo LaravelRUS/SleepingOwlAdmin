@@ -75,12 +75,19 @@ run_consumer_workflow() {
     select_shadcn_theme
     php "${APP_ROOT}/artisan" sleepingowl:update --check --no-interaction
     php "${PROJECT_ROOT}/scripts/ci/verify-no-build-consumer.php" "${APP_ROOT}" shadcn
+    select_empty_theme
+    php "${APP_ROOT}/artisan" sleepingowl:update --check --no-interaction
+    php "${PROJECT_ROOT}/scripts/ci/verify-no-build-consumer.php" "${APP_ROOT}" empty
     ADMIN_DEV_ASSETS=true php "${APP_ROOT}/artisan" sleepingowl:update --no-interaction
     php "${APP_ROOT}/artisan" route:list --path=admin --no-ansi > /dev/null
 }
 
 select_shadcn_theme() {
     export SLEEPINGOWL_TEMPLATE=shadcn
+}
+
+select_empty_theme() {
+    export SLEEPINGOWL_TEMPLATE=empty
 }
 
 assert_check_is_read_only() {

@@ -23,6 +23,7 @@ class AssetManifestLoaderTest extends TestCase
             'shared:vue',
             'theme:adminlte',
             'theme:adminlte:overrides',
+            'theme:empty',
             'theme:framework-free-test',
             'theme:shadcn',
             'theme:shadcn:overrides',

@@ -1,23 +1,8 @@
-$sidebar-width: 15rem !default;
 $sidebar-padding: 0.75rem !default;
 $item-gap: 0.25rem !default;
 $item-padding: 0.5rem 0.75rem !default;
 $overlay-opacity: 0.45 !default;
 $compact-breakpoint: 75rem !default;
-$surface: var(--soa-surface-color) !default;
-$border: var(--soa-border-color) !default;
-$text: var(--soa-text-color) !default;
-$overlay: var(--soa-text-color) !default;
-
-@mixin properties {
-  :root[data-theme='framework-free-test'] {
-    --soa-workbench-sidebar-surface: #{$surface};
-    --soa-workbench-sidebar-border-color: #{$border};
-    --soa-workbench-sidebar-text-color: #{$text};
-    --soa-workbench-sidebar-overlay-color: #{$overlay};
-    --soa-workbench-sidebar-width: #{$sidebar-width};
-  }
-}
 
 @mixin styles {
   [data-theme='framework-free-test'] .workbench-sidebar {

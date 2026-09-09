@@ -7,7 +7,6 @@
 @import 'datatables.net-responsive-bs5/css/responsive.bootstrap5.css';
 
 @mixin styles {
-  @include tokens.define;
   @include inline-editor.styles;
   @include layout.styles;
   @include table.styles;

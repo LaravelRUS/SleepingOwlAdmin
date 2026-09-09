@@ -1,23 +1,5 @@
-@use 'colors';
 @use 'inline-editor';
 @layer sleepingowl-feature.table;
-
-$cell-padding-block: 0.625rem !default;
-$cell-padding-inline: 0.75rem !default;
-$border-width: 0.0625rem !default;
-$row-transition-duration: 150ms !default;
-
-:root {
-  --soa-table-text-color: #{colors.$text};
-  --soa-table-surface-color: #{colors.$surface};
-  --soa-table-border-color: #{colors.$border};
-  --soa-table-row-hover-color: #{colors.$row-hover};
-  --soa-table-row-selected-color: #{colors.$row-selected};
-  --soa-table-cell-padding-block: #{$cell-padding-block};
-  --soa-table-cell-padding-inline: #{$cell-padding-inline};
-  --soa-table-border-width: #{$border-width};
-  --soa-table-row-transition-duration: #{$row-transition-duration};
-}
 
 @layer sleepingowl-feature.table {
   @include inline-editor.styles;

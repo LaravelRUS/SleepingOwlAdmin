@@ -1,13 +1,5 @@
 @layer sleepingowl-core, sleepingowl-framework, sleepingowl-shared, sleepingowl-feature, sleepingowl-theme, sleepingowl-theme-override;
 @layer sleepingowl-core {
-  :root {
-    --soa-focus-ring-width: 0.1875rem;
-    --soa-motion-duration-fast: 150ms;
-    --soa-motion-duration-normal: 250ms;
-    --soa-layout-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  }
-}
-@layer sleepingowl-core {
   [data-cloak] {
     display: none;
   }
@@ -24,12 +16,6 @@
     clip-path: inset(50%);
     white-space: nowrap;
     border: 0;
-  }
-  @media (prefers-reduced-motion: reduce) {
-    :root {
-      --soa-motion-duration-fast: 0ms;
-      --soa-motion-duration-normal: 0ms;
-    }
   }
 }
 

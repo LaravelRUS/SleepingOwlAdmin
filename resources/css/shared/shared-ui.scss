@@ -5,7 +5,9 @@
 @use 'ui/forms';
 @use 'ui/foundation';
 @use 'ui/shell';
+@use 'tokens';
 @layer sleepingowl-shared;
+@include tokens.define;
 
 @layer sleepingowl-shared {
   @include foundation.styles;

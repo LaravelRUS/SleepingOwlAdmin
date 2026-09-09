@@ -1,28 +1,65 @@
-$surface: canvas !default;
-$text: canvastext !default;
-$z-index: 1000 !default;
-
-@mixin properties {
-    :root {
-        --soa-dropdown-surface: #{$surface};
-        --soa-dropdown-text: #{$text};
-        --soa-dropdown-z-index: #{$z-index};
-    }
-}
-
 @mixin styles {
-    :where(.dropdown, .btn-group) {
-        position: relative;
-    }
+  :where(.dropdown, .btn-group) {
+    position: relative;
+  }
 
-    .dropdown-menu {
-        position: absolute;
-        z-index: var(--soa-dropdown-z-index);
-        background: var(--soa-dropdown-surface);
-        color: var(--soa-dropdown-text);
-    }
+  .dropdown-menu {
+    background: var(--soa-dropdown-surface);
+    border: var(--soa-dropdown-border-width) solid var(--soa-dropdown-border);
+    border-radius: var(--soa-dropdown-radius);
+    box-shadow: var(--soa-dropdown-shadow);
+    color: var(--soa-dropdown-text);
+    font-size: var(--soa-dropdown-font-size);
+    inset-block-start: calc(100% + var(--soa-dropdown-offset));
+    inset-inline: var(--soa-dropdown-inset-inline);
+    line-height: var(--soa-dropdown-line-height);
+    min-inline-size: var(--soa-dropdown-min-width);
+    padding: var(--soa-dropdown-padding-block) var(--soa-dropdown-padding-inline);
+    position: absolute;
+    z-index: var(--soa-dropdown-z-index);
+  }
 
-    .dropdown-menu[hidden] {
-        display: none !important;
-    }
+  .dropdown-menu[hidden] {
+    display: none !important;
+  }
+
+  .dropdown-item {
+    background: transparent;
+    border: 0;
+    border-radius: var(--soa-dropdown-item-radius);
+    color: inherit;
+    display: block;
+    inline-size: 100%;
+    padding: var(--soa-dropdown-item-padding-block)
+      var(--soa-dropdown-item-padding-inline);
+    text-align: start;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .dropdown-item:hover {
+    background: var(--soa-dropdown-hover-surface);
+    color: inherit;
+  }
+
+  .dropdown-item:focus-visible {
+    outline: var(--soa-dropdown-focus-width) solid var(--soa-dropdown-focus);
+    outline-offset: calc(-1 * var(--soa-dropdown-focus-width));
+  }
+
+  .dropdown-menu.btn-actions {
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+    padding: 0;
+  }
+
+  .dropup > .dropdown-menu {
+    inset-block: auto calc(100% + var(--soa-dropdown-offset));
+  }
+
+  .dropdown-menu-start,
+  .dropdown-menu-left {
+    inset-inline: 0 auto;
+  }
 }

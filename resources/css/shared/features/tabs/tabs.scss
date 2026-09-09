@@ -1,0 +1,40 @@
+@layer sleepingowl-feature.tabs;
+
+@layer sleepingowl-feature.tabs {
+  [data-tablist],
+  [role='tablist'] {
+    border-block-end: var(--soa-tabs-border-width) solid var(--soa-tabs-border);
+    display: flex;
+    gap: var(--soa-tabs-gap);
+  }
+
+  [data-tab],
+  [data-toggle='tab'],
+  [data-bs-toggle='tab'],
+  [role='tab'] {
+    border: var(--soa-tabs-border-width) solid transparent;
+    border-start-end-radius: var(--soa-tabs-radius);
+    border-start-start-radius: var(--soa-tabs-radius);
+    color: var(--soa-tabs-text);
+    margin-block-end: calc(-1 * var(--soa-tabs-border-width));
+    padding: var(--soa-tabs-padding-block) var(--soa-tabs-padding-inline);
+    text-decoration: none;
+  }
+
+  [data-tab].active,
+  [data-toggle='tab'].active,
+  [data-bs-toggle='tab'].active,
+  [role='tab'][aria-selected='true'] {
+    background: var(--soa-tabs-active-surface);
+    border-color: var(--soa-tabs-active-border-color);
+    color: var(--soa-tabs-active-text);
+  }
+
+  [data-tab]:focus-visible,
+  [data-toggle='tab']:focus-visible,
+  [data-bs-toggle='tab']:focus-visible,
+  [role='tab']:focus-visible {
+    outline: var(--soa-tabs-focus-width) solid var(--soa-tabs-focus);
+    outline-offset: var(--soa-tabs-focus-offset);
+  }
+}

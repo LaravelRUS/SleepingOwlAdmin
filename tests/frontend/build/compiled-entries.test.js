@@ -109,25 +109,22 @@ describe('compiled Tailwind form entry', () => {
     })
 })
 
-describe('compiled Tailwind content adapters', () => {
-    it('publishes Tailwind content adapters from canonical theme tokens only', () => {
+describe('compiled shared content presentation', () => {
+    it('publishes shared presentation with theme-owned token overrides', () => {
         for (const profile of ['production', 'development']) {
+            const shared = readFileSync(
+                resolve(root, `public/default/profiles/${profile}/css/shared/features.css`),
+                'utf8',
+            )
+            const theme = readFileSync(
+                resolve(root, `public/default/profiles/${profile}/css/themes/shadcn.css`),
+                'utf8',
+            )
+
             for (const feature of ['lightbox', 'tabs', 'tree']) {
-                const css = readFileSync(
-                    resolve(root, `public/default/profiles/${profile}/css/themes/shadcn.css`),
-                    'utf8',
-                )
-
-                expect(css).toContain(`@layer sleepingowl-theme.${feature}`)
-                expect(css).toMatch(/var\(--soa-(?:primary|text|surface|border|muted)/)
-
-                const sources = filesUnder(`resources/css/themes/shadcn/features/${feature}`)
-                    .map((path) => readFileSync(resolve(root, path), 'utf8'))
-                    .join('\n')
-                expect(sources).not.toMatch(
-                    /bootstrap|admin-lte|adminlte|jquery|react|radix|lucide/i,
-                )
-                expect(sources).not.toMatch(/#[\da-f]{3,8}\b/i)
+                expect(shared).toContain(`@layer sleepingowl-feature.${feature}`)
+                expect(shared).toContain(`var(--soa-${feature}`)
+                expect(theme).toContain(`--soa-${feature}`)
             }
         }
     })
@@ -289,8 +286,9 @@ describe('production asset companions', () => {
 describe('compiled runtime properties', () => {
     it('publishes bundle-owned runtime custom properties', () => {
         const expectations = {
-            'css/admin-core.css': ['--soa-focus-ring-width', '--soa-motion-duration-normal'],
-            'css/shared/features.css': [
+            'css/shared/ui.css': [
+                '--soa-focus-ring-width',
+                '--soa-motion-duration-normal',
                 '--soa-form-control-text-color',
                 '--soa-form-file-thumbnail-border-color',
                 '--soa-form-date-picker-surface-color',
@@ -299,8 +297,8 @@ describe('compiled runtime properties', () => {
             ],
             'css/themes/adminlte.css': [
                 '--soa-sidebar-bg',
-                '--soa-sidebar-width',
-                '--soa-font-family-sans',
+                '--soa-line-height-tight',
+                '--soa-dropdown-surface',
             ],
             'css/themes/shadcn.css': [
                 '--soa-sidebar-bg',

@@ -1,6 +1,0 @@
-@use 'tabs';
-@include tabs.properties;
-
-@layer sleepingowl-theme.tabs {
-  @include tabs.styles;
-}

@@ -6,6 +6,7 @@ use Illuminate\Contracts\Console\Kernel;
 use SleepingOwl\Admin\Assets\AssetRegistry;
 use SleepingOwl\Admin\Contracts\Theme\ThemeInterface;
 use SleepingOwl\Admin\Themes\AdminLTETheme;
+use SleepingOwl\Admin\Themes\EmptyTheme;
 use SleepingOwl\Admin\Themes\TailwindTheme;
 use SleepingOwl\Admin\Themes\ThemeRuntimeAssets;
 
@@ -126,6 +127,7 @@ function verifyThemes(string $appRoot, string $expectedTheme): void
 
     $expectedClass = match ($expectedTheme) {
         'adminlte' => AdminLTETheme::class,
+        'empty' => EmptyTheme::class,
         'shadcn' => TailwindTheme::class,
         default => fail("Unsupported expected theme [{$expectedTheme}]."),
     };
@@ -170,7 +172,7 @@ function main(array $arguments): void
 {
     $appRoot = isset($arguments[1]) ? realpath($arguments[1]) : false;
     if ($appRoot === false || ! is_dir($appRoot)) {
-        fail('Usage: php verify-no-build-consumer.php <laravel-application> [adminlte|shadcn]');
+        fail('Usage: php verify-no-build-consumer.php <laravel-application> [adminlte|empty|shadcn]');
     }
     $expectedTheme = $arguments[2] ?? 'adminlte';
 

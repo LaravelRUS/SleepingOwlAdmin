@@ -1,6 +1,5 @@
 @use 'lightbox';
 @layer sleepingowl-feature.lightbox;
-@include lightbox.properties;
 
 @layer sleepingowl-feature.lightbox {
     @include lightbox.styles;

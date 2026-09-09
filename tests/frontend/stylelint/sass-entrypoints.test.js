@@ -5,16 +5,17 @@ import { describe, expect, it } from 'vitest'
 
 const root = resolve(import.meta.dirname, '../../..')
 const entries = readJson('build/frontend-entries.json').modern.styles
-const aggregateEntries = new Set(['shared:features', 'shared:icons'])
 const layerOnlyEntries = new Set([
-    'shared:ui',
+    'theme:empty',
     'theme:adminlte:overrides',
     'theme:shadcn:overrides',
 ])
-const tokenizedEntries = entries.filter(
-    (entry) => !aggregateEntries.has(entry.logicalId) && !layerOnlyEntries.has(entry.logicalId),
+const themeTokenEntries = entries.filter(
+    (entry) =>
+        entry.source.endsWith('.scss') &&
+        entry.logicalId.startsWith('theme:') &&
+        !layerOnlyEntries.has(entry.logicalId),
 )
-const sassTokenizedEntries = tokenizedEntries.filter((entry) => entry.source.endsWith('.scss'))
 
 function readJson(path) {
     return JSON.parse(readFileSync(resolve(root, path), 'utf8'))
@@ -38,6 +39,7 @@ describe('Sass aggregate entries', () => {
             'lightbox',
             'sidebar',
             'table',
+            'tabs',
             'tooltip',
             'tree',
         ]) {
@@ -53,7 +55,7 @@ describe('Sass entrypoint boundaries', () => {
         (entry) => {
             const source = readSource(entry.source)
 
-            expect(source).toMatch(/@layer sleepingowl-(?:shared|theme-override);/)
+            expect(source).toMatch(/@layer sleepingowl-(?:shared|theme|theme-override);/)
             expect(source).not.toMatch(/@import\b/)
             expect(variableDeclarations(source)).toEqual([])
         },
@@ -61,36 +63,40 @@ describe('Sass entrypoint boundaries', () => {
 })
 
 describe('Sass entrypoint token ownership', () => {
-    it.each(sassTokenizedEntries)('$logicalId loads its canonical token owner', (entry) => {
+    it('loads the complete canonical contract from shared:ui', () => {
+        const entry = entries.find((candidate) => candidate.logicalId === 'shared:ui')
         const source = readSource(entry.source)
-        const isCore = entry.logicalId === 'core'
+        const tokens = readFileSync(siblingPath(entry, '_tokens.scss'), 'utf8')
 
-        if (isCore) {
-            expect(source).not.toContain("@use 'tokens';")
-            expect(variableDeclarations(source)).not.toHaveLength(0)
-        } else {
-            expect(source).toContain("@use 'tokens';")
-            expect(readFileSync(siblingPath(entry, '_tokens.scss')).byteLength).toBeGreaterThan(0)
-        }
-
-        const colorsPath = siblingPath(entry, '_colors.scss')
-        if (!existsSync(colorsPath)) return
-
-        expect(source).toContain("@use 'colors';")
-        expect(readFileSync(colorsPath).byteLength).toBeGreaterThan(0)
+        expect(source).toContain("@use 'tokens';")
+        expect(source).toContain('@include tokens.define;')
+        expect(tokens).toContain('@mixin define')
+        expect(customPropertyDeclarations(tokens).length).toBeGreaterThan(0)
     })
 
-    it.each(sassTokenizedEntries)(
-        '$logicalId exposes owner-local overridable build-time tokens',
-        (entry) => {
-            const tokens =
-                entry.logicalId === 'core'
-                    ? readSource(entry.source)
-                    : readFileSync(siblingPath(entry, '_tokens.scss'), 'utf8')
-            const colorsPath = siblingPath(entry, '_colors.scss')
+    it('keeps runtime token ownership out of core', () => {
+        const entry = entries.find((candidate) => candidate.logicalId === 'core')
+        const source = readSource(entry.source)
 
-            expect(variableDeclarations(tokens)).not.toHaveLength(0)
-            expect(nonDefaultDeclarations(tokens)).toEqual([])
+        expect(source).not.toContain("@use 'tokens';")
+        expect(customPropertyDeclarations(source)).toEqual([])
+    })
+
+    it.each(themeTokenEntries)('$logicalId loads only token overrides', (entry) => {
+        const source = readSource(entry.source)
+        const tokens = readFileSync(siblingPath(entry, '_tokens.scss'), 'utf8')
+
+        expect(source).toContain("@use 'tokens';")
+        expect(source).toContain('@include tokens.define;')
+        expect(tokens).toContain('@mixin define')
+        expect(customPropertyDeclarations(tokens).length).toBeGreaterThan(0)
+        expect(nonDefaultDeclarations(tokens)).toEqual([])
+    })
+
+    it.each(themeTokenEntries)(
+        '$logicalId keeps build-time palette inputs overridable',
+        (entry) => {
+            const colorsPath = siblingPath(entry, '_colors.scss')
 
             if (existsSync(colorsPath)) {
                 const colors = readFileSync(colorsPath, 'utf8')

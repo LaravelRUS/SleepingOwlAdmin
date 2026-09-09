@@ -1,6 +1,0 @@
-@use 'lightbox';
-@include lightbox.properties;
-
-@layer sleepingowl-theme.lightbox {
-    @include lightbox.styles;
-}

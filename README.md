@@ -101,13 +101,15 @@ Choose a theme by configured name:
     'themes' => [
         'adminlte' => SleepingOwl\Admin\Themes\AdminLTETheme::class,
         'shadcn' => SleepingOwl\Admin\Themes\TailwindTheme::class,
+        'empty' => SleepingOwl\Admin\Themes\EmptyTheme::class,
     ],
 ],
 ```
 
 Only the selected theme is resolved and loaded. An invalid theme name, class,
 capability or manifest fails explicitly instead of falling back silently to
-AdminLTE.
+AdminLTE. The diagnostic `empty` theme keeps shared styles and icons while
+adding no theme-owned presentation rules.
 
 Set `ADMIN_DEV_ASSETS=true` only in a local/debug environment to select the
 already-built development profile with source maps and Vue diagnostics. This

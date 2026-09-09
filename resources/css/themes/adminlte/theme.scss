@@ -1,13 +1,8 @@
 @use 'asset-health';
 @use 'colors';
 @use 'legacy-build';
-@use 'features/dropdown/dropdown-adminlte';
-@use 'features/lightbox/lightbox-adminlte';
 @use 'features/sidebar/sidebar-adminlte';
 @use 'features/table/datatables';
-@use 'features/tabs/tabs-adminlte';
-@use 'features/tooltip/tooltip-adminlte';
-@use 'features/tree/tree-adminlte';
 @use 'sidebar';
 @use 'tokens';
 @layer sleepingowl-theme;

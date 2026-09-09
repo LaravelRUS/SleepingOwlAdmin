@@ -90,7 +90,7 @@ Generated-файлы под `public/default` вручную не редакти�
 | Ключ                  | Назначение                                         | Значение по умолчанию |
 | :-------------------- | :------------------------------------------------- | :-------------------- |
 | `template.default`    | Имя выбранной темы                                 | `adminlte`            |
-| `template.themes`     | Карта имён на `ThemeInterface` classes             | `adminlte`, `shadcn`  |
+| `template.themes`     | Карта имён на `ThemeInterface` classes             | `adminlte`, `shadcn`, `empty` |
 | `ui`                  | Branding, shell, footer и presentation switches    | См. config            |
 | `dev_assets`          | Выбор готового development profile                 | `false`               |
 | `url_prefix`          | URL-префикс админки                                | `admin`               |
@@ -110,12 +110,14 @@ Generated-файлы под `public/default` вручную не редакти�
     'themes' => [
         'adminlte' => SleepingOwl\Admin\Themes\AdminLTETheme::class,
         'shadcn' => SleepingOwl\Admin\Themes\TailwindTheme::class,
+        'empty' => SleepingOwl\Admin\Themes\EmptyTheme::class,
     ],
 ],
 ```
 
 `adminlte` использует AdminLTE 4/Bootstrap 5. `shadcn` выбирает готовую
-TailwindTheme. Разрешается только выбранная тема; неверное имя, class,
+TailwindTheme. Диагностическая `empty` сохраняет shared styles и icons, но не
+добавляет theme-owned presentation. Разрешается только выбранная тема; неверное имя, class,
 capability или manifest вызывает диагностическое исключение без silent fallback.
 
 Обе темы получают общие `core`, feature drivers и `shared:ui`; presentation и

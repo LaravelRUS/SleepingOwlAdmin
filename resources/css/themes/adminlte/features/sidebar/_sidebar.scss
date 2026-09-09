@@ -1,28 +1,4 @@
-@use 'colors';
-
-$width: 15.625rem !default;
-$collapsed-width: 4.6rem !default;
 $mobile-breakpoint: 64rem !default;
-$z-index: 1038 !default;
-$overlay-z-index: 1037 !default;
-$indicator-angle: -90deg !default;
-
-@mixin properties {
-  :root {
-    --soa-sidebar-bg: #{colors.$sidebar-background};
-    --soa-sidebar-text-color: #{colors.$sidebar-text};
-    --soa-sidebar-link-hover-bg: #{colors.$sidebar-link-hover};
-    --soa-sidebar-link-active-bg: #{colors.$sidebar-link-active};
-    --soa-sidebar-link-active-text: #{colors.$sidebar-link-active-text};
-    --soa-sidebar-submenu-bg: #{colors.$sidebar-submenu};
-    --soa-sidebar-overlay-bg: #{colors.$overlay-background};
-    --soa-sidebar-width: #{$width};
-    --soa-sidebar-collapsed-width: #{$collapsed-width};
-    --soa-sidebar-z-index: #{$z-index};
-    --soa-sidebar-overlay-z-index: #{$overlay-z-index};
-    --soa-sidebar-indicator-angle: #{$indicator-angle};
-  }
-}
 
 @mixin framework-compatibility {
   .soa-body .app-sidebar {

@@ -91,11 +91,14 @@ Test-only `FrameworkFreeTestTheme` является executable acceptance fixtur
     'themes' => [
         'adminlte' => SleepingOwl\Admin\Themes\AdminLTETheme::class,
         'shadcn' => SleepingOwl\Admin\Themes\TailwindTheme::class,
+        'empty' => SleepingOwl\Admin\Themes\EmptyTheme::class,
     ],
 ],
 ```
 
 `template.default` выбирает ровно один ключ `template.themes`; классы остальных тем не создаются. Имена используют `lower-kebab`, неизвестное имя и некорректная карта завершаются `TemplateException` без fallback к AdminLTE.
+
+Встроенная диагностическая тема `empty` переиспользует текущую package Blade-разметку, но не добавляет theme-owned CSS, JavaScript или overrides. Её единственная capability — `icons`, а Font Awesome подключается через обязательный для этой темы `shared:icons`. Пустой `theme:empty` bundle существует только потому, что logical theme entry обязателен. Выбор `SLEEPINGOWL_TEMPLATE=empty` оставляет `core`, `shared:ui`, `shared:features` и shared runtime dependencies и предназначен для визуального аудита границы shared/theme, а не для production UI.
 
 Resolver временно принимает прежний class-string как runtime fallback, но новый package config его не публикует. После выбора класса поддерживаются две реализации:
 

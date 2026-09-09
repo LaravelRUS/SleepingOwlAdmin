@@ -3,28 +3,3 @@ $layout-gap-block: 0.75rem !default;
 $layout-gap-inline: 1rem !default;
 $control-height: 2.375rem !default;
 $mobile-breakpoint: 40rem !default;
-
-@mixin define {
-  :root {
-    --soa-table-row-hover-color: var(--soa-muted-surface-color);
-    --soa-table-row-selected-color: var(--soa-accent-surface-color);
-    --soa-inline-editor-surface: var(--soa-elevated-surface-color);
-    --soa-inline-editor-text: var(--soa-text-color);
-    --soa-inline-editor-border: var(--soa-input-border-color);
-    --soa-inline-editor-accent: var(--soa-primary-color);
-    --soa-inline-editor-accent-hover: color-mix(
-      in srgb,
-      var(--soa-primary-color) 88%,
-      var(--soa-text-color)
-    );
-    --soa-inline-editor-on-accent: var(--soa-on-primary-color);
-    --soa-inline-editor-muted: var(--soa-muted-text-color);
-    --soa-inline-editor-error: var(--soa-danger-color);
-    --soa-inline-editor-shadow: color-mix(
-      in srgb,
-      var(--soa-text-color) 14%,
-      transparent
-    );
-    --soa-inline-editor-backdrop: var(--soa-overlay-color);
-  }
-}

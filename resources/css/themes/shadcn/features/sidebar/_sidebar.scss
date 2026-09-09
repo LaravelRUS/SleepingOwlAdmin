@@ -1,35 +1,4 @@
 $mobile-breakpoint: 64rem !default;
-$z-index: 40 !default;
-$overlay-z-index: 30 !default;
-$indicator-angle: -90deg !default;
-$link-radius: 0.375rem !default;
-$link-gap: 0.5rem !default;
-$link-padding-block: 0.625rem !default;
-$link-padding-inline: 0.75rem !default;
-$submenu-padding-inline: 1rem !default;
-$sidebar-link-hover: var(--soa-sidebar-active-color) !default;
-$sidebar-link-active: var(--soa-sidebar-active-color) !default;
-$sidebar-link-active-text: var(--soa-sidebar-text-color) !default;
-$sidebar-submenu: var(--soa-sidebar-bg) !default;
-$overlay-background: var(--soa-overlay-color) !default;
-
-@mixin properties {
-  :root {
-    --soa-sidebar-link-hover-bg: #{$sidebar-link-hover};
-    --soa-sidebar-link-active-bg: #{$sidebar-link-active};
-    --soa-sidebar-link-active-text: #{$sidebar-link-active-text};
-    --soa-sidebar-submenu-bg: #{$sidebar-submenu};
-    --soa-sidebar-overlay-bg: #{$overlay-background};
-    --soa-sidebar-z-index: #{$z-index};
-    --soa-sidebar-overlay-z-index: #{$overlay-z-index};
-    --soa-sidebar-indicator-angle: #{$indicator-angle};
-    --soa-sidebar-link-radius: #{$link-radius};
-    --soa-sidebar-link-gap: #{$link-gap};
-    --soa-sidebar-link-padding-block: #{$link-padding-block};
-    --soa-sidebar-link-padding-inline: #{$link-padding-inline};
-    --soa-sidebar-submenu-padding-inline: #{$submenu-padding-inline};
-  }
-}
 
 @mixin styles {
   .main-sidebar {

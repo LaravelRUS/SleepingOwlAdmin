@@ -10,7 +10,7 @@ Manifest создаётся после Laravel Mix build из `build/frontend-en
 
 - `core`;
 - общие `shared:icons`, `shared:compatibility`, semantic `shared:ui`, объединённый `shared:features`, profile-aware `shared:vue` и завершающий `shared:modules`;
-- встроенные `theme:adminlte`/`theme:shadcn` и их последние `theme:<name>:overrides`.
+- встроенные `theme:adminlte`/`theme:shadcn`, их последние `theme:<name>:overrides` и диагностический layer-only `theme:empty`.
 
 `shared:features` содержит все всегда загружаемые feature drivers и их нейтральный CSS. Встроенные
 presentation adapters входят в единый `theme:<id>` bundle. Это соответствует фактическому runtime:

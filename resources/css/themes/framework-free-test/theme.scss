@@ -1,9 +1,6 @@
 @use 'colors';
-@use 'features/dropdown/dropdown-framework-free-test';
 @use 'features/sidebar/sidebar-framework-free-test';
 @use 'features/table/table-framework-free-test';
-@use 'features/tabs/tabs-framework-free-test';
-@use 'features/tooltip/tooltip-framework-free-test';
 @use 'presentation';
 @use 'tokens';
 @include tokens.define;
