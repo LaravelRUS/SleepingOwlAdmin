@@ -1,4 +1,4 @@
-@use 'variables';
+@use 'tokens';
 
 @mixin styles {
   :root[data-theme='framework-free-test'] {
@@ -12,31 +12,31 @@
   .workbench-shell {
     box-sizing: border-box;
     display: grid;
-    gap: variables.$space-4;
-    grid-template-columns: variables.$rail-width minmax(0, variables.$content-width);
+    gap: tokens.$space-4;
+    grid-template-columns: tokens.$rail-width minmax(0, tokens.$content-width);
     margin-inline: auto;
-    max-width: calc(variables.$content-width + variables.$rail-width + variables.$space-4 * 2);
-    padding: variables.$space-4;
+    max-width: calc(tokens.$content-width + tokens.$rail-width + tokens.$space-4 * 2);
+    padding: tokens.$space-4;
   }
 
   .workbench-rail {
     background: var(--soa-primary-color);
-    border-radius: variables.$radius-small;
+    border-radius: tokens.$radius-small;
   }
 
   .workbench-main,
   .workbench-display,
   .workbench-form {
     background: var(--soa-surface-color);
-    border: variables.$border-width solid var(--soa-border-color);
-    border-radius: variables.$radius-medium;
-    box-shadow: variables.$shadow var(--soa-shadow-color);
+    border: tokens.$border-width solid var(--soa-border-color);
+    border-radius: tokens.$radius-medium;
+    box-shadow: tokens.$shadow var(--soa-shadow-color);
   }
 
   .workbench-main,
   .workbench-display,
   .workbench-form {
-    padding: variables.$space-4;
+    padding: tokens.$space-4;
   }
 
   .workbench-kicker,
@@ -45,7 +45,7 @@
     font-family: var(--soa-font-family-monospace);
     font-size: 0.75em;
     letter-spacing: 0.08em;
-    margin: 0 0 variables.$space-1;
+    margin: 0 0 tokens.$space-1;
     text-transform: uppercase;
   }
 
@@ -56,29 +56,29 @@
   .workbench-display-content,
   .workbench-form-value {
     display: block;
-    margin-block: variables.$space-3;
+    margin-block: tokens.$space-3;
   }
 
   .workbench-button {
     background: var(--soa-primary-color);
-    border: variables.$border-width solid var(--soa-primary-color);
-    border-radius: variables.$radius-small;
+    border: tokens.$border-width solid var(--soa-primary-color);
+    border-radius: tokens.$radius-small;
     color: var(--soa-surface-color);
     cursor: pointer;
     font: inherit;
-    padding: variables.$space-1 variables.$space-3;
+    padding: tokens.$space-1 tokens.$space-3;
   }
 
   :where(a, button, input, select, textarea):focus-visible {
-    outline: variables.$focus-width solid var(--soa-focus-color);
-    outline-offset: variables.$space-1;
+    outline: tokens.$focus-width solid var(--soa-focus-color);
+    outline-offset: tokens.$space-1;
   }
 
   @media (width <= 40rem) {
     .workbench-shell {
-      gap: variables.$space-2;
-      grid-template-columns: variables.$rail-width minmax(0, 1fr);
-      padding: variables.$space-2;
+      gap: tokens.$space-2;
+      grid-template-columns: tokens.$rail-width minmax(0, 1fr);
+      padding: tokens.$space-2;
     }
   }
 }
