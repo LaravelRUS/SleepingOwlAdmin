@@ -12,9 +12,7 @@ it('keeps framework imports behind the legacy AdminLTE theme boundary', () => {
     const vendor = read('resources/css/themes/adminlte/_vendor.scss')
     const sharedIcons = read('resources/css/shared/features/icons/font-awesome.scss')
 
-    expect(entrypoint).toContain(
-        "@use '../legacy-build' as legacy-theme;",
-    )
+    expect(entrypoint).toContain("@use '../legacy-build' as legacy-theme;")
     for (const legacyImport of [
         'bootstrap/scss/',
         'legacy/adminLte',

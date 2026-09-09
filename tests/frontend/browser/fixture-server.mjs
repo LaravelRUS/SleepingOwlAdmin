@@ -393,10 +393,7 @@ const staticRoutes = new Map([
     ],
     [
         '/public/default/css/themes/adminlte.css',
-        [
-            join(projectRoot, 'public', 'default', 'css', 'themes', 'adminlte.css'),
-            'text/css',
-        ],
+        [join(projectRoot, 'public', 'default', 'css', 'themes', 'adminlte.css'), 'text/css'],
     ],
     [
         '/public/default/css/themes/shadcn.css',

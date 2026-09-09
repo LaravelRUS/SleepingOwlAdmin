@@ -31,19 +31,11 @@ it('keeps the tree driver and both theme adapters in separate owned sources', ()
 it('keeps theme notification policies out of the neutral tree entry', () => {
     const entries = readJson('build/frontend-entries.json').modern
     const scripts = entries.scripts.filter(({ logicalId }) => logicalId.includes('tree'))
-    const adminlte = scripts.find(
-        ({ logicalId }) => logicalId === 'feature:tree:theme:adminlte',
-    )
-    const tailwind = scripts.find(
-        ({ logicalId }) => logicalId === 'feature:tree:theme:shadcn',
-    )
+    const adminlte = scripts.find(({ logicalId }) => logicalId === 'feature:tree:theme:adminlte')
+    const tailwind = scripts.find(({ logicalId }) => logicalId === 'feature:tree:theme:shadcn')
 
-    expect(adminlte?.source).toBe(
-        'resources/js/themes/adminlte/features/tree/browser.js',
-    )
-    expect(tailwind?.source).toBe(
-        'resources/js/themes/shadcn/features/tree/browser.js',
-    )
+    expect(adminlte?.source).toBe('resources/js/themes/adminlte/features/tree/browser.js')
+    expect(tailwind?.source).toBe('resources/js/themes/shadcn/features/tree/browser.js')
     expect(read('resources/js/shared/features/tree/browser.js')).not.toMatch(
         /Swal|SweetAlert|Admin\.Messages|adminlte/,
     )

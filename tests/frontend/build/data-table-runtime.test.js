@@ -32,9 +32,7 @@ it('pins the dependency-free DataTables 3 and Responsive 4 package lines', () =>
 
 it('keeps the engine independent from the legacy theme presentation adapter', () => {
     const engine = readSource('resources/js/shared/features/table/engine/data-table-engine.js')
-    const presentation = readSource(
-        'resources/js/themes/adminlte/features/table/datatables.js',
-    )
+    const presentation = readSource('resources/js/themes/adminlte/features/table/datatables.js')
 
     expect(engine).toContain("from 'datatables.net'")
     expect(engine).toContain("import 'datatables.net-responsive'")
@@ -47,9 +45,7 @@ it('keeps the engine independent from the legacy theme presentation adapter', ()
 it('removes the handwritten Bootstrap 3 renderer and owns vendor CSS in the adapter', () => {
     const legacyRenderer = resolve(root, 'resources/js/shared/legacy/libs/datatables.js')
     const bootstrap = readSource('resources/js/shared/legacy/bootstrap.js')
-    const styles = readSource(
-        'resources/css/themes/adminlte/features/table/datatables.scss',
-    )
+    const styles = readSource('resources/css/themes/adminlte/features/table/datatables.scss')
 
     expect(existsSync(legacyRenderer)).toBe(false)
     expect(bootstrap.indexOf('dataTableEngineRuntime')).toBeLessThan(

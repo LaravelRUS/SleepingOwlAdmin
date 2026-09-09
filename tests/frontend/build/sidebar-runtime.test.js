@@ -19,7 +19,9 @@ it('replaces AdminLTE PushMenu and Treeview execution with a native feature', ()
 it('keeps existing PushMenu and Treeview markers without replacement attributes', () => {
     const header = read('resources/views/themes/adminlte/default/_partials/header.blade.php')
     const layout = read('resources/views/themes/adminlte/default/_layout/inner.blade.php')
-    const navigation = read('resources/views/themes/adminlte/default/_partials/navigation.blade.php')
+    const navigation = read(
+        'resources/views/themes/adminlte/default/_partials/navigation.blade.php',
+    )
     const elements = read('resources/js/shared/features/sidebar/sidebar-elements.js')
     const sidebar = read('resources/js/shared/features/sidebar/sidebars.js')
 
@@ -38,14 +40,12 @@ it('ships independent behavior and AdminLTE/Tailwind Sass adapters', () => {
     expect(read('resources/css/shared/features/sidebar/sidebar-base.scss')).toContain(
         '@layer sleepingowl-feature.sidebar',
     )
-    expect(
-        read(
-            'resources/css/themes/adminlte/features/sidebar/sidebar-adminlte.scss',
-        ),
-    ).toContain('@layer sleepingowl-theme.sidebar')
-    expect(
-        read('resources/css/themes/shadcn/features/sidebar/sidebar-tailwind.scss'),
-    ).toContain('@layer sleepingowl-theme.sidebar')
+    expect(read('resources/css/themes/adminlte/features/sidebar/sidebar-adminlte.scss')).toContain(
+        '@layer sleepingowl-theme.sidebar',
+    )
+    expect(read('resources/css/themes/shadcn/features/sidebar/sidebar-tailwind.scss')).toContain(
+        '@layer sleepingowl-theme.sidebar',
+    )
 })
 
 function read(path) {

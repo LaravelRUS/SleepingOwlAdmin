@@ -31,10 +31,7 @@ it('does not publish jQuery or Bootstrap JavaScript globals', () => {
 })
 
 it('keeps first-party runtime sources free of jQuery calls', () => {
-    const sources = ['resources/js', 'resources/views']
-        .flatMap(sourceFiles)
-        .map(read)
-        .join('\n')
+    const sources = ['resources/js', 'resources/views'].flatMap(sourceFiles).map(read).join('\n')
 
     expect(sources).not.toMatch(/jquery|jQuery|\$\(/i)
 })
@@ -56,10 +53,7 @@ it('removes the legacy theme callback adapter and dead jQuery table draft', () =
     expect(table).not.toMatch(/jquery|jQuery|\$\(/)
     expect(
         existsSync(
-            resolve(
-                root,
-                'resources/js/themes/adminlte/features/table/action-callbacks.js',
-            ),
+            resolve(root, 'resources/js/themes/adminlte/features/table/action-callbacks.js'),
         ),
     ).toBe(false)
 })

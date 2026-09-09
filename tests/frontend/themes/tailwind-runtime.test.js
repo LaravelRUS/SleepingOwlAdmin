@@ -36,7 +36,9 @@ describe('Tailwind theme runtime', () => {
         expect(applyColorMode(fixture.target, fixture.toggle, 'system')).toBe('light')
         expect(fixture.root.dataset.colorScheme).toBe('light')
     })
+})
 
+describe('Tailwind card controls', () => {
     it('drives preserved AdminLTE card hooks without AdminLTE', () => {
         const listeners = new Map()
         const iconClasses = createClassList(['fa-minus'])

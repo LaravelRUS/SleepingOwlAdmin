@@ -23,12 +23,12 @@ describe('Air Datepicker migration boundary', () => {
         expect(packageLock.packages['node_modules/air-datepicker'].version).toBe('3.6.0')
         expect(bootstrap).toContain("require('./admin/form/date-controls')")
         expect(bootstrap).not.toMatch(/libs\/daterangepicker|admin\/form\/daterange/)
-        expect(existsSync(resolve(root, 'resources/js/shared/legacy/libs/daterangepicker.js'))).toBe(
-            false,
-        )
-        expect(existsSync(resolve(root, 'resources/js/shared/legacy/admin/form/daterange.js'))).toBe(
-            false,
-        )
+        expect(
+            existsSync(resolve(root, 'resources/js/shared/legacy/libs/daterangepicker.js')),
+        ).toBe(false)
+        expect(
+            existsSync(resolve(root, 'resources/js/shared/legacy/admin/form/daterange.js')),
+        ).toBe(false)
     })
 
     it('keeps date behavior free of jQuery and old picker APIs', () => {

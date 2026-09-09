@@ -40,10 +40,7 @@ function expectedSourceRoots(logicalId) {
     }
 
     if (type === 'feature') {
-        return [
-            `resources/css/shared/features/${id}/`,
-            `resources/js/shared/features/${id}/`,
-        ]
+        return [`resources/css/shared/features/${id}/`, `resources/js/shared/features/${id}/`]
     }
 
     return [`resources/css/themes/${theme}/`, `resources/js/themes/${theme}/`]
@@ -63,10 +60,17 @@ describe('frontend build entries', () => {
                 sourceEntry('resources/js/shared/legacy/app-dev.js', 'js/admin-app-dev.js'),
                 sourceEntry('resources/js/shared/legacy/modules_load.js', 'js/modules.js'),
             ],
-            styles: [sourceEntry('resources/css/themes/adminlte/legacy/admin-app.scss', 'css/admin-app.css')],
+            styles: [
+                sourceEntry(
+                    'resources/css/themes/adminlte/legacy/admin-app.scss',
+                    'css/admin-app.css',
+                ),
+            ],
         })
     })
+})
 
+describe('modern frontend build entries', () => {
     it.each([
         'core',
         'feature:dropdown',
@@ -92,9 +96,9 @@ describe('frontend build entries', () => {
         Object.values(entries.modern)
             .flat()
             .forEach(({ logicalId, source }) => {
-                expect(
-                    expectedSourceRoots(logicalId).some((root) => source.startsWith(root)),
-                ).toBe(true)
+                expect(expectedSourceRoots(logicalId).some((root) => source.startsWith(root))).toBe(
+                    true,
+                )
             })
     })
 })

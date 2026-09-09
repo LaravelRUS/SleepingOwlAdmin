@@ -158,7 +158,9 @@ it('publishes a namespaced extension API and a shared runtime external stub', ()
 
 describe('precompiled Vue islands', () => {
     it('mounts the file element directly and uses the Dropzone constructor', () => {
-        const view = readSource('resources/views/themes/adminlte/default/form/element/file.blade.php')
+        const view = readSource(
+            'resources/views/themes/adminlte/default/form/element/file.blade.php',
+        )
         const component = readSource('resources/js/shared/legacy/admin/form/file.vue')
         const dropzone = readSource('resources/js/shared/legacy/libs/dropzone.js')
 
@@ -230,15 +232,15 @@ it('uses precompiled related state, native Sortable and shared lifecycle modules
 })
 
 it('removes every package inline-template bridge owner', () => {
-    expect(existsSync(resolve(root, 'resources/js/shared/legacy/libs/vue-inline-template.js'))).toBe(
-        false,
-    )
+    expect(
+        existsSync(resolve(root, 'resources/js/shared/legacy/libs/vue-inline-template.js')),
+    ).toBe(false)
     expect(
         existsSync(resolve(root, 'resources/js/shared/legacy/admin/form/related/elements.js')),
     ).toBe(false)
-    expect(existsSync(resolve(root, 'resources/js/shared/legacy/admin/form/related/group.js'))).toBe(
-        false,
-    )
+    expect(
+        existsSync(resolve(root, 'resources/js/shared/legacy/admin/form/related/group.js')),
+    ).toBe(false)
 })
 
 describe('precompiled select island', () => {
@@ -264,7 +266,9 @@ describe('precompiled select island', () => {
         expect(catalog).toContain("'element-select': ElementSelect")
         expect(catalog).not.toMatch(/\bdeselect\b|\bmultiselect:/)
         expect(
-            existsSync(resolve(root, 'resources/js/shared/legacy/admin/form/multiselect-compat.js')),
+            existsSync(
+                resolve(root, 'resources/js/shared/legacy/admin/form/multiselect-compat.js'),
+            ),
         ).toBe(false)
         expect(existsSync(resolve(root, 'resources/js/shared/legacy/admin/form/deselect.js'))).toBe(
             false,
@@ -289,12 +293,14 @@ describe('Select2 migration boundary', () => {
         expect(component).not.toMatch(/\$\(|jQuery|\.select2\(/)
         expect(ajaxView).toContain("'selectExtraProps' => ['remote' => $remoteSelect]")
         expect(existsSync(resolve(root, 'resources/js/shared/legacy/libs/select2.js'))).toBe(false)
-        expect(existsSync(resolve(root, 'resources/css/themes/adminlte/legacy/components/select2.scss'))).toBe(
-            false,
-        )
-        expect(existsSync(resolve(root, 'resources/js/shared/legacy/admin/form/selectajax.js'))).toBe(
-            false,
-        )
+        expect(
+            existsSync(
+                resolve(root, 'resources/css/themes/adminlte/legacy/components/select2.scss'),
+            ),
+        ).toBe(false)
+        expect(
+            existsSync(resolve(root, 'resources/js/shared/legacy/admin/form/selectajax.js')),
+        ).toBe(false)
     })
 })
 
@@ -306,7 +312,9 @@ describe('precompiled image island', () => {
         const component = readSource('resources/js/shared/legacy/admin/form/image.vue')
         const catalog = readSource('resources/js/shared/legacy/admin/vue-components.js')
 
-        expect(existsSync(resolve(root, 'resources/js/shared/legacy/admin/form/image.js'))).toBe(false)
+        expect(existsSync(resolve(root, 'resources/js/shared/legacy/admin/form/image.js'))).toBe(
+            false,
+        )
         expect(view).toContain('data-vue-component="element-image"')
         expect(view).toContain('data-vue-props=')
         expect(view).toContain('v-pre')

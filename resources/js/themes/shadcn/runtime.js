@@ -1,4 +1,4 @@
-const INSTALLATION = Symbol.for('sleepingowl.theme.tailwind')
+const INSTALLATION = Symbol.for('sleepingowl.theme.shadcn')
 
 export function installTailwindTheme(target = globalThis) {
     if (target[INSTALLATION]) return target[INSTALLATION]
@@ -36,21 +36,16 @@ export function installTailwindCardControls(document) {
     if (typeof document?.addEventListener !== 'function') return null
 
     const onClick = (event) => {
-        const button = event.target?.closest?.('[data-card-widget]')
-        const card = button?.closest?.('.soa-card, .card')
-        if (!button || !card) return
+        const control = cardControl(event)
+        if (!control) return
 
+        const { button, card } = control
         const action = button.getAttribute('data-card-widget')
         if (action === 'collapse') {
-            const collapsed = card.classList.toggle('collapsed-card')
-            button.setAttribute('aria-expanded', collapsed ? 'false' : 'true')
-            updateCollapseIcon(button, collapsed)
-            event.preventDefault()
+            collapseCard(event, button, card)
         }
         if (action === 'maximize') {
-            const maximized = card.classList.toggle('soa-card-maximized')
-            button.setAttribute('aria-pressed', maximized ? 'true' : 'false')
-            event.preventDefault()
+            maximizeCard(event, button, card)
         }
     }
     const onKeydown = (event) => {
@@ -58,10 +53,7 @@ export function installTailwindCardControls(document) {
         const card = document.querySelector?.('.soa-card-maximized')
         if (!card) return
         card.classList.remove('soa-card-maximized')
-        card.querySelector?.('[data-card-widget="maximize"]')?.setAttribute(
-            'aria-pressed',
-            'false',
-        )
+        card.querySelector?.('[data-card-widget="maximize"]')?.setAttribute('aria-pressed', 'false')
     }
 
     document.addEventListener('click', onClick)
@@ -73,6 +65,26 @@ export function installTailwindCardControls(document) {
             document.removeEventListener('keydown', onKeydown)
         },
     }
+}
+
+function cardControl(event) {
+    const button = event.target?.closest?.('[data-card-widget]')
+    const card = button?.closest?.('.soa-card, .card')
+
+    return button && card ? { button, card } : null
+}
+
+function collapseCard(event, button, card) {
+    const collapsed = card.classList.toggle('collapsed-card')
+    button.setAttribute('aria-expanded', collapsed ? 'false' : 'true')
+    updateCollapseIcon(button, collapsed)
+    event.preventDefault()
+}
+
+function maximizeCard(event, button, card) {
+    const maximized = card.classList.toggle('soa-card-maximized')
+    button.setAttribute('aria-pressed', maximized ? 'true' : 'false')
+    event.preventDefault()
 }
 
 function updateCollapseIcon(button, collapsed) {

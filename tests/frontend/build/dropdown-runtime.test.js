@@ -31,18 +31,20 @@ it('ships independent behavior and AdminLTE/Tailwind Sass adapters', () => {
         '@layer sleepingowl-feature.dropdown',
     )
     expect(
-        read(
-            'resources/css/themes/adminlte/features/dropdown/dropdown-adminlte.scss',
-        ),
+        read('resources/css/themes/adminlte/features/dropdown/dropdown-adminlte.scss'),
     ).toContain('@layer sleepingowl-theme.dropdown')
-    expect(
-        read('resources/css/themes/shadcn/features/dropdown/dropdown-tailwind.scss'),
-    ).toContain('@layer sleepingowl-theme.dropdown')
+    expect(read('resources/css/themes/shadcn/features/dropdown/dropdown-tailwind.scss')).toContain(
+        '@layer sleepingowl-theme.dropdown',
+    )
 })
 
 it('removes the legacy AdminLTE and aggregate dropdown style owners', () => {
-    expect(existsSync(resolve(root, 'resources/css/themes/adminlte/legacy/adminLte.scss'))).toBe(false)
-    expect(read('resources/css/themes/adminlte/legacy/components.scss')).not.toContain('components/dropdown')
+    expect(existsSync(resolve(root, 'resources/css/themes/adminlte/legacy/adminLte.scss'))).toBe(
+        false,
+    )
+    expect(read('resources/css/themes/adminlte/legacy/components.scss')).not.toContain(
+        'components/dropdown',
+    )
 })
 
 function read(path) {

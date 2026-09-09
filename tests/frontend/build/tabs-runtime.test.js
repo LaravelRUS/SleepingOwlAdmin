@@ -32,12 +32,12 @@ it('ships theme-independent behavior and both presentation adapters', () => {
         'installTabs(target.Admin',
     )
     expect(read('resources/js/shared/features/tabs/index.js')).toContain("TABS_FEATURE_ID = 'tabs'")
-    expect(
-        read('resources/css/themes/adminlte/features/tabs/tabs-adminlte.scss'),
-    ).toContain('@layer sleepingowl-theme.tabs')
-    expect(
-        read('resources/css/themes/shadcn/features/tabs/tabs-tailwind.scss'),
-    ).toContain('@layer sleepingowl-theme.tabs')
+    expect(read('resources/css/themes/adminlte/features/tabs/tabs-adminlte.scss')).toContain(
+        '@layer sleepingowl-theme.tabs',
+    )
+    expect(read('resources/css/themes/shadcn/features/tabs/tabs-tailwind.scss')).toContain(
+        '@layer sleepingowl-theme.tabs',
+    )
 })
 
 function read(path) {

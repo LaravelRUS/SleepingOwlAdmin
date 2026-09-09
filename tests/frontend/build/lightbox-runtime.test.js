@@ -14,7 +14,9 @@ it('replaces Magnific Popup with the GLightbox feature driver', () => {
     expect(packageJson.dependencies['magnific-popup']).toBeUndefined()
     expect(bootstrap).not.toMatch(/libs\/magnific-popup/)
     expect(runtime).not.toMatch(/jquery|jQuery|\$\(|magnificPopup/i)
-    expect(existsSync(resolve(root, 'resources/js/shared/legacy/libs/magnific-popup.js'))).toBe(false)
+    expect(existsSync(resolve(root, 'resources/js/shared/legacy/libs/magnific-popup.js'))).toBe(
+        false,
+    )
 })
 
 it('ships standalone lightbox sources and both theme adapters', () => {

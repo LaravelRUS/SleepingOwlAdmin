@@ -304,10 +304,7 @@ describe('compiled runtime properties', () => {
     })
 
     it('keeps the sidebar variable live in both color schemes and the legacy aggregate', () => {
-        const theme = readFileSync(
-            resolve(root, 'public/default/css/themes/adminlte.css'),
-            'utf8',
-        )
+        const theme = readFileSync(resolve(root, 'public/default/css/themes/adminlte.css'), 'utf8')
         const legacy = readFileSync(resolve(root, 'public/default/css/admin-app.css'), 'utf8')
 
         expect(theme).toContain('data-color-scheme')

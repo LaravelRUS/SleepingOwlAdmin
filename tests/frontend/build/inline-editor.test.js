@@ -49,12 +49,8 @@ it('keeps the headless runtime free of jQuery and plugin wrappers', () => {
 })
 
 it('keeps presentation in Sass adapters owned by each theme', () => {
-    const legacy = source(
-        'resources/css/themes/adminlte/features/table/_inline-editor.scss',
-    )
-    const tailwind = source(
-        'resources/css/themes/shadcn/features/table/_inline-editor.scss',
-    )
+    const legacy = source('resources/css/themes/adminlte/features/table/_inline-editor.scss')
+    const tailwind = source('resources/css/themes/shadcn/features/table/_inline-editor.scss')
 
     expect(legacy).toContain('var(--soa-inline-editor-accent)')
     expect(tailwind).toContain('var(--soa-inline-editor-accent)')

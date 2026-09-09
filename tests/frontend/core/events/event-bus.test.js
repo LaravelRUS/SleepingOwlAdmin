@@ -1,9 +1,6 @@
 import { expect, it, vi } from 'vitest'
 
-import {
-    AdminEventBus,
-    createEventBus,
-} from '../../../../resources/js/core/events/event-bus.js'
+import { AdminEventBus, createEventBus } from '../../../../resources/js/core/events/event-bus.js'
 
 it('preserves positional arguments, registration order, duplicates, and callback context', () => {
     const events = createEventBus(new globalThis.EventTarget())
