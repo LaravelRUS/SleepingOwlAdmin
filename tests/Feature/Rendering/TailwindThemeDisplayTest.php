@@ -14,15 +14,15 @@ class TailwindThemeDisplayTest extends TestCase
         $app['config']->set('sleeping_owl.template', TailwindTheme::class);
     }
 
-    public function test_every_display_and_column_view_is_owned_by_tailwind(): void
+    public function test_every_display_and_column_view_is_resolvable_for_tailwind(): void
     {
-        $legacyRoot = realpath(__DIR__.'/../../../resources/views/default');
+        $baseRoot = realpath(__DIR__.'/../../../resources/views/default');
         $tailwindRoot = realpath(__DIR__.'/../../../resources/views/themes/shadcn/default');
         $views = [];
 
         foreach (['display', 'column'] as $group) {
             $directory = new RecursiveDirectoryIterator(
-                $legacyRoot.DIRECTORY_SEPARATOR.$group,
+                $baseRoot.DIRECTORY_SEPARATOR.$group,
                 FilesystemIterator::SKIP_DOTS
             );
 
@@ -31,14 +31,16 @@ class TailwindThemeDisplayTest extends TestCase
                     continue;
                 }
 
-                $relative = substr($file->getPathname(), strlen($legacyRoot) + 1);
+                $relative = substr($file->getPathname(), strlen($baseRoot) + 1);
                 $logical = str_replace([DIRECTORY_SEPARATOR, '.blade.php'], ['.', ''], $relative);
                 $resolved = view()->getFinder()->find(
                     app('sleeping_owl.template')->getViewPath($logical)
                 );
+                $override = $tailwindRoot.DIRECTORY_SEPARATOR.$relative;
+                $expected = is_file($override) ? $override : $file->getPathname();
 
                 $this->assertSame(
-                    realpath($tailwindRoot.DIRECTORY_SEPARATOR.$relative),
+                    realpath($expected),
                     realpath($resolved),
                     $logical
                 );

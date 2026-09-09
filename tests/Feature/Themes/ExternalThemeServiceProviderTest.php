@@ -65,6 +65,14 @@ class ExternalThemeServiceProviderTest extends TestCase
         $this->assertSame('/project/admin.css', end($styles)->source());
         $this->assertSame('/project/admin.js', end($scripts)->source());
     }
+
+    public function test_external_theme_receives_no_default_view_fallback_implicitly(): void
+    {
+        $this->assertArrayNotHasKey(
+            'provider-test',
+            view()->getFinder()->getHints()
+        );
+    }
 }
 
 final class ExternalThemeContractServiceProvider extends ServiceProvider

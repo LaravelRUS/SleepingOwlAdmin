@@ -41,12 +41,12 @@ class TailwindThemeFormTest extends TestCase
         AdminFacade::swap($admin);
     }
 
-    public function test_every_form_view_and_form_primitive_is_owned_by_tailwind(): void
+    public function test_every_form_view_is_resolvable_and_primitives_are_theme_owned(): void
     {
-        $legacyRoot = realpath(__DIR__.'/../../../resources/views/default');
+        $baseRoot = realpath(__DIR__.'/../../../resources/views/default');
         $tailwindRoot = realpath(__DIR__.'/../../../resources/views/themes/shadcn/default');
         $directory = new RecursiveDirectoryIterator(
-            $legacyRoot.DIRECTORY_SEPARATOR.'form',
+            $baseRoot.DIRECTORY_SEPARATOR.'form',
             FilesystemIterator::SKIP_DOTS
         );
         $views = [];
@@ -56,14 +56,16 @@ class TailwindThemeFormTest extends TestCase
                 continue;
             }
 
-            $relative = substr($file->getPathname(), strlen($legacyRoot) + 1);
+            $relative = substr($file->getPathname(), strlen($baseRoot) + 1);
             $logical = str_replace([DIRECTORY_SEPARATOR, '.blade.php'], ['.', ''], $relative);
             $resolved = view()->getFinder()->find(
                 app('sleeping_owl.template')->getViewPath($logical)
             );
+            $override = $tailwindRoot.DIRECTORY_SEPARATOR.$relative;
+            $expected = is_file($override) ? $override : $file->getPathname();
 
             $this->assertSame(
-                realpath($tailwindRoot.DIRECTORY_SEPARATOR.$relative),
+                realpath($expected),
                 realpath($resolved),
                 $logical
             );

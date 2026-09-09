@@ -24,26 +24,31 @@ class TailwindThemeRemainingViewsTest extends TestCase
         ]);
     }
 
-    public function test_tailwind_owns_every_legacy_logical_view(): void
+    public function test_tailwind_resolves_every_base_logical_view(): void
     {
-        $legacyRoot = realpath(__DIR__.'/../../../resources/views/default');
+        $baseRoot = realpath(__DIR__.'/../../../resources/views/default');
         $tailwindRoot = realpath(__DIR__.'/../../../resources/views/themes/shadcn/default');
-        $directory = new RecursiveDirectoryIterator($legacyRoot, FilesystemIterator::SKIP_DOTS);
+        $directory = new RecursiveDirectoryIterator($baseRoot, FilesystemIterator::SKIP_DOTS);
         $views = [];
+        $inherited = 0;
+        $overridden = 0;
 
         foreach (new RecursiveIteratorIterator($directory) as $file) {
             if (! str_ends_with($file->getFilename(), '.blade.php')) {
                 continue;
             }
 
-            $relative = substr($file->getPathname(), strlen($legacyRoot) + 1);
+            $relative = substr($file->getPathname(), strlen($baseRoot) + 1);
             $logical = str_replace([DIRECTORY_SEPARATOR, '.blade.php'], ['.', ''], $relative);
             $resolved = view()->getFinder()->find(
                 app('sleeping_owl.template')->getViewPath($logical)
             );
+            $override = $tailwindRoot.DIRECTORY_SEPARATOR.$relative;
+            $expected = is_file($override) ? $override : $file->getPathname();
+            is_file($override) ? $overridden++ : $inherited++;
 
             $this->assertSame(
-                realpath($tailwindRoot.DIRECTORY_SEPARATOR.$relative),
+                realpath($expected),
                 realpath($resolved),
                 $logical
             );
@@ -52,6 +57,83 @@ class TailwindThemeRemainingViewsTest extends TestCase
 
         $this->assertContains('dashboard', $views);
         $this->assertContains('pages.login', $views);
+        $this->assertCount(136, $views);
+        $this->assertSame(37, $inherited);
+        $this->assertSame(99, $overridden);
+    }
+
+    public function test_tailwind_overrides_contain_no_base_duplicates(): void
+    {
+        $baseRoot = realpath(__DIR__.'/../../../resources/views/default');
+        $tailwindRoot = realpath(__DIR__.'/../../../resources/views/themes/shadcn/default');
+        $directory = new RecursiveDirectoryIterator($tailwindRoot, FilesystemIterator::SKIP_DOTS);
+        $overrides = [];
+
+        foreach (new RecursiveIteratorIterator($directory) as $file) {
+            if (! str_ends_with($file->getFilename(), '.blade.php')) {
+                continue;
+            }
+
+            $relative = substr($file->getPathname(), strlen($tailwindRoot) + 1);
+            $base = $baseRoot.DIRECTORY_SEPARATOR.$relative;
+
+            $this->assertFileExists($base, $relative);
+            $this->assertNotSame(
+                $this->normalizeBlade(file_get_contents($base)),
+                $this->normalizeBlade(file_get_contents($file->getPathname())),
+                $relative
+            );
+            $overrides[] = $relative;
+        }
+
+        $this->assertCount(99, $overrides);
+    }
+
+    public function test_nested_logical_paths_keep_the_tailwind_fallback_chain(): void
+    {
+        $template = app('sleeping_owl.template');
+        $finder = view()->getFinder();
+        $base = realpath(__DIR__.'/../../../resources/views/default');
+        $tailwind = realpath(__DIR__.'/../../../resources/views/themes/shadcn/default');
+
+        $inherited = $finder->find($template->getViewPath('column.editable.text'));
+        $nestedOverride = $finder->find(
+            $template->getViewPath('column.editable.partials.editor_template')
+        );
+
+        $this->assertSame(
+            realpath($base.DIRECTORY_SEPARATOR.'column/editable/text.blade.php'),
+            realpath($inherited)
+        );
+        $this->assertSame(
+            realpath(
+                $tailwind.DIRECTORY_SEPARATOR.
+                    'column/editable/partials/editor_template.blade.php'
+            ),
+            realpath($nestedOverride)
+        );
+    }
+
+    public function test_shadcn_components_remain_theme_owned(): void
+    {
+        $root = realpath(__DIR__.'/../../../resources/views/themes/shadcn/components');
+        $directory = new RecursiveDirectoryIterator($root, FilesystemIterator::SKIP_DOTS);
+        $components = [];
+
+        foreach (new RecursiveIteratorIterator($directory) as $file) {
+            if (! str_ends_with($file->getFilename(), '.blade.php')) {
+                continue;
+            }
+
+            $relative = substr($file->getPathname(), strlen($root) + 1);
+            $logical = str_replace([DIRECTORY_SEPARATOR, '.blade.php'], ['.', ''], $relative);
+
+            $this->assertTrue(view()->exists("sleeping_owl_shadcn::components.{$logical}"));
+            $this->assertFalse(view()->exists("sleeping_owl::components.{$logical}"));
+            $components[] = $logical;
+        }
+
+        $this->assertCount(27, $components);
     }
 
     public function test_login_receives_theme_classes_without_changing_contracts(): void
@@ -84,5 +166,14 @@ class TailwindThemeRemainingViewsTest extends TestCase
         foreach ($fragments as $fragment) {
             $this->assertStringContainsString($fragment, $html);
         }
+    }
+
+    private function normalizeBlade(string $source): string
+    {
+        $lines = preg_split('/\R/u', $source);
+        $lines = array_map('rtrim', $lines ?: []);
+        $lines = array_filter($lines, static fn (string $line): bool => trim($line) !== '');
+
+        return trim(implode("\n", $lines));
     }
 }
