@@ -1,3 +1,27 @@
+$control-size: 2.75rem !default;
+$control-radius: 0.5rem !default;
+$caption-radius: 0.5rem !default;
+$transition-duration: 150ms !default;
+$control-surface: var(--soa-text-color) !default;
+$control-surface-hover: var(--soa-primary-color) !default;
+$control-text: var(--soa-surface-color) !default;
+$caption-surface: var(--soa-elevated-surface-color) !default;
+$caption-text: var(--soa-text-color) !default;
+
+@mixin properties {
+    :root {
+        --soa-lightbox-control-surface: #{$control-surface};
+        --soa-lightbox-control-surface-hover: #{$control-surface-hover};
+        --soa-lightbox-control-text: #{$control-text};
+        --soa-lightbox-caption-surface: #{$caption-surface};
+        --soa-lightbox-caption-text: #{$caption-text};
+        --soa-lightbox-control-size: #{$control-size};
+        --soa-lightbox-control-radius: #{$control-radius};
+        --soa-lightbox-caption-radius: #{$caption-radius};
+        --soa-lightbox-transition-duration: #{$transition-duration};
+    }
+}
+
 @mixin styles {
     .glightbox-container .gbtn {
         inline-size: var(--soa-lightbox-control-size);

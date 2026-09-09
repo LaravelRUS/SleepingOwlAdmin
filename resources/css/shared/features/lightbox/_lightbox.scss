@@ -1,4 +1,16 @@
 @use 'sass:meta';
+@use 'colors';
+
+$backdrop-opacity: 0.92 !default;
+$svg-min-size: 5rem !default;
+
+@mixin properties {
+    :root {
+        --soa-lightbox-backdrop: #{colors.$backdrop};
+        --soa-lightbox-backdrop-opacity: #{$backdrop-opacity};
+        --soa-lightbox-svg-min-size: #{$svg-min-size};
+    }
+}
 
 @mixin styles {
     @include meta.load-css('../../../../../node_modules/glightbox/dist/css/glightbox.css');

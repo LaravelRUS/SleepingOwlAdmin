@@ -3,8 +3,8 @@
 @use '../../../shared/features/forms/custom-properties' as form-properties;
 @use '../../../shared/features/dropdown/dropdown' as dropdown-driver;
 @use '../features/dropdown/dropdown' as legacy-dropdown;
-@use '../../../shared/features/lightbox/legacy' as legacy-lightbox-driver;
-@use '../features/lightbox/legacy' as legacy-lightbox;
+@use '../../../shared/features/lightbox/lightbox' as legacy-lightbox-driver;
+@use '../features/lightbox/lightbox' as legacy-lightbox;
 @use '../../../shared/features/sidebar/custom-properties' as sidebar-properties;
 @use '../../../shared/features/sidebar/sidebar' as sidebar-driver;
 @use '../features/sidebar/legacy' as legacy-sidebar;
@@ -21,7 +21,9 @@
 @include dropdown-driver.styles;
 @include legacy-dropdown.properties;
 @include legacy-dropdown.styles;
+@include legacy-lightbox-driver.properties;
 @include legacy-lightbox-driver.styles;
+@include legacy-lightbox.properties;
 @include legacy-lightbox.styles;
 @include sidebar-properties.define;
 @include sidebar-driver.styles;
