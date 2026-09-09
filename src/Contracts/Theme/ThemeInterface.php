@@ -5,17 +5,14 @@ namespace SleepingOwl\Admin\Contracts\Theme;
 interface ThemeInterface
 {
     /**
-     * Stable theme id used by logical asset and adapter ids.
-     */
-    public function id(): string;
-
-    /**
      * Blade namespace owned by this theme.
      */
     public function viewNamespace(): string;
 
     /**
-     * Logical asset entries required by the theme. Physical paths and URLs are not allowed.
+     * Unscoped logical asset declarations required by the theme. The selected
+     * config/registry name is applied to theme and feature entries by the runtime.
+     * Physical paths, URLs and already-scoped theme names are not allowed.
      *
      * @see \SleepingOwl\Admin\Themes\ThemeAssetManifest
      *

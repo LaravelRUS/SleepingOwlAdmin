@@ -1,5 +1,5 @@
 <div
-    data-theme="{{ $theme->id() }}"
+    data-theme="{{ $themeName }}"
     data-body-class="{{ $themeConfig->get('body_default_class') }}"
     data-breadcrumbs="{{ $themeConfig->get('breadcrumbs') ? 'yes' : 'no' }}"
     data-favicon="{{ $themeConfig->get('favicon') }}"

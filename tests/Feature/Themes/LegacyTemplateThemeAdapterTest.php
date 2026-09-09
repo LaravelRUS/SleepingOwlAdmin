@@ -18,8 +18,8 @@ class LegacyTemplateThemeAdapterTest extends TestCase
         $this->assertInstanceOf(TemplateDefault::class, $template);
         $this->assertInstanceOf(TemplateInterface::class, $template);
         $this->assertInstanceOf(LegacyTemplateThemeAdapter::class, $theme);
-        $this->assertSame('adminlte', $theme->id());
-        $this->assertSame(['shared:icons', 'theme:adminlte'], $theme->assets());
+        $this->assertSame('adminlte', $selection->name());
+        $this->assertSame(['shared:icons'], $theme->assets());
         $this->assertSame(
             array_map(fn (ThemeCapability $capability) => $capability->value, ThemeCapability::cases()),
             $theme->capabilities()
@@ -36,15 +36,13 @@ class LegacyTemplateThemeAdapterTest extends TestCase
 
         $theme = new LegacyTemplateThemeAdapter(
             $template,
-            'custom-admin',
-            ['theme:custom-admin'],
+            ['feature:table'],
             ['edit' => 'pencil'],
             ['tooltip', 'tabs']
         );
 
-        $this->assertSame('custom-admin', $theme->id());
         $this->assertSame('custom-admin::theme', $theme->viewNamespace());
-        $this->assertSame(['theme:custom-admin'], $theme->assets());
+        $this->assertSame(['feature:table'], $theme->assets());
         $this->assertSame(['edit' => 'pencil'], $theme->icons());
         $this->assertSame(['tabs', 'tooltip'], $theme->capabilities());
         $this->assertSame($template, $theme->legacyTemplate());
@@ -59,7 +57,6 @@ class LegacyTemplateThemeAdapterTest extends TestCase
 
         $theme->legacyTemplate()->initialize();
 
-        $this->assertSame('legacy-template', $theme->id());
         $this->assertSame([], $theme->assets());
         $this->assertSame([], $theme->icons());
         $this->assertSame([], $theme->capabilities());

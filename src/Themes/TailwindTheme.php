@@ -6,11 +6,6 @@ use SleepingOwl\Admin\Contracts\Theme\ThemeInterface;
 
 final class TailwindTheme implements ThemeInterface
 {
-    public function id(): string
-    {
-        return 'shadcn';
-    }
-
     public function viewNamespace(): string
     {
         return 'sleeping_owl_shadcn::default';
@@ -23,7 +18,6 @@ final class TailwindTheme implements ThemeInterface
             'shared:compatibility',
             'shared:modules',
             'shared:vue',
-            'theme:shadcn',
         ];
     }
 

@@ -16,7 +16,11 @@ class ExternalThemeAssetsTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('must match theme [external-contract] assets');
 
-        app(ExternalThemeAssets::class)->validate(new ExternalAssetContractTheme(), $manifest);
+        app(ExternalThemeAssets::class)->validate(
+            'external-contract',
+            new ExternalAssetContractTheme(),
+            $manifest
+        );
     }
 
     public function test_external_fragment_requires_both_ready_profiles(): void
@@ -28,7 +32,11 @@ class ExternalThemeAssetsTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('[development] profile');
 
-        app(ExternalThemeAssets::class)->validate(new ExternalAssetContractTheme(), $manifest);
+        app(ExternalThemeAssets::class)->validate(
+            'external-contract',
+            new ExternalAssetContractTheme(),
+            $manifest
+        );
     }
 
     private function manifest(array $entries, bool $development = true): AssetManifest
@@ -61,11 +69,6 @@ class ExternalThemeAssetsTest extends TestCase
 
 final class ExternalAssetContractTheme implements ThemeInterface
 {
-    public function id(): string
-    {
-        return 'external-contract';
-    }
-
     public function viewNamespace(): string
     {
         return 'external-contract::default';
@@ -73,7 +76,7 @@ final class ExternalAssetContractTheme implements ThemeInterface
 
     public function assets(): array
     {
-        return ['theme:external-contract'];
+        return [];
     }
 
     public function icons(): array

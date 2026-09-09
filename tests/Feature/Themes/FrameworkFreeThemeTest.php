@@ -14,6 +14,7 @@ use SleepingOwl\Admin\Themes\ThemeCapabilities;
 use SleepingOwl\Admin\Themes\ThemeResolver;
 use SleepingOwl\Admin\Themes\ThemeRuntimeAssets;
 use SleepingOwl\Admin\Themes\ThemeTemplateAdapter;
+use SleepingOwl\Admin\Themes\ThemeSelection;
 use SleepingOwl\Tests\Fixtures\Themes\FrameworkFreeTestTheme;
 
 class FrameworkFreeThemeTest extends TestCase
@@ -22,7 +23,10 @@ class FrameworkFreeThemeTest extends TestCase
     {
         parent::resolveApplicationConfiguration($app);
 
-        $app['config']->set('sleeping_owl.template', FrameworkFreeTestTheme::class);
+        $app['config']->set('sleeping_owl.template', [
+            'default' => 'framework-free-test',
+            'themes' => ['framework-free-test' => FrameworkFreeTestTheme::class],
+        ]);
     }
 
     protected function setUp(): void
@@ -42,7 +46,7 @@ class FrameworkFreeThemeTest extends TestCase
 
         $this->assertInstanceOf(FrameworkFreeTestTheme::class, $theme);
         $this->assertInstanceOf(ThemeTemplateAdapter::class, $template);
-        $this->assertSame('framework-free-test', $theme->id());
+        $this->assertSame('framework-free-test', app(ThemeSelection::class)->name());
         $this->assertSame('framework-free-test::contract', $theme->viewNamespace());
         $this->assertSame([], $theme->icons());
         $this->assertSame([
@@ -98,7 +102,7 @@ class FrameworkFreeThemeTest extends TestCase
             'theme:framework-free-test',
             'shared:features',
             'shared:modules',
-        ], $runtime->logicalEntries(app(ThemeInterface::class)));
+        ], $runtime->logicalEntries('framework-free-test', app(ThemeInterface::class)));
     }
 
     public function test_each_profile_registers_only_the_selected_theme_bundle_and_adapters(): void
@@ -119,7 +123,7 @@ class FrameworkFreeThemeTest extends TestCase
         $registry = app(AssetRegistry::class);
         $registry->clear();
         $selection = (new ThemeResolver($this->app))->resolve($themeClass);
-        $selection->template()->initialize();
+        app(ThemeRuntimeAssets::class)->register($selection->name(), $selection->theme());
 
         return [
             ...array_map(static fn ($asset) => $asset->source(), $registry->registeredScripts()),

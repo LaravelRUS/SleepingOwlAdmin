@@ -25,19 +25,13 @@ final class LegacyTemplateThemeAdapter implements ThemeInterface
      */
     public function __construct(
         private TemplateInterface $template,
-        private string $id = 'legacy-template',
         array $assets = [],
         array $icons = [],
         array $capabilities = []
     ) {
-        $this->assets = (new ThemeAssetManifest($id, $assets))->entries();
+        $this->assets = $assets;
         $this->icons = (new ThemeIcons($icons))->all();
         $this->capabilities = (new ThemeCapabilities($capabilities))->ids();
-    }
-
-    public function id(): string
-    {
-        return $this->id;
     }
 
     public function viewNamespace(): string

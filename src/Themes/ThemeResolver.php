@@ -18,21 +18,24 @@ final class ThemeResolver
 
     public function resolve(mixed $configuration): ThemeSelection
     {
-        $configuredClass = $this->configuredClass($configuration);
-        $implementation = $this->makeImplementation($configuredClass);
+        [$name, $configuredClass] = $this->configuredTheme($configuration);
+        $implementation = $this->makeImplementation($name, $configuredClass);
 
         if ($implementation instanceof TemplateInterface && $implementation instanceof ThemeInterface) {
-            $this->validateTheme($implementation);
+            $name ??= $this->legacyName($configuredClass, $implementation);
+            $this->validateTheme($name, $implementation);
 
-            return new ThemeSelection($implementation, $implementation);
+            return new ThemeSelection($name, $implementation, $implementation);
         }
 
         if ($implementation instanceof TemplateInterface) {
-            return $this->fromLegacyTemplate($implementation);
+            $name ??= $this->legacyName($configuredClass, $implementation);
+            return $this->fromLegacyTemplate($name, $implementation);
         }
 
         if ($implementation instanceof ThemeInterface) {
-            return $this->fromTheme($implementation);
+            $name ??= $this->legacyName($configuredClass, $implementation);
+            return $this->fromTheme($name, $implementation);
         }
 
         throw new TemplateException(
@@ -43,10 +46,10 @@ final class ThemeResolver
     /**
      * @return class-string
      */
-    private function configuredClass(mixed $configuration): string
+    private function configuredTheme(mixed $configuration): array
     {
         if (is_string($configuration)) {
-            return $configuration;
+            return [null, $configuration];
         }
 
         if (! is_array($configuration)) {
@@ -83,18 +86,29 @@ final class ThemeResolver
             }
         }
 
-        if (! array_key_exists($default, $themes)) {
+        if (! array_key_exists($default, $themes) && ! $this->themes->has($default)) {
             throw new TemplateException(
-                "Default theme [{$default}] is not defined in [sleeping_owl.template.themes]."
+                "Default theme [{$default}] is neither configured nor registered."
             );
         }
 
-        return $themes[$default];
+        return [$default, $themes[$default] ?? null];
     }
 
-    private function makeImplementation(string $configuredClass): object
+    private function makeImplementation(?string $name, ?string $configuredClass): object
     {
-        $implementationClass = $this->themes->implementationClass($configuredClass);
+        try {
+            $implementationClass = $name === null
+                ? $configuredClass
+                : $this->themes->implementationClass($name, $configuredClass);
+        } catch (\InvalidArgumentException $exception) {
+            throw new TemplateException($exception->getMessage(), 0, $exception);
+        }
+
+        if (! is_string($implementationClass)) {
+            throw new TemplateException('Configured theme class must be a non-empty class-string.');
+        }
+
         if (! class_exists($implementationClass)) {
             throw new TemplateException("Template class [{$configuredClass}] not found in config file");
         }
@@ -102,35 +116,65 @@ final class ThemeResolver
         return $this->app->make($implementationClass);
     }
 
-    private function fromLegacyTemplate(TemplateInterface $template): ThemeSelection
+    private function fromLegacyTemplate(string $name, TemplateInterface $template): ThemeSelection
     {
         $theme = new LegacyTemplateThemeAdapter(
             $template,
-            'adminlte',
-            ['shared:icons', 'theme:adminlte'],
+            ['shared:icons'],
             [],
             $this->allCapabilityIds()
         );
 
-        return new ThemeSelection($template, $theme);
+        return new ThemeSelection($name, $template, $theme);
     }
 
-    private function fromTheme(ThemeInterface $theme): ThemeSelection
+    private function fromTheme(string $name, ThemeInterface $theme): ThemeSelection
     {
-        $this->validateTheme($theme);
+        $this->validateTheme($name, $theme);
 
         $template = $this->app->make(ThemeTemplateAdapter::class, [
+            'themeName' => $name,
             'theme' => $theme,
         ]);
 
-        return new ThemeSelection($template, $theme);
+        return new ThemeSelection($name, $template, $theme);
     }
 
-    private function validateTheme(ThemeInterface $theme): void
+    private function validateTheme(string $name, ThemeInterface $theme): void
     {
-        ThemeAssetManifest::fromTheme($theme);
+        ThemeAssetManifest::fromTheme($name, $theme);
         ThemeCapabilities::fromTheme($theme);
         ThemeIcons::fromTheme($theme);
+    }
+
+    /**
+     * Resolve a canonical name only for the legacy class-string config shape.
+     */
+    private function legacyName(string $configuredClass, object $implementation): string
+    {
+        if (($registered = $this->themes->nameForClass($configuredClass)) !== null) {
+            return $registered;
+        }
+
+        $configuredThemes = $this->app['config']->get('sleeping_owl.template.themes', []);
+        if (is_array($configuredThemes)) {
+            $name = array_search($configuredClass, $configuredThemes, true);
+            if (is_string($name)) {
+                return $name;
+            }
+        }
+
+        if ($implementation instanceof TemplateInterface) {
+            return 'adminlte';
+        }
+
+        if ($implementation instanceof TailwindTheme) {
+            return 'shadcn';
+        }
+
+        throw new TemplateException(
+            "Legacy class-string theme [{$configuredClass}] has no canonical name; configure it in [sleeping_owl.template.themes]."
+        );
     }
 
     /**

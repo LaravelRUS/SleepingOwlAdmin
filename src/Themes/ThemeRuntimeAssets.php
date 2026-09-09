@@ -22,19 +22,19 @@ final class ThemeRuntimeAssets
     /**
      * @param  array<string, string>  $aliases
      */
-    public function register(ThemeInterface $theme, array $aliases = []): ResolvedAssetBundle
+    public function register(string $themeName, ThemeInterface $theme, array $aliases = []): ResolvedAssetBundle
     {
-        $this->manifests->select($theme->id());
+        $this->manifests->select($themeName);
 
-        return $this->registrar->register($this->logicalEntries($theme), $aliases);
+        return $this->registrar->register($this->logicalEntries($themeName, $theme), $aliases);
     }
 
     /**
      * @return list<string>
      */
-    public function logicalEntries(ThemeInterface $theme): array
+    public function logicalEntries(string $themeName, ThemeInterface $theme): array
     {
-        $manifest = ThemeAssetManifest::fromTheme($theme);
+        $manifest = ThemeAssetManifest::fromTheme($themeName, $theme);
         $base = array_values(array_diff(
             $manifest->entriesFor([]),
             [...self::DEFERRED_ASSETS, self::FEATURE_RUNTIME]

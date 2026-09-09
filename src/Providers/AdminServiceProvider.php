@@ -196,6 +196,10 @@ class AdminServiceProvider extends ServiceProvider
         });
         $this->app->alias('sleeping_owl.theme', ThemeInterface::class);
 
+        $this->app->singleton('sleeping_owl.theme.name', function (Application $app) {
+            return $app->make(ThemeSelection::class)->name();
+        });
+
         if (file_exists($assetsFile = __DIR__.'/../../resources/assets.php')) {
             include $assetsFile;
         }

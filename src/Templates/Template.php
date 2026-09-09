@@ -15,6 +15,7 @@ use SleepingOwl\Admin\Contracts\Template\MetaInterface;
 use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 use SleepingOwl\Admin\Contracts\Theme\ThemeInterface;
 use SleepingOwl\Admin\Themes\ThemeConfiguration;
+use SleepingOwl\Admin\Themes\ThemeSelection;
 
 abstract class Template implements TemplateInterface
 {
@@ -182,6 +183,7 @@ abstract class Template implements TemplateInterface
 
         return [
             'theme' => $this->app->make(ThemeInterface::class),
+            'themeName' => $this->app->make(ThemeSelection::class)->name(),
             'themeConfig' => $this->app->make(ThemeConfiguration::class),
             'assetHealthStatus' => $this->assetHealthStatus(),
         ];

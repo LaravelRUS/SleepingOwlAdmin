@@ -20,23 +20,24 @@ final class ThemeAssetManifest
     /**
      * @param  list<string>  $entries
      */
-    public function __construct(private string $themeId, array $entries = [])
+    public function __construct(private string $themeName, array $entries = [])
     {
-        $this->assertIdentifier('theme', $themeId);
+        $this->assertIdentifier('theme', $themeName);
+        $this->themeEntry = "theme:{$themeName}";
 
         foreach ($entries as $entry) {
             $this->addEntry($entry);
         }
     }
 
-    public static function fromTheme(ThemeInterface $theme): self
+    public static function fromTheme(string $themeName, ThemeInterface $theme): self
     {
-        return new self($theme->id(), $theme->assets());
+        return new self($themeName, $theme->assets());
     }
 
-    public function themeId(): string
+    public function themeName(): string
     {
-        return $this->themeId;
+        return $this->themeName;
     }
 
     /**
@@ -92,19 +93,19 @@ final class ThemeAssetManifest
             throw new InvalidArgumentException('Theme asset manifest entries must be strings.');
         }
 
-        if ($entry === "theme:{$this->themeId}") {
-            $this->addThemeEntry($entry);
-
-            return;
-        }
-
         if (str_starts_with($entry, 'shared:')) {
             $this->addSharedEntry($entry);
 
             return;
         }
 
-        $this->addFeatureEntry($entry);
+        if (str_starts_with($entry, 'feature:')) {
+            $this->addFeatureEntry($entry);
+
+            return;
+        }
+
+        throw new InvalidArgumentException("Invalid theme asset declaration [{$entry}].");
     }
 
     private function addSharedEntry(string $entry): void
@@ -119,39 +120,22 @@ final class ThemeAssetManifest
         $this->sharedEntries[$id] = $entry;
     }
 
-    private function addThemeEntry(string $entry): void
-    {
-        if ($this->themeEntry !== null) {
-            throw new InvalidArgumentException("Duplicate theme asset entry [{$entry}].");
-        }
-
-        $this->themeEntry = $entry;
-    }
-
     private function addFeatureEntry(string $entry): void
     {
-        if (! preg_match('/\Afeature:([^:]+):theme:([^:]+)\z/', $entry, $matches)) {
-            throw new InvalidArgumentException("Invalid theme asset entry [{$entry}].");
-        }
-
-        [$feature, $theme] = [$matches[1], $matches[2]];
-        $this->assertIdentifier('feature', $feature);
-        $this->assertOwnedByTheme($entry, $theme);
-
-        if (isset($this->featureEntries[$feature])) {
-            throw new InvalidArgumentException("Duplicate feature theme asset entry [{$entry}].");
-        }
-
-        $this->featureEntries[$feature] = $entry;
-    }
-
-    private function assertOwnedByTheme(string $entry, string $theme): void
-    {
-        if ($theme !== $this->themeId) {
+        if (! preg_match('/\Afeature:([^:]+)\z/', $entry, $matches)) {
             throw new InvalidArgumentException(
-                "Theme asset entry [{$entry}] belongs to [{$theme}], expected [{$this->themeId}]."
+                "Theme asset declaration [{$entry}] must not contain a theme name."
             );
         }
+
+        $feature = $matches[1];
+        $this->assertIdentifier('feature', $feature);
+
+        if (isset($this->featureEntries[$feature])) {
+            throw new InvalidArgumentException("Duplicate feature asset declaration [{$entry}].");
+        }
+
+        $this->featureEntries[$feature] = "feature:{$feature}:theme:{$this->themeName}";
     }
 
     /**

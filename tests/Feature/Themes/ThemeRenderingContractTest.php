@@ -8,6 +8,7 @@ use SleepingOwl\Admin\Form\FormDefault;
 use SleepingOwl\Admin\Templates\TemplateDefault;
 use SleepingOwl\Admin\Themes\LegacyTemplateThemeAdapter;
 use SleepingOwl\Admin\Themes\ThemeResolver;
+use SleepingOwl\Admin\Themes\ThemeSelection;
 
 class ThemeRenderingContractTest extends TestCase
 {
@@ -93,13 +94,15 @@ class ThemeRenderingContractTest extends TestCase
     /**
      * @param  class-string<TemplateInterface>  $templateClass
      */
-    private function renderWithTheme(object $renderable, string $templateClass, string $themeId): string
+    private function renderWithTheme(object $renderable, string $templateClass, string $themeName): string
     {
         $template = $this->app->make($templateClass);
-        $theme = new LegacyTemplateThemeAdapter($template, $themeId);
+        $theme = new LegacyTemplateThemeAdapter($template);
+        $selection = new ThemeSelection($themeName, $template, $theme);
 
         $this->app->instance('sleeping_owl.template', $template);
         $this->app->instance('sleeping_owl.theme', $theme);
+        $this->app->instance(ThemeSelection::class, $selection);
 
         $this->assertSame($theme, $this->app->make(ThemeInterface::class));
         $this->assertSame($template->getViewNamespace(), $theme->viewNamespace());
@@ -109,12 +112,16 @@ class ThemeRenderingContractTest extends TestCase
 
     private function renderWithDirectTheme(object $renderable): string
     {
-        $selection = (new ThemeResolver($this->app))->resolve(DirectContractTheme::class);
+        $selection = (new ThemeResolver($this->app))->resolve([
+            'default' => 'contract-direct',
+            'themes' => ['contract-direct' => DirectContractTheme::class],
+        ]);
         $template = $selection->template();
         $theme = $selection->theme();
 
         $this->app->instance('sleeping_owl.template', $template);
         $this->app->instance('sleeping_owl.theme', $theme);
+        $this->app->instance(ThemeSelection::class, $selection);
 
         $this->assertSame('contract-alpha::contract', $template->getViewNamespace());
         $this->assertSame($theme, $this->app->make(ThemeInterface::class));
@@ -250,11 +257,6 @@ final class BetaContractTemplate extends TemplateDefault
 
 final class DirectContractTheme implements ThemeInterface
 {
-    public function id(): string
-    {
-        return 'contract-direct';
-    }
-
     public function viewNamespace(): string
     {
         return 'contract-alpha::contract';
@@ -262,7 +264,7 @@ final class DirectContractTheme implements ThemeInterface
 
     public function assets(): array
     {
-        return ['theme:contract-direct'];
+        return [];
     }
 
     public function icons(): array

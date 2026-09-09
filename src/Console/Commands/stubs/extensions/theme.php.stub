@@ -6,11 +6,6 @@ use SleepingOwl\Admin\Contracts\Theme\ThemeInterface;
 
 final class DummyClass implements ThemeInterface
 {
-    public function id(): string
-    {
-        return 'dummy-kebab';
-    }
-
     public function viewNamespace(): string
     {
         return 'dummy-kebab';
@@ -18,7 +13,7 @@ final class DummyClass implements ThemeInterface
 
     public function assets(): array
     {
-        return ['theme:dummy-kebab'];
+        return [];
     }
 
     public function icons(): array

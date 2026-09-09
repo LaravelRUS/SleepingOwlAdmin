@@ -15,15 +15,12 @@ final class AdminLTETheme extends TemplateDefault implements ThemeInterface
 
     public function initialize(): void
     {
+        $selection = $this->app->make(ThemeSelection::class);
         $this->app->make(ThemeRuntimeAssets::class)->register(
+            $selection->name(),
             $this,
             self::LEGACY_HANDLES
         );
-    }
-
-    public function id(): string
-    {
-        return 'adminlte';
     }
 
     public function viewNamespace(): string
@@ -38,7 +35,6 @@ final class AdminLTETheme extends TemplateDefault implements ThemeInterface
             'shared:compatibility',
             'shared:modules',
             'shared:vue',
-            'theme:'.$this->id(),
         ];
     }
 

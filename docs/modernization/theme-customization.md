@@ -127,7 +127,6 @@ Only `sidebar_background_color` is currently accepted as a PHP config-to-CSS map
 An external package supplies a `ThemeInterface`, namespaced Blade views, already-built production/development files and a manifest fragment. Its provider registers the fragment during the Laravel registration phase:
 
 ```php
-use SleepingOwl\Admin\Themes\AdminLTETheme;
 use SleepingOwl\Admin\Themes\ThemeRegistry;
 use Vendor\AdminTheme\AcmeTheme;
 
@@ -135,22 +134,20 @@ public function register(): void
 {
     $this->app->afterResolving(ThemeRegistry::class, function (ThemeRegistry $themes): void {
         $themes->register(
+            'acme',
             AcmeTheme::class,
             __DIR__.'/../dist/asset-manifest.json',
             'vendor/acme/sleepingowl-theme'
         );
-
-        // Optional: keep an existing published config value and replace its implementation.
-        $themes->replace(AdminLTETheme::class, AcmeTheme::class);
     });
 }
 ```
 
-`afterResolving()` makes the hook independent of Composer provider discovery order while still running before theme selection. If `template.themes` already maps the selected name to `AcmeTheme::class`, omit `replace()`. A replacement must be registered first. Registering the same theme-owned logical entries again is an intentional last-registration-wins override.
+`afterResolving()` makes the hook independent of Composer provider discovery order while still running before theme selection. Set `template.default` to `acme`; the name may be provided by the registry without copying the class into the application's theme map. Registering a duplicate canonical name, or configuring that name for another class, fails explicitly.
 
 The package provider separately calls `loadViewsFrom()` and publishes/copies its built files to the public root passed to `register()`. File names inside the manifest are relative to that root. SleepingOwl does not compile or copy external package assets with `sleepingowl:update`.
 
-The fragment uses the core manifest schema but does not contain `core` or package feature-driver entries. It must contain both `production` and `development`, with identical logical ids in the same order. Every non-shared entry must be declared by `AcmeTheme::assets()` and belong to its id:
+The fragment uses the core manifest schema but does not contain `core` or package feature-driver entries. It must contain both `production` and `development`, with identical logical ids in the same order. `theme:acme` is generated from the registry name. Every optional adapter is declared without repeating that name in `AcmeTheme::assets()` (for example `feature:table`) and is scoped in the ready fragment:
 
 ```text
 theme:acme
@@ -158,7 +155,7 @@ feature:table:theme:acme
 feature:tooltip:theme:acme
 ```
 
-Shared entries are allowed only when declared by the theme. Core resolves unchanged `core`, `shared:features` and existing shared infrastructure from SleepingOwl's own manifest; the external fragment supplies only its ready theme/shared/optional adapter files. A mismatched profile, undeclared entry, foreign theme id, invalid path or checksum metadata fails registration. No assets from another theme are loaded as fallback.
+Shared entries are allowed only when declared by the theme. Core resolves unchanged `core`, `shared:features` and existing shared infrastructure from SleepingOwl's own manifest; the external fragment supplies only its ready theme/shared/optional adapter files. A mismatched profile, undeclared entry, foreign theme name, invalid path or checksum metadata fails registration. No assets from another theme are loaded as fallback.
 
 ## Blade overrides
 

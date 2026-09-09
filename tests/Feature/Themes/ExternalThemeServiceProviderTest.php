@@ -9,6 +9,7 @@ use SleepingOwl\Admin\Themes\AdminLTETheme;
 use SleepingOwl\Admin\Themes\ThemeConfiguration;
 use SleepingOwl\Admin\Themes\ThemeRegistry;
 use SleepingOwl\Admin\Themes\ThemeTemplateAdapter;
+use SleepingOwl\Admin\Themes\ThemeSelection;
 
 class ExternalThemeServiceProviderTest extends TestCase
 {
@@ -30,12 +31,9 @@ class ExternalThemeServiceProviderTest extends TestCase
             $registry->registeredStyles()
         );
 
-        $this->assertSame('adminlte', config('sleeping_owl.template.default'));
-        $this->assertSame(
-            AdminLTETheme::class,
-            config('sleeping_owl.template.themes.adminlte')
-        );
+        $this->assertSame('provider-test', config('sleeping_owl.template.default'));
         $this->assertInstanceOf(ProviderContractTheme::class, $theme);
+        $this->assertSame('provider-test', app(ThemeSelection::class)->name());
         $this->assertInstanceOf(ThemeTemplateAdapter::class, app('sleeping_owl.template'));
         $this->assertSame(app('sleeping_owl.template'), app('sleeping_owl')->template());
         $this->assertContains(
@@ -81,12 +79,16 @@ final class ExternalThemeContractServiceProvider extends ServiceProvider
     {
         $this->app['config']->set('sleeping_owl.ui.footer_text', 'Provider footer');
         $this->app['config']->set('sleeping_owl.ui.sidebar_background_color', '#102030');
+        $this->app['config']->set('sleeping_owl.template.default', 'provider-test');
 
         $this->app->afterResolving(ThemeRegistry::class, function (ThemeRegistry $themes): void {
             $manifest = __DIR__.'/../../Fixtures/assets/external-theme-manifest.json';
-            $themes->register(ProviderContractTheme::class, $manifest, 'vendor/provider-test/first');
-            $themes->register(ProviderContractTheme::class, $manifest, 'vendor/provider-test/final');
-            $themes->replace(AdminLTETheme::class, ProviderContractTheme::class);
+            $themes->register(
+                'provider-test',
+                ProviderContractTheme::class,
+                $manifest,
+                'vendor/provider-test/final'
+            );
         });
 
         $this->app->booted(function (Application $app): void {
@@ -99,11 +101,6 @@ final class ExternalThemeContractServiceProvider extends ServiceProvider
 
 final class ProviderContractTheme implements ThemeInterface
 {
-    public function id(): string
-    {
-        return 'provider-test';
-    }
-
     public function viewNamespace(): string
     {
         return 'provider-test::default';
@@ -112,8 +109,7 @@ final class ProviderContractTheme implements ThemeInterface
     public function assets(): array
     {
         return [
-            'theme:provider-test',
-            'feature:tooltip:theme:provider-test',
+            'feature:tooltip',
         ];
     }
 

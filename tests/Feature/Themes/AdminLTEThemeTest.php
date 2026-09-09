@@ -11,6 +11,7 @@ use SleepingOwl\Admin\Contracts\Theme\ThemeInterface;
 use SleepingOwl\Admin\Themes\AdminLTETheme;
 use SleepingOwl\Admin\Themes\ThemeAssetManifest;
 use SleepingOwl\Admin\Themes\ThemeCapability;
+use SleepingOwl\Admin\Themes\ThemeSelection;
 
 class AdminLTEThemeTest extends TestCase
 {
@@ -28,13 +29,16 @@ class AdminLTEThemeTest extends TestCase
         $this->assertInstanceOf(TemplateInterface::class, $theme);
         $this->assertSame($theme, $template);
         $this->assertSame($theme, $this->app->make('sleeping_owl')->theme());
-        $this->assertSame('adminlte', $theme->id());
+        $this->assertSame('adminlte', $this->app->make(ThemeSelection::class)->name());
         $this->assertSame('sleeping_owl::default', $theme->viewNamespace());
     }
 
     public function test_it_declares_shared_runtime_theme_and_component_adapters(): void
     {
-        $manifest = ThemeAssetManifest::fromTheme($this->app->make(AdminLTETheme::class));
+        $manifest = ThemeAssetManifest::fromTheme(
+            'adminlte',
+            $this->app->make(AdminLTETheme::class)
+        );
 
         $this->assertSame([
             'shared:icons',

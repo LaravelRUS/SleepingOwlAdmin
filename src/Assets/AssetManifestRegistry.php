@@ -9,20 +9,20 @@ final class AssetManifestRegistry
 
     private ?string $selectedTheme = null;
 
-    public function register(string $themeId, AssetManifest $manifest, string $publicRoot): void
+    public function register(string $themeName, AssetManifest $manifest, string $publicRoot): void
     {
         $source = new AssetManifestSource($manifest, $publicRoot);
 
         foreach ($manifest->profileIds() as $profileId) {
             foreach ($manifest->profile($profileId)->entryIds() as $logicalId) {
-                $this->sources[$themeId][$profileId][$logicalId] = $source;
+                $this->sources[$themeName][$profileId][$logicalId] = $source;
             }
         }
     }
 
-    public function select(string $themeId): void
+    public function select(string $themeName): void
     {
-        $this->selectedTheme = $themeId;
+        $this->selectedTheme = $themeName;
     }
 
     public function find(string $profileId, string $logicalId): ?AssetManifestSource

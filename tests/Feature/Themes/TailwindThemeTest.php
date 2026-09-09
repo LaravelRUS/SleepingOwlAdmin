@@ -12,6 +12,7 @@ use SleepingOwl\Admin\Themes\ThemeAssetManifest;
 use SleepingOwl\Admin\Themes\ThemeResolver;
 use SleepingOwl\Admin\Themes\ThemeRuntimeAssets;
 use SleepingOwl\Admin\Themes\ThemeTemplateAdapter;
+use SleepingOwl\Admin\Themes\ThemeSelection;
 
 class TailwindThemeTest extends TestCase
 {
@@ -37,7 +38,7 @@ class TailwindThemeTest extends TestCase
         $this->assertSame(TailwindTheme::class, config('sleeping_owl.template.themes.shadcn'));
         $this->assertInstanceOf(TailwindTheme::class, $theme);
         $this->assertInstanceOf(ThemeTemplateAdapter::class, $template);
-        $this->assertSame('shadcn', $theme->id());
+        $this->assertSame('shadcn', app(ThemeSelection::class)->name());
         $this->assertSame('sleeping_owl_shadcn::default', $template->getViewNamespace());
         $this->assertSame([
             'tooltip',
@@ -53,7 +54,7 @@ class TailwindThemeTest extends TestCase
 
     public function test_it_declares_only_implemented_feature_adapters(): void
     {
-        $manifest = ThemeAssetManifest::fromTheme(app(TailwindTheme::class));
+        $manifest = ThemeAssetManifest::fromTheme('shadcn', app(TailwindTheme::class));
 
         $this->assertSame([
             'shared:icons',
@@ -70,7 +71,7 @@ class TailwindThemeTest extends TestCase
             'theme:shadcn',
             'shared:features',
             'shared:modules',
-        ], app(ThemeRuntimeAssets::class)->logicalEntries(app(TailwindTheme::class)));
+        ], app(ThemeRuntimeAssets::class)->logicalEntries('shadcn', app(TailwindTheme::class)));
     }
 
     public function test_each_profile_registers_implemented_tailwind_adapters(): void

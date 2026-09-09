@@ -10,9 +10,9 @@ final class ExternalThemeAssets
 {
     private const REQUIRED_PROFILES = ['production', 'development'];
 
-    public function validate(ThemeInterface $theme, AssetManifest $manifest): void
+    public function validate(string $themeName, ThemeInterface $theme, AssetManifest $manifest): void
     {
-        $themeAssets = ThemeAssetManifest::fromTheme($theme);
+        $themeAssets = ThemeAssetManifest::fromTheme($themeName, $theme);
         $this->assertProfiles($manifest);
 
         $expectedEntries = null;
@@ -43,10 +43,10 @@ final class ExternalThemeAssets
     private function assertEntries(array $entries, ThemeAssetManifest $themeAssets): void
     {
         $declared = $themeAssets->entries();
-        $themeEntry = 'theme:'.$themeAssets->themeId();
+        $themeEntry = 'theme:'.$themeAssets->themeName();
         if (! in_array($themeEntry, $declared, true)) {
             throw new InvalidArgumentException(
-                "External theme [{$themeAssets->themeId()}] must declare [{$themeEntry}]."
+                "External theme [{$themeAssets->themeName()}] must declare [{$themeEntry}]."
             );
         }
 
@@ -57,7 +57,7 @@ final class ExternalThemeAssets
 
         if (array_diff($entries, $declared) !== [] || array_diff($required, $entries) !== []) {
             throw new InvalidArgumentException(
-                "External theme manifest entries must match theme [{$themeAssets->themeId()}] assets."
+                "External theme manifest entries must match theme [{$themeAssets->themeName()}] assets."
             );
         }
     }

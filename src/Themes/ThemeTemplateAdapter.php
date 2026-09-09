@@ -21,6 +21,7 @@ final class ThemeTemplateAdapter extends Template
         MetaInterface $meta,
         NavigationInterface $navigation,
         Breadcrumbs $breadcrumbs,
+        private string $themeName,
         private ThemeInterface $theme
     ) {
         parent::__construct($application, $admin, $meta, $navigation, $breadcrumbs);
@@ -28,12 +29,12 @@ final class ThemeTemplateAdapter extends Template
 
     public function initialize(): void
     {
-        $this->app->make(ThemeRuntimeAssets::class)->register($this->theme);
+        $this->app->make(ThemeRuntimeAssets::class)->register($this->themeName, $this->theme);
     }
 
     public function name(): string
     {
-        return $this->theme->id();
+        return $this->themeName;
     }
 
     public function version(): string

@@ -12,20 +12,19 @@ class ThemeMetadataContractTest extends TestCase
     {
         $theme = new MetadataContractTheme(
             assets: [
-                'feature:table:theme:custom-admin',
+                'feature:table',
                 'shared:icons',
-                'theme:custom-admin',
-                'feature:tabs:theme:custom-admin',
+                'feature:tabs',
             ],
             icons: ['edit' => 'pencil'],
             capabilities: array_reverse($this->allCapabilityIds())
         );
 
-        $manifest = ThemeAssetManifest::fromTheme($theme);
+        $manifest = ThemeAssetManifest::fromTheme('custom-admin', $theme);
         $capabilities = ThemeCapabilities::fromTheme($theme);
         $icons = ThemeIcons::fromTheme($theme);
 
-        $this->assertSame('custom-admin', $manifest->themeId());
+        $this->assertSame('custom-admin', $manifest->themeName());
         $this->assertSame([
             'shared:icons',
             'theme:custom-admin',
@@ -53,23 +52,23 @@ class ThemeMetadataContractTest extends TestCase
     {
         $manifest = new ThemeAssetManifest('legacy-template');
 
-        $this->assertSame([], $manifest->entries());
-        $this->assertSame([], $manifest->entriesFor(['table']));
+        $this->assertSame(['theme:legacy-template'], $manifest->entries());
+        $this->assertSame(['theme:legacy-template'], $manifest->entriesFor(['table']));
     }
 
     public function test_manifest_rejects_physical_paths(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Invalid theme asset entry [build/theme.css].');
+        $this->expectExceptionMessage('Invalid theme asset declaration [build/theme.css].');
 
         new ThemeAssetManifest('custom-admin', ['build/theme.css']);
     }
 
-    public function test_manifest_rejects_entries_owned_by_another_theme(): void
+    public function test_manifest_rejects_already_scoped_entries(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(
-            'Theme asset entry [feature:table:theme:adminlte] belongs to [adminlte], expected [custom-admin].'
+            'Theme asset declaration [feature:table:theme:adminlte] must not contain a theme name.'
         );
 
         new ThemeAssetManifest('custom-admin', ['feature:table:theme:adminlte']);
@@ -78,7 +77,7 @@ class ThemeMetadataContractTest extends TestCase
     public function test_manifest_rejects_duplicate_entries(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Duplicate theme asset entry [theme:custom-admin].');
+        $this->expectExceptionMessage('Invalid theme asset declaration [theme:custom-admin].');
 
         new ThemeAssetManifest('custom-admin', [
             'theme:custom-admin',
@@ -134,11 +133,6 @@ final class MetadataContractTheme implements ThemeInterface
         private array $icons,
         private array $capabilities
     ) {
-    }
-
-    public function id(): string
-    {
-        return 'custom-admin';
     }
 
     public function viewNamespace(): string

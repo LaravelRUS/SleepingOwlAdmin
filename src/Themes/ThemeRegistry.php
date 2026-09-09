@@ -10,11 +10,8 @@ use SleepingOwl\Admin\Contracts\Theme\ThemeInterface;
 
 final class ThemeRegistry
 {
-    /** @var array<class-string, string> */
+    /** @var array<string, class-string<ThemeInterface>> */
     private array $registered = [];
-
-    /** @var array<class-string, class-string<ThemeInterface>> */
-    private array $replacements = [];
 
     public function __construct(
         private Application $app,
@@ -27,41 +24,54 @@ final class ThemeRegistry
     /**
      * @param  class-string<ThemeInterface>  $themeClass
      */
-    public function register(string $themeClass, string $manifestPath, string $publicRoot): self
+    public function register(
+        string $name,
+        string $themeClass,
+        string $manifestPath,
+        string $publicRoot
+    ): self
     {
+        $this->assertName($name);
+        if (isset($this->registered[$name])) {
+            throw new InvalidArgumentException("Theme name [{$name}] is already registered.");
+        }
+
         $theme = $this->makeTheme($themeClass);
         $manifest = $this->loader->loadFragment($manifestPath);
-        $this->validator->validate($theme, $manifest);
-        $this->assets->register($theme->id(), $manifest, $publicRoot);
-        $this->registered[$themeClass] = $theme->id();
+        $this->validator->validate($name, $theme, $manifest);
+        $this->assets->register($name, $manifest, $publicRoot);
+        $this->registered[$name] = $themeClass;
 
         return $this;
     }
 
-    /**
-     * @param  class-string  $configuredClass
-     * @param  class-string<ThemeInterface>  $themeClass
-     */
-    public function replace(string $configuredClass, string $themeClass): self
+    public function has(string $name): bool
     {
-        if (! isset($this->registered[$themeClass])) {
-            throw new InvalidArgumentException(
-                "Theme [{$themeClass}] must be registered before it can replace another theme."
-            );
-        }
-
-        $this->replacements[$configuredClass] = $themeClass;
-
-        return $this;
+        return isset($this->registered[$name]);
     }
 
     /**
      * @param  class-string  $configuredClass
      * @return class-string
      */
-    public function implementationClass(string $configuredClass): string
+    public function implementationClass(string $name, ?string $configuredClass = null): string
     {
-        return $this->replacements[$configuredClass] ?? $configuredClass;
+        $registeredClass = $this->registered[$name] ?? null;
+        if ($registeredClass !== null && $configuredClass !== null && $registeredClass !== $configuredClass) {
+            throw new InvalidArgumentException(
+                "Theme name [{$name}] is configured for [{$configuredClass}] and registered for [{$registeredClass}]."
+            );
+        }
+
+        return $registeredClass ?? $configuredClass
+            ?? throw new InvalidArgumentException("Theme name [{$name}] is not registered.");
+    }
+
+    public function nameForClass(string $themeClass): ?string
+    {
+        $name = array_search($themeClass, $this->registered, true);
+
+        return is_string($name) ? $name : null;
     }
 
     /**
@@ -74,5 +84,12 @@ final class ThemeRegistry
         }
 
         return $this->app->make($themeClass);
+    }
+
+    private function assertName(string $name): void
+    {
+        if (preg_match('/^[a-z0-9]+(?:-[a-z0-9]+)*$/', $name) !== 1) {
+            throw new InvalidArgumentException('Theme names must use lower-kebab format.');
+        }
     }
 }

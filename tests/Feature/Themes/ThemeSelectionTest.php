@@ -136,7 +136,7 @@ class ThemeSelectionTest extends TestCase
     {
         $this->expectException(TemplateException::class);
         $this->expectExceptionMessage(
-            'Default theme [missing] is not defined in [sleeping_owl.template.themes].'
+            'Default theme [missing] is neither configured nor registered.'
         );
 
         (new ThemeResolver($this->app))->resolve([
@@ -168,11 +168,6 @@ class ThemeSelectionTest extends TestCase
 
 final class SelectableContractTheme implements ThemeInterface
 {
-    public function id(): string
-    {
-        return 'selector-theme';
-    }
-
     public function viewNamespace(): string
     {
         return 'selector-theme::contract';
@@ -199,11 +194,6 @@ final class UnselectedContractTheme implements ThemeInterface
     public function __construct()
     {
         throw new RuntimeException('An unselected theme must not be resolved.');
-    }
-
-    public function id(): string
-    {
-        return 'unused-theme';
     }
 
     public function viewNamespace(): string

@@ -2,7 +2,7 @@
 
 ## Назначение
 
-`ThemeInterface` описывает только выбранную presentation implementation: стабильный id, Blade namespace, логические assets, icon tokens и поддерживаемые capabilities. Он не получает методы для CSS-классов, не преобразует пользовательские HTML attributes и не управляет lifecycle feature drivers.
+`ThemeInterface` описывает только выбранную presentation implementation: Blade namespace, логические asset declarations, icon tokens и поддерживаемые capabilities. Canonical name хранится ключом config/registry и передаётся отдельно через `ThemeSelection`; theme class его не повторяет. Interface не получает методы для CSS-классов, не преобразует пользовательские HTML attributes и не управляет lifecycle feature drivers.
 
 Авторы тем возвращают простые массивы. Core преобразует их в небольшие проверяемые value objects:
 
@@ -14,12 +14,11 @@
 
 ## Логический asset manifest
 
-Theme manifest fragment не содержит filenames, URLs, hashes или build profile. Допустимы три вида entries:
+`ThemeInterface::assets()` не содержит filenames, URLs, hashes, build profile или canonical theme name. Допустимы два вида declarations:
 
 ```text
 shared:<shared-id>
-theme:<theme-id>
-feature:<feature-id>:theme:<theme-id>
+feature:<feature-id>
 ```
 
 Например:
@@ -30,16 +29,15 @@ public function assets(): array
     return [
         'shared:compatibility',
         'shared:vue',
-        'theme:acme',
-        'feature:table:theme:acme',
-        'feature:tabs:theme:acme',
+        'feature:table',
+        'feature:tabs',
     ];
 }
 ```
 
-`ThemeAssetManifest::fromTheme($theme)` проверяет ownership каждого theme/feature entry, запрещает физические пути и дубликаты и возвращает shared entries перед base theme entry. `entriesFor($activeFeatures)` добавляет только объявленные adapters фактически активных features, сохраняя порядок запрошенных features и не загружая остальные chunks.
+`ThemeAssetManifest::fromTheme($name, $theme)` проверяет declarations, запрещает физические пути, уже scoped имена и дубликаты, затем генерирует `theme:<name>` и `feature:<feature>:theme:<name>`. Он возвращает shared entries перед base theme entry. `entriesFor($activeFeatures)` добавляет только объявленные adapters фактически активных features, сохраняя порядок запрошенных features и не загружая остальные chunks.
 
-Пустой список временно разрешён для legacy template adapter. Встроенные и новые custom themes должны объявлять `theme:<id>`. Runtime `AssetManifestResolver` сопоставляет ids с versioned filenames и checksums выбранного профиля; theme contract сам файловую систему не читает. Полная schema описана в `asset-manifest.md`.
+Пустой список допустим и всё равно создаёт обязательный `theme:<name>` entry. Runtime `AssetManifestResolver` сопоставляет ids с versioned filenames и checksums выбранного профиля; theme contract сам файловую систему не читает. Полная schema описана в `asset-manifest.md`.
 
 ## Capability API
 
@@ -76,9 +74,9 @@ Capability говорит только о presentation support. Он не озн
 
 ## Runtime прямой custom theme
 
-Прямая реализация `ThemeInterface` не обязана наследовать package template или повторять его `initialize()`. Transitional `ThemeTemplateAdapter::initialize()` автоматически передаёт выбранную тему общему `ThemeRuntimeAssets`: он регистрирует `core`, объявленные shared/theme entries, объединённый package `shared:features` и только явно объявленные external adapter chunks с тем же theme id. Table adapter при наличии ставится до самозапускающегося общего runtime; остальные external adapters — после него. Объявленный `shared:modules` остаётся последним для финального module boot/scan. `AdminLTETheme` использует тот же assembler, добавляя только прежние публичные asset handles.
+Прямая реализация `ThemeInterface` не обязана наследовать package template или повторять его `initialize()`. Transitional `ThemeTemplateAdapter::initialize()` автоматически передаёт выбранные canonical name и тему общему `ThemeRuntimeAssets`: он регистрирует `core`, объявленные shared/theme entries, объединённый package `shared:features` и только явно объявленные external adapter chunks, scoped выбранным именем. Table adapter при наличии ставится до самозапускающегося общего runtime; остальные external adapters — после него. Объявленный `shared:modules` остаётся последним для финального module boot/scan. `AdminLTETheme` использует тот же assembler, добавляя только прежние публичные asset handles.
 
-Таким образом, `assets()` custom theme обычно описывает лишь её shared dependencies и один `theme:<id>`, внутри которого собраны её adapters. Отдельный `feature:<feature>:theme:<id>` допустим только для действительно независимо поставляемого external chunk, а не как обязательная схема для каждого компонента. Theme не перечисляет package-owned `shared:features` и не получает неявные AdminLTE, shadcn или icon assets. Отсутствующий либо повреждённый logical entry диагностируется manifest resolver; fallback к другой теме не выполняется. Готовые production/development файлы и checksums публикует автор темы, поэтому Composer-потребитель выбирает имя из `sleeping_owl.template` без Node.js и пересборки core. Внешний package регистрирует свой manifest fragment и public root через `ThemeRegistry`; этот service-provider hook и optional replacement существующего configured class описаны в [`theme-customization.md`](theme-customization.md).
+Таким образом, `assets()` custom theme обычно описывает лишь её shared dependencies. Base `theme:<name>` добавляется автоматически; декларация `feature:<feature>` допустима только для действительно независимо поставляемого external chunk, а не как обязательная схема для каждого компонента. Theme не перечисляет package-owned `shared:features` и не получает неявные AdminLTE, shadcn или icon assets. Отсутствующий либо повреждённый logical entry диагностируется manifest resolver; fallback к другой теме не выполняется. Готовые production/development файлы и checksums публикует автор темы, поэтому Composer-потребитель выбирает имя из `sleeping_owl.template` без Node.js и пересборки core. Внешний package регистрирует canonical name, class, manifest fragment и public root через `ThemeRegistry`; этот service-provider hook описан в [`theme-customization.md`](theme-customization.md).
 
 Test-only `FrameworkFreeTestTheme` является executable acceptance fixture этого контракта, а не новой встроенной продуктовой темой. Она реализует только публичный interface, владеет Blade-разметкой display/form и произвольными project attributes/classes, поставляет один CSS-only Sass theme со своими dropdown/sidebar/table/tabs/tooltip adapters и не импортирует Bootstrap, AdminLTE, Tailwind или Font Awesome. Её шесть объявленных capabilities (`dropdown`, `notification`, `sidebar`, `table-presentation`, `tabs`, `tooltip`) являются проверяемым подмножеством capabilities AdminLTE; `modal` и `icons` намеренно не объявлены, icon bundle не загружается. Browser contract выполняет одинаковые операции обеих тем в production/development, проверяет отсутствие framework/global runtime и по фактическим response URLs доказывает загрузку только выбранного theme bundle.
 
@@ -105,7 +103,7 @@ Resolver временно принимает прежний class-string как 
 
 Класс, не реализующий ни один contract, вызывает `TemplateException`; неявного fallback к AdminLTE нет. Реализация обоих interfaces может использоваться напрямую с обеих сторон selection boundary.
 
-`ThemeConfiguration` передаёт выбранной теме только зафиксированные theme-owned keys под canonical именами. Значения не приводятся к строкам и не преобразуются в semantic classes. В каждый view, созданный через transitional template renderer, передаются зарезервированные переменные `$theme` и `$themeConfig` вместе с прежним `$template`.
+`ThemeConfiguration` передаёт выбранной теме только зафиксированные theme-owned keys под canonical именами. Значения не приводятся к строкам и не преобразуются в semantic classes. В каждый view, созданный через transitional template renderer, передаются зарезервированные переменные `$theme`, `$themeName` и `$themeConfig` вместе с прежним `$template`.
 
 В набор входят 14 существующих keys из config migration matrix и `sidebar_background_color`. Старый опубликованный config может не содержать новый ключ: в этом случае package default `null` не выводит override, и theme default применяется без пересборки assets.
 
