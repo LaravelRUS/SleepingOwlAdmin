@@ -6,16 +6,14 @@ import { expect, it } from 'vitest'
 const root = resolve(import.meta.dirname, '../../..')
 
 it('replaces Bootstrap alert execution while preserving the public marker', () => {
-    const views = ['error', 'info', 'success', 'warning']
-        .map((type) => read(`resources/views/default/_partials/messages/${type}.blade.php`))
-        .join('\n')
+    const view = read('resources/views/default/_partials/message.blade.php')
     const runtime = [
         read('resources/js/shared/legacy/admin/alert.js'),
         read('resources/js/shared/features/alert/alerts.js'),
     ].join('\n')
 
-    expect(views).toContain('data-dismiss="alert"')
-    expect(views).not.toContain('data-alert')
+    expect(view).toContain('data-dismiss="alert"')
+    expect(view).not.toContain('data-alert')
     expect(runtime).toContain('[data-dismiss="alert"]')
     expect(runtime).not.toMatch(/jquery|jQuery|\$\(|bootstrap/i)
 })

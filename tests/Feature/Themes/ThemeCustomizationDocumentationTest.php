@@ -31,8 +31,8 @@ class ThemeCustomizationDocumentationTest extends TestCase
     private function sourceProperties(string $root): array
     {
         $patterns = [
-            '/resources/css/core/_custom-properties.scss',
-            '/resources/css/themes/adminlte/_custom-properties.scss',
+            '/resources/css/core/admin-core.scss',
+            '/resources/css/themes/adminlte/_tokens.scss',
             '/resources/css/shared/features/*/*.scss',
             '/resources/css/themes/adminlte/features/*/*.scss',
         ];
