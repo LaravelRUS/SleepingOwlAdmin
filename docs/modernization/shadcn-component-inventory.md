@@ -62,7 +62,7 @@ and must not be registered, included or scanned by the build.
 | --- | --- | --- |
 | alert, badge, breadcrumb, button, separator, sidebar, tooltip | `resources/views/default/_layout`, `_partials`, `helper` | Shared server markup carries legacy classes plus `soa-*`; existing feature drivers own behavior. |
 | button-group, card, checkbox, field, input, input-group, label, native-select, radio-group, switch, textarea | `resources/views/default/form` and `resources/views/default/column` | Native controls and Vue islands keep names, attributes, validation and lifecycle; theme CSS styles semantic hooks. |
-| table, pagination, empty, alert-dialog | `resources/views/default/display`, the four Shadcn DOM overrides and table adapters | Blade owns stable table markup; DataTables and table drivers own generated state and transport. |
+| table, pagination, empty, alert-dialog | `resources/views/default/display` and table adapters | Blade owns stable table markup; DataTables and table drivers own generated state and transport. |
 | attachment, dialog, progress, skeleton, spinner | Existing form/gallery markup, Vue props and feature CSS/JS | These remain conceptual recipes; there is no generic Blade component API until multiple real callers require one. |
 | collapsible, dropdown-menu, tabs | Navigation/tree/dropdown/tab logical views and public feature drivers | State and keyboard behavior stay in existing drivers; no React/Radix runtime is introduced. |
 

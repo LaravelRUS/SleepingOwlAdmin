@@ -12,26 +12,26 @@
   (`14cccdce`);
 - оставшиеся 99 overrides классифицированы по реальной причине различия.
   Semantic `soa-*` hooks перенесены в общий base рядом с сохранёнными
-  Bootstrap/AdminLTE compatibility classes; после этого удалены ещё 95
+  Bootstrap/AdminLTE compatibility classes; после этого удалены ещё 98
   presentation-only overrides;
-- в `resources/views/themes/shadcn/default` оставлены только четыре реальных
-  DOM/behavior overrides: `_layout/inner`, `_partials/navigation/page`,
-  `display/table` и `pages/login`;
+- в `resources/views/themes/shadcn/default` оставлен только один реальный
+  override `_layout/inner`: темы действительно по-разному компонуют shell,
+  page heading и footer. Navigation, table и login сведены в общий markup;
 - 27 Shadcn component prototypes без runtime ownership перенесены в
   `resources/archive/unused-sources`; активный namespace их не разрешает;
 - tests проверяют все 136 logical paths для обеих тем, три уровня приоритета,
   nested theme context, отсутствие одинаковых overrides и отсутствие
   неявного fallback у внешней темы;
-- оба asset profiles пересобраны. Из Tailwind utilities исчезла только ложная
-  `.static`, ранее найденная scanner-ом в PHP `static fn`; реального CSS class
-  contract для неё не было. После полного semantic consolidation
-  production/development utility CSS занимает 171/279 bytes;
+- оба asset profiles пересобраны. Tailwind utilities больше не зависят от
+  случайных class names в theme Blade и содержат только явно закреплённые
+  `flex`/`grid`; production/development utility CSS занимает 122/202 bytes;
 - browser fixtures переведены с удалённых per-feature paths на фактические
   `shared/features` и theme bundles. Заодно legacy AdminLTE CSS перенесён перед
   feature adapters внутри общего theme entry, чтобы adapters сохраняли
   приоритет после укрупнения. Полная Playwright matrix: 141/141.
-- после объединения Blade оба asset profiles повторно пересобраны, и полная
-  Playwright matrix снова прошла 141/141.
+- после финального объединения Blade оба asset profiles повторно пересобраны.
+  Итоговые gates: PHPUnit 632 tests / 2997 assertions (11 skipped), Vitest
+  115 files / 494 tests, Playwright 141/141, ESLint и Stylelint без ошибок.
 
 Optional публичный fallback registrar для внешних theme packages не добавлен:
 assessment определяет его как отдельный opt-in scope, а текущий внешний
@@ -102,24 +102,24 @@ resources/views/themes/shadcn/default    136 Blade, 2713 строк
 | **Итого** | **136** | **37** | **99** |
 
 Первый проход сознательно удалял только byte-equivalent copies. Второй проход
-показал, что 95 из 99 различий были presentation-only: классы, props с
+показал, что 98 из 99 различий были presentation-only: классы, props с
 классами либо небольшие общие accessibility improvements. Они объединены не
 механическим копированием, а единым контрактом `legacy classes + soa-*`.
-Четыре файла с реальной разницей структуры или поведения остались overrides.
+Единственный файл с реальной разницей композиции shell остался override.
 
 Итоговый runtime inventory:
 
 | Группа | Base paths | Наследуются Shadcn | Shadcn overrides |
 | --- | ---: | ---: | ---: |
 | `_layout` | 2 | 1 | 1 |
-| `_partials` | 15 | 14 | 1 |
+| `_partials` | 15 | 15 | 0 |
 | `column` | 53 | 53 | 0 |
 | `dashboard.blade.php` | 1 | 1 | 0 |
-| `display` | 15 | 14 | 1 |
+| `display` | 15 | 15 | 0 |
 | `form` | 46 | 46 | 0 |
 | `helper` | 3 | 3 | 0 |
-| `pages` | 1 | 0 | 1 |
-| **Итого** | **136** | **132** | **4** |
+| `pages` | 1 | 1 | 0 |
+| **Итого** | **136** | **135** | **1** |
 
 ## Целевая физическая структура
 
@@ -137,7 +137,7 @@ resources/views/
 ├── shared/                          # существующие shared views
 └── themes/
     └── shadcn/
-        └── default/                 # только 4 DOM/behavior overrides
+        └── default/                 # только 1 shell-composition override
 
 resources/archive/unused-sources/
 └── resources/views/themes/shadcn/components/  # 27 reference prototypes
@@ -247,9 +247,9 @@ application override для всех тем — отдельное продук�
 - 136 файлов из `resources/views/themes/adminlte/default` перемещены в
   `resources/views/default`;
 - 37 совпадающих Shadcn files удалены первым structural checkpoint;
-- 95 presentation-only overrides сведены в общий markup отдельными слоями:
+- 98 presentation-only overrides сведены в общий markup отдельными слоями:
   columns, display, basic forms, rich forms, layout/partials;
-- четыре DOM/behavior overrides оставлены в теме;
+- единственный shell-composition override оставлен в теме;
 - 27 component prototypes перенесены в archive после проверки отсутствия
   runtime references;
 - `shared`/`features` не перемещались: их ownership уже был корректным.
@@ -292,7 +292,7 @@ application override для всех тем — отдельное продук�
 ### Tailwind build
 
 После удаления presentation-only Shadcn copies Tailwind content scan видит
-только четыре физических overrides. Нужный theme contract теперь задаётся
+только один физический override. Нужный theme contract теперь задаётся
 стабильными `soa-*` selectors в Sass, а не случайным обнаружением utility names
 в дублирующихся Blade. Production/development CSS необходимо пересобирать и
 проверять как prepared artifacts.

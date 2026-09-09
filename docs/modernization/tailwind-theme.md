@@ -133,8 +133,8 @@ checkpoints close, no Tailwind feature adapter or capability is declared.
 
 The theme owns the `sleeping_owl_shadcn::default` Blade namespace with ordered
 package roots: `resources/views/themes/shadcn`, then `resources/views`. The
-theme directory contains only four structural/behavioral overrides; the other
-132 logical views inherit the complete 136-view package base in
+theme directory contains only one structural shell override; the other 135
+logical views inherit the complete 136-view package base in
 `resources/views/default`. That base carries both legacy compatibility classes
 and stable `soa-*` semantic hooks. The former 27 component prototypes are
 archived and are not runtime views. Relative logical view names remain
@@ -156,16 +156,17 @@ preflight—and limits source discovery to the Tailwind theme namespace. Its
 `tailwind.config.cjs` uses `tailwind.preset.cjs`, whose colors, fonts, radii and
 shadows resolve to canonical `--soa-*` properties.
 
-The scanner reads the four physical Shadcn overrides. Inherited base files use
+The scanner reads the single physical Shadcn override. Inherited base files use
 stable semantic/theme CSS; the generated utility snapshot does not depend on
 discovering legacy class strings in the base tree. The
-fallback migration removed only the false-positive `.static` utility produced
-from a Blade `static fn`; no rendered `static` class existed. A future inherited
-view that is the sole source of a required utility must add an explicit
-safelist/source contract test instead of scanning the whole base tree.
-After semantic consolidation the prepared utility layer is 171 bytes in
-production and 279 bytes in development; the complete `soa-*` presentation
-remains in `shadcn.css`.
+fallback migration first removed the false-positive `.static` utility produced
+from a Blade `static fn`; no rendered `static` class existed. After semantic
+consolidation, the generated layer contains only the explicitly sourced
+`flex`/`grid` utilities. A future inherited view that is the sole source of a
+required utility must add an explicit source contract test instead of scanning
+the whole base tree. The prepared utility layer is 122 bytes in production and
+202 bytes in development; the complete `soa-*` presentation remains in
+`shadcn.css`.
 
 The build matrix publishes two files under the single logical
 `theme:shadcn` entry:
