@@ -33,7 +33,10 @@ resources/
 │   │   └── features/<feature>/   # adapter только этой темы
 │   └── theme-overrides/<theme-name>/
 └── views/
-    └── themes/<theme-name>/      # полный Blade namespace темы
+    ├── default/                  # полный AdminLTE-compatible base contract
+    ├── features/                 # theme-neutral feature views
+    ├── shared/                   # theme-neutral composition
+    └── themes/<theme-name>/      # только реальные overrides/primitives темы
 ```
 
 Сторонняя Composer-тема повторяет тот же переносимый unit в своём package:
@@ -54,7 +57,11 @@ vendor-theme/
 
 Application регистрирует class и manifest fragment под canonical названием темы, не копируя sources внутрь SleepingOwlAdmin.
 
-Тема является логическим unit: одинаковое `<theme-name>` связывает её CSS, JavaScript и Blade namespace в стандартных Laravel resource folders. Переносимой единицей является Composer package целиком.
+Тема является логическим unit: одинаковое `<theme-name>` связывает её CSS,
+JavaScript и Blade namespace в стандартных Laravel resource folders. Встроенная
+тема может наследовать полный `resources/views/default` и хранить только
+отличающиеся Blade overrides; внешний package остаётся самостоятельной
+переносимой единицей и не получает fallback неявно.
 
 `resources/{css,js}/theme-overrides/<theme-name>` содержит локальные изменения/исправления, применяется только к выбранной теме и всегда идёт последним. Application Blade overrides используют стандартный Laravel path `resources/views/vendor/<theme-namespace>`.
 
@@ -102,7 +109,7 @@ Canonical название хранится один раз — ключом `te
 - [x] Отказаться от отдельного theme id: canonical название хранится только ключом `template.themes`, выбор — в `template.default`.
 - [x] Создать каталоги `resources/{css,js}/{core,shared,themes,theme-overrides}` по целевой структуре.
 - [x] Переместить общий core/runtime и feature sources; привести public output paths и logical ids к canonical theme names.
-- [x] Разложить CSS/JS темы и её feature adapters по `resources/{css,js}/themes/<theme-name>`; сохранить Blade в `resources/views/themes/<theme-name>`.
+- [x] Разложить CSS/JS темы и её feature adapters по `resources/{css,js}/themes/<theme-name>`; выделить полный Blade base и реальные theme overrides.
 - [ ] Заменить `ThemeInterface::id()` и внутренний `themeId` на имя, передаваемое config/registry; Theme-класс не дублирует название.
 - [x] Добавить новый shape `template.default` + `template.themes`, сохранив fallback для прежнего `'template' => ThemeClass::class`.
 - [ ] Ввести logical entry `theme:<name>:overrides`, подключаемый только для выбранной темы и после всех её base/feature entries.
@@ -112,6 +119,7 @@ Canonical название хранится один раз — ключом `te
 - [x] Зафиксировать для каждого файла один owner: `core`, `shared`, `theme` или `theme override`; перекрёстные копии запрещены.
 - [x] Проверить одинаковый детерминированный порядок CSS и JavaScript в production/development manifests.
 - [x] Объединить всегда загружаемые built-in feature entries в `shared:features`, а мелкие adapters — в единый bundle каждой темы.
+- [x] Перенести полный AdminLTE-compatible Blade contract в `resources/views/default`; Shadcn хранит только отличающиеся overrides и наследует base через Laravel namespace hints.
 - [ ] Создать `resources/css/shared/shared-ui.scss` и logical entry `shared:ui` в обоих asset profiles.
 - [ ] Зафиксировать cascade order `core -> shared -> feature -> theme`; theme override должен быть явным и минимальным.
 - [ ] Автоматически регистрировать `shared:ui` ровно один раз для AdminLTE, Tailwind и любой custom theme.
@@ -187,3 +195,5 @@ Canonical название хранится один раз — ключом `te
 | 2026-09-09 | Canonical asset names | После уточнения scope снято ограничение backward compatibility: runtime ids, `data-theme`, Blade namespace и generated paths приведены к `adminlte`/`shadcn`; 94 старых generated-файла `legacy-adminlte`/`tailwind` удалены и оба профиля пересобраны. Manifest содержит только canonical theme entries. Vitest: 115 файлов, 723 теста; PHPUnit Themes: 78 тестов / 633 assertions; Rendering: 79 тестов / 930 assertions. | `598516a1` |
 | 2026-09-09 | Финальный resource audit | Старые resource trees и активные ссылки на них отсутствуют. Reachability scan от всех build entries и поддерживаемых public source boundaries не нашёл orphan JS/Vue/SCSS; три оставшихся Open Sans файла используются, девять неиспользуемых файлов находятся в `resources/archive/unused-sources`. Production/development entry order совпадает. Prettier, ESLint, Stylelint и 723 Vitest прошли; полный PHPUnit: 626 тестов, 3013 assertions, 11 предусмотренных skip. | текущий commit |
 | 2026-09-09 | Осмысленное укрупнение bundles | Все девять всегда загружаемых feature drivers и neutral CSS объединены в `shared:features`; built-in feature adapters входят в единый bundle своей темы. Manifest сокращён с 37 до 9 logical entries и с 51 до 14 файлов на профиль. Выбранный AdminLTE runtime сокращён с 33 до 10 файлов; production size уменьшился с 1 843 637 до 1 797 249 bytes, development — с 4 942 211 до 4 758 642 bytes за счёт устранения повторной bundler-обвязки. External independently shipped adapters остаются поддержаны. | текущий commit |
+| 2026-09-09 | Blade base + theme fallback | 136 AdminLTE-compatible views перенесены в общий `resources/views/default`; из Shadcn удалены 37 повторов и оставлены 99 реальных overrides плюс 27 theme-only components. Namespace paths приложений сохранены, finder проверен в порядке application → theme → base, одинаковый override запрещён architecture test. | `337f3184`, `14cccdce` |
+| 2026-09-09 | Browser fixtures после укрупнения bundles | Browser fixtures переведены с удалённых per-feature output paths на `shared/features` и единый bundle выбранной темы. Порядок AdminLTE CSS внутри theme entry исправлен на legacy base → feature adapters. Оба asset profiles пересобраны; Playwright: 141/141, ESLint и Stylelint прошли. | текущий commit |

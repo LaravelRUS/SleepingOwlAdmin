@@ -131,11 +131,16 @@ the class declares only shared dependencies and `theme:shadcn`; package
 feature drivers are not repeated in theme metadata. Until their presentation
 checkpoints close, no Tailwind feature adapter or capability is declared.
 
-The theme owns the `sleeping_owl_shadcn::default` Blade namespace rooted at
-`resources/views/themes/shadcn/default`. Relative logical view names remain
-unchanged. An application can override this namespace through Laravel's usual
-view namespace mechanism, and an external package can use the existing
-`ThemeRegistry` service-provider hook documented in `theme-customization.md`.
+The theme owns the `sleeping_owl_shadcn::default` Blade namespace with ordered
+package roots: `resources/views/themes/shadcn`, then `resources/views`. The
+theme directory contains 99 real presentation overrides; 37 unchanged logical
+views inherit the complete 136-view package base in `resources/views/default`.
+Its 27 `components` primitives remain theme-only. Relative logical view names
+remain unchanged, and an application override under
+`resources/views/vendor/sleeping_owl_shadcn` precedes both roots. An external
+package can use the existing `ThemeRegistry` service-provider hook documented
+in `theme-customization.md`; it does not receive this built-in fallback
+implicitly.
 
 Invalid classes, malformed metadata and missing logical assets raise the
 existing diagnostic exceptions. There is no fallback to `AdminLTETheme`.
@@ -148,6 +153,14 @@ by Composer consumers. `tailwind.input.css` loads only the utilities layer—no
 preflight—and limits source discovery to the Tailwind theme namespace. Its
 `tailwind.config.cjs` uses `tailwind.preset.cjs`, whose colors, fonts, radii and
 shadows resolve to canonical `--soa-*` properties.
+
+The scanner intentionally reads physical Shadcn overrides and components, not
+the AdminLTE-compatible base. Inherited base files must therefore use stable
+semantic/theme CSS or utilities already present in the Shadcn snapshot. The
+fallback migration removed only the false-positive `.static` utility produced
+from a Blade `static fn`; no rendered `static` class existed. A future inherited
+view that is the sole source of a required utility must add an explicit
+safelist/source contract test instead of scanning the whole base tree.
 
 The build matrix publishes two files under the single logical
 `theme:shadcn` entry:

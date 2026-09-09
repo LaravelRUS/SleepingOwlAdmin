@@ -18,7 +18,7 @@ for (const profile of ['development', 'production']) {
 async function useFormsProfile(page, profile) {
     if (profile === 'development') return
 
-    for (const path of ['admin-core.js', 'shared/compatibility.js', 'features/forms.js']) {
+    for (const path of ['admin-core.js', 'shared/compatibility.js', 'shared/features.js']) {
         await page.route(`**/profiles/development/js/${path}`, (route) => {
             const requestUrl = new URL(route.request().url())
             const replacement = `/public/default/profiles/${profile}/js/${path}`

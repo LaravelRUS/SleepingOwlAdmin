@@ -12,7 +12,7 @@ const themes = [
         route: '/theme-capabilities-framework-free',
     },
     {
-        id: 'tailwind',
+        id: 'shadcn',
         route: '/theme-capabilities-tailwind',
     },
 ]
@@ -181,7 +181,7 @@ function assertIsolatedThemeRequests(requests, profile, selectedTheme) {
         }
     }
 
-    if (selectedTheme === 'tailwind') {
+    if (selectedTheme === 'shadcn') {
         expect(requests).toContain(`${profileRoot}css/themes/shadcn-utilities.css`)
     }
     if (selectedTheme === 'framework-free-test') {

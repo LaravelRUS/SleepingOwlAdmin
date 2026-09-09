@@ -19,8 +19,8 @@
                     state_datatables: false,
                     state_filters: false,
                     datatables_highlight: false,
+                    state_tabs: true,
                 },
-                state_tabs: true,
                 wysiwyg: {},
                 lang: {
                     button: { cancel: 'Cancel', save: 'Save', yes: 'Yes' },
@@ -78,7 +78,9 @@
             <section id="last-keyboard-panel">Last keyboard panel</section>
         </main>
 
-        <script src="/public/default/js/admin-app.js"></script>
+        <script src="/public/default/js/admin-core.js"></script>
+        <script src="/public/default/js/shared/compatibility.js"></script>
+        <script src="/public/default/js/shared/features.js"></script>
         <script>
             window.__tabEvents = []
             window.__bootstrapTabEvents = []
@@ -91,6 +93,6 @@
                 Admin.Events.on(name, (id) => window.__bootstrapTabEvents.push({ id, name }))
             })
         </script>
-        <script src="/public/default/js/modules.js"></script>
+        <script src="/public/default/js/shared/modules.js"></script>
     </body>
 </html>

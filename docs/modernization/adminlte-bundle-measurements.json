@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "sourceManifest": "public/default/asset-manifest.json",
   "packageVersion": "dev-master",
-  "buildId": "sha256:ad64246fc41c3f003ccfe10ca596c4aed2826932ffa85da2f7afcda178e7c485",
+  "buildId": "sha256:5660f0a02ce1f10ef944be6bf95a46da7c38a670d2283952b8f75b25bdf535ee",
   "baseline": {
     "source": "docs/modernization/baseline/frontend.json",
     "bytes": 2585357,
@@ -142,23 +142,23 @@
             {
               "type": "styles",
               "file": "profiles/production/css/themes/adminlte.css",
-              "version": "409d54093755cf629375963629b9d1ea",
-              "checksum": "sha256:0245bff88268c8c4d641d916d4ab3ed2c0872c74b262d7c9fe3d05810addcea7",
+              "version": "7077dfa6c34226210a89fd3c3844cb27",
+              "checksum": "sha256:17bb1b63f0f3623eb65b35abedc0bfcbd94ba135ab1b0328b20abc83c493eb37",
               "bytes": 380697,
-              "gzipBytes": 56673
+              "gzipBytes": 56614
             }
           ],
           "totals": {
             "files": 2,
             "bytes": 529949,
-            "gzipBytes": 105632
+            "gzipBytes": 105573
           }
         }
       },
       "totals": {
         "files": 10,
         "bytes": 1797249,
-        "gzipBytes": 459387
+        "gzipBytes": 459328
       }
     },
     "development": {
@@ -294,23 +294,23 @@
             {
               "type": "styles",
               "file": "profiles/development/css/themes/adminlte.css",
-              "version": "79d78e3072b0d3b2f73deca92a30186a",
-              "checksum": "sha256:072699e47e803e0dde40c22ae87051093f96378b76887c31cc3fa3cc7ea58370",
+              "version": "d61d94092d9b25d5a4a47c24b3c3856b",
+              "checksum": "sha256:fa7508eeef2e91f02938bd5fe6ce5eccad7f85246fdc79e7de0d1b4e7f98e68c",
               "bytes": 500973,
-              "gzipBytes": 64238
+              "gzipBytes": 64144
             }
           ],
           "totals": {
             "files": 2,
             "bytes": 1024037,
-            "gzipBytes": 191381
+            "gzipBytes": 191287
           }
         }
       },
       "totals": {
         "files": 10,
         "bytes": 4758642,
-        "gzipBytes": 933259
+        "gzipBytes": 933165
       }
     }
   },
@@ -322,10 +322,10 @@
       "percent": -30.5
     },
     "gzipBytes": {
-      "current": 459387,
+      "current": 459328,
       "baseline": 587787,
-      "delta": -128400,
-      "percent": -21.8
+      "delta": -128459,
+      "percent": -21.9
     }
   }
 }

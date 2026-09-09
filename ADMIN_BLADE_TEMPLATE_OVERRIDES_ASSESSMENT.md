@@ -1,5 +1,31 @@
 # Оценка перехода Blade на default + theme/application overrides
 
+## Статус реализации
+
+Встроенный scope выполнен 2026-09-09:
+
+- 136 AdminLTE-compatible views перенесены без изменения содержимого в
+  `resources/views/default` (`337f3184`);
+- Shadcn зарегистрирован с ordered roots `theme, base`, при этом прежние
+  application namespaces сохранены;
+- заново пересчитаны и удалены ровно 37 одинаковых Shadcn copies; остались 99
+  отличающихся overrides и 27 theme-only components (`14cccdce`);
+- tests проверяют все 136 logical paths для обеих тем, три уровня приоритета,
+  nested theme context, отсутствие одинаковых overrides и отсутствие
+  неявного fallback у внешней темы;
+- оба asset profiles пересобраны. Из Tailwind utilities исчезла только ложная
+  `.static`, ранее найденная scanner-ом в PHP `static fn`; реального CSS class
+  contract для неё не было. Production/development utility CSS теперь
+  2 050/2 669 bytes;
+- browser fixtures переведены с удалённых per-feature paths на фактические
+  `shared/features` и theme bundles. Заодно legacy AdminLTE CSS перенесён перед
+  feature adapters внутри общего theme entry, чтобы adapters сохраняли
+  приоритет после укрупнения. Полная Playwright matrix: 141/141.
+
+Optional публичный fallback registrar для внешних theme packages не добавлен:
+assessment определяет его как отдельный opt-in scope, а текущий внешний
+contract намеренно остаётся изолированным.
+
 ## Резюме решения
 
 Текущий полный mirror `default` внутри каждой темы следует заменить каскадом

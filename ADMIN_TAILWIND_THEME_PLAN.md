@@ -25,7 +25,7 @@
 1. **Design brief и tokens.** До компонентов фиксируются плотность data-heavy admin UI, typography, palette, radius, shadows, motion и один отличительный motif. Color literals принадлежат только `_colors.scss`, остальные build-time defaults — `_variables.scss`, runtime values — `--soa-*` в `_custom-properties.scss`.
 2. **shadcn token bridge.** Tailwind/shadcn semantic utilities ссылаются на `--soa-*`; параллельная независимая палитра `--background`/`--primary` не становится вторым источником истины.
 3. **Blade UI primitives.** Кнопки, labels, inputs, cards, alerts, badges, tables и overlays оформляются маленькими theme-owned partials на основе выбранных shadcn recipes. В PHP не добавляется resolver классов.
-4. **SleepingOwl view mapping.** Полный набор существующих logical views зеркалируется под TailwindTheme и собирается из primitives; application/vendor overrides сохраняют прежний приоритет.
+4. **SleepingOwl view mapping.** Полный набор существующих logical views доступен TailwindTheme через реальные overrides и общий package base; application/vendor overrides сохраняют прежний приоритет.
 5. **Feature presentation adapters.** Tabs, dropdown, tooltip, sidebar, tree, DataTables, forms, uploads и lightbox получают только theme-owned Sass/Blade presentation. Transport, state и lifecycle не копируются из core/features.
 6. **Precompiled delivery.** Tailwind scan выполняется maintainer build-ом по package Blade/Vue sources. В Composer artifact входят готовые production/development assets, manifest и checksums.
 
@@ -39,7 +39,7 @@ resources/views/themes/shadcn/
 ├── components/
 │   ├── ui/                 # выбранные shadcn-derived Blade primitives
 │   └── patterns/           # admin shell, toolbar, empty/error states
-└── default/                # зеркало стабильных logical view paths
+└── default/                # только отличающиеся overrides stable logical paths
     ├── _layout/
     ├── _partials/
     ├── column/
@@ -116,6 +116,7 @@ docs/modernization/
 - [x] Сохранить в shell прямую структуру `.nav-item > .nav-link + .nav-treeview`, config classes, пользовательские attributes и hooks `data-widget`, `data-lte-toggle`, `data-toggle`, `data-bs-toggle`, `data-dismiss`, `data-bs-dismiss`, tooltip template и sidebar state classes.
 - [x] Создать полный theme-owned набор layout, navigation, display, table, filter, form, action, widget, auth и helper views.
 - [x] Сохранить логические пути views и приоритет application overrides.
+- [x] Заменить полный physical mirror каскадом application → Shadcn override → package default; оставить только реально отличающиеся theme files.
 - [x] Передавать Tailwind classes/options Vue islands только из Blade props; не зашивать utilities в Vue/feature JavaScript.
 - [x] Сохранить публичные `data-dismiss`, `data-toggle`, `data-widget`, field names, ARIA и остальные documented behavior hooks.
 - [x] Проверить пользовательские HTML attributes/classes и hook-compatible изменённую вложенность без frontend rebuild.
@@ -174,3 +175,4 @@ docs/modernization/
 | 2026-09-08 | Content adapters и полный view namespace | TailwindTheme подключает независимые lightbox/tabs/tree adapters; их palette сведена к canonical `--soa-*`, а tree success/error policy слушает только `tree:changed`/`tree:failed` и обновляет Blade-owned live region. Добавлены последние dashboard/env-editor/login/tab-badge/CKEditor logical views; inventory подтверждает полный паритет namespace, config classes/props, field names, ARIA и hooks сохранены. Оба профиля содержат по 50 manifest assets; production/development: theme CSS 18 246/22 368, lightbox 1 082/1 257, tabs 1 164/1 374, tree CSS 3 144/3 736, tree JS 1 389/7 476 bytes. Gate: PHP 20/321, frontend 267, ESLint и Stylelint. Следующая точка — Tailwind 4 build/customization/no-build acceptance. | текущий commit |
 | 2026-09-08 | Tailwind 4 build и no-build distribution | Exact maintainer-only `tailwindcss`/`@tailwindcss/postcss` 4.3.3 собирают отдельный utility layer без preflight; scan ограничен Tailwind Blade namespace, preset ссылается на canonical `--soa-*`. `theme:shadcn` публикует handwritten и generated CSS, по 51 проверяемому asset на production/development; utility CSS — 2 156/2 819 bytes, без Bootstrap/AdminLTE/jQuery/React/Radix/lucide, color literals и `oklch`. Документированы application utilities/custom properties и граница Node.js; config switch и `sleepingowl:update` используют готовые assets. Gate: production build, PHP 14/61, frontend 268, ESLint, Prettier и PHP syntax. Следующая точка — acceptance matrix и release gate. | текущий commit |
 | 2026-09-08 | Acceptance matrix и release gate | Общая browser matrix подтверждает одинаковое объявленное behavior AdminLTE/framework-free/Tailwind, изоляцию assets обоих профилей и Tailwind light/dark, focus, reduced motion, responsive sidebar и custom color; presentation fixtures используют опубликованные theme tokens. PHP gate: 41 tests / 499 assertions; Playwright: 20/20; ESLint, Prettier и PHP syntax проходят. Clean Laravel 12 Composer smoke без Node.js проверил install/update, production/development manifests по 51 файлу, default AdminLTE и реальное config-переключение на Tailwind. Ранее отдельно измерены utility CSS 2 156/2 819 bytes. TailwindTheme завершена. | текущий commit |
+| 2026-09-09 | Blade fallback вместо полного mirror | Историческое требование полного физического mirror superseded: все 136 logical paths по-прежнему доступны, но `resources/views/themes/shadcn/default` содержит только 99 реальных overrides, а 37 одинаковых файлов наследуются из `resources/views/default`. 27 Shadcn components остаются theme-owned. Application namespace не изменён; no-identical-override guard и порядок application → theme → base закреплены тестами. Пересборка удалила только ложную `.static` utility из PHP `static fn`: production/development utility CSS 2 050/2 669 bytes. | `337f3184`, `14cccdce`, текущий commit |

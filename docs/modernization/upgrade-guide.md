@@ -71,6 +71,14 @@ Views remain the owner of concrete classes. Override only the specific file
 under `resources/views/vendor/sleeping_owl` that needs different markup; a full
 view republish is unnecessary and makes future upgrades harder.
 
+The package now stores the complete AdminLTE-compatible implementation in
+`resources/views/default`. This physical package move does not change the
+`sleeping_owl::default.*` namespace or the application override path above.
+Shadcn application overrides remain under
+`resources/views/vendor/sleeping_owl_shadcn`; its namespace resolves project,
+then a differing Shadcn view, then the package base. Applications do not need
+to create copies for inherited views.
+
 ## Assets and themes
 
 Direct `KodiCMS\Assets` facade imports must move to the package-owned facades
@@ -91,8 +99,10 @@ frontend rebuild:
 ],
 ```
 
-Its full Blade namespace, Tailwind 4 utility snapshot and production/development
-assets are precompiled. Application overrides may reuse shipped utilities or
+Its full logical Blade namespace, Tailwind 4 utility snapshot and production/development
+assets are precompiled. The physical Shadcn tree contains only presentation
+overrides and inherits unchanged logical views from the package base.
+Application overrides may reuse shipped utilities or
 own a separate application Tailwind build for new arbitrary utilities. A ready
 external theme may register its own Blade views and manifest fragment through
 `ThemeRegistry`. Application CSS/JS, supported `--soa-*` properties, the sidebar

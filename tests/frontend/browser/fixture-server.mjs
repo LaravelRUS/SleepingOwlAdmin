@@ -124,16 +124,13 @@ const staticRoutes = new Map([
     [
         '/resources/js/core/data/island-props.js',
         [
-            join(projectRoot, 'resources', 'frontend', 'core', 'data', 'island-props.js'),
+            join(projectRoot, 'resources', 'js', 'core', 'data', 'island-props.js'),
             'text/javascript',
         ],
     ],
     [
         '/resources/js/core/dom/listeners.js',
-        [
-            join(projectRoot, 'resources', 'frontend', 'core', 'dom', 'listeners.js'),
-            'text/javascript',
-        ],
+        [join(projectRoot, 'resources', 'js', 'core', 'dom', 'listeners.js'), 'text/javascript'],
     ],
     [
         '/public/default/js/admin-core.js',
@@ -144,38 +141,27 @@ const staticRoutes = new Map([
         [join(projectRoot, 'public', 'default', 'css', 'admin-core.css'), 'text/css'],
     ],
     [
-        '/public/default/js/features/alert.js',
-        [join(projectRoot, 'public', 'default', 'js', 'features', 'alert.js'), 'text/javascript'],
+        '/public/default/js/shared/features.js',
+        [join(projectRoot, 'public', 'default', 'js', 'shared', 'features.js'), 'text/javascript'],
     ],
     [
-        '/public/default/js/features/tabs.js',
-        [join(projectRoot, 'public', 'default', 'js', 'features', 'tabs.js'), 'text/javascript'],
-    ],
-    [
-        '/public/default/js/features/dropdown.js',
+        '/public/default/js/shared/compatibility.js',
         [
-            join(projectRoot, 'public', 'default', 'js', 'features', 'dropdown.js'),
+            join(projectRoot, 'public', 'default', 'js', 'shared', 'compatibility.js'),
             'text/javascript',
         ],
     ],
     [
-        '/public/default/js/features/sidebar.js',
-        [join(projectRoot, 'public', 'default', 'js', 'features', 'sidebar.js'), 'text/javascript'],
+        '/public/default/js/shared/modules.js',
+        [join(projectRoot, 'public', 'default', 'js', 'shared', 'modules.js'), 'text/javascript'],
     ],
     [
-        '/public/default/js/features/lightbox.js',
-        [
-            join(projectRoot, 'public', 'default', 'js', 'features', 'lightbox.js'),
-            'text/javascript',
-        ],
+        '/public/default/js/themes/adminlte.js',
+        [join(projectRoot, 'public', 'default', 'js', 'themes', 'adminlte.js'), 'text/javascript'],
     ],
     [
-        '/public/default/js/features/tree.js',
-        [join(projectRoot, 'public', 'default', 'js', 'features', 'tree.js'), 'text/javascript'],
-    ],
-    [
-        '/public/default/js/features/tooltip.js',
-        [join(projectRoot, 'public', 'default', 'js', 'features', 'tooltip.js'), 'text/javascript'],
+        '/public/default/js/themes/shadcn.js',
+        [join(projectRoot, 'public', 'default', 'js', 'themes', 'shadcn.js'), 'text/javascript'],
     ],
     [
         '/public/default/js/admin-app.js',
@@ -229,14 +215,9 @@ const staticRoutes = new Map([
             'text/javascript',
         ],
     ],
-    ...profileFeatureRoutes('development', ['forms', 'lightbox', 'table', 'tooltip', 'tree']),
-    ...profileFeatureRoutes('development', ['alert', 'dropdown', 'sidebar', 'tabs']),
-    ...profileThemeAdapterRoutes('development', [
-        ['tree', 'adminlte'],
-        ['tree', 'tailwind'],
-    ]),
-    ...profileThemeRoutes('development', ['adminlte', 'tailwind']),
-    ...profileSharedRoutes('development', ['modules']),
+    ...profileScriptRoutes('development', ['admin-core']),
+    ...profileThemeRoutes('development', ['adminlte', 'shadcn']),
+    ...profileSharedRoutes('development', ['features', 'modules']),
     ...profileStyleRoutes('development', themeCapabilityStyles()),
     [
         '/public/default/profiles/production/js/shared/vue.js',
@@ -270,126 +251,17 @@ const staticRoutes = new Map([
             'text/javascript',
         ],
     ],
-    ...profileFeatureRoutes('production', ['forms', 'lightbox', 'table', 'tooltip', 'tree']),
-    ...profileFeatureRoutes('production', ['alert', 'dropdown', 'sidebar', 'tabs']),
-    ...profileThemeAdapterRoutes('production', [
-        ['tree', 'adminlte'],
-        ['tree', 'tailwind'],
-    ]),
-    ...profileThemeRoutes('production', ['adminlte', 'tailwind']),
-    ...profileSharedRoutes('production', ['modules']),
+    ...profileScriptRoutes('production', ['admin-core']),
+    ...profileThemeRoutes('production', ['adminlte', 'shadcn']),
+    ...profileSharedRoutes('production', ['features', 'modules']),
     ...profileStyleRoutes('production', themeCapabilityStyles()),
     [
         '/public/default/css/admin-app.css',
         [join(projectRoot, 'public', 'default', 'css', 'admin-app.css'), 'text/css'],
     ],
     [
-        '/public/default/css/features/dropdown.css',
-        [join(projectRoot, 'public', 'default', 'css', 'features', 'dropdown.css'), 'text/css'],
-    ],
-    [
-        '/public/default/css/features/dropdown/themes/adminlte.css',
-        [
-            join(
-                projectRoot,
-                'public',
-                'default',
-                'css',
-                'features',
-                'dropdown',
-                'themes',
-                'adminlte.css',
-            ),
-            'text/css',
-        ],
-    ],
-    [
-        '/public/default/css/features/dropdown/themes/shadcn.css',
-        [
-            join(
-                projectRoot,
-                'public',
-                'default',
-                'css',
-                'features',
-                'dropdown',
-                'themes',
-                'tailwind.css',
-            ),
-            'text/css',
-        ],
-    ],
-    [
-        '/public/default/css/features/sidebar.css',
-        [join(projectRoot, 'public', 'default', 'css', 'features', 'sidebar.css'), 'text/css'],
-    ],
-    [
-        '/public/default/css/features/sidebar/themes/adminlte.css',
-        [
-            join(
-                projectRoot,
-                'public',
-                'default',
-                'css',
-                'features',
-                'sidebar',
-                'themes',
-                'adminlte.css',
-            ),
-            'text/css',
-        ],
-    ],
-    [
-        '/public/default/css/features/sidebar/themes/shadcn.css',
-        [
-            join(
-                projectRoot,
-                'public',
-                'default',
-                'css',
-                'features',
-                'sidebar',
-                'themes',
-                'tailwind.css',
-            ),
-            'text/css',
-        ],
-    ],
-    [
-        '/public/default/css/features/tooltip.css',
-        [join(projectRoot, 'public', 'default', 'css', 'features', 'tooltip.css'), 'text/css'],
-    ],
-    [
-        '/public/default/css/features/tooltip/themes/adminlte.css',
-        [
-            join(
-                projectRoot,
-                'public',
-                'default',
-                'css',
-                'features',
-                'tooltip',
-                'themes',
-                'adminlte.css',
-            ),
-            'text/css',
-        ],
-    ],
-    [
-        '/public/default/css/features/tooltip/themes/shadcn.css',
-        [
-            join(
-                projectRoot,
-                'public',
-                'default',
-                'css',
-                'features',
-                'tooltip',
-                'themes',
-                'tailwind.css',
-            ),
-            'text/css',
-        ],
+        '/public/default/css/shared/features.css',
+        [join(projectRoot, 'public', 'default', 'css', 'shared', 'features.css'), 'text/css'],
     ],
     [
         '/public/default/css/themes/adminlte.css',
@@ -397,147 +269,7 @@ const staticRoutes = new Map([
     ],
     [
         '/public/default/css/themes/shadcn.css',
-        [join(projectRoot, 'public', 'default', 'css', 'themes', 'tailwind.css'), 'text/css'],
-    ],
-    [
-        '/public/default/css/features/table.css',
-        [join(projectRoot, 'public', 'default', 'css', 'features', 'table.css'), 'text/css'],
-    ],
-    [
-        '/public/default/css/features/lightbox.css',
-        [join(projectRoot, 'public', 'default', 'css', 'features', 'lightbox.css'), 'text/css'],
-    ],
-    [
-        '/public/default/css/features/lightbox/themes/adminlte.css',
-        [
-            join(
-                projectRoot,
-                'public',
-                'default',
-                'css',
-                'features',
-                'lightbox',
-                'themes',
-                'adminlte.css',
-            ),
-            'text/css',
-        ],
-    ],
-    [
-        '/public/default/css/features/lightbox/themes/shadcn.css',
-        [
-            join(
-                projectRoot,
-                'public',
-                'default',
-                'css',
-                'features',
-                'lightbox',
-                'themes',
-                'tailwind.css',
-            ),
-            'text/css',
-        ],
-    ],
-    [
-        '/public/default/css/features/tabs/themes/adminlte.css',
-        [
-            join(
-                projectRoot,
-                'public',
-                'default',
-                'css',
-                'features',
-                'tabs',
-                'themes',
-                'adminlte.css',
-            ),
-            'text/css',
-        ],
-    ],
-    [
-        '/public/default/css/features/tabs/themes/shadcn.css',
-        [
-            join(
-                projectRoot,
-                'public',
-                'default',
-                'css',
-                'features',
-                'tabs',
-                'themes',
-                'tailwind.css',
-            ),
-            'text/css',
-        ],
-    ],
-    [
-        '/public/default/css/features/table/themes/datatables-adminlte.css',
-        [
-            join(
-                projectRoot,
-                'public',
-                'default',
-                'css',
-                'features',
-                'table',
-                'themes',
-                'datatables-adminlte.css',
-            ),
-            'text/css',
-        ],
-    ],
-    [
-        '/public/default/css/features/table/themes/shadcn.css',
-        [
-            join(
-                projectRoot,
-                'public',
-                'default',
-                'css',
-                'features',
-                'table',
-                'themes',
-                'tailwind.css',
-            ),
-            'text/css',
-        ],
-    ],
-    [
-        '/public/default/css/features/tree.css',
-        [join(projectRoot, 'public', 'default', 'css', 'features', 'tree.css'), 'text/css'],
-    ],
-    [
-        '/public/default/css/features/tree/themes/adminlte.css',
-        [
-            join(
-                projectRoot,
-                'public',
-                'default',
-                'css',
-                'features',
-                'tree',
-                'themes',
-                'adminlte.css',
-            ),
-            'text/css',
-        ],
-    ],
-    [
-        '/public/default/css/features/tree/themes/shadcn.css',
-        [
-            join(
-                projectRoot,
-                'public',
-                'default',
-                'css',
-                'features',
-                'tree',
-                'themes',
-                'tailwind.css',
-            ),
-            'text/css',
-        ],
+        [join(projectRoot, 'public', 'default', 'css', 'themes', 'shadcn.css'), 'text/css'],
     ],
     [
         '/fixtures/custom-vue-island.js',
@@ -545,35 +277,21 @@ const staticRoutes = new Map([
     ],
 ])
 
-function profileFeatureRoutes(profile, features) {
-    const profileRoot = join(projectRoot, 'public', 'default', 'profiles', profile, 'js')
-    const core = [
-        `/public/default/profiles/${profile}/js/admin-core.js`,
-        [join(profileRoot, 'admin-core.js'), 'text/javascript'],
-    ]
-    const entries = features.map((feature) => [
-        `/public/default/profiles/${profile}/js/features/${feature}.js`,
-        [join(profileRoot, 'features', `${feature}.js`), 'text/javascript'],
-    ])
-
-    return [core, ...entries]
-}
-
-function profileThemeAdapterRoutes(profile, adapters) {
-    const profileRoot = join(projectRoot, 'public', 'default', 'profiles', profile, 'js')
-
-    return adapters.map(([feature, theme]) => [
-        `/public/default/profiles/${profile}/js/features/${feature}/themes/${theme}.js`,
-        [join(profileRoot, 'features', feature, 'themes', `${theme}.js`), 'text/javascript'],
-    ])
-}
-
 function profileThemeRoutes(profile, themes) {
     const profileRoot = join(projectRoot, 'public', 'default', 'profiles', profile, 'js')
 
     return themes.map((theme) => [
         `/public/default/profiles/${profile}/js/themes/${theme}.js`,
         [join(profileRoot, 'themes', `${theme}.js`), 'text/javascript'],
+    ])
+}
+
+function profileScriptRoutes(profile, entries) {
+    const profileRoot = join(projectRoot, 'public', 'default', 'profiles', profile, 'js')
+
+    return entries.map((entry) => [
+        `/public/default/profiles/${profile}/js/${entry}.js`,
+        [join(profileRoot, `${entry}.js`), 'text/javascript'],
     ])
 }
 
@@ -596,50 +314,13 @@ function profileStyleRoutes(profile, entries) {
 }
 
 function tailwindCapabilityStyles() {
-    return [
-        'themes/shadcn.css',
-        'themes/shadcn-utilities.css',
-        'features/dropdown/themes/shadcn.css',
-        'features/forms/themes/shadcn.css',
-        'features/lightbox/themes/shadcn.css',
-        'features/sidebar/themes/shadcn.css',
-        'features/table/themes/shadcn.css',
-        'features/tabs/themes/shadcn.css',
-        'features/tooltip/themes/shadcn.css',
-        'features/tree/themes/shadcn.css',
-    ]
+    return ['themes/shadcn.css', 'themes/shadcn-utilities.css']
 }
 
 function themeCapabilityStyles() {
-    const base = [
-        'admin-core.css',
-        'icons.css',
-        'features/dropdown.css',
-        'features/forms.css',
-        'features/lightbox.css',
-        'features/sidebar.css',
-        'features/table.css',
-        'features/tooltip.css',
-        'features/tree.css',
-    ]
-    const legacy = [
-        'themes/adminlte.css',
-        'features/dropdown/themes/adminlte.css',
-        'features/lightbox/themes/adminlte.css',
-        'features/sidebar/themes/adminlte.css',
-        'features/table/themes/datatables-adminlte.css',
-        'features/tabs/themes/adminlte.css',
-        'features/tooltip/themes/adminlte.css',
-        'features/tree/themes/adminlte.css',
-    ]
-    const frameworkFree = [
-        'themes/framework-free-test.css',
-        'features/dropdown/themes/framework-free-test.css',
-        'features/sidebar/themes/framework-free-test.css',
-        'features/table/themes/framework-free-test.css',
-        'features/tabs/themes/framework-free-test.css',
-        'features/tooltip/themes/framework-free-test.css',
-    ]
+    const base = ['admin-core.css', 'icons.css', 'shared/features.css']
+    const legacy = ['themes/adminlte.css']
+    const frameworkFree = ['themes/framework-free-test.css']
     return [...base, ...legacy, ...frameworkFree, ...tailwindCapabilityStyles()]
 }
 

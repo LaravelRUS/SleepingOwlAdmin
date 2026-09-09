@@ -11,7 +11,7 @@ test('AdminLTE table adapter owns Bootstrap DataTables presentation', async ({ p
 })
 
 test('Tailwind table adapter is standalone, compact and theme-token driven', async ({ page }) => {
-    await page.goto('/table-presentation?theme=tailwind')
+    await page.goto('/table-presentation?theme=shadcn')
 
     const containerBox = await page.locator('#table-presentation').boundingBox()
     const searchBox = await page.locator('.dt-search').boundingBox()
@@ -31,7 +31,7 @@ test('Tailwind table adapter is standalone, compact and theme-token driven', asy
 
 for (const [theme, height, right] of [
     ['adminlte', '0px', '6px'],
-    ['tailwind', '36px', '0px'],
+    ['shadcn', '36px', '0px'],
 ]) {
     test(`${theme} auto-update presentation keeps the progress line beside its toggle`, async ({
         page,

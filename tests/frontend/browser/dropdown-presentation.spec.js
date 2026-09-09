@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test'
 
 for (const [theme, surface, radius] of [
     ['adminlte', 'rgb(255, 255, 255)', '4px'],
-    ['tailwind', 'rgb(255, 255, 255)', '8px'],
+    ['shadcn', 'rgb(255, 255, 255)', '8px'],
 ]) {
     test(`${theme} dropdown adapter owns presentation`, async ({ page }) => {
         await page.goto(`/dropdown-presentation?theme=${theme}`)

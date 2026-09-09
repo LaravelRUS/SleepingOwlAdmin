@@ -3,19 +3,14 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="stylesheet" href="/public/default/css/features/table.css" />
+        <link rel="stylesheet" href="/public/default/css/shared/features.css" />
         <script>
-            const theme = new URLSearchParams(location.search).get('theme') || 'tailwind'
-            const supported = ['adminlte', 'tailwind']
+            const theme = new URLSearchParams(location.search).get('theme') || 'shadcn'
+            const supported = ['adminlte', 'shadcn']
 
             if (!supported.includes(theme)) throw new Error(`Unsupported fixture theme: ${theme}`)
 
-            const adapter = theme === 'adminlte' ? 'datatables-adminlte' : 'tailwind'
-
-            for (const href of [
-                `/public/default/css/themes/${theme}.css`,
-                `/public/default/css/features/table/themes/${adapter}.css`,
-            ]) {
+            for (const href of [`/public/default/css/themes/${theme}.css`]) {
                 const link = document.createElement('link')
                 link.rel = 'stylesheet'
                 link.href = href

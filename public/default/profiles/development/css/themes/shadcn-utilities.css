@@ -4,9 +4,6 @@
   .collapse {
     visibility: collapse;
   }
-  .static {
-    position: static;
-  }
   .order-2 {
     order: 2;
   }

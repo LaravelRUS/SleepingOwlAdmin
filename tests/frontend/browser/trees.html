@@ -5,7 +5,7 @@
         <meta name="csrf-token" content="tree-token" />
         <title>Tree browser fixture</title>
         <link rel="stylesheet" href="/public/default/css/admin-app.css" />
-        <link rel="stylesheet" href="/public/default/css/features/tree.css" />
+        <link rel="stylesheet" href="/public/default/css/shared/features.css" />
         <script>
             window.GlobalConfig = {
                 debug: true,
@@ -186,13 +186,15 @@
             </section>
         </main>
 
-        <script src="/public/default/js/admin-app.js"></script>
+        <script src="/public/default/js/admin-core.js"></script>
+        <script src="/public/default/js/shared/compatibility.js"></script>
+        <script src="/public/default/js/shared/features.js"></script>
         <script>
             window.__treeEvents = []
             ;['tree:changed', 'tree:failed', 'display.tree::changed'].forEach((name) => {
                 document.addEventListener(name, () => window.__treeEvents.push(name))
             })
         </script>
-        <script src="/public/default/js/modules.js"></script>
+        <script src="/public/default/js/shared/modules.js"></script>
     </body>
 </html>

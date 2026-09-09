@@ -4,8 +4,8 @@ import { expect, test } from '@playwright/test'
 
 const profileAssets = [
     'js/admin-core.js',
-    'js/features/tooltip.js',
     'js/shared/compatibility.js',
+    'js/shared/features.js',
     'js/shared/vue.js',
 ]
 

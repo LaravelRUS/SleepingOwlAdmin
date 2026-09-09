@@ -3,8 +3,10 @@ import { URL } from 'node:url'
 import { expect, test } from '@playwright/test'
 
 for (const profile of ['development', 'production']) {
-    test(`${profile} lightbox entry auto-boots on the headless core`, async ({ page }) => {
-        await useLogicalFeature(page, profile, 'lightbox')
+    test(`${profile} shared features entry auto-boots lightbox on the headless core`, async ({
+        page,
+    }) => {
+        await useSharedFeatures(page, profile)
         await page.goto('/lightboxes')
         await page.locator('#single').click()
 
@@ -12,8 +14,10 @@ for (const profile of ['development', 'production']) {
         expect(await inspectFeature(page, 'Lightboxes')).toEqual(expectedFeatureState())
     })
 
-    test(`${profile} tree entry auto-boots on the headless core`, async ({ page }) => {
-        await useLogicalFeature(page, profile, 'tree')
+    test(`${profile} shared features entry auto-boots tree on the headless core`, async ({
+        page,
+    }) => {
+        await useSharedFeatures(page, profile)
         await page.goto('/trees')
 
         expect(await inspectFeature(page, 'Trees')).toEqual(expectedFeatureState())
@@ -21,13 +25,22 @@ for (const profile of ['development', 'production']) {
     })
 }
 
-async function useLogicalFeature(page, profile, feature) {
+async function useSharedFeatures(page, profile) {
     await replaceScript(
         page,
-        '**/public/default/js/admin-app.js',
+        '**/public/default/js/admin-core.js',
         profilePath(profile, 'admin-core'),
     )
-    await replaceScript(page, '**/public/default/js/modules.js', profilePath(profile, feature))
+    await replaceScript(
+        page,
+        '**/public/default/js/shared/compatibility.js',
+        `/public/default/profiles/${profile}/js/shared/compatibility.js`,
+    )
+    await replaceScript(
+        page,
+        '**/public/default/js/shared/features.js',
+        `/public/default/profiles/${profile}/js/shared/features.js`,
+    )
 }
 
 function replaceScript(page, pattern, path) {
@@ -38,10 +51,8 @@ function replaceScript(page, pattern, path) {
     })
 }
 
-function profilePath(profile, feature) {
-    const path = feature === 'admin-core' ? 'admin-core.js' : `features/${feature}.js`
-
-    return `/public/default/profiles/${profile}/js/${path}`
+function profilePath(profile) {
+    return `/public/default/profiles/${profile}/js/admin-core.js`
 }
 
 function inspectFeature(page, namespace) {

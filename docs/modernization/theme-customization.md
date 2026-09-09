@@ -162,7 +162,26 @@ Shared entries are allowed only when declared by the theme. Core resolves unchan
 
 ## Blade overrides
 
-Application views under `resources/views/vendor/sleeping_owl` retain priority over package views. External themes use their own namespace and may document a matching application override path. Keep documented behavior markers and ARIA/field names; `data-toggle`, `data-dismiss` and `data-widget` remain compatibility markers. Do not introduce `data-soa-*`. Concrete classes and safe nesting belong to Blade, and PHP does not translate semantic variants into framework classes.
+The two built-in themes keep separate application namespaces:
+
+```text
+AdminLTE: resources/views/vendor/sleeping_owl/default/<logical path>
+Shadcn:   resources/views/vendor/sleeping_owl_shadcn/default/<logical path>
+```
+
+AdminLTE resolves the application file and then the complete package base in
+`resources/views/default`. Shadcn resolves application, then a real override in
+`resources/views/themes/shadcn/default`, then that same base. Do not copy the
+whole 136-view base into an application or theme: override only the files whose
+markup differs. An absent Shadcn override is normal inheritance.
+
+External themes use their own namespace and may document a matching
+application override path. SleepingOwl does not attach the built-in base to an
+external namespace implicitly. Keep documented behavior markers and
+ARIA/field names; `data-toggle`, `data-dismiss` and `data-widget` remain
+compatibility markers. Do not introduce `data-soa-*`. Concrete classes and safe
+nesting belong to Blade, and PHP does not translate semantic variants into
+framework classes.
 
 ## TailwindTheme utilities in application views
 
