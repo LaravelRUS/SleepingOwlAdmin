@@ -118,8 +118,8 @@
                         },
                         {
                             "file": "profiles/production/css/themes/shadcn-utilities.css",
-                            "version": "4e12dac56b8ec18cbc230b14836ee4d5",
-                            "checksum": "sha256:7c2b7923b0f51c3b3ce463a4f420fbb1dad74647b4c99832e85cd356d4d4fc6f"
+                            "version": "e52698dc18e70bec03c5989e6ea983c5",
+                            "checksum": "sha256:0b3a71a0958077734a170ca2c5eaa3a0639738501a172e4d78bd98bbdc50dd69"
                         }
                     ]
                 }
@@ -241,13 +241,13 @@
                         },
                         {
                             "file": "profiles/development/css/themes/shadcn-utilities.css",
-                            "version": "f4252c60892cead8bf4a17243cfde073",
-                            "checksum": "sha256:a5d681eedce8a7c10d44d6d6979080803b8bfff198b699f32ab7a8ec3aef89e4"
+                            "version": "feed7de00a8db2aaf92942baa9df6100",
+                            "checksum": "sha256:d5662a50a9a30e65d733740676e18ccab8933be9aca548ea2b990a465f805c47"
                         }
                     ]
                 }
             }
         }
     },
-    "build_id": "sha256:5660f0a02ce1f10ef944be6bf95a46da7c38a670d2283952b8f75b25bdf535ee"
+    "build_id": "sha256:96b61f2e2799ce7cd7b6280c2b1e9c4bb006ebce4a8128484d624d064e0d9e61"
 }

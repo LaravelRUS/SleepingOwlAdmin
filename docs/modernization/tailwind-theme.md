@@ -163,6 +163,9 @@ fallback migration removed only the false-positive `.static` utility produced
 from a Blade `static fn`; no rendered `static` class existed. A future inherited
 view that is the sole source of a required utility must add an explicit
 safelist/source contract test instead of scanning the whole base tree.
+After semantic consolidation the prepared utility layer is 171 bytes in
+production and 279 bytes in development; the complete `soa-*` presentation
+remains in `shadcn.css`.
 
 The build matrix publishes two files under the single logical
 `theme:shadcn` entry:

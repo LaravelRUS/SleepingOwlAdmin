@@ -24,12 +24,14 @@
   неявного fallback у внешней темы;
 - оба asset profiles пересобраны. Из Tailwind utilities исчезла только ложная
   `.static`, ранее найденная scanner-ом в PHP `static fn`; реального CSS class
-  contract для неё не было. Production/development utility CSS теперь
-  2 050/2 669 bytes;
+  contract для неё не было. После полного semantic consolidation
+  production/development utility CSS занимает 171/279 bytes;
 - browser fixtures переведены с удалённых per-feature paths на фактические
   `shared/features` и theme bundles. Заодно legacy AdminLTE CSS перенесён перед
   feature adapters внутри общего theme entry, чтобы adapters сохраняли
   приоритет после укрупнения. Полная Playwright matrix: 141/141.
+- после объединения Blade оба asset profiles повторно пересобраны, и полная
+  Playwright matrix снова прошла 141/141.
 
 Optional публичный fallback registrar для внешних theme packages не добавлен:
 assessment определяет его как отдельный opt-in scope, а текущий внешний
