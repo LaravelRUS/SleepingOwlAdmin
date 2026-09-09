@@ -85,11 +85,6 @@ function frameworkFreeTheme(): ThemeInterface
 {
     return new class implements ThemeInterface
     {
-        public function id(): string
-        {
-            return 'framework-free-test';
-        }
-
         public function viewNamespace(): string
         {
             return 'sleeping_owl::default';
@@ -97,7 +92,11 @@ function frameworkFreeTheme(): ThemeInterface
 
         public function assets(): array
         {
-            return frameworkFreeAssets();
+            return [
+                'shared:compatibility',
+                'shared:modules',
+                'shared:vue',
+            ];
         }
 
         public function icons(): array
@@ -110,21 +109,6 @@ function frameworkFreeTheme(): ThemeInterface
             return frameworkFreeCapabilities();
         }
     };
-}
-
-function frameworkFreeAssets(): array
-{
-    return [
-        'shared:compatibility',
-        'shared:modules',
-        'shared:vue',
-        'theme:framework-free-test',
-        'feature:dropdown:theme:framework-free-test',
-        'feature:sidebar:theme:framework-free-test',
-        'feature:table:theme:framework-free-test',
-        'feature:tabs:theme:framework-free-test',
-        'feature:tooltip:theme:framework-free-test',
-    ];
 }
 
 function frameworkFreeCapabilities(): array
@@ -152,7 +136,10 @@ function verifyThemes(string $appRoot, string $expectedTheme): void
 
     $registry = $app->make(AssetRegistry::class);
     $registry->clear();
-    $app->make(ThemeRuntimeAssets::class)->register(frameworkFreeTheme());
+    $app->make(ThemeRuntimeAssets::class)->register(
+        'framework-free-test',
+        frameworkFreeTheme()
+    );
 
     $assets = [...$registry->registeredScripts(), ...$registry->registeredStyles()];
     $sources = implode("\n", array_map(static fn ($asset): string => $asset->source(), $assets));
@@ -166,7 +153,7 @@ function verifyThemes(string $appRoot, string $expectedTheme): void
     }
 
     $registry->clear();
-    $app->make(ThemeRuntimeAssets::class)->register(new TailwindTheme());
+    $app->make(ThemeRuntimeAssets::class)->register('shadcn', new TailwindTheme());
     $assets = [...$registry->registeredScripts(), ...$registry->registeredStyles()];
     $sources = implode("\n", array_map(static fn ($asset): string => $asset->source(), $assets));
 

@@ -19,10 +19,13 @@ class AssetManifestLoaderTest extends TestCase
             'shared:features',
             'shared:icons',
             'shared:modules',
+            'shared:ui',
             'shared:vue',
             'theme:adminlte',
+            'theme:adminlte:overrides',
             'theme:framework-free-test',
             'theme:shadcn',
+            'theme:shadcn:overrides',
         ], $manifest->profile('production')->entryIds());
         $this->assertSame(
             $manifest->profile('production')->entryIds(),

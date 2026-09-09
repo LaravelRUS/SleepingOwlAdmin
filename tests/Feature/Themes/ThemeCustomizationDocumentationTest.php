@@ -25,6 +25,28 @@ class ThemeCustomizationDocumentationTest extends TestCase
         $this->assertSame($expected, $documented);
     }
 
+    public function test_external_theme_documentation_defines_the_shared_ui_boundary(): void
+    {
+        $documentation = file_get_contents(
+            dirname(__DIR__, 3).'/docs/modernization/theme-customization.md'
+        );
+        $normalized = preg_replace('/\s+/', ' ', $documentation);
+
+        $this->assertStringContainsString(
+            "receives SleepingOwl's `shared:ui` exactly once",
+            $normalized
+        );
+        $this->assertStringContainsString(
+            'provides token values and genuine presentation differences',
+            $normalized
+        );
+        $this->assertStringContainsString(
+            'does not copy or compile either shared semantic layer',
+            $normalized
+        );
+        $this->assertStringContainsString('theme:acme:overrides', $normalized);
+    }
+
     /**
      * @return list<string>
      */

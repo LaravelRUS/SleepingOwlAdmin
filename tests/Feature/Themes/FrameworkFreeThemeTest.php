@@ -115,7 +115,10 @@ class FrameworkFreeThemeTest extends TestCase
             $this->assertSelectedThemeSources($customSources, $profile, 'framework-free-test');
             $this->assertSelectedThemeSources($adminlteSources, $profile, 'adminlte');
             $this->assertStringNotContainsString('icons.css', implode('|', $customSources));
-            $this->assertStringContainsString('/css/shared/ui.css', implode('|', $customSources));
+            $this->assertCount(1, array_filter(
+                $customSources,
+                static fn (string $source): bool => str_contains($source, '/css/shared/ui.css')
+            ));
         }
     }
 

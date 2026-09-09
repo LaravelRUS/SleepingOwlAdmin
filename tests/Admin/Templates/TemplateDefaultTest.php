@@ -4,6 +4,7 @@ use Mockery as m;
 use SleepingOwl\Admin\Contracts\Theme\ThemeInterface;
 use SleepingOwl\Admin\Templates\TemplateDefault;
 use SleepingOwl\Admin\Themes\ThemeConfiguration;
+use SleepingOwl\Admin\Themes\ThemeSelection;
 
 class TemplateDefaultTest extends TestCase
 {
@@ -48,6 +49,7 @@ class TemplateDefaultTest extends TestCase
         $data = [
             'test',
             'theme' => $theme,
+            'themeName' => $this->app->make(ThemeSelection::class)->name(),
             'themeConfig' => $themeConfig,
             'assetHealthStatus' => null,
             'template' => $template,

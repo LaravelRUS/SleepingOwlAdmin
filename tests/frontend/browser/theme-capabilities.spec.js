@@ -167,10 +167,12 @@ async function closeAlert(page) {
 
 function assertIsolatedThemeRequests(requests, profile, selectedTheme) {
     const profileRoot = `/public/default/profiles/${profile}/`
+    const sharedUi = `${profileRoot}css/shared/ui.css`
     const themeRequests = requests.filter(
         (path) => path.startsWith(profileRoot) && path.includes('/themes/'),
     )
 
+    expect(requests.filter((path) => path === sharedUi)).toHaveLength(1)
     expect(themeRequests.length).toBeGreaterThan(0)
     expect(themeRequests.every((path) => path.includes(selectedTheme))).toBe(true)
     expect(requests).toContain(`${profileRoot}css/themes/${selectedTheme}.css`)

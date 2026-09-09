@@ -119,7 +119,10 @@ class TailwindThemeTest extends TestCase
             $this->assertStringContainsString("profiles/{$profile}/css/themes/shadcn.css", $joined);
             $this->assertStringContainsString("profiles/{$profile}/css/themes/shadcn-utilities.css", $joined);
             $this->assertStringContainsString("profiles/{$profile}/css/icons.css", $joined);
-            $this->assertStringContainsString("profiles/{$profile}/css/shared/ui.css", $joined);
+            $this->assertCount(1, array_filter(
+                $sources,
+                static fn (string $source): bool => str_contains($source, '/css/shared/ui.css')
+            ));
             $this->assertStringContainsString(
                 "profiles/{$profile}/css/theme-overrides/shadcn.css",
                 $joined

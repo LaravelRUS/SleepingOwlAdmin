@@ -80,20 +80,7 @@ run_consumer_workflow() {
 }
 
 select_shadcn_theme() {
-    php -r '
-$path = $argv[1];
-$contents = file_get_contents($path);
-$updated = str_replace(
-    "SleepingOwl\\Admin\\Themes\\AdminLTETheme::class",
-    "SleepingOwl\\Admin\\Themes\\TailwindTheme::class",
-    $contents,
-    $count
-);
-if ($count !== 1 || file_put_contents($path, $updated) === false) {
-    fwrite(STDERR, "Unable to select TailwindTheme in the clean application.\n");
-    exit(1);
-}
-' "${APP_ROOT}/config/sleeping_owl.php"
+    export SLEEPINGOWL_TEMPLATE=shadcn
 }
 
 assert_check_is_read_only() {

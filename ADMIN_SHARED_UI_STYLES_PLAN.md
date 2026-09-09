@@ -2,8 +2,8 @@
 
 ## Статус и правила
 
-- Статус: **инфраструктура и все четыре приоритетные UI-группы готовы**.
-- Следующий checkpoint: финальная acceptance matrix.
+- Статус: **завершено — инфраструктура, все четыре приоритетные UI-группы и acceptance matrix готовы**.
+- Следующий checkpoint: отсутствует; новые элементы добавляются отдельным checklist по правилам этого плана.
 - Общие декларации поставляются отдельным logical entry `shared:ui`, автоматически подключаемым для любой `ThemeInterface`; headless `core` не получает presentation.
 - Общий CSS может использовать только semantic `soa-*` classes, behavior hooks и canonical `--soa-*` variables. Тема задаёт значения tokens и действительно отличающиеся overrides.
 - В общем слое запрещены Bootstrap/AdminLTE/Tailwind imports, vendor selectors и literal palette. Одинаковые structural rules удаляются из theme adapters.
@@ -172,13 +172,13 @@ Canonical название хранится один раз — ключом `te
 
 ## 5. Acceptance
 
-- [ ] AdminLTE, Tailwind и framework-free fixture получают `shared:ui` один раз в production/development.
-- [ ] Browser matrix подтверждает одинаковую geometry header/sidebar/footer/buttons/editables/scroll controls; различаться могут только theme tokens/явные overrides.
-- [ ] Keyboard focus, reduced motion, responsive sidebar и scroll controls проходят узкий Chromium gate.
-- [ ] PHP manifest/runtime tests подтверждают порядок assets и custom-theme workflow.
-- [ ] Production/development manifests, MD5/SHA-256 и no-build publication согласованы.
-- [ ] Stylelint и forbidden framework/literal-color scan проходят для общего layer.
-- [ ] Документация custom theme описывает обязательный `shared:ui` contract и допустимые overrides.
+- [x] AdminLTE, Shadcn и framework-free fixture получают `shared:ui` один раз в production/development.
+- [x] Browser matrix подтверждает одинаковую geometry header/sidebar/footer/buttons/editables/scroll controls; различаться могут только theme tokens/явные overrides.
+- [x] Keyboard focus, reduced motion, responsive sidebar и scroll controls проходят узкий Chromium gate.
+- [x] PHP manifest/runtime tests подтверждают порядок assets и custom-theme workflow.
+- [x] Production/development manifests, MD5/SHA-256 и no-build publication согласованы.
+- [x] Stylelint и forbidden framework/literal-color scan проходят для общего layer.
+- [x] Документация custom theme описывает обязательный `shared:ui` contract и допустимые overrides.
 
 ## Журнал выполнения
 
@@ -208,3 +208,4 @@ Canonical название хранится один раз — ключом `te
 | 2026-09-09 | Shared controls и containers | `shared:ui` декомпозирован на семь source owners при сохранении одного logical bundle. Общими стали button/input/choice/switch, field, card/dialog и attachment geometry со всеми disabled/focus/collapsed/maximized/empty/error/uploading/readonly states; Vue upload roots публикуют semantic state classes и ARIA. Theme SCSS оставляет tokens/skin, а новый static gate запрещает возврат structural declarations. Оба profiles пересобраны; Chromium: 19/19 shell+controls, PHP Rendering: 83 tests / 1005 assertions, узкие Vitest gates: 29/29. | текущий commit |
 | 2026-09-09 | Shared inline editors | Trigger/clamp, popup/inline shell, все девять control shapes, actions, clear/error/busy и scrollable checklist перенесены в один framework-free table feature partial. Два theme `_inline-editor.scss` удалены; AdminLTE/Shadcn оставляют token values, framework-free fixture публикует тот же token contract. Select получил рабочий clear event через headless binding и Vue island, range output становится видимым при синхронизации. Оба profiles пересобраны; Chromium behavior + geometry: 15/15, узкие Vitest gates: 133/133, PHP Rendering: 83 tests / 1005 assertions. | текущий commit |
 | 2026-09-09 | Fixed-control overlap | Shared shell резервирует место справа от footer для fixed scroll controls на desktop/mobile, а controls автоматически скрываются на время активного inline editor. Top/bottom placement, минимальные отступы 16/12 px, hide/restore contract и обе asset profiles проверены общей Chromium matrix: 13/13. | текущий commit |
+| 2026-09-09 | Финальная acceptance matrix | Capability fixtures подключают `shared:ui` ровно один раз; no-build smoke приведён к canonical theme API/name и прошёл на чистом Laravel 12 без вызова Node.js: оба profiles по 17 файлов, MD5/SHA-256, read-only check, AdminLTE/Shadcn runtime. Полные gates: format, ESLint, Stylelint, reachability 365/365, Vitest 117 файлов / 519 тестов, PHPUnit 642 теста / 3372 assertions / 11 skipped, Playwright 167/167. Документационный shared UI/override contract закреплён PHP test. | текущий commit |
