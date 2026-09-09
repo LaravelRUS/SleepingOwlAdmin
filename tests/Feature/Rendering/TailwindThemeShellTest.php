@@ -4,6 +4,7 @@ use Illuminate\Session\ArraySessionHandler;
 use Illuminate\Session\Store;
 use SleepingOwl\Admin\Assets\AssetHealthStatus;
 use SleepingOwl\Admin\Themes\TailwindTheme;
+use SleepingOwl\Admin\Widgets\Messages\ErrorMessages;
 
 class TailwindThemeShellTest extends TestCase
 {
@@ -127,12 +128,10 @@ class TailwindThemeShellTest extends TestCase
     public function test_message_uses_the_ledger_rail_and_keeps_alert_dismiss_hooks(): void
     {
         $session = new Store('tailwind-shell', new ArraySessionHandler(120));
-        $session->put('error_message', 'Failure');
+        $session->put('error_message', '<strong>Request failed</strong>');
         $this->app->instance('session', $session);
 
-        $html = view('sleeping_owl_shadcn::default._partials.messages.error', [
-            'messages' => '<strong>Request failed</strong>',
-        ])->render();
+        $html = (new ErrorMessages())->toHtml();
 
         $this->assertContainsAll($html, [
             'alert alert-error alert-danger alert-message',

@@ -22,5 +22,7 @@ Archived during the resource-layout migration:
   historical logical paths are no longer active in this breaking release.
 - seven class-only control/card adapters. Their PHP owners now select the
   variant classes and render one control or card-part Blade implementation.
+- four nearly identical message views, replaced by one message template whose
+  widget supplies alert classes, icon, role and session key.
 
 Nothing under `resources/archive` may be imported or compiled.

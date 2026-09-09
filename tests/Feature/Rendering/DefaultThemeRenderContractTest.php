@@ -7,6 +7,10 @@ use Illuminate\Support\ViewErrorBag;
 use Mockery as m;
 use PHPUnit\Framework\Attributes\DataProvider;
 use SleepingOwl\Admin\Facades\Template as TemplateFacade;
+use SleepingOwl\Admin\Widgets\Messages\ErrorMessages;
+use SleepingOwl\Admin\Widgets\Messages\InfoMessages;
+use SleepingOwl\Admin\Widgets\Messages\SuccessMessages;
+use SleepingOwl\Admin\Widgets\Messages\WarningMessages;
 
 class DefaultThemeRenderContractTest extends TestCase
 {
@@ -280,16 +284,16 @@ class DefaultThemeRenderContractTest extends TestCase
 
     #[DataProvider('messageContracts')]
     public function test_message_views_keep_type_icon_and_raw_content(
-        string $type,
+        string $class,
         string $sessionKey,
         string $alertClass,
         string $iconClass
     ): void {
         $session = $this->bindArraySession($sessionKey);
-        $html = view("sleeping_owl::default._partials.messages.{$type}", [
-            'messages' => '<strong>Contract message</strong>',
-        ])->render();
+        $widget = new $class();
+        $html = $widget->toHtml();
 
+        $this->assertSame('_partials.message', $widget->getMessageView());
         $this->assertContainsAll($html, [
             "alert {$alertClass} alert-message",
             $iconClass,
@@ -301,10 +305,10 @@ class DefaultThemeRenderContractTest extends TestCase
 
     public static function messageContracts(): iterable
     {
-        yield 'success' => ['success', 'success_message', 'alert-success', 'fa-check-circle'];
-        yield 'warning' => ['warning', 'warning_message', 'alert-warning', 'fa-exclamation-triangle'];
-        yield 'info' => ['info', 'info_message', 'alert-info', 'fa-info'];
-        yield 'error' => ['error', 'error_message', 'alert-error alert-danger', 'fa-times'];
+        yield 'success' => [SuccessMessages::class, 'success_message', 'alert-success', 'fa-check-circle'];
+        yield 'warning' => [WarningMessages::class, 'warning_message', 'alert-warning', 'fa-exclamation-triangle'];
+        yield 'info' => [InfoMessages::class, 'info_message', 'alert-info', 'fa-info'];
+        yield 'error' => [ErrorMessages::class, 'error_message', 'alert-error alert-danger', 'fa-times'];
     }
 
     private function configureLayout(): void
@@ -428,7 +432,7 @@ class DefaultThemeRenderContractTest extends TestCase
     private function bindArraySession(string $sessionKey): Store
     {
         $session = new Store('render-contract', new ArraySessionHandler(120));
-        $session->put($sessionKey, 'Contract message');
+        $session->put($sessionKey, '<strong>Contract message</strong>');
         $this->app->instance('session', $session);
 
         return $session;

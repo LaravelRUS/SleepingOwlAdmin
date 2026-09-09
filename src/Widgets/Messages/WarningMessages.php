@@ -12,5 +12,9 @@ class WarningMessages extends Messages
     /**
      * @var string
      */
-    protected $messageView = '_partials.messages.warning';
+    protected $messageClasses = 'alert-warning alert-message';
+
+    protected $messageIcon = 'fas fa-exclamation-triangle';
+
+    protected $messageRole = 'alert';
 }

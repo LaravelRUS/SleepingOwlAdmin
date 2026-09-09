@@ -12,5 +12,7 @@ class SuccessMessages extends Messages
     /**
      * @var string
      */
-    protected $messageView = '_partials.messages.success';
+    protected $messageClasses = 'alert-success alert-message text-white';
+
+    protected $messageIcon = 'fas fa-check-circle';
 }

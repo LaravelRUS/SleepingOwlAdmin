@@ -12,5 +12,7 @@ class InfoMessages extends Messages
     /**
      * @var string
      */
-    protected $messageView = '_partials.messages.info';
+    protected $messageClasses = 'alert-info alert-message text-white';
+
+    protected $messageIcon = 'fas fa-info';
 }

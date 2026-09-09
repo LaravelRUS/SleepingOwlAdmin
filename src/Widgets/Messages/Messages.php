@@ -15,7 +15,22 @@ abstract class Messages extends Widget
     /**
      * @var string
      */
-    protected $messageView;
+    protected $messageView = '_partials.message';
+
+    /**
+     * @var string
+     */
+    protected $messageClasses;
+
+    /**
+     * @var string
+     */
+    protected $messageIcon;
+
+    /**
+     * @var string
+     */
+    protected $messageRole = 'status';
 
     /**
      * Get content as a string of HTML.
@@ -26,6 +41,10 @@ abstract class Messages extends Widget
     {
         return AdminTemplate::view($this->messageView, [
             'messages' => $this->getMessage(),
+            'messageClasses' => $this->messageClasses,
+            'messageIcon' => $this->messageIcon,
+            'messageRole' => $this->messageRole,
+            'messageSession' => static::$sessionName,
         ])->render();
     }
 
