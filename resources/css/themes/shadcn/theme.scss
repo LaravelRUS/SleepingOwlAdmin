@@ -1,7 +1,6 @@
 @use 'base';
 @use 'colors';
 @use 'components';
-@use 'custom-properties';
 @use 'features/dropdown/dropdown-tailwind';
 @use 'features/forms/forms-tailwind';
 @use 'features/lightbox/lightbox-tailwind';
@@ -11,9 +10,9 @@
 @use 'features/tooltip/tooltip-tailwind';
 @use 'features/tree/tree-tailwind';
 @use 'shadcn-theme';
-@use 'variables';
+@use 'tokens';
 @layer sleepingowl-theme;
-@include custom-properties.define;
+@include tokens.define;
 @include shadcn-theme.define;
 
 @layer sleepingowl-theme {

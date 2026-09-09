@@ -1,4 +1,4 @@
-@use 'variables';
+@use 'tokens';
 
 @mixin styles {
   .soa-app {
@@ -630,7 +630,7 @@
     display: inline-flex;
   }
 
-  @media (max-width: variables.$mobile-breakpoint) {
+  @media (max-width: tokens.$mobile-breakpoint) {
     .soa-app,
     .sidebar-collapse .soa-app {
       display: block;
