@@ -1,3 +1,43 @@
+$min-width: 12rem !default;
+$offset: 0.375rem !default;
+$padding-block: 0.375rem !default;
+$padding-inline: 0.375rem !default;
+$item-padding-block: 0.5rem !default;
+$item-padding-inline: 0.75rem !default;
+$border-width: 1px !default;
+$radius: 0.5rem !default;
+$font-size: 0.875rem !default;
+$line-height: 1.25rem !default;
+$focus-width: 2px !default;
+$surface: var(--soa-elevated-surface-color) !default;
+$text: var(--soa-text-color) !default;
+$border: var(--soa-border-color) !default;
+$hover-surface: var(--soa-muted-surface-color) !default;
+$focus: var(--soa-focus-color) !default;
+$shadow: var(--soa-shadow-md) !default;
+
+@mixin properties {
+    :root {
+        --soa-dropdown-surface: #{$surface};
+        --soa-dropdown-text: #{$text};
+        --soa-dropdown-border: #{$border};
+        --soa-dropdown-hover-surface: #{$hover-surface};
+        --soa-dropdown-focus: #{$focus};
+        --soa-dropdown-min-width: #{$min-width};
+        --soa-dropdown-offset: #{$offset};
+        --soa-dropdown-padding-block: #{$padding-block};
+        --soa-dropdown-padding-inline: #{$padding-inline};
+        --soa-dropdown-item-padding-block: #{$item-padding-block};
+        --soa-dropdown-item-padding-inline: #{$item-padding-inline};
+        --soa-dropdown-border-width: #{$border-width};
+        --soa-dropdown-radius: #{$radius};
+        --soa-dropdown-font-size: #{$font-size};
+        --soa-dropdown-line-height: #{$line-height};
+        --soa-dropdown-focus-width: #{$focus-width};
+        --soa-dropdown-shadow: #{$shadow};
+    }
+}
+
 @mixin styles {
     .dropdown-menu {
         inset-block-start: calc(100% + var(--soa-dropdown-offset));

@@ -1,3 +1,15 @@
+$surface: canvas !default;
+$text: canvastext !default;
+$z-index: 1000 !default;
+
+@mixin properties {
+    :root {
+        --soa-dropdown-surface: #{$surface};
+        --soa-dropdown-text: #{$text};
+        --soa-dropdown-z-index: #{$z-index};
+    }
+}
+
 @mixin styles {
     :where(.dropdown, .btn-group) {
         position: relative;

@@ -1,7 +1,0 @@
-@use 'custom-properties';
-@use 'dropdown';
-
-@mixin styles {
-    @include custom-properties.define;
-    @include dropdown.styles;
-}

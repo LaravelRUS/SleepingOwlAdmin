@@ -1,0 +1,50 @@
+$menu-offset: 0.375rem !default;
+$menu-min-width: 10rem !default;
+$menu-padding: 0.375rem !default;
+$item-padding: 0.5rem 0.75rem !default;
+$radius: 0.375rem !default;
+$shadow-offset: 0 0.625rem 1.5rem !default;
+$surface: var(--soa-surface-color) !default;
+$border: var(--soa-border-color) !default;
+$text: var(--soa-text-color) !default;
+$shadow-color: var(--soa-shadow-color) !default;
+
+@mixin properties {
+  :root[data-theme='framework-free-test'] {
+    --soa-workbench-dropdown-surface: #{$surface};
+    --soa-workbench-dropdown-border-color: #{$border};
+    --soa-workbench-dropdown-text-color: #{$text};
+    --soa-workbench-dropdown-shadow-color: #{$shadow-color};
+    --soa-workbench-dropdown-radius: #{$radius};
+  }
+}
+
+@mixin styles {
+  [data-theme='framework-free-test'] .dropdown {
+    display: inline-block;
+    position: relative;
+  }
+
+  [data-theme='framework-free-test'] .dropdown-menu {
+    background: var(--soa-workbench-dropdown-surface);
+    border: 0.0625rem solid var(--soa-workbench-dropdown-border-color);
+    border-radius: var(--soa-workbench-dropdown-radius);
+    box-shadow: #{$shadow-offset} var(--soa-workbench-dropdown-shadow-color);
+    inset-block-start: calc(100% + #{$menu-offset});
+    inset-inline-start: 0;
+    min-width: $menu-min-width;
+    padding: $menu-padding;
+    position: absolute;
+    z-index: 20;
+  }
+
+  [data-theme='framework-free-test'] .dropdown-item {
+    background: transparent;
+    border: 0;
+    color: var(--soa-workbench-dropdown-text-color);
+    display: block;
+    padding: $item-padding;
+    text-align: start;
+    width: 100%;
+  }
+}

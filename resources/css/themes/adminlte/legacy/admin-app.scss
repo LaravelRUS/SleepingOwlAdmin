@@ -1,9 +1,8 @@
 @use '../../../shared/features/forms/files' as form-files;
 @use '../../../shared/features/forms/date-picker' as form-date-picker;
 @use '../../../shared/features/forms/custom-properties' as form-properties;
-@use '../../../shared/features/dropdown/custom-properties' as dropdown-properties;
 @use '../../../shared/features/dropdown/dropdown' as dropdown-driver;
-@use '../features/dropdown/legacy' as legacy-dropdown;
+@use '../features/dropdown/dropdown' as legacy-dropdown;
 @use '../../../shared/features/lightbox/legacy' as legacy-lightbox-driver;
 @use '../features/lightbox/legacy' as legacy-lightbox;
 @use '../../../shared/features/sidebar/custom-properties' as sidebar-properties;
@@ -19,8 +18,9 @@
 @use '../asset-health' as theme-asset-health;
 @use '../legacy-build' as legacy-theme;
 
-@include dropdown-properties.define;
+@include dropdown-driver.properties;
 @include dropdown-driver.styles;
+@include legacy-dropdown.properties;
 @include legacy-dropdown.styles;
 @include legacy-lightbox-driver.styles;
 @include legacy-lightbox.styles;

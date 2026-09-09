@@ -1,3 +1,49 @@
+@use 'colors';
+
+$min-width: 10rem !default;
+$offset: 0.125rem !default;
+$padding-block: 0.5rem !default;
+$padding-inline: 0 !default;
+$item-padding-block: 0.25rem !default;
+$item-padding-inline: 1.5rem !default;
+$border-width: 1px !default;
+$radius: 0.25rem !default;
+$font-size: 1rem !default;
+$line-height: 1.5 !default;
+$focus-width: 2px !default;
+$shadow-offset: 0 0.5rem 1rem !default;
+
+@mixin properties {
+    :root {
+        --soa-dropdown-surface: #{colors.$surface};
+        --soa-dropdown-text: #{colors.$text};
+        --soa-dropdown-border: #{colors.$border};
+        --soa-dropdown-hover-surface: #{colors.$hover-surface};
+        --soa-dropdown-focus: #{colors.$focus};
+        --soa-dropdown-shadow-color: #{colors.$shadow};
+        --soa-dropdown-min-width: #{$min-width};
+        --soa-dropdown-offset: #{$offset};
+        --soa-dropdown-padding-block: #{$padding-block};
+        --soa-dropdown-padding-inline: #{$padding-inline};
+        --soa-dropdown-item-padding-block: #{$item-padding-block};
+        --soa-dropdown-item-padding-inline: #{$item-padding-inline};
+        --soa-dropdown-border-width: #{$border-width};
+        --soa-dropdown-radius: #{$radius};
+        --soa-dropdown-font-size: #{$font-size};
+        --soa-dropdown-line-height: #{$line-height};
+        --soa-dropdown-focus-width: #{$focus-width};
+        --soa-dropdown-shadow: #{$shadow-offset} #{colors.$shadow};
+    }
+
+    :root[data-color-scheme='dark'],
+    [data-bs-theme='dark'] {
+        --soa-dropdown-surface: #{colors.$dark-surface};
+        --soa-dropdown-text: #{colors.$dark-text};
+        --soa-dropdown-border: #{colors.$dark-border};
+        --soa-dropdown-hover-surface: #{colors.$dark-hover-surface};
+    }
+}
+
 @mixin styles {
     .dropdown-menu {
         inset-block-start: calc(100% + var(--soa-dropdown-offset));

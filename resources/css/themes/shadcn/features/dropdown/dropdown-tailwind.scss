@@ -1,8 +1,5 @@
-@use 'colors';
-@use 'custom-properties';
 @use 'dropdown';
-@use 'variables';
-@include custom-properties.define;
+@include dropdown.properties;
 
 @layer sleepingowl-theme.dropdown {
     @include dropdown.styles;
