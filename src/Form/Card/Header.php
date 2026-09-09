@@ -4,5 +4,5 @@ namespace SleepingOwl\Admin\Form\Card;
 
 class Header extends Body
 {
-    protected $view = 'form.card.header';
+    protected $themeClasses = ['card-header', 'soa-card-header'];
 }

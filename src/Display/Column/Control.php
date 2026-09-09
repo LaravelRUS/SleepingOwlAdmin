@@ -71,8 +71,8 @@ class Control extends TableColumn
         $button->setCondition(function () {
             return $this->isEditable();
         });
-        $button->setView('column.control_link.edit');
         $button->setIcon('fas fa-pencil-alt');
+        $button->setHtmlAttribute('class', ['btn-primary', 'soa-button-primary']);
 
         $this->buttons->put('delete', $button = new ControlButton(function (Model $model) {
             return $this->getModelConfiguration()->getDeleteUrl($model->getKey());
@@ -83,9 +83,8 @@ class Control extends TableColumn
 
         $button->setMethod('delete');
         $button->hideText();
-        $button->setView('column.control_button.delete');
         $button->setIcon('fas fa-trash-alt');
-        $button->setHtmlAttribute('class', 'btn-delete');
+        $button->setHtmlAttribute('class', ['btn-danger', 'soa-button-danger', 'btn-delete']);
 
         $this->buttons->put('destroy', $button = new ControlButton(function (Model $model) {
             return $this->getModelConfiguration()->getDestroyUrl($model->getKey());
@@ -96,9 +95,8 @@ class Control extends TableColumn
 
         $button->setMethod('delete');
         $button->hideText();
-        $button->setView('column.control_button.destroy');
         $button->setIcon('fas fa-trash-alt');
-        $button->setHtmlAttribute('class', 'btn-destroy');
+        $button->setHtmlAttribute('class', ['btn-danger', 'soa-button-danger', 'btn-destroy']);
 
         $this->buttons->put('restore', $button = new ControlButton(function (Model $model) {
             return $this->getModelConfiguration()->getRestoreUrl($model->getKey());
@@ -107,8 +105,8 @@ class Control extends TableColumn
             return $this->isRestorable();
         });
         $button->hideText();
-        $button->setView('column.control_button.restore');
         $button->setIcon('fas fa-reply');
+        $button->setHtmlAttribute('class', ['btn-warning', 'soa-button-warning']);
     }
 
     /**

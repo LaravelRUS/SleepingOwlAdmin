@@ -20,5 +20,7 @@ Archived during the resource-layout migration:
 - eight retired `default.*` Blade bridges. Runtime owners now point directly
   to their `shared.*` or `features.*` views, so the extra include layer and its
   historical logical paths are no longer active in this breaking release.
+- seven class-only control/card adapters. Their PHP owners now select the
+  variant classes and render one control or card-part Blade implementation.
 
 Nothing under `resources/archive` may be imported or compiled.

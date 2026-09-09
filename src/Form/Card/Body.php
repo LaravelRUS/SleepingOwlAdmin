@@ -13,7 +13,12 @@ class Body extends FormElements implements CardInterface
     /**
      * @var string
      */
-    protected $view = 'form.card.body';
+    protected $view = 'form.card.element';
+
+    /**
+     * @var string[]
+     */
+    protected $themeClasses = ['card-body', 'soa-card-body'];
 
     /**
      * @return array
@@ -24,6 +29,7 @@ class Body extends FormElements implements CardInterface
             'elements' => $this->getElements()->onlyVisible(),
             'attributes' => $this->htmlAttributesToString(),
             'attributesArray' => $this->getHtmlAttributes(),
+            'themeClasses' => $this->themeClasses,
         ];
     }
 }

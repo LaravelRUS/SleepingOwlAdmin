@@ -3,6 +3,9 @@
 use Mockery as m;
 use PHPUnit\Framework\Attributes\DataProvider;
 use SleepingOwl\Admin\Contracts\Form\FormButtonsInterface;
+use SleepingOwl\Admin\Form\Card\Body;
+use SleepingOwl\Admin\Form\Card\Footer;
+use SleepingOwl\Admin\Form\Card\Header;
 use SleepingOwl\Admin\Form\Buttons\FormButton;
 use SleepingOwl\Admin\Form\Buttons\SaveAndClose;
 use SleepingOwl\Admin\Form\Columns\Column;
@@ -109,9 +112,9 @@ class LegacyThemePresentationTest extends TestCase
 
     public function test_control_wrapper_adds_action_variant_in_legacy_theme(): void
     {
-        $html = view('sleeping_owl::default.column.control_link.edit', [
+        $html = view('sleeping_owl::default.column.control_link', [
             'attributesArray' => [
-                'class' => 'user-control',
+                'class' => 'btn-primary soa-button-primary user-control',
                 'data-contract' => 'edit',
             ],
             'hideText' => false,
@@ -190,6 +193,18 @@ class LegacyThemePresentationTest extends TestCase
         $this->assertSame(1, substr_count($html, 'card-footer'));
     }
 
+    #[DataProvider('cardPartVariants')]
+    public function test_card_parts_share_one_view_and_supply_their_variant_classes(
+        string $class,
+        string $expectedClass
+    ): void {
+        $part = new $class([]);
+        $html = $part->render()->render();
+
+        $this->assertSame('form.card.element', $part->getView());
+        $this->assertStringContainsString($expectedClass, $html);
+    }
+
     private function assertContainsAll(string $html, array $fragments): void
     {
         foreach ($fragments as $fragment) {
@@ -206,5 +221,12 @@ class LegacyThemePresentationTest extends TestCase
         yield 'destroy' => ['destroy', 'btn-danger'];
         yield 'cancel' => ['cancel', 'btn-warning'];
         yield 'restore' => ['restore', 'btn-warning'];
+    }
+
+    public static function cardPartVariants(): iterable
+    {
+        yield 'header' => [Header::class, 'class="card-header soa-card-header"'];
+        yield 'body' => [Body::class, 'class="card-body soa-card-body"'];
+        yield 'footer' => [Footer::class, 'class="card-footer soa-card-footer"'];
     }
 }
