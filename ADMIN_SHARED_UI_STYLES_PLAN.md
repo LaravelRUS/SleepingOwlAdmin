@@ -2,8 +2,8 @@
 
 ## Статус и правила
 
-- Статус: **инфраструктура, application shell, controls/containers и все inline editable fields готовы**.
-- Следующий checkpoint: overlap-proof для fixed controls и финальная acceptance matrix.
+- Статус: **инфраструктура и все четыре приоритетные UI-группы готовы**.
+- Следующий checkpoint: финальная acceptance matrix.
 - Общие декларации поставляются отдельным logical entry `shared:ui`, автоматически подключаемым для любой `ThemeInterface`; headless `core` не получает presentation.
 - Общий CSS может использовать только semantic `soa-*` classes, behavior hooks и canonical `--soa-*` variables. Тема задаёт значения tokens и действительно отличающиеся overrides.
 - В общем слое запрещены Bootstrap/AdminLTE/Tailwind imports, vendor selectors и literal palette. Одинаковые structural rules удаляются из theme adapters.
@@ -168,7 +168,7 @@ Canonical название хранится один раз — ключом `te
 - [x] Унифицировать Blade markup `scrolltotop` / `scrolltobottom`: `.soa-scroll-control`, `href`, ARIA и page-end anchor во всех встроенных темах.
 - [x] Вынести position, stack order, hit area, icon alignment и focus в `shared:ui`.
 - [x] Вынести общие `show` / `hide` visibility states; theme adapters оставляют только token-driven surface/border/shadow/color.
-- [ ] Проверить top/bottom placement на desktop/mobile и отсутствие перекрытия footer/inline editor.
+- [x] Проверить top/bottom placement на desktop/mobile и отсутствие перекрытия footer/inline editor.
 
 ## 5. Acceptance
 
@@ -207,3 +207,4 @@ Canonical название хранится один раз — ключом `te
 | 2026-09-09 | Semantic application shell | Один base Blade теперь обслуживает AdminLTE и Shadcn: корень получает canonical `data-theme`, а app/header/sidebar/navigation/main/footer/asset-health — стабильные `soa-*` owners; лишний Shadcn layout override удалён. `shared:ui` владеет grid/flex, collapsed/mobile, focus/reduced-motion и footer geometry, themes задают tokens и skin. Fixed scroll controls получили единый markup, hit area, stack и show/hide states. Chromium matrix: 13/13 для трёх themes и двух profiles; PHP: 38/38; Vitest/style boundary и reachability gates добавлены. | текущий commit |
 | 2026-09-09 | Shared controls и containers | `shared:ui` декомпозирован на семь source owners при сохранении одного logical bundle. Общими стали button/input/choice/switch, field, card/dialog и attachment geometry со всеми disabled/focus/collapsed/maximized/empty/error/uploading/readonly states; Vue upload roots публикуют semantic state classes и ARIA. Theme SCSS оставляет tokens/skin, а новый static gate запрещает возврат structural declarations. Оба profiles пересобраны; Chromium: 19/19 shell+controls, PHP Rendering: 83 tests / 1005 assertions, узкие Vitest gates: 29/29. | текущий commit |
 | 2026-09-09 | Shared inline editors | Trigger/clamp, popup/inline shell, все девять control shapes, actions, clear/error/busy и scrollable checklist перенесены в один framework-free table feature partial. Два theme `_inline-editor.scss` удалены; AdminLTE/Shadcn оставляют token values, framework-free fixture публикует тот же token contract. Select получил рабочий clear event через headless binding и Vue island, range output становится видимым при синхронизации. Оба profiles пересобраны; Chromium behavior + geometry: 15/15, узкие Vitest gates: 133/133, PHP Rendering: 83 tests / 1005 assertions. | текущий commit |
+| 2026-09-09 | Fixed-control overlap | Shared shell резервирует место справа от footer для fixed scroll controls на desktop/mobile, а controls автоматически скрываются на время активного inline editor. Top/bottom placement, минимальные отступы 16/12 px, hide/restore contract и обе asset profiles проверены общей Chromium matrix: 13/13. | текущий commit |

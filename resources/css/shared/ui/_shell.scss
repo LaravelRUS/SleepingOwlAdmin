@@ -342,7 +342,13 @@
     }
 
     .soa-footer {
-      padding-inline: var(--soa-content-padding-compact);
+      padding-inline: var(--soa-content-padding-compact)
+        max(
+          var(--soa-content-padding-compact),
+          calc(
+            var(--soa-scroll-control-size) + (2 * var(--soa-content-padding-compact))
+          )
+        );
     }
   }
 }

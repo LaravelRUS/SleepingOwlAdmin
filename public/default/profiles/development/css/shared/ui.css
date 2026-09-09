@@ -992,7 +992,7 @@
       padding: 0 var(--soa-content-padding-compact) var(--soa-content-padding-compact);
     }
     .soa-footer {
-      padding-inline: var(--soa-content-padding-compact);
+      padding-inline: var(--soa-content-padding-compact) max(var(--soa-content-padding-compact), var(--soa-scroll-control-size) + 2 * var(--soa-content-padding-compact));
     }
   }
   .soa-scroll-control {
@@ -1025,6 +1025,11 @@
     inset-block-end: var(--soa-scroll-control-offset-block);
   }
   .soa-scroll-control-bottom.hide {
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+  }
+  .soa-body:has(.soa-inline-editor[data-inline-editor-root]) .soa-scroll-control {
     opacity: 0;
     pointer-events: none;
     visibility: hidden;

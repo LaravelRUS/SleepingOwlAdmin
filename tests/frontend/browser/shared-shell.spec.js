@@ -23,6 +23,7 @@ for (const profile of ['development', 'production']) {
             expect(geometry.sidebar.height).toBeGreaterThanOrEqual(geometry.viewport.height)
 
             await expectDesktopScrollControls(page)
+            await expectFixedControlsAvoidContent(page, 16)
 
             await page.locator('body').evaluate((body) => body.classList.add('sidebar-collapse'))
             await expect(page.locator('#shell-sidebar')).toHaveCSS('width', '64px')
@@ -56,6 +57,9 @@ for (const profile of ['development', 'production']) {
             expect(controls.bottom.right).toBe(12)
             expect(controls.bottom.bottom).toBe(16)
             expect(controls.bottom.width).toBe(44)
+            expect(controls.top).toMatchObject({ bottom: 60, right: 12, width: 44 })
+
+            await expectFixedControlsAvoidContent(page, 12)
         })
     }
 }
@@ -122,4 +126,29 @@ async function expectDesktopScrollControls(page) {
     await page.locator('#scrolltobottom').evaluate((element) => element.classList.add('hide'))
     await expect(page.locator('#scrolltotop')).toHaveCSS('visibility', 'visible')
     await expect(page.locator('#scrolltobottom')).toHaveCSS('visibility', 'hidden')
+}
+
+async function expectFixedControlsAvoidContent(page, minimumGap) {
+    await page.locator('.soa-footer').scrollIntoViewIfNeeded()
+    await page.locator('#scrolltobottom').evaluate((element) => element.classList.remove('hide'))
+    const footerGap = await page.evaluate(() => {
+        const footer = document.querySelector('.soa-footer-inner').getBoundingClientRect()
+        const control = document.querySelector('#scrolltobottom').getBoundingClientRect()
+
+        return control.left - footer.right
+    })
+
+    expect(footerGap).toBeGreaterThanOrEqual(minimumGap)
+
+    await page.evaluate(() => {
+        const editor = document.createElement('div')
+        editor.className = 'soa-inline-editor'
+        editor.dataset.inlineEditorRoot = ''
+        document.body.append(editor)
+    })
+    await expect(page.locator('#scrolltotop')).toHaveCSS('visibility', 'hidden')
+    await expect(page.locator('#scrolltobottom')).toHaveCSS('visibility', 'hidden')
+
+    await page.locator('[data-inline-editor-root]').evaluate((editor) => editor.remove())
+    await expect(page.locator('#scrolltobottom')).toHaveCSS('visibility', 'visible')
 }

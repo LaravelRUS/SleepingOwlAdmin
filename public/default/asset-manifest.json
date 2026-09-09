@@ -71,8 +71,8 @@
                     "styles": [
                         {
                             "file": "profiles/production/css/shared/ui.css",
-                            "version": "8890675b0de26d53b28cc973fa07af58",
-                            "checksum": "sha256:2e65bc665ab22c62d426a452ad0aad409b69648a10e063826443caa2b59ce2e0"
+                            "version": "2e8c6d440b340f79f155f2d5cbefa231",
+                            "checksum": "sha256:ca06586b453f5967ce07dee6b9742981259fa53fb59b809a98473b1a3ee350cf"
                         }
                     ]
                 },
@@ -224,8 +224,8 @@
                     "styles": [
                         {
                             "file": "profiles/development/css/shared/ui.css",
-                            "version": "890f879c57879e3ab710a4f2bbae71f9",
-                            "checksum": "sha256:ee6587a693a35148fc545266f3532dcbd78569f1d576ff97f89b816603d426af"
+                            "version": "6d9502fcfaa37b97f84faff63c9202cf",
+                            "checksum": "sha256:b9b7e4cadf6487d443f942e2654398c5f50dcd121e4d223d27b5211f28d1e54c"
                         }
                     ]
                 },
@@ -309,5 +309,5 @@
             }
         }
     },
-    "build_id": "sha256:abdc24d58ffc593993d02d9fd3c9ae4be482a595badfeb3687a5c0e5b600bc20"
+    "build_id": "sha256:ec81ae8e7dd7481164510ce0197534074d78d836414c4fbd174d1b169d2e8d37"
 }

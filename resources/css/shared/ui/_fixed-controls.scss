@@ -40,6 +40,12 @@
     visibility: hidden;
   }
 
+  .soa-body:has(.soa-inline-editor[data-inline-editor-root]) .soa-scroll-control {
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+  }
+
   @media (width <= 64rem) {
     .soa-scroll-control {
       inset-inline-end: var(--soa-content-padding-compact);
