@@ -57,7 +57,6 @@ class TailwindThemeTest extends TestCase
         $manifest = ThemeAssetManifest::fromTheme('shadcn', app(TailwindTheme::class));
 
         $this->assertSame([
-            'shared:icons',
             'shared:compatibility',
             'shared:modules',
             'shared:vue',

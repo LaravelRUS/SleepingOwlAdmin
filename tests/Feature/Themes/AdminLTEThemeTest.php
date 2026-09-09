@@ -41,7 +41,6 @@ class AdminLTEThemeTest extends TestCase
         );
 
         $this->assertSame([
-            'shared:icons',
             'shared:compatibility',
             'shared:modules',
             'shared:vue',
@@ -49,7 +48,6 @@ class AdminLTEThemeTest extends TestCase
             'theme:adminlte:overrides',
         ], $manifest->entries());
         $this->assertSame([
-            'shared:icons',
             'shared:compatibility',
             'shared:modules',
             'shared:vue',

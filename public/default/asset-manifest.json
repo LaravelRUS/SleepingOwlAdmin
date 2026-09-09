@@ -34,8 +34,8 @@
                     "scripts": [
                         {
                             "file": "profiles/production/js/shared/features.js",
-                            "version": "ecc690c3f23f6cbfe7839fa560b0ead8",
-                            "checksum": "sha256:7b2e2e44f4746b61a5819f2fe394e1a210e2876a9b8f55edfdd6093c36aed190"
+                            "version": "bb62bedc514e719661d527b59ca74f26",
+                            "checksum": "sha256:99457c03307bb91da6e3b5be98604e0ba8932fc84d94d42ab9332174fa62f220"
                         }
                     ],
                     "styles": [
@@ -122,16 +122,6 @@
                         }
                     ]
                 },
-                "theme:framework-free-test": {
-                    "scripts": [],
-                    "styles": [
-                        {
-                            "file": "profiles/production/css/themes/framework-free-test.css",
-                            "version": "e63eea9308fe5d5f6d255795177861ff",
-                            "checksum": "sha256:94fa6c04dc13495a46069c0ad160ca9f097f14044a04c8321f5c896abce86333"
-                        }
-                    ]
-                },
                 "theme:shadcn": {
                     "scripts": [
                         {
@@ -197,8 +187,8 @@
                     "scripts": [
                         {
                             "file": "profiles/development/js/shared/features.js",
-                            "version": "7f65e03dd9b839b517f5850de823753a",
-                            "checksum": "sha256:8e8b6d6faf2d99bba453c25f6c4acc2efe46f20e9604087bdf164a09fc8c6faa"
+                            "version": "ba9e3ab0e99d5979af18f3ae0a1bd728",
+                            "checksum": "sha256:c87a657c52819a0dba6787f7d81499e51abbdcf159d07ee506638e99b7abf721"
                         }
                     ],
                     "styles": [
@@ -285,16 +275,6 @@
                         }
                     ]
                 },
-                "theme:framework-free-test": {
-                    "scripts": [],
-                    "styles": [
-                        {
-                            "file": "profiles/development/css/themes/framework-free-test.css",
-                            "version": "e22dab16ff0c70a45b42d3656a0e7fd7",
-                            "checksum": "sha256:535d2ed0f46e3efa1ec35505f45fe733fddf12d57ca7f4dfba95767219522d05"
-                        }
-                    ]
-                },
                 "theme:shadcn": {
                     "scripts": [
                         {
@@ -329,5 +309,5 @@
             }
         }
     },
-    "build_id": "sha256:ab631aba0af302c8c860573873f249e78157810e54c570a8a6003f43b8b8806d"
+    "build_id": "sha256:3328f865bcca387dda0b11ce64668c5fa1a17dc13153ff2628b9537b644bdc88"
 }

@@ -44,11 +44,8 @@ export function installTableAutoUpdateFeature(engine, dependencies) {
 }
 
 export function configureTableAutoUpdate(table, options) {
-    const host = findAutoUpdateHost(table)
-    if (!host) return false
-
-    const config = readAutoUpdateConfig(host)
-    if (!matchesAutoUpdateTable(table, config.tableClasses)) return false
+    const match = findAutoUpdateMatch(table)
+    if (!match) return false
 
     options.layout = { ...options.layout, top: AUTO_UPDATE_FEATURE }
 
@@ -57,15 +54,12 @@ export function configureTableAutoUpdate(table, options) {
 
 export function createTableAutoUpdateFeature(settings, dependencies) {
     const table = settings.table
-    const host = findAutoUpdateHost(table)
-    if (!host) return null
+    const match = findAutoUpdateMatch(table)
+    if (!match) return null
 
-    const config = readAutoUpdateConfig(host)
-    if (!matchesAutoUpdateTable(table, config.tableClasses)) return null
-
-    const controller = mountTableAutoUpdate(table, config, {
+    const controller = mountTableAutoUpdate(table, match.config, {
         ...dependencies,
-        controlTemplate: readAutoUpdateControlTemplate(host),
+        controlTemplate: readAutoUpdateControlTemplate(match.host),
         deferStart: true,
         insert: false,
     })
@@ -78,12 +72,12 @@ export function createTableAutoUpdateFeature(settings, dependencies) {
 
 class TableAutoUpdateCollection {
     constructor(host, dependencies) {
-        this.config = readAutoUpdateConfig(host)
         this.controllers = new Map()
         this.dependencies = {
             ...dependencies,
             controlTemplate: readAutoUpdateControlTemplate(host),
         }
+        this.host = host
         this.unsubscribe = dependencies.tables.subscribe((event) => this.registryChanged(event))
 
         try {
@@ -101,18 +95,13 @@ class TableAutoUpdateCollection {
 
     mount(adapter) {
         const table = adapter.element
-        if (!this.matches(table)) return
+        if (this.controllers.has(table) || table.classList.contains('autoupdater')) return
 
-        const controller = mountTableAutoUpdate(table, this.config, this.dependencies)
+        const config = readAutoUpdateConfig(this.host, table)
+        if (!config) return
+
+        const controller = mountTableAutoUpdate(table, config, this.dependencies)
         this.controllers.set(table, controller)
-    }
-
-    matches(table) {
-        return (
-            !this.controllers.has(table) &&
-            !table.classList.contains('autoupdater') &&
-            matchesAutoUpdateTable(table, this.config.tableClasses)
-        )
     }
 
     unmount(adapter) {
@@ -269,23 +258,81 @@ class TableAutoUpdateController {
     }
 }
 
-export function readAutoUpdateConfig(host) {
+export function readAutoUpdateConfig(host, table = null) {
+    const profiles = readAutoUpdateProfiles(host)
+
+    if (!table) return profiles[0] ?? null
+
+    return profiles.find((profile) => matchesAutoUpdateTable(table, profile.tableClasses)) ?? null
+}
+
+export function readAutoUpdateProfiles(host) {
+    if (typeof host?.dataset?.profiles === 'string') {
+        return readSerializedProfiles(host)
+    }
+
+    return [readLegacyAutoUpdateProfile(host)]
+}
+
+function readSerializedProfiles(host) {
+    let profiles
+    try {
+        profiles = JSON.parse(host.dataset.profiles)
+    } catch {
+        throw new TypeError('Table auto-update profiles must be a JSON array.')
+    }
+
+    if (!Array.isArray(profiles)) {
+        throw new TypeError('Table auto-update profiles must be a JSON array.')
+    }
+
+    return profiles.map((profile, index) => normalizeSerializedProfile(host, profile, index))
+}
+
+function normalizeSerializedProfile(host, profile, index) {
+    if (!profile || typeof profile !== 'object' || Array.isArray(profile)) {
+        throw new TypeError(`Table auto-update profile ${index} must be an object.`)
+    }
+
+    const tableClasses = normalizeTableClasses([profile.class])
+    const interval = Number(profile.interval)
+    const color = typeof profile.color === 'string' ? profile.color.trim() : ''
+
+    if (tableClasses.length !== 1) {
+        throw new TypeError(`Table auto-update profile ${index} requires a table class.`)
+    }
+    assertProfileValues(interval, color)
+
+    return profileConfig(host, { color, interval, tableClasses })
+}
+
+function readLegacyAutoUpdateProfile(host) {
     const interval = Number(host.dataset.interval)
     const color = host.style.getPropertyValue(AUTO_UPDATE_COLOR_PROPERTY).trim()
 
+    assertProfileValues(interval, color)
+
+    return profileConfig(host, {
+        color,
+        interval,
+        tableClasses: readTableClasses(host),
+    })
+}
+
+function profileConfig(host, profile) {
+    return {
+        ...profile,
+        pauseLabel: host.dataset.pauseLabel || host.dataset.closeLabel || 'Pause auto-update',
+        resumeLabel: host.dataset.resumeLabel || 'Resume auto-update',
+    }
+}
+
+function assertProfileValues(interval, color) {
     if (!Number.isFinite(interval) || interval < 1) {
         throw new TypeError('Table auto-update interval must be a positive number.')
     }
     if (!color) {
         throw new TypeError('Table auto-update requires a configured color.')
-    }
-
-    return {
-        color,
-        interval,
-        pauseLabel: host.dataset.pauseLabel || host.dataset.closeLabel || 'Pause auto-update',
-        resumeLabel: host.dataset.resumeLabel || 'Resume auto-update',
-        tableClasses: readTableClasses(host),
     }
 }
 
@@ -365,19 +412,19 @@ function mountProgressView(table, settings, dependencies) {
     }
 }
 
-function findAutoUpdateHost(table) {
+function findAutoUpdateMatch(table) {
     const document = table.ownerDocument
     const hosts = document?.querySelectorAll?.(AUTO_UPDATE_HOST_SELECTOR)
     const candidates = hosts
         ? Array.from(hosts)
         : [document?.querySelector?.(AUTO_UPDATE_HOST_SELECTOR)].filter(Boolean)
 
-    return (
-        candidates.find((host) => {
-            const config = readAutoUpdateConfig(host)
-            return matchesAutoUpdateTable(table, config.tableClasses)
-        }) ?? null
-    )
+    for (const host of candidates) {
+        const config = readAutoUpdateConfig(host, table)
+        if (config) return { config, host }
+    }
+
+    return null
 }
 
 function cloneControl(template) {

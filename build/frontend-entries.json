@@ -94,11 +94,6 @@
                 "output": "css/themes/adminlte.css"
             },
             {
-                "logicalId": "theme:framework-free-test",
-                "source": "resources/css/themes/framework-free-test/theme.scss",
-                "output": "css/themes/framework-free-test.css"
-            },
-            {
                 "logicalId": "theme:empty",
                 "source": "resources/css/themes/empty/theme.scss",
                 "output": "css/themes/empty.css"

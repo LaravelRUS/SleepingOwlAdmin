@@ -5962,15 +5962,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   mountTableAutoUpdate: () => (/* binding */ mountTableAutoUpdate),
 /* harmony export */   mountTableAutoUpdates: () => (/* binding */ mountTableAutoUpdates),
 /* harmony export */   readAutoUpdateConfig: () => (/* binding */ readAutoUpdateConfig),
-/* harmony export */   readAutoUpdateControlTemplate: () => (/* binding */ readAutoUpdateControlTemplate)
+/* harmony export */   readAutoUpdateControlTemplate: () => (/* binding */ readAutoUpdateControlTemplate),
+/* harmony export */   readAutoUpdateProfiles: () => (/* binding */ readAutoUpdateProfiles)
 /* harmony export */ });
-function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
 function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
 function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
 function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
 function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
@@ -6016,10 +6018,8 @@ function installTableAutoUpdateFeature(engine, dependencies) {
   });
 }
 function configureTableAutoUpdate(table, options) {
-  var host = findAutoUpdateHost(table);
-  if (!host) return false;
-  var config = readAutoUpdateConfig(host);
-  if (!matchesAutoUpdateTable(table, config.tableClasses)) return false;
+  var match = findAutoUpdateMatch(table);
+  if (!match) return false;
   options.layout = _objectSpread(_objectSpread({}, options.layout), {}, {
     top: AUTO_UPDATE_FEATURE
   });
@@ -6027,12 +6027,10 @@ function configureTableAutoUpdate(table, options) {
 }
 function createTableAutoUpdateFeature(settings, dependencies) {
   var table = settings.table;
-  var host = findAutoUpdateHost(table);
-  if (!host) return null;
-  var config = readAutoUpdateConfig(host);
-  if (!matchesAutoUpdateTable(table, config.tableClasses)) return null;
-  var controller = mountTableAutoUpdate(table, config, _objectSpread(_objectSpread({}, dependencies), {}, {
-    controlTemplate: readAutoUpdateControlTemplate(host),
+  var match = findAutoUpdateMatch(table);
+  if (!match) return null;
+  var controller = mountTableAutoUpdate(table, match.config, _objectSpread(_objectSpread({}, dependencies), {}, {
+    controlTemplate: readAutoUpdateControlTemplate(match.host),
     deferStart: true,
     insert: false
   }));
@@ -6046,11 +6044,11 @@ var TableAutoUpdateCollection = /*#__PURE__*/function () {
   function TableAutoUpdateCollection(host, dependencies) {
     var _this = this;
     _classCallCheck(this, TableAutoUpdateCollection);
-    this.config = readAutoUpdateConfig(host);
     this.controllers = new Map();
     this.dependencies = _objectSpread(_objectSpread({}, dependencies), {}, {
       controlTemplate: readAutoUpdateControlTemplate(host)
     });
+    this.host = host;
     this.unsubscribe = dependencies.tables.subscribe(function (event) {
       return _this.registryChanged(event);
     });
@@ -6075,14 +6073,11 @@ var TableAutoUpdateCollection = /*#__PURE__*/function () {
     key: "mount",
     value: function mount(adapter) {
       var table = adapter.element;
-      if (!this.matches(table)) return;
-      var controller = mountTableAutoUpdate(table, this.config, this.dependencies);
+      if (this.controllers.has(table) || table.classList.contains('autoupdater')) return;
+      var config = readAutoUpdateConfig(this.host, table);
+      if (!config) return;
+      var controller = mountTableAutoUpdate(table, config, this.dependencies);
       this.controllers.set(table, controller);
-    }
-  }, {
-    key: "matches",
-    value: function matches(table) {
-      return !this.controllers.has(table) && !table.classList.contains('autoupdater') && matchesAutoUpdateTable(table, this.config.tableClasses);
     }
   }, {
     key: "unmount",
@@ -6267,21 +6262,75 @@ var TableAutoUpdateController = /*#__PURE__*/function () {
   }]);
 }();
 function readAutoUpdateConfig(host) {
+  var _profiles$, _profiles$find;
+  var table = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+  var profiles = readAutoUpdateProfiles(host);
+  if (!table) return (_profiles$ = profiles[0]) !== null && _profiles$ !== void 0 ? _profiles$ : null;
+  return (_profiles$find = profiles.find(function (profile) {
+    return matchesAutoUpdateTable(table, profile.tableClasses);
+  })) !== null && _profiles$find !== void 0 ? _profiles$find : null;
+}
+function readAutoUpdateProfiles(host) {
+  var _host$dataset;
+  if (typeof (host === null || host === void 0 || (_host$dataset = host.dataset) === null || _host$dataset === void 0 ? void 0 : _host$dataset.profiles) === 'string') {
+    return readSerializedProfiles(host);
+  }
+  return [readLegacyAutoUpdateProfile(host)];
+}
+function readSerializedProfiles(host) {
+  var profiles;
+  try {
+    profiles = JSON.parse(host.dataset.profiles);
+  } catch (_unused) {
+    throw new TypeError('Table auto-update profiles must be a JSON array.');
+  }
+  if (!Array.isArray(profiles)) {
+    throw new TypeError('Table auto-update profiles must be a JSON array.');
+  }
+  return profiles.map(function (profile, index) {
+    return normalizeSerializedProfile(host, profile, index);
+  });
+}
+function normalizeSerializedProfile(host, profile, index) {
+  if (!profile || _typeof(profile) !== 'object' || Array.isArray(profile)) {
+    throw new TypeError("Table auto-update profile ".concat(index, " must be an object."));
+  }
+  var tableClasses = normalizeTableClasses([profile["class"]]);
+  var interval = Number(profile.interval);
+  var color = typeof profile.color === 'string' ? profile.color.trim() : '';
+  if (tableClasses.length !== 1) {
+    throw new TypeError("Table auto-update profile ".concat(index, " requires a table class."));
+  }
+  assertProfileValues(interval, color);
+  return profileConfig(host, {
+    color: color,
+    interval: interval,
+    tableClasses: tableClasses
+  });
+}
+function readLegacyAutoUpdateProfile(host) {
   var interval = Number(host.dataset.interval);
   var color = host.style.getPropertyValue(AUTO_UPDATE_COLOR_PROPERTY).trim();
+  assertProfileValues(interval, color);
+  return profileConfig(host, {
+    color: color,
+    interval: interval,
+    tableClasses: readTableClasses(host)
+  });
+}
+function profileConfig(host, profile) {
+  return _objectSpread(_objectSpread({}, profile), {}, {
+    pauseLabel: host.dataset.pauseLabel || host.dataset.closeLabel || 'Pause auto-update',
+    resumeLabel: host.dataset.resumeLabel || 'Resume auto-update'
+  });
+}
+function assertProfileValues(interval, color) {
   if (!Number.isFinite(interval) || interval < 1) {
     throw new TypeError('Table auto-update interval must be a positive number.');
   }
   if (!color) {
     throw new TypeError('Table auto-update requires a configured color.');
   }
-  return {
-    color: color,
-    interval: interval,
-    pauseLabel: host.dataset.pauseLabel || host.dataset.closeLabel || 'Pause auto-update',
-    resumeLabel: host.dataset.resumeLabel || 'Resume auto-update',
-    tableClasses: readTableClasses(host)
-  };
 }
 function readAutoUpdateControlTemplate(host) {
   var _host$querySelector, _template$content;
@@ -6302,7 +6351,7 @@ function readTableClasses(host) {
   var classes;
   try {
     classes = JSON.parse(serialized);
-  } catch (_unused) {
+  } catch (_unused2) {
     throw new TypeError('Table auto-update classes must be a JSON array.');
   }
   if (!Array.isArray(classes)) {
@@ -6350,15 +6399,28 @@ function mountProgressView(table, settings, dependencies) {
     throw error;
   }
 }
-function findAutoUpdateHost(table) {
-  var _document$querySelect, _document$querySelect2, _candidates$find;
+function findAutoUpdateMatch(table) {
+  var _document$querySelect, _document$querySelect2;
   var document = table.ownerDocument;
   var hosts = document === null || document === void 0 || (_document$querySelect = document.querySelectorAll) === null || _document$querySelect === void 0 ? void 0 : _document$querySelect.call(document, AUTO_UPDATE_HOST_SELECTOR);
   var candidates = hosts ? Array.from(hosts) : [document === null || document === void 0 || (_document$querySelect2 = document.querySelector) === null || _document$querySelect2 === void 0 ? void 0 : _document$querySelect2.call(document, AUTO_UPDATE_HOST_SELECTOR)].filter(Boolean);
-  return (_candidates$find = candidates.find(function (host) {
-    var config = readAutoUpdateConfig(host);
-    return matchesAutoUpdateTable(table, config.tableClasses);
-  })) !== null && _candidates$find !== void 0 ? _candidates$find : null;
+  var _iterator = _createForOfIteratorHelper(candidates),
+    _step;
+  try {
+    for (_iterator.s(); !(_step = _iterator.n()).done;) {
+      var host = _step.value;
+      var config = readAutoUpdateConfig(host, table);
+      if (config) return {
+        config: config,
+        host: host
+      };
+    }
+  } catch (err) {
+    _iterator.e(err);
+  } finally {
+    _iterator.f();
+  }
+  return null;
 }
 function cloneControl(template) {
   var _fragment$children;
@@ -9363,6 +9425,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   TABLE_AUTO_UPDATES_COMPONENT: () => (/* binding */ TABLE_AUTO_UPDATES_COMPONENT),
 /* harmony export */   TABLE_AUTO_UPDATES_SELECTOR: () => (/* binding */ TABLE_AUTO_UPDATES_SELECTOR),
+/* harmony export */   hasAutoUpdateTargets: () => (/* binding */ hasAutoUpdateTargets),
 /* harmony export */   installTableAutoUpdates: () => (/* binding */ installTableAutoUpdates)
 /* harmony export */ });
 /* harmony import */ var _autoupdate_table_auto_update_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../autoupdate/table-auto-update.js */ "./resources/js/shared/features/table/autoupdate/table-auto-update.js");
@@ -9371,6 +9434,14 @@ var TABLE_AUTO_UPDATES_COMPONENT = 'table-auto-updates';
 var TABLE_AUTO_UPDATES_SELECTOR = '[data-admin-table-autoupdate]';
 function installTableAutoUpdates(admin, options) {
   assertOptions(admin, options);
+  if (!hasAutoUpdateTargets(options.root)) {
+    return {
+      feature: _autoupdate_table_auto_update_js__WEBPACK_IMPORTED_MODULE_0__.AUTO_UPDATE_FEATURE,
+      scan: function scan() {
+        return 0;
+      }
+    };
+  }
   (0,_autoupdate_table_auto_update_js__WEBPACK_IMPORTED_MODULE_0__.installTableAutoUpdateFeature)(options.engine, {
     now: options.now,
     ProgressBar: options.ProgressBar,
@@ -9384,11 +9455,20 @@ function installTableAutoUpdates(admin, options) {
     }
   };
 }
+function hasAutoUpdateTargets(root) {
+  var hosts = Array.from(root.querySelectorAll(TABLE_AUTO_UPDATES_SELECTOR));
+  var tables = Array.from(root.querySelectorAll('.datatables'));
+  return hosts.some(function (host) {
+    return tables.some(function (table) {
+      return (0,_autoupdate_table_auto_update_js__WEBPACK_IMPORTED_MODULE_0__.readAutoUpdateConfig)(host, table);
+    });
+  });
+}
 function assertOptions(admin, options) {
-  var dependencies = [admin === null || admin === void 0 ? void 0 : admin.Tables, options === null || options === void 0 ? void 0 : options.engine, options === null || options === void 0 ? void 0 : options.ProgressBar, options === null || options === void 0 ? void 0 : options.scheduler];
+  var dependencies = [admin === null || admin === void 0 ? void 0 : admin.Tables, options === null || options === void 0 ? void 0 : options.engine, options === null || options === void 0 ? void 0 : options.ProgressBar, options === null || options === void 0 ? void 0 : options.root, options === null || options === void 0 ? void 0 : options.scheduler];
   if (dependencies.some(function (dependency) {
     return !dependency;
-  })) {
+  }) || typeof options.root.querySelectorAll !== 'function') {
     throw new TypeError('Table auto-updates require lifecycle, registry and browser drivers.');
   }
 }
@@ -11467,6 +11547,7 @@ var dataTables = __webpack_require__(/*! ./datatables */ "./resources/js/shared/
 module.exports = installTableAutoUpdates(Admin, {
   engine: dataTables.engine,
   ProgressBar: globalThis.ProgressBar,
+  root: document,
   scheduler: window
 });
 

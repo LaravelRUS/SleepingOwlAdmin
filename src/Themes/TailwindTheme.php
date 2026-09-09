@@ -14,7 +14,6 @@ final class TailwindTheme implements ThemeInterface
     public function assets(): array
     {
         return [
-            'shared:icons',
             'shared:compatibility',
             'shared:modules',
             'shared:vue',

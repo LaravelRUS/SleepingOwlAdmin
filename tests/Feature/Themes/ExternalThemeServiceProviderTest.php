@@ -50,6 +50,10 @@ class ExternalThemeServiceProviderTest extends TestCase
             $sources,
             static fn (string $source): bool => str_contains($source, '/css/shared/ui.css')
         ));
+        $this->assertCount(1, array_filter(
+            $sources,
+            static fn (string $source): bool => str_contains($source, '/css/icons.css')
+        ));
         $this->assertStringNotContainsString('adminlte', implode('|', $sources));
     }
 

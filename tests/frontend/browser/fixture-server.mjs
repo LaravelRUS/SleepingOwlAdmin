@@ -18,13 +18,6 @@ const staticRoutes = new Map([
         [join(browserDirectory, 'theme-capabilities-adminlte.html'), 'text/html; charset=utf-8'],
     ],
     [
-        '/theme-capabilities-framework-free',
-        [
-            join(browserDirectory, 'theme-capabilities-framework-free.html'),
-            'text/html; charset=utf-8',
-        ],
-    ],
-    [
         '/theme-capabilities-tailwind',
         [join(browserDirectory, 'theme-capabilities-tailwind.html'), 'text/html; charset=utf-8'],
     ],
@@ -329,8 +322,8 @@ function tailwindCapabilityStyles() {
 function themeCapabilityStyles() {
     const base = ['admin-core.css', 'icons.css', 'shared/ui.css', 'shared/features.css']
     const legacy = ['themes/adminlte.css']
-    const frameworkFree = ['themes/framework-free-test.css']
-    return [...base, ...legacy, ...frameworkFree, ...tailwindCapabilityStyles()]
+    const empty = ['themes/empty.css']
+    return [...base, ...legacy, ...empty, ...tailwindCapabilityStyles()]
 }
 
 const fixtureRequests = new Map()

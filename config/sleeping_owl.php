@@ -274,11 +274,14 @@ return [
         // Supported values: 'row', 'table', false.
         'datatables_inline_edit_refresh' => 'table',
 
-        // Auto-update is enabled for tables already marked with the "autoupdate" class.
-        // Change its settings here; add another entry only for a custom table class.
+        // Auto-update is registered only when enabled and a rendered DataTable
+        // matches one of the CSS classes configured under "profiles".
         'autoupdate' => [
-            'autoupdate' => ['interval' => 300, 'color' => '#dc3545'],
-            // 'orders-live' => ['interval' => 60, 'color' => '#2563eb'],
+            'enabled' => true,
+            'profiles' => [
+                'autoupdate' => ['interval' => 300, 'color' => '#dc3545'],
+                'orders-live' => ['interval' => 60, 'color' => '#2563eb'],
+            ],
         ],
     ],
 

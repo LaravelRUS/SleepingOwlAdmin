@@ -102,11 +102,14 @@ button, text, icon or presentation classes. The legacy
 
 A project view override may replace the element type, classes and internal
 nesting while retaining the template and toggle hooks. Auto-update is configured
-as `datatables_settings.autoupdate.<table-class>` profiles. Each table class owns
-its own `interval` in seconds and validated `color`; the Blade layer emits one
-host per profile and the runtime selects the first profile matching the table.
-`autoupdate` is the standard pre-existing table marker; `autoupdater` is a
-different runtime state class added automatically after the feature mounts.
+with the global `datatables_settings.autoupdate.enabled` flag and
+`datatables_settings.autoupdate.profiles.<table-class>` entries. Each table class
+owns its own `interval` in seconds and validated `color`. The Blade layer emits
+one host and one control template containing all profiles as serialized data;
+the runtime selects the first profile matching each table. No DataTables feature
+is registered when auto-update is disabled or no rendered table matches a
+profile. `autoupdate` is the standard pre-existing table marker; `autoupdater`
+is a different runtime state class added automatically after the feature mounts.
 
 The host scan is repeated after `DOMContentLoaded` because the historical base
 layout renders the Blade host after its scripts. The controller also subscribes

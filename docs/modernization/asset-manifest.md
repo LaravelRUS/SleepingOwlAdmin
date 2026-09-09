@@ -9,10 +9,11 @@ Manifest создаётся после Laravel Mix build из `build/frontend-en
 Текущие группы logical ids:
 
 - `core`;
-- общие `shared:icons`, `shared:compatibility`, semantic `shared:ui`, объединённый `shared:features`, profile-aware `shared:vue` и завершающий `shared:modules`;
+- обязательный package-owned `shared:icons`, общие `shared:compatibility`, semantic `shared:ui`, объединённый `shared:features`, profile-aware `shared:vue` и завершающий `shared:modules`;
 - встроенные `theme:adminlte`/`theme:shadcn`, их последние `theme:<name>:overrides` и диагностический layer-only `theme:empty`.
 
-`shared:features` содержит все всегда загружаемые feature drivers и их нейтральный CSS. Встроенные
+`shared:icons` и `shared:features` всегда добавляются package runtime. `shared:features`
+содержит все всегда загружаемые feature drivers и их нейтральный CSS. Встроенные
 presentation adapters входят в единый `theme:<id>` bundle. Это соответствует фактическому runtime:
 драйверы не выбирались по страницам, поэтому отдельные `feature × theme` файлы создавали запросы,
 но ничего не экономили. Массив `ThemeInterface::assets()` объявляет только logical ids и не содержит

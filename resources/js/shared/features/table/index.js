@@ -12,6 +12,7 @@ export {
     mountTableAutoUpdates,
     readAutoUpdateConfig,
     readAutoUpdateControlTemplate,
+    readAutoUpdateProfiles,
 } from './autoupdate/table-auto-update.js'
 export { findActionTable, selectedRowParameters } from './actions/action-context.js'
 export { actionRequestSettings, executeTableAction } from './actions/action-request.js'

@@ -206,10 +206,11 @@ matrix includes:
 - `theme:<name>:overrides`, loaded last when present.
 
 `ThemeRuntimeAssets` constructs the ordered style/script lists for the selected
-theme. `LogicalAssetRegistrar` resolves those entries through
-`AssetManifestResolver` and registers stable handles with the first-party asset
-system. `AssetManifestRegistry` can add a selected external theme source without
-allowing it to replace package-owned core or feature drivers.
+theme and always includes the package-owned `shared:icons` entry.
+`LogicalAssetRegistrar` resolves those entries through `AssetManifestResolver`
+and registers stable handles with the first-party asset system.
+`AssetManifestRegistry` can add a selected external theme source without allowing
+it to replace package-owned core or feature drivers.
 
 Each distributable manifest contains matching `production` and `development`
 profiles with content versions, MD5-compatible URL versions and SHA-256

@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test'
 
 /* global document, getComputedStyle */
 
-const themes = ['adminlte', 'framework-free-test', 'shadcn']
+const themes = ['adminlte', 'empty', 'shadcn']
 
 for (const profile of ['development', 'production']) {
     for (const theme of themes) {

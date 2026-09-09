@@ -6,5 +6,6 @@ const dataTables = require('./datatables')
 module.exports = installTableAutoUpdates(Admin, {
     engine: dataTables.engine,
     ProgressBar: globalThis.ProgressBar,
+    root: document,
     scheduler: window,
 })

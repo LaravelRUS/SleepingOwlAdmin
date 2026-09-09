@@ -13,6 +13,8 @@ final class ThemeRuntimeAssets
 
     private const FEATURE_RUNTIME = 'shared:features';
 
+    private const REQUIRED_SHARED_ASSETS = ['shared:icons'];
+
     private const SHARED_UI = 'shared:ui';
 
     public function __construct(
@@ -55,6 +57,7 @@ final class ThemeRuntimeAssets
 
         return $this->unique([
             'core',
+            ...self::REQUIRED_SHARED_ASSETS,
             ...$this->sharedRuntimeEntries($manifest),
             self::SHARED_UI,
             self::FEATURE_RUNTIME,
@@ -74,6 +77,7 @@ final class ThemeRuntimeAssets
 
         return $this->unique([
             'core',
+            ...self::REQUIRED_SHARED_ASSETS,
             ...$this->sharedRuntimeEntries($manifest),
             $manifest->themeEntry(),
             self::FEATURE_RUNTIME,

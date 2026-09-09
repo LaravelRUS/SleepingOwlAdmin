@@ -19,7 +19,7 @@ class LegacyTemplateThemeAdapterTest extends TestCase
         $this->assertInstanceOf(TemplateInterface::class, $template);
         $this->assertInstanceOf(LegacyTemplateThemeAdapter::class, $theme);
         $this->assertSame('adminlte', $selection->name());
-        $this->assertSame(['shared:icons'], $theme->assets());
+        $this->assertSame([], $theme->assets());
         $this->assertSame(
             array_map(fn (ThemeCapability $capability) => $capability->value, ThemeCapability::cases()),
             $theme->capabilities()

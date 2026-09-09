@@ -82,41 +82,6 @@ function verifyProfiles(string $assetRoot, array $manifest): void
     }
 }
 
-function frameworkFreeTheme(): ThemeInterface
-{
-    return new class implements ThemeInterface
-    {
-        public function viewNamespace(): string
-        {
-            return 'sleeping_owl::default';
-        }
-
-        public function assets(): array
-        {
-            return [
-                'shared:compatibility',
-                'shared:modules',
-                'shared:vue',
-            ];
-        }
-
-        public function icons(): array
-        {
-            return [];
-        }
-
-        public function capabilities(): array
-        {
-            return frameworkFreeCapabilities();
-        }
-    };
-}
-
-function frameworkFreeCapabilities(): array
-{
-    return ['dropdown', 'notification', 'sidebar', 'table-presentation', 'tabs', 'tooltip'];
-}
-
 function verifyThemes(string $appRoot, string $expectedTheme): void
 {
     chdir($appRoot);
@@ -137,23 +102,6 @@ function verifyThemes(string $appRoot, string $expectedTheme): void
     }
 
     $registry = $app->make(AssetRegistry::class);
-    $registry->clear();
-    $app->make(ThemeRuntimeAssets::class)->register(
-        'framework-free-test',
-        frameworkFreeTheme()
-    );
-
-    $assets = [...$registry->registeredScripts(), ...$registry->registeredStyles()];
-    $sources = implode("\n", array_map(static fn ($asset): string => $asset->source(), $assets));
-
-    if (! str_contains($sources, 'framework-free-test')) {
-        fail('The framework-free test theme did not resolve its precompiled assets.');
-    }
-
-    if (str_contains($sources, 'adminlte')) {
-        fail('The framework-free test theme resolved AdminLTE assets.');
-    }
-
     $registry->clear();
     $app->make(ThemeRuntimeAssets::class)->register('shadcn', new TailwindTheme());
     $assets = [...$registry->registeredScripts(), ...$registry->registeredStyles()];

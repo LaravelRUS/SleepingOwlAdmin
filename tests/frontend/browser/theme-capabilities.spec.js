@@ -8,10 +8,6 @@ const themes = [
         route: '/theme-capabilities-adminlte',
     },
     {
-        id: 'framework-free-test',
-        route: '/theme-capabilities-framework-free',
-    },
-    {
         id: 'shadcn',
         route: '/theme-capabilities-tailwind',
     },
@@ -185,9 +181,6 @@ function assertIsolatedThemeRequests(requests, profile, selectedTheme) {
 
     if (selectedTheme === 'shadcn') {
         expect(requests).toContain(`${profileRoot}css/themes/shadcn-utilities.css`)
-    }
-    if (selectedTheme === 'framework-free-test') {
-        expect(requests.some((path) => path.endsWith('/css/icons.css'))).toBe(false)
     }
 }
 

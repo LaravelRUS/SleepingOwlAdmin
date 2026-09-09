@@ -10,7 +10,12 @@ import {
     mountTableAutoUpdate,
     mountTableAutoUpdates,
     readAutoUpdateConfig,
+    readAutoUpdateProfiles,
 } from '../../../../resources/js/shared/features/table/autoupdate/table-auto-update.js'
+import {
+    hasAutoUpdateTargets,
+    installTableAutoUpdates,
+} from '../../../../resources/js/shared/features/table/runtime/install-table-auto-updates.js'
 
 function fixture() {
     let click
@@ -124,19 +129,42 @@ function config(overrides = {}) {
 function attachHost(item, overrides = {}) {
     const host = {
         dataset: {
-            interval: '250',
             pauseLabel: 'Pause updates',
+            profiles: JSON.stringify([{ class: 'orders', color: '#123456', interval: 250 }]),
             resumeLabel: 'Resume updates',
-            tableClasses: '["orders"]',
             ...overrides,
         },
         querySelector: vi.fn(() => item.controlTemplate),
-        style: { getPropertyValue: () => '#123456' },
     }
 
     item.table.ownerDocument = { querySelector: vi.fn(() => host) }
 
     return host
+}
+
+function autoUpdateHost(tableClass) {
+    return {
+        dataset: {
+            profiles: JSON.stringify([{ class: tableClass, color: '#123456', interval: 250 }]),
+        },
+    }
+}
+
+function tableWithClasses(...classes) {
+    return { classList: { contains: (name) => classes.includes(name) } }
+}
+
+function autoUpdateRoot(hosts, tables) {
+    return {
+        querySelectorAll: vi.fn((selector) => {
+            if (selector === '[data-admin-table-autoupdate]') return hosts
+            if (selector === '.datatables') {
+                return tables.filter((table) => table.classList.contains('datatables'))
+            }
+
+            return []
+        }),
+    }
 }
 
 it('registers auto-update as a DataTables layout feature', () => {
@@ -154,6 +182,56 @@ it('registers auto-update as a DataTables layout feature', () => {
     )
 
     expect(register).toHaveBeenCalledWith(AUTO_UPDATE_FEATURE, expect.any(Function))
+})
+
+it('does not register the layout feature when no table matches the configured class', () => {
+    const register = vi.fn()
+    const host = autoUpdateHost('project-orders')
+    const table = tableWithClasses('datatables', 'project-stock')
+
+    installTableAutoUpdates(
+        { Tables: { reload: vi.fn() } },
+        {
+            engine: { feature: { register } },
+            ProgressBar: { Line: vi.fn() },
+            root: autoUpdateRoot([host], [table]),
+            scheduler: { clearTimeout: vi.fn(), setTimeout: vi.fn() },
+        },
+    )
+
+    expect(register).not.toHaveBeenCalled()
+})
+
+it('registers the layout feature when Blade rendered an auto-update host', () => {
+    const register = vi.fn()
+    const host = autoUpdateHost('project-orders')
+    const table = tableWithClasses('datatables', 'project-orders')
+
+    installTableAutoUpdates(
+        { Tables: { reload: vi.fn() } },
+        {
+            engine: { feature: { register } },
+            ProgressBar: { Line: vi.fn() },
+            root: autoUpdateRoot([host], [table]),
+            scheduler: { clearTimeout: vi.fn(), setTimeout: vi.fn() },
+        },
+    )
+
+    expect(register).toHaveBeenCalledWith(AUTO_UPDATE_FEATURE, expect.any(Function))
+})
+
+it('requires both a Blade host and a matching DataTable', () => {
+    const host = autoUpdateHost('project-orders')
+
+    expect(hasAutoUpdateTargets(autoUpdateRoot([], [tableWithClasses('project-orders')]))).toBe(
+        false,
+    )
+    expect(hasAutoUpdateTargets(autoUpdateRoot([host], []))).toBe(false)
+    expect(
+        hasAutoUpdateTargets(
+            autoUpdateRoot([host], [tableWithClasses('datatables', 'project-orders')]),
+        ),
+    ).toBe(true)
 })
 
 it('places matching auto-update controls in the DataTables top layout position', () => {
@@ -198,24 +276,42 @@ it('places matching auto-update controls in the DataTables top layout position',
     expect(item.root.remove).toHaveBeenCalledOnce()
 })
 
-it('reads typed config and multiple matching classes from the Blade host', () => {
+it('reads multiple typed profiles from one Blade host and selects by table class', () => {
     const host = {
         dataset: {
-            interval: '120000',
             pauseLabel: 'Pause',
+            profiles: JSON.stringify([
+                { class: 'project-orders', color: '#123456', interval: 120000 },
+                { class: 'project-stock', color: 'black', interval: 60000 },
+            ]),
             resumeLabel: 'Continue',
-            tableClasses: '["project-orders","project-stock"]',
         },
-        style: { getPropertyValue: () => '#123456' },
     }
 
-    expect(readAutoUpdateConfig(host)).toEqual({
-        color: '#123456',
-        interval: 120000,
+    expect(readAutoUpdateProfiles(host)).toEqual([
+        {
+            color: '#123456',
+            interval: 120000,
+            pauseLabel: 'Pause',
+            resumeLabel: 'Continue',
+            tableClasses: ['project-orders'],
+        },
+        {
+            color: 'black',
+            interval: 60000,
+            pauseLabel: 'Pause',
+            resumeLabel: 'Continue',
+            tableClasses: ['project-stock'],
+        },
+    ])
+    expect(readAutoUpdateConfig(host, tableWithClasses('datatables', 'project-stock'))).toEqual({
+        color: 'black',
+        interval: 60000,
         pauseLabel: 'Pause',
         resumeLabel: 'Continue',
-        tableClasses: ['project-orders', 'project-stock'],
+        tableClasses: ['project-stock'],
     })
+    expect(readAutoUpdateConfig(host, tableWithClasses('datatables', 'missing'))).toBeNull()
 })
 
 it('keeps the singular class and close label as a legacy Blade contract', () => {
@@ -323,9 +419,10 @@ it('mounts and tears down matching tables registered after the Blade host', () =
         }),
     }
     const host = {
-        dataset: { interval: '250', tableClasses: '["orders"]' },
+        dataset: {
+            profiles: JSON.stringify([{ class: 'orders', color: '#123456', interval: 250 }]),
+        },
         querySelector: vi.fn(() => item.controlTemplate),
-        style: { getPropertyValue: () => '#123456' },
     }
     const collection = mountTableAutoUpdates(host, {
         now: item.now,
@@ -346,6 +443,20 @@ it('mounts and tears down matching tables registered after the Blade host', () =
 })
 
 it('rejects invalid host configuration before mounting tables', () => {
+    expect(() =>
+        readAutoUpdateProfiles({
+            dataset: { profiles: '{' },
+        }),
+    ).toThrow('profiles must be a JSON array')
+
+    expect(() =>
+        readAutoUpdateProfiles({
+            dataset: {
+                profiles: JSON.stringify([{ class: 'orders', color: '', interval: 1000 }]),
+            },
+        }),
+    ).toThrow('requires a configured color')
+
     expect(() =>
         readAutoUpdateConfig({
             dataset: { interval: '0' },

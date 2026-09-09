@@ -120,7 +120,7 @@ final class ThemeResolver
     {
         $theme = new LegacyTemplateThemeAdapter(
             $template,
-            ['shared:icons'],
+            [],
             [],
             $this->allCapabilityIds()
         );

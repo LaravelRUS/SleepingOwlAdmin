@@ -2,7 +2,7 @@
 
 import { expect, test } from '@playwright/test'
 
-const themes = ['adminlte', 'framework-free-test', 'shadcn']
+const themes = ['adminlte', 'empty', 'shadcn']
 
 for (const profile of ['development', 'production']) {
     for (const theme of themes) {
@@ -91,7 +91,7 @@ for (const profile of ['development', 'production']) {
 test('shared shell focus and reduced motion contracts are theme neutral', async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 800 })
     await page.emulateMedia({ reducedMotion: 'reduce' })
-    await page.goto('/shared-shell?profile=development&theme=framework-free-test')
+    await page.goto('/shared-shell?profile=development&theme=empty')
 
     await page.keyboard.press('Tab')
     await expect(page.locator('#header-action')).toBeFocused()

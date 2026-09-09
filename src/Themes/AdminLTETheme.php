@@ -31,7 +31,6 @@ final class AdminLTETheme extends TemplateDefault implements ThemeInterface
     public function assets(): array
     {
         return [
-            'shared:icons',
             'shared:compatibility',
             'shared:modules',
             'shared:vue',
