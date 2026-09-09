@@ -103,6 +103,8 @@ entry и подключает результат через `MetaInterface`.
 php artisan sleepingowl:extension:make theme ProjectTheme
 ```
 
+Команда создаёт self-contained unit в `resources/admin/themes/project-theme`: Laravel-layout sources/views, оба готовых asset profile, manifest с MD5/SHA-256 и provider с `ThemeRegistry::registerPackage()`. Для установки и выбора каркаса Node.js не нужен; provider публикует только готовый `public` каталог.
+
 Выбор по-прежнему выполняется существующим `sleeping_owl.template`. Старый опубликованный
 config не заменяется целиком: добавляются только подтверждённые новые значения, а
 `sleepingowl:update` обновляет только package-owned assets.

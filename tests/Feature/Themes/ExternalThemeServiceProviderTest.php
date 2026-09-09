@@ -75,6 +75,21 @@ class ExternalThemeServiceProviderTest extends TestCase
             view()->getFinder()->getHints()
         );
     }
+
+    public function test_duplicate_external_theme_name_is_rejected_explicitly(): void
+    {
+        $themes = app(ThemeRegistry::class);
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Theme name [provider-test] is already registered.');
+
+        $themes->registerPackage(
+            'provider-test',
+            ProviderContractTheme::class,
+            __DIR__.'/../../Fixtures/themes/provider-test',
+            'vendor/provider-test/duplicate'
+        );
+    }
 }
 
 final class ExternalThemeContractServiceProvider extends ServiceProvider
@@ -86,11 +101,11 @@ final class ExternalThemeContractServiceProvider extends ServiceProvider
         $this->app['config']->set('sleeping_owl.template.default', 'provider-test');
 
         $this->app->afterResolving(ThemeRegistry::class, function (ThemeRegistry $themes): void {
-            $manifest = __DIR__.'/../../Fixtures/assets/external-theme-manifest.json';
-            $themes->register(
+            $root = __DIR__.'/../../Fixtures/themes/provider-test';
+            $themes->registerPackage(
                 'provider-test',
                 ProviderContractTheme::class,
-                $manifest,
+                $root,
                 'vendor/provider-test/final'
             );
         });

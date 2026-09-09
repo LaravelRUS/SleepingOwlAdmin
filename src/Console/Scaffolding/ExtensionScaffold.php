@@ -32,6 +32,14 @@ final class ExtensionScaffold
         'theme' => [
             ['theme.php.stub', 'app', 'Admin/Themes/DummyClass.php', 'Admin\\Themes'],
             ['theme-provider.php.stub', 'app', 'Providers/DummyThemeProviderClass.php', 'Providers'],
+            ['theme.scss.stub', 'resources', 'admin/themes/dummy-kebab/resources/css/themes/dummy-kebab/theme.scss'],
+            ['theme.js.stub', 'resources', 'admin/themes/dummy-kebab/resources/js/themes/dummy-kebab/theme.js'],
+            ['theme-view.blade.php.stub', 'resources', 'admin/themes/dummy-kebab/resources/views/themes/dummy-kebab/default/_layout/base.blade.php'],
+            ['theme-ready.css.stub', 'resources', 'admin/themes/dummy-kebab/public/profiles/production/css/theme.css'],
+            ['theme-ready.css.stub', 'resources', 'admin/themes/dummy-kebab/public/profiles/development/css/theme.css'],
+            ['theme-ready.js.stub', 'resources', 'admin/themes/dummy-kebab/public/profiles/production/js/theme.js'],
+            ['theme-ready.js.stub', 'resources', 'admin/themes/dummy-kebab/public/profiles/development/js/theme.js'],
+            ['theme-manifest.json.stub', 'resources', 'admin/themes/dummy-kebab/asset-manifest.json'],
         ],
     ];
 
@@ -88,7 +96,7 @@ final class ExtensionScaffold
             throw new InvalidArgumentException('Extension name cannot be empty.');
         }
 
-        return array_map(
+        $artifacts = array_map(
             fn (array $artifact): array => $this->artifact(
                 $artifact,
                 $class,
@@ -98,6 +106,58 @@ final class ExtensionScaffold
             ),
             $definition
         );
+
+        return $type === 'theme' ? $this->hydrateThemeManifest($artifacts) : $artifacts;
+    }
+
+    /**
+     * @param  list<array{path: string, contents: string}>  $artifacts
+     * @return list<array{path: string, contents: string}>
+     */
+    private function hydrateThemeManifest(array $artifacts): array
+    {
+        $css = $this->artifactContents($artifacts, 'profiles/production/css/theme.css');
+        $javascript = $this->artifactContents($artifacts, 'profiles/production/js/theme.js');
+
+        foreach ($artifacts as &$artifact) {
+            if (! str_ends_with(str_replace('\\', '/', $artifact['path']), '/asset-manifest.json')) {
+                continue;
+            }
+
+            $manifest = json_decode(strtr($artifact['contents'], [
+                'DummyCssMd5' => hash('md5', $css),
+                'DummyCssSha256' => hash('sha256', $css),
+                'DummyJsMd5' => hash('md5', $javascript),
+                'DummyJsSha256' => hash('sha256', $javascript),
+            ]), true, 512, JSON_THROW_ON_ERROR);
+            $buildData = $manifest;
+            unset($buildData['build_id']);
+            $manifest['build_id'] = 'sha256:'.hash(
+                'sha256',
+                json_encode($buildData, JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR)
+            );
+            $artifact['contents'] = json_encode(
+                $manifest,
+                JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR
+            ).PHP_EOL;
+        }
+        unset($artifact);
+
+        return $artifacts;
+    }
+
+    /**
+     * @param  list<array{path: string, contents: string}>  $artifacts
+     */
+    private function artifactContents(array $artifacts, string $suffix): string
+    {
+        foreach ($artifacts as $artifact) {
+            if (str_ends_with(str_replace('\\', '/', $artifact['path']), $suffix)) {
+                return $artifact['contents'];
+            }
+        }
+
+        throw new RuntimeException("Theme scaffold artifact [{$suffix}] is missing.");
     }
 
     /**

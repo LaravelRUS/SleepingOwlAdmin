@@ -1,0 +1,47 @@
+{
+    "schema_version": 1,
+    "package_version": "0.1.0",
+    "build_id": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "profiles": {
+        "production": {
+            "entries": {
+                "theme:dummy-kebab": {
+                    "scripts": [
+                        {
+                            "file": "profiles/production/js/theme.js",
+                            "version": "DummyJsMd5",
+                            "checksum": "sha256:DummyJsSha256"
+                        }
+                    ],
+                    "styles": [
+                        {
+                            "file": "profiles/production/css/theme.css",
+                            "version": "DummyCssMd5",
+                            "checksum": "sha256:DummyCssSha256"
+                        }
+                    ]
+                }
+            }
+        },
+        "development": {
+            "entries": {
+                "theme:dummy-kebab": {
+                    "scripts": [
+                        {
+                            "file": "profiles/development/js/theme.js",
+                            "version": "DummyJsMd5",
+                            "checksum": "sha256:DummyJsSha256"
+                        }
+                    ],
+                    "styles": [
+                        {
+                            "file": "profiles/development/css/theme.css",
+                            "version": "DummyCssMd5",
+                            "checksum": "sha256:DummyCssSha256"
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}

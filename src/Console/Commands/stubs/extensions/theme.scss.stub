@@ -1,0 +1,2 @@
+// Define palette and presentation only. SleepingOwl supplies shared geometry.
+@layer sleepingowl-theme;

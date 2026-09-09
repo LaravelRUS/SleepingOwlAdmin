@@ -6,6 +6,7 @@ use Illuminate\Filesystem\Filesystem;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
+use SleepingOwl\Admin\Assets\AssetManifest;
 use SleepingOwl\Admin\Console\Scaffolding\ExtensionScaffold;
 
 final class ExtensionScaffoldTest extends TestCase
@@ -41,7 +42,7 @@ final class ExtensionScaffoldTest extends TestCase
             array_push($paths, ...$this->generate($type, 'Order Status'));
         }
 
-        $this->assertCount(11, $paths);
+        $this->assertCount(19, $paths);
         foreach ($paths as $path) {
             $this->assertFileExists($path);
             $this->assertStringNotContainsString('Dummy', $this->files->get($path));
@@ -81,6 +82,44 @@ final class ExtensionScaffoldTest extends TestCase
             "'admin-vue-init'",
             $this->files->get($paths[2])
         );
+    }
+
+    public function testThemeIsASelfContainedNoBuildPackageUnit(): void
+    {
+        $paths = $this->generate('theme', 'Order Status');
+        $normalized = array_map(static fn (string $path): string => str_replace('\\', '/', $path), $paths);
+
+        $this->assertCount(10, $paths);
+        $this->assertNotSame([], preg_grep('#/resources/css/themes/order-status/theme\.scss$#', $normalized));
+        $this->assertNotSame([], preg_grep('#/resources/js/themes/order-status/theme\.js$#', $normalized));
+        $this->assertNotSame([], preg_grep('#/resources/views/themes/order-status/#', $normalized));
+
+        $manifestPath = current(preg_grep('#/asset-manifest\.json$#', $normalized));
+        $this->assertIsString($manifestPath);
+        $data = json_decode($this->files->get($manifestPath), true, 512, JSON_THROW_ON_ERROR);
+        $manifest = AssetManifest::fromFragment($data);
+
+        $this->assertSame(['production', 'development'], $manifest->profileIds());
+        foreach ($manifest->profileIds() as $profile) {
+            $bundle = $manifest->profile($profile)->bundle('theme:order-status');
+            foreach ([...$bundle->scripts(), ...$bundle->styles()] as $asset) {
+                $path = dirname($manifestPath).DIRECTORY_SEPARATOR.'public'.DIRECTORY_SEPARATOR
+                    .str_replace('/', DIRECTORY_SEPARATOR, $asset->file());
+
+                $this->assertFileExists($path);
+                $this->assertSame(hash_file('md5', $path), $asset->version());
+                $this->assertSame('sha256:'.hash_file('sha256', $path), $asset->checksum());
+            }
+        }
+
+        $providerPath = current(preg_grep('#OrderStatusThemeServiceProvider\.php$#', $normalized));
+        $provider = $this->files->get($providerPath);
+        $this->assertStringContainsString("registerPackage(\n                'order-status'", $provider);
+        $this->assertStringContainsString("'order-status-theme-assets'", $provider);
+        $this->assertStringNotContainsString('node_modules', implode("\n", array_map(
+            fn (string $path): string => $this->files->get($path),
+            $paths
+        )));
     }
 
     public function testExistingFilesRequireAnExplicitForceOption(): void

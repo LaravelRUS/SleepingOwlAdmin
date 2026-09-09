@@ -11,9 +11,10 @@ final class DummyThemeProviderClass extends ServiceProvider
     public function register(): void
     {
         $this->app->afterResolving(ThemeRegistry::class, function (ThemeRegistry $themes): void {
-            $themes->register(
+            $themes->registerPackage(
+                'dummy-kebab',
                 DummyClass::class,
-                resource_path('admin/themes/dummy-kebab/asset-manifest.json'),
+                resource_path('admin/themes/dummy-kebab'),
                 'vendor/dummy-kebab'
             );
         });
@@ -21,6 +22,14 @@ final class DummyThemeProviderClass extends ServiceProvider
 
     public function boot(): void
     {
-        $this->loadViewsFrom(resource_path('views/themes/dummy-kebab'), 'dummy-kebab');
+        $root = resource_path('admin/themes/dummy-kebab');
+
+        $this->loadViewsFrom(
+            $root.'/resources/views/themes/dummy-kebab',
+            'dummy-kebab'
+        );
+        $this->publishes([
+            $root.'/public' => public_path('vendor/dummy-kebab'),
+        ], 'dummy-kebab-theme-assets');
     }
 }

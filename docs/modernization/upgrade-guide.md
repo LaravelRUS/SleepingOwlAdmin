@@ -134,6 +134,8 @@ php artisan sleepingowl:extension:make theme AcmeTheme
 
 PHP-only extensions need no frontend build. The Vue island scaffold uses
 `Admin.Vue.runtime` and `Admin.Vue.register()` rather than bundling or publishing
-a global Vue copy. A generated theme is an explicit contract skeleton: add its
-Blade namespace and ready production/development manifest before selecting it.
-Existing files are never overwritten unless `--force` is supplied.
+a global Vue copy. A generated theme is a self-contained contract skeleton with
+Laravel-layout sources/views, ready production/development files, a checksum
+manifest and provider registration. It can be selected without Node.js; compile
+its sources only when implementing real theme presentation. Existing files are
+never overwritten unless `--force` is supplied.

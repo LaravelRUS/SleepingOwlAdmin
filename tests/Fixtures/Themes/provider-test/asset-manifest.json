@@ -1,0 +1,55 @@
+{
+    "schema_version": 1,
+    "package_version": "1.0.0",
+    "build_id": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "profiles": {
+        "production": {
+            "entries": {
+                "theme:provider-test": {
+                    "scripts": [],
+                    "styles": [
+                        {
+                            "file": "profiles/production/css/provider-test.css",
+                            "version": "11111111111111111111111111111111",
+                            "checksum": "sha256:1111111111111111111111111111111111111111111111111111111111111111"
+                        }
+                    ]
+                },
+                "feature:tooltip:theme:provider-test": {
+                    "scripts": [],
+                    "styles": [
+                        {
+                            "file": "profiles/production/css/tooltip.css",
+                            "version": "22222222222222222222222222222222",
+                            "checksum": "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+                        }
+                    ]
+                }
+            }
+        },
+        "development": {
+            "entries": {
+                "theme:provider-test": {
+                    "scripts": [],
+                    "styles": [
+                        {
+                            "file": "profiles/development/css/provider-test.css",
+                            "version": "33333333333333333333333333333333",
+                            "checksum": "sha256:3333333333333333333333333333333333333333333333333333333333333333"
+                        }
+                    ]
+                },
+                "feature:tooltip:theme:provider-test": {
+                    "scripts": [],
+                    "styles": [
+                        {
+                            "file": "profiles/development/css/tooltip.css",
+                            "version": "44444444444444444444444444444444",
+                            "checksum": "sha256:4444444444444444444444444444444444444444444444444444444444444444"
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}

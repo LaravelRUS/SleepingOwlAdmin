@@ -135,10 +135,10 @@ use Vendor\AdminTheme\AcmeTheme;
 public function register(): void
 {
     $this->app->afterResolving(ThemeRegistry::class, function (ThemeRegistry $themes): void {
-        $themes->register(
+        $themes->registerPackage(
             'acme',
             AcmeTheme::class,
-            __DIR__.'/../dist/asset-manifest.json',
+            __DIR__.'/..',
             'vendor/acme/sleepingowl-theme'
         );
     });
@@ -147,7 +147,7 @@ public function register(): void
 
 `afterResolving()` makes the hook independent of Composer provider discovery order while still running before theme selection. Set `template.default` to `acme`; the name may be provided by the registry without copying the class into the application's theme map. Registering a duplicate canonical name, or configuring that name for another class, fails explicitly.
 
-The package provider separately calls `loadViewsFrom()` and publishes/copies its built files to the public root passed to `register()`. File names inside the manifest are relative to that root. SleepingOwl does not compile or copy external package assets with `sleepingowl:update`.
+The registered root is self-contained: it owns `asset-manifest.json`, `resources/{css,js,views}` and ready `public/profiles/{production,development}` files. The package provider separately calls `loadViewsFrom()` and publishes only its `public` directory to the URL root passed to `registerPackage()`. File names inside the manifest are relative to that public root. SleepingOwl never copies theme sources into the package and does not compile external assets with `sleepingowl:update`.
 
 The fragment uses the core manifest schema but does not contain `core` or package feature-driver entries. It must contain both `production` and `development`, with identical logical ids in the same order. `theme:acme` is generated from the registry name. Every optional adapter is declared without repeating that name in `AcmeTheme::assets()` (for example `feature:table`) and is scoped in the ready fragment:
 

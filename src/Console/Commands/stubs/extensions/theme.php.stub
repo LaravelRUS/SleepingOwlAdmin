@@ -8,7 +8,7 @@ final class DummyClass implements ThemeInterface
 {
     public function viewNamespace(): string
     {
-        return 'dummy-kebab';
+        return 'dummy-kebab::default';
     }
 
     public function assets(): array

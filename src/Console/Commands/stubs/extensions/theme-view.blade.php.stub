@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="{{ app()->getLocale() }}" data-theme="{{ $themeName }}">
+<head>
+    {!! $template->renderMeta($title) !!}
+    @include('sleeping_owl::shared.theme.runtime_properties')
+    @stack('scripts')
+</head>
+<body class="soa-body">
+    @yield('content')
+    {!! $template->meta()->renderScripts(true) !!}
+    @stack('footer-scripts')
+</body>
+</html>

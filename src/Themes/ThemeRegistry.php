@@ -45,6 +45,32 @@ final class ThemeRegistry
         return $this;
     }
 
+    /**
+     * Register a self-contained Composer theme root with a ready manifest.
+     *
+     * Expected root layout: asset-manifest.json, resources/ and public/.
+     *
+     * @param  class-string<ThemeInterface>  $themeClass
+     */
+    public function registerPackage(
+        string $name,
+        string $themeClass,
+        string $themeRoot,
+        string $publicRoot
+    ): self {
+        $themeRoot = rtrim($themeRoot, '/\\');
+        if ($themeRoot === '') {
+            throw new InvalidArgumentException('Theme package root must be a non-empty path.');
+        }
+
+        return $this->register(
+            $name,
+            $themeClass,
+            $themeRoot.DIRECTORY_SEPARATOR.'asset-manifest.json',
+            $publicRoot
+        );
+    }
+
     public function has(string $name): bool
     {
         return isset($this->registered[$name]);

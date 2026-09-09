@@ -1,0 +1,2 @@
+// Install only runtime behavior that is genuinely specific to this theme.
+export function installTheme() {}
