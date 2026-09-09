@@ -17,5 +17,8 @@ Archived during the resource-layout migration:
   `soa-*` hooks now live directly in the shared `resources/views/default`
   markup; the prototypes had no remaining runtime callers and are retained
   only as design reference.
+- eight retired `default.*` Blade bridges. Runtime owners now point directly
+  to their `shared.*` or `features.*` views, so the extra include layer and its
+  historical logical paths are no longer active in this breaking release.
 
 Nothing under `resources/archive` may be imported or compiled.

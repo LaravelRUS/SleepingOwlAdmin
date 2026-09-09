@@ -135,7 +135,7 @@ class UploadController extends Controller
         if ($result && $result['uploaded'] == 1) {
             if ($request->CKEditorFuncNum && $request->CKEditor && $request->langCode) {
                 return app('sleeping_owl.template')
-                    ->view('helper.ckeditor.ckeditor_upload_file', compact('result'));
+                    ->view('sleeping_owl::features.ckeditor.upload_result', compact('result'));
             }
 
             return response($result);

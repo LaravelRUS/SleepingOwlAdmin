@@ -36,7 +36,7 @@ class Action extends NamedColumn implements ActionInterface
     /**
      * @var string
      */
-    protected $view = 'column.action';
+    protected $view = 'sleeping_owl::features.display.action_option';
 
     /**
      * @var bool

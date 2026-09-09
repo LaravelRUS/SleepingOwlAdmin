@@ -6,7 +6,7 @@
 | --- | --- | --- |
 | `resources/views/shared` | UI core | Theme-independent composition and minimal semantic HTML with no feature lifecycle or CSS-framework classes |
 | `resources/views/features` | Named feature | Feature behavior, protocol responses and theme-neutral feature markup |
-| `resources/views/default` | Package default | Complete AdminLTE-compatible base contract for every `sleeping_owl::default.*` logical path |
+| `resources/views/default` | Package default | AdminLTE-compatible presentation views that genuinely belong to the selected theme |
 | `resources/views/themes/shadcn/default` | Shadcn theme | Only Blade implementations whose presentation differs from the package default |
 | `resources/archive/unused-sources/resources/views/themes/shadcn/components` | Archive only | Retired component prototypes; never a runtime view root |
 
@@ -18,12 +18,14 @@
 `sleeping_owl_shadcn::default.*` keeps its separate application namespace.
 Laravel registers ordered package hints for it: `themes/shadcn`, then the
 package root. A missing Shadcn file therefore inherits the base implementation
-without a bridge or runtime existence check. The current tree contains 136
+without a bridge or runtime existence check. The current tree contains 128
 base logical views and one real Shadcn shell override. The earlier 27 component
 prototypes are archived because all useful `soa-*` hooks now live directly in
 the shared base markup and no runtime view references them.
 
-When a historical path now belongs to `shared` or `features`, its file inside the legacy theme is kept as a one-line bridge include. This preserves published view overrides and PHP view names while moving the implementation to its real owner.
+When a runtime belongs to `shared` or `features`, its PHP owner now uses that
+fully qualified view name directly. The breaking modernization release does
+not keep one-line `default.*` bridge files merely to preserve historical paths.
 
 ## Stable resolution and custom-view API
 
@@ -71,20 +73,22 @@ interface; those themes provide views, not a replacement rendering API.
 - A feature view that still needs framework classes remains a theme-owned feature presentation adapter; it is not moved into `features` merely because its PHP class belongs to a feature.
 - New cross-layer includes use explicit `sleeping_owl::shared.*` or `sleeping_owl::features.*` paths. The only built-in presentation fallback is the ordered Shadcn-to-base namespace; no semantic class resolver is introduced.
 
-## Compatibility bridges
+## Direct owner paths
 
-| Historical path | Owned implementation |
+| Runtime owner | Canonical implementation |
 | --- | --- |
-| `default.column.header` | `shared.column.header` |
-| `default.form.element.formelements` | `shared.form.elements` |
-| `default.column.action` | `features.display.action_option` |
-| `default.column.tree_control` | `features.tree.controls` |
-| `default.display.extensions.actions_form` | `features.display.actions_form` |
-| `default.display.extensions.links` | `features.display.links` |
-| `default.helper.autoupdate` | `features.datatables.autoupdate` |
-| `default.helper.ckeditor.ckeditor_upload_file` | `features.ckeditor.upload_result` |
+| `TableHeaderColumn` | `shared.column.header` |
+| `FormElements` | `shared.form.elements` |
+| action column | `features.display.action_option` |
+| tree controls | `features.tree.controls` |
+| bulk action form | `features.display.actions_form` |
+| display links | `features.display.links` |
+| table auto-update host | `features.datatables.autoupdate` |
+| CKEditor upload response | `features.ckeditor.upload_result` |
 
-The bridge list is executable contract data in `ViewBoundaryTest`: every listed legacy file must contain only its include, and every owned view must be discoverable through the existing `sleeping_owl` namespace.
+`ViewBoundaryTest` verifies that every canonical view remains discoverable and
+that shared/feature roots keep their dependency direction. Retired bridges are
+preserved only under `resources/archive/unused-sources`.
 
 ## Package default and built-in theme overrides
 
@@ -99,7 +103,7 @@ The current compatibility implementation is explicitly identified as `adminlte` 
 
 Shadcn keeps `sleeping_owl_shadcn::default`, stores only the structurally
 different `_layout/inner` shell in `resources/views/themes/shadcn/default` and
-inherits the other 135 logical views from the same base. External namespaces
+inherits the other 127 presentation views from the same base. External namespaces
 remain isolated unless their own provider explicitly
 registers a fallback. The physical view move does not change logical view names,
 template config, published override priority or public asset URLs. The stable
@@ -114,8 +118,8 @@ version.
 - shared and feature Blade roots cannot refer to physical theme paths;
 - frontend core module specifiers cannot point into `features` or `themes`.
 
-`ViewBoundaryTest` walks every base Blade file and proves that each still
-resolves through its original `sleeping_owl::default.*` logical name. The
+`ViewBoundaryTest` walks every base Blade file and proves that each theme-owned
+view resolves through its `sleeping_owl::default.*` logical name. The
 Tailwind rendering contracts repeat that walk through the Shadcn namespace,
 select the theme file when present and the base file otherwise, reject an
 override identical to base, and prove that archived component prototypes are

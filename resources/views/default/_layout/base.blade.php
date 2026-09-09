@@ -18,7 +18,7 @@
 	@yield('content')
 	@include(AdminTemplate::getViewPath('_partials.tooltip'))
 	@include(AdminTemplate::getViewPath('helper.scrolltotop'))
-	@include(AdminTemplate::getViewPath('helper.autoupdate'))
+	@include('sleeping_owl::features.datatables.autoupdate')
 
 	{!! $template->meta()->renderScripts(true) !!}
 	@stack('footer-scripts')

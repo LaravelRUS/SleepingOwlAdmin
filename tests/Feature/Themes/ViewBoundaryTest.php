@@ -2,21 +2,20 @@
 
 class ViewBoundaryTest extends TestCase
 {
-    private const BRIDGES = [
-        'default.column.action' => 'features.display.action_option',
-        'default.column.header' => 'shared.column.header',
-        'default.column.tree_control' => 'features.tree.controls',
-        'default.display.extensions.actions_form' => 'features.display.actions_form',
-        'default.display.extensions.links' => 'features.display.links',
-        'default.form.element.formelements' => 'shared.form.elements',
-        'default.helper.autoupdate' => 'features.datatables.autoupdate',
-        'default.helper.ckeditor.ckeditor_upload_file' => 'features.ckeditor.upload_result',
+    private const OWNED_VIEWS = [
+        'features.display.action_option',
+        'shared.column.header',
+        'features.tree.controls',
+        'features.display.actions_form',
+        'features.display.links',
+        'shared.form.elements',
+        'features.datatables.autoupdate',
+        'features.ckeditor.upload_result',
     ];
 
-    public function test_owned_and_legacy_view_paths_are_discoverable(): void
+    public function test_owned_view_paths_are_discoverable_without_default_bridges(): void
     {
-        foreach (self::BRIDGES as $legacy => $owned) {
-            $this->assertTrue(view()->exists("sleeping_owl::{$legacy}"), $legacy);
+        foreach (self::OWNED_VIEWS as $owned) {
             $this->assertTrue(view()->exists("sleeping_owl::{$owned}"), $owned);
         }
     }
@@ -52,15 +51,6 @@ class ViewBoundaryTest extends TestCase
         $this->assertSame($root, $hints[array_search($root, $hints, true)]);
     }
 
-    public function test_legacy_paths_are_thin_compatibility_bridges(): void
-    {
-        foreach (self::BRIDGES as $legacy => $owned) {
-            $source = trim(file_get_contents($this->viewPath($legacy)));
-
-            $this->assertSame("@include('sleeping_owl::{$owned}')", $source, $legacy);
-        }
-    }
-
     public function test_shared_views_do_not_depend_on_themes_or_feature_runtimes(): void
     {
         $patterns = [
@@ -82,15 +72,13 @@ class ViewBoundaryTest extends TestCase
         $this->assertSame([], $this->findViolations('features', $patterns));
     }
 
-    public function test_shared_header_keeps_the_legacy_render_path(): void
+    public function test_shared_header_renders_rich_titles(): void
     {
         $data = ['title' => '<strong>Orders</strong>'];
 
-        $legacy = view('sleeping_owl::default.column.header', $data)->render();
-        $owned = view('sleeping_owl::shared.column.header', $data)->render();
+        $html = view('sleeping_owl::shared.column.header', $data)->render();
 
-        $this->assertSame($owned, $legacy);
-        $this->assertStringContainsString('<strong>Orders</strong>', $legacy);
+        $this->assertStringContainsString('<strong>Orders</strong>', $html);
     }
 
     private function findViolations(string $root, array $patterns): array
@@ -121,13 +109,6 @@ class ViewBoundaryTest extends TestCase
                 yield $file->getPathname();
             }
         }
-    }
-
-    private function viewPath(string $view): string
-    {
-        $relative = str_replace('.', DIRECTORY_SEPARATOR, $view);
-
-        return __DIR__."/../../../resources/views/{$relative}.blade.php";
     }
 
     private function relativePath(string $path): string

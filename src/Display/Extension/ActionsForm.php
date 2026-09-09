@@ -23,7 +23,7 @@ class ActionsForm extends Extension implements Initializable, Placable
     /**
      * @var string|View
      */
-    protected $view = 'display.extensions.actions_form';
+    protected $view = 'sleeping_owl::features.display.actions_form';
 
     /**
      * @var string

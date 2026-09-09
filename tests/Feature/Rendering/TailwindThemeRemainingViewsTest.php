@@ -57,7 +57,7 @@ class TailwindThemeRemainingViewsTest extends TestCase
 
         $this->assertContains('dashboard', $views);
         $this->assertContains('pages.login', $views);
-        $this->assertCount(136, $views);
+        $this->assertCount(128, $views);
         $this->assertSame(count($views), $inherited + $overridden);
         $this->assertGreaterThan(0, $inherited);
         $this->assertGreaterThan(0, $overridden);

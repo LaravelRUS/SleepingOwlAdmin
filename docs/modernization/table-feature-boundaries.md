@@ -91,8 +91,8 @@ creates a table through `$(element).DataTable(...)`.
 
 ## Blade-owned auto-update control
 
-The historical `default.helper.autoupdate` logical view still owns the feature
-host through `features.datatables.autoupdate`. It now renders a
+The canonical `features.datatables.autoupdate` view owns the feature host and
+is included directly by the base layout. It renders a
 `template[data-admin-table-autoupdate-control]` containing exactly one root and
 a descendant marked with `data-admin-table-autoupdate-toggle`. The table runtime
 clones that root for each matching table, inserts it immediately before the

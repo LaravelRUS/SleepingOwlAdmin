@@ -27,7 +27,7 @@ class TableHeaderColumn implements TableHeaderColumnInterface
     /**
      * @var string|\Illuminate\View\View
      */
-    protected $view = 'column.header';
+    protected $view = 'sleeping_owl::shared.column.header';
 
     public function __construct()
     {

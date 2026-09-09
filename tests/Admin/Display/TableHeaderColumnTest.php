@@ -70,7 +70,7 @@ class TableHeaderColumnTest extends TestCase
     {
         $header = $this->getHeader();
 
-        $this->assertEquals('column.header', $header->getView());
+        $this->assertEquals('sleeping_owl::shared.column.header', $header->getView());
 
         $this->assertEquals($header, $header->setView('custom.template'));
         $this->assertEquals('custom.template', $header->getView());

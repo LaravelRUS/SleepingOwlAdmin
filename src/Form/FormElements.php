@@ -13,7 +13,7 @@ class FormElements extends FormElement implements ElementsInterface
     /**
      * @var string
      */
-    protected $view = 'form.element.formelements';
+    protected $view = 'sleeping_owl::shared.form.elements';
 
     /**
      * @param  array  $elements

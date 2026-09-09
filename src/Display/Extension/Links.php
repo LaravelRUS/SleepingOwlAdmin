@@ -13,7 +13,7 @@ class Links extends Extension implements Placable
     /**
      * @var string|View
      */
-    protected $view = 'display.extensions.links';
+    protected $view = 'sleeping_owl::features.display.links';
 
     /**
      * @var string

@@ -132,7 +132,7 @@ class DefaultThemeRenderContractTest extends TestCase
     {
         $action = $this->renderable('<button data-contract="action">Run</button>');
 
-        $html = view('sleeping_owl::default.display.extensions.actions_form', [
+        $html = view('sleeping_owl::features.display.actions_form', [
             'action_form' => collect([$action]),
             'attributesArray' => [
                 'class' => 'project-actions',
@@ -157,7 +157,7 @@ class DefaultThemeRenderContractTest extends TestCase
             'data-link-id' => 'catalog',
         ]);
 
-        $html = view('sleeping_owl::default.display.extensions.links', [
+        $html = view('sleeping_owl::features.display.links', [
             'attributesArray' => [
                 'class' => 'project-links',
                 'aria-label' => 'Catalog links',

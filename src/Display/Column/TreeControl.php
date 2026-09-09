@@ -19,5 +19,5 @@ class TreeControl extends Control
      *
      * @var string
      */
-    protected $view = 'column.tree_control';
+    protected $view = 'sleeping_owl::features.tree.controls';
 }

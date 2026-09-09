@@ -34,19 +34,6 @@ class DataTablesAutoUpdateRenderTest extends TestCase
         $this->assertStringNotContainsString('<script', $html);
     }
 
-    public function test_historical_theme_view_renders_the_feature_control_template(): void
-    {
-        config()->set('sleeping_owl.datatables_settings.autoupdate', [
-            'autoupdate' => ['interval' => 300, 'color' => '#dc3545'],
-        ]);
-
-        $html = view('sleeping_owl::default.helper.autoupdate')->render();
-
-        $this->assertStringContainsString('data-admin-table-autoupdate', $html);
-        $this->assertStringContainsString('data-admin-table-autoupdate-control', $html);
-        $this->assertStringContainsString('data-admin-table-autoupdate-toggle', $html);
-    }
-
     public function test_disabled_auto_update_renders_no_script(): void
     {
         config()->set('sleeping_owl.datatables_settings.autoupdate', []);
