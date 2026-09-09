@@ -1,0 +1,61 @@
+@use 'colors';
+
+$font-family-sans: -apple-system, blinkmacsystemfont, 'Segoe UI', sans-serif !default;
+$font-size-base: 1rem !default;
+$line-height-base: 1.5 !default;
+$sidebar-width: 15.625rem !default;
+$sidebar-collapsed-width: 4.6rem !default;
+$content-padding: 0.9375rem !default;
+$border-radius: 0.25rem !default;
+$layout-transition-duration: 300ms !default;
+$asset-health-gap: 0.5rem 1rem !default;
+$asset-health-margin-top: 0.75rem !default;
+$asset-health-padding-block: 0.5rem !default;
+$asset-health-padding-inline: 0.75rem !default;
+$asset-health-border-width: 0.1875rem !default;
+$font-family-monospace: sfmono-regular, menlo, monaco, consolas, 'Liberation Mono', monospace !default;
+
+@mixin define {
+  :root {
+    --soa-primary-color: #{colors.$primary};
+    --soa-danger-color: #{colors.$danger};
+    --soa-surface-color: #{colors.$surface};
+    --soa-page-background-color: #{colors.$page-background};
+    --soa-text-color: #{colors.$text};
+    --soa-muted-text-color: #{colors.$text-muted};
+    --soa-border-color: #{colors.$border};
+    --soa-focus-color: #{colors.$primary};
+    --soa-font-family-sans: #{$font-family-sans};
+    --soa-font-size-base: #{$font-size-base};
+    --soa-line-height-base: #{$line-height-base};
+    --soa-sidebar-bg: #{colors.$sidebar-background};
+    --soa-sidebar-text-color: #{colors.$sidebar-text};
+    --soa-sidebar-width: #{$sidebar-width};
+    --soa-sidebar-collapsed-width: #{$sidebar-collapsed-width};
+    --soa-content-padding: #{$content-padding};
+    --soa-border-radius: #{$border-radius};
+    --soa-layout-transition-duration: #{$layout-transition-duration};
+    --soa-asset-health-surface-color: #{colors.$asset-health-surface};
+    --soa-asset-health-text-color: #{colors.$asset-health-text};
+    --soa-asset-health-border-color: #{colors.$asset-health-border};
+    --soa-asset-health-gap: #{$asset-health-gap};
+    --soa-asset-health-margin-top: #{$asset-health-margin-top};
+    --soa-asset-health-padding-block: #{$asset-health-padding-block};
+    --soa-asset-health-padding-inline: #{$asset-health-padding-inline};
+    --soa-asset-health-border-width: #{$asset-health-border-width};
+    --soa-font-family-monospace: #{$font-family-monospace};
+  }
+
+  :root[data-color-scheme='dark'] {
+    --soa-surface-color: #{colors.$dark-surface};
+    --soa-page-background-color: #{colors.$dark-page-background};
+    --soa-text-color: #{colors.$dark-text};
+    --soa-muted-text-color: #{colors.$dark-text-muted};
+    --soa-border-color: #{colors.$dark-border};
+    --soa-sidebar-bg: #{colors.$dark-sidebar-background};
+    --soa-sidebar-text-color: #{colors.$dark-sidebar-text};
+    --soa-asset-health-surface-color: #{colors.$dark-asset-health-surface};
+    --soa-asset-health-text-color: #{colors.$dark-asset-health-text};
+    --soa-asset-health-border-color: #{colors.$dark-asset-health-border};
+  }
+}

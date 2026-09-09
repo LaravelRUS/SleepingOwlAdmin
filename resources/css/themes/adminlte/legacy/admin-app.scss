@@ -1,6 +1,6 @@
 @use '../../../shared/features/forms/files' as form-files;
 @use '../../../shared/features/forms/date-picker' as form-date-picker;
-@use '../../../shared/features/forms/custom-properties' as form-properties;
+@use '../../../shared/features/forms/tokens' as form-tokens;
 @use '../../../shared/features/dropdown/dropdown' as dropdown-driver;
 @use '../features/dropdown/dropdown' as legacy-dropdown;
 @use '../../../shared/features/lightbox/lightbox' as legacy-lightbox-driver;
@@ -12,7 +12,7 @@
 @use '../../../shared/features/tooltip/tooltip' as tooltip-driver;
 @use '../features/tooltip/tooltip' as legacy-tooltip;
 @use '../features/tree/tree' as legacy-tree;
-@use '../custom-properties' as theme-properties;
+@use '../tokens' as theme-tokens;
 @use '../asset-health' as theme-asset-health;
 @use '../legacy-build' as legacy-theme;
 
@@ -42,9 +42,9 @@
   $thumbnail-surface: legacy-theme.$file-thumbnail-surface,
   $file-name-text: legacy-theme.$file-name-text,
 );
-@include form-properties.define;
+@include form-tokens.define;
 @include form-date-picker.styles;
-@include theme-properties.define;
+@include theme-tokens.define;
 @include theme-asset-health.styles;
 
 @import '../../../shared/features/icons/font-awesome';

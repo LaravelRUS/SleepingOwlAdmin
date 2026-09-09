@@ -1,6 +1,5 @@
 @use 'asset-health';
 @use 'colors';
-@use 'custom-properties';
 @use 'legacy-build';
 @use 'features/dropdown/dropdown-adminlte';
 @use 'features/lightbox/lightbox-adminlte';
@@ -10,9 +9,9 @@
 @use 'features/tooltip/tooltip-adminlte';
 @use 'features/tree/tree-adminlte';
 @use 'sidebar';
-@use 'variables';
+@use 'tokens';
 @layer sleepingowl-theme;
-@include custom-properties.define;
+@include tokens.define;
 
 @layer sleepingowl-theme {
   @include asset-health.styles;
