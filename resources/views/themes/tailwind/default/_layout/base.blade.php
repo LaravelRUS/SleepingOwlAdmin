@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 @php
     $colorScheme = ($_COOKIE['theme-mode'] ?? 'light') === 'dark' ? 'dark' : 'light';
-    $bodyClasses = trim('soa-body '.config('sleeping_owl.body_default_class', 'sidebar-mini sidebar-open')
+    $bodyClasses = trim('soa-body '.config('sleeping_owl.ui.body_default_class', '')
         .(($_COOKIE['sidebar-state'] ?? null) === 'sidebar-collapse' ? ' sidebar-collapse' : ''));
 @endphp
 <html lang="{{ app()->getLocale() }}" data-bs-theme="{{ $colorScheme }}" data-color-scheme="{{ $colorScheme }}">
@@ -9,7 +9,7 @@
     {!! $template->renderMeta($title) !!}
     @include('sleeping_owl::shared.theme.runtime_properties')
 
-    @if(null !== ($favicon = config('sleeping_owl.favicon')))
+    @if(null !== ($favicon = config('sleeping_owl.ui.favicon')))
         <link rel="icon" href="{{ $favicon }}">
     @endif
 

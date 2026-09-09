@@ -2,17 +2,15 @@
   $autoupdate = app(\SleepingOwl\Admin\Configuration\DataTablesAutoUpdateConfiguration::class);
 @endphp
 
-@if ($autoupdate->enabled())
+@foreach ($autoupdate->profiles() as $profile)
   <span
     data-admin-table-autoupdate
     data-pause-label="{{ trans('sleeping_owl::lang.button.pause_auto_update') }}"
     data-resume-label="{{ trans('sleeping_owl::lang.button.resume_auto_update') }}"
-    data-interval="{{ $autoupdate->intervalMilliseconds() }}"
-    data-table-classes="{{ json_encode($autoupdate->tableClasses()) }}"
-    @if (count($autoupdate->tableClasses()) === 1)
-      data-table-class="{{ $autoupdate->tableClass() }}"
-    @endif
-    style="--soa-datatables-autoupdate-color: {{ $autoupdate->color() }}"
+    data-interval="{{ $profile['interval_ms'] }}"
+    data-table-class="{{ $profile['class'] }}"
+    data-table-classes="{{ json_encode([$profile['class']]) }}"
+    style="--soa-datatables-autoupdate-color: {{ $profile['color'] }}"
     hidden
   >
     <template data-admin-table-autoupdate-control>
@@ -31,4 +29,4 @@
       </div>
     </template>
   </span>
-@endif
+@endforeach

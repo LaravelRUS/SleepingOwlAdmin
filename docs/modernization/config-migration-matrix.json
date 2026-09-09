@@ -6,7 +6,7 @@
         {
             "selector": {
                 "prefix": "aliases",
-                "exclude": ["aliases.Assets", "aliases.Meta", "aliases.PackageManager"]
+                "exclude": ["aliases.A", "aliases.Assets", "aliases.Form", "aliases.HTML", "aliases.Meta", "aliases.PackageManager"]
             },
             "status": "unchanged",
             "owner": "core:aliases",
@@ -19,6 +19,18 @@
             "status": "same key/new implementation",
             "owner": "compatibility:assets",
             "contract": "Normalize legacy KodiCMS facade strings to first-party SleepingOwl facades after kodicms/laravel-assets is removed."
+        },
+        {
+            "selector": {
+                "keys": ["aliases.A", "aliases.Form", "aliases.HTML"]
+            },
+            "status": "removed",
+            "owner": "presentation:blade",
+            "reason": "The aliases exposed a third-party HTML builder for markup now owned by package Blade views.",
+            "replacement": "Use native Blade elements and SleepingOwl\\Admin\\Support\\HtmlAttributeBag.",
+            "fallback": "No runtime fallback; update direct application usages during the major-version upgrade.",
+            "timeline": "Removed in the current major refactor together with spatie/laravel-html.",
+            "contract": "Render links, mailto anchors, selects, textareas, files and checkboxes with native Blade markup."
         },
         {
             "selector": {
@@ -110,7 +122,7 @@
             },
             "status": "same key/new implementation",
             "owner": "core:themes",
-            "contract": "Keep the class-string selector key. Resolve AdminLTE or a custom ThemeInterface, adapt legacy TemplateDefault, and allow an external provider to register ready assets and explicitly replace the configured class through ThemeRegistry."
+            "contract": "Keep template as the selector key, publish template.default plus the template.themes name-to-class map, resolve only the selected theme, retain the former class-string as a runtime fallback, adapt legacy TemplateDefault, and allow an external provider to register ready assets through ThemeRegistry."
         },
         {
             "selector": {

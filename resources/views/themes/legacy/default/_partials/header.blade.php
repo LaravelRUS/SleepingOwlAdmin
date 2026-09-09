@@ -3,7 +3,7 @@
 		<a class="nav-link" data-widget="pushmenu" data-lte-toggle="sidebar" role="button"><i class="fas fa-bars"></i></a>
 	</li>
 
-	@if (config('sleeping_owl.datatables_settings.state_datatables') || config('sleeping_owl.state_tabs') || config('sleeping_owl.datatables_settings.state_filters'))
+	@if (config('sleeping_owl.datatables_settings.state_datatables') || config('sleeping_owl.datatables_settings.state_tabs') || config('sleeping_owl.datatables_settings.state_filters'))
 		<li class="nav-item">
 			<a class="nav-link" href="javascript:localStorage.clear()" data-toggle="tooltip" data-bs-toggle="tooltip" title="{{ trans('sleeping_owl::lang.button.clear') }} LocalStorage">
 				<i class="fas fa-eraser"></i>
@@ -11,7 +11,7 @@
 		</li>
 	@endif
 
-    @if(config('sleeping_owl.show_mode'))
+	@if(config('sleeping_owl.ui.show_mode'))
         <li>
             <a class="nav-link" data-mode="{{ @$_COOKIE['theme-mode'] ?? 'light' }}" id="theme-mode" data-toggle="tooltip" data-bs-toggle="tooltip" title="{{ trans('sleeping_owl::lang.button.theme') }}">
                 @if((@$_COOKIE['theme-mode'] ?? 'light') == 'light')

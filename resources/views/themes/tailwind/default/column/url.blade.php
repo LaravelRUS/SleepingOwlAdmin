@@ -4,12 +4,7 @@
             @if($icon)
                 <i class="{{ $icon }}" data-toggle="tooltip" data-bs-toggle="tooltip" title="{{ trans('sleeping_owl::lang.table.filter-goto') }}"></i>
             @endif
-            {{
-              app('A')
-                ->attributes(array_merge($linkAttributes, ['target'=> '_blank']))
-                ->href($value)
-                ->text($text)
-            }}
+            <a {!! new \SleepingOwl\Admin\Support\HtmlAttributeBag(array_merge($linkAttributes, ['target' => '_blank', 'href' => $value])) !!}>{{ $text }}</a>
 		@endif
 		{!! $append !!}
 
@@ -18,4 +13,3 @@
 		@endif
 	@endif
 </div>
-

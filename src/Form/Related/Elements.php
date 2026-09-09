@@ -169,7 +169,7 @@ abstract class Elements extends FormElements
         $this->groups = collect();
         $this->relatedValues = collect();
 
-        if (config('sleeping_owl.useRelationCard')) {
+        if (config('sleeping_owl.ui.useRelationCard')) {
             $this->setCard();
         }
 

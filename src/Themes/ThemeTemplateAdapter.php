@@ -58,16 +58,16 @@ final class ThemeTemplateAdapter extends Template
 
     public function getLogo(): mixed
     {
-        return config('sleeping_owl.logo');
+        return config('sleeping_owl.ui.logo');
     }
 
     public function getLogoMini(): mixed
     {
-        return config('sleeping_owl.logo_mini');
+        return config('sleeping_owl.ui.logo_mini');
     }
 
     public function getMenuTop(): mixed
     {
-        return config('sleeping_owl.menu_top');
+        return config('sleeping_owl.ui.menu_top');
     }
 }

@@ -78,7 +78,7 @@ class Image extends NamedColumn
             return (bool) $this->lazy;
         }
 
-        return (bool) config('sleeping_owl.imageLazyLoad');
+        return (bool) config('sleeping_owl.images.lazy_load');
     }
 
     /**

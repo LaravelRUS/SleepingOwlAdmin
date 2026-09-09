@@ -3,7 +3,7 @@
 		@if (!empty($value))
 			<a href="{{ $value }}" data-lightbox>
 				@if ($lazy)
-					<img class="thumbnail lazyload" src="{{ config('sleeping_owl.imageLazyLoadFile') }}" data-src="{{ $value }}" width="{{ $imageWidth }}">
+					<img class="thumbnail lazyload" src="{{ config('sleeping_owl.images.lazy_load_file') }}" data-src="{{ $value }}" width="{{ $imageWidth }}">
 				@else
 					<img class="thumbnail" src="{{ $value }}" width="{{ $imageWidth }}">
 				@endif

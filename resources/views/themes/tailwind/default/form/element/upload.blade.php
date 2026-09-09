@@ -11,15 +11,13 @@
         @include(AdminTemplate::getViewPath('form.element.partials.helptext'))
 
         @if (! $readonly)
-            {!! html()->file($name)->attributes(
-                (new \SleepingOwl\Admin\Support\HtmlAttributeBag($attributesArray ?? []))->class(['soa-file-input'])->getAttributes()
-            )->id($name) !!}
-{{--            {!! Form::file($name, ['id' => $name]) !!}--}}
+            @php($fileAttributes = (new \SleepingOwl\Admin\Support\HtmlAttributeBag(array_merge(['type' => 'file', 'name' => $name], $attributesArray ?? [], ['id' => $name])))->class(['soa-file-input']))
+            <input {!! $fileAttributes !!}>
         @endif
 
         @if(!empty($value) && !$readonly)
             <div class="form-check mt-2 soa-choice">
-                <label class="form-check-label soa-choice-label">{!! html()->checkbox("{$name}_remove")->class('form-check-input soa-choice-control') !!} @lang('sleeping_owl::lang.file.remove')</label>
+                <label class="form-check-label soa-choice-label"><input type="checkbox" name="{{ $name }}_remove" value="1" class="form-check-input soa-choice-control" @checked(old("{$name}_remove"))> @lang('sleeping_owl::lang.file.remove')</label>
             </div>
         @endif
     </div>

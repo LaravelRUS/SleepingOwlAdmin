@@ -2,7 +2,7 @@
 
 ## Статус и правила
 
-- Статус: **inventory готов; реализация не начата**.
+- Статус: **inventory готов; именованный выбор темы реализован**.
 - Следующий checkpoint: перейти к Laravel resource layout, создать отдельный override layer и общий asset layer.
 - Общие декларации поставляются отдельным logical entry `shared:ui`, автоматически подключаемым для любой `ThemeInterface`; headless `core` не получает presentation.
 - Общий CSS может использовать только semantic `soa-*` classes, behavior hooks и canonical `--soa-*` variables. Тема задаёт значения tokens и действительно отличающиеся overrides.
@@ -100,7 +100,7 @@ Canonical название хранится один раз — ключом `te
 - [ ] Переместить общий core/runtime и feature sources без изменения public output paths и logical ids.
 - [ ] Разложить CSS/JS темы и её feature adapters по `resources/{css,js}/themes/<theme-name>`; сохранить Blade в `resources/views/themes/<theme-name>`.
 - [ ] Заменить `ThemeInterface::id()` и внутренний `themeId` на имя, передаваемое config/registry; Theme-класс не дублирует название.
-- [ ] Добавить новый shape `template.default` + `template.themes`, сохранив fallback для прежнего `'template' => ThemeClass::class`.
+- [x] Добавить новый shape `template.default` + `template.themes`, сохранив fallback для прежнего `'template' => ThemeClass::class`.
 - [ ] Ввести logical entry `theme:<name>:overrides`, подключаемый только для выбранной темы и после всех её base/feature entries.
 - [ ] Генерировать theme-scoped logical entries из выбранного имени, не перечислять имя повторно в `ThemeInterface::assets()`.
 - [ ] Расширить custom-theme scaffold и `ThemeRegistry`: внешний package регистрирует self-contained theme root и готовый manifest fragment без копирования в package.
@@ -177,3 +177,4 @@ Canonical название хранится один раз — ключом `te
 | 2026-09-09 | Упрощение resource tree | Лишний уровень `resources/frontend` удалён из целевой структуры: headless runtime находится в `resources/core`, общий UI — в `resources/shared`, темы и overrides — рядом. Во внешнем theme-package также используется прямой `resources/{views,scripts,styles,features}` без дублирующего `resources/theme`. Код/assets не менялись, tests не запускались. | текущий commit |
 | 2026-09-09 | Laravel resource layout | Целевая структура приведена к Laravel convention: `resources/css`, `resources/js`, `resources/views`. Тема остаётся логическим unit через общее `<theme-name>` в type folders; Composer package является физически переносимой единицей. CSS/JS overrides отделены в `theme-overrides/<name>`, application Blade overrides используют стандартный `views/vendor/<namespace>`. Код/assets не менялись, tests не запускались. | текущий commit |
 | 2026-09-09 | Выбор темы по названию | Отдельный theme id исключён из целевого контракта. `template` становится блоком с `default` и картой `themes`; canonical name хранится только ключом этой карты. Старый class-string остаётся совместимым. Resolver передаёт имя manifest scope, Theme-класс его не дублирует; `core/shared` не зависят от выбора, загружаются только assets выбранной темы и её overrides. Код/assets не менялись, tests не запускались. | текущий commit |
+| 2026-09-09 | Config-driven выбор темы | Package config публикует `template.default` и `template.themes`; resolver валидирует имя/карту, создаёт только выбранный класс и сохраняет runtime fallback для прежнего class-string. Default AdminLTE, switch на `shadcn`, внешний provider, invalid map и unselected-theme поведение закреплены точечными test cases. Документация и migration matrix обновлены; каталоги/assets не перемещались, tests по указанию не запускались. | текущий commit |

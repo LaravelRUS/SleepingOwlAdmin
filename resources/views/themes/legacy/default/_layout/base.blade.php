@@ -4,13 +4,13 @@
 <head>
 	{!! $template->renderMeta($title) !!}
 	@include('sleeping_owl::shared.theme.runtime_properties')
-	@if(null !== ($favicon = config('sleeping_owl.favicon')))
+	@if(null !== ($favicon = config('sleeping_owl.ui.favicon')))
 		<link rel="icon" href="{{ $favicon }}">
 	@endif
 
 	@stack('scripts')
 </head>
-<body class="{{ config('sleeping_owl.body_default_class', 'sidebar-mini sidebar-open') . (@$_COOKIE['sidebar-state'] == 'sidebar-collapse' ? ' sidebar-collapse' : '') }}">
+<body class="{{ config('sleeping_owl.ui.body_default_class', '') . (@$_COOKIE['sidebar-state'] == 'sidebar-collapse' ? ' sidebar-collapse' : '') }}">
 	@yield('content')
 	@include(AdminTemplate::getViewPath('_partials.tooltip'))
 	@include(AdminTemplate::getViewPath('helper.scrolltotop'))

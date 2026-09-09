@@ -113,11 +113,16 @@ documented `--soa-*`, including `--soa-sidebar-bg`.
 
 ## Selection contract
 
-The existing public config key selects the built-in theme without a new key or
-a consumer asset build:
+The public config selects the built-in theme by name without a consumer build:
 
 ```php
-'template' => SleepingOwl\Admin\Themes\TailwindTheme::class,
+'template' => [
+    'default' => 'shadcn',
+    'themes' => [
+        'adminlte' => SleepingOwl\Admin\Themes\AdminLTETheme::class,
+        'shadcn' => SleepingOwl\Admin\Themes\TailwindTheme::class,
+    ],
+],
 ```
 
 `TailwindTheme` directly implements `ThemeInterface`. The transitional

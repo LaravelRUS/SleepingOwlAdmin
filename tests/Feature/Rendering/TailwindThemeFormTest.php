@@ -227,7 +227,7 @@ class TailwindThemeFormTest extends TestCase
             'data-wysiwyg-init="ckeditor5"',
             'data-wysiwyg-type="ckeditor5"',
             'name="body"',
-            '<p>Body</p>',
+            '&lt;p&gt;Body&lt;/p&gt;',
         ]);
     }
 

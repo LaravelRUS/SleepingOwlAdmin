@@ -56,11 +56,11 @@ trait ProvidesScriptVariables
             'datatables_settings' => [
                 'state_datatables' => $stateDatatables,
                 'state_filters' => $stateFilters,
+                'state_tabs' => $datatablesSettings['state_tabs'] ?? false,
                 'datatables_highlight' => $datatablesSettings['datatables_highlight'] ?? false,
                 'page_jump' => $datatablesSettings['page_jump'] ?? true,
                 'datatables_inline_edit_refresh' => $datatablesSettings['datatables_inline_edit_refresh'] ?? 'row',
             ],
-            'state_tabs' => $this->config['state_tabs'],
             'lang' => $lang,
         ];
     }

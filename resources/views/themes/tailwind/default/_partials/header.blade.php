@@ -12,7 +12,7 @@
         ])
     </li>
 
-    @if(config('sleeping_owl.datatables_settings.state_datatables') || config('sleeping_owl.state_tabs') || config('sleeping_owl.datatables_settings.state_filters'))
+    @if(config('sleeping_owl.datatables_settings.state_datatables') || config('sleeping_owl.datatables_settings.state_tabs') || config('sleeping_owl.datatables_settings.state_filters'))
         <li class="nav-item">
             @include('sleeping_owl_tailwind::components.ui.button', [
                 'attributesArray' => [
@@ -30,7 +30,7 @@
         </li>
     @endif
 
-    @if(config('sleeping_owl.show_mode'))
+    @if(config('sleeping_owl.ui.show_mode'))
         @php($mode = ($_COOKIE['theme-mode'] ?? 'light') === 'dark' ? 'dark' : 'light')
         <li class="nav-item">
             @include('sleeping_owl_tailwind::components.ui.button', [

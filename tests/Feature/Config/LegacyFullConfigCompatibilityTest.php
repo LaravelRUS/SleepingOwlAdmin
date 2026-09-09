@@ -25,7 +25,6 @@ class LegacyFullConfigCompatibilityTest extends TestCase
         $this->assertSame('admin', $config['url_prefix']);
         $this->assertFalse($config['domain']);
         $this->assertSame(['web', 'admin'], $config['middleware']);
-        $this->assertSame('users', $config['auth_provider']);
         $this->assertSame('env/editor', $config['env_editor_url']);
         $this->assertSame(['APP_KEY', 'DB_*'], $config['env_editor_excluded_keys']);
         $this->assertSame('app/Admin', $config['bootstrapDirectory']);
@@ -56,9 +55,9 @@ class LegacyFullConfigCompatibilityTest extends TestCase
         $this->assertArrayNotHasKey('show_mode', $this->legacyConfig);
 
         $this->assertFalse(config('sleeping_owl.dev_assets'));
-        $this->assertTrue(config('sleeping_owl.enable_editor'));
-        $this->assertTrue(config('sleeping_owl.show_mode'));
-        $this->assertNull(config('sleeping_owl.sidebar_background_color'));
+        $this->assertTrue(config('sleeping_owl.env.enabled'));
+        $this->assertTrue(config('sleeping_owl.ui.show_mode'));
+        $this->assertNull(config('sleeping_owl.ui.sidebar_background_color'));
     }
 
     public function test_package_services_and_default_views_load_with_legacy_config(): void

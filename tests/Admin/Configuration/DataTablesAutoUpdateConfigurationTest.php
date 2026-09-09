@@ -5,105 +5,89 @@ use SleepingOwl\Admin\Configuration\DataTablesAutoUpdateConfiguration;
 
 class DataTablesAutoUpdateConfigurationTest extends TestCase
 {
-    public function test_it_preserves_configured_auto_update_values(): void
+    public function test_it_keeps_interval_and_color_bound_to_each_table_class(): void
     {
         $configuration = $this->configuration([
-            'dt_autoupdate' => true,
-            'dt_autoupdate_class' => 'project-orders',
-            'dt_autoupdate_color' => 'rgb(10 20 30 / 50%)',
-            'dt_autoupdate_interval' => 15,
+            'project-orders' => [
+                'color' => 'rgb(10 20 30 / 50%)',
+                'interval' => 15,
+            ],
+            'project-stock' => [
+                'color' => 'black',
+                'interval' => 60,
+            ],
         ]);
 
         $this->assertTrue($configuration->enabled());
-        $this->assertSame(1, $configuration->intervalMinutes());
-        $this->assertSame(15, $configuration->intervalSeconds());
-        $this->assertSame(15000, $configuration->intervalMilliseconds());
-        $this->assertSame('project-orders', $configuration->tableClass());
-        $this->assertSame(['project-orders', 'autoupdate'], $configuration->tableClasses());
-        $this->assertSame(
-            '.datatables.project-orders, .datatables.autoupdate',
-            $configuration->tableSelector()
-        );
-        $this->assertSame('rgb(10 20 30 / 50%)', $configuration->color());
+        $this->assertSame([
+            [
+                'class' => 'project-orders',
+                'interval' => 15,
+                'interval_ms' => 15000,
+                'color' => 'rgb(10 20 30 / 50%)',
+            ],
+            [
+                'class' => 'project-stock',
+                'interval' => 60,
+                'interval_ms' => 60000,
+                'color' => 'black',
+            ],
+        ], $configuration->profiles());
     }
 
-    public function test_it_accepts_named_progress_colors(): void
+    public function test_an_empty_profile_map_disables_auto_update(): void
     {
-        $configuration = $this->configuration([
-            'dt_autoupdate_color' => 'black',
-        ]);
-
-        $this->assertSame('black', $configuration->color());
-    }
-
-    public function test_it_accepts_an_array_of_alternative_table_classes(): void
-    {
-        $configuration = $this->configuration([
-            'dt_autoupdate_class' => ['project-orders', '.project-stock', 'project-orders'],
-        ]);
-
-        $this->assertSame(
-            ['project-orders', 'project-stock', 'autoupdate'],
-            $configuration->tableClasses()
-        );
-        $this->assertSame('project-orders', $configuration->tableClass());
-        $this->assertSame(
-            '.datatables.project-orders, .datatables.project-stock, .datatables.autoupdate',
-            $configuration->tableSelector()
-        );
-    }
-
-    public function test_it_keeps_legacy_fallbacks_for_empty_values(): void
-    {
-        $configuration = $this->configuration([
-            'dt_autoupdate' => false,
-            'dt_autoupdate_class' => null,
-            'dt_autoupdate_color' => '',
-            'dt_autoupdate_interval' => 0,
-        ]);
+        $configuration = $this->configuration([]);
 
         $this->assertFalse($configuration->enabled());
-        $this->assertSame(5, $configuration->intervalMinutes());
-        $this->assertSame(300, $configuration->intervalSeconds());
-        $this->assertSame('autoupdate', $configuration->tableClass());
-        $this->assertSame(['autoupdate'], $configuration->tableClasses());
-        $this->assertSame('.datatables.autoupdate', $configuration->tableSelector());
-        $this->assertSame('#dc3545', $configuration->color());
+        $this->assertSame([], $configuration->profiles());
     }
 
-    public function test_it_rejects_sub_minimum_intervals_with_the_documented_fallback(): void
+    public function test_profile_values_have_safe_defaults(): void
     {
         $configuration = $this->configuration([
-            'dt_autoupdate_interval' => -10,
+            'autoupdate' => [
+                'color' => '',
+                'interval' => 0,
+            ],
         ]);
 
-        $this->assertSame(300, $configuration->intervalSeconds());
+        $this->assertSame([[
+            'class' => 'autoupdate',
+            'interval' => 300,
+            'interval_ms' => 300000,
+            'color' => '#dc3545',
+        ]], $configuration->profiles());
     }
 
     public function test_it_rejects_an_unsafe_progress_color(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('[sleeping_owl.datatables_settings.dt_autoupdate_color]');
+        $this->expectExceptionMessage(
+            '[sleeping_owl.datatables_settings.autoupdate.orders.color]'
+        );
 
         $this->configuration([
-            'dt_autoupdate_color' => '#fff; } body { display: none',
+            'orders' => ['color' => '#fff; } body { display: none'],
         ]);
     }
 
-    public function test_it_rejects_non_string_class_items(): void
+    public function test_it_rejects_invalid_profile_class_names(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('[sleeping_owl.datatables_settings.dt_autoupdate_class]');
+        $this->expectExceptionMessage('keys must be valid CSS class names');
 
         $this->configuration([
-            'dt_autoupdate_class' => ['orders', 10],
+            'orders table' => ['interval' => 30],
         ]);
     }
 
-    private function configuration(array $values): DataTablesAutoUpdateConfiguration
+    private function configuration(array $profiles): DataTablesAutoUpdateConfiguration
     {
         return new DataTablesAutoUpdateConfiguration(new Repository([
-            'sleeping_owl' => ['datatables_settings' => $values],
+            'sleeping_owl' => [
+                'datatables_settings' => ['autoupdate' => $profiles],
+            ],
         ]));
     }
 }

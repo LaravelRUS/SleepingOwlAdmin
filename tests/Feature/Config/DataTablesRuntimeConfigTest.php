@@ -13,11 +13,13 @@ class DataTablesRuntimeConfigTest extends TestCase
                 'datatables_inline_edit_refresh' => 'table',
                 'state_datatables' => true,
                 'state_filters' => true,
+                'state_tabs' => true,
             ],
         ]);
 
         $this->assertTrue($variables['datatables_settings']['state_datatables']);
         $this->assertTrue($variables['datatables_settings']['state_filters']);
+        $this->assertTrue($variables['datatables_settings']['state_tabs']);
         $this->assertTrue($variables['datatables_settings']['datatables_highlight']);
         $this->assertSame('table', $variables['datatables_settings']['datatables_inline_edit_refresh']);
     }

@@ -9,31 +9,40 @@ use SleepingOwl\Admin\Themes\ThemeTemplateAdapter;
 class ThemeSelectionTest extends TestCase
 {
     private const THEME_CONFIG = [
-        'body_default_class' => 'custom-layout compact',
-        'breadcrumbs' => false,
-        'favicon' => '/custom/favicon.svg',
-        'footer_text' => 'Custom footer',
+        'title' => 'Custom admin',
         'logo' => '<svg data-logo="custom"></svg>',
         'logo_mini' => 'CU',
         'menu_top' => 'Custom menu',
-        'show_footer' => true,
-        'show_mode' => false,
-        'show_version' => true,
+        'favicon' => '/custom/favicon.svg',
+        'body_default_class' => 'custom-layout compact',
         'sidebar_background_color' => '#102030',
-        'useHasManyLocalCard' => true,
-        'useRelationCard' => false,
-        'useWysiwygCard' => true,
+        'breadcrumbs' => false,
+        'show_mode' => false,
+        'scroll_to_top' => true,
+        'scroll_to_bottom' => true,
+        'show_footer' => true,
+        'footer_text' => 'Custom footer',
+        'show_version' => true,
         'version_text' => '2026.9',
+        'useWysiwygCard' => true,
+        'useRelationCard' => false,
+        'useHasManyLocalCard' => true,
     ];
 
     protected function resolveApplicationConfiguration($app)
     {
         parent::resolveApplicationConfiguration($app);
 
-        $app['config']->set('sleeping_owl.template', SelectableContractTheme::class);
+        $app['config']->set('sleeping_owl.template', [
+            'default' => 'selector-theme',
+            'themes' => [
+                'selector-theme' => SelectableContractTheme::class,
+                'unused-theme' => UnselectedContractTheme::class,
+            ],
+        ]);
 
         foreach (self::THEME_CONFIG as $key => $value) {
-            $app['config']->set("sleeping_owl.{$key}", $value);
+            $app['config']->set("sleeping_owl.ui.{$key}", $value);
         }
     }
 
@@ -52,7 +61,11 @@ class ThemeSelectionTest extends TestCase
         $theme = app(ThemeInterface::class);
         $template = app('sleeping_owl.template');
 
-        $this->assertSame(SelectableContractTheme::class, config('sleeping_owl.template'));
+        $this->assertSame('selector-theme', config('sleeping_owl.template.default'));
+        $this->assertSame(
+            SelectableContractTheme::class,
+            config('sleeping_owl.template.themes.selector-theme')
+        );
         $this->assertInstanceOf(SelectableContractTheme::class, $theme);
         $this->assertInstanceOf(ThemeTemplateAdapter::class, $template);
         $this->assertSame('selector-theme::contract', $template->getViewNamespace());
@@ -112,6 +125,39 @@ class ThemeSelectionTest extends TestCase
         (new ThemeResolver($this->app))->resolve(stdClass::class);
     }
 
+    public function test_legacy_class_string_still_resolves(): void
+    {
+        $selection = (new ThemeResolver($this->app))->resolve(SelectableContractTheme::class);
+
+        $this->assertInstanceOf(SelectableContractTheme::class, $selection->theme());
+    }
+
+    public function test_selector_rejects_an_unknown_default_name(): void
+    {
+        $this->expectException(TemplateException::class);
+        $this->expectExceptionMessage(
+            'Default theme [missing] is not defined in [sleeping_owl.template.themes].'
+        );
+
+        (new ThemeResolver($this->app))->resolve([
+            'default' => 'missing',
+            'themes' => ['selector-theme' => SelectableContractTheme::class],
+        ]);
+    }
+
+    public function test_selector_rejects_a_malformed_theme_map(): void
+    {
+        $this->expectException(TemplateException::class);
+        $this->expectExceptionMessage(
+            'Configured class for theme [selector-theme] must be a non-empty class-string.'
+        );
+
+        (new ThemeResolver($this->app))->resolve([
+            'default' => 'selector-theme',
+            'themes' => ['selector-theme' => null],
+        ]);
+    }
+
     private function assertContainsAll(string $html, array $fragments): void
     {
         foreach ($fragments as $fragment) {
@@ -145,5 +191,38 @@ final class SelectableContractTheme implements ThemeInterface
     public function capabilities(): array
     {
         return ['icons', 'table-presentation'];
+    }
+}
+
+final class UnselectedContractTheme implements ThemeInterface
+{
+    public function __construct()
+    {
+        throw new RuntimeException('An unselected theme must not be resolved.');
+    }
+
+    public function id(): string
+    {
+        return 'unused-theme';
+    }
+
+    public function viewNamespace(): string
+    {
+        return 'unused-theme::default';
+    }
+
+    public function assets(): array
+    {
+        return [];
+    }
+
+    public function icons(): array
+    {
+        return [];
+    }
+
+    public function capabilities(): array
+    {
+        return [];
     }
 }

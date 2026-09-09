@@ -62,7 +62,7 @@ class ThemeRenderingContractTest extends TestCase
             'project-contract',
             __DIR__.'/../../Fixtures/views/themes/project'
         );
-        config()->set('sleeping_owl.logo_mini', 'SO');
+        config()->set('sleeping_owl.ui.logo_mini', 'SO');
         $display = (new ThemeSettableContractDisplay())
             ->setView('display')
             ->setTitle('Direct theme')

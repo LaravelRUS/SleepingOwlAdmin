@@ -101,13 +101,12 @@ button, text, icon or presentation classes. The legacy
 `data-admin-table-autoupdate-close` hook is still accepted by project overrides.
 
 A project view override may replace the element type, classes and internal
-nesting while retaining the template and toggle hooks. The configured class may
-be one string or an array; a table matches when it has the common `autoupdate`
-marker or any additionally configured class. The explicit
-`dt_autoupdate_interval` value is expressed in seconds and converted to
-milliseconds only at the Blade/runtime boundary. The progress color remains
-controlled by `dt_autoupdate_color` and accepts safe CSS color keywords such as
-`black` in addition to hexadecimal, rgb/rgba and hsl/hsla values.
+nesting while retaining the template and toggle hooks. Auto-update is configured
+as `datatables_settings.autoupdate.<table-class>` profiles. Each table class owns
+its own `interval` in seconds and validated `color`; the Blade layer emits one
+host per profile and the runtime selects the first profile matching the table.
+`autoupdate` is the standard pre-existing table marker; `autoupdater` is a
+different runtime state class added automatically after the feature mounts.
 
 The host scan is repeated after `DOMContentLoaded` because the historical base
 layout renders the Blade host after its scripts. The controller also subscribes

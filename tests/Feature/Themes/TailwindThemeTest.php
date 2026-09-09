@@ -19,7 +19,13 @@ class TailwindThemeTest extends TestCase
     {
         parent::resolveApplicationConfiguration($app);
 
-        $app['config']->set('sleeping_owl.template', TailwindTheme::class);
+        $app['config']->set('sleeping_owl.template', [
+            'default' => 'shadcn',
+            'themes' => [
+                'adminlte' => SleepingOwl\Admin\Themes\AdminLTETheme::class,
+                'shadcn' => TailwindTheme::class,
+            ],
+        ]);
     }
 
     public function test_existing_config_key_selects_the_direct_tailwind_theme(): void
@@ -27,7 +33,8 @@ class TailwindThemeTest extends TestCase
         $theme = app(ThemeInterface::class);
         $template = app('sleeping_owl.template');
 
-        $this->assertSame(TailwindTheme::class, config('sleeping_owl.template'));
+        $this->assertSame('shadcn', config('sleeping_owl.template.default'));
+        $this->assertSame(TailwindTheme::class, config('sleeping_owl.template.themes.shadcn'));
         $this->assertInstanceOf(TailwindTheme::class, $theme);
         $this->assertInstanceOf(ThemeTemplateAdapter::class, $template);
         $this->assertSame('tailwind', $theme->id());

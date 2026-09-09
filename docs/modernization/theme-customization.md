@@ -8,17 +8,29 @@ The normal production workflow is Composer plus PHP/Artisan. Node.js is needed o
 
 ## Select a theme and pass settings
 
-The existing selector remains a class string in the published config:
+Select a theme by its configured name:
 
 ```php
 use Vendor\AdminTheme\AcmeTheme;
 
 return [
-    'template' => AcmeTheme::class,
+    'template' => [
+        'default' => 'acme',
+        'themes' => [
+            'acme' => AcmeTheme::class,
+        ],
+    ],
 ];
 ```
 
-`AcmeTheme` implements `SleepingOwl\Admin\Contracts\Theme\ThemeInterface`. `TemplateDefault::class` remains a deprecated compatibility value. An invalid class, capability or logical asset fails with a diagnostic exception; the resolver never falls back to AdminLTE.
+`AcmeTheme` implements `SleepingOwl\Admin\Contracts\Theme\ThemeInterface`. Only
+the class selected by `template.default` is resolved. An invalid name, class,
+capability or logical asset fails with a diagnostic exception; the resolver
+never falls back to AdminLTE.
+
+The resolver still accepts the former `'template' => AcmeTheme::class` shape
+as a migration fallback. The current package config publishes only the named
+`default`/`themes` shape.
 
 `ThemeConfiguration` gives theme views the following existing values under their original names and types:
 
@@ -134,7 +146,7 @@ public function register(): void
 }
 ```
 
-`afterResolving()` makes the hook independent of Composer provider discovery order while still running before theme selection. If `sleeping_owl.template` already contains `AcmeTheme::class`, omit `replace()`. A replacement must be registered first. Registering the same theme-owned logical entries again is an intentional last-registration-wins override.
+`afterResolving()` makes the hook independent of Composer provider discovery order while still running before theme selection. If `template.themes` already maps the selected name to `AcmeTheme::class`, omit `replace()`. A replacement must be registered first. Registering the same theme-owned logical entries again is an intentional last-registration-wins override.
 
 The package provider separately calls `loadViewsFrom()` and publishes/copies its built files to the public root passed to `register()`. File names inside the manifest are relative to that root. SleepingOwl does not compile or copy external package assets with `sleepingowl:update`.
 
@@ -154,11 +166,17 @@ Application views under `resources/views/vendor/sleeping_owl` retain priority ov
 
 ## TailwindTheme utilities in application views
 
-The built-in TailwindTheme works without Node.js. Select it with the existing
-config key and use the committed production/development CSS:
+The built-in TailwindTheme works without Node.js. Select its configured name
+and use the committed production/development CSS:
 
 ```php
-'template' => SleepingOwl\Admin\Themes\TailwindTheme::class,
+'template' => [
+    'default' => 'shadcn',
+    'themes' => [
+        'adminlte' => SleepingOwl\Admin\Themes\AdminLTETheme::class,
+        'shadcn' => SleepingOwl\Admin\Themes\TailwindTheme::class,
+    ],
+],
 ```
 
 The precompiled utility snapshot scans package views only. An override in

@@ -16,8 +16,12 @@ final class LegacyConfigNormalizer
 
         $this->deprecateShowEditor();
 
-        if (! array_key_exists('enable_editor', $config)) {
-            $config['enable_editor'] = $config['show_editor'];
+        if (! isset($config['env']) || ! is_array($config['env'])) {
+            $config['env'] = [];
+        }
+
+        if (! array_key_exists('enabled', $config['env'])) {
+            $config['env']['enabled'] = $config['show_editor'];
         }
 
         return $config;
@@ -25,7 +29,7 @@ final class LegacyConfigNormalizer
 
     private function deprecateShowEditor(): void
     {
-        $message = 'The sleeping_owl.show_editor config key is deprecated; use enable_editor instead.';
+        $message = 'The sleeping_owl.show_editor config key is deprecated; use env.enabled instead.';
 
         if (function_exists('trigger_deprecation')) {
             trigger_deprecation('laravelrus/sleepingowl', '13.0', $message);

@@ -457,7 +457,7 @@ No-build consumer contract является release-blocking:
 
 - По умолчанию существующий ключ сохраняется. Удаление допускается только если опция больше технически не имеет смысла либо небезопасна; такое решение требует отдельной записи в migration table.
 - Пользовательский опубликованный конфиг не перезаписывается командой `sleepingowl:update`. Новые ключи читаются с безопасными defaults, поэтому старый config продолжает загружаться.
-- Имена `template`, `body_default_class`, `logo`, `logo_mini`, `menu_top`, `favicon`, `show_mode`, footer/version settings сохраняются. `template` продолжает выбирать класс реализации, даже если новый класс реализует расширенный `ThemeInterface`.
+- `template` остаётся selector key, но новый config содержит `template.default` и карту `template.themes`; resolver создаёт только выбранный класс. Прежний class-string принимается как runtime fallback и не публикуется в новом config.
 - Добавляется простой optional key `sidebar_background_color`; `null` означает default выбранной темы. Значение после валидации задаёт `--soa-sidebar-bg`, поэтому типичный brand color меняется в PHP config без Sass/Tailwind build.
 - `body_default_class` и другие class/HTML options остаются обычными строками классов выбранной темы; core не преобразует их.
 - `bootstrapDirectory` сохраняется без переименования: это историческое имя директории bootstrap-файлов админки (`app/Admin`), а не настройка CSS-фреймворка Bootstrap.
@@ -569,7 +569,7 @@ No-build consumer contract является release-blocking:
 - [x] Извлечь текущую AdminLTE 3/Bootstrap 4 реализацию как временную reference/legacy theme без изменения поведения.
 - [x] Добавить contract tests, которые рендерят один и тот же PHP display/form через разные test themes.
 - [x] Определить theme asset manifest и capability API: tabs, tooltip, dropdown, modal, notification, icons и table presentation.
-- [x] Сохранить `sleeping_owl.template` как selector реализации темы и передать theme-owned config values без переименования.
+- [x] Сохранить `sleeping_owl.template` как selector, добавить `default` + карту `themes`, разрешать только выбранный класс и передать theme-owned config values без преобразования.
 - [x] Проверить `body_default_class`, logo/favicon/menu/footer/version/show_mode и layout card flags в legacy и новых темах.
 - [x] Запретить core imports из каталогов конкретной темы автоматической проверкой.
 
@@ -927,7 +927,7 @@ Tailwind acceptance matrix находится только в [`ADMIN_TAILWIND_T
 - [x] прежний опубликованный `config/sleeping_owl.php` загружается без fatal errors и сохраняет ожидаемое поведение поддерживаемых keys;
 - [x] `sleepingowl:update` не перезаписывает пользовательский config;
 - [x] отсутствие новых keys покрывается defaults внутри пакета;
-- [x] `template` выбирает AdminLTE или custom implementation без обязательного переименования ключа;
+- [x] `template.default` выбирает AdminLTE/custom implementation из `template.themes`; прежний class-string остаётся runtime fallback;
 - [x] `bootstrapDirectory` продолжает указывать на application admin bootstrap files и не связано с выбранной CSS-темой;
 - [x] route/auth/env/upload/date-time/WYSIWYG/search/alias settings не меняются из-за frontend migration;
 - [x] table/state/autoupdate settings сохраняют ключи и документированное поведение;
@@ -1170,3 +1170,5 @@ Tailwind acceptance matrix находится только в [`ADMIN_TAILWIND_T
 | 2026-09-08 | TailwindTheme / Tailwind 4 build и no-build distribution | Exact maintainer-only Tailwind/PostCSS 4.3.3 собирают отдельный utility layer без preflight и только из Tailwind namespace; preset использует canonical `--soa-*`. Оба профиля публикуют handwritten и generated CSS под `theme:tailwind`, по 51 asset с MD5/SHA-256; utility CSS production/development — 2 156/2 819 bytes, forbidden framework/runtime/color scan чист. Документированы application utilities, custom properties, Node boundary, config switch и готовая публикация через `sleepingowl:update`. Gate: production build, PHP 14/61, frontend 268, ESLint/Prettier/PHP syntax. Следующая точка — Tailwind acceptance matrix и release gate. | текущий commit |
 | 2026-09-08 | TailwindTheme / итоговый acceptance gate | PHP contracts подтверждают display/form parity, core/theme isolation, asset health, locale fallback и чистую footer-разметку: 41 tests / 499 assertions. Chromium matrix подтверждает одинаковые capabilities AdminLTE/framework-free/Tailwind в обоих профилях и Tailwind mode/focus/motion/responsive/presentation: 20/20. Clean Laravel 12 Composer smoke без Node.js проверил install/update, 51 asset каждого профиля, default AdminLTE и config switch на Tailwind; ESLint, Prettier и PHP syntax проходят. TailwindTheme и текущий scope модернизации завершены; pilot, TablerTheme и Vite остаются отдельными задачами. | текущий commit |
 | 2026-09-09 | Общие стили постоянных UI-блоков / inventory | Создан отдельный checklist для `shared:ui`: application shell, header buttons, sidebar, footer, common controls, все inline editable types и scroll-to-top/bottom. Sources разделяются на `core`, общий `shared`, отдельный `themes/<id>` и загружаемый последним `themes/<id>/overrides`; manifest фиксирует единый CSS/JS order без изменения public paths/logical ids. Код/assets не менялись, tests не запускались. | текущий commit |
+| 2026-09-09 | Config-driven выбор темы | Новый config публикует `template.default` и `template.themes`; resolver проверяет имя и карту, создаёт только выбранную тему и сохраняет runtime fallback для прежнего class-string без legacy-дубликата в package config. Точечные test cases обновлены для AdminLTE, `shadcn`, custom/external темы и ошибок выбора; документация и migration matrix синхронизированы. Каталоги/assets не перемещались, tests по указанию не запускались. | текущий commit |
+| 2026-09-09 | Удаление `spatie/laravel-html` | Удалены Composer dependency/service provider и aliases `Form`/`HTML`/`A`. Email/url/link/select/WYSIWYG/upload/header-checkbox переведены на native Blade и first-party `HtmlAttributeBag`; `mailto:` проверен в AdminLTE/Tailwind, адрес с `+` сохраняется. Финальные узкие проверки: 4 tests / 37 assertions, Composer manifest, config matrix и PHP syntax; полный suite не запускался. | текущий commit |

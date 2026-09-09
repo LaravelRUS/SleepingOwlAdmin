@@ -33,7 +33,7 @@ trait DateFormat
     public function getTimezone()
     {
         if (is_null($this->timezone)) {
-            $this->timezone = config('sleeping_owl.timezone');
+            $this->timezone = config('sleeping_owl.timezone') ?? config('app.timezone');
         }
 
         return $this->timezone;

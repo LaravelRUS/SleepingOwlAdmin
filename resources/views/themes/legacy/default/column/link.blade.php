@@ -1,7 +1,7 @@
 <div {!! new \SleepingOwl\Admin\Support\HtmlAttributeBag($attributesArray ?? []) !!}>
   @if ($visibled)
     @if($isEditable)
-      {!! app('A')->attributes($linkAttributes)->href($link)->text($value) !!}
+      <a {!! new \SleepingOwl\Admin\Support\HtmlAttributeBag(array_merge($linkAttributes, ['href' => $link])) !!}>{{ $value }}</a>
     @else
       {!! $value !!}
     @endif

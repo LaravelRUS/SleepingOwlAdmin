@@ -118,7 +118,7 @@ class TemplateDefault extends Template
      */
     public function getLogo()
     {
-        return config('sleeping_owl.logo');
+        return config('sleeping_owl.ui.logo');
     }
 
     /**
@@ -126,7 +126,7 @@ class TemplateDefault extends Template
      */
     public function getMenuTop()
     {
-        return config('sleeping_owl.menu_top');
+        return config('sleeping_owl.ui.menu_top');
     }
 
     /**
@@ -134,6 +134,6 @@ class TemplateDefault extends Template
      */
     public function getLogoMini()
     {
-        return config('sleeping_owl.logo_mini');
+        return config('sleeping_owl.ui.logo_mini');
     }
 }

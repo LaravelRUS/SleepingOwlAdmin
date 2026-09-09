@@ -11,7 +11,7 @@ class EnvEditor extends Widget
      */
     public function active()
     {
-        return config('sleeping_owl.enable_editor');
+        return config('sleeping_owl.env.enabled');
     }
 
     /**

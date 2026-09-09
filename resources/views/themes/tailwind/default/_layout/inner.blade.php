@@ -26,11 +26,11 @@
         @php($assetHealthStatus = $assetHealthStatus ?? null)
         <footer class="app-footer main-footer soa-footer">
             <div class="soa-footer-inner">
-                @if(config('sleeping_owl.show_footer'))
+                @if(config('sleeping_owl.ui.show_footer'))
                     <div class="soa-footer-copy">
-                        <span>{!! config('sleeping_owl.footer_text') !!}</span>
+                        <span>{!! config('sleeping_owl.ui.footer_text') !!}</span>
 
-                        @if(config('sleeping_owl.show_version'))
+                        @if(config('sleeping_owl.ui.show_version'))
                             <span class="soa-version">{!! $template->getVersion() !!}</span>
                         @endif
                     </div>

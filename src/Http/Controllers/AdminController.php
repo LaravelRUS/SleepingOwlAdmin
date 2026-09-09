@@ -78,7 +78,7 @@ class AdminController extends Controller
         $this->breadcrumbs = $admin->template()->breadcrumbs();
         $this->inlineEdits = $inlineEdits;
 
-        if ($this->envPolicy = config('sleeping_owl.env_editor_policy')) {
+        if ($this->envPolicy = config('sleeping_owl.env.policy')) {
             $this->envPolicy = new $this->envPolicy;
         }
 
@@ -148,7 +148,7 @@ class AdminController extends Controller
          * @return bool
          */
         $envContent = $envContent->filter(function ($value, $key) {
-            return ! in_array($key, config('sleeping_owl.env_editor_excluded_keys')) && ! $this->filterKey($key);
+            return ! in_array($key, config('sleeping_owl.env.excluded_keys')) && ! $this->filterKey($key);
         });
 
         $envContent = $envContent->filter(function ($value, $key) {
@@ -205,7 +205,7 @@ class AdminController extends Controller
         $removeContent = collect();
 
         foreach ($envContent as $key => $value) {
-            if (! in_array($key, config('sleeping_owl.env_editor_excluded_keys')) && ! $this->filterKey($key)) {
+            if (! in_array($key, config('sleeping_owl.env.excluded_keys')) && ! $this->filterKey($key)) {
                 if ($requestContent->has($key)) {
                     if ($this->validatePolicy('edit', $key)) {
                         $envContent[$key] = $requestContent[$key]['value'];
@@ -219,7 +219,7 @@ class AdminController extends Controller
         }
 
         foreach ($requestContent as $key => $value) {
-            if (! in_array($key, config('sleeping_owl.env_editor_excluded_keys')) && ! $this->filterKey($key)
+            if (! in_array($key, config('sleeping_owl.env.excluded_keys')) && ! $this->filterKey($key)
                 && $this->validatePolicy('create', $key)) {
                 $this->writeEnvData($key, $value['value'], 1);
             }
@@ -245,7 +245,7 @@ class AdminController extends Controller
      */
     public function filterKey($key)
     {
-        foreach (config('sleeping_owl.env_editor_excluded_keys') as $val) {
+        foreach (config('sleeping_owl.env.excluded_keys') as $val) {
             if (strpos($val, '*') !== false) {
                 $val = str_replace('*', '', $val);
                 if (strpos($key, $val) !== false) {

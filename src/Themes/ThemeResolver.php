@@ -16,8 +16,9 @@ final class ThemeResolver
         $this->themes = $themes ?? $app->make(ThemeRegistry::class);
     }
 
-    public function resolve(mixed $configuredClass): ThemeSelection
+    public function resolve(mixed $configuration): ThemeSelection
     {
+        $configuredClass = $this->configuredClass($configuration);
         $implementation = $this->makeImplementation($configuredClass);
 
         if ($implementation instanceof TemplateInterface && $implementation instanceof ThemeInterface) {
@@ -39,14 +40,60 @@ final class ThemeResolver
         );
     }
 
-    private function makeImplementation(mixed $configuredClass): object
+    /**
+     * @return class-string
+     */
+    private function configuredClass(mixed $configuration): string
     {
-        if (! is_string($configuredClass)) {
-            $value = is_scalar($configuredClass) ? (string) $configuredClass : get_debug_type($configuredClass);
+        if (is_string($configuration)) {
+            return $configuration;
+        }
+
+        if (! is_array($configuration)) {
+            $value = is_scalar($configuration) ? (string) $configuration : get_debug_type($configuration);
 
             throw new TemplateException("Template class [{$value}] not found in config file");
         }
 
+        $default = $configuration['default'] ?? null;
+        if (! is_string($default) || $default === '') {
+            throw new TemplateException(
+                'Theme config [sleeping_owl.template.default] must be a non-empty theme name.'
+            );
+        }
+
+        $themes = $configuration['themes'] ?? null;
+        if (! is_array($themes) || $themes === []) {
+            throw new TemplateException(
+                'Theme config [sleeping_owl.template.themes] must be a non-empty theme map.'
+            );
+        }
+
+        foreach ($themes as $name => $class) {
+            if (! is_string($name) || preg_match('/^[a-z0-9]+(?:-[a-z0-9]+)*$/', $name) !== 1) {
+                throw new TemplateException(
+                    'Theme names in [sleeping_owl.template.themes] must use lower-kebab format.'
+                );
+            }
+
+            if (! is_string($class) || $class === '') {
+                throw new TemplateException(
+                    "Configured class for theme [{$name}] must be a non-empty class-string."
+                );
+            }
+        }
+
+        if (! array_key_exists($default, $themes)) {
+            throw new TemplateException(
+                "Default theme [{$default}] is not defined in [sleeping_owl.template.themes]."
+            );
+        }
+
+        return $themes[$default];
+    }
+
+    private function makeImplementation(string $configuredClass): object
+    {
         $implementationClass = $this->themes->implementationClass($configuredClass);
         if (! class_exists($implementationClass)) {
             throw new TemplateException("Template class [{$configuredClass}] not found in config file");

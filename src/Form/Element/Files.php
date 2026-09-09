@@ -306,7 +306,7 @@ class Files extends Images
      */
     public function defaultUploadPath(UploadedFile $file)
     {
-        return config('sleeping_owl.filesUploadDirectory', 'files/uploads');
+        return config('sleeping_owl.files.upload_directory', 'files/uploads');
     }
 
     /**

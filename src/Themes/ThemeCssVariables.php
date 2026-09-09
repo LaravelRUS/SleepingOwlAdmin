@@ -36,7 +36,7 @@ final class ThemeCssVariables
         return [
             self::SIDEBAR_BACKGROUND => CssColor::from(
                 $color,
-                'sleeping_owl.sidebar_background_color'
+                'sleeping_owl.ui.sidebar_background_color'
             )->value(),
         ];
     }

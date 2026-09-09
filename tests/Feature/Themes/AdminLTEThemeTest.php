@@ -19,7 +19,11 @@ class AdminLTEThemeTest extends TestCase
         $theme = $this->app->make(ThemeInterface::class);
         $template = $this->app->make('sleeping_owl.template');
 
-        $this->assertSame(AdminLTETheme::class, config('sleeping_owl.template'));
+        $this->assertSame('adminlte', config('sleeping_owl.template.default'));
+        $this->assertSame(
+            AdminLTETheme::class,
+            config('sleeping_owl.template.themes.adminlte')
+        );
         $this->assertInstanceOf(AdminLTETheme::class, $theme);
         $this->assertInstanceOf(TemplateInterface::class, $theme);
         $this->assertSame($theme, $template);

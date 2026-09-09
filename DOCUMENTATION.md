@@ -21,7 +21,7 @@ SleepingOwl Admin — это мощный конструктор админис�
 
 - **PHP:** >= 8.1
 - **Laravel:** >= 10
-- **Зависимости:** `doctrine/dbal`, `spatie/laravel-html`, `erusev/parsedown`, `diglactic/laravel-breadcrumbs`.
+- **Зависимости:** `doctrine/dbal`, `erusev/parsedown`, `diglactic/laravel-breadcrumbs`.
 
 После `php artisan sleepingowl:install` пакет:
 1. Публикует конфиг `config/sleeping_owl.php`.
@@ -33,12 +33,14 @@ SleepingOwl Admin — это мощный конструктор админис�
 | Ключ | Описание | Дефолт |
 | :--- | :--- | :--- |
 | `url_prefix` | Префикс URL для админки | `admin` |
-| `title` | Название в заголовке и хедере | `Sleeping Owl` |
 | `middleware` | Middleware для маршрутов админки | `['web']` |
-| `auth_provider` | Провайдер аутентификации | `users` |
-| `template` | Класс темы/шаблона UI | `AdminLTETheme::class` |
-| `wysiwyg` | Редактор по умолчанию | `ckeditor` |
-| `imagesUploadDirectory` | Директория для загрузки изображений | `images/uploads` |
+| `template.default` | Название выбранной темы | `adminlte` |
+| `template.themes` | Карта названий тем на классы | `adminlte`, `shadcn` |
+| `ui` | Branding, layout, footer, cards и scroll controls | См. файл |
+| `env` | Настройки env editor | См. файл |
+| `images`, `files` | Загрузка и отображение файлов | См. файл |
+| `wysiwyg` | CDN и настройки редакторов | `ckeditor` |
+| `datatables_settings` | Состояние, поведение и auto-update таблиц | См. файл |
 | `aliases` | Список алиасов для фасадов | См. файл |
 
 Выбор `ThemeInterface`, подключение отдельного CSS/JS, поддерживаемые `--soa-*` properties и service-provider hook внешней готовой темы описаны в [no-build theme customization](docs/modernization/theme-customization.md). Эти операции не требуют npm или пересборки core/theme bundles.

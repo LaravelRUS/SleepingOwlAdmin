@@ -209,7 +209,7 @@ class HasManyLocal extends FormElements
         $this->fieldValues = collect();
         $this->setLabel($label);
 
-        if (config('sleeping_owl.useHasManyLocalCard')) {
+        if (config('sleeping_owl.ui.useHasManyLocalCard')) {
             $this->setCard();
         }
 

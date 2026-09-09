@@ -113,22 +113,22 @@ class UploadController extends Controller
         $result = [];
 
         $imagesAllowedExtensions = collect(
-            config('sleeping_owl.imagesAllowedExtensions', ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg', 'webp'])
+            config('sleeping_owl.images.allowed_extensions', ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg', 'webp'])
         );
 
         if ($imagesAllowedExtensions->search($file->getClientOriginalExtension()) !== false) {
-            $uploadDirectory = config('sleeping_owl.imagesUploadDirectory');
-            $uploadFilenameBehavior = config('sleeping_owl.imagesUploadFilenameBehavior', $this->uploadFilenameBehaviorDefault);
+            $uploadDirectory = config('sleeping_owl.images.upload_directory');
+            $uploadFilenameBehavior = config('sleeping_owl.images.filename_behavior', $this->uploadFilenameBehaviorDefault);
             $result = $this->uploadFile($file, $uploadDirectory, $uploadFilenameBehavior);
         }
 
         $filesAllowedExtensions = collect(
-            config('sleeping_owl.filesAllowedExtensions', [])
+            config('sleeping_owl.files.allowed_extensions', [])
         );
 
         if ($filesAllowedExtensions->search($file->getClientOriginalExtension()) !== false) {
-            $uploadDirectory = config('sleeping_owl.filesUploadDirectory');
-            $uploadFilenameBehavior = config('sleeping_owl.filesUploadFilenameBehavior', $this->uploadFilenameBehaviorDefault);
+            $uploadDirectory = config('sleeping_owl.files.upload_directory');
+            $uploadFilenameBehavior = config('sleeping_owl.files.filename_behavior', $this->uploadFilenameBehaviorDefault);
             $result = $this->uploadFile($file, $uploadDirectory, $uploadFilenameBehavior);
         }
 

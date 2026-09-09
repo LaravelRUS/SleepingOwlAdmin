@@ -20,11 +20,11 @@ class MinimalConfigCompatibilityTest extends TestCase
 
         $this->assertSame(['title' => 'Minimal Admin'], $this->minimalConfig);
         $this->assertSame('Minimal Admin', $config['title']);
-        $this->assertSame('SO', $config['logo_mini']);
+        $this->assertSame('SO', $config['ui']['logo_mini']);
         $this->assertSame('admin', $config['url_prefix']);
         $this->assertFalse($config['dev_assets']);
-        $this->assertFalse($config['enable_editor']);
-        $this->assertTrue($config['show_mode']);
+        $this->assertFalse($config['env']['enabled']);
+        $this->assertTrue($config['ui']['show_mode']);
         $this->assertIsArray($config['datatables']);
         $this->assertIsArray($config['datatables_settings']);
         $this->assertArrayHasKey('AdminTemplate', $config['aliases']);

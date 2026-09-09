@@ -8,21 +8,24 @@ use Illuminate\Contracts\Support\Arrayable;
 final class ThemeConfiguration implements Arrayable
 {
     private const KEYS = [
-        'body_default_class',
-        'breadcrumbs',
-        'favicon',
-        'footer_text',
+        'title',
         'logo',
         'logo_mini',
         'menu_top',
-        'show_footer',
-        'show_mode',
-        'show_version',
+        'favicon',
+        'body_default_class',
         'sidebar_background_color',
-        'useHasManyLocalCard',
-        'useRelationCard',
-        'useWysiwygCard',
+        'breadcrumbs',
+        'show_mode',
+        'scroll_to_top',
+        'scroll_to_bottom',
+        'show_footer',
+        'footer_text',
+        'show_version',
         'version_text',
+        'useWysiwygCard',
+        'useRelationCard',
+        'useHasManyLocalCard',
     ];
 
     /** @var array<string, mixed> */
@@ -33,7 +36,7 @@ final class ThemeConfiguration implements Arrayable
         $this->values = [];
 
         foreach (self::KEYS as $key) {
-            $this->values[$key] = $config->get("sleeping_owl.{$key}");
+            $this->values[$key] = $config->get("sleeping_owl.ui.{$key}");
         }
     }
 

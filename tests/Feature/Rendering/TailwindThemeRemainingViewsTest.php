@@ -26,9 +26,9 @@ class TailwindThemeRemainingViewsTest extends TestCase
         Route::post('/env-editor', fn () => null)->name('admin.env.editor.post');
         $this->app['router']->getRoutes()->refreshNameLookups();
         config()->set([
-            'sleeping_owl.favicon' => null,
-            'sleeping_owl.scroll_to_bottom' => false,
-            'sleeping_owl.scroll_to_top' => false,
+            'sleeping_owl.ui.favicon' => null,
+            'sleeping_owl.ui.scroll_to_bottom' => false,
+            'sleeping_owl.ui.scroll_to_top' => false,
         ]);
     }
 

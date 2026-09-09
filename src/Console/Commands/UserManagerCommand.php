@@ -76,7 +76,11 @@ class UserManagerCommand extends Command
      */
     public function getUserClass()
     {
-        if (is_null($userClass = config('auth.providers.'.config('sleeping_owl.auth_provider', 'users').'.model'))) {
+        $guard = config('auth.defaults.guard');
+        $provider = is_string($guard) ? config("auth.guards.{$guard}.provider") : null;
+        $userClass = is_string($provider) ? config("auth.providers.{$provider}.model") : null;
+
+        if (is_null($userClass)) {
             throw new Exception('User class not specified in config/auth.php providers.');
         }
 

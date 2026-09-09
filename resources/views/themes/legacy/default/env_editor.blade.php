@@ -12,8 +12,8 @@
 @php
     $envEditorProps = array_replace([
         'action' => route('admin.env.editor.post'),
-        'canAdd' => (bool) config('sleeping_owl.env_can_add'),
-        'canDelete' => (bool) config('sleeping_owl.env_can_delete'),
+        'canAdd' => (bool) config('sleeping_owl.env.can_add'),
+        'canDelete' => (bool) config('sleeping_owl.env.can_delete'),
         'classes' => [
             'addButton' => 'btn btn-primary text-white',
             'addIcon' => 'fas fa-plus',
@@ -39,7 +39,7 @@
         'csrfToken' => csrf_token(),
         'data' => $data,
         'errorText' => trans('sleeping_owl::validation.access_denied'),
-        'keysReadonly' => (bool) config('sleeping_owl.env_keys_readonly'),
+        'keysReadonly' => (bool) config('sleeping_owl.env.keys_readonly'),
         'labels' => [
             'add' => trans('sleeping_owl::lang.button.new-entry'),
             'key' => trans('sleeping_owl::lang.env_editor.key'),

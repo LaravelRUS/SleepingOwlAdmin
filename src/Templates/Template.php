@@ -121,7 +121,7 @@ abstract class Template implements TemplateInterface
      */
     public function getTitle(): string
     {
-        return config('sleeping_owl.title');
+        return config('sleeping_owl.ui.title');
     }
 
     /**
@@ -206,7 +206,7 @@ abstract class Template implements TemplateInterface
      */
     public function renderBreadcrumbs($key)
     {
-        if (config('sleeping_owl.breadcrumbs')) {
+        if (config('sleeping_owl.ui.breadcrumbs')) {
             config()->set('breadcrumbs.view', $this->getViewPath('_partials.breadcrumbs'));
 
             return $this->breadcrumbs()->renderIfExists($key);
@@ -259,8 +259,8 @@ abstract class Template implements TemplateInterface
      */
     public function getVersion(): string
     {
-        if (config('sleeping_owl.version_text')) {
-            $this->ver = config('sleeping_owl.version_text');
+        if (config('sleeping_owl.ui.version_text')) {
+            $this->ver = config('sleeping_owl.ui.version_text');
         }
 
         return $this->ver;

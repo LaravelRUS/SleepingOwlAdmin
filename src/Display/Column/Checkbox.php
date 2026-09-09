@@ -2,7 +2,8 @@
 
 namespace SleepingOwl\Admin\Display\Column;
 
-use Spatie\Html\Html;
+use Illuminate\Support\HtmlString;
+use SleepingOwl\Admin\Support\HtmlAttributeBag;
 
 class Checkbox extends NamedColumn
 {
@@ -24,16 +25,19 @@ class Checkbox extends NamedColumn
     public function __construct($label = null)
     {
         parent::__construct($label);
-        $html = app(Html::class);
         $id = 'admin_checkbox_all_'.spl_object_id($this);
-        $checkbox = $html->checkbox(null, 0, false)
-            ->attributes(['class' => 'adminCheckboxAll', 'id' => $id]);
+        $checkbox = new HtmlAttributeBag([
+            'type' => 'checkbox',
+            'value' => 0,
+            'class' => 'adminCheckboxAll',
+            'id' => $id,
+        ]);
+        $label = new HtmlAttributeBag(['for' => $id]);
 
-        $this->setLabel(
-            $html->div()
-                ->class('icheck-primary text-center')
-                ->children([$checkbox, $html->label('', $id)])
-        );
+        $this->setLabel(new HtmlString(
+            '<div class="icheck-primary text-center">'.
+            "<input {$checkbox}><label {$label}></label></div>"
+        ));
     }
 
     /**

@@ -27,7 +27,6 @@ use SleepingOwl\Admin\Providers\AdminServiceProvider;
 use SleepingOwl\Admin\Providers\AliasesServiceProvider;
 use SleepingOwl\Admin\Providers\BreadcrumbsServiceProvider;
 use SleepingOwl\Admin\Themes\ThemeConfiguration;
-use Spatie\Html\HtmlServiceProvider;
 
 /**
  * Class Admin.
@@ -266,7 +265,6 @@ class Admin implements AdminInterface
     {
         $providers = [
             AliasesServiceProvider::class,
-            HtmlServiceProvider::class,
             BreadcrumbsServiceProvider::class,
             AdminServiceProvider::class,
         ];

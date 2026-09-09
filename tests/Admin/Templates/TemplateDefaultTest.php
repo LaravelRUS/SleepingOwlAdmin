@@ -75,7 +75,7 @@ class TemplateDefaultTest extends TestCase
     {
         $this->getConfigMock()
             ->shouldReceive('get')
-            ->with('sleeping_owl.title', null)
+            ->with('sleeping_owl.ui.title', null)
             ->once()
             ->andReturn('Hello world');
 
@@ -89,7 +89,7 @@ class TemplateDefaultTest extends TestCase
     {
         $this->getConfigMock()
             ->shouldReceive('get')
-            ->with('sleeping_owl.title', null)
+            ->with('sleeping_owl.ui.title', null)
             ->twice()
             ->andReturn('Hello world');
 
@@ -100,7 +100,7 @@ class TemplateDefaultTest extends TestCase
 
         $this->getConfigMock()
             ->shouldReceive('get')
-            ->with('sleeping_owl.title', null)
+            ->with('sleeping_owl.ui.title', null)
             ->once()
             ->andReturn('Hello world');
 
@@ -110,7 +110,7 @@ class TemplateDefaultTest extends TestCase
 
         $this->getConfigMock()
             ->shouldReceive('get')
-            ->with('sleeping_owl.title', null)
+            ->with('sleeping_owl.ui.title', null)
             ->once()
             ->andReturn('Hello world');
 
@@ -124,7 +124,7 @@ class TemplateDefaultTest extends TestCase
     {
         $this->getConfigMock()
             ->shouldReceive('get')
-            ->with('sleeping_owl.logo', null)
+            ->with('sleeping_owl.ui.logo', null)
             ->once()
             ->andReturn($logo = '<img src="logo.png" />');
 
@@ -138,7 +138,7 @@ class TemplateDefaultTest extends TestCase
     {
         $this->getConfigMock()
             ->shouldReceive('get')
-            ->with('sleeping_owl.logo_mini', null)
+            ->with('sleeping_owl.ui.logo_mini', null)
             ->once()
             ->andReturn($logo = '<img src="logo-mini.png" />');
 
@@ -152,7 +152,7 @@ class TemplateDefaultTest extends TestCase
     //{
     //    $this->getConfigMock()
     //        ->shouldReceive('get')
-    //        ->with('sleeping_owl.breadcrumbs', null)
+    //        ->with('sleeping_owl.ui.breadcrumbs', null)
     //        ->once()
     //        ->andReturn(true);
     //
@@ -168,7 +168,7 @@ class TemplateDefaultTest extends TestCase
     //
     //    $this->getConfigMock()
     //        ->shouldReceive('get')
-    //        ->with('sleeping_owl.breadcrumbs', null)
+    //        ->with('sleeping_owl.ui.breadcrumbs', null)
     //        ->once()
     //        ->andReturn(false);
     //

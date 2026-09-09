@@ -16037,6 +16037,9 @@
   div.dt-processing {
     top: 10em;
   }
+  .card-body {
+    max-width: calc(100% - 1px);
+  }
   .app-sidebar .sidebar-menu > .nav-item > .nav-treeview {
     background-color: rgba(255, 255, 255, 0.03);
     padding-left: 1rem;

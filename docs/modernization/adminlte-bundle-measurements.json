@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "sourceManifest": "public/default/asset-manifest.json",
   "packageVersion": "dev-master",
-  "buildId": "sha256:3f23a60ceb773ce8dcaa51e6c07cf226ee30cb45948f5c3be020c32d9b1b73df",
+  "buildId": "sha256:39c880c62631502a480f3c9add146587a2e77938739c4a3964c374b40a5d7893",
   "baseline": {
     "source": "docs/modernization/baseline/frontend.json",
     "bytes": 2585357,
@@ -461,23 +461,23 @@
             {
               "type": "styles",
               "file": "profiles/production/css/themes/legacy-adminlte.css",
-              "version": "b3436b3b0d331e5227efc07c6f6210e1",
-              "checksum": "sha256:9f8aea4309f4ad61fe21dbb224d66f5ec09b51f6f4f8f845798647805771d178",
-              "bytes": 333695,
-              "gzipBytes": 49466
+              "version": "d5ce33b48170690b711c06afc6fb9862",
+              "checksum": "sha256:a079ae51e7ea8512dc925734667c6b5487035114bd02f8d5f89b9b797ee137f2",
+              "bytes": 333733,
+              "gzipBytes": 49480
             }
           ],
           "totals": {
             "files": 2,
-            "bytes": 337698,
-            "gzipBytes": 51188
+            "bytes": 337736,
+            "gzipBytes": 51202
           }
         }
       },
       "totals": {
         "files": 33,
-        "bytes": 1848057,
-        "gzipBytes": 489337
+        "bytes": 1848095,
+        "gzipBytes": 489351
       }
     },
     "development": {
@@ -932,37 +932,37 @@
             {
               "type": "styles",
               "file": "profiles/development/css/themes/legacy-adminlte.css",
-              "version": "a65b1d62f97f3dc46ea4173dcc0c5fe0",
-              "checksum": "sha256:2e8dbe3d93501fa0148b05ec1d4ab0da4b6c1405f83c6d4e16009a4ce4db7c4c",
-              "bytes": 444240,
-              "gzipBytes": 56498
+              "version": "4a2714bf13a3dba47d81e8b093e1bb8e",
+              "checksum": "sha256:ad2ed0455fd333f92c8d0d8361c772e04a2279f891d8bb950f4686d8de082c01",
+              "bytes": 444292,
+              "gzipBytes": 56514
             }
           ],
           "totals": {
             "files": 2,
-            "bytes": 458279,
-            "gzipBytes": 60360
+            "bytes": 458331,
+            "gzipBytes": 60376
           }
         }
       },
       "totals": {
         "files": 33,
-        "bytes": 4962428,
-        "gzipBytes": 992190
+        "bytes": 4962480,
+        "gzipBytes": 992206
       }
     }
   },
   "productionVsLegacyAggregate": {
     "bytes": {
-      "current": 1848057,
+      "current": 1848095,
       "baseline": 2585357,
-      "delta": -737300,
+      "delta": -737262,
       "percent": -28.5
     },
     "gzipBytes": {
-      "current": 489337,
+      "current": 489351,
       "baseline": 587787,
-      "delta": -98450,
+      "delta": -98436,
       "percent": -16.7
     }
   }

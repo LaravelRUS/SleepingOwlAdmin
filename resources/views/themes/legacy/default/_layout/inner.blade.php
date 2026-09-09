@@ -41,10 +41,10 @@
         @php($assetHealthStatus = $assetHealthStatus ?? null)
 
         <footer class="app-footer main-footer small">
-            @if(config('sleeping_owl.show_footer'))
-                {!! config('sleeping_owl.footer_text') !!}
+            @if(config('sleeping_owl.ui.show_footer'))
+                {!! config('sleeping_owl.ui.footer_text') !!}
 
-                @if(config('sleeping_owl.show_version'))
+                @if(config('sleeping_owl.ui.show_version'))
                     <div class="float-end d-none d-sm-inline-block">
                         {!! $template->getVersion() !!}
                     </div>

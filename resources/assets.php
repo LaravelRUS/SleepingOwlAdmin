@@ -18,8 +18,8 @@ $wysiwyg_manager->register('ckeditor')
  * Ckeditor 5 CDN & local version.
  */
 $ck5CDN = '//cdn.ckeditor.com/ckeditor5/';
-$ck5CDN .= config('sleeping_owl.wysiwyg_cdn.ckeditor5.ver', '23.1.0');
-if (config('sleeping_owl.wysiwyg_cdn.ckeditor5.useCdn')) {
+$ck5CDN .= config('sleeping_owl.wysiwyg.cdn.ckeditor5.ver', '23.1.0');
+if (config('sleeping_owl.wysiwyg.cdn.ckeditor5.useCdn')) {
     $wysiwyg_manager->register('ckeditor5')
         ->js(null, $ck5CDN.'/classic/ckeditor.js', null, false)
         ->js('ckeditor5-translate', $ck5CDN.'/classic/translations/'.config('app.locale').'.js', null, false);
@@ -33,8 +33,8 @@ if (config('sleeping_owl.wysiwyg_cdn.ckeditor5.useCdn')) {
  * Tinymce CDN version.
  */
 $tinyCDN = '//cdn.tiny.cloud/1/';
-$tinyCDN .= config('sleeping_owl.wysiwyg_cdn.tinymce.api', 'no-api-key');
-$tinyCDN .= '/tinymce/'.config('sleeping_owl.wysiwyg_cdn.tinymce.ver', '4').'/tinymce.min.js';
+$tinyCDN .= config('sleeping_owl.wysiwyg.cdn.tinymce.api', 'no-api-key');
+$tinyCDN .= '/tinymce/'.config('sleeping_owl.wysiwyg.cdn.tinymce.ver', '4').'/tinymce.min.js';
 $wysiwyg_manager->register('tinymce')->js(null, $tinyCDN, null, false);
 
 /**

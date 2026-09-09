@@ -198,6 +198,46 @@ class DefaultThemeRenderContractTest extends TestCase
         ]);
     }
 
+    public function test_native_filter_select_keeps_groups_and_a_zero_selection_in_both_themes(): void
+    {
+        $data = [
+            'attributesArray' => ['data-filter' => 'active'],
+            'default' => 0,
+            'helpText' => null,
+            'options' => ['Status' => [0 => 'No', 1 => 'Yes']],
+            'visibled' => true,
+            'width' => '',
+        ];
+
+        foreach (['sleeping_owl::default.column.filter.select', 'sleeping_owl_tailwind::default.column.filter.select'] as $view) {
+            $html = view($view, $data)->render();
+
+            $this->assertStringContainsString('<optgroup label="Status">', $html);
+            $this->assertStringContainsString('value="0" selected>No</option>', $html);
+            $this->assertStringContainsString('data-filter="active"', $html);
+        }
+    }
+
+    public function test_email_column_renders_a_native_mailto_link_in_both_themes(): void
+    {
+        $data = [
+            'append' => null,
+            'attributesArray' => ['class' => 'project-email'],
+            'small' => null,
+            'value' => 'dev+alerts@example.test',
+            'visibled' => true,
+        ];
+
+        foreach (['sleeping_owl::default.column.email', 'sleeping_owl_tailwind::default.column.email'] as $view) {
+            $html = view($view, $data)->render();
+
+            $this->assertStringContainsString(
+                '<a href="mailto:dev+alerts@example.test">dev+alerts@example.test</a>',
+                $html
+            );
+        }
+    }
+
     public function test_text_form_element_keeps_attributes_help_and_validation_markup(): void
     {
         $this->bindViewPathTemplate();
@@ -268,18 +308,18 @@ class DefaultThemeRenderContractTest extends TestCase
     private function configureLayout(): void
     {
         config()->set([
-            'sleeping_owl.body_default_class' => 'contract-body',
-            'sleeping_owl.datatables_settings.dt_autoupdate' => false,
-            'sleeping_owl.favicon' => null,
-            'sleeping_owl.footer_text' => 'Contract footer',
-            'sleeping_owl.scroll_to_bottom' => false,
-            'sleeping_owl.scroll_to_top' => false,
-            'sleeping_owl.show_footer' => true,
-            'sleeping_owl.show_mode' => false,
-            'sleeping_owl.show_version' => true,
+            'sleeping_owl.ui.body_default_class' => 'contract-body',
+            'sleeping_owl.datatables_settings.autoupdate' => [],
+            'sleeping_owl.ui.favicon' => null,
+            'sleeping_owl.ui.footer_text' => 'Contract footer',
+            'sleeping_owl.ui.scroll_to_bottom' => false,
+            'sleeping_owl.ui.scroll_to_top' => false,
+            'sleeping_owl.ui.show_footer' => true,
+            'sleeping_owl.ui.show_mode' => false,
+            'sleeping_owl.ui.show_version' => true,
             'sleeping_owl.datatables_settings.state_datatables' => false,
             'sleeping_owl.datatables_settings.state_filters' => false,
-            'sleeping_owl.state_tabs' => false,
+            'sleeping_owl.datatables_settings.state_tabs' => false,
             'sleeping_owl.url_prefix' => 'admin',
         ]);
     }

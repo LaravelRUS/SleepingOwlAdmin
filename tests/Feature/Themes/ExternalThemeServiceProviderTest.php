@@ -30,7 +30,11 @@ class ExternalThemeServiceProviderTest extends TestCase
             $registry->registeredStyles()
         );
 
-        $this->assertSame(AdminLTETheme::class, config('sleeping_owl.template'));
+        $this->assertSame('adminlte', config('sleeping_owl.template.default'));
+        $this->assertSame(
+            AdminLTETheme::class,
+            config('sleeping_owl.template.themes.adminlte')
+        );
         $this->assertInstanceOf(ProviderContractTheme::class, $theme);
         $this->assertInstanceOf(ThemeTemplateAdapter::class, app('sleeping_owl.template'));
         $this->assertSame(app('sleeping_owl.template'), app('sleeping_owl')->template());
@@ -67,8 +71,8 @@ final class ExternalThemeContractServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        $this->app['config']->set('sleeping_owl.footer_text', 'Provider footer');
-        $this->app['config']->set('sleeping_owl.sidebar_background_color', '#102030');
+        $this->app['config']->set('sleeping_owl.ui.footer_text', 'Provider footer');
+        $this->app['config']->set('sleeping_owl.ui.sidebar_background_color', '#102030');
 
         $this->app->afterResolving(ThemeRegistry::class, function (ThemeRegistry $themes): void {
             $manifest = __DIR__.'/../../Fixtures/assets/external-theme-manifest.json';

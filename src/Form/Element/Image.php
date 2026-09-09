@@ -54,7 +54,7 @@ class Image extends File
     {
         $this->uploadValidationRules = ['required', new ImageExtended()];
 
-        $this->setAllowSvg((bool) config('sleeping_owl.imagesAllowSvg'));
+        $this->setAllowSvg((bool) config('sleeping_owl.images.allow_svg'));
 
         parent::__construct($path, $label);
     }
@@ -184,7 +184,7 @@ class Image extends File
      */
     public function defaultUploadPath(UploadedFile $file)
     {
-        return config('sleeping_owl.imagesUploadDirectory', 'images/uploads');
+        return config('sleeping_owl.images.upload_directory', 'images/uploads');
     }
 
     /**

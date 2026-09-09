@@ -44,11 +44,11 @@ class CssColorTest extends TestCase
 
         foreach ($colors as $color) {
             try {
-                CssColor::from($color, 'sleeping_owl.sidebar_background_color');
+                CssColor::from($color, 'sleeping_owl.ui.sidebar_background_color');
                 $this->fail('Invalid color was accepted.');
             } catch (InvalidArgumentException $exception) {
                 $this->assertStringContainsString(
-                    '[sleeping_owl.sidebar_background_color]',
+                    '[sleeping_owl.ui.sidebar_background_color]',
                     $exception->getMessage()
                 );
             }

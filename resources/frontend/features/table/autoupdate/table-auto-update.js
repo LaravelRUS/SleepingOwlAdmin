@@ -366,7 +366,18 @@ function mountProgressView(table, settings, dependencies) {
 }
 
 function findAutoUpdateHost(table) {
-    return table.ownerDocument?.querySelector?.(AUTO_UPDATE_HOST_SELECTOR) ?? null
+    const document = table.ownerDocument
+    const hosts = document?.querySelectorAll?.(AUTO_UPDATE_HOST_SELECTOR)
+    const candidates = hosts
+        ? Array.from(hosts)
+        : [document?.querySelector?.(AUTO_UPDATE_HOST_SELECTOR)].filter(Boolean)
+
+    return (
+        candidates.find((host) => {
+            const config = readAutoUpdateConfig(host)
+            return matchesAutoUpdateTable(table, config.tableClasses)
+        }) ?? null
+    )
 }
 
 function cloneControl(template) {

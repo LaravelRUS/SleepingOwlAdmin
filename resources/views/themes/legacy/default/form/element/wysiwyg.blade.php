@@ -28,7 +28,8 @@
         </div>
 
         <div class="card-body pad pt-0">
-            {!! html()->textarea($name, $value)->attributes($attributesArray) !!}
+            @php($textareaAttributes = array_merge(['name' => $name, 'id' => $name], $attributesArray))
+            <textarea {!! new \SleepingOwl\Admin\Support\HtmlAttributeBag($textareaAttributes) !!}>{{ old($name, $value) }}</textarea>
         </div>
 
         @include(AdminTemplate::getViewPath('form.element.partials.helptext'))

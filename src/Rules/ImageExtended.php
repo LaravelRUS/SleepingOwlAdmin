@@ -18,7 +18,7 @@ class ImageExtended implements Rule
      */
     public function passes($attribute, $value)
     {
-        return $this->validateMimes($attribute, $value, config('sleeping_owl.imagesAllowedExtensions', ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg', 'webp']));
+        return $this->validateMimes($attribute, $value, config('sleeping_owl.images.allowed_extensions', ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg', 'webp']));
     }
 
     /**

@@ -28,7 +28,7 @@ class ThemeCssVariablesTest extends TestCase
     public function test_invalid_sidebar_color_is_rejected(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('[sleeping_owl.sidebar_background_color]');
+        $this->expectExceptionMessage('[sleeping_owl.ui.sidebar_background_color]');
 
         $this->variables([
             'sidebar_background_color' => '#fff; } body { color: red',

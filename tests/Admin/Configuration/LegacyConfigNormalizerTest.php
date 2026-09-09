@@ -11,16 +11,16 @@ class LegacyConfigNormalizerTest extends TestCase
         ]);
 
         $this->assertTrue($config['show_editor']);
-        $this->assertTrue($config['enable_editor']);
+        $this->assertTrue($config['env']['enabled']);
     }
 
     public function test_explicit_current_editor_key_takes_priority(): void
     {
         $config = (new LegacyConfigNormalizer())->normalize([
             'show_editor' => true,
-            'enable_editor' => false,
+            'env' => ['enabled' => false],
         ]);
 
-        $this->assertFalse($config['enable_editor']);
+        $this->assertFalse($config['env']['enabled']);
     }
 }

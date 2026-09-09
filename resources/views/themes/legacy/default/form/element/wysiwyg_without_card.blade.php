@@ -10,7 +10,8 @@
 
         @include(AdminTemplate::getViewPath('form.element.partials.helptext'))
 
-        {!! html()->textarea($name, $value)->attributes($attributesArray) !!}
+        @php($textareaAttributes = array_merge(['name' => $name, 'id' => $name], $attributesArray))
+        <textarea {!! new \SleepingOwl\Admin\Support\HtmlAttributeBag($textareaAttributes) !!}>{{ old($name, $value) }}</textarea>
 
         @include(app('sleeping_owl.template')->getViewPath('form.element.partials.errors'))
     </div>

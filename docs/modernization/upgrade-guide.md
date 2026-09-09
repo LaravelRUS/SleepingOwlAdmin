@@ -29,8 +29,9 @@ continues to load and displays a localized warning in the AdminLTE footer.
   processing remain the PHP table API.
 - Existing route, auth, environment, upload, date/time, WYSIWYG, search and
   table configuration keys remain available.
-- `sleeping_owl.template` remains the theme selector; old
-  `TemplateDefault::class` values use the deprecated adapter.
+- `sleeping_owl.template` remains the theme selector, now as
+  `default` plus the `themes` name-to-class map. Old class-string values still
+  resolve during migration; `TemplateDefault::class` uses the deprecated adapter.
 - `sleeping_owl::default.*` view names and Laravel application override priority
   are preserved.
 - Concrete theme classes and arbitrary HTML attributes still pass through; PHP
@@ -77,11 +78,17 @@ listed in [first-party assets](first-party-assets.md). Exact old facade strings
 inside an existing published config are normalized automatically.
 
 The default ready theme is `AdminLTETheme`. The package also includes the
-framework-independent `TailwindTheme`; select it with the unchanged key and no
+framework-independent `TailwindTheme`; select its configured name without a
 frontend rebuild:
 
 ```php
-'template' => SleepingOwl\Admin\Themes\TailwindTheme::class,
+'template' => [
+    'default' => 'shadcn',
+    'themes' => [
+        'adminlte' => SleepingOwl\Admin\Themes\AdminLTETheme::class,
+        'shadcn' => SleepingOwl\Admin\Themes\TailwindTheme::class,
+    ],
+],
 ```
 
 Its full Blade namespace, Tailwind 4 utility snapshot and production/development

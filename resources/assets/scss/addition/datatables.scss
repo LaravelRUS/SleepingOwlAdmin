@@ -10,3 +10,9 @@ Fix Datatable css
 div.dt-processing {
     top: 10em;
 }
+
+
+//fix horizontal scroll
+.card-body {
+    max-width: calc(100% - 1px);
+}

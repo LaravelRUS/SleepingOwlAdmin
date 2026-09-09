@@ -36,7 +36,9 @@ function mountConfiguredTabs(admin, body, options) {
 }
 
 function configuredTabState(admin) {
-    return typeof admin.Config?.get === 'function' ? admin.Config.get('state_tabs', false) : false
+    return typeof admin.Config?.get === 'function'
+        ? admin.Config.get('datatables_settings.state_tabs', false)
+        : false
 }
 
 function preferred(value, fallback) {

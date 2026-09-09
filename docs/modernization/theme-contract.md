@@ -70,7 +70,7 @@ Capability говорит только о presentation support. Он не озн
 
 `AdminLTETheme` является прямой реализацией `ThemeInterface` и одновременно наследует `TemplateDefault`, пока legacy rendering API остаётся публичным. Она владеет namespace `sleeping_owl::default`, объявляет общие `shared:icons`/`shared:compatibility`/`shared:vue`/`shared:modules`, `theme:legacy-adminlte`, все существующие feature presentation adapters и восемь capabilities. Icon classes не преобразуются в PHP: существующие Blade views и пользовательские расширения продолжают задавать нужные Font Awesome classes напрямую.
 
-Новый package config выбирает `AdminLTETheme::class`. Её собственный `initialize()` регистрирует один versioned manifest profile: headless core, shared entries, standalone AdminLTE presentation, все feature drivers и только объявленные AdminLTE adapters. `shared:modules` загружается последним, после возможных project assets, и выполняет compatibility module boot с финальным component scan. Standalone `theme:legacy-adminlte` CSS содержит Bootstrap/AdminLTE, но не дублирует отдельный `shared:icons` bundle.
+Новый package config выбирает имя `adminlte` из `template.themes`, где оно связано с `AdminLTETheme::class`. Её собственный `initialize()` регистрирует один versioned manifest profile: headless core, shared entries, standalone AdminLTE presentation, все feature drivers и только объявленные AdminLTE adapters. `shared:modules` загружается последним, после возможных project assets, и выполняет compatibility module boot с финальным component scan. Standalone `theme:legacy-adminlte` CSS содержит Bootstrap/AdminLTE, но не дублирует отдельный `shared:icons` bundle.
 
 Публичные dependency handles `admin-vue-init`, `admin-default` и `admin-modules-load` сохранены на соответствующих logical boundaries, поэтому существующие project CSS/JS продолжают подключаться без изменения API. Опубликованный config, в котором сохранён `TemplateDefault::class`, по-прежнему работает через `LegacyTemplateThemeAdapter` и старые aggregate-файлы; его lifecycle намеренно не переключён на новый runtime.
 
@@ -78,16 +78,30 @@ Capability говорит только о presentation support. Он не озн
 
 Прямая реализация `ThemeInterface` не обязана наследовать package template или повторять его `initialize()`. Transitional `ThemeTemplateAdapter::initialize()` автоматически передаёт выбранную тему общему `ThemeRuntimeAssets`: он регистрирует `core`, объявленные shared/theme entries, стандартные package feature drivers и только adapters с тем же theme id. Table adapter ставится перед самозапускающимся table driver; объявленный `shared:modules` остаётся последним для финального module boot/scan. `AdminLTETheme` использует тот же assembler, добавляя только прежние публичные asset handles.
 
-Таким образом, `assets()` custom theme описывает лишь её shared dependencies, один `theme:<id>` и matching `feature:<feature>:theme:<id>` presentation adapters. Он не перечисляет package-owned `feature:<feature>` drivers и не получает неявные AdminLTE, Tailwind или icon assets. Отсутствующий либо повреждённый logical entry диагностируется manifest resolver; fallback к другой теме не выполняется. Готовые production/development файлы и checksums публикует автор темы, поэтому Composer-потребитель выбирает class через существующий `sleeping_owl.template` без Node.js и пересборки core. Внешний package регистрирует свой manifest fragment и public root через `ThemeRegistry`; этот service-provider hook и optional replacement существующего configured class описаны в [`theme-customization.md`](theme-customization.md).
+Таким образом, `assets()` custom theme описывает лишь её shared dependencies, один `theme:<id>` и matching `feature:<feature>:theme:<id>` presentation adapters. Он не перечисляет package-owned `feature:<feature>` drivers и не получает неявные AdminLTE, Tailwind или icon assets. Отсутствующий либо повреждённый logical entry диагностируется manifest resolver; fallback к другой теме не выполняется. Готовые production/development файлы и checksums публикует автор темы, поэтому Composer-потребитель выбирает имя из `sleeping_owl.template` без Node.js и пересборки core. Внешний package регистрирует свой manifest fragment и public root через `ThemeRegistry`; этот service-provider hook и optional replacement существующего configured class описаны в [`theme-customization.md`](theme-customization.md).
 
 Test-only `FrameworkFreeTestTheme` является executable acceptance fixture этого контракта, а не новой встроенной продуктовой темой. Она реализует только публичный interface, владеет Blade-разметкой display/form и произвольными project attributes/classes, поставляет CSS-only Sass theme плюс dropdown/sidebar/table/tabs/tooltip adapters и не импортирует Bootstrap, AdminLTE, Tailwind или Font Awesome. Её шесть объявленных capabilities (`dropdown`, `notification`, `sidebar`, `table-presentation`, `tabs`, `tooltip`) являются проверяемым подмножеством capabilities AdminLTE; `modal` и `icons` намеренно не объявлены, icon bundle не загружается. Browser contract выполняет одинаковые операции обеих тем в production/development, проверяет отсутствие framework/global runtime и по фактическим response URLs доказывает загрузку только bundle/adapters выбранной темы.
 
 ## Выбор темы и config values
 
-Существующий `sleeping_owl.template` остаётся единственным selector key. Значением является class-string одной из двух форм:
+`sleeping_owl.template` остаётся единственным selector key, но новый config использует именованную карту:
 
-- legacy implementation `TemplateInterface` — продолжает работать как `sleeping_owl.template` и получает `LegacyTemplateThemeAdapter`;
-- новая implementation `ThemeInterface` — становится выбранной темой и получает внутренний `ThemeTemplateAdapter` для переходных вызовов старого rendering API.
+```php
+'template' => [
+    'default' => env('SLEEPINGOWL_TEMPLATE', 'adminlte'),
+    'themes' => [
+        'adminlte' => SleepingOwl\Admin\Themes\AdminLTETheme::class,
+        'shadcn' => SleepingOwl\Admin\Themes\TailwindTheme::class,
+    ],
+],
+```
+
+`template.default` выбирает ровно один ключ `template.themes`; классы остальных тем не создаются. Имена используют `lower-kebab`, неизвестное имя и некорректная карта завершаются `TemplateException` без fallback к AdminLTE.
+
+Resolver временно принимает прежний class-string как runtime fallback, но новый package config его не публикует. После выбора класса поддерживаются две реализации:
+
+- legacy implementation `TemplateInterface` получает `LegacyTemplateThemeAdapter`;
+- новая implementation `ThemeInterface` становится выбранной темой и получает внутренний `ThemeTemplateAdapter` для переходных вызовов старого rendering API.
 
 Класс, не реализующий ни один contract, вызывает `TemplateException`; неявного fallback к AdminLTE нет. Реализация обоих interfaces может использоваться напрямую с обеих сторон selection boundary.
 

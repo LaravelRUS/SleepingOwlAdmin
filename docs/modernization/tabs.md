@@ -31,7 +31,7 @@ selector for custom or published views. Package-owned views use only
 
 ## State and events
 
-The existing `state_tabs` config key is unchanged. When enabled, the driver
+The `datatables_settings.state_tabs` config key enables persistence. The driver
 reads and writes the historical `Tabbed_<pathname>` localStorage key, including
 the old numeric edit-route normalization. Invalid JSON or a storage quota error
 does not clear unrelated application storage.

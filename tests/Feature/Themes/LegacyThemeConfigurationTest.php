@@ -59,9 +59,9 @@ class LegacyThemeConfigurationTest extends TestCase
     {
         $this->configureLegacyLayout();
         config()->set([
-            'sleeping_owl.favicon' => null,
-            'sleeping_owl.show_footer' => false,
-            'sleeping_owl.show_mode' => false,
+            'sleeping_owl.ui.favicon' => null,
+            'sleeping_owl.ui.show_footer' => false,
+            'sleeping_owl.ui.show_mode' => false,
         ]);
 
         $html = $this->renderLayout($this->bindLayoutTemplate());
@@ -76,7 +76,7 @@ class LegacyThemeConfigurationTest extends TestCase
     public function test_asset_health_status_renders_when_the_optional_footer_is_hidden(): void
     {
         $this->configureLegacyLayout();
-        config()->set('sleeping_owl.show_footer', false);
+        config()->set('sleeping_owl.ui.show_footer', false);
         $this->app->setLocale('en');
 
         $html = $this->renderLayout(
@@ -98,7 +98,7 @@ class LegacyThemeConfigurationTest extends TestCase
     public function test_null_sidebar_color_does_not_emit_a_runtime_override(): void
     {
         $this->configureLegacyLayout();
-        config()->set('sleeping_owl.sidebar_background_color', null);
+        config()->set('sleeping_owl.ui.sidebar_background_color', null);
 
         $html = $this->renderLayout($this->bindLayoutTemplate());
 
@@ -108,10 +108,10 @@ class LegacyThemeConfigurationTest extends TestCase
     public function test_invalid_sidebar_color_is_rejected_before_css_rendering(): void
     {
         $this->configureLegacyLayout();
-        config()->set('sleeping_owl.sidebar_background_color', '#fff; } body { color: red');
+        config()->set('sleeping_owl.ui.sidebar_background_color', '#fff; } body { color: red');
 
         $this->expectException(ViewException::class);
-        $this->expectExceptionMessage('[sleeping_owl.sidebar_background_color]');
+        $this->expectExceptionMessage('[sleeping_owl.ui.sidebar_background_color]');
 
         $this->renderLayout($this->bindLayoutTemplate());
     }
@@ -119,10 +119,10 @@ class LegacyThemeConfigurationTest extends TestCase
     public function test_legacy_template_getters_keep_existing_config_keys(): void
     {
         config()->set([
-            'sleeping_owl.logo' => '<svg data-contract="actual-logo"></svg>',
-            'sleeping_owl.logo_mini' => 'AL',
-            'sleeping_owl.menu_top' => 'Actual legacy menu',
-            'sleeping_owl.version_text' => 'Actual legacy version',
+            'sleeping_owl.ui.logo' => '<svg data-contract="actual-logo"></svg>',
+            'sleeping_owl.ui.logo_mini' => 'AL',
+            'sleeping_owl.ui.menu_top' => 'Actual legacy menu',
+            'sleeping_owl.ui.version_text' => 'Actual legacy version',
         ]);
 
         $template = $this->app->make(TemplateDefault::class);
@@ -135,47 +135,47 @@ class LegacyThemeConfigurationTest extends TestCase
 
     public function test_legacy_card_flags_keep_form_view_modes(): void
     {
-        config()->set('sleeping_owl.useWysiwygCard', true);
+        config()->set('sleeping_owl.ui.useWysiwygCard', true);
         $this->assertSame('form.element.wysiwyg', $this->wysiwyg()->getView());
 
-        config()->set('sleeping_owl.useWysiwygCard', false);
+        config()->set('sleeping_owl.ui.useWysiwygCard', false);
         $this->assertSame('form.element.wysiwyg_without_card', $this->wysiwyg()->getView());
 
-        config()->set('sleeping_owl.useRelationCard', true);
+        config()->set('sleeping_owl.ui.useRelationCard', true);
         $this->assertSame('form.element.related.elements', (new HasMany('items'))->getView());
 
-        config()->set('sleeping_owl.useRelationCard', false);
+        config()->set('sleeping_owl.ui.useRelationCard', false);
         $this->assertSame('form.element.related.elements_without_card', (new HasMany('items'))->getView());
 
-        config()->set('sleeping_owl.useHasManyLocalCard', true);
+        config()->set('sleeping_owl.ui.useHasManyLocalCard', true);
         $this->assertSame('form.element.related.elements', (new HasManyLocal('items'))->getView());
 
-        config()->set('sleeping_owl.useHasManyLocalCard', false);
+        config()->set('sleeping_owl.ui.useHasManyLocalCard', false);
         $this->assertSame('form.element.related.elements_without_card', (new HasManyLocal('items'))->getView());
     }
 
     private function configureLegacyLayout(): void
     {
         config()->set([
-            'sleeping_owl.body_default_class' => 'legacy-layout compact',
-            'sleeping_owl.breadcrumbs' => false,
-            'sleeping_owl.datatables_settings.dt_autoupdate' => false,
-            'sleeping_owl.favicon' => '/favicon.svg?tenant=main&size=small',
-            'sleeping_owl.footer_text' => '<strong>Legacy footer</strong>',
-            'sleeping_owl.logo' => '<svg data-contract="logo"></svg>',
-            'sleeping_owl.logo_mini' => 'LC',
-            'sleeping_owl.menu_top' => 'Legacy configuration menu',
-            'sleeping_owl.scroll_to_bottom' => false,
-            'sleeping_owl.scroll_to_top' => false,
-            'sleeping_owl.show_footer' => true,
-            'sleeping_owl.show_mode' => true,
-            'sleeping_owl.show_version' => true,
-            'sleeping_owl.sidebar_background_color' => '#102030',
+            'sleeping_owl.ui.body_default_class' => 'legacy-layout compact',
+            'sleeping_owl.ui.breadcrumbs' => false,
+            'sleeping_owl.datatables_settings.autoupdate' => [],
+            'sleeping_owl.ui.favicon' => '/favicon.svg?tenant=main&size=small',
+            'sleeping_owl.ui.footer_text' => '<strong>Legacy footer</strong>',
+            'sleeping_owl.ui.logo' => '<svg data-contract="logo"></svg>',
+            'sleeping_owl.ui.logo_mini' => 'LC',
+            'sleeping_owl.ui.menu_top' => 'Legacy configuration menu',
+            'sleeping_owl.ui.scroll_to_bottom' => false,
+            'sleeping_owl.ui.scroll_to_top' => false,
+            'sleeping_owl.ui.show_footer' => true,
+            'sleeping_owl.ui.show_mode' => true,
+            'sleeping_owl.ui.show_version' => true,
+            'sleeping_owl.ui.sidebar_background_color' => '#102030',
             'sleeping_owl.datatables_settings.state_datatables' => false,
             'sleeping_owl.datatables_settings.state_filters' => false,
-            'sleeping_owl.state_tabs' => false,
+            'sleeping_owl.datatables_settings.state_tabs' => false,
             'sleeping_owl.url_prefix' => 'admin',
-            'sleeping_owl.version_text' => '<em>Legacy version</em>',
+            'sleeping_owl.ui.version_text' => '<em>Legacy version</em>',
         ]);
     }
 
@@ -250,22 +250,22 @@ final class LegacyThemeConfigurationTemplateStub
 
     public function getLogo(): string
     {
-        return config('sleeping_owl.logo');
+        return config('sleeping_owl.ui.logo');
     }
 
     public function getLogoMini(): string
     {
-        return config('sleeping_owl.logo_mini');
+        return config('sleeping_owl.ui.logo_mini');
     }
 
     public function getMenuTop(): string
     {
-        return config('sleeping_owl.menu_top');
+        return config('sleeping_owl.ui.menu_top');
     }
 
     public function getVersion(): string
     {
-        return config('sleeping_owl.version_text');
+        return config('sleeping_owl.ui.version_text');
     }
 
     public function meta(): LegacyThemeConfigurationMetaStub

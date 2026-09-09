@@ -11,78 +11,65 @@ final class DataTablesAutoUpdateConfiguration
 
     private const DEFAULT_INTERVAL_SECONDS = 300;
 
-    private const DEFAULT_TABLE_CLASS = 'autoupdate';
-
-    private bool $enabled;
-
-    private int $intervalSeconds;
-
-    /** @var list<string> */
-    private array $tableClasses;
-
-    private string $color;
+    /** @var list<array{class: string, interval: int, interval_ms: int, color: string}> */
+    private array $profiles;
 
     public function __construct(Repository $config)
     {
-        $this->enabled = (bool) $config->get('sleeping_owl.datatables_settings.dt_autoupdate', false);
-        $this->intervalSeconds = $this->normalizeIntervalSeconds(
-            $config->get('sleeping_owl.datatables_settings.dt_autoupdate_interval')
-        );
-        $this->tableClasses = $this->normalizeClasses(
-            $config->get('sleeping_owl.datatables_settings.dt_autoupdate_class')
-        );
-        $this->color = $this->normalizeColor(
-            $config->get('sleeping_owl.datatables_settings.dt_autoupdate_color')
+        $this->profiles = $this->normalizeProfiles(
+            $config->get('sleeping_owl.datatables_settings.autoupdate', [])
         );
     }
 
     public function enabled(): bool
     {
-        return $this->enabled;
+        return $this->profiles !== [];
     }
 
-    /** @deprecated Use intervalSeconds() for the configured interval. */
-    public function intervalMinutes(): int
+    /**
+     * @return list<array{class: string, interval: int, interval_ms: int, color: string}>
+     */
+    public function profiles(): array
     {
-        return (int) ceil($this->intervalSeconds / 60);
+        return $this->profiles;
     }
 
-    public function intervalSeconds(): int
+    /**
+     * @return list<array{class: string, interval: int, interval_ms: int, color: string}>
+     */
+    private function normalizeProfiles(mixed $profiles): array
     {
-        return $this->intervalSeconds;
-    }
-
-    public function intervalMilliseconds(): int
-    {
-        return $this->intervalSeconds * 1000;
-    }
-
-    public function tableClass(): ?string
-    {
-        return $this->tableClasses[0] ?? null;
-    }
-
-    /** @return list<string> */
-    public function tableClasses(): array
-    {
-        return $this->tableClasses;
-    }
-
-    public function tableSelector(): string
-    {
-        if ($this->tableClasses === []) {
-            return '.datatables';
+        if (! is_array($profiles)) {
+            throw new \InvalidArgumentException(
+                '[sleeping_owl.datatables_settings.autoupdate] must be a map keyed by table CSS class.'
+            );
         }
 
-        return implode(', ', array_map(
-            static fn (string $class): string => '.datatables.'.$class,
-            $this->tableClasses
-        ));
-    }
+        $normalized = [];
 
-    public function color(): string
-    {
-        return $this->color;
+        foreach ($profiles as $class => $settings) {
+            if (! is_string($class) || preg_match('/^-?[_a-zA-Z]+[_a-zA-Z0-9-]*$/', $class) !== 1) {
+                throw new \InvalidArgumentException(
+                    '[sleeping_owl.datatables_settings.autoupdate] keys must be valid CSS class names.'
+                );
+            }
+
+            if (! is_array($settings)) {
+                throw new \InvalidArgumentException(
+                    "[sleeping_owl.datatables_settings.autoupdate.{$class}] must be an array."
+                );
+            }
+
+            $interval = $this->normalizeIntervalSeconds($settings['interval'] ?? null);
+            $normalized[] = [
+                'class' => $class,
+                'interval' => $interval,
+                'interval_ms' => $interval * 1000,
+                'color' => $this->normalizeColor($settings['color'] ?? null, $class),
+            ];
+        }
+
+        return $normalized;
     }
 
     private function normalizeIntervalSeconds(mixed $value): int
@@ -92,43 +79,7 @@ final class DataTablesAutoUpdateConfiguration
         return $seconds >= 1 ? $seconds : self::DEFAULT_INTERVAL_SECONDS;
     }
 
-    /** @return list<string> */
-    private function normalizeClasses(mixed $value): array
-    {
-        if ($value === null || $value === false || $value === '') {
-            return [self::DEFAULT_TABLE_CLASS];
-        }
-
-        if (! is_string($value) && ! is_array($value)) {
-            throw new \InvalidArgumentException(
-                '[sleeping_owl.datatables_settings.dt_autoupdate_class] must be a string or an array.'
-            );
-        }
-
-        $values = is_array($value) ? $value : [$value];
-        $classes = [];
-
-        foreach ($values as $item) {
-            if (! is_string($item)) {
-                throw new \InvalidArgumentException(
-                    '[sleeping_owl.datatables_settings.dt_autoupdate_class] must contain only strings.'
-                );
-            }
-
-            foreach (preg_split('/[\s,]+/u', trim($item), -1, PREG_SPLIT_NO_EMPTY) ?: [] as $class) {
-                $class = ltrim($class, '.');
-                if ($class !== '') {
-                    $classes[] = $class;
-                }
-            }
-        }
-
-        $classes[] = self::DEFAULT_TABLE_CLASS;
-
-        return array_values(array_unique($classes));
-    }
-
-    private function normalizeColor(mixed $value): string
+    private function normalizeColor(mixed $value, string $class): string
     {
         $color = trim((string) $value);
 
@@ -136,6 +87,9 @@ final class DataTablesAutoUpdateConfiguration
             return self::DEFAULT_COLOR;
         }
 
-        return CssColor::from($color, 'sleeping_owl.datatables_settings.dt_autoupdate_color')->value();
+        return CssColor::from(
+            $color,
+            "sleeping_owl.datatables_settings.autoupdate.{$class}.color"
+        )->value();
     }
 }
