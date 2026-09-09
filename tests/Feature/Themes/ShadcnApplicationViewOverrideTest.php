@@ -29,8 +29,8 @@ class ShadcnApplicationViewOverrideTest extends TestCase
         );
         $this->assertSame(
             $themeRoot.DIRECTORY_SEPARATOR.'default'.DIRECTORY_SEPARATOR.
-                '_layout'.DIRECTORY_SEPARATOR.'base.blade.php',
-            realpath($finder->find('sleeping_owl_shadcn::default._layout.base'))
+                'display'.DIRECTORY_SEPARATOR.'table.blade.php',
+            realpath($finder->find('sleeping_owl_shadcn::default.display.table'))
         );
         $this->assertSame(
             $baseRoot.DIRECTORY_SEPARATOR.'default'.DIRECTORY_SEPARATOR.

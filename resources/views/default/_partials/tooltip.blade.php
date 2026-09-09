@@ -1,5 +1,5 @@
 <template data-tooltip-template>
-    <div data-tooltip-popup role="tooltip">
+    <div class="soa-tooltip" data-tooltip-popup role="tooltip">
         <span data-tooltip-content></span>
     </div>
 </template>

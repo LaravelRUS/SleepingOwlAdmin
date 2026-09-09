@@ -1,5 +1,9 @@
 <!DOCTYPE html>
-@php($colorScheme = ($_COOKIE['theme-mode'] ?? 'light') === 'dark' ? 'dark' : 'light')
+@php
+    $colorScheme = ($_COOKIE['theme-mode'] ?? 'light') === 'dark' ? 'dark' : 'light';
+    $bodyClasses = trim('soa-body '.config('sleeping_owl.ui.body_default_class', '')
+        .(($_COOKIE['sidebar-state'] ?? null) === 'sidebar-collapse' ? ' sidebar-collapse' : ''));
+@endphp
 <html lang="{{ app()->getLocale() }}" data-bs-theme="{{ $colorScheme }}" data-color-scheme="{{ $colorScheme }}">
 <head>
 	{!! $template->renderMeta($title) !!}
@@ -10,7 +14,7 @@
 
 	@stack('scripts')
 </head>
-<body class="{{ config('sleeping_owl.ui.body_default_class', '') . (@$_COOKIE['sidebar-state'] == 'sidebar-collapse' ? ' sidebar-collapse' : '') }}">
+<body class="{{ $bodyClasses }}">
 	@yield('content')
 	@include(AdminTemplate::getViewPath('_partials.tooltip'))
 	@include(AdminTemplate::getViewPath('helper.scrolltotop'))

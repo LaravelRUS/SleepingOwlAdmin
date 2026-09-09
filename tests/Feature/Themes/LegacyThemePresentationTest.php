@@ -21,7 +21,7 @@ class LegacyThemePresentationTest extends TestCase
         $html = view('sleeping_owl::default.form.button', $button->toArray())->render();
 
         $this->assertContainsAll($html, [
-            '<button class="btn btn-success user-action"',
+            '<button class="btn btn-success soa-button soa-button-success user-action"',
             'data-contract="save"',
             'value="save_and_close"',
         ]);
@@ -45,9 +45,9 @@ class LegacyThemePresentationTest extends TestCase
         ])->render();
 
         $this->assertContainsAll($html, [
-            'class="btn-group"',
+            'class="btn-group soa-button-group"',
             'data-toggle="dropdown"',
-            'class="dropdown-menu btn-actions"',
+            'class="dropdown-menu btn-actions soa-dropdown-menu"',
             'aria-haspopup="true"',
             'aria-expanded="false"',
             '<button data-contract="group-action">Run</button>',
@@ -68,13 +68,13 @@ class LegacyThemePresentationTest extends TestCase
         $html = view('sleeping_owl::default.form.element.column', $column->toArray())->render();
 
         $this->assertContainsAll($html, [
-            '<div class="col-sm-6 user-column"',
+            '<div class="soa-form-column col-sm-6 user-column"',
             'data-contract="grid"',
         ]);
     }
 
     #[DataProvider('buttonVariants')]
-    public function test_form_button_variants_are_owned_by_legacy_theme(string $name, string $variant): void
+    public function test_form_button_variants_keep_legacy_classes_with_semantic_aliases(string $name, string $variant): void
     {
         $html = view('sleeping_owl::default.form.button', [
             'attributesArray' => ['class' => 'user-action'],
@@ -85,7 +85,8 @@ class LegacyThemePresentationTest extends TestCase
             'url' => null,
         ])->render();
 
-        $this->assertStringContainsString("class=\"btn {$variant} user-action\"", $html);
+        $this->assertStringContainsString("class=\"btn {$variant} soa-button", $html);
+        $this->assertStringContainsString('user-action', $html);
     }
 
     public function test_badge_keeps_user_variant_without_adding_default_variant(): void
@@ -99,7 +100,7 @@ class LegacyThemePresentationTest extends TestCase
         ])->render();
 
         $this->assertContainsAll($html, [
-            '<small class="badge bg-danger user-badge"',
+            '<small class="badge soa-badge bg-danger user-badge"',
             'data-contract="badge"',
             '  7',
         ]);
@@ -121,7 +122,7 @@ class LegacyThemePresentationTest extends TestCase
         ])->render();
 
         $this->assertContainsAll($html, [
-            '<a href="/edit/1" class="btn btn-sm btn-primary user-control"',
+            '<a href="/edit/1" class="btn btn-sm soa-button soa-button-sm btn-primary soa-button-primary user-control"',
             'data-contract="edit"',
             'Edit',
         ]);
@@ -142,7 +143,7 @@ class LegacyThemePresentationTest extends TestCase
         ])->render();
 
         $this->assertContainsAll($html, [
-            'class="nav-item nav-link active user-tab"',
+            'class="nav-item nav-link soa-tab-trigger active user-tab"',
             'data-tab',
             'data-contract="tab"',
             'href="#nav-orders"',
