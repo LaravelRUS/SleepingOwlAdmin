@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "sourceManifest": "public/default/asset-manifest.json",
   "packageVersion": "dev-master",
-  "buildId": "sha256:30f672027d84317b2f5b2cc34fdc44275d2917dc5f6f92d6de9ab7218ec9c625",
+  "buildId": "sha256:2c08f68582a22fcb1db3a9220e495b6aecea8b36c0666650ec7989c9c58ec518",
   "baseline": {
     "source": "docs/modernization/baseline/frontend.json",
     "bytes": 2585357,
@@ -58,24 +58,24 @@
             {
               "type": "scripts",
               "file": "profiles/production/js/shared/features.js",
-              "version": "743432ff41aa7e0ced2a449e7268e996",
-              "checksum": "sha256:e5fd01b2b2faea53fcdaf36921ff997fcbd26d5c453d69069e6128ea036b7607",
-              "bytes": 558717,
-              "gzipBytes": 148228
+              "version": "34dab76d163b98e14aa516b943e3f92d",
+              "checksum": "sha256:0f14c81307a957c12593b9161ebcc3c9a90f7efbaac6b5c4b443f92616e6a82c",
+              "bytes": 614600,
+              "gzipBytes": 167708
             },
             {
               "type": "styles",
               "file": "profiles/production/css/shared/features.css",
-              "version": "08d3cf621be3ba4c25e644a4961b27fb",
-              "checksum": "sha256:df813734ed0c6d9c7efd0c968b9e0dae5574d61c7790ca7c9f11762930c26237",
-              "bytes": 70617,
-              "gzipBytes": 12049
+              "version": "7b0a5795f1561c82a2d4736bf2ea2286",
+              "checksum": "sha256:18a1c07e06a6f1f55b3c14a47d49743cd794101a18b9a480e7784d99202d2f8a",
+              "bytes": 84169,
+              "gzipBytes": 14363
             }
           ],
           "totals": {
             "files": 2,
-            "bytes": 629334,
-            "gzipBytes": 160277
+            "bytes": 698769,
+            "gzipBytes": 182071
           }
         },
         "shared:icons": {
@@ -174,8 +174,8 @@
       },
       "totals": {
         "files": 11,
-        "bytes": 1850277,
-        "gzipBytes": 467474
+        "bytes": 1919712,
+        "gzipBytes": 489268
       }
     },
     "development": {
@@ -227,24 +227,24 @@
             {
               "type": "scripts",
               "file": "profiles/development/js/shared/features.js",
-              "version": "da4bd4b313d45910eef80d771fd4e35f",
-              "checksum": "sha256:9928adc23370feb555f70308023523db5b334424f270bc714be38b350675d7d3",
-              "bytes": 1402285,
-              "gzipBytes": 300899
+              "version": "715cf679ab6704a2ba160d729e0a09dd",
+              "checksum": "sha256:f9797f1985437cef0a9ea789ab227520db2e9fff4e3963beff53b6eb716190cf",
+              "bytes": 1626192,
+              "gzipBytes": 345449
             },
             {
               "type": "styles",
               "file": "profiles/development/css/shared/features.css",
-              "version": "e14629cf17f368fceaa813e7731e30ad",
-              "checksum": "sha256:0279aa6eaa2f7601fbe9ac0c15c6a4881edead6bf9f5fe69b2e9c7f17d4e94e2",
-              "bytes": 88253,
-              "gzipBytes": 13365
+              "version": "d5aae7aca78f27dda594325f77b21492",
+              "checksum": "sha256:0507f3fb1b0575e01661a95434d322a769de3c60e81f24b0c37d64d721f58b52",
+              "bytes": 105804,
+              "gzipBytes": 16377
             }
           ],
           "totals": {
             "files": 2,
-            "bytes": 1490538,
-            "gzipBytes": 314264
+            "bytes": 1731996,
+            "gzipBytes": 361826
           }
         },
         "shared:icons": {
@@ -343,23 +343,23 @@
       },
       "totals": {
         "files": 11,
-        "bytes": 4805883,
-        "gzipBytes": 941494
+        "bytes": 5047341,
+        "gzipBytes": 989056
       }
     }
   },
   "productionVsLegacyAggregate": {
     "bytes": {
-      "current": 1850277,
+      "current": 1919712,
       "baseline": 2585357,
-      "delta": -735080,
-      "percent": -28.4
+      "delta": -665645,
+      "percent": -25.7
     },
     "gzipBytes": {
-      "current": 467474,
+      "current": 489268,
       "baseline": 587787,
-      "delta": -120313,
-      "percent": -20.5
+      "delta": -98519,
+      "percent": -16.8
     }
   }
 }

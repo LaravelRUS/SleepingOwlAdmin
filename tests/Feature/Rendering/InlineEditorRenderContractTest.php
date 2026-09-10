@@ -51,6 +51,9 @@ class InlineEditorRenderContractTest extends TestCase
         );
         $this->assertStringNotContainsString('data-options=', $select);
         $this->assertStringContainsString('tabindex="-1"', $select);
+        $this->assertStringContainsString('data-inline-editor-select-native', $select);
+        $this->assertMatchesRegularExpression('/<option value="1"\s*>One &amp; Two<\/option>/', $select);
+        $this->assertStringNotContainsString('data-vue-component="element-select"', $select);
         $this->assertStringContainsString('data-date-format="DD.MM.YYYY HH:mm"', $date);
         $this->assertStringNotContainsString('data-source=', $select);
         $this->assertStringNotContainsString('data-combodate=', $date);

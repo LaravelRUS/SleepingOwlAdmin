@@ -96,6 +96,7 @@ function setBusy(elements, busy) {
     elements.form.querySelectorAll('input, textarea, select, button').forEach((control) => {
         control.disabled = busy
     })
+    elements.control.setDisabled?.(busy)
 }
 
 function setError(element, message) {

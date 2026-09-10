@@ -4,7 +4,9 @@
         <meta charset="UTF-8" />
         <meta name="csrf-token" content="inline-editor-token" />
         <title>Inline editors browser fixture</title>
-        <link rel="stylesheet" href="/public/default/css/admin-app.css" />
+        <link rel="stylesheet" href="/public/default/css/admin-core.css" />
+        <link rel="stylesheet" href="/public/default/css/shared/ui.css" />
+        <link rel="stylesheet" href="/public/default/css/shared/features.css" />
         <script>
             window.GlobalConfig = {
                 debug: true,
@@ -303,10 +305,20 @@
                     <form class="soa-inline-editor-form" data-inline-editor-form>
                         <div class="soa-inline-editor-title">State</div>
                         <div class="soa-inline-editor-input">
-                            <select class="soa-inline-editor-control" data-inline-editor-control>
-                                <option value="draft">Draft</option>
-                                <option value="published">Published</option>
-                            </select>
+                            <div
+                                class="soa-inline-editor-select"
+                                data-inline-editor-control
+                                data-inline-editor-select
+                                tabindex="-1"
+                            >
+                                <select
+                                    class="soa-inline-editor-control soa-select"
+                                    data-inline-editor-select-native
+                                >
+                                    <option value="draft">Draft</option>
+                                    <option value="published">Published</option>
+                                </select>
+                            </div>
                         </div>
                         <button class="soa-inline-editor-submit" type="submit">Save</button>
                         <button

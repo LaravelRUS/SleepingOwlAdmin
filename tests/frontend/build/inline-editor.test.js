@@ -50,6 +50,7 @@ it('keeps the headless runtime free of jQuery and plugin wrappers', () => {
 
 it('keeps geometry in the shared table feature and themes limited to token values', () => {
     const shared = source('resources/css/shared/features/table/_inline-editor.scss')
+    const tomSelect = source('resources/css/shared/features/table/_tom-select.scss')
     const contract = source('resources/css/shared/_tokens.scss')
     const adminlte = source('resources/css/themes/adminlte/_tokens.scss')
     const shadcn = source('resources/css/themes/shadcn/_tokens.scss')
@@ -60,6 +61,8 @@ it('keeps geometry in the shared table feature and themes limited to token value
     expect(adminlte).toContain('--soa-inline-editor-accent:')
     expect(shadcn).toContain('--soa-inline-editor-shadow:')
     expect(shared).not.toContain('#')
+    expect(tomSelect).toContain('node_modules/tom-select/dist/css/tom-select.default.css')
+    expect(tomSelect).toContain('var(--soa-inline-editor-surface)')
     expect(
         existsSync(
             resolve(root, 'resources/css/themes/adminlte/features/table/_inline-editor.scss'),

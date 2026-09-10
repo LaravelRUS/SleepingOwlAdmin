@@ -1,12 +1,50 @@
 import { expect, test } from '@playwright/test'
 
+/* global document, getComputedStyle */
+
 let fixtureHeaders
+
+const themes = ['adminlte', 'empty', 'shadcn']
 
 async function requests(request) {
     const response = await request.get('/__fixture/requests', { headers: fixtureHeaders })
     const state = await response.json()
 
     return state.requests.filter(({ kind }) => kind === 'inline-edit')
+}
+
+async function tomSelectPalette(page) {
+    return page.evaluate(() => {
+        const color = (property) => {
+            const probe = document.createElement('span')
+            probe.style.backgroundColor = `var(${property})`
+            document.body.append(probe)
+            const value = getComputedStyle(probe).backgroundColor
+            probe.remove()
+
+            return value
+        }
+        const style = (selector) => getComputedStyle(document.querySelector(selector))
+        document
+            .querySelector('.soa-inline-editor-select .ts-dropdown .option')
+            .classList.add('active')
+
+        return {
+            active: style('.soa-inline-editor-select .ts-dropdown .active').backgroundColor,
+            control: style('.soa-inline-editor-select .ts-control').backgroundColor,
+            controlBackgroundImage: style('.soa-inline-editor-select .ts-control').backgroundImage,
+            controlBorder: style('.soa-inline-editor-select .ts-control').borderColor,
+            controlText: style('.soa-inline-editor-select .ts-control').color,
+            dropdown: style('.soa-inline-editor-select .ts-dropdown').backgroundColor,
+            dropdownText: style('.soa-inline-editor-select .ts-dropdown').color,
+            expectedActive: color('--soa-dropdown-hover-surface'),
+            expectedControl: color('--soa-inline-editor-surface'),
+            expectedControlText: color('--soa-inline-editor-text'),
+            expectedDropdown: color('--soa-dropdown-surface'),
+            expectedDropdownText: color('--soa-dropdown-text'),
+            expectedBorder: color('--soa-inline-editor-border'),
+        }
+    })
 }
 
 test.beforeEach(async ({ page, request }, testInfo) => {
@@ -24,23 +62,51 @@ test('all PHP editor types mount native controls without X-editable', async ({ p
         datetime: 'input',
         number: 'input[type="number"]',
         range: 'input[type="range"]',
-        select: 'select',
+        select: '.ts-control',
         text: 'input[type="text"]',
         textarea: 'textarea',
     }
 
     for (const [type, selector] of Object.entries(expectations)) {
         await page.locator(`#editor-${type}`).click()
-        await expect(page.locator(`.soa-inline-editor-input ${selector}`)).toBeVisible()
+        const editor = page.locator(
+            type === 'text' ? '.project-editor-shell' : '.soa-inline-editor',
+        )
+        await expect(editor.locator(selector)).toBeVisible()
         if (type === 'text') {
             await expect(page.locator('.project-editor-shell .project-text-control')).toBeVisible()
         }
-        await page.locator('.soa-inline-editor-cancel').click()
+        if (type === 'select') {
+            await editor.locator('.soa-inline-editor-select .ts-control').click()
+        }
+        await editor.locator('[data-inline-editor-cancel]').click()
     }
 
     expect(await page.evaluate(() => globalThis.jQuery?.fn?.editable)).toBeUndefined()
     expect(await page.evaluate(() => globalThis.moment)).toBeUndefined()
 })
+
+for (const theme of themes) {
+    test(`${theme} renders the Tom Select dialog in its dark color scheme`, async ({ page }) => {
+        await page.addStyleTag({
+            url: `/public/default/profiles/production/css/themes/${theme}.css`,
+        })
+        await page.locator('html').evaluate((element) => (element.dataset.colorScheme = 'dark'))
+        await page.locator('#editor-select').click()
+
+        const palette = await tomSelectPalette(page)
+
+        expect(palette).toMatchObject({
+            active: palette.expectedActive,
+            control: palette.expectedControl,
+            controlBackgroundImage: 'none',
+            controlBorder: palette.expectedBorder,
+            controlText: palette.expectedControlText,
+            dropdown: palette.expectedDropdown,
+            dropdownText: palette.expectedDropdownText,
+        })
+    })
+}
 
 test('text, select and checklist preserve payloads and update display values', async ({
     page,
@@ -53,7 +119,12 @@ test('text, select and checklist preserve payloads and update display values', a
     await page.locator('.project-cancel').click()
 
     await page.locator('#editor-select').click()
-    await page.locator('.soa-inline-editor-control').selectOption('published')
+    await page
+        .locator('.soa-inline-editor-select .ts-dropdown .option')
+        .filter({
+            hasText: 'Published',
+        })
+        .click()
     await submit(page)
     await expect(page.locator('#editor-select')).toHaveText('Published')
 

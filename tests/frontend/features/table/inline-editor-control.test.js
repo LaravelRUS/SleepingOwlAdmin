@@ -1,4 +1,4 @@
-import { expect, it } from 'vitest'
+import { expect, it, vi } from 'vitest'
 
 import { bindInlineEditorControl } from '../../../../resources/js/shared/features/table/editing/inline-editor-control.js'
 
@@ -46,32 +46,46 @@ it('clears scalar controls', () => {
     expect(control.read()).toBe('')
 })
 
-it('reads and clears the editable multiselect through its native island event', () => {
+it('uses Tom Select for a popup editable select', () => {
     const native = {
         value: 'published',
     }
-    let clearEvent = null
-    const root = {
-        dispatchEvent: (event) => (clearEvent = event.type),
+    const tomSelect = {
+        clear: vi.fn(),
+        destroy: vi.fn(),
+        disable: vi.fn(),
+        enable: vi.fn(),
+        focus: vi.fn(),
+        getValue: () => 'archived',
     }
+    const createTomSelect = vi.fn(() => tomSelect)
     const element = {
         matches: () => true,
         querySelector: (selector) => {
             if (selector === '[data-inline-editor-select-native]') return native
-            if (selector === '[data-select-root]') return root
 
             return null
         },
     }
-    const control = bindInlineEditorControl(element, {
-        type: 'select',
-        value: 'published',
-    })
+    const control = bindInlineEditorControl(
+        element,
+        {
+            mode: 'popup',
+            type: 'select',
+            value: 'published',
+        },
+        { createTomSelect },
+    )
 
-    expect(control.read()).toBe('published')
-    expect(control.focusElement).toBe(element)
+    expectTomSelectSettings(createTomSelect, native)
+    expect(control.read()).toBe('archived')
+    control.focusElement()
+    expect(tomSelect.focus).toHaveBeenCalledOnce()
     control.clear()
-    expect(clearEvent).toBe('select:clear')
+    control.setDisabled(true)
+    control.setDisabled(false)
+    control.destroy()
+    expectTomSelectLifecycle(tomSelect)
 })
 
 it('resets an editable range to zero when it is cleared', () => {
@@ -129,4 +143,23 @@ function expectClearedRange(range, number, output) {
         output: '0',
         range: '0',
     })
+}
+
+function expectTomSelectSettings(createTomSelect, native) {
+    expect(createTomSelect).toHaveBeenCalledWith(
+        native,
+        expect.objectContaining({
+            allowEmptyOption: true,
+            create: false,
+            maxItems: 1,
+            maxOptions: null,
+        }),
+    )
+}
+
+function expectTomSelectLifecycle(tomSelect) {
+    expect(tomSelect.clear).toHaveBeenCalledOnce()
+    expect(tomSelect.disable).toHaveBeenCalledOnce()
+    expect(tomSelect.enable).toHaveBeenCalledOnce()
+    expect(tomSelect.destroy).toHaveBeenCalledOnce()
 }

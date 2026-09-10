@@ -34,15 +34,15 @@
                     "scripts": [
                         {
                             "file": "profiles/production/js/shared/features.js",
-                            "version": "743432ff41aa7e0ced2a449e7268e996",
-                            "checksum": "sha256:e5fd01b2b2faea53fcdaf36921ff997fcbd26d5c453d69069e6128ea036b7607"
+                            "version": "34dab76d163b98e14aa516b943e3f92d",
+                            "checksum": "sha256:0f14c81307a957c12593b9161ebcc3c9a90f7efbaac6b5c4b443f92616e6a82c"
                         }
                     ],
                     "styles": [
                         {
                             "file": "profiles/production/css/shared/features.css",
-                            "version": "08d3cf621be3ba4c25e644a4961b27fb",
-                            "checksum": "sha256:df813734ed0c6d9c7efd0c968b9e0dae5574d61c7790ca7c9f11762930c26237"
+                            "version": "7b0a5795f1561c82a2d4736bf2ea2286",
+                            "checksum": "sha256:18a1c07e06a6f1f55b3c14a47d49743cd794101a18b9a480e7784d99202d2f8a"
                         }
                     ]
                 },
@@ -187,15 +187,15 @@
                     "scripts": [
                         {
                             "file": "profiles/development/js/shared/features.js",
-                            "version": "da4bd4b313d45910eef80d771fd4e35f",
-                            "checksum": "sha256:9928adc23370feb555f70308023523db5b334424f270bc714be38b350675d7d3"
+                            "version": "715cf679ab6704a2ba160d729e0a09dd",
+                            "checksum": "sha256:f9797f1985437cef0a9ea789ab227520db2e9fff4e3963beff53b6eb716190cf"
                         }
                     ],
                     "styles": [
                         {
                             "file": "profiles/development/css/shared/features.css",
-                            "version": "e14629cf17f368fceaa813e7731e30ad",
-                            "checksum": "sha256:0279aa6eaa2f7601fbe9ac0c15c6a4881edead6bf9f5fe69b2e9c7f17d4e94e2"
+                            "version": "d5aae7aca78f27dda594325f77b21492",
+                            "checksum": "sha256:0507f3fb1b0575e01661a95434d322a769de3c60e81f24b0c37d64d721f58b52"
                         }
                     ]
                 },
@@ -309,5 +309,5 @@
             }
         }
     },
-    "build_id": "sha256:30f672027d84317b2f5b2cc34fdc44275d2917dc5f6f92d6de9ab7218ec9c625"
+    "build_id": "sha256:2c08f68582a22fcb1db3a9220e495b6aecea8b36c0666650ec7989c9c58ec518"
 }

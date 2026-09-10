@@ -84,6 +84,18 @@ describe('compiled form entries', () => {
         expect(legacy).toContain(selector)
     })
 
+    it('publishes Tom Select and its token skin in the shared feature bundle', () => {
+        for (const profile of ['production', 'development']) {
+            const shared = readFileSync(
+                resolve(root, `public/default/profiles/${profile}/css/shared/features.css`),
+                'utf8',
+            )
+
+            expect(shared).toContain('.ts-control')
+            expect(shared).toContain('var(--soa-inline-editor-surface)')
+        }
+    })
+
     it('publishes theme-token driven Air Datepicker styles in both form bundles', () => {
         const forms = readFileSync(resolve(root, 'public/default/css/shared/features.css'), 'utf8')
         const legacy = readFileSync(resolve(root, 'public/default/css/admin-app.css'), 'utf8')

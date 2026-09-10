@@ -5,6 +5,7 @@
 @use 'page-jump';
 @use 'processing';
 @use 'search';
+@use 'tom-select';
 @layer sleepingowl-feature.table;
 
 @layer sleepingowl-feature.table {
@@ -15,4 +16,5 @@
   @include page-jump.styles;
   @include processing.styles;
   @include search.styles;
+  @include tom-select.styles;
 }
