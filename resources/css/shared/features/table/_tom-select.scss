@@ -1,0 +1,131 @@
+@use 'sass:meta';
+
+@mixin styles {
+  @include meta.load-css('../../../../../node_modules/tom-select/dist/css/tom-select.default.css');
+
+  // Tom Select ships a glossy, fixed-light default skin. Keep its structural
+  // rules, but make the editable control follow the same form and menu tokens
+  // as the rest of the active theme.
+  /* stylelint-disable selector-class-pattern -- Tom Select public hooks. */
+  .soa-inline-editor-select .ts-wrapper {
+    inline-size: 100%;
+    min-block-size: var(--soa-form-control-min-height);
+  }
+
+  .soa-inline-editor-select .ts-control,
+  .soa-inline-editor-select .ts-wrapper.single .ts-control,
+  .soa-inline-editor-select .ts-wrapper.single.input-active .ts-control {
+    align-items: center;
+    background: var(--soa-inline-editor-surface);
+    background-image: none;
+    block-size: var(--soa-form-control-min-height);
+    border: var(--soa-border-width) solid var(--soa-inline-editor-border);
+    border-radius: var(--soa-border-radius);
+    box-shadow: none;
+    color: var(--soa-inline-editor-text);
+    font: inherit;
+    line-height: var(--soa-line-height-tight);
+    min-block-size: var(--soa-form-control-min-height);
+    padding-block: var(--soa-form-control-padding-block) !important;
+    padding-inline: var(--soa-form-control-padding-inline)
+      max(
+        var(--soa-form-control-padding-inline),
+        calc(var(--ts-pr-caret) + var(--soa-form-control-padding-inline))
+      ) !important;
+    transition:
+      border-color var(--soa-motion-duration-fast),
+      box-shadow var(--soa-motion-duration-fast);
+  }
+
+  .soa-inline-editor-select .ts-wrapper:not(.disabled) .ts-control:hover {
+    border-color: var(--soa-inline-editor-text);
+  }
+
+  .soa-inline-editor-select .ts-wrapper.focus .ts-control {
+    border-color: var(--soa-inline-editor-accent);
+    box-shadow: 0 0 0 var(--soa-focus-ring-width)
+      var(--soa-inline-editor-focus-ring, var(--soa-focus-color));
+  }
+
+  .soa-inline-editor-select .ts-control > input {
+    color: var(--soa-inline-editor-text);
+    font: inherit;
+    line-height: inherit;
+    min-inline-size: 0;
+  }
+
+  .soa-inline-editor-select .ts-control > input::placeholder {
+    color: var(--soa-inline-editor-muted);
+  }
+
+  .soa-inline-editor-select .ts-wrapper.single .ts-control::after {
+    border-top-color: var(--soa-inline-editor-muted);
+  }
+
+  .soa-inline-editor-select .ts-wrapper.single.dropdown-active .ts-control::after {
+    border-color: transparent transparent var(--soa-inline-editor-muted);
+  }
+
+  .soa-inline-editor-select .ts-dropdown,
+  .soa-inline-editor-select .ts-dropdown.single {
+    background: var(--soa-dropdown-surface);
+    border: var(--soa-dropdown-border-width) solid var(--soa-dropdown-border);
+    border-radius: var(--soa-dropdown-radius);
+    box-shadow: var(--soa-dropdown-shadow);
+    color: var(--soa-dropdown-text);
+    font: inherit;
+    line-height: var(--soa-dropdown-line-height);
+    margin-block-start: var(--soa-dropdown-offset);
+    padding: var(--soa-dropdown-padding-block) var(--soa-dropdown-padding-inline);
+  }
+
+  .soa-inline-editor-select .ts-dropdown-content {
+    max-block-size: min(15rem, 50vh);
+  }
+
+  .soa-inline-editor-select .ts-dropdown .option,
+  .soa-inline-editor-select .ts-dropdown .optgroup-header,
+  .soa-inline-editor-select .ts-dropdown .no-results,
+  .soa-inline-editor-select .ts-dropdown .create {
+    border-radius: var(--soa-dropdown-item-radius);
+    min-block-size: var(--soa-form-control-min-height);
+    padding: var(--soa-dropdown-item-padding-block)
+      var(--soa-dropdown-item-padding-inline);
+  }
+
+  .soa-inline-editor-select .ts-dropdown .option,
+  .soa-inline-editor-select .ts-dropdown .create {
+    color: inherit;
+  }
+
+  .soa-inline-editor-select .ts-dropdown [data-selectable].option:hover,
+  .soa-inline-editor-select .ts-dropdown .active {
+    background: var(--soa-dropdown-hover-surface);
+    color: inherit;
+  }
+
+  .soa-inline-editor-select .ts-dropdown [data-selected] {
+    background: var(--soa-accent-surface-color);
+    color: var(--soa-inline-editor-text);
+    font-weight: var(--soa-font-weight-semibold);
+  }
+
+  .soa-inline-editor-select .ts-dropdown .highlight {
+    background: color-mix(in srgb, var(--soa-inline-editor-accent) 20%, transparent);
+    border-radius: var(--soa-border-radius-sm);
+  }
+
+  .soa-inline-editor-select .ts-dropdown .optgroup-header,
+  .soa-inline-editor-select .ts-dropdown .no-results,
+  .soa-inline-editor-select .ts-dropdown .create {
+    background: transparent;
+    color: var(--soa-inline-editor-muted);
+  }
+
+  .soa-inline-editor-select .ts-wrapper.disabled .ts-control {
+    background: var(--soa-muted-surface-color);
+    color: var(--soa-inline-editor-muted);
+    opacity: var(--soa-disabled-opacity);
+  }
+  /* stylelint-enable selector-class-pattern */
+}
