@@ -30,11 +30,13 @@ final class ThemeResolver
 
         if ($implementation instanceof TemplateInterface) {
             $name ??= $this->legacyName($configuredClass, $implementation);
+
             return $this->fromLegacyTemplate($name, $implementation);
         }
 
         if ($implementation instanceof ThemeInterface) {
             $name ??= $this->legacyName($configuredClass, $implementation);
+
             return $this->fromTheme($name, $implementation);
         }
 

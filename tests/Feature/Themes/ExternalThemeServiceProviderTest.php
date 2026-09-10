@@ -5,11 +5,10 @@ use Illuminate\Support\ServiceProvider;
 use SleepingOwl\Admin\Assets\AssetRegistry;
 use SleepingOwl\Admin\Contracts\Template\MetaInterface;
 use SleepingOwl\Admin\Contracts\Theme\ThemeInterface;
-use SleepingOwl\Admin\Themes\AdminLTETheme;
 use SleepingOwl\Admin\Themes\ThemeConfiguration;
 use SleepingOwl\Admin\Themes\ThemeRegistry;
-use SleepingOwl\Admin\Themes\ThemeTemplateAdapter;
 use SleepingOwl\Admin\Themes\ThemeSelection;
+use SleepingOwl\Admin\Themes\ThemeTemplateAdapter;
 
 class ExternalThemeServiceProviderTest extends TestCase
 {
