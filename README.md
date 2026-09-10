@@ -86,7 +86,6 @@ a card form, policy, widget, custom assets and a Vue 3 island is available in th
 The current frontend is prebuilt and jQuery-free:
 
 - AdminLTE 4 and Bootstrap 5 for the default `adminlte` theme;
-- a ready Tailwind 4/Shadcn-inspired theme selected as `shadcn`;
 - the official Tabler 1.5.1 presentation selected as CSS-only `tabler`;
 - Vue 3 runtime-only islands for interactive form controls;
 - DataTables 3 and native feature drivers;
@@ -101,7 +100,6 @@ Choose a theme by configured name:
     'default' => env('SLEEPINGOWL_TEMPLATE', 'adminlte'),
     'themes' => [
         'adminlte' => SleepingOwl\Admin\Themes\AdminLTETheme::class,
-        'shadcn' => SleepingOwl\Admin\Themes\TailwindTheme::class,
         'empty' => SleepingOwl\Admin\Themes\EmptyTheme::class,
         'tabler' => SleepingOwl\Admin\Themes\TablerTheme::class,
     ],

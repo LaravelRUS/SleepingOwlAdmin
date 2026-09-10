@@ -75,6 +75,6 @@ markup contract. Existing application views require no migration. The feature ch
 only the implementation and never invokes Bootstrap's `$(element).tooltip()` API.
 
 Presentation belongs to the selected theme. The common feature stylesheet contains only
-positioning behavior; AdminLTE and Tailwind provide separate Sass adapters and
+positioning behavior; built-in themes provide their own presentation and
 `--soa-tooltip-*` properties. A custom theme can override the Blade template and style
 the same `data-tooltip-popup` hook without importing either built-in theme.

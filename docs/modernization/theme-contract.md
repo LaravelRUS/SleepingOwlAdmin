@@ -55,7 +55,7 @@ public function assets(): array
 | `sidebar` | layout, navigation tree и presentation состояний open/collapsed |
 | `table-presentation` | table wrapper, responsive presentation и styles для table driver |
 
-`ThemeCapabilities::fromTheme($theme)` отклоняет неизвестные значения и предоставляет типизированный `supports(ThemeCapability $capability)`. Отсутствующая capability не включает AdminLTE fallback и не даёт core права добавить Bootstrap/Tailwind classes. Компонент или будущий coordinator должен либо выбрать поддерживаемое theme-owned представление, либо выдать явную диагностическую ошибку.
+`ThemeCapabilities::fromTheme($theme)` отклоняет неизвестные значения и предоставляет типизированный `supports(ThemeCapability $capability)`. Отсутствующая capability не включает AdminLTE fallback и не даёт core права добавить framework-specific classes. Компонент или будущий coordinator должен либо выбрать поддерживаемое theme-owned представление, либо выдать явную диагностическую ошибку.
 
 Capability говорит только о presentation support. Он не означает, что тема владеет query, transport, state или lifecycle tabs/DataTables/modal. Эта логика остаётся в core либо соответствующем feature driver.
 
@@ -77,7 +77,7 @@ Capability говорит только о presentation support. Он не озн
 
 Прямая реализация `ThemeInterface` не обязана наследовать package template или повторять его `initialize()`. Transitional `ThemeTemplateAdapter::initialize()` автоматически передаёт выбранные canonical name и тему общему `ThemeRuntimeAssets`: он регистрирует `core`, объявленные shared/theme entries, объединённый package `shared:features` и только явно объявленные external adapter chunks, scoped выбранным именем. Table adapter при наличии ставится до самозапускающегося общего runtime; остальные external adapters — после него. Объявленный `shared:modules` остаётся последним для финального module boot/scan. `AdminLTETheme` использует тот же assembler, добавляя только прежние публичные asset handles.
 
-Таким образом, `assets()` custom theme обычно описывает лишь её дополнительные shared dependencies. Base `theme:<name>` и обязательный package-owned `shared:icons` добавляются автоматически; декларация `feature:<feature>` допустима только для действительно независимо поставляемого external chunk, а не как обязательная схема для каждого компонента. Theme не перечисляет package-owned `shared:features` или `shared:icons` и не получает неявные AdminLTE либо shadcn assets. Отсутствующий либо повреждённый logical entry диагностируется manifest resolver; fallback к другой теме не выполняется. Готовые production/development файлы и checksums публикует автор темы, поэтому Composer-потребитель выбирает имя из `sleeping_owl.template` без Node.js и пересборки core. Внешний package регистрирует canonical name, class, manifest fragment и public root через `ThemeRegistry`; этот service-provider hook описан в [`theme-customization.md`](theme-customization.md).
+Таким образом, `assets()` custom theme обычно описывает лишь её дополнительные shared dependencies. Base `theme:<name>` и обязательный package-owned `shared:icons` добавляются автоматически; декларация `feature:<feature>` допустима только для действительно независимо поставляемого external chunk, а не как обязательная схема для каждого компонента. Theme не перечисляет package-owned `shared:features` или `shared:icons` и не получает неявные assets другой темы. Отсутствующий либо повреждённый logical entry диагностируется manifest resolver; fallback к другой теме не выполняется. Готовые production/development файлы и checksums публикует автор темы, поэтому Composer-потребитель выбирает имя из `sleeping_owl.template` без Node.js и пересборки core. Внешний package регистрирует canonical name, class, manifest fragment и public root через `ThemeRegistry`; этот service-provider hook описан в [`theme-customization.md`](theme-customization.md).
 
 ## Выбор темы и config values
 
@@ -88,7 +88,6 @@ Capability говорит только о presentation support. Он не озн
     'default' => env('SLEEPINGOWL_TEMPLATE', 'adminlte'),
     'themes' => [
         'adminlte' => SleepingOwl\Admin\Themes\AdminLTETheme::class,
-        'shadcn' => SleepingOwl\Admin\Themes\TailwindTheme::class,
         'empty' => SleepingOwl\Admin\Themes\EmptyTheme::class,
         'tabler' => SleepingOwl\Admin\Themes\TablerTheme::class,
     ],

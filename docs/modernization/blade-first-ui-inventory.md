@@ -13,7 +13,7 @@ boundary for the remaining theme migration:
 - precompiled Vue components and third-party widgets are explicit, bounded
   exceptions rather than a general reason to move rendering into JavaScript;
 - PHP does not translate semantic component names into framework classes;
-  AdminLTE, Tailwind and project themes put their actual classes in their own
+  AdminLTE, Tabler and project themes put their actual classes in their own
   Blade views;
 - the existing logical view names and Laravel application-over-package override
   priority remain public compatibility contracts;
@@ -30,7 +30,7 @@ read-only reference project is intentionally not scanned again.
    restyle, move that element to a theme-owned Blade partial or a
    Blade-rendered `<template>`.
 2. A feature may use stable `data-*` behavior hooks and neutral structural
-   classes. It may not choose Bootstrap, AdminLTE or Tailwind classes.
+   classes. It may not choose framework-specific classes.
 3. A theme or project view writes concrete classes directly. No PHP class map,
    semantic resolver or implicit fallback to AdminLTE is introduced.
 4. JavaScript may clone a rendered template, bind events, update ARIA/state,
@@ -113,7 +113,7 @@ is not a candidate for Blade duplication.
 
 | Vendor boundary | Vendor-owned UI | First-party control surface |
 | --- | --- | --- |
-| DataTables 3 / Responsive 4 | wrapper, length/search/info/paging controls and responsive rows | `data-table-engine`, normalized public options, server-side wire contract and separate AdminLTE/Tailwind Sass adapters |
+| DataTables 3 / Responsive 4 | wrapper, length/search/info/paging controls and responsive rows | `data-table-engine`, normalized public options, server-side wire contract and theme-owned presentation |
 | Air Datepicker | calendar popup | native input/addon Blade markup, locale/options modules and theme Sass variables |
 | GLightbox | lightbox dialog/overlay | Blade trigger/gallery markup, neutral lifecycle adapter and theme Sass |
 | ProgressBar.js | auto-update SVG line | Blade-rendered pause/resume control and host; feature owns timing, color custom property and teardown |
@@ -152,7 +152,7 @@ For each migrated candidate, tests must prove all of the following:
 - arbitrary classes and a changed but hook-compatible nesting reach the
   browser unchanged;
 - JavaScript finds behavior hooks without assuming Bootstrap/AdminLTE classes;
-- built-in AdminLTE and Tailwind templates can choose different concrete
+- built-in AdminLTE and Tabler templates can choose different concrete
   classes without PHP translation;
 - both committed asset profiles run the same server-rendered template contract;
 - no test or consumer fixture invokes npm, Vite or a runtime Vue compiler.
@@ -168,7 +168,7 @@ For each migrated candidate, tests must prove all of the following:
 4. [Complete] Add the optional layout-level tooltip popup template with a
    neutral fallback contract for minimal custom themes.
 5. [Complete] Pass concrete classes/options from Blade into every precompiled Vue island
-   and verify AdminLTE/Tailwind/custom render boundaries.
+   and verify AdminLTE/Tabler/custom render boundaries.
    - [Complete] `select`: the logical Blade partial owns the concrete required
      message class, while the precompiled component consumes `classes.required`.
      PHP and browser contracts cover arbitrary project classes without a

@@ -23,9 +23,6 @@ it('keeps auto-update presentation in one shared source owner', () => {
     expect(
         existsSync(resolve(root, 'resources/css/themes/adminlte/features/table/_auto-update.scss')),
     ).toBe(false)
-    expect(
-        existsSync(resolve(root, 'resources/css/themes/shadcn/features/table/_auto-update.scss')),
-    ).toBe(false)
 })
 
 it('keeps auto-update selectors out of theme presentation sources', () => {

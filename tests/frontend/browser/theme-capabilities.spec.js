@@ -8,10 +8,6 @@ const themes = [
         route: '/theme-capabilities-adminlte',
     },
     {
-        id: 'shadcn',
-        route: '/theme-capabilities-tailwind',
-    },
-    {
         id: 'tabler',
         route: '/theme-capabilities-tabler',
     },
@@ -30,36 +26,6 @@ for (const profile of ['development', 'production']) {
         for (const result of results.slice(1)) {
             expect(result.behavior).toEqual(results[0].behavior)
         }
-    })
-
-    test(`${profile} Tailwind covers mode, focus, reduced motion and responsive sidebar`, async ({
-        page,
-    }) => {
-        await page.setViewportSize({ width: 390, height: 800 })
-        await page.emulateMedia({ reducedMotion: 'reduce' })
-        await page.addInitScript(() => globalThis.localStorage.removeItem('theme-mode'))
-        await useProfile(page, profile)
-        await page.goto('/theme-capabilities-tailwind')
-
-        const sidebar = page.locator('#capability-sidebar-panel')
-        await expect(sidebar).toHaveCSS('background-color', 'rgb(12, 34, 56)')
-        await expect(page.locator('body')).toHaveClass(/sidebar-collapse/)
-        await expect(sidebar).not.toHaveCSS('transform', 'none')
-
-        await page.keyboard.press('Tab')
-        await expect(page.locator('#theme-mode')).toBeFocused()
-        await expect(page.locator('#theme-mode')).toHaveCSS('outline-style', 'solid')
-        await page.keyboard.press('Enter')
-        await expect(page.locator('html')).toHaveAttribute('data-color-scheme', 'dark')
-
-        const transitionSeconds = await sidebar.evaluate((element) =>
-            Number.parseFloat(globalThis.getComputedStyle(element).transitionDuration),
-        )
-        expect(transitionSeconds).toBeLessThanOrEqual(0.001)
-
-        await page.locator('#capability-sidebar').click()
-        await expect(page.locator('body')).toHaveClass(/sidebar-open/)
-        await expect(sidebar).toHaveCSS('transform', 'none')
     })
 
     test(`${profile} Tabler covers mode, focus, reduced motion and responsive sidebar`, async ({
@@ -211,10 +177,6 @@ function assertIsolatedThemeRequests(requests, profile, selectedTheme) {
         if (theme.id !== selectedTheme) {
             expect(requests.some((path) => path.includes(theme.id))).toBe(false)
         }
-    }
-
-    if (selectedTheme === 'shadcn') {
-        expect(requests).toContain(`${profileRoot}css/themes/shadcn-utilities.css`)
     }
 }
 

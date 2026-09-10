@@ -32,7 +32,7 @@ class PublishedAssetVerifierTest extends TestCase
         $report = $this->verifier()->verify($this->assetRoot);
 
         $this->assertSame('production', $report->profile());
-        $this->assertSame(18, $report->fileCount());
+        $this->assertSame(14, $report->fileCount());
         $this->assertSame(
             $this->app->make(ComposerPackageVersion::class)->current(),
             $report->packageVersion()

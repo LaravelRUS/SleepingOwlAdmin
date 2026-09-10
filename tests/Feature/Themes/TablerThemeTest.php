@@ -93,7 +93,6 @@ class TablerThemeTest extends TestCase
                 "profiles/{$profile}/css/themes/tabler.css",
             ], $styles);
             $this->assertStringNotContainsString('adminlte', $joined);
-            $this->assertStringNotContainsString('shadcn', $joined);
             $this->assertStringNotContainsString('theme-overrides', $joined);
             $this->assertStringNotContainsString('/js/themes/tabler', $joined);
         }

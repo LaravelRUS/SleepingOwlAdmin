@@ -1,6 +1,6 @@
 # Эталонные экраны модернизации UI
 
-Этот inventory задаёт стабильные scenario IDs для browser tests, screenshots и pilot-проверки. Один и тот же PHP fixture рендерится отдельно с темами `adminlte` и `tailwind`; смена темы не меняет данные, PHP DSL или ожидаемые события.
+Этот inventory задаёт стабильные scenario IDs для browser tests, screenshots и pilot-проверки. Один и тот же PHP fixture рендерится отдельно с темами `adminlte` и `tabler`; смена темы не меняет данные, PHP DSL или ожидаемые события.
 
 ## Общие условия
 
@@ -30,9 +30,8 @@
 
 | Theme | Required scenarios | Asset assertion |
 | --- | --- | --- |
-| `adminlte` | `REF-01`…`REF-09` | AdminLTE 4/Bootstrap 5 present; Tailwind bundle absent |
-| `tailwind` | `REF-01`…`REF-09` | Tailwind theme present; Bootstrap/AdminLTE bundles absent |
-| `tabler` | `REF-01`…`REF-09` | Tabler CSS present; AdminLTE/Tailwind and theme/vendor JavaScript absent |
+| `adminlte` | `REF-01`…`REF-09` | AdminLTE 4/Bootstrap 5 present; Tabler bundle absent |
+| `tabler` | `REF-01`…`REF-09` | Tabler CSS present; AdminLTE and theme/vendor JavaScript absent |
 | `custom-test` | `REF-01`, `REF-02`, `REF-05` plus contract tests | only public core/feature contracts and custom manifest entries; no internal imports |
 
 ## Stable fixture rules

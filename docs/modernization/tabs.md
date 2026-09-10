@@ -43,13 +43,13 @@ available during migration, so tree and inline-editor scans keep working.
 
 ## Theme ownership
 
-Behavior belongs to the shared tabs source folder; it does not contain Bootstrap, AdminLTE,
-shadcn, jQuery, or presentation classes. AdminLTE and shadcn provide independent source
-adapters that compile into their theme bundles:
+Behavior belongs to the shared tabs source folder; it does not contain framework,
+jQuery, or presentation classes. Built-in themes provide presentation through
+their own bundles:
 
 ```text
 theme:adminlte
-theme:shadcn
+theme:tabler
 ```
 
 Colors are declared in each adapter's `_colors.scss`; dimensions and public

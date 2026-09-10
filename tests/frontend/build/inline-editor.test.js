@@ -53,13 +53,11 @@ it('keeps geometry in the shared table feature and themes limited to token value
     const tomSelect = source('resources/css/shared/features/table/_tom-select.scss')
     const contract = source('resources/css/shared/_tokens.scss')
     const adminlte = source('resources/css/themes/adminlte/_tokens.scss')
-    const shadcn = source('resources/css/themes/shadcn/_tokens.scss')
 
     expect(shared).toContain('.soa-inline-editor-popup')
     expect(shared).toContain('var(--soa-inline-editor-accent)')
     expect(contract).toContain('--soa-inline-editor-accent:')
     expect(adminlte).toContain('--soa-inline-editor-accent:')
-    expect(shadcn).toContain('--soa-inline-editor-shadow:')
     expect(shared).not.toContain('#')
     expect(tomSelect).toContain('node_modules/tom-select/dist/css/tom-select.default.css')
     expect(tomSelect).toContain('var(--soa-inline-editor-surface)')
@@ -67,8 +65,5 @@ it('keeps geometry in the shared table feature and themes limited to token value
         existsSync(
             resolve(root, 'resources/css/themes/adminlte/features/table/_inline-editor.scss'),
         ),
-    ).toBe(false)
-    expect(
-        existsSync(resolve(root, 'resources/css/themes/shadcn/features/table/_inline-editor.scss')),
     ).toBe(false)
 })

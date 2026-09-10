@@ -25,6 +25,5 @@ describe('AdminLTE bundle measurements', () => {
         expect(entries).toContain('shared:features')
         expect(entries).toContain('theme:adminlte')
         expect(entries.some((entry) => entry.startsWith('feature:'))).toBe(false)
-        expect(entries).not.toContain('theme:shadcn')
     })
 })

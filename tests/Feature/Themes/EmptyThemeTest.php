@@ -100,7 +100,6 @@ class EmptyThemeTest extends TestCase
                 ...$styleSources,
             ]);
             $this->assertStringNotContainsString('adminlte', $joined);
-            $this->assertStringNotContainsString('shadcn', $joined);
             $this->assertStringNotContainsString('theme-overrides', $joined);
         }
     }

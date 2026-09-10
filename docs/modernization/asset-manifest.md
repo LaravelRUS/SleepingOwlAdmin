@@ -10,7 +10,7 @@ Manifest создаётся после Vite build из `build/frontend-entries.j
 
 - `core`;
 - обязательный package-owned `shared:icons`, общие `shared:compatibility`, semantic `shared:ui`, объединённый `shared:features`, profile-aware `shared:vue` и завершающий `shared:modules`;
-- встроенные `theme:adminlte`/`theme:shadcn`, их последние `theme:<name>:overrides` и диагностический layer-only `theme:empty`.
+- встроенные `theme:adminlte`/`theme:tabler`, последний `theme:adminlte:overrides` и диагностический layer-only `theme:empty`.
 
 `shared:icons` и `shared:features` всегда добавляются package runtime. `shared:features`
 содержит все всегда загружаемые feature drivers и их нейтральный CSS. Встроенные
@@ -90,8 +90,8 @@ manifest и опубликованные файлы структурно вал�
 разметка не выводится.
 
 Core передаёт теме только immutable status data и не выбирает CSS-классы.
-AdminLTE и Tailwind оформляют уведомление своими Blade/Sass partials и
-`--soa-*` variables; custom theme может отрисовать тот же публичный status
+AdminLTE оформляет уведомление своими Blade/Sass partials и `--soa-*`
+variables; custom theme может отрисовать тот же публичный status
 contract собственной разметкой. Missing/corrupt manifest, неверная schema и
 checksum mismatch остаются hard errors: для них недостаточно безопасного
 целостного набора, на котором можно показать обычный layout.

@@ -122,37 +122,6 @@
                         }
                     ]
                 },
-                "theme:shadcn": {
-                    "scripts": [
-                        {
-                            "file": "profiles/production/js/themes/shadcn.js",
-                            "version": "c4f6ea93ead84188726e1400edc22239",
-                            "checksum": "sha256:89ce2ef66ac432bf96e9d6f8099c3faa3db887d7e4e47c995a31236cb18bfbd1"
-                        }
-                    ],
-                    "styles": [
-                        {
-                            "file": "profiles/production/css/themes/shadcn.css",
-                            "version": "f16d900a6eb29958a7e83b140ba4d121",
-                            "checksum": "sha256:97fb9ad0e3f9ea24dcb703d93224c2265982ae981f4a3e0345232498336e8fb2"
-                        },
-                        {
-                            "file": "profiles/production/css/themes/shadcn-utilities.css",
-                            "version": "2e22cccbfeef9f517fe798e203842034",
-                            "checksum": "sha256:0a08c772ab3c3b48a1729e37ae9b8e504bde266e9bc6b5e2283a21100debea82"
-                        }
-                    ]
-                },
-                "theme:shadcn:overrides": {
-                    "scripts": [],
-                    "styles": [
-                        {
-                            "file": "profiles/production/css/theme-overrides/shadcn.css",
-                            "version": "6ea4bd51a8a7dc95874c68161ddd968b",
-                            "checksum": "sha256:56735dbc8ee7e73877f62daf0f167893cc4559d4b571acb667d46fd9d2f4dea4"
-                        }
-                    ]
-                },
                 "theme:tabler": {
                     "scripts": [],
                     "styles": [
@@ -285,37 +254,6 @@
                         }
                     ]
                 },
-                "theme:shadcn": {
-                    "scripts": [
-                        {
-                            "file": "profiles/development/js/themes/shadcn.js",
-                            "version": "f14a0831c320c12ad7b3d8e887bd82c1",
-                            "checksum": "sha256:5509e169807abf0b73c075b73f38780657cec898575ddd1c9e8d712fef0d3cdb"
-                        }
-                    ],
-                    "styles": [
-                        {
-                            "file": "profiles/development/css/themes/shadcn.css",
-                            "version": "c32090704a059b35fa59d13a023e6fa4",
-                            "checksum": "sha256:217e32677a23117265bc2216980a79cb3a6a752f10b1c24574ce2567c600b478"
-                        },
-                        {
-                            "file": "profiles/development/css/themes/shadcn-utilities.css",
-                            "version": "0dd230aec518c7b676e050200201dec1",
-                            "checksum": "sha256:a8fea35d77f93f76adca3dae7c58684c0eb91acdb375842bdb71aeeaf391a04a"
-                        }
-                    ]
-                },
-                "theme:shadcn:overrides": {
-                    "scripts": [],
-                    "styles": [
-                        {
-                            "file": "profiles/development/css/theme-overrides/shadcn.css",
-                            "version": "aa3cfb07de8d3639612d1bd77143b58a",
-                            "checksum": "sha256:615fd607a1b2c69081565a05537aacd74d71c9a994f9adb2ca39f3d89df6b8b5"
-                        }
-                    ]
-                },
                 "theme:tabler": {
                     "scripts": [],
                     "styles": [
@@ -329,5 +267,5 @@
             }
         }
     },
-    "build_id": "sha256:43a17ca80ef1ed34b981b1e8eaf05df748be45f443848ffe71c5fda3d826145a"
+    "build_id": "sha256:e74fe0f5d9472f6649e1f1eb18afac91edeba6978bb84ff3e21bb866d2a22e9f"
 }

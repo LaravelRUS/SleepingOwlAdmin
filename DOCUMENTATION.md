@@ -70,7 +70,7 @@ resources/
 ├── css/                      # core, shared, themes и theme-overrides
 ├── js/                       # core, shared, themes и theme-overrides
 ├── views/default/            # Полный базовый Blade contract
-├── views/themes/{shadcn,tabler}/ # Только реальные sparse overrides
+├── views/themes/tabler/        # Только реальные sparse overrides
 ├── views/features/           # Общие feature-owned views
 └── lang/                     # Локализация
 
@@ -90,7 +90,7 @@ Generated-файлы под `public/default` вручную не редакти�
 | Ключ                  | Назначение                                         | Значение по умолчанию |
 | :-------------------- | :------------------------------------------------- | :-------------------- |
 | `template.default`    | Имя выбранной темы                                 | `adminlte`            |
-| `template.themes`     | Карта имён на `ThemeInterface` classes             | `adminlte`, `shadcn`, `empty`, `tabler` |
+| `template.themes`     | Карта имён на `ThemeInterface` classes             | `adminlte`, `empty`, `tabler` |
 | `ui`                  | Branding, shell, footer и presentation switches    | См. config            |
 | `dev_assets`          | Выбор готового development profile                 | `false`               |
 | `url_prefix`          | URL-префикс админки                                | `admin`               |
@@ -109,15 +109,14 @@ Generated-файлы под `public/default` вручную не редакти�
     'default' => env('SLEEPINGOWL_TEMPLATE', 'adminlte'),
     'themes' => [
         'adminlte' => SleepingOwl\Admin\Themes\AdminLTETheme::class,
-        'shadcn' => SleepingOwl\Admin\Themes\TailwindTheme::class,
         'empty' => SleepingOwl\Admin\Themes\EmptyTheme::class,
         'tabler' => SleepingOwl\Admin\Themes\TablerTheme::class,
     ],
 ],
 ```
 
-`adminlte` использует AdminLTE 4/Bootstrap 5. `shadcn` выбирает готовую
-TailwindTheme, а `tabler` — CSS-only TablerTheme 1.5.1 без vendor JavaScript.
+`adminlte` использует AdminLTE 4/Bootstrap 5, а `tabler` — CSS-only
+TablerTheme 1.5.1 без vendor JavaScript.
 Диагностическая `empty` сохраняет shared styles и icons, но не
 добавляет theme-owned presentation. Разрешается только выбранная тема; неверное имя, class,
 capability или manifest вызывает диагностическое исключение без silent fallback.
@@ -481,4 +480,4 @@ element, widget, policy, module provider, Vue island и custom theme.
 Legacy classes вроде `hidden-sm`, `.last`, `.badge-list-warning` и `.th-center`
 не являются новым cross-theme API. Для нового кода используйте semantic
 `soa-*` hooks, public custom properties и application-owned CSS. Не переносите
-Bootstrap/AdminLTE/Tailwind classes в PHP core или feature JavaScript.
+framework-specific classes в PHP core или feature JavaScript.

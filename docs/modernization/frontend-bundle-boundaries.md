@@ -13,7 +13,6 @@ The modernization build publishes independent entrypoints for the default `Admin
 | `shared:features` | `js/shared/features.js` | `css/shared/features.css` | all feature drivers and theme-neutral feature presentation that the runtime always loads together |
 | `shared:modules` | `js/shared/modules.js` | — | final compatibility module boot and idempotent component scan |
 | `theme:adminlte` | `js/themes/adminlte.js` | `css/themes/adminlte.css` | AdminLTE/Bootstrap presentation and all AdminLTE feature adapters |
-| `theme:shadcn` | `js/themes/shadcn.js` | `css/themes/shadcn.css`, `css/themes/shadcn-utilities.css` | shadcn presentation, feature adapters and build-only Tailwind utilities |
 | `theme:tabler` | — | `css/themes/tabler.css` | exact Tabler 1.5.1 CSS and Tabler-specific token/component presentation; no vendor runtime |
 
 The source/output mapping is declared once in `build/frontend-entries.json` and consumed by Vite. The same file is a build-time contract; after compilation it generates `public/default/asset-manifest.json`, which maps logical ids to validated runtime files, content versions and SHA-256 checksums. The schema and PHP resolver are documented in `asset-manifest.md`.
@@ -21,8 +20,7 @@ The source/output mapping is declared once in `build/frontend-entries.json` and 
 Feature source folders remain ownership boundaries: table behavior cannot import a concrete theme,
 and theme adapters remain under `resources/{css,js}/themes/<theme>/features`. They are aggregated
 only at the public build boundary. This keeps source responsibilities visible without paying for a
-request and manifest record for every small partial. The Tailwind adapter is precompiled and does
-not require Tailwind, PostCSS or Node.js in a consumer project.
+request and manifest record for every small partial.
 
 The new Sass entries declare cascade-layer boundaries:
 

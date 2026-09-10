@@ -113,10 +113,10 @@ one DOM row, while the latter invalidates all DOM rows before drawing.
 ## Theme ownership
 
 The shared table feature provides one framework-free Sass owner for every
-editor type. AdminLTE and Shadcn do not duplicate its selectors: their table
-tokens only assign the public `--soa-inline-editor-*` palette values. A custom
+editor type. Built-in themes do not duplicate its selectors: their table tokens
+only assign the public `--soa-inline-editor-*` palette values. A custom
 theme receives the same geometry through `shared:features` and can change the
-stable token surface without importing Bootstrap, AdminLTE, or Tailwind and
+stable token surface without importing a frontend framework and
 without reimplementing transport or state. Structural overrides are reserved
 for an intentional contract change and belong in the theme's explicit final
 override layer.

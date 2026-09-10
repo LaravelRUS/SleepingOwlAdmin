@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-theme="shadcn">
+<html lang="en" data-theme="adminlte">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -7,9 +7,9 @@
         <script>
             const parameters = new URLSearchParams(location.search)
             const profile = parameters.get('profile') || 'development'
-            const theme = parameters.get('theme') || 'shadcn'
+            const theme = parameters.get('theme') || 'adminlte'
             const supportedProfiles = ['development', 'production']
-            const supportedThemes = ['adminlte', 'empty', 'shadcn', 'tabler']
+            const supportedThemes = ['adminlte', 'empty', 'tabler']
 
             if (!supportedProfiles.includes(profile) || !supportedThemes.includes(theme)) {
                 throw new Error(`Unsupported inline editor fixture: ${profile}/${theme}`)

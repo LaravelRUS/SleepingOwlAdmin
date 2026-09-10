@@ -7,8 +7,8 @@
         <link rel="stylesheet" href="/public/default/css/shared/ui.css" />
         <link rel="stylesheet" href="/public/default/css/shared/features.css" />
         <script>
-            const theme = new URLSearchParams(location.search).get('theme') || 'shadcn'
-            const supported = ['adminlte', 'empty', 'shadcn', 'tabler']
+            const theme = new URLSearchParams(location.search).get('theme') || 'adminlte'
+            const supported = ['adminlte', 'empty', 'tabler']
 
             if (!supported.includes(theme)) throw new Error(`Unsupported fixture theme: ${theme}`)
 

@@ -168,10 +168,6 @@ final class ThemeResolver
             return 'adminlte';
         }
 
-        if ($implementation instanceof TailwindTheme) {
-            return 'shadcn';
-        }
-
         throw new TemplateException(
             "Legacy class-string theme [{$configuredClass}] has no canonical name; configure it in [sleeping_owl.template.themes]."
         );

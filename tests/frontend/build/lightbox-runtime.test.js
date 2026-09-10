@@ -25,7 +25,6 @@ it('ships standalone behavior with shared presentation and theme token overrides
         'resources/css/shared/features/lightbox/lightbox-base.scss',
         'resources/css/shared/_tokens.scss',
         'resources/css/themes/adminlte/_tokens.scss',
-        'resources/css/themes/shadcn/_tokens.scss',
     ]
 
     files.forEach((file) => expect(existsSync(resolve(root, file))).toBe(true))

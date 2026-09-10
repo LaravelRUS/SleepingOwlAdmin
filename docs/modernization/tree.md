@@ -91,20 +91,18 @@ The AdminLTE tree adapter listens to those native events and maps them to its
 own localized SweetAlert policy: success is a short toast, while failure uses
 `Admin.Messages.error`. It does not register or mount the tree controller, so
 it may load before or after the neutral feature entry without creating a
-second tree instance. Tailwind intentionally remains event-only until it owns
-a notification component; it does not load SweetAlert or the AdminLTE policy.
+second tree instance.
 
 ## Theme and asset ownership
 
-The theme-neutral tree module inside `shared:features` owns lifecycle, serialization,
-transport, max-depth validation, and the minimal behavior stylesheet. AdminLTE
-and Tailwind each provide a separate Sass presentation adapter. Palette values
-come from `_colors.scss`; dimensions, motion and `--soa-tree-*` emission stay
-in the same adapter module.
+The theme-neutral tree module inside `shared:features` owns lifecycle,
+serialization, transport, max-depth validation, and the minimal behavior
+stylesheet. Built-in themes provide their own presentation. Palette values,
+dimensions, motion and `--soa-tree-*` emission stay in theme-owned modules.
 
 A custom theme can style the stable `soa-tree-*` DOM contract and listen to
 `tree:changed`/`tree:failed` for its own notifications without importing
-Bootstrap, AdminLTE, SweetAlert, or Tailwind and without reimplementing tree
+Bootstrap, AdminLTE, or SweetAlert and without reimplementing tree
 state or transport. Code that installs the library API directly may also pass
 the optional `notifications.success()`/`notifications.error(error)` dependency
 to `installTrees()`.
@@ -114,7 +112,7 @@ The no-build distribution exposes these logical entries in both profiles:
 ```text
 shared:features
 theme:adminlte
-theme:shadcn
+theme:tabler
 ```
 
 They resolve to precompiled JavaScript and CSS under `public/default`. The

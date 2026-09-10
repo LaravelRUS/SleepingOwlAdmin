@@ -765,7 +765,7 @@
                 {
                     "key": "dev_assets",
                     "file": "src/Templates/TemplateDefault.php",
-                    "line": 54,
+                    "line": 51,
                     "source": "php",
                     "accessor": "config-helper"
                 }
@@ -1150,9 +1150,9 @@
             ]
         },
         {
-            "key": "template.themes.shadcn",
+            "key": "template.themes.tabler",
             "type": "string",
-            "default": "SleepingOwl\\Admin\\Themes\\TailwindTheme",
+            "default": "SleepingOwl\\Admin\\Themes\\TablerTheme",
             "consumers": [],
             "ancestorConsumers": [
                 {
@@ -1303,7 +1303,7 @@
                 {
                     "key": "ui.logo",
                     "file": "src/Templates/TemplateDefault.php",
-                    "line": 121,
+                    "line": 118,
                     "source": "php",
                     "accessor": "config-helper"
                 },
@@ -1332,7 +1332,7 @@
                 {
                     "key": "ui.logo_mini",
                     "file": "src/Templates/TemplateDefault.php",
-                    "line": 137,
+                    "line": 134,
                     "source": "php",
                     "accessor": "config-helper"
                 },
@@ -1361,7 +1361,7 @@
                 {
                     "key": "ui.menu_top",
                     "file": "src/Templates/TemplateDefault.php",
-                    "line": 129,
+                    "line": 126,
                     "source": "php",
                     "accessor": "config-helper"
                 },
@@ -1494,8 +1494,8 @@
         },
         {
             "key": "ui.sidebar_background_color",
-            "type": "string",
-            "default": "#abc",
+            "type": "null",
+            "default": null,
             "consumers": [
                 {
                     "key": "ui.sidebar_background_color",

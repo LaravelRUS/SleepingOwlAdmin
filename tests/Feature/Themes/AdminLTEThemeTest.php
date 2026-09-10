@@ -129,7 +129,6 @@ class AdminLTEThemeTest extends TestCase
         $this->assertLegacyHandles($scripts, $styles);
         $this->assertRuntimeProfile($scriptSources, "profiles/{$profile}");
         $this->assertRuntimeProfile($styleSources, "profiles/{$profile}");
-        $this->assertStringNotContainsString('shadcn', implode('|', [...$scriptSources, ...$styleSources]));
         $this->assertStringNotContainsString('js/admin-app', implode('|', $scriptSources));
         $this->assertStringNotContainsString('/js/vue.js', implode('|', $scriptSources));
         $this->assertStringNotContainsString('/js/modules.js', implode('|', $scriptSources));

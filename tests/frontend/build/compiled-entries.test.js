@@ -103,54 +103,6 @@ describe('compiled date-picker entry', () => {
     })
 })
 
-describe('compiled Tailwind form entry', () => {
-    it('publishes the Tailwind forms skin without shared attachment geometry', () => {
-        for (const profile of ['production', 'development']) {
-            const forms = readFileSync(
-                resolve(root, `public/default/profiles/${profile}/css/themes/shadcn.css`),
-                'utf8',
-            )
-            const sharedUi = readFileSync(
-                resolve(root, `public/default/profiles/${profile}/css/shared/ui.css`),
-                'utf8',
-            )
-
-            expect(forms).toContain('@layer sleepingowl-theme.forms')
-            expect(forms).toContain('var(--soa-primary-color)')
-            expect(forms).toContain('.multiselect__tags')
-            expect(forms).not.toContain('.soa-attachment-list')
-            expect(sharedUi).toContain('.soa-attachment-list')
-        }
-
-        const sources = filesUnder('resources/css/themes/shadcn/features/forms')
-            .map((path) => readFileSync(resolve(root, path), 'utf8'))
-            .join('\n')
-        expect(sources).not.toMatch(/bootstrap|admin-lte|adminlte|jquery|react|radix|lucide/i)
-        expect(sources).not.toMatch(/#[\da-f]{3,8}\b/i)
-    })
-})
-
-describe('compiled shared content presentation', () => {
-    it('publishes shared presentation with theme-owned token overrides', () => {
-        for (const profile of ['production', 'development']) {
-            const shared = readFileSync(
-                resolve(root, `public/default/profiles/${profile}/css/shared/features.css`),
-                'utf8',
-            )
-            const theme = readFileSync(
-                resolve(root, `public/default/profiles/${profile}/css/themes/shadcn.css`),
-                'utf8',
-            )
-
-            for (const feature of ['lightbox', 'tabs', 'tree']) {
-                expect(shared).toContain(`@layer sleepingowl-feature.${feature}`)
-                expect(shared).toContain(`var(--soa-${feature}`)
-                expect(theme).toContain(`--soa-${feature}`)
-            }
-        }
-    })
-})
-
 describe('compiled core boundaries', () => {
     it.each(['production', 'development'])(
         'keeps the %s core useful and free of frontend frameworks or feature engines',
@@ -321,11 +273,6 @@ describe('compiled runtime properties', () => {
                 '--soa-sidebar-bg',
                 '--soa-line-height-tight',
                 '--soa-dropdown-surface',
-            ],
-            'css/themes/shadcn.css': [
-                '--soa-sidebar-bg',
-                '--soa-sidebar-width',
-                '--soa-font-family-sans',
             ],
         }
 

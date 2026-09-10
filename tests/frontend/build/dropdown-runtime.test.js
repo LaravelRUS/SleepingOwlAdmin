@@ -32,7 +32,6 @@ it('ships independent behavior, shared presentation and theme token overrides', 
     expect(presentation).toContain('.dropdown-menu')
     expect(presentation).toContain('var(--soa-dropdown-radius)')
     expect(read('resources/css/themes/adminlte/_tokens.scss')).toContain('--soa-dropdown-radius:')
-    expect(read('resources/css/themes/shadcn/_tokens.scss')).toContain('--soa-dropdown-radius:')
     expect(
         existsSync(
             resolve(root, 'resources/css/themes/adminlte/features/dropdown/dropdown-adminlte.scss'),

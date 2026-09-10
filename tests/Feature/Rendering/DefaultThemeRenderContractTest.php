@@ -234,7 +234,7 @@ class DefaultThemeRenderContractTest extends TestCase
         $this->assertStringContainsString('&lt;strong&gt;Sales&lt;/strong&gt;', $escaped);
     }
 
-    public function test_native_filter_select_keeps_groups_and_a_zero_selection_in_both_themes(): void
+    public function test_native_filter_select_keeps_groups_and_a_zero_selection(): void
     {
         $data = [
             'attributesArray' => ['data-filter' => 'active'],
@@ -245,16 +245,14 @@ class DefaultThemeRenderContractTest extends TestCase
             'width' => '',
         ];
 
-        foreach (['sleeping_owl::default.column.filter.select', 'sleeping_owl_shadcn::default.column.filter.select'] as $view) {
-            $html = view($view, $data)->render();
+        $html = view('sleeping_owl::default.column.filter.select', $data)->render();
 
-            $this->assertStringContainsString('<optgroup label="Status">', $html);
-            $this->assertStringContainsString('value="0" selected>No</option>', $html);
-            $this->assertStringContainsString('data-filter="active"', $html);
-        }
+        $this->assertStringContainsString('<optgroup label="Status">', $html);
+        $this->assertStringContainsString('value="0" selected>No</option>', $html);
+        $this->assertStringContainsString('data-filter="active"', $html);
     }
 
-    public function test_email_column_renders_a_native_mailto_link_in_both_themes(): void
+    public function test_email_column_renders_a_native_mailto_link(): void
     {
         $data = [
             'append' => null,
@@ -264,14 +262,12 @@ class DefaultThemeRenderContractTest extends TestCase
             'visibled' => true,
         ];
 
-        foreach (['sleeping_owl::default.column.email', 'sleeping_owl_shadcn::default.column.email'] as $view) {
-            $html = view($view, $data)->render();
+        $html = view('sleeping_owl::default.column.email', $data)->render();
 
-            $this->assertStringContainsString(
-                '<a href="mailto:dev+alerts@example.test">dev+alerts@example.test</a>',
-                $html
-            );
-        }
+        $this->assertStringContainsString(
+            '<a href="mailto:dev+alerts@example.test">dev+alerts@example.test</a>',
+            $html
+        );
     }
 
     public function test_text_form_element_keeps_attributes_help_and_validation_markup(): void

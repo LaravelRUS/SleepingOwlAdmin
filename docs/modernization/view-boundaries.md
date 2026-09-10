@@ -7,21 +7,17 @@
 | `resources/views/shared` | UI core | Theme-independent composition and minimal semantic HTML with no feature lifecycle or CSS-framework classes |
 | `resources/views/features` | Named feature | Feature behavior, protocol responses and theme-neutral feature markup |
 | `resources/views/default` | Package default | AdminLTE-compatible presentation views that genuinely belong to the selected theme |
-| `resources/views/themes/shadcn/default` | Shadcn theme | Only Blade implementations whose presentation differs from the package default |
-| `resources/archive/unused-sources/resources/views/themes/shadcn/components` | Archive only | Retired component prototypes; never a runtime view root |
+| `resources/views/themes/tabler/default` | Tabler theme | Only Blade implementations whose presentation differs from the package default |
 
 `sleeping_owl::default.*` remains the compatibility namespace used by
 `TemplateDefault` and existing custom templates. Its package root is
 `resources/views`; application files under
 `resources/views/vendor/sleeping_owl` remain first.
 
-`sleeping_owl_shadcn::default.*` keeps its separate application namespace.
-Laravel registers ordered package hints for it: `themes/shadcn`, then the
-package root. A missing Shadcn file therefore inherits the base implementation
-without a bridge or runtime existence check. The current tree contains 103
-base logical views and one real Shadcn shell override. The earlier 27 component
-prototypes are archived because all useful `soa-*` hooks now live directly in
-the shared base markup and no runtime view references them.
+`sleeping_owl_tabler::default.*` keeps its separate application namespace.
+Laravel registers ordered package hints for it: `themes/tabler`, then the
+package root. A missing Tabler file therefore inherits the base implementation
+without a bridge or runtime existence check.
 
 When a runtime belongs to `shared` or `features`, its PHP owner now uses that
 fully qualified view name directly. The breaking modernization release does
@@ -49,19 +45,19 @@ AdminLTE:
 resources/views/vendor/sleeping_owl/default/<logical path>
     -> resources/views/default/<logical path>
 
-Shadcn:
-resources/views/vendor/sleeping_owl_shadcn/default/<logical path>
-    -> resources/views/themes/shadcn/default/<logical path>
+Tabler:
+resources/views/vendor/sleeping_owl_tabler/default/<logical path>
+    -> resources/views/themes/tabler/default/<logical path>
     -> resources/views/default/<logical path>
 ```
 
 `ApplicationViewOverrideTest` boots the package with a real simulated
 application `view.paths` root and proves that the vendor override wins over the
-package copy. `ShadcnApplicationViewOverrideTest` proves all three Shadcn
+package copy. `TablerApplicationViewOverrideTest` proves all three Tabler
 levels and the unchanged namespace. `ThemeRenderingContractTest` proves both relative `setView()` and
 fully namespaced `addCustomView()` through a direct `ThemeInterface`, including
 unchanged data and escaped content. The contract therefore applies to the
-current AdminLTE theme and to Tailwind or project themes added through the same
+current AdminLTE and Tabler themes and to project themes added through the same
 interface; those themes provide views, not a replacement rendering API.
 
 ## Dependency direction
@@ -71,7 +67,7 @@ interface; those themes provide views, not a replacement rendering API.
 - A theme view may compose shared views, feature views and theme-local presentation partials.
 - Bootstrap/AdminLTE classes belong to the AdminLTE-compatible `resources/views/default` base; shared and feature implementations cannot acquire them through an implicit fallback.
 - A feature view that still needs framework classes remains a theme-owned feature presentation adapter; it is not moved into `features` merely because its PHP class belongs to a feature.
-- New cross-layer includes use explicit `sleeping_owl::shared.*` or `sleeping_owl::features.*` paths. The only built-in presentation fallback is the ordered Shadcn-to-base namespace; no semantic class resolver is introduced.
+- New cross-layer includes use explicit `sleeping_owl::shared.*` or `sleeping_owl::features.*` paths. The only built-in presentation fallback is the ordered Tabler-to-base namespace; no semantic class resolver is introduced.
 
 ## Direct owner paths
 
@@ -101,9 +97,9 @@ The current compatibility implementation is explicitly identified as `adminlte` 
 - current precompiled distribution: `public/default`;
 - compatibility JavaScript: `resources/js/shared/legacy`; theme styles/scripts: `resources/{css,js}/themes/adminlte`; active legacy aggregate Sass: `resources/css/themes/adminlte/legacy`.
 
-Shadcn keeps `sleeping_owl_shadcn::default`, stores only the structurally
-different `_layout/inner` shell in `resources/views/themes/shadcn/default` and
-inherits the other 102 presentation views from the same base. External namespaces
+Tabler keeps `sleeping_owl_tabler::default`, stores only structurally different
+views in `resources/views/themes/tabler/default` and inherits the remaining
+presentation views from the same base. External namespaces
 remain isolated unless their own provider explicitly
 registers a fallback. The physical view move does not change logical view names,
 template config, published override priority or public asset URLs. The stable
@@ -114,15 +110,14 @@ version.
 
 `ThemeDependencyBoundaryTest` protects the direction of dependencies in all server-side layers:
 
-- PHP outside concrete theme directories cannot reference `AdminLte`, `Tailwind` or `Legacy` theme subnamespaces;
+- PHP outside concrete theme directories cannot reference concrete theme or legacy subnamespaces;
 - shared and feature Blade roots cannot refer to physical theme paths;
 - frontend core module specifiers cannot point into `features` or `themes`.
 
 `ViewBoundaryTest` walks every base Blade file and proves that each theme-owned
-view resolves through its `sleeping_owl::default.*` logical name. The
-Tailwind rendering contracts repeat that walk through the Shadcn namespace,
-select the theme file when present and the base file otherwise, reject an
-override identical to base, and prove that archived component prototypes are
-not runtime-resolvable views.
+view resolves through its `sleeping_owl::default.*` logical name. The Tabler
+rendering contracts repeat that walk through the Tabler namespace, select the
+theme file when present and the base file otherwise, and reject an override
+identical to base.
 
 The modern frontend ESLint config repeats the `core → features/themes` restriction through `no-restricted-imports`, so a new JavaScript violation fails at lint time before the wider PHPUnit architecture gate. Theme selection remains data-driven through `sleeping_owl.template`; adding a theme does not authorize a core import of its implementation.

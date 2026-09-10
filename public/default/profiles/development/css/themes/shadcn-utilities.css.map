@@ -1,1 +1,0 @@
-{"version":3,"sources":["../../../../resources/css/themes/shadcn/tailwind.input.css"],"names":[],"mappings":"AAAA","file":"shadcn-utilities.css","sourcesContent":["/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */\n@layer utilities{.flex{display:flex}.grid{display:grid}}\n"]}

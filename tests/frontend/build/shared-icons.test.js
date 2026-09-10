@@ -19,7 +19,7 @@ it('publishes icons separately from both theme stylesheets', () => {
     expect(icons).toContain('Font Awesome Free 7.3.1')
     expect(icons).toMatch(/\.fa-solid|\.fas/)
 
-    for (const theme of ['adminlte', 'shadcn', 'tabler']) {
+    for (const theme of ['adminlte', 'tabler']) {
         expect(read(`public/default/css/themes/${theme}.css`)).not.toContain('Font Awesome')
     }
 })

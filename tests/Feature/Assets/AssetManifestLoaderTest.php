@@ -24,8 +24,6 @@ class AssetManifestLoaderTest extends TestCase
             'theme:adminlte',
             'theme:adminlte:overrides',
             'theme:empty',
-            'theme:shadcn',
-            'theme:shadcn:overrides',
             'theme:tabler',
         ], $manifest->profile('production')->entryIds());
         $this->assertSame(

@@ -56,12 +56,12 @@ on delegated markup and native events instead of calling these methods.
 
 ## Theme ownership
 
-Behavior and visibility belong to the shared dropdown source folder. AdminLTE and shadcn
-provide independent Sass presentation adapters that compile into their theme bundles:
+Behavior and visibility belong to the shared dropdown source folder. The
+selected built-in theme provides its presentation through its own bundle:
 
 ```text
 theme:adminlte
-theme:shadcn
+theme:tabler
 ```
 
 Colors live in each adapter's `_colors.scss`; dimensions and `--soa-dropdown-*`

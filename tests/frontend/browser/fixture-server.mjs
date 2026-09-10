@@ -18,10 +18,6 @@ const staticRoutes = new Map([
         [join(browserDirectory, 'theme-capabilities-adminlte.html'), 'text/html; charset=utf-8'],
     ],
     [
-        '/theme-capabilities-tailwind',
-        [join(browserDirectory, 'theme-capabilities-tailwind.html'), 'text/html; charset=utf-8'],
-    ],
-    [
         '/theme-capabilities-tabler',
         [join(browserDirectory, 'theme-capabilities-tabler.html'), 'text/html; charset=utf-8'],
     ],
@@ -170,10 +166,6 @@ const staticRoutes = new Map([
         [join(projectRoot, 'public', 'default', 'js', 'themes', 'adminlte.js'), 'text/javascript'],
     ],
     [
-        '/public/default/js/themes/shadcn.js',
-        [join(projectRoot, 'public', 'default', 'js', 'themes', 'shadcn.js'), 'text/javascript'],
-    ],
-    [
         '/public/default/js/admin-app.js',
         [join(projectRoot, 'public', 'default', 'js', 'admin-app.js'), 'text/javascript'],
     ],
@@ -226,7 +218,7 @@ const staticRoutes = new Map([
         ],
     ],
     ...profileScriptRoutes('development', ['admin-core']),
-    ...profileThemeRoutes('development', ['adminlte', 'shadcn']),
+    ...profileThemeRoutes('development', ['adminlte']),
     ...profileSharedRoutes('development', ['features', 'modules']),
     ...profileStyleRoutes('development', themeCapabilityStyles()),
     [
@@ -262,7 +254,7 @@ const staticRoutes = new Map([
         ],
     ],
     ...profileScriptRoutes('production', ['admin-core']),
-    ...profileThemeRoutes('production', ['adminlte', 'shadcn']),
+    ...profileThemeRoutes('production', ['adminlte']),
     ...profileSharedRoutes('production', ['features', 'modules']),
     ...profileStyleRoutes('production', themeCapabilityStyles()),
     [
@@ -280,10 +272,6 @@ const staticRoutes = new Map([
     [
         '/public/default/css/themes/adminlte.css',
         [join(projectRoot, 'public', 'default', 'css', 'themes', 'adminlte.css'), 'text/css'],
-    ],
-    [
-        '/public/default/css/themes/shadcn.css',
-        [join(projectRoot, 'public', 'default', 'css', 'themes', 'shadcn.css'), 'text/css'],
     ],
     [
         '/public/default/css/themes/tabler.css',
@@ -331,16 +319,12 @@ function profileStyleRoutes(profile, entries) {
     ])
 }
 
-function tailwindCapabilityStyles() {
-    return ['themes/shadcn.css', 'themes/shadcn-utilities.css']
-}
-
 function themeCapabilityStyles() {
     const base = ['admin-core.css', 'icons.css', 'shared/ui.css', 'shared/features.css']
     const legacy = ['themes/adminlte.css']
     const empty = ['themes/empty.css']
     const tabler = ['themes/tabler.css']
-    return [...base, ...legacy, ...empty, ...tailwindCapabilityStyles(), ...tabler]
+    return [...base, ...legacy, ...empty, ...tabler]
 }
 
 const fixtureRequests = new Map()

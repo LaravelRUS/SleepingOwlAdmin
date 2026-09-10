@@ -1,5 +1,0 @@
-@import 'tailwindcss/utilities.css' layer(utilities) source(none);
-
-@config './tailwind.config.cjs';
-@source '../../../views/themes/shadcn';
-@source inline('flex grid');

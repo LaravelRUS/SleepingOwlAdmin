@@ -13,7 +13,7 @@ Laravel discovers
 During registration and boot the provider:
 
 1. recursively merges `config/sleeping_owl.php` and merges navigation config;
-2. registers the package and Shadcn Blade namespaces;
+2. registers the package and Tabler Blade namespaces;
 3. creates the central `Admin` service and registers package service providers;
 4. registers factories, widgets, WYSIWYG, theme and asset services;
 5. resolves the configured theme/template and initializes it for normal
@@ -110,8 +110,7 @@ families are:
 
 Aliases can be replaced or extended through the container/config without
 changing package source. The factories create PHP objects; they do not select
-Bootstrap, AdminLTE or Tailwind classes. Theme-specific classes are resolved in
-Blade.
+framework-specific classes. Theme-specific classes are resolved in Blade.
 
 Displays own structural composition and server-side data behavior. Extensions
 such as actions, links, column filters, totals and custom views implement the
@@ -128,12 +127,12 @@ The canonical built-in Blade base is `resources/views/default`. It contains the
 complete AdminLTE-compatible logical view contract. Shared feature views live in
 `resources/views/features`.
 
-The Shadcn theme uses ordered namespace hints; its intermediate package path is
+The Tabler theme uses ordered namespace hints; its intermediate package path is
 present only when a real markup difference requires an override:
 
 ```text
 application override
-    -> resources/views/themes/shadcn/default (real differences only)
+    -> resources/views/themes/tabler/default (real differences only)
     -> resources/views/default (canonical base)
 ```
 
@@ -141,10 +140,10 @@ Application override paths are:
 
 ```text
 AdminLTE: resources/views/vendor/sleeping_owl/default/<logical path>
-Shadcn:   resources/views/vendor/sleeping_owl_shadcn/default/<logical path>
+Tabler:   resources/views/vendor/sleeping_owl_tabler/default/<logical path>
 ```
 
-An absent Shadcn override is normal inheritance. Copying the complete base into
+An absent Tabler override is normal inheritance. Copying the complete base into
 another theme or application is intentionally discouraged; override only markup
 that differs.
 
@@ -170,7 +169,8 @@ as a migration fallback.
 Built-in names are:
 
 - `adminlte` → `AdminLTETheme` (AdminLTE 4 and Bootstrap 5);
-- `shadcn` → `TailwindTheme` (ready Tailwind 4/Shadcn-inspired presentation).
+- `empty` → `EmptyTheme` (diagnostic shared-only presentation);
+- `tabler` → `TablerTheme` (Tabler 1.5.1 CSS-only presentation).
 
 `ThemeResolver` validates the selection and resolves only the selected class.
 There is no silent fallback to AdminLTE when configuration is invalid.
@@ -246,8 +246,7 @@ Maintainers build with Vite. `vite.config.mjs` defines the classic-script,
 Vue, Sass/PostCSS, source-map and license boundaries, while
 `scripts/modernization/build-vite-profile.mjs` consumes the build matrix one
 entry at a time. `scripts/modernization/build-asset-profiles.mjs` builds and
-reconciles both release profiles. Tailwind remains a maintainer-only build
-dependency for the ready Shadcn theme; Vite is never a consumer requirement.
+reconciles both release profiles. Vite is never a consumer requirement.
 
 Generated package files live under `public/default`; publication copies them to
 `public/packages/sleepingowl/default`. Application-owned CSS, JavaScript and
@@ -291,7 +290,7 @@ resources/js/
 resources/views/
   default/                     # Canonical built-in Blade base
   features/                    # Shared feature-owned templates
-  themes/shadcn/               # Real Shadcn differences only
+  themes/tabler/               # Real Tabler differences only
 src/
   Assets/                      # Manifest/resolution/publication
   Configuration/               # Normalized runtime configuration

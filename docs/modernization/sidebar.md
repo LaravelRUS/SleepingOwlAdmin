@@ -58,10 +58,10 @@ Behavior is shipped by `shared:features`. Presentation is compiled into the sele
 
 ```text
 theme:adminlte
-theme:shadcn
+theme:tabler
 ```
 
-Both Sass adapters keep colors in `_colors.scss`; dimensions and runtime
+Theme adapters keep colors in theme-owned tokens; dimensions and runtime
 `--soa-sidebar-*` emission stay in the same adapter module. The
 existing validated `sidebar_background_color` config override continues to set
 `--soa-sidebar-bg` without rebuilding frontend assets.
@@ -69,5 +69,5 @@ existing validated `sidebar_background_color` config override continues to set
 The default logical owner of the overlay markup is
 `default._layout.inner`. A project may override that Blade layout and change
 the overlay's classes or surrounding structure while preserving the stable
-`#sidebar-overlay` behavior hook. Tailwind and future custom theme layouts must
+`#sidebar-overlay` behavior hook. Custom theme layouts must
 render the same hook when they enable compact PushMenu behavior.

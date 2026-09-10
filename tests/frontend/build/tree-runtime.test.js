@@ -34,36 +34,23 @@ it('keeps tree behavior and presentation in shared owned sources', () => {
 it('keeps theme notification policies out of the neutral tree entry', () => {
     const entries = readJson('build/frontend-entries.json').modern
     const adminlte = entries.scripts.find(({ logicalId }) => logicalId === 'theme:adminlte')
-    const shadcn = entries.scripts.find(({ logicalId }) => logicalId === 'theme:shadcn')
 
     expect(read(adminlte.source)).toContain("import './features/tree/browser.js'")
-    expect(read(shadcn.source)).toContain("import './features/tree/browser.js'")
     expect(read('resources/js/shared/features/tree/browser.js')).not.toMatch(
-        /Swal|SweetAlert|Admin\.Messages|adminlte/,
-    )
-    expect(read('resources/js/themes/shadcn/theme.js')).not.toMatch(
-        /Swal|SweetAlert|Admin\.Messages|adminlte/,
-    )
-    expect(read('resources/js/themes/shadcn/features/tree/browser.js')).not.toMatch(
         /Swal|SweetAlert|Admin\.Messages|adminlte/,
     )
 })
 
 it.each(['production', 'development'])(
-    '%s manifest publishes tree notification adapters inside each theme bundle',
+    '%s manifest publishes the tree notification adapter inside the AdminLTE bundle',
     (profile) => {
         const entries = readJson('public/default/asset-manifest.json').profiles[profile].entries
         const adminlte = entries['theme:adminlte']
-        const shadcn = entries['theme:shadcn']
 
         expect(adminlte.scripts.map(({ file }) => file)).toEqual([
             `profiles/${profile}/js/themes/adminlte.js`,
         ])
         expect(adminlte.styles).toHaveLength(1)
-        expect(shadcn.scripts.map(({ file }) => file)).toEqual([
-            `profiles/${profile}/js/themes/shadcn.js`,
-        ])
-        expect(shadcn.styles).toHaveLength(2)
     },
 )
 

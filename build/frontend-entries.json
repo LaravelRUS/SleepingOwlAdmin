@@ -60,11 +60,6 @@
                 "logicalId": "theme:adminlte",
                 "source": "resources/js/themes/adminlte/theme.js",
                 "output": "js/themes/adminlte.js"
-            },
-            {
-                "logicalId": "theme:shadcn",
-                "source": "resources/js/themes/shadcn/theme.js",
-                "output": "js/themes/shadcn.js"
             }
         ],
         "styles": [
@@ -99,17 +94,6 @@
                 "output": "css/themes/empty.css"
             },
             {
-                "logicalId": "theme:shadcn",
-                "source": "resources/css/themes/shadcn/theme.scss",
-                "output": "css/themes/shadcn.css"
-            },
-            {
-                "logicalId": "theme:shadcn",
-                "source": "resources/css/themes/shadcn/tailwind.input.css",
-                "output": "css/themes/shadcn-utilities.css",
-                "processor": "postcss"
-            },
-            {
                 "logicalId": "theme:tabler",
                 "source": "resources/css/themes/tabler/theme.scss",
                 "output": "css/themes/tabler.css"
@@ -118,11 +102,6 @@
                 "logicalId": "theme:adminlte:overrides",
                 "source": "resources/css/theme-overrides/adminlte.scss",
                 "output": "css/theme-overrides/adminlte.css"
-            },
-            {
-                "logicalId": "theme:shadcn:overrides",
-                "source": "resources/css/theme-overrides/shadcn.scss",
-                "output": "css/theme-overrides/shadcn.css"
             }
         ]
     }

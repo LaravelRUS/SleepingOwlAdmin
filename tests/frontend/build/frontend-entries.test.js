@@ -113,13 +113,10 @@ describe('modern frontend build entries', () => {
 })
 
 describe('theme frontend build entries', () => {
-    it.each(['adminlte', 'shadcn'])(
-        'publishes the %s runtime and adapters as one theme boundary',
-        (theme) => {
-            expect(modernEntry(`theme:${theme}`, 'scripts')).toBeDefined()
-            expect(modernEntry(`theme:${theme}`, 'styles')).toBeDefined()
-        },
-    )
+    it('publishes the AdminLTE runtime and adapters as one theme boundary', () => {
+        expect(modernEntry('theme:adminlte', 'scripts')).toBeDefined()
+        expect(modernEntry('theme:adminlte', 'styles')).toBeDefined()
+    })
 
     it('publishes Tabler as a CSS-only theme boundary', () => {
         expect(modernEntry('theme:tabler', 'scripts')).toBeUndefined()
@@ -131,11 +128,11 @@ describe('theme frontend build entries', () => {
         expect(modernEntry('theme:tabler:overrides', 'styles')).toBeUndefined()
     })
 
-    it.each(['adminlte', 'shadcn'])('publishes the %s override layer last', (theme) => {
-        expect(modernEntry(`theme:${theme}:overrides`, 'styles')).toEqual({
-            logicalId: `theme:${theme}:overrides`,
-            source: `resources/css/theme-overrides/${theme}.scss`,
-            output: `css/theme-overrides/${theme}.css`,
+    it('publishes the AdminLTE override layer last', () => {
+        expect(modernEntry('theme:adminlte:overrides', 'styles')).toEqual({
+            logicalId: 'theme:adminlte:overrides',
+            source: 'resources/css/theme-overrides/adminlte.scss',
+            output: 'css/theme-overrides/adminlte.css',
         })
     })
 

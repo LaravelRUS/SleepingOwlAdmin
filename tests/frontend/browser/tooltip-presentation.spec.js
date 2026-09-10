@@ -2,7 +2,6 @@ import { expect, test } from '@playwright/test'
 
 for (const [theme, surface] of [
     ['adminlte', 'rgb(0, 0, 0)'],
-    ['shadcn', 'rgb(16, 35, 53)'],
     ['tabler', 'rgb(19, 34, 56)'],
 ]) {
     test(`${theme} tooltip adapter owns presentation`, async ({ page }) => {

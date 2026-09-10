@@ -77,4 +77,4 @@ both outcomes violate the sparse boundary.
 
 The executable evidence is `TablerThemeTest`,
 `TablerApplicationViewOverrideTest`, `tabler-theme.test.js` and the shared
-browser capability matrix, which now runs Tabler beside AdminLTE and Shadcn.
+browser capability matrix, which runs Tabler beside AdminLTE.

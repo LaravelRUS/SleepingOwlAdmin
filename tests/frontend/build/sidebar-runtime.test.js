@@ -34,21 +34,17 @@ it('keeps existing PushMenu and Treeview markers without replacement attributes'
     )
 })
 
-it('ships independent behavior and AdminLTE/Tailwind Sass adapters', () => {
+it('ships independent behavior and an AdminLTE Sass adapter', () => {
     expect(read('resources/css/shared/features/sidebar/sidebar-base.scss')).toContain(
         '@layer sleepingowl-feature.sidebar',
     )
     expect(read('resources/css/themes/adminlte/features/sidebar/sidebar-adminlte.scss')).toContain(
         '@layer sleepingowl-theme.sidebar',
     )
-    expect(read('resources/css/themes/shadcn/features/sidebar/sidebar-tailwind.scss')).toContain(
-        '@layer sleepingowl-theme.sidebar',
-    )
 })
 
 it('keeps nav-sidebar presentation in the shared sidebar feature', () => {
     const sharedSidebar = read('resources/css/shared/features/sidebar/_sidebar.scss')
-    const shadcnSidebar = read('resources/css/themes/shadcn/features/sidebar/_sidebar.scss')
 
     for (const selector of [
         '.nav-sidebar .nav-link',
@@ -57,8 +53,6 @@ it('keeps nav-sidebar presentation in the shared sidebar feature', () => {
     ]) {
         expect(sharedSidebar).toContain(selector)
     }
-
-    expect(shadcnSidebar).not.toMatch(/\.nav-(?:sidebar|treeview)\b/)
 })
 
 function read(path) {

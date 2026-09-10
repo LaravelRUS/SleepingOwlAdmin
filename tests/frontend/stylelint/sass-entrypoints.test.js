@@ -5,11 +5,7 @@ import { describe, expect, it } from 'vitest'
 
 const root = resolve(import.meta.dirname, '../../..')
 const entries = readJson('build/frontend-entries.json').modern.styles
-const layerOnlyEntries = new Set([
-    'theme:empty',
-    'theme:adminlte:overrides',
-    'theme:shadcn:overrides',
-])
+const layerOnlyEntries = new Set(['theme:empty', 'theme:adminlte:overrides'])
 const themeTokenEntries = entries.filter(
     (entry) =>
         entry.source.endsWith('.scss') &&
@@ -138,19 +134,6 @@ describe('Sass custom property namespaces', () => {
             [],
         )
     })
-
-    it('limits shadcn aliases to the Tailwind bridge and canonical --soa-* values', () => {
-        const source = readSource('resources/css/themes/shadcn/_shadcn-theme.scss')
-        const aliases = customPropertyDeclarations(source)
-        const bridgedAliases = [
-            ...source.matchAll(
-                /(--(?:color|font|radius|shadow)-[a-z0-9-]+)\s*:\s*var\((--soa-[a-z0-9-]+)\)/gi,
-            ),
-        ].map((match) => match[1])
-
-        expect(aliases.length).toBeGreaterThan(0)
-        expect(bridgedAliases).toEqual(aliases)
-    })
 })
 
 describe('Core Sass boundary', () => {
@@ -181,11 +164,7 @@ function nonDefaultDeclarations(source) {
 function isHandwrittenCss(path) {
     const normalized = path.replaceAll('\\', '/')
 
-    return (
-        normalized.endsWith('.css') &&
-        normalized !== 'css/themes/shadcn/tailwind.input.css' &&
-        !/(^|\/)(generated|vendor)\//.test(normalized)
-    )
+    return normalized.endsWith('.css') && !/(^|\/)(generated|vendor)\//.test(normalized)
 }
 
 function customPropertyDeclarations(source) {
@@ -201,10 +180,6 @@ function allowedCustomProperty({ name, path }) {
 
     if (path === 'shared/features/table/_column-order.scss') {
         return name.startsWith('--dt-order-arrow-')
-    }
-
-    if (path === 'themes/shadcn/_shadcn-theme.scss') {
-        return /^--(?:color|font|radius|shadow)-/.test(name)
     }
 
     return path.endsWith('/_date-picker.scss') && name.startsWith('--adp-')

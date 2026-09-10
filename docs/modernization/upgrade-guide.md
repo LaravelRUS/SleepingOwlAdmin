@@ -74,9 +74,9 @@ view republish is unnecessary and makes future upgrades harder.
 The package now stores the complete AdminLTE-compatible implementation in
 `resources/views/default`. This physical package move does not change the
 `sleeping_owl::default.*` namespace or the application override path above.
-Shadcn application overrides remain under
-`resources/views/vendor/sleeping_owl_shadcn`; its namespace resolves project,
-then a differing Shadcn view, then the package base. Applications do not need
+Tabler application overrides live under
+`resources/views/vendor/sleeping_owl_tabler`; its namespace resolves project,
+then a differing Tabler view, then the package base. Applications do not need
 to create copies for inherited views.
 
 ## Assets and themes
@@ -85,30 +85,28 @@ Direct `KodiCMS\Assets` facade imports must move to the package-owned facades
 listed in [first-party assets](first-party-assets.md). Exact old facade strings
 inside an existing published config are normalized automatically.
 
-The default ready theme is `AdminLTETheme`. The package also includes
-`TailwindTheme` and the CSS-only official Tabler 1.5.1 presentation; select a
-configured name without a frontend rebuild:
+The default ready theme is `AdminLTETheme`. The package also includes the
+CSS-only official Tabler 1.5.1 presentation and the diagnostic `EmptyTheme`;
+select a configured name without a frontend rebuild:
 
 ```php
 'template' => [
-    'default' => 'shadcn',
+    'default' => 'tabler',
     'themes' => [
         'adminlte' => SleepingOwl\Admin\Themes\AdminLTETheme::class,
-        'shadcn' => SleepingOwl\Admin\Themes\TailwindTheme::class,
+        'empty' => SleepingOwl\Admin\Themes\EmptyTheme::class,
         'tabler' => SleepingOwl\Admin\Themes\TablerTheme::class,
     ],
 ],
 ```
 
-Its full logical Blade namespace, Tailwind 4 utility snapshot and production/development
-assets are precompiled. The physical Shadcn tree contains only presentation
-overrides and inherits unchanged logical views from the package base.
-Application overrides may reuse shipped utilities or
-own a separate application Tailwind build for new arbitrary utilities. A ready
-external theme may register its own Blade views and manifest fragment through
+The built-in production/development assets are precompiled. The physical
+Tabler tree contains only presentation overrides and inherits unchanged
+logical views from the package base. A ready external theme may register its
+own Blade views and manifest fragment through
 `ThemeRegistry`. Application CSS/JS, supported `--soa-*` properties, the sidebar
 background and Blade overrides require no package rebuild. See the
-[Tailwind theme](tailwind-theme.md), [Tabler theme](tabler-theme.md) and
+[Tabler theme](tabler-theme.md) and
 [theme customization guide](theme-customization.md) for complete examples.
 
 ## Application verification
