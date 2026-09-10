@@ -11,15 +11,15 @@ const profile = process.argv[2] ?? 'development'
 const watch = process.argv.includes('--watch')
 const poll = process.argv.includes('--poll')
 const entries = frontendEntries()
-const refreshManifest = watch ? manifestRefresh(profile) : null
+const refreshManifest = watch ? manifestRefresh(profile, entries) : null
 
 for (const entry of entries) {
     prepareOutput(entry, profile)
-    await build(createAssetConfig(entry, profile, { onBuilt: refreshManifest, poll, watch }))
+    const onBuilt = refreshManifest ? () => refreshManifest(entry.output) : null
+    await build(createAssetConfig(entry, profile, { onBuilt, poll, watch }))
 }
 
 if (watch) {
-    refreshManifest()
     console.log(`Watching ${entries.length} Vite entries for the ${profile} profile.`)
 } else {
     generateAssetManifest(profile)
@@ -58,10 +58,14 @@ function prepareOutput(entry, assetProfile) {
     }
 }
 
-function manifestRefresh(assetProfile) {
+function manifestRefresh(assetProfile, watchedEntries) {
     let timer
+    const pendingInitialBuilds = new Set(watchedEntries.map((entry) => entry.output))
 
-    return () => {
+    return (output) => {
+        pendingInitialBuilds.delete(output)
+        if (pendingInitialBuilds.size > 0) return
+
         clearTimeout(timer)
         timer = setTimeout(() => generateAssetManifest(assetProfile), 150)
     }

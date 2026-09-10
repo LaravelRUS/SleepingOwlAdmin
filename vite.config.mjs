@@ -1,7 +1,7 @@
 import vue from '@vitejs/plugin-vue'
 import autoprefixer from 'autoprefixer'
 import { readFileSync, writeFileSync } from 'node:fs'
-import { basename, extname, resolve } from 'node:path'
+import { basename, dirname, extname, isAbsolute, relative, resolve } from 'node:path'
 import postcss from 'postcss'
 import { defineConfig } from 'vite'
 
@@ -27,7 +27,7 @@ export function createAssetConfig(entry, profile, options = {}) {
         base: './',
         build: buildOptions(entry, production, options),
         configFile: false,
-        css: cssOptions(entry),
+        css: cssOptions(entry, !production),
         define: vueCompileFlags(production),
         esbuild: { legalComments: 'inline' },
         logLevel: 'warn',
@@ -76,8 +76,9 @@ function outputOptions(entry) {
     return output
 }
 
-function cssOptions(entry) {
+function cssOptions(entry, sourceMap) {
     return {
+        devSourcemap: sourceMap,
         postcss: { plugins: [autoprefixer()] },
         preprocessorOptions: {
             scss: {
@@ -137,8 +138,20 @@ function licenseReference(output) {
 }
 
 function finalizeStyle(entry, sourceMap) {
+    let compiledSourceMap
+
     return {
         name: 'sleepingowl-finalize-style',
+        transform(_source, id) {
+            if (!sourceMap || normalizePath(id.split('?')[0]) !== normalizePath(entry.source)) {
+                return null
+            }
+
+            const map = this.getCombinedSourcemap()
+            if (map.mappings) compiledSourceMap = map
+
+            return null
+        },
         writeBundle: {
             async handler() {
                 const path = resolve(publicRoot, entry.output)
@@ -148,18 +161,40 @@ function finalizeStyle(entry, sourceMap) {
                     return
                 }
 
+                if (!compiledSourceMap) {
+                    throw new Error(`Vite did not expose a CSS source map for [${entry.source}].`)
+                }
+
                 const result = await postcss().process(source, {
                     from: resolve(projectRoot, entry.source),
-                    map: { annotation: `${basename(entry.output)}.map`, inline: false },
+                    map: {
+                        annotation: `${basename(entry.output)}.map`,
+                        inline: false,
+                        prev: compiledSourceMap,
+                        sourcesContent: true,
+                    },
                     to: path,
                 })
 
                 writeFileSync(path, result.css)
-                writeFileSync(`${path}.map`, result.map.toString())
+                writeFileSync(`${path}.map`, serializeSourceMap(result.map, path))
             },
             order: 'post',
         },
     }
+}
+
+function normalizePath(path) {
+    return resolve(projectRoot, path).replaceAll('\\', '/')
+}
+
+function serializeSourceMap(map, output) {
+    const sourceMap = map.toJSON()
+    sourceMap.sources = sourceMap.sources.map((source) =>
+        (isAbsolute(source) ? relative(dirname(output), source) : source).replaceAll('\\', '/'),
+    )
+
+    return JSON.stringify(sourceMap)
 }
 
 function removeStyleEntryChunk() {

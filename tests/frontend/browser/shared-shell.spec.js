@@ -12,6 +12,7 @@ for (const profile of ['development', 'production']) {
 
             await expect(page.locator('html')).toHaveAttribute('data-theme', theme)
             await expect(page.locator('.soa-app')).toHaveCSS('display', 'grid')
+            await expect(page.locator('.nav-sidebar')).toHaveCSS('padding-left', '0px')
             await expect(page.locator('#header-action')).toHaveCSS('min-width', '40px')
             await expect(page.locator('#header-action')).toHaveCSS('min-height', '40px')
             await expect(page.locator('#scrolltobottom')).toHaveCSS('text-decoration-line', 'none')

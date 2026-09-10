@@ -12,15 +12,42 @@ for (const profile of ['development', 'production']) {
 
             await expect(page.locator('html')).toHaveAttribute('data-theme', theme)
             await expect(page.locator('#button-toolbar')).toHaveCSS('display', 'flex')
+            await expect(page.locator('#button-group')).toHaveCSS('display', 'flex')
             await expect(page.locator('#input-group')).toHaveCSS('display', 'flex')
             await expect(page.locator('#collapsed-card .soa-card-body')).toBeHidden()
             await expect(page.locator('#collapsed-card .soa-card-footer')).toBeHidden()
 
             await expectSharedSizes(page)
+            await expectSharedElementBaselines(page)
             await expectSharedStates(page)
             await expectViewportContainers(page)
         })
     }
+}
+
+async function expectSharedElementBaselines(page) {
+    const baselines = await page.evaluate(() => {
+        const style = (selector) => getComputedStyle(document.querySelector(selector))
+        const range = document.querySelector('#range-input')
+
+        return {
+            buttonGroupGap: style('#button-group').gap,
+            listMarginEnd: style('#ordered-list').marginBlockEnd,
+            listPaddingStart: style('#ordered-list').paddingInlineStart,
+            nestedListMarginEnd: style('#nested-list').marginBlockEnd,
+            rangeAccent: style('#range-input').accentColor,
+            rangePadding: style('#range-input').padding,
+            rangeWidth: range.getBoundingClientRect().width,
+        }
+    })
+
+    expect(baselines.buttonGroupGap).toBe('8px')
+    expect(baselines.listMarginEnd).toBe('16px')
+    expect(baselines.listPaddingStart).toBe('32px')
+    expect(baselines.nestedListMarginEnd).toBe('0px')
+    expect(baselines.rangeAccent).not.toBe('auto')
+    expect(baselines.rangePadding).toBe('0px')
+    expect(baselines.rangeWidth).toBeGreaterThan(0)
 }
 
 async function expectSharedSizes(page) {

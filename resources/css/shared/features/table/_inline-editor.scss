@@ -288,9 +288,7 @@
   }
 
   .soa-inline-editor-type-range [data-inline-editor-range-input] {
-    border: 0;
     box-shadow: none;
-    padding: 0;
   }
 
   .soa-inline-editor-type-range .soa-inline-editor-input > [data-inline-editor-control] {
@@ -298,8 +296,9 @@
   }
 
   .soa-inline-editor-range-value {
-    color: var(--soa-inline-editor-muted);
-    text-align: center;
+    display:none;
+    //color: var(--soa-inline-editor-muted);
+    //text-align: center;
   }
 
   .soa-inline-editor-range-number-wrap {

@@ -106,6 +106,10 @@
                             Disabled
                         </button>
                     </div>
+                    <div class="btn-group soa-button-group" id="button-group" role="group">
+                        <button class="soa-button" type="button">Previous</button>
+                        <button class="soa-button" type="button">Next</button>
+                    </div>
                 </div>
                 <footer class="soa-card-footer">Footer</footer>
             </section>
@@ -137,11 +141,27 @@
                     <label class="soa-label" for="textarea-input">Textarea</label>
                     <textarea class="soa-textarea" id="textarea-input"></textarea>
                 </div>
+                <div class="soa-field">
+                    <label class="soa-label" for="range-input">Range</label>
+                    <input class="form-range soa-range" id="range-input" type="range" />
+                </div>
                 <div class="soa-input-group" id="input-group">
                     <span class="soa-input-addon">@</span>
                     <input class="soa-input" id="grouped-input" readonly value="readonly" />
                 </div>
             </form>
+
+            <section>
+                <ol id="ordered-list">
+                    <li>
+                        First
+                        <ul id="nested-list">
+                            <li>Nested</li>
+                        </ul>
+                    </li>
+                    <li>Second</li>
+                </ol>
+            </section>
 
             <section class="soa-radio-group" id="choice-group">
                 <label class="soa-choice-label">

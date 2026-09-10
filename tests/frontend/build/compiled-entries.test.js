@@ -237,6 +237,21 @@ describe('logical asset manifest', () => {
     )
 })
 
+describe('compiled CSS source maps', () => {
+    it('maps development CSS back to individual Sass partials', () => {
+        const map = readJson('public/default/profiles/development/css/shared/ui.css.map')
+        const sources = map.sources.map((source) => source.replaceAll('\\', '/'))
+
+        expect(map.mappings.length).toBeGreaterThan(100)
+        expect(sources).toContainEqual(
+            expect.stringContaining('resources/css/shared/ui/_forms.scss'),
+        )
+        expect(sources).toContainEqual(
+            expect.stringContaining('resources/css/shared/ui/_shell.scss'),
+        )
+    })
+})
+
 describe('production asset companions', () => {
     it('copies every referenced license sidecar beside its script', () => {
         let references = 0

@@ -168,6 +168,20 @@
     opacity: var(--soa-disabled-opacity);
   }
 
+  .soa-range {
+    accent-color: var(--soa-primary-color);
+    background: transparent;
+    border: 0;
+    inline-size: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  .soa-range:disabled {
+    cursor: not-allowed;
+    opacity: var(--soa-disabled-opacity);
+  }
+
   .soa-radio-group {
     display: grid;
     gap: var(--soa-space-2);

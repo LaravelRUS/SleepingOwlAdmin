@@ -116,6 +116,7 @@
   }
 
   .soa-sidebar-nav,
+  .nav-sidebar,
   .soa-nav-tree,
   .soa-nav-children {
     list-style: none;
@@ -126,6 +127,7 @@
   .soa-nav-item {
     margin-block: var(--soa-space-1);
     min-inline-size: 0;
+    width: 100%;
   }
 
   .soa-nav-link {

@@ -408,6 +408,13 @@
     min-block-size: 100dvh;
     margin: 0;
   }
+  :where(body.soa-body) :where(ol, ul) {
+    margin-block: 0 var(--soa-space-4);
+    padding-inline-start: 2rem;
+  }
+  :where(body.soa-body) :where(ol, ul) :where(ol, ul) {
+    margin-block-end: 0;
+  }
   .soa-app,
   .soa-app *,
   .soa-app *::before,
@@ -741,6 +748,18 @@
   .soa-checkbox:disabled,
   .soa-choice-control[aria-readonly=true],
   .soa-checkbox[aria-readonly=true] {
+    cursor: not-allowed;
+    opacity: var(--soa-disabled-opacity);
+  }
+  .soa-range {
+    accent-color: var(--soa-primary-color);
+    background: transparent;
+    border: 0;
+    inline-size: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  .soa-range:disabled {
     cursor: not-allowed;
     opacity: var(--soa-disabled-opacity);
   }
@@ -1230,6 +1249,7 @@
     padding: var(--soa-space-3) var(--soa-space-2);
   }
   .soa-sidebar-nav,
+  .nav-sidebar,
   .soa-nav-tree,
   .soa-nav-children {
     list-style: none;
@@ -1239,6 +1259,7 @@
   .soa-nav-item {
     margin-block: var(--soa-space-1);
     min-inline-size: 0;
+    width: 100%;
   }
   .soa-nav-link {
     align-items: center;
