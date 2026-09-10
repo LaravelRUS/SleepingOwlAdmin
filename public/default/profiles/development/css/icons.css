@@ -1,3 +1,8 @@
+/*!
+ * Font Awesome Free 7.3.1 by @fontawesome - https://fontawesome.com
+ * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
+ * Copyright 2026 Fonticons, Inc.
+ */
 .fa-solid,
 .fa-regular,
 .fa-brands,
@@ -147,7 +152,6 @@
   margin-inline-start: var(--fa-li-margin, 2.5em);
   padding-inline-start: 0;
 }
-
 .fa-ul > li {
   position: relative;
 }
@@ -8957,7 +8961,7 @@
   font-style: normal;
   font-weight: 900;
   font-display: block;
-  src: url(../../../fonts/vendor/@fortawesome/fontawesome-free/webfa-solid-900.woff2?dcef2f69dbd5989a2e69679f671138e7);
+  src: url("../../../fonts/vendor/@fortawesome/fontawesome-free/webfa-solid-900.woff2");
 }
 .fas {
   --fa-family: var(--fa-family-classic);
@@ -8987,7 +8991,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: block;
-  src: url(../../../fonts/vendor/@fortawesome/fontawesome-free/webfa-brands-400.woff2?41062caea457897b1d3bb774c9554c7b);
+  src: url("../../../fonts/vendor/@fortawesome/fontawesome-free/webfa-brands-400.woff2");
 }
 .fab,
 .fa-brands,
@@ -11449,7 +11453,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: block;
-  src: url(../../../fonts/vendor/@fortawesome/fontawesome-free/webfa-regular-400.woff2?fa2e58edfd73d8341e0738818fc63871);
+  src: url("../../../fonts/vendor/@fortawesome/fontawesome-free/webfa-regular-400.woff2");
 }
 .far {
   --fa-family: var(--fa-family-classic);
@@ -11463,5 +11467,4 @@
 .fa-regular {
   --fa-style: 400;
 }
-
-/*# sourceMappingURL=icons.css.map*/
+/*# sourceMappingURL=icons.css.map */

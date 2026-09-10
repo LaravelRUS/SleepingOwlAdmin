@@ -4,7 +4,7 @@
 
 `public/default/asset-manifest.json` является runtime-картой готовых frontend bundles. PHP-код, Blade views и расширения используют только logical ids и не строят физические пути, query versions или имена собранных файлов вручную.
 
-Manifest создаётся после Laravel Mix build из `build/frontend-entries.json`. Версия пакета берётся из `Composer\InstalledVersions`, поэтому она не дублируется в config. Для каждого файла generator вычисляет MD5 content version для cache URL и SHA-256 checksum для последующей проверки publish/update workflow.
+Manifest создаётся после Vite build из `build/frontend-entries.json`. Версия пакета берётся из `Composer\InstalledVersions`, поэтому она не дублируется в config. Для каждого файла generator вычисляет MD5 content version для cache URL и SHA-256 checksum для последующей проверки publish/update workflow.
 
 Текущие группы logical ids:
 
@@ -98,7 +98,7 @@ checksum mismatch остаются hard errors: для них недостато
 
 ## No-build publish/update
 
-Обычный пользователь не запускает npm, Mix или Vite. Оба готовых профиля входят в Composer package и публикуются стандартными командами:
+Обычный пользователь не запускает npm или Vite. Оба готовых профиля входят в Composer package и публикуются стандартными командами:
 
 ```bash
 php artisan sleepingowl:install

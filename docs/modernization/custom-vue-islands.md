@@ -41,7 +41,7 @@ not mount through it.
 Register the project bundle after `admin-vue-init`:
 
 ```php
-Meta::addJs('project-admin-vue', mix('js/admin.js'), ['admin-vue-init']);
+Meta::addJs('project-admin-vue', asset('js/admin.js'), ['admin-vue-init']);
 ```
 
 The API tolerates both positions relative to `admin-modules-load`: an unknown
@@ -49,18 +49,30 @@ host is left pending, and a later `register()` mounts it. The declared
 `admin-vue-init` dependency is still mandatory because the public API and Vue
 runtime do not exist earlier.
 
-The consumer build must not bundle another Vue copy. With Laravel Mix 6:
+The consumer build must not bundle another Vue copy. With Vite:
 
 ```js
-const mix = require('laravel-mix')
+import vue from '@vitejs/plugin-vue'
+import { defineConfig } from 'vite'
 
-mix.webpackConfig({
-    externals: {
-        vue: ['Admin', 'Vue', 'runtime'],
+export default defineConfig({
+    plugins: [vue()],
+    build: {
+        lib: {
+            entry: 'resources/js/admin.js',
+            formats: ['iife'],
+            name: 'ProjectAdmin',
+        },
+        outDir: 'public/js',
+        rollupOptions: {
+            external: ['vue'],
+            output: {
+                entryFileNames: 'admin.js',
+                globals: { vue: 'Admin.Vue.runtime' },
+            },
+        },
     },
 })
-
-mix.js('resources/js/admin.js', 'public/js/admin.js').vue({ version: 3 })
 ```
 
 Compiled SFC imports such as `import { ref } from 'vue'` then resolve to

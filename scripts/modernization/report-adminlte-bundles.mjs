@@ -1,4 +1,4 @@
-import { readFileSync, statSync, writeFileSync } from 'node:fs'
+import { readFileSync, rmSync, statSync, writeFileSync } from 'node:fs'
 import { gzipSync } from 'node:zlib'
 import { resolve } from 'node:path'
 import { argv } from 'node:process'
@@ -33,8 +33,10 @@ export function buildAdminLteBundleReport() {
 
 export function writeAdminLteBundleReport() {
     const report = buildAdminLteBundleReport()
+    const path = resolve(root, reportFile)
 
-    writeFileSync(resolve(root, reportFile), `${JSON.stringify(report, null, 2)}\n`)
+    rmSync(path, { force: true })
+    writeFileSync(path, `${JSON.stringify(report, null, 2)}\n`)
     return report
 }
 

@@ -169,7 +169,8 @@ npm run production
 ```
 
 `npm run production` regenerates both distributable profiles and their
-manifests. Do not edit generated files under `public/default` manually.
+manifests through Vite. Do not edit generated files under `public/default`
+manually.
 
 The CI workflow runs the PHP suite, the complete frontend gate and a clean
 no-build consumer installation that rejects accidental Node.js use.

@@ -155,7 +155,7 @@ For each migrated candidate, tests must prove all of the following:
 - built-in AdminLTE and Tailwind templates can choose different concrete
   classes without PHP translation;
 - both committed asset profiles run the same server-rendered template contract;
-- no test or consumer fixture invokes npm, Mix, Vite or a runtime Vue compiler.
+- no test or consumer fixture invokes npm, Vite or a runtime Vue compiler.
 
 ## Implementation order
 

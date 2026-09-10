@@ -1,1 +1,1 @@
-{"version":3,"file":"css/themes/empty.css","mappings":"AACA,yB","sources":["webpack:///./resources/css/themes/empty/theme.scss"],"sourcesContent":["// Intentionally empty: this diagnostic theme exposes core and shared styles only.\n@layer sleepingowl-theme;\n"],"names":[],"sourceRoot":""}
+{"version":3,"sources":["../../../../resources/css/themes/empty/theme.scss"],"names":[],"mappings":"AAAA","file":"empty.css","sourcesContent":["@layer sleepingowl-theme;"]}

@@ -126,17 +126,11 @@ function prepareProfileDirectory(string $root, string $profile): void
 
 function normalizeCompiledFontUrls(array $matrix, string $root): void
 {
-    $changed = [];
-
     foreach ($matrix['modern']['styles'] ?? [] as $entry) {
         $output = str_replace('\\', '/', $entry['output']);
         $path = "{$root}/public/default/{$output}";
-        if (rebaseStylesheetFontUrls($path, $output)) {
-            $changed[] = $output;
-        }
+        rebaseStylesheetFontUrls($path, $output);
     }
-
-    updateMixManifestVersions($root, $changed);
 }
 
 function rebaseStylesheetFontUrls(string $path, string $publicPath): bool
@@ -165,27 +159,6 @@ function rebaseStylesheetFontUrls(string $path, string $publicPath): bool
     $files->replace($path, $updated);
 
     return true;
-}
-
-function updateMixManifestVersions(string $root, array $outputs): void
-{
-    if ($outputs === []) {
-        return;
-    }
-
-    $path = "{$root}/public/default/mix-manifest.json";
-    $manifest = readJson($path);
-
-    foreach ($outputs as $output) {
-        $key = '/'.$output;
-        if (! isset($manifest[$key])) {
-            continue;
-        }
-
-        $manifest[$key] = $key.'?id='.hash_file('md5', "{$root}/public/default/{$output}");
-    }
-
-    writeJson($path, $manifest);
 }
 
 function existingProfiles(string $path, string $packageVersion): array

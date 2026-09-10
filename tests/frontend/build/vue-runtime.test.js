@@ -1,13 +1,9 @@
-import { createHash } from 'node:crypto'
-import { createRequire } from 'node:module'
 import { basename, resolve } from 'node:path'
 import { existsSync, readFileSync } from 'node:fs'
 
 import { describe, expect, it } from 'vitest'
 
 const root = resolve(import.meta.dirname, '../../..')
-const require = createRequire(import.meta.url)
-const { resolveVueRuntime, runtimeFiles } = require('../../../build/vue-runtime')
 const packageJson = readJson('package.json')
 const packageLock = readJson('package-lock.json')
 const legacyVueViews = [
@@ -26,16 +22,16 @@ function readSource(path) {
     return readFileSync(resolve(root, path), 'utf8')
 }
 
-function md5(path) {
-    return createHash('md5').update(readFileSync(path)).digest('hex')
-}
-
 describe('Vue 3 runtime dependencies', () => {
     it('pins one matching Vue runtime and compiler line', () => {
         expect(packageJson.dependencies.vue).toBe('3.5.42')
         expect(packageJson.dependencies).not.toHaveProperty('@vue/compat')
         expect(packageJson.devDependencies['@vue/compiler-sfc']).toBe(packageJson.dependencies.vue)
-        expect(packageJson.devDependencies['vue-loader']).toMatch(/^\^17\./)
+        expect(packageJson.devDependencies['@vitejs/plugin-vue']).toBe('6.0.8')
+        expect(packageJson.devDependencies.vite).toBe('8.2.2')
+        expect(packageJson.devDependencies).not.toHaveProperty('vue-loader')
+        expect(packageJson.devDependencies).not.toHaveProperty('webpack')
+        expect(packageJson.devDependencies).not.toHaveProperty('laravel-mix')
         expect(packageLock.packages['node_modules/vue'].version).toBe(packageJson.dependencies.vue)
         expect(packageLock.packages).not.toHaveProperty('node_modules/@vue/compat')
     })
@@ -61,17 +57,13 @@ describe('Vue 3 runtime dependencies', () => {
 
 describe('Vue asset profiles', () => {
     it('aliases package imports to the runtime-only Vue build', () => {
-        const development = resolveVueRuntime(root, 'development').replaceAll('\\', '/')
+        const config = readSource('vite.config.mjs')
 
-        expect(runtimeFiles).toEqual({
-            development: 'vue.runtime.esm-bundler.js',
-            production: 'vue.runtime.esm-bundler.js',
-        })
-        expect(basename(development)).toBe('vue.runtime.esm-bundler.js')
-        expect(basename(resolveVueRuntime(root, 'production'))).toBe('vue.runtime.esm-bundler.js')
-        expect(development).toContain('/node_modules/vue/dist/vue.runtime.esm-bundler.js')
-        expect(development).not.toContain('/node_modules/@vue/compat/')
-        expect(() => resolveVueRuntime(root, 'preview')).toThrow(/Unsupported Vue asset profile/)
+        expect(config).toContain('node_modules/vue/dist/vue.runtime.esm-bundler.js')
+        expect(config).toContain('{ find: /^vue$/')
+        expect(config).toContain("__VUE_OPTIONS_API__: 'true'")
+        expect(config).not.toContain('node_modules/@vue/compat/')
+        expect(config).toContain('Unsupported Vite asset profile')
     })
 
     it('publishes restorable development app and Vue bundles beside production', () => {
@@ -79,12 +71,11 @@ describe('Vue asset profiles', () => {
         const developmentVue = resolve(root, 'public/default/js/vue-dev.js')
         const productionApp = resolve(root, 'public/default/js/admin-app.js')
         const productionVue = resolve(root, 'public/default/js/vue.js')
-        const manifest = readJson('public/default/mix-manifest.json')
 
-        expectDevelopmentAsset(developmentApp, manifest)
-        expectDevelopmentAsset(developmentVue, manifest)
-        expectProductionAsset(productionApp, manifest)
-        expectProductionAsset(productionVue, manifest)
+        expectDevelopmentAsset(developmentApp)
+        expectDevelopmentAsset(developmentVue)
+        expectProductionAsset(productionApp)
+        expectProductionAsset(productionVue)
         expect(readFileSync(productionVue).byteLength).toBeLessThan(
             readFileSync(developmentVue).byteLength,
         )
@@ -146,13 +137,13 @@ describe('bounded legacy Vue apps', () => {
 it('publishes a namespaced extension API and a shared runtime external stub', () => {
     const initializer = readSource('resources/js/shared/vue/browser.js')
     const extension = readSource('resources/js/shared/vue/legacy/extension-api.js')
-    const stub = readSource('docs/modernization/examples/custom-vue-island/webpack.mix.js')
+    const stub = readSource('docs/modernization/examples/custom-vue-island/vite.config.mjs')
 
     expect(initializer).toContain("import * as VueRuntime from 'vue'")
     expect(initializer).toContain('Admin.Vue = createVueExtensionApi')
     expect(extension).toContain('register(name, component)')
     expect(extension).toContain('plugins.use(plugin, ...pluginOptions)')
-    expect(stub).toContain("vue: ['Admin', 'Vue', 'runtime']")
+    expect(stub).toContain("vue: 'Admin.Vue.runtime'")
     expect(initializer).not.toMatch(/window\.Vue|globalThis\.Vue/)
 })
 
@@ -369,19 +360,14 @@ describe('precompiled images island', () => {
     })
 })
 
-function expectDevelopmentAsset(path, manifest) {
+function expectDevelopmentAsset(path) {
     const name = basename(path)
-    const manifestKey = `/js/${name}`
 
     expect(readFileSync(path, 'utf8')).toContain(`sourceMappingURL=${name}.map`)
     expect(existsSync(`${path}.map`)).toBe(true)
-    expect(manifest[manifestKey]).toBe(`${manifestKey}?id=${md5(path)}`)
 }
 
-function expectProductionAsset(path, manifest) {
-    const name = basename(path)
-    const manifestKey = `/js/${name}`
-
+function expectProductionAsset(path) {
     expect(readFileSync(path, 'utf8')).not.toContain('sourceMappingURL=')
-    expect(manifest[manifestKey]).toBe(`${manifestKey}?id=${md5(path)}`)
+    expect(existsSync(`${path}.map`)).toBe(false)
 }

@@ -1,1 +1,1 @@
-{"version":3,"file":"css/theme-overrides/shadcn.css","mappings":"AACA,kC","sources":["webpack:///./resources/css/theme-overrides/shadcn.scss"],"sourcesContent":["// Selected-theme corrections load last and must remain smaller than the base adapter.\n@layer sleepingowl-theme-override;\n"],"names":[],"sourceRoot":""}
+{"version":3,"sources":["../../../../resources/css/theme-overrides/shadcn.scss"],"names":[],"mappings":"AAAA","file":"shadcn.css","sourcesContent":["@layer sleepingowl-theme-override;"]}

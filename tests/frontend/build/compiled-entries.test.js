@@ -7,7 +7,6 @@ import { describe, expect, it } from 'vitest'
 const root = resolve(import.meta.dirname, '../../..')
 const assetManifest = readJson('public/default/asset-manifest.json')
 const buildEntries = readJson('build/frontend-entries.json')
-const mixManifest = readJson('public/default/mix-manifest.json')
 
 function readJson(path) {
     return JSON.parse(readFileSync(resolve(root, path), 'utf8'))
@@ -24,10 +23,6 @@ function profileCases() {
             ...entry,
         })),
     )
-}
-
-function manifestPath(output) {
-    return `/${output.replaceAll('\\', '/')}`
 }
 
 function contentHash(path) {
@@ -48,13 +43,11 @@ function filesUnder(path) {
 
 describe('compiled frontend entries', () => {
     it.each([...modernEntries('scripts'), ...modernEntries('styles')])(
-        'publishes a versioned $logicalId entry at $output',
+        'publishes a non-empty $logicalId entry at $output',
         ({ output }) => {
             const publicPath = resolve(root, 'public/default', output)
-            const versionedPath = mixManifest[manifestPath(output)]
 
             expect(readFileSync(publicPath).byteLength).toBeGreaterThan(0)
-            expect(versionedPath).toBe(`${manifestPath(output)}?id=${contentHash(publicPath)}`)
         },
     )
 })
@@ -189,9 +182,10 @@ describe('compiled core boundaries', () => {
 
     it('keeps framework and theme CSS out of the compiled core stylesheet', () => {
         const core = readFileSync(resolve(root, 'public/default/css/admin-core.css'), 'utf8')
+        const compact = core.replaceAll(/\s+/g, '')
 
-        expect(core).toContain(
-            '@layer sleepingowl-core, sleepingowl-framework, sleepingowl-shared, sleepingowl-feature, sleepingowl-theme, sleepingowl-theme-override',
+        expect(compact).toContain(
+            '@layersleepingowl-core,sleepingowl-framework,sleepingowl-shared,sleepingowl-feature,sleepingowl-theme,sleepingowl-theme-override',
         )
         expect(core).toContain('[data-cloak]')
         expect(core).toContain('[data-visually-hidden]')

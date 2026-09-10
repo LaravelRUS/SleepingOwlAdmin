@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "sourceManifest": "public/default/asset-manifest.json",
   "packageVersion": "dev-master",
-  "buildId": "sha256:80a8323194809260121a29b5f61ff9b37749a841708f5d2f7dc7f8a38a12818b",
+  "buildId": "sha256:43a17ca80ef1ed34b981b1e8eaf05df748be45f443848ffe71c5fda3d826145a",
   "baseline": {
     "source": "docs/modernization/baseline/frontend.json",
     "bytes": 2585357,
@@ -16,24 +16,24 @@
             {
               "type": "scripts",
               "file": "profiles/production/js/admin-core.js",
-              "version": "4b738c30e9b7da7a08fbd95f872b1b66",
-              "checksum": "sha256:96995824671c7e0bdaf9d0e0f502d6351af8fd8ba4797ae0e2a0afcde58cc60f",
-              "bytes": 40710,
-              "gzipBytes": 8790
+              "version": "3ee023b8b68c4f3b5c1f2441ed586058",
+              "checksum": "sha256:8093e8d2aac7fd40ee6fe13536853b26539e59f7fa520afc178b597f6226dc98",
+              "bytes": 16238,
+              "gzipBytes": 5029
             },
             {
               "type": "styles",
               "file": "profiles/production/css/admin-core.css",
-              "version": "8fdca209900237758357c09efe4e27b0",
-              "checksum": "sha256:a624a128672644c556f7a25ecb677c15fbdd28067f5694cbfb23b5da3cdea6ec",
-              "bytes": 606,
-              "gzipBytes": 359
+              "version": "811ee685c6e57f6253b31f0a75228f12",
+              "checksum": "sha256:5209fef17aa9f19add472cf5149f6289a340ae91fc0730490d7158eb8885fc39",
+              "bytes": 601,
+              "gzipBytes": 355
             }
           ],
           "totals": {
             "files": 2,
-            "bytes": 41316,
-            "gzipBytes": 9149
+            "bytes": 16839,
+            "gzipBytes": 5384
           }
         },
         "shared:compatibility": {
@@ -41,16 +41,16 @@
             {
               "type": "scripts",
               "file": "profiles/production/js/shared/compatibility.js",
-              "version": "ad25c97ad48ffdfdb8f184941ffebfa0",
-              "checksum": "sha256:3bdfd03de38c0f21dd23e3fd94a7f9af3663aeb46dcf83c9bf7bd2d3fc0fab08",
-              "bytes": 222720,
-              "gzipBytes": 70385
+              "version": "77b6e9058a5839d8c5f3d61d78f11147",
+              "checksum": "sha256:104b15acf0ec5b91c3fcce0b57d780f87d44ff261b94dfee7aea06f6f62bffae",
+              "bytes": 210122,
+              "gzipBytes": 67993
             }
           ],
           "totals": {
             "files": 1,
-            "bytes": 222720,
-            "gzipBytes": 70385
+            "bytes": 210122,
+            "gzipBytes": 67993
           }
         },
         "shared:features": {
@@ -58,24 +58,24 @@
             {
               "type": "scripts",
               "file": "profiles/production/js/shared/features.js",
-              "version": "34dab76d163b98e14aa516b943e3f92d",
-              "checksum": "sha256:0f14c81307a957c12593b9161ebcc3c9a90f7efbaac6b5c4b443f92616e6a82c",
-              "bytes": 614600,
-              "gzipBytes": 167708
+              "version": "36aa80781067e8d91fdd137c9adc1fd0",
+              "checksum": "sha256:5b9a7c98ad22f5c576ae63aa56cc27426559fb97b78cc4d9abd20cb4706fba41",
+              "bytes": 513641,
+              "gzipBytes": 156184
             },
             {
               "type": "styles",
               "file": "profiles/production/css/shared/features.css",
-              "version": "7b0a5795f1561c82a2d4736bf2ea2286",
-              "checksum": "sha256:18a1c07e06a6f1f55b3c14a47d49743cd794101a18b9a480e7784d99202d2f8a",
-              "bytes": 84169,
-              "gzipBytes": 14363
+              "version": "b1dac85baf26e650e83488857b503ea2",
+              "checksum": "sha256:72b99309df23bf28781f60ad8afecf1defb7cf6b7e75aa2d5143d4458df1b82d",
+              "bytes": 84589,
+              "gzipBytes": 14544
             }
           ],
           "totals": {
             "files": 2,
-            "bytes": 698769,
-            "gzipBytes": 182071
+            "bytes": 598230,
+            "gzipBytes": 170728
           }
         },
         "shared:icons": {
@@ -83,16 +83,16 @@
             {
               "type": "styles",
               "file": "profiles/production/css/icons.css",
-              "version": "07be4637035a020bbd40e57fe67cd02a",
-              "checksum": "sha256:345b82484232b71f3186d7f7605a75baf1a4d0c83bb1878b14434ade7ada3dbd",
-              "bytes": 85453,
-              "gzipBytes": 22345
+              "version": "69d3c0e582b41ab37b84a3a6e2e04799",
+              "checksum": "sha256:677fce5a09f138498d9e77fc47f8cfc3276f2d73fd7d4970781f4570aca445ce",
+              "bytes": 87721,
+              "gzipBytes": 22262
             }
           ],
           "totals": {
             "files": 1,
-            "bytes": 85453,
-            "gzipBytes": 22345
+            "bytes": 87721,
+            "gzipBytes": 22262
           }
         },
         "shared:modules": {
@@ -100,16 +100,16 @@
             {
               "type": "scripts",
               "file": "profiles/production/js/shared/modules.js",
-              "version": "8e6abcb6c9baa1f71b0de0096471f82a",
-              "checksum": "sha256:5113ba17104bd973e1c9c23eed6e4a3ba6051e7b35e6aa4438cbcb5cb70f0b45",
-              "bytes": 487,
-              "gzipBytes": 321
+              "version": "7cab1f7794e00931bec1e7ee45e312fb",
+              "checksum": "sha256:55f205a37a23ace2e9682fc294eeb384906090d57333cb3602d5182d3b7b9bac",
+              "bytes": 383,
+              "gzipBytes": 267
             }
           ],
           "totals": {
             "files": 1,
-            "bytes": 487,
-            "gzipBytes": 321
+            "bytes": 383,
+            "gzipBytes": 267
           }
         },
         "shared:ui": {
@@ -117,16 +117,16 @@
             {
               "type": "styles",
               "file": "profiles/production/css/shared/ui.css",
-              "version": "ebd1a2dc4a6cf96f133b49c65d290a55",
-              "checksum": "sha256:f63705761cd92bad953ec6d461e53582a973d9f29711571d5dde87342b0b22d2",
-              "bytes": 44586,
-              "gzipBytes": 7563
+              "version": "943981175b8a19fa6c72e94134777344",
+              "checksum": "sha256:817df74eaba443d0a0ba2d732a6173e8b3d43d1202bf365b8efbeff7630e304f",
+              "bytes": 44998,
+              "gzipBytes": 7596
             }
           ],
           "totals": {
             "files": 1,
-            "bytes": 44586,
-            "gzipBytes": 7563
+            "bytes": 44998,
+            "gzipBytes": 7596
           }
         },
         "shared:vue": {
@@ -134,16 +134,16 @@
             {
               "type": "scripts",
               "file": "profiles/production/js/shared/vue.js",
-              "version": "77617840f0b8a5a5ecb90dbd1238de00",
-              "checksum": "sha256:3ff2ee8fc19967c373200fceb3ea5ee5f48325d515e19b6cc943e6aaf65788d1",
-              "bytes": 323879,
-              "gzipBytes": 97740
+              "version": "0826e6b85ac9825654c2f8079f240fe3",
+              "checksum": "sha256:b318956df201dbc22d461cee1a5e626a914e580db586a2c23cdad23a26654132",
+              "bytes": 259109,
+              "gzipBytes": 85589
             }
           ],
           "totals": {
             "files": 1,
-            "bytes": 323879,
-            "gzipBytes": 97740
+            "bytes": 259109,
+            "gzipBytes": 85589
           }
         },
         "theme:adminlte": {
@@ -151,31 +151,31 @@
             {
               "type": "scripts",
               "file": "profiles/production/js/themes/adminlte.js",
-              "version": "84a622d84df656a2f23da79b329a974a",
-              "checksum": "sha256:cd492174e2715608784ac177800cd5e3b41c35fc9818dfea00df0aa66e9e7584",
-              "bytes": 145247,
-              "gzipBytes": 47480
+              "version": "f7accb1c58998af421a085dadd2d0a30",
+              "checksum": "sha256:9e82ded9ecfc2e867200b46755a53340b999620cb122a9fe81c41093475e4c14",
+              "bytes": 144824,
+              "gzipBytes": 47521
             },
             {
               "type": "styles",
               "file": "profiles/production/css/themes/adminlte.css",
-              "version": "ea9d5973c8e4e1755f9a282580016d0e",
-              "checksum": "sha256:ae6e777a65fbd4c40e23f0f00bfc0945f2561b3a9350c3d3648b1ba125461a09",
-              "bytes": 357255,
-              "gzipBytes": 52214
+              "version": "520cc310c1e05ea75d91811354f94e9f",
+              "checksum": "sha256:68ff5799988b61fce88df7012bc67a077adaa3936d6d4891c2b4b11f7394f7ab",
+              "bytes": 365549,
+              "gzipBytes": 53255
             }
           ],
           "totals": {
             "files": 2,
-            "bytes": 502502,
-            "gzipBytes": 99694
+            "bytes": 510373,
+            "gzipBytes": 100776
           }
         }
       },
       "totals": {
         "files": 11,
-        "bytes": 1919712,
-        "gzipBytes": 489268
+        "bytes": 1727775,
+        "gzipBytes": 460595
       }
     },
     "development": {
@@ -185,24 +185,24 @@
             {
               "type": "scripts",
               "file": "profiles/development/js/admin-core.js",
-              "version": "8c965cb01ad23a7df076bd66d5a3a8bf",
-              "checksum": "sha256:31a7c02c2a7c1895e3b224fdf179aaf881885b29bad290af5c37faa3418d0b16",
-              "bytes": 83105,
-              "gzipBytes": 14715
+              "version": "7abf959bb849a298b9ab948dd0dcc0ce",
+              "checksum": "sha256:d0807a5d78ff64e46f49e010c2f8f3d458fc37deeeedb1f735cd79886a02706a",
+              "bytes": 31874,
+              "gzipBytes": 7371
             },
             {
               "type": "styles",
               "file": "profiles/development/css/admin-core.css",
-              "version": "358034441ba815e06b2a8ade1ad03e2e",
-              "checksum": "sha256:9b35dd03a1f5b7cd1577140be25784a01b188b04557ac13e98d7a2d363ae8881",
+              "version": "bfc29e83ede3700608b5bc3b9b8b911f",
+              "checksum": "sha256:59d9298227135416cfce78d9d45f08ef2ec6ae3238ac5e2c713ae5c2069e8aab",
               "bytes": 804,
-              "gzipBytes": 427
+              "gzipBytes": 428
             }
           ],
           "totals": {
             "files": 2,
-            "bytes": 83909,
-            "gzipBytes": 15142
+            "bytes": 32678,
+            "gzipBytes": 7799
           }
         },
         "shared:compatibility": {
@@ -210,16 +210,16 @@
             {
               "type": "scripts",
               "file": "profiles/development/js/shared/compatibility.js",
-              "version": "26ebc35ff921e1bde4f0ac0e0538f2b5",
-              "checksum": "sha256:bd4eb1b1289614b97e65d301724a757aae121dbc1ef7b711cb24ccd5314afba4",
-              "bytes": 1019739,
-              "gzipBytes": 195689
+              "version": "073f24773b8f345bde032e3de5e5859f",
+              "checksum": "sha256:46072bbd4f2ddc4b808433f2c078ba6ddaa333b076730ad5e7dcc6d8d46a8956",
+              "bytes": 827501,
+              "gzipBytes": 164007
             }
           ],
           "totals": {
             "files": 1,
-            "bytes": 1019739,
-            "gzipBytes": 195689
+            "bytes": 827501,
+            "gzipBytes": 164007
           }
         },
         "shared:features": {
@@ -227,24 +227,24 @@
             {
               "type": "scripts",
               "file": "profiles/development/js/shared/features.js",
-              "version": "715cf679ab6704a2ba160d729e0a09dd",
-              "checksum": "sha256:f9797f1985437cef0a9ea789ab227520db2e9fff4e3963beff53b6eb716190cf",
-              "bytes": 1626192,
-              "gzipBytes": 345449
+              "version": "90a33a39bf09af82fd0854453a827b88",
+              "checksum": "sha256:33753e4ac65ad3bb03894955d2d69ed65533884fe565ef41eae65e6dff51819c",
+              "bytes": 1087685,
+              "gzipBytes": 250402
             },
             {
               "type": "styles",
               "file": "profiles/development/css/shared/features.css",
-              "version": "d5aae7aca78f27dda594325f77b21492",
-              "checksum": "sha256:0507f3fb1b0575e01661a95434d322a769de3c60e81f24b0c37d64d721f58b52",
+              "version": "c6d3b22e3bab2ef142cf54774063ac49",
+              "checksum": "sha256:b5a84e8d81293e03536d5f073afa16aef6808121ee6c3818a79f90ef9c79280c",
               "bytes": 105804,
-              "gzipBytes": 16377
+              "gzipBytes": 16376
             }
           ],
           "totals": {
             "files": 2,
-            "bytes": 1731996,
-            "gzipBytes": 361826
+            "bytes": 1193489,
+            "gzipBytes": 266778
           }
         },
         "shared:icons": {
@@ -252,16 +252,16 @@
             {
               "type": "styles",
               "file": "profiles/development/css/icons.css",
-              "version": "0f49c5e2d92a06baf68ec9d16f707fa2",
-              "checksum": "sha256:b2345eb9ecee9967ea88506c74073f93eeb73d756845736771c24e2578eabcee",
-              "bytes": 128904,
-              "gzipBytes": 23839
+              "version": "c9cb139bbd6c89a94ad16431ca71909a",
+              "checksum": "sha256:f478035684fed856719c854803539bd24543a338a2622bef7499f7397c2f434c",
+              "bytes": 129029,
+              "gzipBytes": 23896
             }
           ],
           "totals": {
             "files": 1,
-            "bytes": 128904,
-            "gzipBytes": 23839
+            "bytes": 129029,
+            "gzipBytes": 23896
           }
         },
         "shared:modules": {
@@ -269,16 +269,16 @@
             {
               "type": "scripts",
               "file": "profiles/development/js/shared/modules.js",
-              "version": "40f1426e469668fd59f5607662a6a0e4",
-              "checksum": "sha256:f3446ed40feba9ca6cfb78bdff330789eb8f873f1d573a4be20663b069327fd7",
-              "bytes": 2485,
-              "gzipBytes": 795
+              "version": "6b0da3f690e61a41fc2d65a100be4f3e",
+              "checksum": "sha256:85771f7d181a3df66af04da1c3bbac21631465ec1e0e47c9e57ad6b81dacf20b",
+              "bytes": 687,
+              "gzipBytes": 346
             }
           ],
           "totals": {
             "files": 1,
-            "bytes": 2485,
-            "gzipBytes": 795
+            "bytes": 687,
+            "gzipBytes": 346
           }
         },
         "shared:ui": {
@@ -286,8 +286,8 @@
             {
               "type": "styles",
               "file": "profiles/development/css/shared/ui.css",
-              "version": "edcf62c45b03dcee9cf1ee62a0e621d0",
-              "checksum": "sha256:1c4acc42b96319029f9e6c0f14500f37602ddb6ebabac786bdd90879c0e3a434",
+              "version": "898d4c2e93a4d023ab8f7fdd0206c5ab",
+              "checksum": "sha256:f3eb0da29004b4aa2c829290fa4133facb6f7fefb06dd7d580bef30549d9ace6",
               "bytes": 52943,
               "gzipBytes": 8176
             }
@@ -303,16 +303,16 @@
             {
               "type": "scripts",
               "file": "profiles/development/js/shared/vue.js",
-              "version": "769d7b6ae97f86fd9dda959f869fbdc9",
-              "checksum": "sha256:f7a985f010c0aa1f84095a8c0fd90ea7ab4efea95b9727542a780ceaa766427d",
-              "bytes": 1044345,
-              "gzipBytes": 199851
+              "version": "e46106d3d6654f82a920817f53759edd",
+              "checksum": "sha256:b89edd7796848e3dd3a71495e1a08b31f5b9674c44047574311ca56be1032bad",
+              "bytes": 587056,
+              "gzipBytes": 137546
             }
           ],
           "totals": {
             "files": 1,
-            "bytes": 1044345,
-            "gzipBytes": 199851
+            "bytes": 587056,
+            "gzipBytes": 137546
           }
         },
         "theme:adminlte": {
@@ -320,46 +320,46 @@
             {
               "type": "scripts",
               "file": "profiles/development/js/themes/adminlte.js",
-              "version": "e8c982e85993a890dd489c2a3b809838",
-              "checksum": "sha256:5b38140be8af8c63151fceb5c3aee655e2a58db5cdf2720d19bed5d31526e63e",
-              "bytes": 512240,
-              "gzipBytes": 124489
+              "version": "b4245d53965635492b03a07c819b5b18",
+              "checksum": "sha256:228fa1ae8933dfc2a0fef299074db3ae63ce0d4169206f3217eb830ecb607180",
+              "bytes": 327532,
+              "gzipBytes": 84974
             },
             {
               "type": "styles",
               "file": "profiles/development/css/themes/adminlte.css",
-              "version": "99c840f689efdaa217a4c4968640f45e",
-              "checksum": "sha256:ff69b2105c8f7524523de0d4215217a1f1351f7181d2446d90b1941563377012",
-              "bytes": 470912,
-              "gzipBytes": 59346
+              "version": "d0dcfc7d19a2ca2e6c4c25c647e5adab",
+              "checksum": "sha256:10bb0fac453444033d8fa01ac78da9ea146c8fea6f469ad5c5364d0cf021639f",
+              "bytes": 470819,
+              "gzipBytes": 59254
             }
           ],
           "totals": {
             "files": 2,
-            "bytes": 983152,
-            "gzipBytes": 183835
+            "bytes": 798351,
+            "gzipBytes": 144228
           }
         }
       },
       "totals": {
         "files": 11,
-        "bytes": 5047473,
-        "gzipBytes": 989153
+        "bytes": 3621734,
+        "gzipBytes": 752776
       }
     }
   },
   "productionVsLegacyAggregate": {
     "bytes": {
-      "current": 1919712,
+      "current": 1727775,
       "baseline": 2585357,
-      "delta": -665645,
-      "percent": -25.7
+      "delta": -857582,
+      "percent": -33.2
     },
     "gzipBytes": {
-      "current": 489268,
+      "current": 460595,
       "baseline": 587787,
-      "delta": -98519,
-      "percent": -16.8
+      "delta": -127192,
+      "percent": -21.6
     }
   }
 }

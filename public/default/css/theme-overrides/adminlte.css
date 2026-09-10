@@ -1,1 +1,1 @@
-@layer sleepingowl-theme-override{.table.datatables th:active,.table.datatables th:hover{outline:none}}
+@layer sleepingowl-theme-override;@layer sleepingowl-theme-override{.table.datatables th:active,.table.datatables th:hover{outline:none}}

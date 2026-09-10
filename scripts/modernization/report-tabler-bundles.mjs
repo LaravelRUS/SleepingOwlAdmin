@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto'
-import { readdirSync, readFileSync, statSync, writeFileSync } from 'node:fs'
+import { readdirSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs'
 import { extname, resolve } from 'node:path'
 import { argv } from 'node:process'
 import { fileURLToPath } from 'node:url'
@@ -62,8 +62,10 @@ export function buildTablerBundleReport() {
 
 export function writeTablerBundleReport() {
     const report = buildTablerBundleReport()
+    const path = resolve(root, reportFile)
 
-    writeFileSync(resolve(root, reportFile), `${JSON.stringify(report, null, 2)}\n`)
+    rmSync(path, { force: true })
+    writeFileSync(path, `${JSON.stringify(report, null, 2)}\n`)
     return report
 }
 

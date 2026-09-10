@@ -46,5 +46,5 @@ function read(path) {
 }
 
 function fontUrls(css) {
-    return [...css.matchAll(/url\(([^)?]+\.woff2)[^)]*\)/g)].map((match) => match[1])
+    return [...css.matchAll(/url\((["']?)([^"')?]+\.woff2)\1[^)]*\)/g)].map((match) => match[2])
 }

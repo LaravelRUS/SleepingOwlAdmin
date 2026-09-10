@@ -2,8 +2,6 @@
 
 namespace SleepingOwl\Admin\Templates;
 
-use Exception;
-
 class TemplateDefault extends Template
 {
     /**
@@ -40,11 +38,10 @@ class TemplateDefault extends Template
     {
         $paths = $this->assetPaths();
 
-        try {
-            $assets = $this->resolveAssets($paths, fn ($path) => mix('/'.$path, $this->assetDir()));
-        } catch (Exception $e) {
-            $assets = $this->resolveAssets($paths, fn ($path) => $this->assetPath($path));
-        }
+        $assets = $this->resolveAssets(
+            $paths,
+            fn ($path) => '/'.ltrim($this->assetPath($path), '/')
+        );
 
         $this->registerAssets($this->versionUnversionedAssets($paths, $assets));
     }

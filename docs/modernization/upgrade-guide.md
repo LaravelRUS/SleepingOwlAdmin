@@ -17,7 +17,7 @@ standard frontend assets through Composer.
 
 `ADMIN_DEV_ASSETS=false` selects the minified production profile.
 `ADMIN_DEV_ASSETS=true` selects the prebuilt development profile with source
-maps and Vue diagnostics. Neither setting runs Node.js, npm, Mix or Vite.
+maps and Vue diagnostics. Neither setting runs Node.js, npm or Vite.
 
 If published files are missing or corrupt, the asset verifier reports the exact
 `php artisan sleepingowl:update` recovery command. A valid but older manifest

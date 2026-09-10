@@ -20,7 +20,7 @@ Vue as a browser global.
 - `@vue/compat` is removed and must not return.
 - `vue-template-compiler` is removed. It belongs to Vue 2 and must not return.
 - `vue-multiselect` uses the stable Vue 3 line (`3.5.x`).
-- Webpack aliases every `vue` import, including dependency imports, to one
+- Vite aliases every `vue` import, including dependency imports, to one
   `vue.runtime.esm-bundler.js`. The catalog, `createApp` and every component
   therefore share one renderer/reactivity instance.
 - `admin-app.js` and `admin-app-dev.js` own the legacy non-Vue aggregate. They
@@ -32,9 +32,9 @@ Vue as a browser global.
   pipeline: production and development use one `js/shared/vue.js` path inside
   their isolated manifest profiles, while `ADMIN_DEV_ASSETS` selects the
   minified or debuggable build without PHP filename branching.
-- `npm run production` builds both profiles, restores `admin-app-dev.js`,
-  `vue-dev.js` and their maps after the production pass, then recalculates both
-  development Mix hashes.
+- `npm run production` builds both profiles through Vite, restores
+  `admin-app-dev.js`, `vue-dev.js` and their maps after the production pass,
+  then regenerates the content-addressed asset manifest.
 - The template loads `admin-app(.dev).js`, then the matching `vue(.dev).js`,
   then `modules.js`. This guarantees that the core `Admin` namespace exists
   before islands register and that custom modules run afterwards.

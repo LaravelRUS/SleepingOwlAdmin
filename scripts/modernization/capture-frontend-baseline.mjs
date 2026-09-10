@@ -84,8 +84,8 @@ function licenseSummary(packages) {
         .sort((left, right) => left.license.localeCompare(right.license))
 }
 
-function assetDetails(entry, manifest) {
-    const relativePath = manifest[entry].split('?')[0].replace(/^\//, '')
+function assetDetails(entry) {
+    const relativePath = entry.replace(/^\//, '')
     const contents = readFileSync(join(assetRoot, relativePath))
 
     return {
@@ -98,8 +98,7 @@ function assetDetails(entry, manifest) {
 }
 
 function assetReport() {
-    const manifest = readJson(join(assetRoot, 'mix-manifest.json'))
-    const assets = productionEntries.map((entry) => assetDetails(entry, manifest))
+    const assets = productionEntries.map(assetDetails)
 
     return {
         assets,

@@ -1,8 +1,8 @@
 import ElementFile from './form/file.vue'
 import ElementImage from './form/image.vue'
-import ElementImages from './form/images'
+import ElementImages from './form/images.vue'
 import ElementSelect from './form/select.vue'
-import { RelatedElements } from './form/related/index'
+import { RelatedElements } from './form/related/index.js'
 
 export const vueComponents = Object.freeze({
     'element-file': ElementFile,

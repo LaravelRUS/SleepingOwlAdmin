@@ -242,11 +242,12 @@ php artisan sleepingowl:update
 php artisan sleepingowl:update --check
 ```
 
-Maintainers currently build with Laravel Mix/Webpack. `webpack.mix.js` consumes
-the build matrix, and `scripts/modernization/build-asset-profiles.mjs` builds and
-reconciles both profiles. Tailwind is a maintainer-only build dependency for the
-ready Shadcn theme. Migration from Mix to Vite is a separate post-release task,
-not a consumer requirement.
+Maintainers build with Vite. `vite.config.mjs` defines the classic-script,
+Vue, Sass/PostCSS, source-map and license boundaries, while
+`scripts/modernization/build-vite-profile.mjs` consumes the build matrix one
+entry at a time. `scripts/modernization/build-asset-profiles.mjs` builds and
+reconciles both release profiles. Tailwind remains a maintainer-only build
+dependency for the ready Shadcn theme; Vite is never a consumer requirement.
 
 Generated package files live under `public/default`; publication copies them to
 `public/packages/sleepingowl/default`. Application-owned CSS, JavaScript and

@@ -11,6 +11,9 @@
   islands use the public `Admin.Vue` API and one shared runtime.
 - Production and development asset profiles are both distributed with the
   Composer package and selected by `ADMIN_DEV_ASSETS` without a consumer build.
+- Maintainer builds now use Vite 8 with the official Vue plugin; Laravel Mix,
+  Webpack and their loaders have been removed without changing published asset
+  handles or the Composer-only consumer workflow.
 - Theme markup and concrete classes remain in overridable Blade views. The
   unchanged `sleeping_owl.template` key selects `AdminLTETheme` or a ready custom
   `ThemeInterface` implementation.
