@@ -3,10 +3,11 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="/public/default/css/shared/ui.css" />
         <link rel="stylesheet" href="/public/default/css/shared/features.css" />
         <script>
             const theme = new URLSearchParams(location.search).get('theme') || 'shadcn'
-            const supported = ['adminlte', 'shadcn']
+            const supported = ['adminlte', 'empty', 'shadcn']
 
             if (!supported.includes(theme)) throw new Error(`Unsupported fixture theme: ${theme}`)
 
@@ -19,6 +20,13 @@
         </script>
     </head>
     <body>
+        <nav class="soa-pagination" aria-label="Server pagination">
+            <ul>
+                <li><a href="#previous">Previous</a></li>
+                <li><span aria-current="page">1</span></li>
+                <li><a href="#next">Next</a></li>
+            </ul>
+        </nav>
         <main class="dt-container" id="table-presentation">
             <div class="dt-layout-row">
                 <div class="dt-layout-cell dt-layout-start">
@@ -44,10 +52,16 @@
                 <div class="dt-layout-cell dt-layout-full">
                     <div
                         class="autoupdater-bar"
+                        data-admin-table-autoupdate-bar
                         data-state="paused"
                         style="--soa-datatables-autoupdate-color: #123456"
                     >
-                        <button class="autoupdater-toggle" type="button" aria-label="Resume">
+                        <button
+                            class="autoupdater-toggle"
+                            data-admin-table-autoupdate-toggle
+                            type="button"
+                            aria-label="Resume"
+                        >
                             ▶
                         </button>
                         <svg viewBox="0 0 100 2" preserveAspectRatio="none">
@@ -84,10 +98,22 @@
             </div>
             <div class="dt-layout-row">
                 <div class="dt-layout-cell dt-layout-start dt-info">Showing 1 to 2 of 2 rows</div>
+                <div class="dt-layout-cell dt-layout-end">
+                    <label class="soa-dt-page-jump">
+                        Page
+                        <input class="soa-dt-page-jump-input" type="number" value="1" />
+                    </label>
+                </div>
                 <div class="dt-layout-cell dt-layout-end dt-paging">
                     <nav aria-label="Pagination">
-                        <button class="dt-paging-button current" type="button">1</button>
-                        <button class="dt-paging-button" type="button">2</button>
+                        <ul class="pagination">
+                            <li class="dt-paging-button page-item active">
+                                <button class="page-link" type="button">1</button>
+                            </li>
+                            <li class="dt-paging-button page-item">
+                                <button class="page-link" type="button">2</button>
+                            </li>
+                        </ul>
                     </nav>
                 </div>
             </div>

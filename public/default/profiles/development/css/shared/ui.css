@@ -132,6 +132,19 @@
   --soa-form-file-thumbnail-border-color: #d8d8d8;
   --soa-form-file-thumbnail-surface-color: #f4f4f4;
   --soa-form-file-name-color: #aaa;
+  --soa-badge-surface: var(--soa-primary-color);
+  --soa-badge-text: var(--soa-on-primary-color);
+  --soa-badge-border: transparent;
+  --soa-badge-border-width: 0;
+  --soa-badge-radius: var(--soa-border-radius-full);
+  --soa-badge-font-size: var(--soa-font-size-caption);
+  --soa-badge-font-weight: var(--soa-font-weight-semibold);
+  --soa-badge-line-height: var(--soa-line-height-tight);
+  --soa-badge-padding-block: var(--soa-space-1);
+  --soa-badge-padding-inline: var(--soa-space-2);
+  --soa-badge-gap: var(--soa-space-1);
+  --soa-badge-vertical-align: baseline;
+  --soa-badge-white-space: nowrap;
   --soa-form-date-picker-surface-color: var(--soa-surface-color);
   --soa-form-date-picker-hover-color: var(--soa-page-background-color);
   --soa-form-date-picker-active-color: var(--soa-border-color);
@@ -218,6 +231,24 @@
   --soa-table-cell-padding-inline: 0.75rem;
   --soa-table-border-width: var(--soa-border-width);
   --soa-table-row-transition-duration: var(--soa-motion-duration-fast);
+  --soa-table-page-jump-gap: 0.375rem;
+  --soa-table-page-jump-margin-inline-end: 1.25rem;
+  --soa-table-page-jump-control-min-size: 2.125rem;
+  --soa-table-page-jump-control-padding-block: 0.25rem;
+  --soa-table-page-jump-control-padding-inline: 0.5rem;
+  --soa-table-page-jump-focus-offset: 0.0625rem;
+  --soa-table-search-gap: var(--soa-space-2);
+  --soa-table-search-margin-block: var(--soa-space-2);
+  --soa-table-search-margin-inline: 1.25rem;
+  --soa-table-search-control-min-size: var(--soa-form-control-min-height);
+  --soa-table-search-control-padding-block: 0.4375rem;
+  --soa-table-search-control-padding-inline: 0.75rem;
+  --soa-table-search-focus-offset: 0.125rem;
+  --soa-table-column-order-gap: 0.375rem;
+  --soa-table-column-order-offset: 0.25rem;
+  --soa-table-column-order-arrow-inline-size: 0.25rem;
+  --soa-table-column-order-arrow-block-size: 0.3125rem;
+  --soa-table-column-order-arrow-inactive-opacity: 0.45;
   --soa-inline-editor-surface: var(--soa-elevated-surface-color);
   --soa-inline-editor-text: var(--soa-text-color);
   --soa-inline-editor-border: var(--soa-input-border-color);
@@ -304,6 +335,39 @@
   --soa-workbench-table-radius: 0.375rem;
 }
 
+:root[data-color-scheme=dark] {
+  --soa-primary-color: #93c5fd;
+  --soa-on-primary-color: #111827;
+  --soa-accent-color: #5eead4;
+  --soa-on-accent-color: #042f2e;
+  --soa-success-color: #4ade80;
+  --soa-warning-color: #facc15;
+  --soa-danger-color: #f87171;
+  --soa-info-color: #22d3ee;
+  --soa-surface-color: #1f2937;
+  --soa-elevated-surface-color: #273449;
+  --soa-muted-surface-color: #374151;
+  --soa-accent-surface-color: #1e3a5f;
+  --soa-page-background-color: #111827;
+  --soa-text-color: #f3f4f6;
+  --soa-muted-text-color: #9ca3af;
+  --soa-border-color: #4b5563;
+  --soa-input-border-color: #6b7280;
+  --soa-focus-color: #93c5fd;
+  --soa-overlay-color: rgb(0 0 0 / 70%);
+  --soa-shadow-color: rgb(0 0 0 / 35%);
+  --soa-shadow-sm: 0 0.125rem 0.25rem var(--soa-shadow-color);
+  --soa-shadow-md: 0 0.5rem 1rem var(--soa-shadow-color);
+  --soa-sidebar-bg: #0f172a;
+  --soa-sidebar-text-color: #f3f4f6;
+  --soa-sidebar-muted-text-color: #cbd5e1;
+  --soa-sidebar-active-color: rgb(255 255 255 / 12%);
+  --soa-sidebar-border-color: #334155;
+  --soa-asset-health-surface-color: #332701;
+  --soa-asset-health-text-color: #ffda6a;
+  --soa-asset-health-border-color: #997404;
+}
+
 @media (prefers-reduced-motion: reduce) {
   :root {
     --soa-motion-duration-fast: 0ms;
@@ -313,7 +377,18 @@
   }
 }
 @layer sleepingowl-shared {
+  :root {
+    color-scheme: light;
+  }
+  :root[data-color-scheme=dark] {
+    color-scheme: dark;
+  }
   body.soa-body {
+    background: var(--soa-page-background-color);
+    color: var(--soa-text-color);
+    font-family: var(--soa-font-family-sans);
+    font-size: var(--soa-font-size-base);
+    line-height: var(--soa-line-height-base);
     min-block-size: 100dvh;
     margin: 0;
   }
@@ -335,6 +410,12 @@
   }
   .soa-app :where(button, input, select, textarea) {
     font: inherit;
+  }
+  .soa-app :where(a, button) {
+    -webkit-tap-highlight-color: var(--soa-overlay-color);
+  }
+  .soa-app a {
+    color: inherit;
   }
   .soa-app :where(a, button, input, select, textarea):focus-visible,
   .soa-scroll-control:focus-visible {
@@ -1035,6 +1116,8 @@
   }
   .soa-header {
     align-items: center;
+    background: var(--soa-elevated-surface-color);
+    border-block-end: var(--soa-border-width) solid var(--soa-border-color);
     display: flex;
     grid-column: 2;
     grid-row: 1;
@@ -1072,6 +1155,9 @@
     pointer-events: none;
   }
   .soa-sidebar {
+    background: var(--soa-sidebar-bg);
+    border-inline-end: var(--soa-border-width) solid var(--soa-sidebar-border-color);
+    color: var(--soa-sidebar-text-color);
     display: flex;
     flex-direction: column;
     grid-column: 1;
@@ -1085,6 +1171,7 @@
   }
   .soa-brand {
     align-items: center;
+    border-block-end: var(--soa-border-width) solid var(--soa-sidebar-border-color);
     display: flex;
     flex: 0 0 var(--soa-header-height);
     min-inline-size: 0;
@@ -1114,6 +1201,10 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+  .soa-brand-text {
+    font-size: var(--soa-font-size-section);
+    font-weight: var(--soa-font-weight-semibold);
   }
   .soa-sidebar-scroll {
     flex: 1 1 auto;
@@ -1162,9 +1253,16 @@
     display: none !important;
   }
   .soa-nav-header {
+    color: var(--soa-sidebar-muted-text-color);
+    font-size: var(--soa-font-size-caption);
+    font-weight: var(--soa-font-weight-semibold);
+    letter-spacing: 0.06em;
     padding: var(--soa-space-4) var(--soa-space-3) var(--soa-space-2);
+    text-transform: uppercase;
   }
   .soa-nav-divider {
+    border: 0;
+    border-block-start: var(--soa-border-width) solid var(--soa-sidebar-border-color);
     margin: var(--soa-space-3);
   }
   .menu-open > .soa-nav-link .soa-nav-arrow {
@@ -1198,6 +1296,9 @@
     padding: 0;
   }
   .soa-page-title {
+    font-size: var(--soa-font-size-title);
+    font-weight: var(--soa-font-weight-semibold);
+    letter-spacing: var(--soa-heading-letter-spacing);
     line-height: var(--soa-line-height-tight);
     margin: var(--soa-space-2) 0 0;
     overflow-wrap: anywhere;
@@ -1207,18 +1308,28 @@
   }
   .soa-breadcrumbs {
     align-items: center;
+    color: var(--soa-muted-text-color);
     display: flex;
+    font-size: var(--soa-font-size-caption);
     flex-wrap: wrap;
     gap: var(--soa-space-2);
     list-style: none;
     margin: 0;
     padding: 0;
   }
+  .soa-breadcrumb-item[aria-current=page] {
+    color: var(--soa-text-color);
+    font-weight: var(--soa-font-weight-medium);
+  }
   .soa-breadcrumb-item + .soa-breadcrumb-item::before {
     content: "/";
     margin-inline-end: var(--soa-space-2);
   }
   .soa-footer {
+    background: var(--soa-surface-color);
+    border-block-start: var(--soa-border-width) solid var(--soa-border-color);
+    color: var(--soa-muted-text-color);
+    font-size: var(--soa-font-size-caption);
     grid-column: 2;
     grid-row: 3;
     min-inline-size: 0;
@@ -1254,6 +1365,7 @@
     overflow-wrap: anywhere;
   }
   .soa-sidebar-overlay {
+    background: var(--soa-overlay-color);
     display: none;
     inset: 0;
     position: fixed;
@@ -1337,8 +1449,12 @@
   }
   .soa-scroll-control {
     align-items: center;
+    background: var(--soa-elevated-surface-color);
+    border: var(--soa-border-width) solid var(--soa-border-color);
     border-radius: var(--soa-border-radius-full);
     box-sizing: border-box;
+    box-shadow: var(--soa-shadow-sm);
+    color: var(--soa-text-color);
     display: inline-flex;
     inline-size: var(--soa-scroll-control-size);
     inset-inline-end: var(--soa-scroll-control-offset-inline);
@@ -1349,6 +1465,10 @@
     text-decoration: none;
     transition: opacity var(--soa-motion-duration-fast) ease;
     z-index: var(--soa-scroll-control-z-index);
+  }
+  .soa-scroll-control:is(:hover, :focus-visible) {
+    background: var(--soa-muted-surface-color);
+    color: var(--soa-text-color);
   }
   .soa-scroll-control-top {
     inset-block-end: calc(var(--soa-scroll-control-offset-block) + var(--soa-scroll-control-size));

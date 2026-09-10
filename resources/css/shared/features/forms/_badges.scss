@@ -1,0 +1,28 @@
+/*
+ * Project configuration example:
+ *
+ * :root {
+ *   --soa-badge-surface: #7c3aed;
+ *   --soa-badge-text: #fff;
+ *   --soa-badge-radius: 0.375rem;
+ *   --soa-badge-padding-inline: 0.625rem;
+ * }
+ */
+@mixin styles {
+  .badge,
+  .soa-badge {
+    align-items: center;
+    background: var(--soa-badge-surface);
+    border: var(--soa-badge-border-width) solid var(--soa-badge-border);
+    border-radius: var(--soa-badge-radius);
+    color: var(--soa-badge-text);
+    display: inline-flex;
+    font-size: var(--soa-badge-font-size);
+    font-weight: var(--soa-badge-font-weight);
+    gap: var(--soa-badge-gap);
+    line-height: var(--soa-badge-line-height);
+    padding: var(--soa-badge-padding-block) var(--soa-badge-padding-inline);
+    vertical-align: var(--soa-badge-vertical-align);
+    white-space: var(--soa-badge-white-space);
+  }
+}

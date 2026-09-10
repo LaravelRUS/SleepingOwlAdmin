@@ -1,0 +1,42 @@
+@mixin styles {
+  .dt-container .dt-search {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: var(--soa-table-search-gap);
+    margin: var(--soa-table-search-margin-block)
+      var(--soa-table-search-margin-inline);
+    color: var(--soa-muted-text-color);
+    font-size: var(--soa-font-size-caption);
+  }
+
+  .dt-container .dt-search > label {
+    margin-block-end: 0;
+  }
+
+  .dt-container .dt-search .dt-input {
+    display: block;
+    inline-size: auto;
+    min-block-size: var(--soa-table-search-control-min-size);
+    padding: var(--soa-table-search-control-padding-block)
+      var(--soa-table-search-control-padding-inline);
+    border: var(--soa-table-border-width) solid var(--soa-border-color);
+    border-radius: var(--soa-border-radius);
+    color: var(--soa-text-color);
+    background-color: var(--soa-surface-color);
+    font: inherit;
+  }
+
+  .dt-container .dt-search .dt-input:focus-visible {
+    border-color: var(--soa-focus-color);
+    outline: var(--soa-focus-ring-width) solid var(--soa-focus-color);
+    outline-offset: var(--soa-table-search-focus-offset);
+  }
+
+  @media (width <= 48rem) {
+    .dt-container .dt-search {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+    }
+  }
+}

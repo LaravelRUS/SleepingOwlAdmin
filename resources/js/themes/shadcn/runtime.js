@@ -6,23 +6,11 @@ export function installTailwindTheme(target = globalThis) {
     const document = target.document
     if (!document) return null
 
-    const toggle = document.getElementById('theme-mode')
     const cards = installTailwindCardControls(document)
-    const apply = (mode) => (toggle ? applyColorMode(target, toggle, mode) : null)
-    const onClick = toggle
-        ? () => apply(toggle.getAttribute('data-mode') === 'dark' ? 'light' : 'dark')
-        : null
-
-    if (toggle) {
-        toggle.addEventListener('click', onClick)
-        apply(readStoredMode(target) ?? toggle.getAttribute('data-mode'))
-    }
 
     const controller = {
-        apply,
         cards,
         destroy() {
-            if (toggle) toggle.removeEventListener('click', onClick)
             cards?.destroy()
             delete target[INSTALLATION]
         },
@@ -92,41 +80,4 @@ function updateCollapseIcon(button, collapsed) {
     if (!icon?.classList) return
     icon.classList.toggle('fa-plus', collapsed)
     icon.classList.toggle('fa-minus', !collapsed)
-}
-
-export function applyColorMode(target, toggle, requestedMode) {
-    const mode = requestedMode === 'dark' ? 'dark' : 'light'
-    const root = target.document.documentElement
-    const icon = target.document.getElementById('theme-icon')
-
-    root.dataset.bsTheme = mode
-    root.dataset.colorScheme = mode
-    toggle.setAttribute('data-mode', mode)
-    if (icon) {
-        icon.className = mode === 'dark' ? 'fa-regular fa-lightbulb' : 'fa-solid fa-moon'
-    }
-
-    writeStoredMode(target, mode)
-
-    return mode
-}
-
-function readStoredMode(target) {
-    try {
-        const value = target.localStorage?.getItem('theme-mode')
-        return value === 'dark' || value === 'light' ? value : null
-    } catch {
-        return null
-    }
-}
-
-function writeStoredMode(target, mode) {
-    try {
-        target.localStorage?.setItem('theme-mode', mode)
-    } catch {
-        // Storage can be unavailable in private or embedded browsing contexts.
-    }
-
-    const secure = target.location?.protocol === 'https:' ? '; Secure' : ''
-    target.document.cookie = `theme-mode=${mode}; Path=/; SameSite=Lax${secure}`
 }

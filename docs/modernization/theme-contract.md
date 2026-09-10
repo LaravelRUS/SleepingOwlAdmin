@@ -96,7 +96,7 @@ Capability говорит только о presentation support. Он не озн
 
 `template.default` выбирает ровно один ключ `template.themes`; классы остальных тем не создаются. Имена используют `lower-kebab`, неизвестное имя и некорректная карта завершаются `TemplateException` без fallback к AdminLTE.
 
-Встроенная диагностическая тема `empty` переиспользует текущую package Blade-разметку, но не добавляет theme-owned CSS, JavaScript или overrides. Её единственная capability — `icons`; Font Awesome подключается через обязательный для всего package runtime `shared:icons`. Пустой `theme:empty` bundle существует только потому, что logical theme entry обязателен. Выбор `SLEEPINGOWL_TEMPLATE=empty` оставляет `core`, `shared:ui`, `shared:features` и shared runtime dependencies и предназначен для визуального аудита границы shared/theme, а не для production UI.
+Встроенная диагностическая тема `empty` переиспользует текущую package Blade-разметку, но не добавляет theme-owned CSS, JavaScript или overrides. Её единственная capability — `icons`; Font Awesome подключается через обязательный для всего package runtime `shared:icons`. Пустой `theme:empty` bundle существует только потому, что logical theme entry обязателен. Выбор `SLEEPINGOWL_TEMPLATE=empty` оставляет `core`, `shared:ui`, `shared:features` и shared runtime dependencies: общий слой предоставляет базовую размерку, light/dark surfaces и переключение цветового режима. Тема предназначена для визуального и функционального аудита границы shared/theme, а не для production UI.
 
 Resolver временно принимает прежний class-string как runtime fallback, но новый package config его не публикует. После выбора класса поддерживаются две реализации:
 

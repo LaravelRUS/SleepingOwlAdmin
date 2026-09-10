@@ -819,6 +819,99 @@ function assertAdmin(admin) {
 
 /***/ },
 
+/***/ "./resources/js/shared/features/color-mode/browser.js"
+/*!************************************************************!*\
+  !*** ./resources/js/shared/features/color-mode/browser.js ***!
+  \************************************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   applyColorMode: () => (/* reexport safe */ _color_mode_js__WEBPACK_IMPORTED_MODULE_0__.applyColorMode),
+/* harmony export */   installColorMode: () => (/* reexport safe */ _color_mode_js__WEBPACK_IMPORTED_MODULE_0__.installColorMode)
+/* harmony export */ });
+/* harmony import */ var _color_mode_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./color-mode.js */ "./resources/js/shared/features/color-mode/color-mode.js");
+
+if (globalThis.document) (0,_color_mode_js__WEBPACK_IMPORTED_MODULE_0__.installColorMode)(globalThis);
+
+
+/***/ },
+
+/***/ "./resources/js/shared/features/color-mode/color-mode.js"
+/*!***************************************************************!*\
+  !*** ./resources/js/shared/features/color-mode/color-mode.js ***!
+  \***************************************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   applyColorMode: () => (/* binding */ applyColorMode),
+/* harmony export */   installColorMode: () => (/* binding */ installColorMode)
+/* harmony export */ });
+var INSTALLATION = Symbol["for"]('sleepingowl.shared.color-mode');
+function installColorMode() {
+  var _readStoredMode;
+  var target = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : globalThis;
+  if (target[INSTALLATION]) return target[INSTALLATION];
+  var document = target.document;
+  var toggle = document === null || document === void 0 ? void 0 : document.getElementById('theme-mode');
+  if (!toggle) return null;
+  var apply = function apply(mode) {
+    return applyColorMode(target, toggle, mode);
+  };
+  var onClick = function onClick() {
+    return apply(toggle.getAttribute('data-mode') === 'dark' ? 'light' : 'dark');
+  };
+  toggle.addEventListener('click', onClick);
+  apply((_readStoredMode = readStoredMode(target)) !== null && _readStoredMode !== void 0 ? _readStoredMode : toggle.getAttribute('data-mode'));
+  var controller = {
+    apply: apply,
+    destroy: function destroy() {
+      toggle.removeEventListener('click', onClick);
+      delete target[INSTALLATION];
+    }
+  };
+  target[INSTALLATION] = controller;
+  return controller;
+}
+function applyColorMode(target, toggle, requestedMode) {
+  var mode = requestedMode === 'dark' ? 'dark' : 'light';
+  var root = target.document.documentElement;
+  var icon = target.document.getElementById('theme-icon');
+  root.dataset.bsTheme = mode;
+  root.dataset.colorScheme = mode;
+  toggle.setAttribute('data-mode', mode);
+  if (icon) {
+    icon.className = mode === 'dark' ? 'fa-regular fa-lightbulb' : 'fa-solid fa-moon';
+  }
+  writeStoredMode(target, mode);
+  return mode;
+}
+function readStoredMode(target) {
+  try {
+    var _target$localStorage;
+    var value = (_target$localStorage = target.localStorage) === null || _target$localStorage === void 0 ? void 0 : _target$localStorage.getItem('theme-mode');
+    return value === 'dark' || value === 'light' ? value : null;
+  } catch (_unused) {
+    return null;
+  }
+}
+function writeStoredMode(target, mode) {
+  var _target$location;
+  try {
+    var _target$localStorage2;
+    (_target$localStorage2 = target.localStorage) === null || _target$localStorage2 === void 0 || _target$localStorage2.setItem('theme-mode', mode);
+  } catch (_unused2) {
+    // Storage can be unavailable in private or embedded browsing contexts.
+  }
+  var secure = ((_target$location = target.location) === null || _target$location === void 0 ? void 0 : _target$location.protocol) === 'https:' ? '; Secure' : '';
+  target.document.cookie = "theme-mode=".concat(mode, "; Path=/; SameSite=Lax").concat(secure);
+}
+
+/***/ },
+
 /***/ "./resources/js/shared/features/dropdown/browser.js"
 /*!**********************************************************!*\
   !*** ./resources/js/shared/features/dropdown/browser.js ***!
@@ -31160,17 +31253,19 @@ var __webpack_exports__ = {};
   !*** ./resources/js/shared/features/browser.js ***!
   \*************************************************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _alert_browser_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./alert/browser.js */ "./resources/js/shared/features/alert/browser.js");
-/* harmony import */ var _tooltip_browser_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./tooltip/browser.js */ "./resources/js/shared/features/tooltip/browser.js");
-/* harmony import */ var _dropdown_browser_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./dropdown/browser.js */ "./resources/js/shared/features/dropdown/browser.js");
-/* harmony import */ var _sidebar_browser_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./sidebar/browser.js */ "./resources/js/shared/features/sidebar/browser.js");
-/* harmony import */ var _lightbox_browser_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./lightbox/browser.js */ "./resources/js/shared/features/lightbox/browser.js");
-/* harmony import */ var _table_browser_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./table/browser.js */ "./resources/js/shared/features/table/browser.js");
-/* harmony import */ var _tabs_browser_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./tabs/browser.js */ "./resources/js/shared/features/tabs/browser.js");
-/* harmony import */ var _forms_browser_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./forms/browser.js */ "./resources/js/shared/features/forms/browser.js");
-/* harmony import */ var _tree_browser_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./tree/browser.js */ "./resources/js/shared/features/tree/browser.js");
+/* harmony import */ var _color_mode_browser_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./color-mode/browser.js */ "./resources/js/shared/features/color-mode/browser.js");
+/* harmony import */ var _alert_browser_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./alert/browser.js */ "./resources/js/shared/features/alert/browser.js");
+/* harmony import */ var _tooltip_browser_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./tooltip/browser.js */ "./resources/js/shared/features/tooltip/browser.js");
+/* harmony import */ var _dropdown_browser_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./dropdown/browser.js */ "./resources/js/shared/features/dropdown/browser.js");
+/* harmony import */ var _sidebar_browser_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./sidebar/browser.js */ "./resources/js/shared/features/sidebar/browser.js");
+/* harmony import */ var _lightbox_browser_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./lightbox/browser.js */ "./resources/js/shared/features/lightbox/browser.js");
+/* harmony import */ var _table_browser_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./table/browser.js */ "./resources/js/shared/features/table/browser.js");
+/* harmony import */ var _tabs_browser_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./tabs/browser.js */ "./resources/js/shared/features/tabs/browser.js");
+/* harmony import */ var _forms_browser_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./forms/browser.js */ "./resources/js/shared/features/forms/browser.js");
+/* harmony import */ var _tree_browser_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./tree/browser.js */ "./resources/js/shared/features/tree/browser.js");
 // These features are part of the base admin runtime and are always registered
 // together. Keep the imports ordered by their runtime dependencies.
+
 
 
 

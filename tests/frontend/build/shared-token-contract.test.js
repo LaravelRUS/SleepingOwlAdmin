@@ -8,13 +8,17 @@ const sharedRoot = resolve(root, 'resources/css/shared')
 const themeRoot = resolve(root, 'resources/css/themes')
 const tokenSource = readFileSync(resolve(sharedRoot, '_tokens.scss'), 'utf8')
 const sharedTokens = declarations(tokenSource)
+const componentLocalTokens = new Set([
+    '--soa-datatables-autoupdate-color',
+    '--soa-inline-editable-max-rows',
+])
 
 it('defines every shared presentation token in the canonical token file', () => {
     const usedTokens = new Set(
         filesUnder(sharedRoot)
             .filter((file) => !file.endsWith('_tokens.scss'))
             .flatMap((file) => references(readFileSync(file, 'utf8')))
-            .filter((token) => token !== '--soa-inline-editable-max-rows'),
+            .filter((token) => !componentLocalTokens.has(token)),
     )
 
     expect([...usedTokens].filter((token) => !sharedTokens.has(token)).sort()).toEqual([])

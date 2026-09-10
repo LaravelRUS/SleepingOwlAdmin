@@ -1,0 +1,33 @@
+// Keep project-specific, framework-independent CSS helper classes here.
+// Wrap helpers in @layer sleepingowl-core so their cascade priority stays stable.
+
+.text-center {
+    text-align: center !important;
+}
+
+.clearfix {
+    display: block;
+}
+
+.small, small {
+    font-size: .875em;
+    font-weight: 400;
+}
+
+
+.dt-layout {
+    &-row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    &-start {
+        //ma
+    }
+
+    &-full {
+        width: 100%;
+    }
+}

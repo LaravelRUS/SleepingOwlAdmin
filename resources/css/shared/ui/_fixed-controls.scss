@@ -1,8 +1,12 @@
 @mixin styles {
   .soa-scroll-control {
     align-items: center;
+    background: var(--soa-elevated-surface-color);
+    border: var(--soa-border-width) solid var(--soa-border-color);
     border-radius: var(--soa-border-radius-full);
     box-sizing: border-box;
+    box-shadow: var(--soa-shadow-sm);
+    color: var(--soa-text-color);
     display: inline-flex;
     inline-size: var(--soa-scroll-control-size);
     inset-inline-end: var(--soa-scroll-control-offset-inline);
@@ -13,6 +17,11 @@
     text-decoration: none;
     transition: opacity var(--soa-motion-duration-fast) ease;
     z-index: var(--soa-scroll-control-z-index);
+  }
+
+  .soa-scroll-control:is(:hover, :focus-visible) {
+    background: var(--soa-muted-surface-color);
+    color: var(--soa-text-color);
   }
 
   .soa-scroll-control-top {

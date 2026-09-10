@@ -1,60 +1,4 @@
 @mixin styles {
-  .soa-header {
-    background: var(--soa-elevated-surface-color);
-    border-block-end: var(--soa-border-width) solid var(--soa-border-color);
-  }
-
-  .soa-sidebar {
-    background: var(--soa-sidebar-bg);
-    border-inline-end: var(--soa-border-width) solid var(--soa-sidebar-border-color);
-    color: var(--soa-sidebar-text-color);
-  }
-
-  .soa-brand {
-    border-block-end: var(--soa-border-width) solid var(--soa-sidebar-border-color);
-  }
-
-  .soa-brand-text {
-    font-size: var(--soa-font-size-section);
-    font-weight: var(--soa-font-weight-semibold);
-  }
-
-  .soa-nav-header {
-    color: var(--soa-sidebar-muted-text-color);
-    font-size: var(--soa-font-size-caption);
-    font-weight: var(--soa-font-weight-semibold);
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-  }
-
-  .soa-nav-divider {
-    border: 0;
-    border-block-start: var(--soa-border-width) solid var(--soa-sidebar-border-color);
-  }
-
-  .soa-page-title {
-    font-size: var(--soa-font-size-title);
-    font-weight: var(--soa-font-weight-semibold);
-    letter-spacing: var(--soa-heading-letter-spacing);
-  }
-
-  .soa-breadcrumbs {
-    color: var(--soa-muted-text-color);
-    font-size: var(--soa-font-size-caption);
-  }
-
-  .soa-breadcrumb-item[aria-current='page'] {
-    color: var(--soa-text-color);
-    font-weight: var(--soa-font-weight-medium);
-  }
-
-  .soa-footer {
-    background: var(--soa-surface-color);
-    border-block-start: var(--soa-border-width) solid var(--soa-border-color);
-    color: var(--soa-muted-text-color);
-    font-size: var(--soa-font-size-caption);
-  }
-
   .soa-dashboard-grid {
     display: grid;
     gap: var(--soa-space-4);
@@ -214,17 +158,6 @@
   .soa-asset-health-command {
     color: var(--soa-text-color);
     font-family: var(--soa-font-family-mono);
-  }
-
-  .soa-scroll-control {
-    background: var(--soa-elevated-surface-color);
-    border: var(--soa-border-width) solid var(--soa-border-color);
-    box-shadow: var(--soa-shadow-sm);
-    color: var(--soa-text-color);
-  }
-
-  .soa-sidebar-overlay {
-    background: var(--soa-overlay-color);
   }
 
   @media (width >= 48rem) {

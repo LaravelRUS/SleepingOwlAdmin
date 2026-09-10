@@ -1,17 +1,3 @@
-/**
-Fix Datatable css
- */
-.dataTable {
-    .dt-column-order {
-        margin-left: 0.5em;
-    }
-}
-
-div.dt-processing {
-    top: 10em;
-}
-
-
 //fix horizontal scroll
 .card-body {
     max-width: calc(100% - 1px);

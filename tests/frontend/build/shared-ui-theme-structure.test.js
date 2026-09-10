@@ -71,6 +71,14 @@ describe('theme structural boundary', () => {
 
         expect(violations).toEqual([])
     })
+
+    it('keeps scroll-control presentation in shared UI', () => {
+        const themeSource = filesUnder(themeRoot)
+            .map((file) => readFileSync(file, 'utf8'))
+            .join('\n')
+
+        expect(themeSource).not.toMatch(/\.soa-scroll-control\b/)
+    })
 })
 
 function structuralViolations(file) {

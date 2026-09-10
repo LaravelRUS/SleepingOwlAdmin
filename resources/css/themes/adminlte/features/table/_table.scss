@@ -13,17 +13,6 @@
       }
     }
 
-    thead > tr > th.dt-type-numeric,
-    thead > tr > th.dt-type-date {
-      .dt-column-header {
-        flex-direction: row;
-      }
-
-      .dt-column-order {
-        right: 0.25rem;
-        left: auto;
-      }
-    }
   }
 
   .lightcolumn.table td.highlight {

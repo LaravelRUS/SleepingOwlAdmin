@@ -100,6 +100,51 @@ test('shared shell focus and reduced motion contracts are theme neutral', async 
     await expect(page.locator('#scrolltobottom')).toHaveCSS('transition-duration', '0s')
 })
 
+for (const profile of ['development', 'production']) {
+    test(`${profile} empty theme gets shared light and dark foundations`, async ({ page }) => {
+        await page.goto(`/shared-shell?profile=${profile}&theme=empty&color-scheme=light`)
+
+        expect(await shellPalette(page)).toEqual({
+            bodyBackground: 'rgb(249, 250, 251)',
+            bodyColor: 'rgb(31, 41, 55)',
+            bodyFontSize: '16px',
+            colorScheme: 'light',
+            footerBackground: 'rgb(255, 255, 255)',
+            headerBackground: 'rgb(255, 255, 255)',
+            sidebarBackground: 'rgb(52, 58, 64)',
+        })
+
+        await page.goto(`/shared-shell?profile=${profile}&theme=empty&color-scheme=dark`)
+
+        expect(await shellPalette(page)).toEqual({
+            bodyBackground: 'rgb(17, 24, 39)',
+            bodyColor: 'rgb(243, 244, 246)',
+            bodyFontSize: '16px',
+            colorScheme: 'dark',
+            footerBackground: 'rgb(31, 41, 55)',
+            headerBackground: 'rgb(39, 52, 73)',
+            sidebarBackground: 'rgb(15, 23, 42)',
+        })
+    })
+}
+
+function shellPalette(page) {
+    return page.evaluate(() => {
+        const style = (selector) => getComputedStyle(document.querySelector(selector))
+        const body = style('body')
+
+        return {
+            bodyBackground: body.backgroundColor,
+            bodyColor: body.color,
+            bodyFontSize: body.fontSize,
+            colorScheme: getComputedStyle(document.documentElement).colorScheme,
+            footerBackground: style('.soa-footer').backgroundColor,
+            headerBackground: style('.soa-header').backgroundColor,
+            sidebarBackground: style('.soa-sidebar').backgroundColor,
+        }
+    })
+}
+
 function shellGeometry(page) {
     return page.evaluate(() => {
         const rectangle = (selector) => {

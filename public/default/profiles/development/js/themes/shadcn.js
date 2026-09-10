@@ -104,7 +104,6 @@ function updateRegion(region, state, message) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   applyColorMode: () => (/* binding */ applyColorMode),
 /* harmony export */   installTailwindCardControls: () => (/* binding */ installTailwindCardControls),
 /* harmony export */   installTailwindTheme: () => (/* binding */ installTailwindTheme)
 /* harmony export */ });
@@ -114,24 +113,10 @@ function installTailwindTheme() {
   if (target[INSTALLATION]) return target[INSTALLATION];
   var document = target.document;
   if (!document) return null;
-  var toggle = document.getElementById('theme-mode');
   var cards = installTailwindCardControls(document);
-  var apply = function apply(mode) {
-    return toggle ? applyColorMode(target, toggle, mode) : null;
-  };
-  var onClick = toggle ? function () {
-    return apply(toggle.getAttribute('data-mode') === 'dark' ? 'light' : 'dark');
-  } : null;
-  if (toggle) {
-    var _readStoredMode;
-    toggle.addEventListener('click', onClick);
-    apply((_readStoredMode = readStoredMode(target)) !== null && _readStoredMode !== void 0 ? _readStoredMode : toggle.getAttribute('data-mode'));
-  }
   var controller = {
-    apply: apply,
     cards: cards,
     destroy: function destroy() {
-      if (toggle) toggle.removeEventListener('click', onClick);
       cards === null || cards === void 0 || cards.destroy();
       delete target[INSTALLATION];
     }
@@ -197,39 +182,6 @@ function updateCollapseIcon(button, collapsed) {
   if (!(icon !== null && icon !== void 0 && icon.classList)) return;
   icon.classList.toggle('fa-plus', collapsed);
   icon.classList.toggle('fa-minus', !collapsed);
-}
-function applyColorMode(target, toggle, requestedMode) {
-  var mode = requestedMode === 'dark' ? 'dark' : 'light';
-  var root = target.document.documentElement;
-  var icon = target.document.getElementById('theme-icon');
-  root.dataset.bsTheme = mode;
-  root.dataset.colorScheme = mode;
-  toggle.setAttribute('data-mode', mode);
-  if (icon) {
-    icon.className = mode === 'dark' ? 'fa-regular fa-lightbulb' : 'fa-solid fa-moon';
-  }
-  writeStoredMode(target, mode);
-  return mode;
-}
-function readStoredMode(target) {
-  try {
-    var _target$localStorage;
-    var value = (_target$localStorage = target.localStorage) === null || _target$localStorage === void 0 ? void 0 : _target$localStorage.getItem('theme-mode');
-    return value === 'dark' || value === 'light' ? value : null;
-  } catch (_unused) {
-    return null;
-  }
-}
-function writeStoredMode(target, mode) {
-  var _target$location;
-  try {
-    var _target$localStorage2;
-    (_target$localStorage2 = target.localStorage) === null || _target$localStorage2 === void 0 || _target$localStorage2.setItem('theme-mode', mode);
-  } catch (_unused2) {
-    // Storage can be unavailable in private or embedded browsing contexts.
-  }
-  var secure = ((_target$location = target.location) === null || _target$location === void 0 ? void 0 : _target$location.protocol) === 'https:' ? '; Secure' : '';
-  target.document.cookie = "theme-mode=".concat(mode, "; Path=/; SameSite=Lax").concat(secure);
 }
 
 /***/ }

@@ -1,5 +1,6 @@
 // These features are part of the base admin runtime and are always registered
 // together. Keep the imports ordered by their runtime dependencies.
+import './color-mode/browser.js'
 import './alert/browser.js'
 import './tooltip/browser.js'
 import './dropdown/browser.js'

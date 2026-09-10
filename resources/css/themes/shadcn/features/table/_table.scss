@@ -35,23 +35,6 @@
       }
     }
 
-    .dt-column-order {
-      margin-left: 0.375rem;
-      color: var(--soa-muted-text-color);
-
-      &::after {
-        content: '\2195';
-      }
-    }
-
-    [aria-sort='ascending'] .dt-column-order::after {
-      content: '\2191';
-    }
-
-    [aria-sort='descending'] .dt-column-order::after {
-      content: '\2193';
-    }
-
     td.dtr-control {
       cursor: pointer;
 

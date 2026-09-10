@@ -1,7 +1,5 @@
 @use 'sass:meta';
-@use 'auto-update';
 @use 'layout';
-@use 'page-jump';
 @use 'table';
 @use 'tokens';
 
@@ -13,9 +11,7 @@
     '../../../../../../node_modules/datatables.net-responsive-bs5/css/responsive.bootstrap5.css'
   );
   @include layout.styles;
-  @include page-jump.styles;
   @include table.styles;
-  @include auto-update.styles;
 
   .button-filter-control {
     margin-right: 1.25rem;

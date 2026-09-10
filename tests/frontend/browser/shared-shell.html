@@ -8,14 +8,23 @@
             const parameters = new URLSearchParams(location.search)
             const profile = parameters.get('profile') || 'development'
             const theme = parameters.get('theme') || 'shadcn'
+            const colorScheme = parameters.get('color-scheme') || 'light'
             const supportedProfiles = ['development', 'production']
             const supportedThemes = ['adminlte', 'empty', 'shadcn']
+            const supportedColorSchemes = ['dark', 'light']
 
-            if (!supportedProfiles.includes(profile) || !supportedThemes.includes(theme)) {
-                throw new Error(`Unsupported shared shell fixture: ${profile}/${theme}`)
+            if (
+                !supportedProfiles.includes(profile) ||
+                !supportedThemes.includes(theme) ||
+                !supportedColorSchemes.includes(colorScheme)
+            ) {
+                throw new Error(
+                    `Unsupported shared shell fixture: ${profile}/${theme}/${colorScheme}`,
+                )
             }
 
             document.documentElement.dataset.theme = theme
+            document.documentElement.dataset.colorScheme = colorScheme
             for (const href of [
                 `/public/default/profiles/${profile}/css/admin-core.css`,
                 `/public/default/profiles/${profile}/css/shared/ui.css`,

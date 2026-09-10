@@ -266,6 +266,10 @@ const staticRoutes = new Map([
         [join(projectRoot, 'public', 'default', 'css', 'shared', 'features.css'), 'text/css'],
     ],
     [
+        '/public/default/css/shared/ui.css',
+        [join(projectRoot, 'public', 'default', 'css', 'shared', 'ui.css'), 'text/css'],
+    ],
+    [
         '/public/default/css/themes/adminlte.css',
         [join(projectRoot, 'public', 'default', 'css', 'themes', 'adminlte.css'), 'text/css'],
     ],

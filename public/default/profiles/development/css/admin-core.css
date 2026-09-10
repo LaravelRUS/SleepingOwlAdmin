@@ -1,3 +1,26 @@
+.text-center {
+  text-align: center !important;
+}
+
+.clearfix {
+  display: block;
+}
+
+.small, small {
+  font-size: 0.875em;
+  font-weight: 400;
+}
+
+.dt-layout-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+.dt-layout-full {
+  width: 100%;
+}
+
 @layer sleepingowl-core, sleepingowl-framework, sleepingowl-shared, sleepingowl-feature, sleepingowl-theme, sleepingowl-theme-override;
 @layer sleepingowl-core {
   [data-cloak] {

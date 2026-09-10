@@ -1,16 +1,12 @@
-@use 'auto-update';
 @use 'controls';
 @use 'display';
 @use 'layout';
-@use 'page-jump';
 @use 'table';
 @use 'tokens';
 
 @layer sleepingowl-theme.table {
   @include layout.styles;
-  @include page-jump.styles;
   @include controls.styles;
   @include display.styles;
   @include table.styles;
-  @include auto-update.styles;
 }

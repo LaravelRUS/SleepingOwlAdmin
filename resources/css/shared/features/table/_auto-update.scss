@@ -1,0 +1,66 @@
+@mixin styles {
+  [data-admin-table-autoupdate-bar] {
+    block-size: 2.25rem;
+    inline-size: 100%;
+    position: relative;
+    z-index: 2;
+  }
+
+  [data-admin-table-autoupdate-bar] > svg {
+    block-size: 0.125rem;
+    inline-size: calc(100% - 2.75rem);
+    inset-block-start: 50%;
+    inset-inline-start: 0;
+    overflow: visible;
+    position: absolute;
+    transform: translateY(-50%);
+    transition: opacity var(--soa-table-row-transition-duration);
+  }
+
+  [data-admin-table-autoupdate-bar][data-state='paused'] > svg {
+    opacity: 0.45;
+  }
+
+  [data-admin-table-autoupdate-toggle] {
+    background: var(--soa-surface-color);
+    block-size: 2rem;
+    border: var(--soa-table-border-width) solid var(--soa-border-color);
+    border-radius: var(--soa-border-radius-full);
+    color: var(--soa-muted-text-color);
+    cursor: pointer;
+    display: inline-grid;
+    font-size: var(--soa-font-size-caption);
+    inline-size: 2rem;
+    inset-block-start: 50%;
+    inset-inline-end: 0;
+    line-height: 1;
+    padding: 0;
+    place-items: center;
+    position: absolute;
+    transform: translateY(-50%);
+    transition:
+      border-color var(--soa-table-row-transition-duration),
+      color var(--soa-table-row-transition-duration);
+  }
+
+  [data-admin-table-autoupdate-toggle]:is(:hover, :focus-visible) {
+    border-color: var(--soa-datatables-autoupdate-color);
+    color: var(--soa-datatables-autoupdate-color);
+    outline: none;
+  }
+
+  [data-admin-table-autoupdate-toggle] > [aria-hidden='true'] {
+    grid-area: 1 / 1;
+  }
+
+  [data-admin-table-autoupdate-label] {
+    block-size: 0.0625rem;
+    border: 0;
+    clip-path: inset(50%);
+    inline-size: 0.0625rem;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    white-space: nowrap;
+  }
+}

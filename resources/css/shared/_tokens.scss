@@ -138,6 +138,19 @@
     --soa-form-file-thumbnail-border-color: #d8d8d8;
     --soa-form-file-thumbnail-surface-color: #f4f4f4;
     --soa-form-file-name-color: #aaa;
+    --soa-badge-surface: var(--soa-primary-color);
+    --soa-badge-text: var(--soa-on-primary-color);
+    --soa-badge-border: transparent;
+    --soa-badge-border-width: 0;
+    --soa-badge-radius: var(--soa-border-radius-full);
+    --soa-badge-font-size: var(--soa-font-size-caption);
+    --soa-badge-font-weight: var(--soa-font-weight-semibold);
+    --soa-badge-line-height: var(--soa-line-height-tight);
+    --soa-badge-padding-block: var(--soa-space-1);
+    --soa-badge-padding-inline: var(--soa-space-2);
+    --soa-badge-gap: var(--soa-space-1);
+    --soa-badge-vertical-align: baseline;
+    --soa-badge-white-space: nowrap;
     --soa-form-date-picker-surface-color: var(--soa-surface-color);
     --soa-form-date-picker-hover-color: var(--soa-page-background-color);
     --soa-form-date-picker-active-color: var(--soa-border-color);
@@ -228,6 +241,24 @@
     --soa-table-cell-padding-inline: 0.75rem;
     --soa-table-border-width: var(--soa-border-width);
     --soa-table-row-transition-duration: var(--soa-motion-duration-fast);
+    --soa-table-page-jump-gap: 0.375rem;
+    --soa-table-page-jump-margin-inline-end: 1.25rem;
+    --soa-table-page-jump-control-min-size: 2.125rem;
+    --soa-table-page-jump-control-padding-block: 0.25rem;
+    --soa-table-page-jump-control-padding-inline: 0.5rem;
+    --soa-table-page-jump-focus-offset: 0.0625rem;
+    --soa-table-search-gap: var(--soa-space-2);
+    --soa-table-search-margin-block: var(--soa-space-2);
+    --soa-table-search-margin-inline: 1.25rem;
+    --soa-table-search-control-min-size: var(--soa-form-control-min-height);
+    --soa-table-search-control-padding-block: 0.4375rem;
+    --soa-table-search-control-padding-inline: 0.75rem;
+    --soa-table-search-focus-offset: 0.125rem;
+    --soa-table-column-order-gap: 0.375rem;
+    --soa-table-column-order-offset: 0.25rem;
+    --soa-table-column-order-arrow-inline-size: 0.25rem;
+    --soa-table-column-order-arrow-block-size: 0.3125rem;
+    --soa-table-column-order-arrow-inactive-opacity: 0.45;
     --soa-inline-editor-surface: var(--soa-elevated-surface-color);
     --soa-inline-editor-text: var(--soa-text-color);
     --soa-inline-editor-border: var(--soa-input-border-color);
@@ -316,6 +347,39 @@
     --soa-workbench-table-border-color: var(--soa-border-color);
     --soa-workbench-table-heading-color: var(--soa-muted-text-color);
     --soa-workbench-table-radius: 0.375rem;
+  }
+
+  :root[data-color-scheme='dark'] {
+    --soa-primary-color: #93c5fd;
+    --soa-on-primary-color: #111827;
+    --soa-accent-color: #5eead4;
+    --soa-on-accent-color: #042f2e;
+    --soa-success-color: #4ade80;
+    --soa-warning-color: #facc15;
+    --soa-danger-color: #f87171;
+    --soa-info-color: #22d3ee;
+    --soa-surface-color: #1f2937;
+    --soa-elevated-surface-color: #273449;
+    --soa-muted-surface-color: #374151;
+    --soa-accent-surface-color: #1e3a5f;
+    --soa-page-background-color: #111827;
+    --soa-text-color: #f3f4f6;
+    --soa-muted-text-color: #9ca3af;
+    --soa-border-color: #4b5563;
+    --soa-input-border-color: #6b7280;
+    --soa-focus-color: #93c5fd;
+    --soa-overlay-color: rgb(0 0 0 / 70%);
+    --soa-shadow-color: rgb(0 0 0 / 35%);
+    --soa-shadow-sm: 0 0.125rem 0.25rem var(--soa-shadow-color);
+    --soa-shadow-md: 0 0.5rem 1rem var(--soa-shadow-color);
+    --soa-sidebar-bg: #0f172a;
+    --soa-sidebar-text-color: #f3f4f6;
+    --soa-sidebar-muted-text-color: #cbd5e1;
+    --soa-sidebar-active-color: rgb(255 255 255 / 12%);
+    --soa-sidebar-border-color: #334155;
+    --soa-asset-health-surface-color: #332701;
+    --soa-asset-health-text-color: #ffda6a;
+    --soa-asset-health-border-color: #997404;
   }
 
   @media (prefers-reduced-motion: reduce) {

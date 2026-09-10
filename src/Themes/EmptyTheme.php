@@ -5,7 +5,7 @@ namespace SleepingOwl\Admin\Themes;
 use SleepingOwl\Admin\Contracts\Theme\ThemeInterface;
 
 /**
- * Diagnostic theme that exposes package markup with shared styles only.
+ * Diagnostic theme that exposes package markup with the shared UI/runtime only.
  */
 final class EmptyTheme implements ThemeInterface
 {

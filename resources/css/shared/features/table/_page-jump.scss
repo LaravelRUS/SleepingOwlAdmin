@@ -1,0 +1,39 @@
+@mixin styles {
+  .soa-dt-page-jump {
+    align-items: center;
+    color: var(--soa-muted-text-color);
+
+    // AdminLTE's later framework bundle sets every label to inline-block.
+    display: inline-flex !important;
+    font-size: var(--soa-font-size-caption);
+    gap: var(--soa-table-page-jump-gap);
+    margin-inline-end: var(--soa-table-page-jump-margin-inline-end);
+    white-space: nowrap;
+  }
+
+  .soa-dt-page-jump-input {
+    background: var(--soa-surface-color);
+    border: var(--soa-table-border-width) solid var(--soa-border-color);
+    border-radius: var(--soa-border-radius);
+    color: var(--soa-text-color);
+    font: inherit;
+    inline-size: 4rem;
+    min-block-size: var(--soa-table-page-jump-control-min-size);
+    padding: var(--soa-table-page-jump-control-padding-block)
+      var(--soa-table-page-jump-control-padding-inline);
+    text-align: center;
+  }
+
+  .soa-dt-page-jump-input:focus-visible {
+    border-color: var(--soa-focus-color);
+    outline: var(--soa-focus-ring-width) solid var(--soa-focus-color);
+    outline-offset: var(--soa-table-page-jump-focus-offset);
+  }
+
+  @media (width <= 48rem) {
+    .soa-dt-page-jump {
+      justify-content: center;
+      margin: var(--soa-space-2) 0 0;
+    }
+  }
+}

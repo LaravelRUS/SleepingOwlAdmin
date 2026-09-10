@@ -1,4 +1,3 @@
-@use 'base';
 @use 'colors';
 @use 'components';
 @use 'features/forms/forms-tailwind';
@@ -11,6 +10,5 @@
 @include shadcn-theme.define;
 
 @layer sleepingowl-theme {
-  @include base.styles;
   @include components.styles;
 }

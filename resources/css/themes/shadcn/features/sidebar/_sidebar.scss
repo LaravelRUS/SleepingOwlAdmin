@@ -13,45 +13,6 @@ $mobile-breakpoint: 64rem !default;
         var(--soa-layout-transition-timing-function);
   }
 
-  .nav-sidebar .nav-link {
-    align-items: center;
-    border-radius: var(--soa-sidebar-link-radius);
-    color: var(--soa-sidebar-text-color);
-    display: flex;
-    gap: var(--soa-sidebar-link-gap);
-    padding: var(--soa-sidebar-link-padding-block) var(--soa-sidebar-link-padding-inline);
-    position: relative;
-  }
-
-  .nav-sidebar .nav-link:hover {
-    background: var(--soa-sidebar-link-hover-bg);
-  }
-
-  .nav-sidebar .nav-link.active {
-    background: var(--soa-sidebar-link-active-bg);
-    color: var(--soa-sidebar-link-active-text);
-  }
-
-  .nav-sidebar .nav-link.active::before {
-    background: var(--soa-status-rail-color);
-    block-size: calc(100% - (2 * var(--soa-space-2)));
-    border-radius: var(--soa-border-radius-full);
-    content: '';
-    inline-size: var(--soa-status-rail-width);
-    inset-block-start: var(--soa-space-2);
-    inset-inline-start: 0;
-    position: absolute;
-  }
-
-  .nav-treeview {
-    background: var(--soa-sidebar-submenu-bg);
-    padding-inline-start: var(--soa-sidebar-submenu-padding-inline);
-  }
-
-  .menu-open > .nav-link :is(.right, .nav-arrow) {
-    transform: rotate(var(--soa-sidebar-indicator-angle));
-  }
-
   .sidebar-collapse .main-sidebar {
     width: var(--soa-sidebar-collapsed-width);
   }

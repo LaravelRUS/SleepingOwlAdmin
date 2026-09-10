@@ -1,6 +1,18 @@
+@use 'auto-update';
+@use 'column-order';
 @use 'inline-editor';
+@use 'pagination';
+@use 'page-jump';
+@use 'processing';
+@use 'search';
 @layer sleepingowl-feature.table;
 
 @layer sleepingowl-feature.table {
+  @include auto-update.styles;
+  @include column-order.styles;
   @include inline-editor.styles;
+  @include pagination.styles;
+  @include page-jump.styles;
+  @include processing.styles;
+  @include search.styles;
 }

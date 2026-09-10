@@ -46,6 +46,21 @@ it('ships independent behavior and AdminLTE/Tailwind Sass adapters', () => {
     )
 })
 
+it('keeps nav-sidebar presentation in the shared sidebar feature', () => {
+    const sharedSidebar = read('resources/css/shared/features/sidebar/_sidebar.scss')
+    const shadcnSidebar = read('resources/css/themes/shadcn/features/sidebar/_sidebar.scss')
+
+    for (const selector of [
+        '.nav-sidebar .nav-link',
+        '.nav-sidebar .nav-link.active',
+        '.nav-treeview',
+    ]) {
+        expect(sharedSidebar).toContain(selector)
+    }
+
+    expect(shadcnSidebar).not.toMatch(/\.nav-(?:sidebar|treeview)\b/)
+})
+
 function read(path) {
     return readFileSync(resolve(root, path), 'utf8')
 }

@@ -20,7 +20,7 @@ class EmptyThemeTest extends TestCase
         $app['config']->set('sleeping_owl.template.default', 'empty');
     }
 
-    public function test_it_selects_the_shared_styles_only_diagnostic_theme(): void
+    public function test_it_selects_the_shared_foundation_diagnostic_theme(): void
     {
         $theme = app(ThemeInterface::class);
         $template = app('sleeping_owl.template');

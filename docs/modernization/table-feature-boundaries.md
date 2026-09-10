@@ -100,6 +100,12 @@ table and binds pause/resume behavior to the toggle hook. It does not create the
 button, text, icon or presentation classes. The legacy
 `data-admin-table-autoupdate-close` hook is still accepted by project overrides.
 
+Auto-update presentation has one framework-free owner in
+`resources/css/shared/features/table/_auto-update.scss`. It styles the public
+`data-admin-table-autoupdate-*` hooks and is included by `shared:features` for
+every modern theme; the legacy aggregate compiles the same partial. Theme table
+bundles do not contain auto-update selectors or geometry.
+
 A project view override may replace the element type, classes and internal
 nesting while retaining the template and toggle hooks. Auto-update is configured
 with the global `datatables_settings.autoupdate.enabled` flag and

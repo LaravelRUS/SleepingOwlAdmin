@@ -1,5 +1,18 @@
 @mixin styles {
+  :root {
+    color-scheme: light;
+  }
+
+  :root[data-color-scheme='dark'] {
+    color-scheme: dark;
+  }
+
   body.soa-body {
+    background: var(--soa-page-background-color);
+    color: var(--soa-text-color);
+    font-family: var(--soa-font-family-sans);
+    font-size: var(--soa-font-size-base);
+    line-height: var(--soa-line-height-base);
     min-block-size: 100dvh;
     margin: 0;
   }
@@ -29,6 +42,14 @@
 
   .soa-app :where(button, input, select, textarea) {
     font: inherit;
+  }
+
+  .soa-app :where(a, button) {
+    -webkit-tap-highlight-color: var(--soa-overlay-color);
+  }
+
+  .soa-app a {
+    color: inherit;
   }
 
   .soa-app :where(a, button, input, select, textarea):focus-visible,

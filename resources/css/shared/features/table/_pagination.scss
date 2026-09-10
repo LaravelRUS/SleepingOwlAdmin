@@ -1,0 +1,82 @@
+@mixin styles {
+  .soa-pagination,
+  .dt-paging nav {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    padding: var(--soa-space-2) var(--soa-space-4);
+    gap: var(--soa-space-1);
+    justify-content: flex-end;
+  }
+
+  .soa-pagination > :is(ul, ol),
+  .dt-paging .pagination {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--soa-space-1);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .soa-pagination :is(a, span),
+  .dt-paging :is(a, button).dt-paging-button,
+  .dt-paging .page-item .page-link {
+    align-items: center;
+    background: var(--soa-surface-color);
+    border: var(--soa-border-width) solid var(--soa-border-color);
+    border-radius: var(--soa-border-radius);
+    color: var(--soa-text-color);
+    display: inline-flex;
+    font: inherit;
+    justify-content: center;
+    line-height: 1;
+    min-block-size: 2.25rem;
+    min-inline-size: 2.25rem;
+    padding: var(--soa-space-1) var(--soa-space-2);
+    text-decoration: none;
+  }
+
+  .dt-paging :is(a, button).dt-paging-button {
+    cursor: pointer;
+  }
+
+  .soa-pagination :is(a, button):hover,
+  .dt-paging :is(a, button).dt-paging-button:hover:not(.disabled, .current),
+  .dt-paging .page-item .page-link:hover {
+    border-color: var(--soa-focus-color);
+    color: var(--soa-primary-color);
+  }
+
+  .soa-pagination :is(a, button):focus-visible,
+  .dt-paging :is(a, button).dt-paging-button:focus-visible,
+  .dt-paging .page-item .page-link:focus-visible {
+    border-color: var(--soa-focus-color);
+    color: var(--soa-primary-color);
+    outline: var(--soa-focus-ring-width) solid var(--soa-focus-color);
+    outline-offset: var(--soa-border-width);
+  }
+
+  .soa-pagination [aria-current='page'],
+  .dt-paging :is(a, button).dt-paging-button.current,
+  .dt-paging .page-item.active .page-link {
+    background: var(--soa-primary-color);
+    border-color: var(--soa-primary-color);
+    color: var(--soa-on-primary-color);
+  }
+
+  .soa-pagination :is([aria-disabled='true'], .disabled > :is(a, span)),
+  .dt-paging :is(a, button).dt-paging-button.disabled,
+  .dt-paging .page-item.disabled .page-link {
+    color: var(--soa-muted-text-color);
+    cursor: not-allowed;
+    opacity: var(--soa-disabled-opacity);
+  }
+
+  @media (width <= 48rem) {
+    .soa-pagination,
+    .dt-paging nav {
+      justify-content: center;
+    }
+  }
+}
