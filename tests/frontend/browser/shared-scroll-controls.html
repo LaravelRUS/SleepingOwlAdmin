@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en" data-theme="empty">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="csrf-token" content="shared-scroll-controls-token" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Shared scroll controls fixture</title>
+        <script>
+            const profile = new URLSearchParams(location.search).get('profile') || 'development'
+
+            if (!['development', 'production'].includes(profile)) {
+                throw new Error(`Unsupported asset profile: ${profile}`)
+            }
+
+            for (const href of [
+                `/public/default/profiles/${profile}/css/admin-core.css`,
+                `/public/default/profiles/${profile}/css/shared/ui.css`,
+                `/public/default/profiles/${profile}/css/themes/empty.css`,
+            ]) {
+                document.write(`<link rel="stylesheet" href="${href}">`)
+            }
+
+            window.GlobalConfig = {
+                datatables_settings: {
+                    datatables_highlight: false,
+                    state_datatables: false,
+                    state_filters: false,
+                    state_tabs: false,
+                },
+                date_format: 'DD.MM.YYYY',
+                datetime_format: 'DD.MM.YYYY HH:mm',
+                debug: true,
+                env: 'testing',
+                lang: {},
+                locale: 'en',
+                template: { asset_dir: 'default' },
+                url: 'http://127.0.0.1:4173',
+                url_path: 'shared-scroll-controls',
+                url_prefix: 'admin',
+                user_id: null,
+                wysiwyg: {},
+            }
+        </script>
+        <style>
+            .fixture-content {
+                min-block-size: 180rem;
+            }
+        </style>
+    </head>
+    <body class="soa-body">
+        <main class="fixture-content" id="vueApp">Shared scroll controls</main>
+        <a
+            class="soa-scroll-control soa-scroll-control-top"
+            id="scrolltotop"
+            href="#vueApp"
+            aria-label="Scroll to top"
+            >↑</a
+        >
+        <a
+            class="soa-scroll-control soa-scroll-control-bottom"
+            id="scrolltobottom"
+            href="#page-end"
+            aria-label="Scroll to bottom"
+            >↓</a
+        >
+        <span id="page-end" tabindex="-1"></span>
+
+        <script>
+            for (const src of [
+                `/public/default/profiles/${profile}/js/admin-core.js`,
+                `/public/default/profiles/${profile}/js/shared/compatibility.js`,
+                `/public/default/profiles/${profile}/js/shared/features.js`,
+            ]) {
+                document.write(`<script src="${src}"><\/script>`)
+            }
+        </script>
+    </body>
+</html>

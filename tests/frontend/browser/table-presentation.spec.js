@@ -30,7 +30,7 @@ test('Tailwind table adapter is standalone, compact and theme-token driven', asy
 })
 
 for (const theme of ['adminlte', 'empty', 'shadcn']) {
-    test(`${theme} presents DataTables 3 column-order markup as paired arrows`, async ({
+    test(`${theme} presents DataTables 3 column-order markup as Bootstrap-style arrows`, async ({
         page,
     }) => {
         await page.goto(`/table-presentation?theme=${theme}`)
@@ -39,8 +39,8 @@ for (const theme of ['adminlte', 'empty', 'shadcn']) {
             .locator('thead th')
             .first()
             .evaluate((header) => {
-                header.className = 'dt-orderable-asc dt-orderable-desc'
-                header.setAttribute('aria-sort', 'descending')
+                header.closest('table').className = 'table datatables'
+                header.className = 'dt-orderable-asc dt-orderable-desc dt-ordering-desc'
                 header.innerHTML = [
                     '<div class="dt-column-header" style="display: flex; align-items: center">',
                     '<div class="dt-column-title">range_col</div>',
@@ -50,8 +50,10 @@ for (const theme of ['adminlte', 'empty', 'shadcn']) {
             })
 
         const arrows = await page.locator('.dt-column-order').evaluate((element) => ({
+            afterBorderColor: getComputedStyle(element, '::after').borderTopColor,
             afterOpacity: getComputedStyle(element, '::after').opacity,
             afterPosition: getComputedStyle(element, '::after').position,
+            beforeBorderColor: getComputedStyle(element, '::before').borderBottomColor,
             beforeOpacity: getComputedStyle(element, '::before').opacity,
             beforePosition: getComputedStyle(element, '::before').position,
             display: getComputedStyle(element).display,
@@ -62,13 +64,15 @@ for (const theme of ['adminlte', 'empty', 'shadcn']) {
         }))
 
         expect(arrows).toEqual({
-            afterOpacity: '1',
-            afterPosition: 'static',
-            beforeOpacity: '0.45',
-            beforePosition: 'static',
-            display: 'grid',
+            afterBorderColor: 'rgb(51, 51, 51)',
+            afterOpacity: '0.65',
+            afterPosition: 'absolute',
+            beforeBorderColor: 'rgb(51, 51, 51)',
+            beforeOpacity: '0.125',
+            beforePosition: 'absolute',
+            display: 'block',
             headerWrap: 'nowrap',
-            titleWhiteSpace: 'nowrap',
+            titleWhiteSpace: 'normal',
         })
     })
 }
@@ -79,15 +83,18 @@ for (const theme of ['adminlte', 'empty', 'shadcn']) {
     }) => {
         await page.goto(`/table-presentation?theme=${theme}`)
 
-        await page.locator('thead th').first().evaluate((header) => {
-            header.className = 'dt-orderable-none'
-            header.innerHTML = [
-                '<div class="dt-column-header" style="display: flex; align-items: center">',
-                '<div class="dt-column-title">range_col</div>',
-                '<div class="dt-column-order" role="button" tabindex="0"></div>',
-                '</div>',
-            ].join('')
-        })
+        await page
+            .locator('thead th')
+            .first()
+            .evaluate((header) => {
+                header.className = 'dt-orderable-none'
+                header.innerHTML = [
+                    '<div class="dt-column-header" style="display: flex; align-items: center">',
+                    '<div class="dt-column-title">range_col</div>',
+                    '<div class="dt-column-order" role="button" tabindex="0"></div>',
+                    '</div>',
+                ].join('')
+            })
 
         await expect(page.locator('.dt-column-order')).toHaveCSS('display', 'none')
     })
@@ -111,7 +118,10 @@ for (const [theme, primary] of Object.entries({
             primary,
         )
         await expect(page.locator('.dt-paging .page-link').first()).toHaveCSS('min-height', '36px')
-        await expect(page.locator('.dt-paging .page-item').first()).toHaveCSS('border-top-width', '0px')
+        await expect(page.locator('.dt-paging .page-item').first()).toHaveCSS(
+            'border-top-width',
+            '0px',
+        )
     })
 }
 

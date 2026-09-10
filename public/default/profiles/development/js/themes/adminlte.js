@@ -168,111 +168,6 @@ function assertDependencies(swal, messages) {
 
 /***/ },
 
-/***/ "./resources/js/themes/adminlte/scroll-controls.js"
-/*!*********************************************************!*\
-  !*** ./resources/js/themes/adminlte/scroll-controls.js ***!
-  \*********************************************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   installScrollControls: () => (/* binding */ installScrollControls),
-/* harmony export */   pageMetrics: () => (/* binding */ pageMetrics)
-/* harmony export */ });
-var INSTALLATION = Symbol["for"]('sleepingowl.theme.adminlte.scroll-controls');
-var SCROLL_END_TOLERANCE = 10;
-function installScrollControls() {
-  var target = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : globalThis;
-  if (target[INSTALLATION]) return target[INSTALLATION];
-  var document = target.document;
-  if (!document) return null;
-  var scrollTop = document.getElementById('scrolltotop');
-  var scrollBottom = document.getElementById('scrolltobottom');
-  if (!scrollTop && !scrollBottom) return null;
-  var update = function update() {
-    return updateControls(target, scrollTop, scrollBottom);
-  };
-  var toTop = function toTop(event) {
-    return scrollPage(target, event, 0);
-  };
-  var toBottom = function toBottom(event) {
-    return scrollPage(target, event, pageMetrics(target).height);
-  };
-  listen(scrollTop, 'click', toTop);
-  listen(scrollBottom, 'click', toBottom);
-  target.addEventListener('scroll', update, {
-    passive: true
-  });
-  var controls = createControls(target, scrollTop, scrollBottom, update, toTop, toBottom);
-  target[INSTALLATION] = controls;
-  update();
-  return controls;
-}
-function pageMetrics(target) {
-  var _document$documentEle;
-  var document = target.document;
-  var root = scrollRoot(document);
-  return {
-    height: Math.max(elementHeight(root), elementHeight(document.documentElement), elementHeight(document.body)),
-    top: root ? root.scrollTop : target.pageYOffset || 0,
-    viewport: firstPositive(target.innerHeight, root === null || root === void 0 ? void 0 : root.clientHeight, (_document$documentEle = document.documentElement) === null || _document$documentEle === void 0 ? void 0 : _document$documentEle.clientHeight)
-  };
-}
-function updateControls(target, scrollTop, scrollBottom) {
-  var metrics = pageMetrics(target);
-  toggleClass(scrollTop, 'show', metrics.top > metrics.viewport);
-  toggleClass(scrollBottom, 'hide', metrics.top + metrics.viewport + SCROLL_END_TOLERANCE >= metrics.height);
-}
-function scrollPage(target, event, top) {
-  event === null || event === void 0 || event.preventDefault();
-  if (typeof target.scrollTo === 'function') {
-    target.scrollTo({
-      behavior: 'smooth',
-      left: 0,
-      top: top
-    });
-    return;
-  }
-  var root = scrollRoot(target.document);
-  if (root) root.scrollTop = top;
-}
-function createControls(target, scrollTop, scrollBottom, update, toTop, toBottom) {
-  return {
-    update: update,
-    destroy: function destroy() {
-      unlisten(scrollTop, 'click', toTop);
-      unlisten(scrollBottom, 'click', toBottom);
-      target.removeEventListener('scroll', update);
-      delete target[INSTALLATION];
-    }
-  };
-}
-function scrollRoot(document) {
-  return document.scrollingElement || document.documentElement || document.body;
-}
-function elementHeight(element) {
-  return element ? element.scrollHeight : 0;
-}
-function firstPositive() {
-  for (var _len = arguments.length, values = new Array(_len), _key = 0; _key < _len; _key++) {
-    values[_key] = arguments[_key];
-  }
-  return values.find(function (value) {
-    return value > 0;
-  }) || 0;
-}
-function toggleClass(element, name, enabled) {
-  if (element) element.classList.toggle(name, enabled);
-}
-function listen(element, type, listener) {
-  if (element) element.addEventListener(type, listener);
-}
-function unlisten(element, type, listener) {
-  if (element) element.removeEventListener(type, listener);
-}
-
-/***/ },
-
 /***/ "./node_modules/datatables.net-bs5/js/dataTables.bootstrap5.mjs"
 /*!**********************************************************************!*\
   !*** ./node_modules/datatables.net-bs5/js/dataTables.bootstrap5.mjs ***!
@@ -14749,11 +14644,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _features_table_browser_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./features/table/browser.js */ "./resources/js/themes/adminlte/features/table/browser.js");
 /* harmony import */ var _features_tree_browser_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./features/tree/browser.js */ "./resources/js/themes/adminlte/features/tree/browser.js");
-/* harmony import */ var _scroll_controls_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./scroll-controls.js */ "./resources/js/themes/adminlte/scroll-controls.js");
 
 
-
-if (globalThis.document) (0,_scroll_controls_js__WEBPACK_IMPORTED_MODULE_2__.installScrollControls)(globalThis);
 var THEME_ID = 'adminlte';
 })();
 

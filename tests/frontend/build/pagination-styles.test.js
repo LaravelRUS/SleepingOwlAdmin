@@ -47,10 +47,12 @@ it('keeps pagination and page-jump presentation in shared source owners', () => 
     expect(tableEntry).toContain("@use 'search';")
     expect(tableEntry).toContain('@include search.styles;')
     expect(columnOrderSource).toContain('.dt-column-order')
-    expect(columnOrderSource).toContain("[aria-sort='ascending']")
-    expect(columnOrderSource).toContain('.dt-column-header > .dt-column-order::before')
-    expect(columnOrderSource).toContain('border-block-end')
-    expect(columnOrderSource).toContain('.dt-orderable-none .dt-column-header > .dt-column-order')
+    expect(columnOrderSource).toContain('--dt-order-arrow-width')
+    expect(columnOrderSource).toContain('.dt-ordering-asc .dt-column-order::before')
+    expect(columnOrderSource).toContain('border-bottom')
+    expect(columnOrderSource).toContain(
+        '.dt-orderable-none:not(.dt-ordering-asc, .dt-ordering-desc)',
+    )
     expect(tableEntry).toContain("@use 'column-order';")
     expect(tableEntry).toContain('@include column-order.styles;')
 })
@@ -85,7 +87,7 @@ it('publishes shared pagination in modern and legacy feature bundles', () => {
         expect(css).toContain('.dt-container .dt-search')
         expect(css).toContain('var(--soa-table-search-gap)')
         expect(css).toContain('.dt-column-order')
-        expect(css).toContain('var(--soa-table-column-order-gap)')
+        expect(css).toContain('var(--dt-order-arrow-width)')
         expect(css).toContain('var(--soa-on-primary-color)')
     }
 })

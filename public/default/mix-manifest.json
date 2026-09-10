@@ -8,10 +8,10 @@
     "/js/shared/compatibility.js": "/js/shared/compatibility.js?id=ad25c97ad48ffdfdb8f184941ffebfa0",
     "/js/shared/modules.js": "/js/shared/modules.js?id=8e6abcb6c9baa1f71b0de0096471f82a",
     "/js/shared/vue.js": "/js/shared/vue.js?id=77617840f0b8a5a5ecb90dbd1238de00",
-    "/js/shared/features.js": "/js/shared/features.js?id=69b820375bdd40d65636694e1da65cc6",
-    "/js/themes/adminlte.js": "/js/themes/adminlte.js?id=b56c359e1099b40394e5aab6c519e59b",
+    "/js/shared/features.js": "/js/shared/features.js?id=743432ff41aa7e0ced2a449e7268e996",
+    "/js/themes/adminlte.js": "/js/themes/adminlte.js?id=84a622d84df656a2f23da79b329a974a",
     "/js/themes/shadcn.js": "/js/themes/shadcn.js?id=ad7bb28eae160e6f43eaa4c256d406ee",
-    "/css/admin-app.css": "/css/admin-app.css?id=f0750b9c8c0cad4ba93b71c8df0c39ee",
+    "/css/admin-app.css": "/css/admin-app.css?id=36cc907cf61c3b1c87d580df06f2239b",
     "/fonts/vendor/@fortawesome/fontawesome-free/webfa-solid-900.woff2?dcef2f69dbd5989a2e69679f671138e7": "/fonts/vendor/@fortawesome/fontawesome-free/webfa-solid-900.woff2?dcef2f69dbd5989a2e69679f671138e7?id=a8e591ebfe770353a4fb31470213fe41",
     "/fonts/vendor/@fortawesome/fontawesome-free/webfa-brands-400.woff2?41062caea457897b1d3bb774c9554c7b": "/fonts/vendor/@fortawesome/fontawesome-free/webfa-brands-400.woff2?41062caea457897b1d3bb774c9554c7b?id=d6787e3db33b0dbf4a5c1088ea0eabdb",
     "/fonts/vendor/@fortawesome/fontawesome-free/webfa-regular-400.woff2?fa2e58edfd73d8341e0738818fc63871": "/fonts/vendor/@fortawesome/fontawesome-free/webfa-regular-400.woff2?fa2e58edfd73d8341e0738818fc63871?id=36f63d04806fa16fec88d66f2ad5249b",
@@ -27,5 +27,5 @@
     "/css/themes/shadcn.css": "/css/themes/shadcn.css?id=4906b79a3038ff5b96c1af2ac8e4004a",
     "/css/themes/empty.css": "/css/themes/empty.css?id=cff93783c573a97ef5837df8ca63818b",
     "/css/themes/adminlte.css": "/css/themes/adminlte.css?id=d3d8014eb4a71aff23f4d3c6fa40ecc6",
-    "/css/shared/features.css": "/css/shared/features.css?id=a8570a9536142b6b556113f41e3bf631"
+    "/css/shared/features.css": "/css/shared/features.css?id=999065da2588f63571faf0d45aaf5d8b"
 }

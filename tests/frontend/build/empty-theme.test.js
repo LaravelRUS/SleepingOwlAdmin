@@ -21,6 +21,23 @@ describe('empty diagnostic theme', () => {
         expect(styles).toHaveLength(1)
         expect(read(`public/default/${styles[0].file}`)).not.toContain('{')
     })
+
+    it.each(['production', 'development'])(
+        '%s inherits scroll controls from the shared feature runtime',
+        (profile) => {
+            const entries = readJson('public/default/asset-manifest.json').profiles[profile].entries
+            const sharedRuntime = read(
+                `public/default/${entries['shared:features'].scripts[0].file}`,
+            )
+            const adminLteRuntime = read(
+                `public/default/${entries['theme:adminlte'].scripts[0].file}`,
+            )
+
+            expect(sharedRuntime).toContain('sleepingowl.shared.features.scroll-controls')
+            expect(sharedRuntime).toContain('scrolltotop')
+            expect(adminLteRuntime).not.toContain('scrolltotop')
+        },
+    )
 })
 
 function read(path) {

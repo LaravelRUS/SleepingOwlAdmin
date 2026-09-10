@@ -1,4 +1,4 @@
-const INSTALLATION = Symbol.for('sleepingowl.theme.adminlte.scroll-controls')
+const INSTALLATION = Symbol.for('sleepingowl.shared.features.scroll-controls')
 const SCROLL_END_TOLERANCE = 10
 
 export function installScrollControls(target = globalThis) {
@@ -104,3 +104,5 @@ function listen(element, type, listener) {
 function unlisten(element, type, listener) {
     if (element) element.removeEventListener(type, listener)
 }
+
+if (globalThis.document) installScrollControls(globalThis)

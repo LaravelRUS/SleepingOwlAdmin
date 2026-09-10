@@ -56,6 +56,10 @@ const staticRoutes = new Map([
     ['/runtime-theme', [join(browserDirectory, 'runtime-theme.html'), 'text/html; charset=utf-8']],
     ['/shared-shell', [join(browserDirectory, 'shared-shell.html'), 'text/html; charset=utf-8']],
     [
+        '/shared-scroll-controls',
+        [join(browserDirectory, 'shared-scroll-controls.html'), 'text/html; charset=utf-8'],
+    ],
+    [
         '/shared-controls',
         [join(browserDirectory, 'shared-controls.html'), 'text/html; charset=utf-8'],
     ],
