@@ -1,0 +1,85 @@
+@mixin styles {
+  // Tabler reserves a classic scrollbar gutter globally. SleepingOwl's shared
+  // shell owns viewport geometry and already handles scrollbars explicitly.
+  html {
+    scrollbar-gutter: auto;
+  }
+
+  .soa-body {
+    background: var(--soa-page-background-color);
+    color: var(--soa-text-color);
+    font-family: var(--soa-font-family-sans);
+  }
+
+  .soa-header {
+    box-shadow: 0 1px 0 var(--soa-border-color);
+  }
+
+  .soa-page-title {
+    align-items: center;
+    display: flex;
+    font-family: ui-rounded, 'Segoe UI Variable Display', 'Segoe UI', system-ui,
+      sans-serif;
+    font-weight: 650;
+    gap: var(--soa-space-3);
+  }
+
+  // The record rail is the theme's one recurring motif: it marks the current
+  // work surface and repeats for state messages without consuming content space.
+  .soa-page-title::before {
+    background: var(--soa-status-rail-color);
+    border-radius: var(--soa-border-radius-full);
+    content: '';
+    inline-size: var(--soa-status-rail-width);
+    min-block-size: 1.5em;
+  }
+
+  :is(.soa-card, .card, .box, .soa-dialog, .soa-inline-editor-popup) {
+    background: var(--soa-elevated-surface-color);
+    border-color: var(--soa-border-color);
+    box-shadow: var(--soa-shadow-sm);
+  }
+
+  :is(.soa-card-header, .card-header, .box-header) {
+    background: transparent;
+    border-block-end-color: var(--soa-border-color);
+    font-weight: var(--soa-font-weight-semibold);
+  }
+
+  :is(.soa-badge, .badge) {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .soa-alert {
+    border-inline-start: var(--soa-status-rail-width) solid
+      var(--soa-status-rail-color);
+    box-shadow: none;
+  }
+
+  .soa-login-page {
+    background:
+      linear-gradient(
+        135deg,
+        color-mix(in srgb, var(--soa-primary-color) 8%, transparent),
+        transparent 45%
+      ),
+      var(--soa-page-background-color);
+  }
+
+  .soa-login-card {
+    border-block-start: var(--soa-status-rail-width) solid var(--soa-primary-color);
+  }
+
+  :is(a, button, input, select, textarea, [tabindex]):focus-visible {
+    outline-color: var(--soa-focus-color);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      scroll-behavior: auto !important;
+      transition-duration: var(--soa-reduced-motion-duration) !important;
+    }
+  }
+}

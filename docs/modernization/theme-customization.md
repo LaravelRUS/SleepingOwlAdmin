@@ -110,7 +110,7 @@ The following properties are the supported AdminLTE/core/feature runtime surface
 - Shared AdminLTE palette/layout: `--soa-primary-color`, `--soa-danger-color`, `--soa-surface-color`, `--soa-page-background-color`, `--soa-text-color`, `--soa-muted-text-color`, `--soa-border-color`, `--soa-focus-color`, `--soa-font-family-sans`, `--soa-font-family-monospace`, `--soa-font-size-base`, `--soa-line-height-base`, `--soa-sidebar-bg`, `--soa-sidebar-text-color`, `--soa-sidebar-width`, `--soa-sidebar-collapsed-width`, `--soa-content-padding`, `--soa-border-radius`, `--soa-layout-transition-duration`.
 - Shared semantic UI: `--soa-elevated-surface-color`, `--soa-muted-surface-color`, `--soa-input-border-color`, `--soa-on-primary-color`, `--soa-success-color`, `--soa-warning-color`, `--soa-info-color`, `--soa-overlay-color`, `--soa-shadow-sm`, `--soa-shadow-md`, `--soa-border-width`, `--soa-border-radius-lg`, `--soa-border-radius-full`, `--soa-disabled-opacity`, `--soa-font-size-caption`, `--soa-font-size-section`, `--soa-font-size-title`, `--soa-font-weight-medium`, `--soa-font-weight-semibold`, `--soa-line-height-tight`, `--soa-space-1`, `--soa-space-2`, `--soa-space-3`, `--soa-space-4`, `--soa-space-6`, `--soa-header-height`, `--soa-header-action-size`, `--soa-header-z-index`, `--soa-overlay-z-index`, `--soa-shell-max-width`, `--soa-content-padding-compact`, `--soa-sidebar-border-color`, `--soa-control-size`, `--soa-control-size-sm`, `--soa-icon-control-size`, `--soa-control-padding-block`, `--soa-control-padding-inline`, `--soa-control-padding-block-sm`, `--soa-control-padding-inline-sm`, `--soa-choice-size`, `--soa-switch-track-padding`, `--soa-attachment-empty-min-height`, `--soa-attachment-preview-ratio`, `--soa-order-badge-size`, `--soa-dragging-opacity`, `--soa-dialog-image-reserved-space`, `--soa-scroll-control-size`, `--soa-scroll-control-offset-inline`, `--soa-scroll-control-offset-block`, `--soa-scroll-control-z-index`.
 - Asset-health footer: `--soa-asset-health-surface-color`, `--soa-asset-health-text-color`, `--soa-asset-health-border-color`, `--soa-asset-health-gap`, `--soa-asset-health-margin-top`, `--soa-asset-health-padding-block`, `--soa-asset-health-padding-inline`, `--soa-asset-health-border-width`.
-- Dropdown: `--soa-dropdown-surface`, `--soa-dropdown-text`, `--soa-dropdown-z-index`, `--soa-dropdown-border`, `--soa-dropdown-hover-surface`, `--soa-dropdown-focus`, `--soa-dropdown-shadow-color`, `--soa-dropdown-min-width`, `--soa-dropdown-offset`, `--soa-dropdown-padding-block`, `--soa-dropdown-padding-inline`, `--soa-dropdown-item-padding-block`, `--soa-dropdown-item-padding-inline`, `--soa-dropdown-border-width`, `--soa-dropdown-radius`, `--soa-dropdown-font-size`, `--soa-dropdown-line-height`, `--soa-dropdown-focus-width`, `--soa-dropdown-shadow`.
+- Dropdown: `--soa-dropdown-surface`, `--soa-dropdown-text`, `--soa-dropdown-z-index`, `--soa-dropdown-border`, `--soa-dropdown-hover-surface`, `--soa-dropdown-focus`, `--soa-dropdown-min-width`, `--soa-dropdown-offset`, `--soa-dropdown-padding-block`, `--soa-dropdown-padding-inline`, `--soa-dropdown-item-padding-block`, `--soa-dropdown-item-padding-inline`, `--soa-dropdown-border-width`, `--soa-dropdown-radius`, `--soa-dropdown-font-size`, `--soa-dropdown-line-height`, `--soa-dropdown-focus-width`, `--soa-dropdown-shadow`.
 - Forms/date/file: `--soa-form-control-text-color`, `--soa-form-control-placeholder-color`, `--soa-form-control-surface-color`, `--soa-form-control-border-color`, `--soa-form-control-focus-color`, `--soa-form-control-invalid-color`, `--soa-form-control-min-height`, `--soa-form-control-padding-block`, `--soa-form-control-padding-inline`, `--soa-form-control-border-width`, `--soa-form-control-border-radius`, `--soa-form-control-transition-duration`, `--soa-form-file-thumbnail-border-color`, `--soa-form-file-thumbnail-surface-color`, `--soa-form-file-name-color`, `--soa-form-date-picker-surface-color`, `--soa-form-date-picker-hover-color`, `--soa-form-date-picker-active-color`, `--soa-form-date-picker-text-color`, `--soa-form-date-picker-muted-color`, `--soa-form-date-picker-accent-color`, `--soa-form-date-picker-border-color`, `--soa-form-date-picker-other-month-color`, `--soa-form-date-picker-disabled-color`, `--soa-form-date-picker-selected-color`, `--soa-form-date-picker-selected-hover-color`, `--soa-form-date-picker-selected-text-color`, `--soa-form-date-picker-range-color`, `--soa-form-date-picker-range-focus-color`, `--soa-form-date-picker-shadow-color`.
 - Shared form geometry/states: `--soa-form-field-gap`, `--soa-form-gap`, `--soa-form-grid-gap`, `--soa-form-textarea-min-height`, `--soa-form-attachment-min-width`, `--soa-form-dialog-max-width`, `--soa-form-spinner-size`, `--soa-form-switch-width`, `--soa-form-switch-height`, `--soa-progress-size`, `--soa-spinner-duration`, `--soa-spinner-border-width`, `--soa-skeleton-duration`, `--soa-skeleton-min-size`, `--soa-skeleton-opacity`.
 - Sidebar: `--soa-sidebar-transition-duration`, `--soa-sidebar-link-hover-bg`, `--soa-sidebar-link-active-bg`, `--soa-sidebar-link-active-text`, `--soa-sidebar-submenu-bg`, `--soa-sidebar-overlay-bg`, `--soa-sidebar-z-index`, `--soa-sidebar-overlay-z-index`, `--soa-sidebar-indicator-angle` in addition to the shared sidebar properties above.
@@ -172,18 +172,19 @@ Shared entries are allowed only when declared by the theme. Core resolves unchan
 
 ## Blade overrides
 
-The two built-in themes keep separate application namespaces:
+The built-in themes keep separate application namespaces:
 
 ```text
 AdminLTE: resources/views/vendor/sleeping_owl/default/<logical path>
 Shadcn:   resources/views/vendor/sleeping_owl_shadcn/default/<logical path>
+Tabler:   resources/views/vendor/sleeping_owl_tabler/default/<logical path>
 ```
 
 AdminLTE resolves the application file and then the complete package base in
-`resources/views/default`. Shadcn resolves application, then a real override in
-`resources/views/themes/shadcn/default`, then that same base. Do not copy the
+`resources/views/default`. Shadcn and Tabler resolve application, then their
+sparse theme path, then that same base. Do not copy the
 whole package view base into an application or theme: override only the files whose
-markup differs. An absent Shadcn override is normal inheritance.
+markup differs. An absent built-in override is normal inheritance.
 
 External themes use their own namespace and may document a matching
 application override path. SleepingOwl does not attach the built-in base to an

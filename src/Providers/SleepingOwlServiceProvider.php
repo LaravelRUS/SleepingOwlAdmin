@@ -22,6 +22,13 @@ class SleepingOwlServiceProvider extends AdminSectionsServiceProvider
             ],
             'sleeping_owl_shadcn'
         );
+        $this->loadViewsFrom(
+            [
+                __DIR__.'/../../resources/views/themes/tabler',
+                __DIR__.'/../../resources/views',
+            ],
+            'sleeping_owl_tabler'
+        );
 
         $this->registerCore();
         $this->registerCommands();

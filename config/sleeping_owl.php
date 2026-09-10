@@ -19,7 +19,7 @@ return [
             'adminlte' => SleepingOwl\Admin\Themes\AdminLTETheme::class,
             'shadcn' => SleepingOwl\Admin\Themes\TailwindTheme::class,
             'empty' => SleepingOwl\Admin\Themes\EmptyTheme::class,
-            // 'tabler' => SleepingOwl\Admin\Themes\TablerTheme::class,
+            'tabler' => SleepingOwl\Admin\Themes\TablerTheme::class,
         ],
     ],
 
@@ -39,7 +39,7 @@ return [
         'body_default_class' => '',
 
         //Sidebar color. null or '#abc'
-        'sidebar_background_color' => '#abc',
+        'sidebar_background_color' => null,
 
         'breadcrumbs' => true,
         'show_color_mode_toggle' => true,

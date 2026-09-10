@@ -90,6 +90,7 @@ Capability говорит только о presentation support. Он не озн
         'adminlte' => SleepingOwl\Admin\Themes\AdminLTETheme::class,
         'shadcn' => SleepingOwl\Admin\Themes\TailwindTheme::class,
         'empty' => SleepingOwl\Admin\Themes\EmptyTheme::class,
+        'tabler' => SleepingOwl\Admin\Themes\TablerTheme::class,
     ],
 ],
 ```

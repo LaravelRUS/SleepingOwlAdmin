@@ -72,7 +72,7 @@ test('production HTTP service sends native CSRF requests', async ({ page }) => {
     })
 })
 
-test('production core disables animation tokens for reduced motion', async ({ page }) => {
+test('shared UI disables animation tokens for reduced motion', async ({ page }) => {
     await page.emulateMedia({ reducedMotion: 'reduce' })
     await page.reload()
 

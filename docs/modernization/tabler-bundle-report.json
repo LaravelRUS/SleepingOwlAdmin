@@ -1,0 +1,368 @@
+{
+  "schemaVersion": 1,
+  "sourceManifest": "public/default/asset-manifest.json",
+  "packageVersion": "dev-master",
+  "buildId": "sha256:80a8323194809260121a29b5f61ff9b37749a841708f5d2f7dc7f8a38a12818b",
+  "upstream": {
+    "package": "@tabler/core",
+    "version": "1.5.1",
+    "source": "git+https://github.com/tabler/tabler.git",
+    "tarball": "https://registry.npmjs.org/@tabler/core/-/core-1.5.1.tgz",
+    "integrity": "sha512-PI9rJq4H4lBh53YP/J+m5Uz6lqVQbsGPmWCMN34IP4KQQ/wy28YMO6a3Eiz1cQHdFFr+3MlU3yYhXdzvFGJfqw==",
+    "license": "MIT",
+    "licenseNotice": "docs/modernization/licenses/tabler-MIT.md",
+    "licenseChecksum": "sha256:969e5816ba3fe3c0349213f11b150a438457d56c223970b6dbfa3ff3110a9119",
+    "node": ">=20",
+    "dependencies": {
+      "@popperjs/core": "^2.11.8"
+    }
+  },
+  "staticInventory": {
+    "(none)": 13,
+    "css": 50,
+    "js": 105,
+    "json": 2,
+    "map": 40,
+    "md": 7,
+    "scss": 203,
+    "svg": 648,
+    "ts": 116,
+    "txt": 2
+  },
+  "selection": {
+    "source": "@tabler/core/dist/css/tabler.css",
+    "publishedStaticFiles": 0,
+    "publishedThemeScripts": 0,
+    "externalAssetUrls": []
+  },
+  "profiles": {
+    "production": {
+      "entries": {
+        "core": {
+          "assets": [
+            {
+              "type": "scripts",
+              "file": "profiles/production/js/admin-core.js",
+              "version": "4b738c30e9b7da7a08fbd95f872b1b66",
+              "checksum": "sha256:96995824671c7e0bdaf9d0e0f502d6351af8fd8ba4797ae0e2a0afcde58cc60f",
+              "bytes": 40710,
+              "gzipBytes": 8790
+            },
+            {
+              "type": "styles",
+              "file": "profiles/production/css/admin-core.css",
+              "version": "8fdca209900237758357c09efe4e27b0",
+              "checksum": "sha256:a624a128672644c556f7a25ecb677c15fbdd28067f5694cbfb23b5da3cdea6ec",
+              "bytes": 606,
+              "gzipBytes": 359
+            }
+          ],
+          "totals": {
+            "files": 2,
+            "bytes": 41316,
+            "gzipBytes": 9149
+          }
+        },
+        "shared:compatibility": {
+          "assets": [
+            {
+              "type": "scripts",
+              "file": "profiles/production/js/shared/compatibility.js",
+              "version": "ad25c97ad48ffdfdb8f184941ffebfa0",
+              "checksum": "sha256:3bdfd03de38c0f21dd23e3fd94a7f9af3663aeb46dcf83c9bf7bd2d3fc0fab08",
+              "bytes": 222720,
+              "gzipBytes": 70385
+            }
+          ],
+          "totals": {
+            "files": 1,
+            "bytes": 222720,
+            "gzipBytes": 70385
+          }
+        },
+        "shared:features": {
+          "assets": [
+            {
+              "type": "scripts",
+              "file": "profiles/production/js/shared/features.js",
+              "version": "34dab76d163b98e14aa516b943e3f92d",
+              "checksum": "sha256:0f14c81307a957c12593b9161ebcc3c9a90f7efbaac6b5c4b443f92616e6a82c",
+              "bytes": 614600,
+              "gzipBytes": 167708
+            },
+            {
+              "type": "styles",
+              "file": "profiles/production/css/shared/features.css",
+              "version": "7b0a5795f1561c82a2d4736bf2ea2286",
+              "checksum": "sha256:18a1c07e06a6f1f55b3c14a47d49743cd794101a18b9a480e7784d99202d2f8a",
+              "bytes": 84169,
+              "gzipBytes": 14363
+            }
+          ],
+          "totals": {
+            "files": 2,
+            "bytes": 698769,
+            "gzipBytes": 182071
+          }
+        },
+        "shared:icons": {
+          "assets": [
+            {
+              "type": "styles",
+              "file": "profiles/production/css/icons.css",
+              "version": "07be4637035a020bbd40e57fe67cd02a",
+              "checksum": "sha256:345b82484232b71f3186d7f7605a75baf1a4d0c83bb1878b14434ade7ada3dbd",
+              "bytes": 85453,
+              "gzipBytes": 22345
+            }
+          ],
+          "totals": {
+            "files": 1,
+            "bytes": 85453,
+            "gzipBytes": 22345
+          }
+        },
+        "shared:modules": {
+          "assets": [
+            {
+              "type": "scripts",
+              "file": "profiles/production/js/shared/modules.js",
+              "version": "8e6abcb6c9baa1f71b0de0096471f82a",
+              "checksum": "sha256:5113ba17104bd973e1c9c23eed6e4a3ba6051e7b35e6aa4438cbcb5cb70f0b45",
+              "bytes": 487,
+              "gzipBytes": 321
+            }
+          ],
+          "totals": {
+            "files": 1,
+            "bytes": 487,
+            "gzipBytes": 321
+          }
+        },
+        "shared:ui": {
+          "assets": [
+            {
+              "type": "styles",
+              "file": "profiles/production/css/shared/ui.css",
+              "version": "ebd1a2dc4a6cf96f133b49c65d290a55",
+              "checksum": "sha256:f63705761cd92bad953ec6d461e53582a973d9f29711571d5dde87342b0b22d2",
+              "bytes": 44586,
+              "gzipBytes": 7563
+            }
+          ],
+          "totals": {
+            "files": 1,
+            "bytes": 44586,
+            "gzipBytes": 7563
+          }
+        },
+        "shared:vue": {
+          "assets": [
+            {
+              "type": "scripts",
+              "file": "profiles/production/js/shared/vue.js",
+              "version": "77617840f0b8a5a5ecb90dbd1238de00",
+              "checksum": "sha256:3ff2ee8fc19967c373200fceb3ea5ee5f48325d515e19b6cc943e6aaf65788d1",
+              "bytes": 323879,
+              "gzipBytes": 97740
+            }
+          ],
+          "totals": {
+            "files": 1,
+            "bytes": 323879,
+            "gzipBytes": 97740
+          }
+        },
+        "theme:tabler": {
+          "assets": [
+            {
+              "type": "styles",
+              "file": "profiles/production/css/themes/tabler.css",
+              "version": "8046036c8e7ccae3fa72c6c228de75bb",
+              "checksum": "sha256:f049da69a65aa9092f96ffc768781cfdc8e3733b182b2304c1f117808e5b8aca",
+              "bytes": 691643,
+              "gzipBytes": 80152
+            }
+          ],
+          "totals": {
+            "files": 1,
+            "bytes": 691643,
+            "gzipBytes": 80152
+          }
+        }
+      },
+      "totals": {
+        "files": 10,
+        "bytes": 2108853,
+        "gzipBytes": 469726
+      }
+    },
+    "development": {
+      "entries": {
+        "core": {
+          "assets": [
+            {
+              "type": "scripts",
+              "file": "profiles/development/js/admin-core.js",
+              "version": "8c965cb01ad23a7df076bd66d5a3a8bf",
+              "checksum": "sha256:31a7c02c2a7c1895e3b224fdf179aaf881885b29bad290af5c37faa3418d0b16",
+              "bytes": 83105,
+              "gzipBytes": 14715
+            },
+            {
+              "type": "styles",
+              "file": "profiles/development/css/admin-core.css",
+              "version": "358034441ba815e06b2a8ade1ad03e2e",
+              "checksum": "sha256:9b35dd03a1f5b7cd1577140be25784a01b188b04557ac13e98d7a2d363ae8881",
+              "bytes": 804,
+              "gzipBytes": 427
+            }
+          ],
+          "totals": {
+            "files": 2,
+            "bytes": 83909,
+            "gzipBytes": 15142
+          }
+        },
+        "shared:compatibility": {
+          "assets": [
+            {
+              "type": "scripts",
+              "file": "profiles/development/js/shared/compatibility.js",
+              "version": "26ebc35ff921e1bde4f0ac0e0538f2b5",
+              "checksum": "sha256:bd4eb1b1289614b97e65d301724a757aae121dbc1ef7b711cb24ccd5314afba4",
+              "bytes": 1019739,
+              "gzipBytes": 195689
+            }
+          ],
+          "totals": {
+            "files": 1,
+            "bytes": 1019739,
+            "gzipBytes": 195689
+          }
+        },
+        "shared:features": {
+          "assets": [
+            {
+              "type": "scripts",
+              "file": "profiles/development/js/shared/features.js",
+              "version": "715cf679ab6704a2ba160d729e0a09dd",
+              "checksum": "sha256:f9797f1985437cef0a9ea789ab227520db2e9fff4e3963beff53b6eb716190cf",
+              "bytes": 1626192,
+              "gzipBytes": 345449
+            },
+            {
+              "type": "styles",
+              "file": "profiles/development/css/shared/features.css",
+              "version": "d5aae7aca78f27dda594325f77b21492",
+              "checksum": "sha256:0507f3fb1b0575e01661a95434d322a769de3c60e81f24b0c37d64d721f58b52",
+              "bytes": 105804,
+              "gzipBytes": 16377
+            }
+          ],
+          "totals": {
+            "files": 2,
+            "bytes": 1731996,
+            "gzipBytes": 361826
+          }
+        },
+        "shared:icons": {
+          "assets": [
+            {
+              "type": "styles",
+              "file": "profiles/development/css/icons.css",
+              "version": "0f49c5e2d92a06baf68ec9d16f707fa2",
+              "checksum": "sha256:b2345eb9ecee9967ea88506c74073f93eeb73d756845736771c24e2578eabcee",
+              "bytes": 128904,
+              "gzipBytes": 23839
+            }
+          ],
+          "totals": {
+            "files": 1,
+            "bytes": 128904,
+            "gzipBytes": 23839
+          }
+        },
+        "shared:modules": {
+          "assets": [
+            {
+              "type": "scripts",
+              "file": "profiles/development/js/shared/modules.js",
+              "version": "40f1426e469668fd59f5607662a6a0e4",
+              "checksum": "sha256:f3446ed40feba9ca6cfb78bdff330789eb8f873f1d573a4be20663b069327fd7",
+              "bytes": 2485,
+              "gzipBytes": 795
+            }
+          ],
+          "totals": {
+            "files": 1,
+            "bytes": 2485,
+            "gzipBytes": 795
+          }
+        },
+        "shared:ui": {
+          "assets": [
+            {
+              "type": "styles",
+              "file": "profiles/development/css/shared/ui.css",
+              "version": "edcf62c45b03dcee9cf1ee62a0e621d0",
+              "checksum": "sha256:1c4acc42b96319029f9e6c0f14500f37602ddb6ebabac786bdd90879c0e3a434",
+              "bytes": 52943,
+              "gzipBytes": 8176
+            }
+          ],
+          "totals": {
+            "files": 1,
+            "bytes": 52943,
+            "gzipBytes": 8176
+          }
+        },
+        "shared:vue": {
+          "assets": [
+            {
+              "type": "scripts",
+              "file": "profiles/development/js/shared/vue.js",
+              "version": "769d7b6ae97f86fd9dda959f869fbdc9",
+              "checksum": "sha256:f7a985f010c0aa1f84095a8c0fd90ea7ab4efea95b9727542a780ceaa766427d",
+              "bytes": 1044345,
+              "gzipBytes": 199851
+            }
+          ],
+          "totals": {
+            "files": 1,
+            "bytes": 1044345,
+            "gzipBytes": 199851
+          }
+        },
+        "theme:tabler": {
+          "assets": [
+            {
+              "type": "styles",
+              "file": "profiles/development/css/themes/tabler.css",
+              "version": "fd286a5a792c46c4ff8287d4662aae5d",
+              "checksum": "sha256:2ec274ef474a460d77f766297fad23f3ca71828b31a67b5117c733f03d36ce40",
+              "bytes": 870201,
+              "gzipBytes": 88572
+            }
+          ],
+          "totals": {
+            "files": 1,
+            "bytes": 870201,
+            "gzipBytes": 88572
+          }
+        }
+      },
+      "totals": {
+        "files": 10,
+        "bytes": 4934522,
+        "gzipBytes": 893890
+      }
+    }
+  },
+  "isolation": {
+    "adminlte": false,
+    "tailwind": false,
+    "jquery": false,
+    "font awesome": false
+  }
+}

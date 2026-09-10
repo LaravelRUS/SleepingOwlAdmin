@@ -1,0 +1,24 @@
+@mixin styles {
+  :is(.soa-input, .soa-select, .soa-textarea, .soa-file-input, .form-control, .form-select) {
+    box-shadow: inset 0 1px 1px color-mix(in srgb, var(--soa-text-color) 4%, transparent);
+  }
+
+  :is(.soa-input, .soa-select, .soa-textarea, .soa-file-input, .form-control, .form-select):focus {
+    border-color: var(--soa-focus-color);
+    box-shadow: 0 0 0 var(--soa-focus-ring-width)
+      color-mix(in srgb, var(--soa-focus-color) 20%, transparent);
+  }
+
+  .soa-label {
+    color: var(--soa-text-color);
+    letter-spacing: 0.01em;
+  }
+
+  .soa-field.has-error {
+    border-inline-start: var(--soa-status-rail-width) solid var(--soa-danger-color);
+  }
+
+  .soa-form-actions {
+    border-block-start: var(--soa-border-width) solid var(--soa-border-color);
+  }
+}

@@ -110,6 +110,11 @@
                 "processor": "postcss"
             },
             {
+                "logicalId": "theme:tabler",
+                "source": "resources/css/themes/tabler/theme.scss",
+                "output": "css/themes/tabler.css"
+            },
+            {
                 "logicalId": "theme:adminlte:overrides",
                 "source": "resources/css/theme-overrides/adminlte.scss",
                 "output": "css/theme-overrides/adminlte.css"

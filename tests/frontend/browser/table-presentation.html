@@ -3,11 +3,12 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="/public/default/css/admin-core.css" />
         <link rel="stylesheet" href="/public/default/css/shared/ui.css" />
         <link rel="stylesheet" href="/public/default/css/shared/features.css" />
         <script>
             const theme = new URLSearchParams(location.search).get('theme') || 'shadcn'
-            const supported = ['adminlte', 'empty', 'shadcn']
+            const supported = ['adminlte', 'empty', 'shadcn', 'tabler']
 
             if (!supported.includes(theme)) throw new Error(`Unsupported fixture theme: ${theme}`)
 

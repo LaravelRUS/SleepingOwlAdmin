@@ -1,0 +1,32 @@
+@mixin styles {
+  /* stylelint-disable selector-class-pattern -- DataTables public hook. */
+  :is(.soa-table, table.dataTable) {
+    font-variant-numeric: tabular-nums;
+  }
+
+  :is(.soa-table, table.dataTable) thead th {
+    background: var(--soa-muted-surface-color);
+    color: var(--soa-muted-text-color);
+    font-family: var(--soa-font-family-monospace);
+    font-size: var(--soa-font-size-caption);
+    letter-spacing: 0.025em;
+  }
+
+  :is(.soa-table, .datatables, table.dataTable) .dt-column-title {
+    white-space: normal;
+  }
+
+  :is(.soa-table, table.dataTable) tbody tr:hover > * {
+    background: var(--soa-table-row-hover-color);
+  }
+
+  :is(.soa-table, table.dataTable) tbody tr[aria-selected='true'] > *,
+  :is(.soa-table, table.dataTable) tbody tr.selected > * {
+    background: var(--soa-table-row-selected-color);
+  }
+
+  .soa-inline-editor-popup {
+    border-block-start: var(--soa-status-rail-width) solid var(--soa-primary-color);
+  }
+  /* stylelint-enable selector-class-pattern */
+}

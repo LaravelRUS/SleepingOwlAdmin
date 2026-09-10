@@ -9,7 +9,7 @@
             const profile = parameters.get('profile') || 'development'
             const theme = parameters.get('theme') || 'shadcn'
             const supportedProfiles = ['development', 'production']
-            const supportedThemes = ['adminlte', 'empty', 'shadcn']
+            const supportedThemes = ['adminlte', 'empty', 'shadcn', 'tabler']
 
             if (!supportedProfiles.includes(profile) || !supportedThemes.includes(theme)) {
                 throw new Error(`Unsupported shared controls fixture: ${profile}/${theme}`)

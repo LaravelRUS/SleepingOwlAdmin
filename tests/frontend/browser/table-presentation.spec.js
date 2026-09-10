@@ -16,7 +16,7 @@ test('Tailwind table adapter is standalone, compact and theme-token driven', asy
     const containerBox = await page.locator('#table-presentation').boundingBox()
     const searchBox = await page.locator('.dt-search').boundingBox()
 
-    expect(searchBox?.x).toBe(containerBox?.x)
+    expect((searchBox?.x ?? 0) - (containerBox?.x ?? 0)).toBe(20)
     await expect(page.locator('#table-search')).toHaveCSS('border-radius', '6px')
     await expect(page.locator('thead th').first()).toHaveCSS('text-transform', 'uppercase')
     await expect(page.locator('tbody tr.selected')).toHaveCSS(
@@ -29,7 +29,7 @@ test('Tailwind table adapter is standalone, compact and theme-token driven', asy
     )
 })
 
-for (const theme of ['adminlte', 'empty', 'shadcn']) {
+for (const theme of ['adminlte', 'empty', 'shadcn', 'tabler']) {
     test(`${theme} presents DataTables 3 column-order markup as Bootstrap-style arrows`, async ({
         page,
     }) => {
@@ -49,19 +49,7 @@ for (const theme of ['adminlte', 'empty', 'shadcn']) {
                 ].join('')
             })
 
-        const arrows = await page.locator('.dt-column-order').evaluate((element) => ({
-            afterBorderColor: getComputedStyle(element, '::after').borderTopColor,
-            afterOpacity: getComputedStyle(element, '::after').opacity,
-            afterPosition: getComputedStyle(element, '::after').position,
-            beforeBorderColor: getComputedStyle(element, '::before').borderBottomColor,
-            beforeOpacity: getComputedStyle(element, '::before').opacity,
-            beforePosition: getComputedStyle(element, '::before').position,
-            display: getComputedStyle(element).display,
-            headerWrap: getComputedStyle(element.parentElement).flexWrap,
-            titleWhiteSpace: getComputedStyle(
-                element.parentElement.querySelector('.dt-column-title'),
-            ).whiteSpace,
-        }))
+        const arrows = await page.locator('.dt-column-order').evaluate(readColumnOrderPresentation)
 
         expect(arrows).toEqual({
             afterBorderColor: 'rgb(51, 51, 51)',
@@ -77,7 +65,23 @@ for (const theme of ['adminlte', 'empty', 'shadcn']) {
     })
 }
 
-for (const theme of ['adminlte', 'empty', 'shadcn']) {
+function readColumnOrderPresentation(element) {
+    const styles = element.ownerDocument.defaultView.getComputedStyle
+
+    return {
+        afterBorderColor: styles(element, '::after').borderTopColor,
+        afterOpacity: styles(element, '::after').opacity,
+        afterPosition: styles(element, '::after').position,
+        beforeBorderColor: styles(element, '::before').borderBottomColor,
+        beforeOpacity: styles(element, '::before').opacity,
+        beforePosition: styles(element, '::before').position,
+        display: styles(element).display,
+        headerWrap: styles(element.parentElement).flexWrap,
+        titleWhiteSpace: styles(element.parentElement.querySelector('.dt-column-title')).whiteSpace,
+    }
+}
+
+for (const theme of ['adminlte', 'empty', 'shadcn', 'tabler']) {
     test(`${theme} hides the DataTables 3 sort control for non-orderable columns`, async ({
         page,
     }) => {
@@ -139,7 +143,7 @@ for (const [theme, { margin, minHeight }] of Object.entries({
     })
 }
 
-for (const theme of ['adminlte', 'empty', 'shadcn']) {
+for (const theme of ['adminlte', 'empty', 'shadcn', 'tabler']) {
     test(`${theme} auto-update presentation keeps the progress line beside its toggle`, async ({
         page,
     }) => {

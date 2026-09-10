@@ -17,6 +17,10 @@
 - A precompiled `TailwindTheme` is included with Blade-first views, Vue 3
   islands and canonical `--soa-*` customization; Tailwind 4 is maintainer-only
   and is not required by Composer consumers.
+- A precompiled `TablerTheme` based on exact `@tabler/core` 1.5.1 is included
+  under the `tabler` name. It uses sparse Blade inheritance, canonical
+  `--soa-*` customization and package-native lifecycle drivers without Tabler
+  or Bootstrap JavaScript.
 
 ### Removed
 

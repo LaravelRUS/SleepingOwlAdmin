@@ -6,6 +6,7 @@ import { env, execPath, exit } from 'node:process'
 import { fileURLToPath, URL } from 'node:url'
 
 import { writeAdminLteBundleReport } from './report-adminlte-bundles.mjs'
+import { writeTablerBundleReport } from './report-tabler-bundles.mjs'
 
 const root = resolve(fileURLToPath(new URL('../..', import.meta.url)))
 const mixCli = resolve(root, 'node_modules/laravel-mix/bin/cli.js')
@@ -15,6 +16,7 @@ const developmentAssets = captureDevelopmentAssets()
 buildProfile('production', ['--production'])
 restoreDevelopmentAssets(developmentAssets)
 writeAdminLteBundleReport()
+writeTablerBundleReport()
 
 function buildProfile(profile, arguments_ = []) {
     const result = spawnSync(execPath, [mixCli, ...arguments_], {

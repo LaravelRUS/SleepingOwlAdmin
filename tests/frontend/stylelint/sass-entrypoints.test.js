@@ -195,6 +195,14 @@ function customPropertyDeclarations(source) {
 function allowedCustomProperty({ name, path }) {
     if (name.startsWith('--soa-')) return true
 
+    if (path === 'themes/tabler/_tokens.scss') {
+        return name.startsWith('--tblr-')
+    }
+
+    if (path === 'shared/features/table/_column-order.scss') {
+        return name.startsWith('--dt-order-arrow-')
+    }
+
     if (path === 'themes/shadcn/_shadcn-theme.scss') {
         return /^--(?:color|font|radius|shadow)-/.test(name)
     }

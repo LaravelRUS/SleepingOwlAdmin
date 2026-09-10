@@ -1,0 +1,15 @@
+@use 'components';
+@use 'features/forms';
+@use 'features/sidebar';
+@use 'features/table';
+@use 'framework';
+@use 'tokens';
+@layer sleepingowl-framework, sleepingowl-theme;
+@include tokens.define;
+
+@layer sleepingowl-theme {
+  @include components.styles;
+  @include forms.styles;
+  @include sidebar.styles;
+  @include table.styles;
+}

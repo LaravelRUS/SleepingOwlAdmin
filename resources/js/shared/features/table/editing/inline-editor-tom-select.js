@@ -2,7 +2,11 @@ import TomSelect from 'tom-select'
 
 const NATIVE_SELECT_SELECTOR = '[data-inline-editor-select-native]'
 
-export function createInlineEditorTomSelect(element, config, createTomSelect = createTomSelectInstance) {
+export function createInlineEditorTomSelect(
+    element,
+    config,
+    createTomSelect = createTomSelectInstance,
+) {
     const select = requiredSelect(element)
     select.value = config.value
 

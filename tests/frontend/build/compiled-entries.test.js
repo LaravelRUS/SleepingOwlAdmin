@@ -95,7 +95,9 @@ describe('compiled form entries', () => {
             expect(shared).toContain('var(--soa-inline-editor-surface)')
         }
     })
+})
 
+describe('compiled date-picker entry', () => {
     it('publishes theme-token driven Air Datepicker styles in both form bundles', () => {
         const forms = readFileSync(resolve(root, 'public/default/css/shared/features.css'), 'utf8')
         const legacy = readFileSync(resolve(root, 'public/default/css/admin-app.css'), 'utf8')

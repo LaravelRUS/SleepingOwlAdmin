@@ -2,7 +2,7 @@
 
 import { expect, test } from '@playwright/test'
 
-const themes = ['adminlte', 'empty', 'shadcn']
+const themes = ['adminlte', 'empty', 'shadcn', 'tabler']
 
 for (const profile of ['development', 'production']) {
     for (const theme of themes) {

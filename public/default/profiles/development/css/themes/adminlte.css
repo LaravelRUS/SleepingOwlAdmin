@@ -15459,6 +15459,7 @@
   }
 }
 @layer sleepingowl-theme {
+  /* stylelint-disable-next-line no-invalid-position-at-import-rule -- legacy partial consumes caller-scoped AdminLTE variables. */
   [data-bs-theme=dark] .multiselect {
     color: inherit;
   }

@@ -66,7 +66,15 @@ class TailwindThemeRemainingViewsTest extends TestCase
     public function test_tailwind_overrides_contain_no_base_duplicates(): void
     {
         $baseRoot = realpath(__DIR__.'/../../../resources/views/default');
-        $tailwindRoot = realpath(__DIR__.'/../../../resources/views/themes/shadcn/default');
+        $tailwindPath = __DIR__.'/../../../resources/views/themes/shadcn/default';
+        $tailwindRoot = realpath($tailwindPath);
+
+        if ($tailwindRoot === false) {
+            $this->assertDirectoryDoesNotExist($tailwindPath);
+
+            return;
+        }
+
         $directory = new RecursiveDirectoryIterator($tailwindRoot, FilesystemIterator::SKIP_DOTS);
         $overrides = [];
 

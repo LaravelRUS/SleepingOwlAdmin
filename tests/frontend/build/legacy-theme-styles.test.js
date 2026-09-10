@@ -40,9 +40,7 @@ it('keeps framework imports behind the legacy AdminLTE theme boundary', () => {
     expect(legacyBuild).toContain("meta.load-css('./framework')")
     expect(vendor).toContain('node_modules/dropzone/dist/dropzone.css')
     expect(vendor).not.toContain('node_modules/vue-multiselect/dist/vue-multiselect.css')
-    expect(sharedVueMultiselect).toContain(
-        'node_modules/vue-multiselect/dist/vue-multiselect.css',
-    )
+    expect(sharedVueMultiselect).toContain('node_modules/vue-multiselect/dist/vue-multiselect.css')
     expect(sharedIcons).toContain('@fortawesome/fontawesome-free/scss/fontawesome')
 })
 

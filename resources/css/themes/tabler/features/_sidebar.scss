@@ -1,0 +1,52 @@
+@mixin styles {
+  .soa-brand {
+    background: color-mix(in srgb, var(--soa-sidebar-bg) 86%, var(--soa-primary-color));
+  }
+
+  .soa-brand-link,
+  .soa-nav-link {
+    color: var(--soa-sidebar-text-color);
+  }
+
+  .soa-nav-link {
+    border-radius: var(--soa-sidebar-link-radius);
+    gap: var(--soa-sidebar-link-gap);
+    padding: var(--soa-sidebar-link-padding-block) var(--soa-sidebar-link-padding-inline);
+    position: relative;
+  }
+
+  .soa-nav-link:hover {
+    background: color-mix(in srgb, var(--soa-sidebar-text-color) 8%, transparent);
+  }
+
+  .soa-nav-link.active {
+    background: var(--soa-sidebar-active-color);
+    color: var(--soa-sidebar-text-color);
+  }
+
+  .soa-nav-link.active::before {
+    background: var(--soa-status-rail-color);
+    border-radius: var(--soa-border-radius-full);
+    content: '';
+    inline-size: var(--soa-status-rail-width);
+    inset-block: var(--soa-space-2);
+    inset-inline-start: 0;
+    position: absolute;
+  }
+
+  .soa-nav-link:focus-visible {
+    outline: var(--soa-focus-ring-width) solid var(--soa-focus-color);
+    outline-offset: var(--soa-border-width);
+  }
+
+  @media (width > 64rem) {
+    .soa-body.sidebar-collapse .soa-nav-link-content {
+      position: relative;
+    }
+
+    .soa-body.sidebar-collapse .soa-nav-arrow {
+      inset-inline-end: 0;
+      position: absolute;
+    }
+  }
+}

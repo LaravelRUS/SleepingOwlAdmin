@@ -3,6 +3,7 @@ import { expect, test } from '@playwright/test'
 for (const [theme, background, width, text] of [
     ['adminlte', 'rgb(52, 58, 64)', '250px', 'rgb(255, 255, 255)'],
     ['shadcn', 'rgb(16, 35, 53)', '272px', 'rgb(219, 231, 242)'],
+    ['tabler', 'rgb(19, 34, 56)', '256px', 'rgb(231, 237, 245)'],
 ]) {
     test(`${theme} sidebar adapter owns presentation`, async ({ page }) => {
         await page.goto(`/sidebar-presentation?theme=${theme}`)

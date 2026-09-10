@@ -47,6 +47,8 @@ assert_artifact_boundary() {
     test -f "${PACKAGE_ROOT}/public/default/profiles/development/js/admin-core.js"
     test -f "${PACKAGE_ROOT}/public/default/profiles/production/css/themes/shadcn-utilities.css"
     test -f "${PACKAGE_ROOT}/public/default/profiles/development/css/themes/shadcn-utilities.css"
+    test -f "${PACKAGE_ROOT}/public/default/profiles/production/css/themes/tabler.css"
+    test -f "${PACKAGE_ROOT}/public/default/profiles/development/css/themes/tabler.css"
     test ! -d "${PACKAGE_ROOT}/node_modules"
     test ! -d "${PACKAGE_ROOT}/vendor"
 }
@@ -75,6 +77,9 @@ run_consumer_workflow() {
     select_shadcn_theme
     php "${APP_ROOT}/artisan" sleepingowl:update --check --no-interaction
     php "${PROJECT_ROOT}/scripts/ci/verify-no-build-consumer.php" "${APP_ROOT}" shadcn
+    select_tabler_theme
+    php "${APP_ROOT}/artisan" sleepingowl:update --check --no-interaction
+    php "${PROJECT_ROOT}/scripts/ci/verify-no-build-consumer.php" "${APP_ROOT}" tabler
     select_empty_theme
     php "${APP_ROOT}/artisan" sleepingowl:update --check --no-interaction
     php "${PROJECT_ROOT}/scripts/ci/verify-no-build-consumer.php" "${APP_ROOT}" empty
@@ -87,7 +92,12 @@ select_shadcn_theme() {
 }
 
 select_empty_theme() {
-    export SLEEPINGOWL_TEMPLATE=empty
+    # Laravel reserves the unquoted string `empty` as an empty environment value.
+    export SLEEPINGOWL_TEMPLATE='"empty"'
+}
+
+select_tabler_theme() {
+    export SLEEPINGOWL_TEMPLATE=tabler
 }
 
 assert_check_is_read_only() {

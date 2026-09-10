@@ -85,9 +85,9 @@ Direct `KodiCMS\Assets` facade imports must move to the package-owned facades
 listed in [first-party assets](first-party-assets.md). Exact old facade strings
 inside an existing published config are normalized automatically.
 
-The default ready theme is `AdminLTETheme`. The package also includes the
-framework-independent `TailwindTheme`; select its configured name without a
-frontend rebuild:
+The default ready theme is `AdminLTETheme`. The package also includes
+`TailwindTheme` and the CSS-only official Tabler 1.5.1 presentation; select a
+configured name without a frontend rebuild:
 
 ```php
 'template' => [
@@ -95,6 +95,7 @@ frontend rebuild:
     'themes' => [
         'adminlte' => SleepingOwl\Admin\Themes\AdminLTETheme::class,
         'shadcn' => SleepingOwl\Admin\Themes\TailwindTheme::class,
+        'tabler' => SleepingOwl\Admin\Themes\TablerTheme::class,
     ],
 ],
 ```
@@ -107,7 +108,7 @@ own a separate application Tailwind build for new arbitrary utilities. A ready
 external theme may register its own Blade views and manifest fragment through
 `ThemeRegistry`. Application CSS/JS, supported `--soa-*` properties, the sidebar
 background and Blade overrides require no package rebuild. See the
-[Tailwind theme](tailwind-theme.md) and
+[Tailwind theme](tailwind-theme.md), [Tabler theme](tabler-theme.md) and
 [theme customization guide](theme-customization.md) for complete examples.
 
 ## Application verification

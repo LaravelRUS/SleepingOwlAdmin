@@ -21,6 +21,7 @@
         "test:e2e:install": "playwright install chromium",
         "test:watch": "vitest",
         "report:bundles": "node scripts/modernization/report-adminlte-bundles.mjs",
+        "report:tabler-bundles": "node scripts/modernization/report-tabler-bundles.mjs",
         "baseline:frontend": "node scripts/modernization/capture-frontend-baseline.mjs",
         "baseline:config": "php scripts/modernization/capture-config-inventory.php",
         "baseline:config:validate": "php scripts/modernization/validate-config-migration-matrix.php",
@@ -29,6 +30,7 @@
     "dependencies": {
         "@fortawesome/fontawesome-free": "^7.3.1",
         "@popperjs/core": "2.11.8",
+        "@tabler/core": "1.5.1",
         "admin-lte": "4.9.1",
         "air-datepicker": "3.6.0",
         "autoprefixer": "^10.5.5",

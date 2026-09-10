@@ -121,6 +121,16 @@ describe('theme frontend build entries', () => {
         },
     )
 
+    it('publishes Tabler as a CSS-only theme boundary', () => {
+        expect(modernEntry('theme:tabler', 'scripts')).toBeUndefined()
+        expect(modernEntry('theme:tabler', 'styles')).toEqual({
+            logicalId: 'theme:tabler',
+            source: 'resources/css/themes/tabler/theme.scss',
+            output: 'css/themes/tabler.css',
+        })
+        expect(modernEntry('theme:tabler:overrides', 'styles')).toBeUndefined()
+    })
+
     it.each(['adminlte', 'shadcn'])('publishes the %s override layer last', (theme) => {
         expect(modernEntry(`theme:${theme}:overrides`, 'styles')).toEqual({
             logicalId: `theme:${theme}:overrides`,

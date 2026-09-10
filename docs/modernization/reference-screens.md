@@ -32,6 +32,7 @@
 | --- | --- | --- |
 | `adminlte` | `REF-01`…`REF-09` | AdminLTE 4/Bootstrap 5 present; Tailwind bundle absent |
 | `tailwind` | `REF-01`…`REF-09` | Tailwind theme present; Bootstrap/AdminLTE bundles absent |
+| `tabler` | `REF-01`…`REF-09` | Tabler CSS present; AdminLTE/Tailwind and theme/vendor JavaScript absent |
 | `custom-test` | `REF-01`, `REF-02`, `REF-05` plus contract tests | only public core/feature contracts and custom manifest entries; no internal imports |
 
 ## Stable fixture rules
@@ -51,4 +52,3 @@
 - Desktop and mobile screenshots for each built-in theme and color scheme.
 - Assertion that only selected theme and used feature assets were requested.
 - PHP render/response contract test for the fixture that feeds the screen.
-

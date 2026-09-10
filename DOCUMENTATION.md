@@ -70,7 +70,7 @@ resources/
 ├── css/                      # core, shared, themes и theme-overrides
 ├── js/                       # core, shared, themes и theme-overrides
 ├── views/default/            # Полный базовый Blade contract
-├── views/themes/shadcn/      # Только реальные Shadcn overrides
+├── views/themes/{shadcn,tabler}/ # Только реальные sparse overrides
 ├── views/features/           # Общие feature-owned views
 └── lang/                     # Локализация
 
@@ -90,7 +90,7 @@ Generated-файлы под `public/default` вручную не редакти�
 | Ключ                  | Назначение                                         | Значение по умолчанию |
 | :-------------------- | :------------------------------------------------- | :-------------------- |
 | `template.default`    | Имя выбранной темы                                 | `adminlte`            |
-| `template.themes`     | Карта имён на `ThemeInterface` classes             | `adminlte`, `shadcn`, `empty` |
+| `template.themes`     | Карта имён на `ThemeInterface` classes             | `adminlte`, `shadcn`, `empty`, `tabler` |
 | `ui`                  | Branding, shell, footer и presentation switches    | См. config            |
 | `dev_assets`          | Выбор готового development profile                 | `false`               |
 | `url_prefix`          | URL-префикс админки                                | `admin`               |
@@ -111,12 +111,14 @@ Generated-файлы под `public/default` вручную не редакти�
         'adminlte' => SleepingOwl\Admin\Themes\AdminLTETheme::class,
         'shadcn' => SleepingOwl\Admin\Themes\TailwindTheme::class,
         'empty' => SleepingOwl\Admin\Themes\EmptyTheme::class,
+        'tabler' => SleepingOwl\Admin\Themes\TablerTheme::class,
     ],
 ],
 ```
 
 `adminlte` использует AdminLTE 4/Bootstrap 5. `shadcn` выбирает готовую
-TailwindTheme. Диагностическая `empty` сохраняет shared styles и icons, но не
+TailwindTheme, а `tabler` — CSS-only TablerTheme 1.5.1 без vendor JavaScript.
+Диагностическая `empty` сохраняет shared styles и icons, но не
 добавляет theme-owned presentation. Разрешается только выбранная тема; неверное имя, class,
 capability или manifest вызывает диагностическое исключение без silent fallback.
 

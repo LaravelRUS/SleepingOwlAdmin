@@ -1,0 +1,8 @@
+@use 'sass:meta';
+
+// @tabler/core is consumed at one theme-owned boundary. The compiled stylesheet
+// is self-contained (including Bootstrap presentation and data-URI controls),
+// so no vendor JavaScript, font, icon, flag or image asset is published.
+@layer sleepingowl-framework {
+  @include meta.load-css('../../../../node_modules/@tabler/core/dist/css/tabler.css');
+}

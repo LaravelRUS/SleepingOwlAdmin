@@ -22,6 +22,10 @@ const staticRoutes = new Map([
         [join(browserDirectory, 'theme-capabilities-tailwind.html'), 'text/html; charset=utf-8'],
     ],
     [
+        '/theme-capabilities-tabler',
+        [join(browserDirectory, 'theme-capabilities-tabler.html'), 'text/html; charset=utf-8'],
+    ],
+    [
         '/compatibility-runtime',
         [join(browserDirectory, 'compatibility-runtime.html'), 'text/html; charset=utf-8'],
     ],
@@ -282,6 +286,10 @@ const staticRoutes = new Map([
         [join(projectRoot, 'public', 'default', 'css', 'themes', 'shadcn.css'), 'text/css'],
     ],
     [
+        '/public/default/css/themes/tabler.css',
+        [join(projectRoot, 'public', 'default', 'css', 'themes', 'tabler.css'), 'text/css'],
+    ],
+    [
         '/fixtures/custom-vue-island.js',
         [join(browserDirectory, 'custom-vue-island.js'), 'text/javascript; charset=utf-8'],
     ],
@@ -331,7 +339,8 @@ function themeCapabilityStyles() {
     const base = ['admin-core.css', 'icons.css', 'shared/ui.css', 'shared/features.css']
     const legacy = ['themes/adminlte.css']
     const empty = ['themes/empty.css']
-    return [...base, ...legacy, ...empty, ...tailwindCapabilityStyles()]
+    const tabler = ['themes/tabler.css']
+    return [...base, ...legacy, ...empty, ...tailwindCapabilityStyles(), ...tabler]
 }
 
 const fixtureRequests = new Map()

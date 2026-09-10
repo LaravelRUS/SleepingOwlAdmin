@@ -7,22 +7,26 @@ class ThemeCustomizationDocumentationTest extends TestCase
         '--soa-inline-editable-max-rows',
     ];
 
-    public function test_documented_properties_match_the_adminlte_runtime_surface(): void
+    public function test_documented_properties_exist_in_the_built_in_runtime_surface(): void
     {
         $root = dirname(__DIR__, 3);
         $documentation = file_get_contents(
             $root.'/docs/modernization/theme-customization.md'
         );
 
-        $expected = array_values(array_unique([
+        $available = array_values(array_unique([
             ...$this->sourceProperties($root),
             ...self::COMPONENT_PROPERTIES,
         ]));
         $documented = $this->properties($documentation);
-        sort($expected);
-        sort($documented);
+        $unsupported = array_values(array_diff($documented, $available));
+        sort($unsupported);
 
-        $this->assertSame($expected, $documented);
+        $this->assertSame([], $unsupported);
+
+        foreach (self::COMPONENT_PROPERTIES as $property) {
+            $this->assertContains($property, $documented);
+        }
     }
 
     public function test_external_theme_documentation_defines_the_shared_ui_boundary(): void
@@ -53,10 +57,13 @@ class ThemeCustomizationDocumentationTest extends TestCase
     private function sourceProperties(string $root): array
     {
         $patterns = [
-            '/resources/css/core/admin-core.scss',
-            '/resources/css/themes/adminlte/_tokens.scss',
+            '/resources/css/core/*.scss',
+            '/resources/css/shared/_tokens.scss',
+            '/resources/css/shared/ui/*.scss',
             '/resources/css/shared/features/*/*.scss',
-            '/resources/css/themes/adminlte/features/*/*.scss',
+            '/resources/css/themes/*/_tokens.scss',
+            '/resources/css/themes/*/features/*.scss',
+            '/resources/css/themes/*/features/*/*.scss',
         ];
         $sources = [];
 

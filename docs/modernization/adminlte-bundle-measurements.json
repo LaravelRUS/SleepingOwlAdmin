@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "sourceManifest": "public/default/asset-manifest.json",
   "packageVersion": "dev-master",
-  "buildId": "sha256:2c08f68582a22fcb1db3a9220e495b6aecea8b36c0666650ec7989c9c58ec518",
+  "buildId": "sha256:80a8323194809260121a29b5f61ff9b37749a841708f5d2f7dc7f8a38a12818b",
   "baseline": {
     "source": "docs/modernization/baseline/frontend.json",
     "bytes": 2585357,
@@ -328,23 +328,23 @@
             {
               "type": "styles",
               "file": "profiles/development/css/themes/adminlte.css",
-              "version": "2dbf341785ab806a39cc7798accae266",
-              "checksum": "sha256:c070921bfca2e15e556d1bcb3ebdff003c80da884fa9f87d8070368cecd0d5df",
-              "bytes": 470780,
-              "gzipBytes": 59249
+              "version": "99c840f689efdaa217a4c4968640f45e",
+              "checksum": "sha256:ff69b2105c8f7524523de0d4215217a1f1351f7181d2446d90b1941563377012",
+              "bytes": 470912,
+              "gzipBytes": 59346
             }
           ],
           "totals": {
             "files": 2,
-            "bytes": 983020,
-            "gzipBytes": 183738
+            "bytes": 983152,
+            "gzipBytes": 183835
           }
         }
       },
       "totals": {
         "files": 11,
-        "bytes": 5047341,
-        "gzipBytes": 989056
+        "bytes": 5047473,
+        "gzipBytes": 989153
       }
     }
   },
