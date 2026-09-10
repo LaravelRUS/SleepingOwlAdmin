@@ -70,18 +70,12 @@
 
 ## Следующие theme tracks
 
-- [ ] До реализации полностью переутвердить
-      [`ADMIN_TABLER_THEME_PLAN.md`](ADMIN_TABLER_THEME_PLAN.md) под действующий
-      name-driven contract: canonical name `tabler` хранится в config/registry,
-      `ThemeInterface` не получает `id()`, built-in views наследуют canonical
-      base и переопределяют только реальные markup differences, а runtime сам
-      добавляет обязательные shared и scoped theme entries. Удалить ссылки на
-      архивный общий migration plan и сверить checklist с
-      [`ADMIN_ADDITIONAL_THEMES_PLAN.md`](ADMIN_ADDITIONAL_THEMES_PLAN.md).
-- [ ] После архитектурного rebase Tabler-плана выполнить только его checkpoint
-      0: exact upstream/package, Bootstrap compatibility, dependency/license
-      provenance, component/capability inventory и доказанный минимум vendor JS.
-      Реализацию theme skeleton начинать отдельным checkpoint.
+- [ ] Выполнить checkpoint 0 актуализированного
+      [`ADMIN_TABLER_THEME_PLAN.md`](ADMIN_TABLER_THEME_PLAN.md): exact
+      upstream/package, Bootstrap compatibility, dependency/license/static
+      provenance, component/capability и Blade-difference inventory, а также
+      доказанный минимум vendor JS. Реализацию theme skeleton начинать отдельным
+      checkpoint после зафиксированного input.
 
 ## Post-release
 
@@ -114,6 +108,9 @@
   находится в
   [`docs/old-plans/ADMIN_SHARED_UI_STYLES_PLAN.md`](docs/old-plans/ADMIN_SHARED_UI_STYLES_PLAN.md).
   Оставшаяся parity ведётся только в `ADMIN_EMPTY_THEME_SHARED_PLAN.md`.
+- `ADMIN_TABLER_THEME_PLAN.md` перебазирован на name-driven theme contract,
+  runtime-owned logical asset graph и sparse Blade inheritance; реализация
+  `TablerTheme` ещё не начата.
 - SelectAjax и DependentSelect используют общий Vue Multiselect island;
   `setSelect2()` сохранён только как compatibility API. Tom Select разрешён
   только в явно описанном inline-editor adapter и поэтому не подлежит удалению
