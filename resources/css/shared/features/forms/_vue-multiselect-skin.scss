@@ -1,0 +1,89 @@
+// Vue Multiselect ships fixed light colors. The shared skin maps its visual
+// states to the package token contract so every theme, including EmptyTheme,
+// follows the active color scheme.
+@mixin styles {
+  /* stylelint-disable selector-class-pattern -- Vue Multiselect public hooks. */
+  .multiselect {
+    color: var(--soa-text-color);
+  }
+
+  .multiselect__spinner {
+    background: var(--soa-surface-color);
+  }
+
+  .multiselect__spinner::before,
+  .multiselect__spinner::after {
+    border-color: var(--soa-primary-color) transparent transparent;
+  }
+
+  .multiselect__input,
+  .multiselect__single {
+    background: transparent;
+    color: var(--soa-text-color);
+  }
+
+  .multiselect__input::placeholder,
+  .multiselect__placeholder {
+    color: var(--soa-muted-text-color);
+  }
+
+  .multiselect__tags,
+  .multiselect__current {
+    background: var(--soa-surface-color);
+    border-color: var(--soa-input-border-color);
+  }
+
+  .multiselect__tag {
+    background: var(--soa-accent-surface-color);
+    color: var(--soa-text-color);
+  }
+
+  .multiselect__tag-icon::after {
+    color: var(--soa-muted-text-color);
+  }
+
+  .multiselect__select::before {
+    border-color: var(--soa-muted-text-color) transparent transparent;
+  }
+
+  .multiselect__content-wrapper {
+    background: var(--soa-elevated-surface-color);
+    border-color: var(--soa-border-color);
+  }
+
+  .multiselect__option--highlight,
+  .multiselect__option--highlight::after {
+    background: var(--soa-primary-color);
+    color: var(--soa-on-primary-color);
+  }
+
+  .multiselect__option--selected {
+    background: var(--soa-muted-surface-color);
+    color: var(--soa-text-color);
+  }
+
+  .multiselect__option--selected.multiselect__option--highlight,
+  .multiselect__option--selected.multiselect__option--highlight::after {
+    background: var(--soa-danger-color);
+    color: var(--soa-on-primary-color);
+  }
+
+  .multiselect--disabled,
+  .multiselect--disabled .multiselect__current,
+  .multiselect--disabled .multiselect__select,
+  .multiselect__option--group {
+    background: var(--soa-muted-surface-color);
+    color: var(--soa-muted-text-color);
+  }
+
+  .multiselect__option--disabled {
+    background: var(--soa-muted-surface-color) !important;
+    color: var(--soa-muted-text-color) !important;
+  }
+
+  .multiselect__option--group.multiselect__option--highlight {
+    background: var(--soa-text-color);
+    color: var(--soa-surface-color);
+  }
+  /* stylelint-enable selector-class-pattern */
+}

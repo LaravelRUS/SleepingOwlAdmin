@@ -24,6 +24,7 @@ describe('shared semantic UI source ownership', () => {
             '_fixed-controls.scss',
             '_forms.scss',
             '_foundation.scss',
+            '_scrollbar.scss',
             '_shell.scss',
         ])
 
@@ -53,6 +54,8 @@ describe('shared semantic UI compiled boundary', () => {
             '.soa-card',
             '.soa-attachment',
             '.soa-dialog',
+            '::-webkit-scrollbar',
+            'select::-webkit-scrollbar',
         ]) {
             expect(compiled).toContain(selector)
         }

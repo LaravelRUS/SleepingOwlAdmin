@@ -8,3 +8,7 @@
   @include meta.load-css('./vendor');
   @include meta.load-css('./framework');
 }
+
+@layer sleepingowl-theme {
+  @import './legacy/components/vue-multiselect';
+}

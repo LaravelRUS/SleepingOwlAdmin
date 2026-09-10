@@ -87,6 +87,23 @@
     --soa-scroll-control-offset-block: 1rem;
     --soa-scroll-control-z-index: 1039;
 
+    /* Scrollbar */
+    --soa-scrollbar-size: 0.8em;
+    --soa-scrollbar-form-control-size: 0.3em;
+    --soa-scrollbar-track-color: var(--soa-border-color);
+    --soa-scrollbar-track-shadow-color: color-mix(
+      in srgb,
+      var(--soa-scrollbar-track-color) 30%,
+      transparent
+    );
+    --soa-scrollbar-thumb-color: var(--soa-muted-text-color);
+    --soa-scrollbar-form-control-track-color: var(--soa-sidebar-bg);
+    --soa-scrollbar-form-control-track-shadow-color: color-mix(
+      in srgb,
+      var(--soa-scrollbar-form-control-track-color) 30%,
+      transparent
+    );
+
     /* Shared controls and containers */
     --soa-control-size: 2.375rem;
     --soa-control-size-sm: 2rem;

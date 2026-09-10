@@ -1,6 +1,8 @@
+@use '../../shared/ui/scrollbar' as shared-scrollbar;
 @import './legacy/variables';
 @import './legacy/colors';
 @import 'admin-lte/src/scss/adminlte';
 @import './legacy/font';
 @import './legacy/components';
 @import './legacy/addition';
+@include shared-scrollbar.styles;

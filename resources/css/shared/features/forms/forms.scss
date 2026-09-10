@@ -1,9 +1,13 @@
 @use 'badges';
 @use 'date-picker';
 @use 'files';
+@use 'vue-multiselect';
+@use 'vue-multiselect-skin';
 @layer sleepingowl-feature.forms;
 
 @layer sleepingowl-feature.forms {
+  @include vue-multiselect.styles;
+  @include vue-multiselect-skin.styles;
   @include badges.styles;
   @include date-picker.styles;
   @include files.styles(

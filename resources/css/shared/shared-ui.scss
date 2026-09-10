@@ -5,6 +5,7 @@
 @use 'ui/forms';
 @use 'ui/foundation';
 @use 'ui/shell';
+@use 'ui/scrollbar';
 @use 'tokens';
 @layer sleepingowl-shared;
 @include tokens.define;
@@ -17,6 +18,7 @@
   @include attachments.styles;
   @include shell.styles;
   @include fixed-controls.styles;
+  @include scrollbar.styles;
 }
 
 @include shell.managed-interactions;

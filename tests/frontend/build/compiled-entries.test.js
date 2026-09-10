@@ -60,6 +60,20 @@ describe('compiled frontend entries', () => {
 })
 
 describe('compiled form entries', () => {
+    it('publishes the Vue Multiselect vendor baseline in the shared feature bundle', () => {
+        for (const profile of ['production', 'development']) {
+            const forms = readFileSync(
+                resolve(root, `public/default/profiles/${profile}/css/shared/features.css`),
+                'utf8',
+            )
+
+            expect(forms).toContain('.multiselect__tags')
+            expect(forms).toContain('.multiselect__content-wrapper')
+            expect(forms).toContain('var(--soa-elevated-surface-color)')
+            expect(forms).toContain('var(--soa-text-color)')
+        }
+    })
+
     it('publishes multiple-file styles in the forms feature and legacy aggregate', () => {
         const forms = readFileSync(resolve(root, 'public/default/css/shared/features.css'), 'utf8')
         const legacy = readFileSync(resolve(root, 'public/default/css/admin-app.css'), 'utf8')

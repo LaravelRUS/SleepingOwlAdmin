@@ -1,0 +1,32 @@
+@mixin styles {
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 var(--soa-scrollbar-size)
+      var(--soa-scrollbar-track-shadow-color);
+    background-color: var(--soa-scrollbar-track-color);
+    overflow: hidden;
+  }
+
+  ::-webkit-scrollbar {
+    width: var(--soa-scrollbar-size);
+    height: var(--soa-scrollbar-size);
+    background-color: var(--soa-scrollbar-track-color);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--soa-scrollbar-thumb-color);
+  }
+
+  select,
+  textarea {
+    &::-webkit-scrollbar {
+      width: var(--soa-scrollbar-form-control-size);
+      background-color: var(--soa-scrollbar-form-control-track-color);
+    }
+
+    &::-webkit-scrollbar-track {
+      box-shadow: inset 0 0 var(--soa-scrollbar-form-control-size)
+        var(--soa-scrollbar-form-control-track-shadow-color);
+      background-color: var(--soa-scrollbar-form-control-track-color);
+    }
+  }
+}

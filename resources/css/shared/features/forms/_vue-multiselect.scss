@@ -1,0 +1,7 @@
+@use 'sass:meta';
+
+// Vue Multiselect is a package-wide form primitive. Keep its vendor geometry in
+// the shared layer so every theme receives a functional baseline skin.
+@mixin styles {
+  @include meta.load-css('../../../../../node_modules/vue-multiselect/dist/vue-multiselect.css');
+}

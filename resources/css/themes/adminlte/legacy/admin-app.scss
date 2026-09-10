@@ -1,5 +1,6 @@
 @use '../../../shared/features/forms/files' as form-files;
 @use '../../../shared/features/forms/date-picker' as form-date-picker;
+@use '../../../shared/features/forms/vue-multiselect' as vue-multiselect;
 @use '../../../shared/features/dropdown/dropdown' as dropdown-driver;
 @use '../../../shared/features/lightbox/lightbox' as legacy-lightbox-driver;
 @use '../../../shared/features/sidebar/sidebar' as sidebar-driver;
@@ -13,6 +14,10 @@
 @use '../asset-health' as theme-asset-health;
 @use '../legacy-build' as legacy-theme;
 
+@layer sleepingowl-framework {
+  @include vue-multiselect.styles;
+}
+
 @include shared-tokens.define;
 @include dropdown-driver.styles;
 @include legacy-lightbox-driver.styles;
@@ -20,6 +25,7 @@
 @include legacy-sidebar.styles;
 @include legacy-datatables.styles;
 @include tooltip-driver.styles;
+@include vue-multiselect.styles;
 @include form-files.styles(
   $thumbnail-border: legacy-theme.$file-thumbnail-border,
   $thumbnail-surface: legacy-theme.$file-thumbnail-surface,

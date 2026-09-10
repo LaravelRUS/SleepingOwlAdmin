@@ -11,6 +11,7 @@ it('keeps framework imports behind the legacy AdminLTE theme boundary', () => {
     const framework = read('resources/css/themes/adminlte/_framework.scss')
     const vendor = read('resources/css/themes/adminlte/_vendor.scss')
     const sharedIcons = read('resources/css/shared/features/icons/font-awesome.scss')
+    const sharedVueMultiselect = read('resources/css/shared/features/forms/_vue-multiselect.scss')
 
     expect(entrypoint).toContain("@use '../legacy-build' as legacy-theme;")
     for (const legacyImport of [
@@ -34,10 +35,14 @@ it('keeps framework imports behind the legacy AdminLTE theme boundary', () => {
         expect(framework).toContain(owner)
     }
     expect(legacyBuild).toContain('@layer sleepingowl-framework')
+    expect(legacyBuild).toContain('@layer sleepingowl-theme')
     expect(legacyBuild).toContain("meta.load-css('./vendor')")
     expect(legacyBuild).toContain("meta.load-css('./framework')")
     expect(vendor).toContain('node_modules/dropzone/dist/dropzone.css')
-    expect(vendor).toContain('node_modules/vue-multiselect/dist/vue-multiselect.css')
+    expect(vendor).not.toContain('node_modules/vue-multiselect/dist/vue-multiselect.css')
+    expect(sharedVueMultiselect).toContain(
+        'node_modules/vue-multiselect/dist/vue-multiselect.css',
+    )
     expect(sharedIcons).toContain('@fortawesome/fontawesome-free/scss/fontawesome')
 })
 
@@ -54,6 +59,7 @@ it('preserves the structural AdminLTE selectors in the legacy aggregate', () => 
     ]) {
         expect(css).toContain(selector)
     }
+    expect(css).toContain('.multiselect__tags')
 })
 
 it('builds a standalone AdminLTE theme without embedding shared icons', () => {
