@@ -87,6 +87,7 @@ The current frontend is prebuilt and jQuery-free:
 
 - AdminLTE 4 and Bootstrap 5 for the default `adminlte` theme;
 - the official Tabler 1.5.1 presentation selected as CSS-only `tabler`;
+- a Tailwind CSS 4.3.3 operations-workbench presentation selected as `tailwind`;
 - Vue 3 runtime-only islands for interactive form controls;
 - DataTables 3 and native feature drivers;
 - framework-independent core, shared feature bundles and `shared:ui`;
@@ -102,6 +103,7 @@ Choose a theme by configured name:
         'adminlte' => SleepingOwl\Admin\Themes\AdminLTETheme::class,
         'empty' => SleepingOwl\Admin\Themes\EmptyTheme::class,
         'tabler' => SleepingOwl\Admin\Themes\TablerTheme::class,
+        'tailwind' => SleepingOwl\Admin\Themes\TailwindTheme::class,
     ],
 ],
 ```
@@ -122,6 +124,7 @@ See:
 - [major upgrade guide](docs/modernization/upgrade-guide.md);
 - [AdminLTE 4 migration](docs/modernization/adminlte-4-migration.md);
 - [built-in Tabler theme](docs/modernization/tabler-theme.md);
+- [built-in Tailwind theme](docs/modernization/tailwind-theme.md);
 - [theme customization and external themes](docs/modernization/theme-customization.md);
 - [first-party asset API](docs/modernization/first-party-assets.md).
 

@@ -177,11 +177,12 @@ The built-in themes keep separate application namespaces:
 ```text
 AdminLTE: resources/views/vendor/sleeping_owl/default/<logical path>
 Tabler:   resources/views/vendor/sleeping_owl_tabler/default/<logical path>
+Tailwind: resources/views/vendor/sleeping_owl_tailwind/default/<logical path>
 ```
 
 AdminLTE resolves the application file and then the complete package base in
-`resources/views/default`. Tabler resolves application, then its sparse theme
-path, then that same base. Do not copy the
+`resources/views/default`. Tabler and Tailwind resolve application, then their
+sparse theme path, then that same base. Do not copy the
 whole package view base into an application or theme: override only the files whose
 markup differs. An absent built-in override is normal inheritance.
 

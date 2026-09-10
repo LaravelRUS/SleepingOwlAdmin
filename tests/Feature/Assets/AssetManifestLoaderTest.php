@@ -25,6 +25,7 @@ class AssetManifestLoaderTest extends TestCase
             'theme:adminlte:overrides',
             'theme:empty',
             'theme:tabler',
+            'theme:tailwind',
         ], $manifest->profile('production')->entryIds());
         $this->assertSame(
             $manifest->profile('production')->entryIds(),

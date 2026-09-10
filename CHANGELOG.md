@@ -21,6 +21,10 @@
   under the `tabler` name. It uses sparse Blade inheritance, canonical
   `--soa-*` customization and package-native lifecycle drivers without Tabler
   or Bootstrap JavaScript.
+- A precompiled `TailwindTheme` based on exact Tailwind CSS 4.3.3 is included
+  under the `tailwind` name. Its light/dark operations-workbench presentation,
+  prefixed theme recipes and shared native feature drivers do not load
+  Bootstrap, AdminLTE or theme-owned JavaScript.
 
 ### Removed
 

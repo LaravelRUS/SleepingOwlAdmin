@@ -71,8 +71,8 @@
                     "styles": [
                         {
                             "file": "profiles/production/css/shared/ui.css",
-                            "version": "d11332b335078860c96a02f60ec5141a",
-                            "checksum": "sha256:34309f5e7e370505ca6bbd3c448ff3f97a2fac6d5f719196fed7ec248804fe31"
+                            "version": "fa1d374a45ccf9b2e05a780a17876d9c",
+                            "checksum": "sha256:5c622e4eb75e2b3d7d00e08d3629c7372b10a7b6eefe6d3066cfc89532885365"
                         }
                     ]
                 },
@@ -129,6 +129,16 @@
                             "file": "profiles/production/css/themes/tabler.css",
                             "version": "808150a1d8bbee965b7b7c6656212fe7",
                             "checksum": "sha256:4c9ffd34bf2e76e0ef3ed68a021499e6ed4af89dc368d165d5f9abb86e2751c8"
+                        }
+                    ]
+                },
+                "theme:tailwind": {
+                    "scripts": [],
+                    "styles": [
+                        {
+                            "file": "profiles/production/css/themes/tailwind.css",
+                            "version": "a133602165975ff3d17ba4971f11b1a6",
+                            "checksum": "sha256:1f6f8a4aa82b7633ee0736a684633861f2d7461c29bdf8e1ac88cb2d3b206953"
                         }
                     ]
                 }
@@ -203,8 +213,8 @@
                     "styles": [
                         {
                             "file": "profiles/development/css/shared/ui.css",
-                            "version": "d1a06e2fc26b99a584d9ea188ab1fb21",
-                            "checksum": "sha256:7d78d785504576a656b143b7bfca5e9a1b6dde925662f619429ceddfeaf84f76"
+                            "version": "0199c4e2acea1c1178768424a50ad1a3",
+                            "checksum": "sha256:3bb0e0c4334f0b6dd45da7ca69e96ee2e2d00953822c0b82e6692739864c0a6a"
                         }
                     ]
                 },
@@ -263,9 +273,19 @@
                             "checksum": "sha256:7d40d6f5730359429ee2391843e60d01ec2492a59be0df9dedcf97a0faf0cbf1"
                         }
                     ]
+                },
+                "theme:tailwind": {
+                    "scripts": [],
+                    "styles": [
+                        {
+                            "file": "profiles/development/css/themes/tailwind.css",
+                            "version": "c392b695a7551247af997c263110b732",
+                            "checksum": "sha256:73993fc44fa2dad98e6f1d9b1b3bee0c622d2934e7e4b6c90a221f4dc53abc1e"
+                        }
+                    ]
                 }
             }
         }
     },
-    "build_id": "sha256:385b6f9e92cf3716d94cdab117563d6d54344e32da677246c4fbeea9f02632e8"
+    "build_id": "sha256:212bdbea39158cfc3be99aaae3bb0c02cdabd181695a4abf0b986b1400e2929e"
 }

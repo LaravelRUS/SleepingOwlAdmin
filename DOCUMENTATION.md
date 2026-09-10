@@ -90,7 +90,7 @@ Generated-файлы под `public/default` вручную не редакти�
 | Ключ                  | Назначение                                         | Значение по умолчанию |
 | :-------------------- | :------------------------------------------------- | :-------------------- |
 | `template.default`    | Имя выбранной темы                                 | `adminlte`            |
-| `template.themes`     | Карта имён на `ThemeInterface` classes             | `adminlte`, `empty`, `tabler` |
+| `template.themes`     | Карта имён на `ThemeInterface` classes             | `adminlte`, `empty`, `tabler`, `tailwind` |
 | `ui`                  | Branding, shell, footer и presentation switches    | См. config            |
 | `dev_assets`          | Выбор готового development profile                 | `false`               |
 | `url_prefix`          | URL-префикс админки                                | `admin`               |
@@ -111,17 +111,19 @@ Generated-файлы под `public/default` вручную не редакти�
         'adminlte' => SleepingOwl\Admin\Themes\AdminLTETheme::class,
         'empty' => SleepingOwl\Admin\Themes\EmptyTheme::class,
         'tabler' => SleepingOwl\Admin\Themes\TablerTheme::class,
+        'tailwind' => SleepingOwl\Admin\Themes\TailwindTheme::class,
     ],
 ],
 ```
 
-`adminlte` использует AdminLTE 4/Bootstrap 5, а `tabler` — CSS-only
-TablerTheme 1.5.1 без vendor JavaScript.
+`adminlte` использует AdminLTE 4/Bootstrap 5, `tabler` — CSS-only
+TablerTheme 1.5.1 без vendor JavaScript, а `tailwind` — готовую Tailwind CSS
+4.3.3 тему без theme-owned JavaScript.
 Диагностическая `empty` сохраняет shared styles и icons, но не
 добавляет theme-owned presentation. Разрешается только выбранная тема; неверное имя, class,
 capability или manifest вызывает диагностическое исключение без silent fallback.
 
-Обе темы получают общие `core`, feature drivers и `shared:ui`; presentation и
+Все темы получают общие `core`, feature drivers и `shared:ui`; presentation и
 theme tokens остаются в выбранной теме. Application CSS/JS загружается после
 package runtime. Обычный пользователь может:
 

@@ -6,6 +6,11 @@ import { describe, expect, it } from 'vitest'
 const root = resolve(import.meta.dirname, '../../..')
 const entries = readJson('build/frontend-entries.json').modern.styles
 const layerOnlyEntries = new Set(['theme:empty', 'theme:adminlte:overrides'])
+const declaredPostcssInputs = new Set(
+    entries
+        .filter((entry) => entry.processor === 'tailwind')
+        .map((entry) => entry.source.replace(/^resources\//, '')),
+)
 const themeTokenEntries = entries.filter(
     (entry) =>
         entry.source.endsWith('.scss') &&
@@ -111,7 +116,7 @@ describe('Sass resource boundaries', () => {
         expect(files.filter((path) => path.endsWith('_custom-properties.scss'))).toEqual([])
     })
 
-    it('contains no handwritten plain CSS below resources', () => {
+    it('contains no undeclared handwritten plain CSS below resources', () => {
         const files = readdirSync(resolve(root, 'resources'), { recursive: true })
 
         expect(files.filter(isHandwrittenCss)).toEqual([])
@@ -164,7 +169,11 @@ function nonDefaultDeclarations(source) {
 function isHandwrittenCss(path) {
     const normalized = path.replaceAll('\\', '/')
 
-    return normalized.endsWith('.css') && !/(^|\/)(generated|vendor)\//.test(normalized)
+    return (
+        normalized.endsWith('.css') &&
+        !/(^|\/)(generated|vendor)\//.test(normalized) &&
+        !declaredPostcssInputs.has(normalized)
+    )
 }
 
 function customPropertyDeclarations(source) {

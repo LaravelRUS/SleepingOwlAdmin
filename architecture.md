@@ -13,7 +13,7 @@ Laravel discovers
 During registration and boot the provider:
 
 1. recursively merges `config/sleeping_owl.php` and merges navigation config;
-2. registers the package and Tabler Blade namespaces;
+2. registers the package and sparse built-in theme Blade namespaces;
 3. creates the central `Admin` service and registers package service providers;
 4. registers factories, widgets, WYSIWYG, theme and asset services;
 5. resolves the configured theme/template and initializes it for normal
@@ -127,12 +127,12 @@ The canonical built-in Blade base is `resources/views/default`. It contains the
 complete AdminLTE-compatible logical view contract. Shared feature views live in
 `resources/views/features`.
 
-The Tabler theme uses ordered namespace hints; its intermediate package path is
-present only when a real markup difference requires an override:
+The Tabler and Tailwind themes use ordered namespace hints; their intermediate
+package paths are present only when a real markup difference requires an override:
 
 ```text
 application override
-    -> resources/views/themes/tabler/default (real differences only)
+    -> resources/views/themes/<theme>/default (real differences only)
     -> resources/views/default (canonical base)
 ```
 
@@ -141,9 +141,10 @@ Application override paths are:
 ```text
 AdminLTE: resources/views/vendor/sleeping_owl/default/<logical path>
 Tabler:   resources/views/vendor/sleeping_owl_tabler/default/<logical path>
+Tailwind: resources/views/vendor/sleeping_owl_tailwind/default/<logical path>
 ```
 
-An absent Tabler override is normal inheritance. Copying the complete base into
+An absent Tabler or Tailwind override is normal inheritance. Copying the complete base into
 another theme or application is intentionally discouraged; override only markup
 that differs.
 
@@ -171,6 +172,7 @@ Built-in names are:
 - `adminlte` → `AdminLTETheme` (AdminLTE 4 and Bootstrap 5);
 - `empty` → `EmptyTheme` (diagnostic shared-only presentation);
 - `tabler` → `TablerTheme` (Tabler 1.5.1 CSS-only presentation).
+- `tailwind` → `TailwindTheme` (Tailwind CSS 4.3.3 CSS-only presentation).
 
 `ThemeResolver` validates the selection and resolves only the selected class.
 There is no silent fallback to AdminLTE when configuration is invalid.
@@ -291,6 +293,7 @@ resources/views/
   default/                     # Canonical built-in Blade base
   features/                    # Shared feature-owned templates
   themes/tabler/               # Real Tabler differences only
+  themes/tailwind/             # Real Tailwind differences only
 src/
   Assets/                      # Manifest/resolution/publication
   Configuration/               # Normalized runtime configuration

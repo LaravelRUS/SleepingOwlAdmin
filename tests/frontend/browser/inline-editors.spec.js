@@ -4,7 +4,7 @@ import { expect, test } from '@playwright/test'
 
 let fixtureHeaders
 
-const themes = ['adminlte', 'empty', 'tabler']
+const themes = ['adminlte', 'empty', 'tabler', 'tailwind']
 
 async function requests(request) {
     const response = await request.get('/__fixture/requests', { headers: fixtureHeaders })

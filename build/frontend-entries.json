@@ -99,6 +99,12 @@
                 "output": "css/themes/tabler.css"
             },
             {
+                "logicalId": "theme:tailwind",
+                "source": "resources/css/themes/tailwind/theme.css",
+                "output": "css/themes/tailwind.css",
+                "processor": "tailwind"
+            },
+            {
                 "logicalId": "theme:adminlte:overrides",
                 "source": "resources/css/theme-overrides/adminlte.scss",
                 "output": "css/theme-overrides/adminlte.css"

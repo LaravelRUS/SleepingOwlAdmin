@@ -1160,7 +1160,6 @@
     justify-content: space-between;
     min-block-size: var(--soa-header-height);
     min-inline-size: 0;
-    padding-inline: var(--soa-content-padding-compact);
     position: sticky;
     z-index: var(--soa-header-z-index);
   }

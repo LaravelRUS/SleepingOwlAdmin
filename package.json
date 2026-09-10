@@ -55,6 +55,7 @@
     "devDependencies": {
         "@eslint/js": "10.0.1",
         "@playwright/test": "1.63.0",
+        "@tailwindcss/postcss": "4.3.3",
         "@vitejs/plugin-vue": "6.0.8",
         "@vue/compiler-sfc": "3.5.42",
         "esbuild": "0.28.2",
@@ -66,6 +67,7 @@
         "stylelint": "17.15.0",
         "stylelint-config-standard-scss": "17.0.0",
         "stylelint-scss": "7.2.0",
+        "tailwindcss": "4.3.3",
         "vite": "8.2.2",
         "vitest": "5.0.0"
     },

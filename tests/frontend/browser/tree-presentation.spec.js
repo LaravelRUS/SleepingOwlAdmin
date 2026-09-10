@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test'
 
-for (const theme of ['adminlte', 'tabler']) {
+for (const theme of ['adminlte', 'tabler', 'tailwind']) {
     test(`${theme} tree adapter owns nested presentation`, async ({ page }) => {
         await page.goto(`/tree-presentation?theme=${theme}`)
 

@@ -128,6 +128,17 @@ describe('theme frontend build entries', () => {
         expect(modernEntry('theme:tabler:overrides', 'styles')).toBeUndefined()
     })
 
+    it('publishes Tailwind as an isolated PostCSS theme boundary', () => {
+        expect(modernEntry('theme:tailwind', 'scripts')).toBeUndefined()
+        expect(modernEntry('theme:tailwind', 'styles')).toEqual({
+            logicalId: 'theme:tailwind',
+            source: 'resources/css/themes/tailwind/theme.css',
+            output: 'css/themes/tailwind.css',
+            processor: 'tailwind',
+        })
+        expect(modernEntry('theme:tailwind:overrides', 'styles')).toBeUndefined()
+    })
+
     it('publishes the AdminLTE override layer last', () => {
         expect(modernEntry('theme:adminlte:overrides', 'styles')).toEqual({
             logicalId: 'theme:adminlte:overrides',

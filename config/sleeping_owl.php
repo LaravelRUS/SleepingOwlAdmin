@@ -18,6 +18,7 @@ return [
         'themes' => [
             'adminlte' => SleepingOwl\Admin\Themes\AdminLTETheme::class,
             'tabler' => SleepingOwl\Admin\Themes\TablerTheme::class,
+            'tailwind' => SleepingOwl\Admin\Themes\TailwindTheme::class,
 
             //last empty template
             'empty' => SleepingOwl\Admin\Themes\EmptyTheme::class,

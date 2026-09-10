@@ -4,6 +4,7 @@ for (const [theme, surface, radius] of [
     ['adminlte', 'rgb(255, 255, 255)', '4px'],
     ['empty', 'rgb(255, 255, 255)', '4px'],
     ['tabler', 'rgb(255, 255, 255)', '6px'],
+    ['tailwind', 'rgb(255, 255, 255)', '10px'],
 ]) {
     test(`${theme} dropdown uses shared presentation`, async ({ page }) => {
         await page.goto(`/dropdown-presentation?theme=${theme}`)

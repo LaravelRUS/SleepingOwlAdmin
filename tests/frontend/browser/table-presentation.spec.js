@@ -10,7 +10,7 @@ test('AdminLTE table adapter owns Bootstrap DataTables presentation', async ({ p
     await expect(page.locator('td.highlight')).toHaveCSS('background-color', 'rgb(242, 242, 242)')
 })
 
-for (const theme of ['adminlte', 'empty', 'tabler']) {
+for (const theme of ['adminlte', 'empty', 'tabler', 'tailwind']) {
     test(`${theme} presents DataTables 3 column-order markup as Bootstrap-style arrows`, async ({
         page,
     }) => {
@@ -62,7 +62,7 @@ function readColumnOrderPresentation(element) {
     }
 }
 
-for (const theme of ['adminlte', 'empty', 'tabler']) {
+for (const theme of ['adminlte', 'empty', 'tabler', 'tailwind']) {
     test(`${theme} hides the DataTables 3 sort control for non-orderable columns`, async ({
         page,
     }) => {
@@ -122,7 +122,7 @@ for (const [theme, { margin, minHeight }] of Object.entries({
     })
 }
 
-for (const theme of ['adminlte', 'empty', 'tabler']) {
+for (const theme of ['adminlte', 'empty', 'tabler', 'tailwind']) {
     test(`${theme} auto-update presentation keeps the progress line beside its toggle`, async ({
         page,
     }) => {

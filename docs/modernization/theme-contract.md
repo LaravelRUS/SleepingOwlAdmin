@@ -90,11 +90,14 @@ Capability говорит только о presentation support. Он не озн
         'adminlte' => SleepingOwl\Admin\Themes\AdminLTETheme::class,
         'empty' => SleepingOwl\Admin\Themes\EmptyTheme::class,
         'tabler' => SleepingOwl\Admin\Themes\TablerTheme::class,
+        'tailwind' => SleepingOwl\Admin\Themes\TailwindTheme::class,
     ],
 ],
 ```
 
 `template.default` выбирает ровно один ключ `template.themes`; классы остальных тем не создаются. Имена используют `lower-kebab`, неизвестное имя и некорректная карта завершаются `TemplateException` без fallback к AdminLTE.
+
+Встроенная `tailwind` тема использует Tailwind CSS 4.3.3 на maintainer build boundary, объявляет полный набор presentation capabilities и переиспользует canonical Blade base через namespace `sleeping_owl_tailwind`. Её готовый CSS содержит светлые/тёмные `--soa-*` tokens и Tailwind-owned component recipes; отдельный theme JavaScript, Bootstrap и AdminLTE не загружаются. Composer-потребитель выбирает тему без Node.js и повторной сборки.
 
 Встроенная диагностическая тема `empty` переиспользует текущую package Blade-разметку, но не добавляет theme-owned CSS, JavaScript или overrides. Её единственная capability — `icons`; Font Awesome подключается через обязательный для всего package runtime `shared:icons`. Пустой `theme:empty` bundle существует только потому, что logical theme entry обязателен. Выбор `SLEEPINGOWL_TEMPLATE=empty` оставляет `core`, `shared:ui`, `shared:features` и shared runtime dependencies: общий слой предоставляет базовую размерку, light/dark surfaces и переключение цветового режима. Тема предназначена для визуального и функционального аудита границы shared/theme, а не для production UI.
 

@@ -1,4 +1,5 @@
 import vue from '@vitejs/plugin-vue'
+import tailwindcss from '@tailwindcss/postcss'
 import autoprefixer from 'autoprefixer'
 import { readFileSync, writeFileSync } from 'node:fs'
 import { basename, dirname, extname, isAbsolute, relative, resolve } from 'node:path'
@@ -79,7 +80,7 @@ function outputOptions(entry) {
 function cssOptions(entry, sourceMap) {
     return {
         devSourcemap: sourceMap,
-        postcss: { plugins: [autoprefixer()] },
+        postcss: { plugins: postcssPlugins(entry) },
         preprocessorOptions: {
             scss: {
                 silenceDeprecations: [
@@ -92,6 +93,10 @@ function cssOptions(entry, sourceMap) {
             },
         },
     }
+}
+
+function postcssPlugins(entry) {
+    return entry.processor === 'tailwind' ? [tailwindcss(), autoprefixer()] : [autoprefixer()]
 }
 
 function assetFileName(asset, stylesheetOutput) {
