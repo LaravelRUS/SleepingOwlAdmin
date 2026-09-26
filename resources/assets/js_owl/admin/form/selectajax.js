@@ -76,13 +76,33 @@ Admin.Modules.register('form.elements.selectajax', () => {
 
         let markup = "<div class='select2-result-repository clearfix'>" +
             "<div class='select2-result-repository__meta'>" +
-            "<div class='select2-result-repository__title'>" + repo.tag_name + "</div>";
+            "<div class='select2-result-repository__title'>" + escapeText(repo.tag_name) + "</div>";
 
         return markup;
     }
 
     function formatRepoSelection (repo) {
-        return repo.custom_name || repo.tag_name || repo.text;
+        return repo.custom_name || escapeText(repo.tag_name || repo.text);
+    }
+
+    // escapeMarkup above is disabled so that formatRepo can return markup (and custom_name
+    // stays an HTML hook), therefore plain-text labels have to be escaped here. tag_name is
+    // the setDisplay() value; text is the textContent of a preselected <option>, where the
+    // browser has already decoded &lt; back to <. Same replacements as select2's
+    // Utils.escapeMarkup.
+    function escapeText (value) {
+        const replaceMap = {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#39;',
+            '/': '&#47;',
+            '\\': '&#92;'
+        };
+
+        return String(value === null || value === undefined ? '' : value)
+            .replace(/[&<>"'\/\\]/g, match => replaceMap[match]);
     }
 
 }, 0, ['bootstrap::tab::shown'])
