@@ -827,16 +827,28 @@ class AdminController extends Controller
             return redirect()->back();
         }
 
-        $items = $request->_id;
+        $items = [];
 
-        foreach ($items as $id) {
+        foreach ((array) $request->_id as $id) {
             $item = $model->getRepository()->find($id);
 
             if (! $item) {
                 return response()->Json(['error' => 'Haven`t row']);
             }
 
-            if (isset($item->deleted_at) && $item->deleted_at) {
+            // The same checks as the single-row deleteDelete() and deleteDestroy(). Every row is
+            // checked before anything is deleted, so one refused row leaves the whole batch intact.
+            $trashed = isset($item->deleted_at) && $item->deleted_at;
+
+            if (! ($trashed ? $model->isRestorable($item) : $model->isDeletable($item))) {
+                abort(404);
+            }
+
+            $items[$id] = $trashed;
+        }
+
+        foreach ($items as $id => $trashed) {
+            if ($trashed) {
                 $model->getRepository()->forceDelete($id);
             } else {
                 $model->getRepository()->delete($id);
